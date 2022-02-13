@@ -1,0 +1,9 @@
+dependencies {
+    compile('com.github.GTNewHorizons:Galacticraft:3.0.39-GTNH:dev')
+    compile('com.github.GTNewHorizons:NotEnoughItems:2.2.7-GTNH:dev')
+    compile('net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev')
+    compileOnly('com.github.GTNewHorizons:BuildCraft:7.1.27:api')
+    compileOnly('com.github.GTNewHorizons:EnderIO:2.3.1.30:api')
+    compileOnly('curse.maven:cofh-lib-220333:2388748')
+    compileOnly(deobf('https://s3.amazonaws.com/aidancbrady/mekanism/281-recommended/Mekanism-1.7.10-9.1.0.281.jar'))
+}
