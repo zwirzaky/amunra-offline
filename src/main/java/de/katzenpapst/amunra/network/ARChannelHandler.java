@@ -29,7 +29,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
     public static ARChannelHandler init()
     {
         ARChannelHandler channelHandler = new ARChannelHandler();
-        channelHandler.channels = NetworkRegistry.INSTANCE.newChannel(AmunRa.MODID, channelHandler, new ARPacketHandler());
+        channelHandler.channels = NetworkRegistry.INSTANCE.newChannel(AmunRa.MODID + "$generic", channelHandler, new ARPacketHandler());
         return channelHandler;
     }
 

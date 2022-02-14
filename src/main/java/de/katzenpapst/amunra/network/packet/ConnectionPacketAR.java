@@ -22,7 +22,7 @@ import net.minecraft.network.NetworkManager;
 
 public class ConnectionPacketAR
 {
-    public static final String CHANNEL = "amunra";
+    public static final String CHANNEL = AmunRa.MODID + "$connection";
     public static FMLEventChannel bus;
 
     public static final byte ID_MOTHERSHIP_LIST = (byte) 150;
