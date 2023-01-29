@@ -2,6 +2,10 @@ package de.katzenpapst.amunra.client.gui;
 
 import java.util.List;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 import de.katzenpapst.amunra.AmunRa;
@@ -14,19 +18,19 @@ import de.katzenpapst.amunra.mothership.Mothership;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR.EnumSimplePacket;
 import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiMothershipSettings extends GuiContainerTabbed {
 
     public interface IMothershipSettingsTab {
+
         public void mothershipResponsePacketRecieved();
 
         public void mothershipOperationFailed(String message);
     }
 
-    private static final ResourceLocation guiTexture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/ms_settings.png");
+    private static final ResourceLocation guiTexture = new ResourceLocation(
+            AmunRa.ASSETPREFIX,
+            "textures/gui/ms_settings.png");
 
     private final TileEntityMothershipSettings tile;
     private Mothership ship;
@@ -57,29 +61,28 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
 
     public void mothershipOperationFailed(String message) {
         AbstractTab curTab = this.getActiveTab();
-        if(curTab instanceof IMothershipSettingsTab) {
-            ((IMothershipSettingsTab)curTab).mothershipOperationFailed(message);
+        if (curTab instanceof IMothershipSettingsTab) {
+            ((IMothershipSettingsTab) curTab).mothershipOperationFailed(message);
         }
     }
 
     public void mothershipResponsePacketRecieved() {
         AbstractTab curTab = this.getActiveTab();
-        if(curTab instanceof IMothershipSettingsTab) {
-            ((IMothershipSettingsTab)curTab).mothershipResponsePacketRecieved();
+        if (curTab instanceof IMothershipSettingsTab) {
+            ((IMothershipSettingsTab) curTab).mothershipResponsePacketRecieved();
         }
     }
 
     public void sendMothershipSettingsPacket() {
-        NBTTagCompound nbt = new NBTTagCompound ();
+        NBTTagCompound nbt = new NBTTagCompound();
         ship.writeSettingsToNBT(nbt);
-        AmunRa.packetPipeline.sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, ship.getID(), nbt));
+        AmunRa.packetPipeline
+                .sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, ship.getID(), nbt));
     }
-
 
     @SuppressWarnings("unchecked")
     @Override
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
 
         this.addTab(new TabMothershipCustom(tile, this, mc, width, height, xSize, ySize));
@@ -87,6 +90,5 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
         this.addTab(new TabMothershipUsage(tile, this, mc, width, height, xSize, ySize));
 
     }
-
 
 }

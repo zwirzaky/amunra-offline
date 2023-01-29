@@ -3,13 +3,13 @@ package de.katzenpapst.amunra.world.mapgen.pyramid;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.util.MathHelper;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+
+import net.minecraft.util.MathHelper;
+
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 import de.katzenpapst.amunra.world.mapgen.StructureGenerator;
-
-
 
 public class PyramidGenerator extends StructureGenerator {
 
@@ -29,8 +29,8 @@ public class PyramidGenerator extends StructureGenerator {
 
         int chunkStartX = superchunkX << rangeShift;
         int chunkStartZ = superchunkZ << rangeShift;
-        int chunkEndX = chunkStartX+range-1;
-        int chunkEndZ = chunkStartZ+range-1;
+        int chunkEndX = chunkStartX + range - 1;
+        int chunkEndZ = chunkStartZ + range - 1;
         // this square of chunk coords superchunkX,superchunkX+range-1 and superchunkZ,superchunkZ+range-1
         // now could contain a village
         this.rand.setSeed(this.worldObj.getSeed() ^ this.getSalt() ^ superchunkX ^ superchunkZ);
@@ -56,22 +56,20 @@ public class PyramidGenerator extends StructureGenerator {
     }
 
     @Override
-    protected BaseStructureStart createNewStructure(int xChunkCoord,
-            int zChunkCoord) {
-        Pyramid p =  new Pyramid(this.worldObj, xChunkCoord, zChunkCoord, this.rand);
+    protected BaseStructureStart createNewStructure(int xChunkCoord, int zChunkCoord) {
+        Pyramid p = new Pyramid(this.worldObj, xChunkCoord, zChunkCoord, this.rand);
         p.setFillMaterial(fillMaterial);
         p.setFloorMaterial(floorMaterial);
         p.setWallMaterial(wallMaterial);
 
         Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
-
         ArrayList compList = generateSubComponents(components, rand4structure, 12);
 
         p.setSmallRooms(compList);
 
         p.setMainRoom((PyramidRoom) this.generateOneComponent(potentialMainRooms, rand4structure));
-        //p.setMainRoom(new PyramidRoom());
+        // p.setMainRoom(new PyramidRoom());
 
         return p;
     }
@@ -109,7 +107,5 @@ public class PyramidGenerator extends StructureGenerator {
     public void setFillMaterial(BlockMetaPair fillMaterial) {
         this.fillMaterial = fillMaterial;
     }
-
-
 
 }

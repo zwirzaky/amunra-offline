@@ -2,8 +2,10 @@ package de.katzenpapst.amunra.world.anubis;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
+
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.IChunkProvider;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.world.AmunraWorldChunkManager;
 import de.katzenpapst.amunra.world.AmunraWorldProvider;
@@ -11,8 +13,7 @@ import de.katzenpapst.amunra.world.AmunraWorldProvider;
 public class AnubisWorldProvider extends AmunraWorldProvider {
 
     /**
-     * Determines the rate to spawn meteors in this planet. Lower means MORE
-     * meteors.
+     * Determines the rate to spawn meteors in this planet. Lower means MORE meteors.
      * <p/>
      * Typical value would be about 7. Return 0 for no meteors.
      *
@@ -24,12 +25,11 @@ public class AnubisWorldProvider extends AmunraWorldProvider {
     }
 
     /**
-     * Changes volume of sounds on this planet. You should be using higher
-     * values for thin atmospheres and high values for dense atmospheres
+     * Changes volume of sounds on this planet. You should be using higher values for thin atmospheres and high values
+     * for dense atmospheres
      *
-     * @return Sound reduction divisor. Value of 10 will make sounds ten times
-     * more quiet. Value of 0.1 will make sounds 10 times louder. Be
-     * careful with the values you choose!
+     * @return Sound reduction divisor. Value of 10 will make sounds ten times more quiet. Value of 0.1 will make sounds
+     *         10 times louder. Be careful with the values you choose!
      */
     @Override
     public float getSoundVolReductionAmount() {
@@ -37,11 +37,9 @@ public class AnubisWorldProvider extends AmunraWorldProvider {
     }
 
     /**
-     * This value will affect player's thermal level, damaging them if it
-     * reaches too high or too low.
+     * This value will affect player's thermal level, damaging them if it reaches too high or too low.
      *
-     * @return Positive integer for hot celestial bodies, negative for cold.
-     * Zero for neutral
+     * @return Positive integer for hot celestial bodies, negative for cold. Zero for neutral
      */
     @Override
     public float getThermalLevelModifier() {
@@ -104,8 +102,7 @@ public class AnubisWorldProvider extends AmunraWorldProvider {
     }
 
     @Override
-    public boolean isSkyColored()
-    {
+    public boolean isSkyColored() {
         return false;
     }
 

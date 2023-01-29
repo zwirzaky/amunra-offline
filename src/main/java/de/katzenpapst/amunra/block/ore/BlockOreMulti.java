@@ -1,12 +1,5 @@
 package de.katzenpapst.amunra.block.ore;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.block.BlockBasicMeta;
-import de.katzenpapst.amunra.block.SubBlock;
-import de.katzenpapst.amunra.item.ItemBlockMulti;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -14,6 +7,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.block.BlockBasicMeta;
+import de.katzenpapst.amunra.block.SubBlock;
+import de.katzenpapst.amunra.item.ItemBlockMulti;
 
 public class BlockOreMulti extends BlockBasicMeta {
 
@@ -30,7 +31,6 @@ public class BlockOreMulti extends BlockBasicMeta {
      */
     protected String mbHarvestTool = null;
 
-
     public BlockOreMulti(String name, String texture, Material mat) {
         super(name, mat);
         this.textureName = texture;
@@ -38,8 +38,7 @@ public class BlockOreMulti extends BlockBasicMeta {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta)
-    {
+    public IIcon getIcon(int side, int meta) {
         return this.blockIcon;
     }
 
@@ -63,8 +62,7 @@ public class BlockOreMulti extends BlockBasicMeta {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
         this.blockIcon = par1IconRegister.registerIcon(this.textureName);
     }
@@ -76,16 +74,16 @@ public class BlockOreMulti extends BlockBasicMeta {
     public void register() {
         GameRegistry.registerBlock(this, ItemBlockMulti.class, this.getUnlocalizedName());
 
-        for(int i=0;i<subBlocksArray.length;i++) {
+        for (int i = 0; i < subBlocksArray.length; i++) {
             SubBlock sb = subBlocksArray[i];
-            if(sb != null) {
+            if (sb != null) {
                 this.setHarvestLevel(
                         mbHarvestTool == null ? sb.getHarvestTool(0) : mbHarvestTool,
-                                Math.max(sb.getHarvestLevel(0), this.getMultiblockHarvestLevel()),
-                                i);
-                if(sb instanceof SubBlockOre) {
+                        Math.max(sb.getHarvestLevel(0), this.getMultiblockHarvestLevel()),
+                        i);
+                if (sb instanceof SubBlockOre) {
                     SubBlockOre sbOre = ((SubBlockOre) sb);
-                    for(String name: sbOre.getOredictNames()) {
+                    for (String name : sbOre.getOredictNames()) {
                         OreDictionary.registerOre(name, new ItemStack(this, 1, i));
                     }
                 }
@@ -93,17 +91,14 @@ public class BlockOreMulti extends BlockBasicMeta {
         }
     }
 
-
     /**
      * The type of render function that is called for this block
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return AmunRa.multiOreRendererId;
     }
-
 
     @Override
     public boolean isValueable(int metadata) {
@@ -111,19 +106,17 @@ public class BlockOreMulti extends BlockBasicMeta {
     }
 
     @Override
-    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
-    {
+    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX,
+            double explosionY, double explosionZ) {
         return Math.max(
                 super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ),
-                this.getExplosionResistance(entity)	// default resistance, should default to this.blockResistance / 5.0F
-                );
+                this.getExplosionResistance(entity) // default resistance, should default to this.blockResistance / 5.0F
+        );
     }
 
     @Override
-    public float getBlockHardness(World par1World, int x, int y, int z)
-    {
+    public float getBlockHardness(World par1World, int x, int y, int z) {
         return Math.max(super.getBlockHardness(par1World, x, y, z), this.blockHardness);
     }
-
 
 }

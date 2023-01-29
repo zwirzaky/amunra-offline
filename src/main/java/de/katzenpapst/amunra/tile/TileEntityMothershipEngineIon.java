@@ -2,20 +2,13 @@ package de.katzenpapst.amunra.tile;
 
 import java.util.EnumSet;
 
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.block.ARBlocks;
-import de.katzenpapst.amunra.helper.CoordHelper;
-import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelDisplay;
-import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelDisplayEnergy;
-import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelDisplayFluid;
-import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelRequirements;
-import de.katzenpapst.amunra.proxy.ARSidedProxy.ParticleType;
 import micdoodle8.mods.galacticraft.api.transmission.NetworkType;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -25,8 +18,16 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbstract {
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.block.ARBlocks;
+import de.katzenpapst.amunra.helper.CoordHelper;
+import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelDisplay;
+import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelDisplayEnergy;
+import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelDisplayFluid;
+import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelRequirements;
+import de.katzenpapst.amunra.proxy.ARSidedProxy.ParticleType;
 
+public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbstract {
 
     protected MothershipFuelDisplay fuelType = null;
     protected MothershipFuelDisplay fuelTypeEnergy = null;
@@ -35,7 +36,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
         this.boosterBlock = ARBlocks.blockMsEngineIonBooster;
         this.containingItems = new ItemStack[2];
         this.fuel = AsteroidsModule.fluidLiquidNitrogen;
-        //AsteroidsItems.canisterLN2
+        // AsteroidsItems.canisterLN2
 
         fuelType = new MothershipFuelDisplayFluid(this.fuel);
         fuelTypeEnergy = MothershipFuelDisplayEnergy.getInstance();
@@ -46,7 +47,8 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     @Override
     protected void startSound() {
         super.startSound();
-        AmunRa.proxy.playTileEntitySound(this, new ResourceLocation(GalacticraftCore.TEXTURE_PREFIX + "entity.astrominer"));
+        AmunRa.proxy
+                .playTileEntitySound(this, new ResourceLocation(GalacticraftCore.TEXTURE_PREFIX + "entity.astrominer"));
     }
 
     @Override
@@ -55,10 +57,14 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
         Vector3 particleStart = getExhaustPosition(1.8);
         Vector3 particleDirection = getExhaustDirection().scale(5);
 
-        AmunRa.proxy.spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
-        AmunRa.proxy.spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
-        AmunRa.proxy.spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
-        AmunRa.proxy.spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
+        AmunRa.proxy
+                .spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
+        AmunRa.proxy
+                .spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
+        AmunRa.proxy
+                .spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
+        AmunRa.proxy
+                .spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
 
     }
 
@@ -83,7 +89,6 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
         super.beginTransit(duration);
     }
 
-
     @Override
     public String getInventoryName() {
         return GCCoreUtil.translate("tile.mothershipEngineIon.name");
@@ -91,17 +96,17 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
 
     @Override
     public boolean isItemValidForSlot(int slotID, ItemStack itemstack) {
-        if(itemstack == null) return false;
+        if (itemstack == null) return false;
 
-        switch(slotID) {
-        case 0:
-            FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
-            if(containedFluid != null && containedFluid.getFluid() == fuel) {
-                return true;
-            }
-            break;
-        case 1:
-            return ItemElectricBase.isElectricItem(itemstack.getItem());
+        switch (slotID) {
+            case 0:
+                FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
+                if (containedFluid != null && containedFluid.getFluid() == fuel) {
+                    return true;
+                }
+                break;
+            case 1:
+                return ItemElectricBase.isElectricItem(itemstack.getItem());
         }
         return false;
 
@@ -116,19 +121,17 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
         return 10.0F;
     }
 
-    //public int getFuelUsageForDistance
+    // public int getFuelUsageForDistance
 
     @Override
     public boolean shouldUseEnergy() {
-        return false;//!this.getDisabled(0);
+        return false;// !this.getDisabled(0);
     }
 
     @Override
     public double getThrust() {
         return this.getNumBoosters() * 25000000.0D;
     }
-
-
 
     @Override
     protected int getTankCapacity() {
@@ -144,9 +147,9 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
 
         // ARItems
         // GCItems
-        if(fuel != fluid) {
+        if (fuel != fluid) {
             // other stuff?
-            if(!FluidRegistry.getFluidName(fluid).equals(fuel.getName())) {
+            if (!FluidRegistry.getFluidName(fluid).equals(fuel.getName())) {
                 return false;
             }
         }
@@ -157,7 +160,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     @Override
     protected boolean isItemFuel(ItemStack itemstack) {
         FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
-        if(containedFluid != null && containedFluid.getFluid() == fuel) {
+        if (containedFluid != null && containedFluid.getFluid() == fuel) {
             return true;
         }
         return false;
@@ -167,7 +170,6 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     public int getRotationMeta(int meta) {
         return (meta & 12) >> 2;
     }
-
 
     @Override
     public ForgeDirection getElectricInputDirection() {
@@ -180,15 +182,13 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
 
     @Override
     public EnumSet<ForgeDirection> getElectricalInputDirections() {
-        //EnumSet.
+        // EnumSet.
         return EnumSet.allOf(ForgeDirection.class);
     }
 
     @Override
-    public boolean canConnect(ForgeDirection direction, NetworkType type)
-    {
-        if (direction == null || direction.equals(ForgeDirection.UNKNOWN) || type != NetworkType.POWER)
-        {
+    public boolean canConnect(ForgeDirection direction, NetworkType type) {
+        if (direction == null || direction.equals(ForgeDirection.UNKNOWN) || type != NetworkType.POWER) {
             return false;
         }
 
@@ -206,22 +206,19 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public void slowDischarge()
-    {
+    public void slowDischarge() {
         // don't
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+    public void readFromNBT(NBTTagCompound nbt) {
         float capacity = nbt.getFloat("energyCapacity");
         this.storage.setCapacity(capacity);
         super.readFromNBT(nbt);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
-    {
+    public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setFloat("energyCapacity", this.storage.getCapacityGC());
     }

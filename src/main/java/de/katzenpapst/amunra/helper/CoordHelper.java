@@ -18,6 +18,7 @@ public class CoordHelper {
 
     /**
      * Get the coordinate of the minimum block of a chunk
+     * 
      * @param chunkCoord
      * @return
      */
@@ -27,11 +28,12 @@ public class CoordHelper {
 
     /**
      * Get the coordinate of the maximum block of a chunk
+     * 
      * @param chunkCoord
      * @return
      */
     public static int chunkToMaxBlock(int chunkCoord) {
-        return ((chunkCoord+1) << 4)-1;
+        return ((chunkCoord + 1) << 4) - 1;
     }
 
     public static StructureBoundingBox getChunkBB(int chunkX, int chunkZ) {
@@ -43,8 +45,7 @@ public class CoordHelper {
     }
 
     /**
-     * Converts an absolute coordinate to relative.
-     * Does not validate the result
+     * Converts an absolute coordinate to relative. Does not validate the result
      *
      * @param absCoord
      * @param chunkCoord
@@ -59,10 +60,8 @@ public class CoordHelper {
         return absCoord - chunkToMinBlock(chunkCoord);
     }
 
-
     /**
-     * Converts a relative chunk coordinate to an absolute one
-     * Does not validate the input
+     * Converts a relative chunk coordinate to an absolute one Does not validate the input
      *
      * @param relCoord
      * @param chunkCoord
@@ -80,32 +79,24 @@ public class CoordHelper {
      * @param z
      * @return
      */
-    public static int getIndex(int x, int y, int z)
-    {
+    public static int getIndex(int x, int y, int z) {
         return (x * 16 + z) * 256 + y;
     }
 
-    public static AxisAlignedBB cloneAABB(AxisAlignedBB box)
-    {
+    public static AxisAlignedBB cloneAABB(AxisAlignedBB box) {
         return AxisAlignedBB.getBoundingBox(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
     }
 
-
-
-
     /**
      * This should transform a ForgeDirection according to rotation metadata
+     * 
      * @param dir
-     * @param rotationMetadata	this should be ONLY the rotation metadata, ANDed and byteshifted, if necessary:
-     *	 0
-     * 2-+-3
-     *   1
+     * @param rotationMetadata this should be ONLY the rotation metadata, ANDed and byteshifted, if necessary: 0 2-+-3 1
      * @return
      */
-    public static ForgeDirection rotateForgeDirection(ForgeDirection dir, int rotationMetadata)
-    {
+    public static ForgeDirection rotateForgeDirection(ForgeDirection dir, int rotationMetadata) {
         int dirOrdinal = dir.ordinal();
-        if(dirOrdinal < 2 || dirOrdinal > 5) {
+        if (dirOrdinal < 2 || dirOrdinal > 5) {
             return dir;
         }
 
@@ -114,51 +105,48 @@ public class CoordHelper {
     }
 
     private static int rotateForgeDirectionOrdinal(int dirOrdinal, int rotationMeta) {
-        switch(rotationMeta) {
-        case 0:	// identity
-            return dirOrdinal;
-        case 1:	// rotate 180°
-            switch(dirOrdinal) {
-            case 2: //N
-                return 3; // S
-            case 3:	// S
-                return 2; // N
-            case 4: // W
-                return 5; // E
-            case 5:	// E
-                return 4; //W
-            }
-            return -1;
-        case 2: // rotate 270°
-            switch(dirOrdinal) {
-            case 2: //N
-                return 4; // W
-            case 3:	// S
-                return 5; // E
-            case 4: // W
-                return 3; // S
-            case 5:	// E
-                return 2; //N
-            }
-            return -1;
-        case 3: // rotate 90°
-            switch(dirOrdinal) {
-            case 2: //N
-                return 5; // E
-            case 3:	// S
-                return 4; // W
-            case 4: // W
-                return 2; // N
-            case 5:	// E
-                return 3; //S
-            }
-            return -1;
+        switch (rotationMeta) {
+            case 0: // identity
+                return dirOrdinal;
+            case 1: // rotate 180°
+                switch (dirOrdinal) {
+                    case 2: // N
+                        return 3; // S
+                    case 3: // S
+                        return 2; // N
+                    case 4: // W
+                        return 5; // E
+                    case 5: // E
+                        return 4; // W
+                }
+                return -1;
+            case 2: // rotate 270°
+                switch (dirOrdinal) {
+                    case 2: // N
+                        return 4; // W
+                    case 3: // S
+                        return 5; // E
+                    case 4: // W
+                        return 3; // S
+                    case 5: // E
+                        return 2; // N
+                }
+                return -1;
+            case 3: // rotate 90°
+                switch (dirOrdinal) {
+                    case 2: // N
+                        return 5; // E
+                    case 3: // S
+                        return 4; // W
+                    case 4: // W
+                        return 2; // N
+                    case 5: // E
+                        return 3; // S
+                }
+                return -1;
 
         }
         return dirOrdinal;
     }
-
-
-
 
 }

@@ -3,18 +3,20 @@ package de.katzenpapst.amunra.world.horus;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
-import net.minecraft.world.chunk.IChunkProvider;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedCreeper;
 import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedSkeleton;
 import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedZombie;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
+import net.minecraft.world.chunk.IChunkProvider;
+
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.AmunraChunkProvider;
 import de.katzenpapst.amunra.world.mapgen.pyramid.BossRoom;
@@ -24,14 +26,13 @@ import de.katzenpapst.amunra.world.mapgen.pyramid.PyramidGenerator;
 import de.katzenpapst.amunra.world.mapgen.pyramid.PyramidRoom;
 import de.katzenpapst.amunra.world.mapgen.volcano.VolcanoGenerator;
 
-public class HorusChunkProvider  extends AmunraChunkProvider {
+public class HorusChunkProvider extends AmunraChunkProvider {
 
     protected final BlockMetaPair stoneBlock = new BlockMetaPair(Blocks.obsidian, (byte) 0);
     protected PyramidGenerator pyramid = new PyramidGenerator();
     private VolcanoGenerator volcanoGen;
 
-    public HorusChunkProvider(World par1World, long seed,
-            boolean mapFeaturesEnabled) {
+    public HorusChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
         super(par1World, seed, mapFeaturesEnabled);
         pyramid.setFillMaterial(ARBlocks.blockBasaltBrick);
         pyramid.setFloorMaterial(ARBlocks.blockSmoothBasalt);
@@ -41,13 +42,7 @@ public class HorusChunkProvider  extends AmunraChunkProvider {
         pyramid.addComponentType(PyramidRoom.class, 0.5F);
         pyramid.addMainRoomType(BossRoom.class, 1.0F);
 
-        volcanoGen = new VolcanoGenerator(
-                new BlockMetaPair(Blocks.lava, (byte) 0),
-                stoneBlock,
-                stoneBlock,
-                15,
-                true
-                );
+        volcanoGen = new VolcanoGenerator(new BlockMetaPair(Blocks.lava, (byte) 0), stoneBlock, stoneBlock, 15, true);
     }
 
     @Override
@@ -57,7 +52,7 @@ public class HorusChunkProvider  extends AmunraChunkProvider {
 
     @Override
     protected BiomeGenBase[] getBiomesForGeneration() {
-        return new BiomeGenBase[]{BiomeGenBase.desert};
+        return new BiomeGenBase[] { BiomeGenBase.desert };
     }
 
     @Override
@@ -79,12 +74,12 @@ public class HorusChunkProvider  extends AmunraChunkProvider {
         SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
         SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
 
-        return new SpawnListEntry[]{skele, creeper, zombie};
+        return new SpawnListEntry[] { skele, creeper, zombie };
     }
 
     @Override
     protected SpawnListEntry[] getCreatures() {
-        return new SpawnListEntry[]{};
+        return new SpawnListEntry[] {};
     }
 
     @Override
@@ -140,7 +135,7 @@ public class HorusChunkProvider  extends AmunraChunkProvider {
         this.pyramid.populate(this, worldObj, chunkX, chunkZ);
         // this.pyramid.populate(this, worldObj, chunkX, chunkZ);
 
-        //this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
+        // this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
     }
 
 }

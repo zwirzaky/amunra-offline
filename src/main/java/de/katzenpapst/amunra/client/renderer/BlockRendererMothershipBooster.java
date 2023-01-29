@@ -1,5 +1,12 @@
 package de.katzenpapst.amunra.client.renderer;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
+
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -8,20 +15,12 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.machine.mothershipEngine.BlockMothershipBoosterMeta;
 import de.katzenpapst.amunra.block.machine.mothershipEngine.MothershipEngineBoosterBase;
 import de.katzenpapst.amunra.client.BlockRenderHelper;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.IBlockAccess;
 
 public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHandler {
 
     public BlockRendererMothershipBooster() {
         AmunRa.msBoosterRendererId = RenderingRegistry.getNextAvailableRenderId();
     }
-
-
 
     public void renderBooster(ResourceLocation loc) {
         final Tessellator tess = Tessellator.instance;
@@ -35,7 +34,6 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
         BlockRenderHelper.renderFaceYNeg(tess, 0, 0.5, 0.25, 0.75, false);
         BlockRenderHelper.renderFaceYPos(tess, 0, 0.5, 0.25, 0.75, false);
 
-
         BlockRenderHelper.renderFaceZNeg(tess, 0, 0, 0.25, 0.25);
         BlockRenderHelper.renderFaceZPos(tess, 0, 0, 0.25, 0.25);
         BlockRenderHelper.renderFaceXNeg(tess, 0, 0, 0.25, 0.25);
@@ -44,15 +42,17 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-        if(block instanceof BlockMothershipBoosterMeta) {
-            MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) ((BlockMothershipBoosterMeta)block).getSubBlock(metadata);
+        if (block instanceof BlockMothershipBoosterMeta) {
+            MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) ((BlockMothershipBoosterMeta) block)
+                    .getSubBlock(metadata);
             ResourceLocation texture = sb.getBoosterTexture();
             renderBooster(texture);
         }
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
+            RenderBlocks renderer) {
         // this happens in the tileentity
 
         return false;

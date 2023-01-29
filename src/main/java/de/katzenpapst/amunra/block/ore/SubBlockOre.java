@@ -2,6 +2,7 @@ package de.katzenpapst.amunra.block.ore;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
 import de.katzenpapst.amunra.block.SubBlockDropItem;
 
 public class SubBlockOre extends SubBlockDropItem {
@@ -38,20 +39,17 @@ public class SubBlockOre extends SubBlockDropItem {
         return this;
     }
 
-
     public SubBlockOre(String name, String texture) {
         super(name, texture);
         this.isValuable = true;
     }
 
-    public SubBlockOre(String name, String texture, String tool,
-            int harvestLevel) {
+    public SubBlockOre(String name, String texture, String tool, int harvestLevel) {
         super(name, texture, tool, harvestLevel);
         this.isValuable = true;
     }
 
-    public SubBlockOre(String name, String texture, String tool,
-            int harvestLevel, float hardness, float resistance) {
+    public SubBlockOre(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         this.isValuable = true;
     }

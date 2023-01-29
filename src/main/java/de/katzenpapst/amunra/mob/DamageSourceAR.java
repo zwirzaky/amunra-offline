@@ -1,7 +1,7 @@
 package de.katzenpapst.amunra.mob;
 
-import de.katzenpapst.amunra.entity.EntityBaseLaserArrow;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ChatComponentTranslation;
@@ -9,9 +9,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.IChatComponent;
 
+import de.katzenpapst.amunra.entity.EntityBaseLaserArrow;
+
 public class DamageSourceAR {
+
     public static DamageSource dsSuffocate = new DamageSource("wrongAtmoSuffocate").setDamageBypassesArmor();
-    public static DamageSource dsFallOffShip = new DamageSource("fallOffMothership").setDamageBypassesArmor().setDamageAllowedInCreativeMode();
+    public static DamageSource dsFallOffShip = new DamageSource("fallOffMothership").setDamageBypassesArmor()
+            .setDamageAllowedInCreativeMode();
     public static DamageSource dsEngine = new DamageSource("death.attack.killedByEngine");
 
     public static DamageSource getDSCrashIntoPlanet(CelestialBody body) {
@@ -30,11 +34,13 @@ public class DamageSourceAR {
         }
 
         @Override
-        public IChatComponent func_151519_b(EntityLivingBase p_151519_1_)
-        {
-            //EntityLivingBase entitylivingbase1 = p_151519_1_.func_94060_bK();
+        public IChatComponent func_151519_b(EntityLivingBase p_151519_1_) {
+            // EntityLivingBase entitylivingbase1 = p_151519_1_.func_94060_bK();
             String s = "death.attack." + this.damageType;
-            return new ChatComponentTranslation(s, p_151519_1_.func_145748_c_(), new ChatComponentTranslation(this.bodyName));
+            return new ChatComponentTranslation(
+                    s,
+                    p_151519_1_.func_145748_c_(),
+                    new ChatComponentTranslation(this.bodyName));
         }
 
     }
@@ -42,8 +48,7 @@ public class DamageSourceAR {
     /**
      * returns EntityDamageSourceIndirect of an arrow
      */
-    public static DamageSource causeLaserDamage(String langKey, EntityBaseLaserArrow arrow, Entity shooter)
-    {
+    public static DamageSource causeLaserDamage(String langKey, EntityBaseLaserArrow arrow, Entity shooter) {
         return (new EntityDamageSourceIndirect(langKey, arrow, shooter)).setProjectile();
     }
 }

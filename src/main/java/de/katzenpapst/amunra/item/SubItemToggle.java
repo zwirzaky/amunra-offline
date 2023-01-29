@@ -2,9 +2,6 @@ package de.katzenpapst.amunra.item;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,6 +10,10 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
 
 public class SubItemToggle extends SubItem {
 
@@ -41,7 +42,7 @@ public class SubItemToggle extends SubItem {
 
     public boolean getState(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
-        if(nbt == null || !nbt.hasKey("toggleState")) {
+        if (nbt == null || !nbt.hasKey("toggleState")) {
             return defaultState;
         }
 
@@ -50,7 +51,7 @@ public class SubItemToggle extends SubItem {
 
     public void setState(ItemStack stack, boolean state) {
         NBTTagCompound nbt = stack.getTagCompound();
-        if(nbt == null) {
+        if (nbt == null) {
             nbt = new NBTTagCompound();
             stack.setTagCompound(nbt);
         }
@@ -60,7 +61,7 @@ public class SubItemToggle extends SubItem {
 
     public void toggleState(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
-        if(nbt == null || !nbt.hasKey("toggleState")) {
+        if (nbt == null || !nbt.hasKey("toggleState")) {
             nbt = new NBTTagCompound();
             stack.setTagCompound(nbt);
             nbt.setBoolean("toggleState", !defaultState);
@@ -71,8 +72,7 @@ public class SubItemToggle extends SubItem {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister registerer)
-    {
+    public void registerIcons(IIconRegister registerer) {
         super.registerIcons(registerer);
         inactItemIcon = registerer.registerIcon(AmunRa.TEXTUREPREFIX + inactiveAssetName);
     }
@@ -82,9 +82,8 @@ public class SubItemToggle extends SubItem {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconIndex(ItemStack stack)
-    {
-        if(this.getState(stack)) {
+    public IIcon getIconIndex(ItemStack stack) {
+        if (this.getState(stack)) {
             return this.itemIcon;
         }
         return this.inactItemIcon;
@@ -94,14 +93,14 @@ public class SubItemToggle extends SubItem {
      * Return the correct icon for rendering based on the supplied ItemStack and render pass.
      *
      * Defers to {@link #getIconFromDamageForRenderPass(int, int)}
+     * 
      * @param stack to render for
-     * @param pass the multi-render pass
+     * @param pass  the multi-render pass
      * @return the icon
      */
     @Override
-    public IIcon getIcon(ItemStack stack, int pass)
-    {
-        if(this.getState(stack)) {
+    public IIcon getIcon(ItemStack stack, int pass) {
+        if (this.getState(stack)) {
             return this.itemIcon;
         }
         return this.inactItemIcon;
@@ -111,20 +110,18 @@ public class SubItemToggle extends SubItem {
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer)
-    {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
         this.toggleState(itemStack);
         return itemStack;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4)
-    {
+    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
-        if(this.getState(itemStack)) {
-            //EnumChatFormatting.GREEN
+        if (this.getState(itemStack)) {
+            // EnumChatFormatting.GREEN
             list.add(EnumChatFormatting.GREEN + StatCollector.translateToLocal("gui.status.active.name"));
         } else {
             list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("gui.status.disabled.name"));

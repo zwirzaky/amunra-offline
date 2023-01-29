@@ -17,8 +17,7 @@ public class AIFollowClosest extends EntityAIBase {
     private Class watchedClass;
     protected float minDistance;
 
-    public AIFollowClosest(EntityLiving user, Class classToFollow, float maxDistance, float minDistance)
-    {
+    public AIFollowClosest(EntityLiving user, Class classToFollow, float maxDistance, float minDistance) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;
         this.maxDistanceForPlayer = maxDistance;
@@ -26,8 +25,8 @@ public class AIFollowClosest extends EntityAIBase {
         this.setMutexBits(2);
     }
 
-    public AIFollowClosest(EntityLiving user, Class classToFollow, float maxDistance, float minDistance, float probability)
-    {
+    public AIFollowClosest(EntityLiving user, Class classToFollow, float maxDistance, float minDistance,
+            float probability) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;
         this.maxDistanceForPlayer = maxDistance;
@@ -39,26 +38,23 @@ public class AIFollowClosest extends EntityAIBase {
      * Returns whether the EntityAIBase should begin execution.
      */
     @Override
-    public boolean shouldExecute()
-    {
-        if (this.theWatcher.getRNG().nextFloat() >= this.someProbability)
-        {
+    public boolean shouldExecute() {
+        if (this.theWatcher.getRNG().nextFloat() >= this.someProbability) {
             return false;
-        }
-        else
-        {
-            if (this.theWatcher.getAttackTarget() != null)
-            {
+        } else {
+            if (this.theWatcher.getAttackTarget() != null) {
                 this.closestEntity = this.theWatcher.getAttackTarget();
             }
 
-            if (this.watchedClass == EntityPlayer.class)
-            {
-                this.closestEntity = this.theWatcher.worldObj.getClosestPlayerToEntity(this.theWatcher, (double)this.maxDistanceForPlayer);
-            }
-            else
-            {
-                this.closestEntity = this.theWatcher.worldObj.findNearestEntityWithinAABB(this.watchedClass, this.theWatcher.boundingBox.expand((double)this.maxDistanceForPlayer, 3.0D, (double)this.maxDistanceForPlayer), this.theWatcher);
+            if (this.watchedClass == EntityPlayer.class) {
+                this.closestEntity = this.theWatcher.worldObj
+                        .getClosestPlayerToEntity(this.theWatcher, (double) this.maxDistanceForPlayer);
+            } else {
+                this.closestEntity = this.theWatcher.worldObj.findNearestEntityWithinAABB(
+                        this.watchedClass,
+                        this.theWatcher.boundingBox
+                                .expand((double) this.maxDistanceForPlayer, 3.0D, (double) this.maxDistanceForPlayer),
+                        this.theWatcher);
             }
 
             return this.closestEntity != null;
@@ -69,26 +65,20 @@ public class AIFollowClosest extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting()
-    {
-        return !this.closestEntity.isEntityAlive()
-                ?
-                        false
-                :
-                    (this.theWatcher.getDistanceSqToEntity(this.closestEntity) > (double)(this.maxDistanceForPlayer * this.maxDistanceForPlayer)
-                            ?
-                                    false
-                            :
-                                this.lookTime > 0
-                    );
+    public boolean continueExecuting() {
+        return !this.closestEntity
+                .isEntityAlive()
+                        ? false
+                        : (this.theWatcher.getDistanceSqToEntity(this.closestEntity)
+                                > (double) (this.maxDistanceForPlayer * this.maxDistanceForPlayer) ? false
+                                        : this.lookTime > 0);
     }
 
     /**
      * Execute a one shot task or start executing a continuous task
      */
     @Override
-    public void startExecuting()
-    {
+    public void startExecuting() {
         this.lookTime = 40 + this.theWatcher.getRNG().nextInt(40);
     }
 
@@ -96,8 +86,7 @@ public class AIFollowClosest extends EntityAIBase {
      * Resets the task
      */
     @Override
-    public void resetTask()
-    {
+    public void resetTask() {
         this.closestEntity = null;
     }
 
@@ -105,14 +94,13 @@ public class AIFollowClosest extends EntityAIBase {
      * Updates the task
      */
     @Override
-    public void updateTask()
-    {
+    public void updateTask() {
         this.theWatcher.getLookHelper().setLookPosition(
                 this.closestEntity.posX,
-                this.closestEntity.posY + (double)this.closestEntity.getEyeHeight(),
-                this.closestEntity.posZ, 10.0F,
-                (float)this.theWatcher.getVerticalFaceSpeed()
-        );
+                this.closestEntity.posY + (double) this.closestEntity.getEyeHeight(),
+                this.closestEntity.posZ,
+                10.0F,
+                (float) this.theWatcher.getVerticalFaceSpeed());
         --this.lookTime;
     }
 

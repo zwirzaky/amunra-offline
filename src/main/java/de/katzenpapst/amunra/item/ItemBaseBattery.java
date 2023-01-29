@@ -1,14 +1,15 @@
 package de.katzenpapst.amunra.item;
 
-import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+
+import de.katzenpapst.amunra.AmunRa;
 
 public class ItemBaseBattery extends ItemElectricBase {
 
     final protected float capacity;
-
 
     public ItemBaseBattery(String assetName, float capacity) {
         super();
@@ -23,17 +24,13 @@ public class ItemBaseBattery extends ItemElectricBase {
     }
 
     @Override
-    public CreativeTabs getCreativeTab()
-    {
+    public CreativeTabs getCreativeTab() {
         return AmunRa.instance.arTab;
     }
 
     @Override
-    public float getMaxElectricityStored(ItemStack itemStack)
-    {
+    public float getMaxElectricityStored(ItemStack itemStack) {
         return this.capacity;
     }
-
-
 
 }

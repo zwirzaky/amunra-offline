@@ -1,6 +1,16 @@
 package de.katzenpapst.amunra.network.packet;
 
 import java.io.IOException;
+
+import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
+import micdoodle8.mods.galacticraft.core.util.GCLog;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.network.NetworkManager;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.FMLNetworkEvent;
@@ -12,16 +22,9 @@ import de.katzenpapst.amunra.mothership.MothershipWorldData;
 import de.katzenpapst.amunra.tick.TickHandlerServer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.network.NetworkManager;
 
-public class ConnectionPacketAR
-{
+public class ConnectionPacketAR {
+
     public static final String CHANNEL = AmunRa.MODID + "$connection";
     public static FMLEventChannel bus;
 
@@ -32,8 +35,7 @@ public class ConnectionPacketAR
         // TODO Auto-generated constructor stub
     }
 
-    public void handle(ByteBuf payload, EntityPlayer player)
-    {
+    public void handle(ByteBuf payload, EntityPlayer player) {
         int packetId = payload.readByte();
         NBTTagCompound nbt;
         // now try this
@@ -44,31 +46,28 @@ public class ConnectionPacketAR
             return;
         }
 
+        // List<Integer> data = new ArrayList<Integer>();
+        switch (packetId) {
+            case ID_MOTHERSHIP_LIST:
 
-        //List<Integer> data = new ArrayList<Integer>();
-        switch (packetId)
-        {
-        case ID_MOTHERSHIP_LIST:
+                if (TickHandlerServer.mothershipData == null) {
+                    TickHandlerServer.mothershipData = new MothershipWorldData(MothershipWorldData.saveDataID);
+                }
 
-            if(TickHandlerServer.mothershipData == null) {
-                TickHandlerServer.mothershipData = new MothershipWorldData(MothershipWorldData.saveDataID);
-            }
-
-            TickHandlerServer.mothershipData.readFromNBT(nbt);
-            break;
-        case ID_CONFIG_OVERRIDE:
-            AmunRa.config.setServerOverrideData(nbt);
-            break;
-        default:
+                TickHandlerServer.mothershipData.readFromNBT(nbt);
+                break;
+            case ID_CONFIG_OVERRIDE:
+                AmunRa.config.setServerOverrideData(nbt);
+                break;
+            default:
         }
-        /*if (payload.readInt() != 3519)
-        {
-            GCLog.severe("Packet completion problem for connection packet " + packetId + " - maybe the player's Galacticraft version does not match the server version?");
-        }*/
+        /*
+         * if (payload.readInt() != 3519) { GCLog.severe("Packet completion problem for connection packet " + packetId +
+         * " - maybe the player's Galacticraft version does not match the server version?"); }
+         */
     }
 
-    public static FMLProxyPacket createConfigPacket()
-    {
+    public static FMLProxyPacket createConfigPacket() {
         ByteBuf payload = Unpooled.buffer();
 
         payload.writeByte(ID_CONFIG_OVERRIDE);
@@ -84,13 +83,12 @@ public class ConnectionPacketAR
         return new FMLProxyPacket(payload, CHANNEL);
     }
 
-    public static FMLProxyPacket createMothershipPacket()
-    {
+    public static FMLProxyPacket createMothershipPacket() {
         ByteBuf payload = Unpooled.buffer();
 
         payload.writeByte(ID_MOTHERSHIP_LIST);
 
-        NBTTagCompound nbt = new NBTTagCompound ();
+        NBTTagCompound nbt = new NBTTagCompound();
         TickHandlerServer.mothershipData.writeToNBT(nbt);
 
         try {
@@ -102,29 +100,25 @@ public class ConnectionPacketAR
         return new FMLProxyPacket(payload, CHANNEL);
     }
 
-
-
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onPacketData(FMLNetworkEvent.ClientCustomPacketEvent event)
-    {
+    public void onPacketData(FMLNetworkEvent.ClientCustomPacketEvent event) {
         FMLProxyPacket pkt = event.packet;
 
         onFMLProxyPacketData(event.manager, pkt, Minecraft.getMinecraft().thePlayer);
     }
 
     @SubscribeEvent
-    public void onPacketData(FMLNetworkEvent.ServerCustomPacketEvent event)
-    {
+    public void onPacketData(FMLNetworkEvent.ServerCustomPacketEvent event) {
         FMLProxyPacket pkt = event.packet;
 
-        onFMLProxyPacketData(event.manager, pkt, ((NetHandlerPlayServer)event.handler).playerEntity);
+        onFMLProxyPacketData(event.manager, pkt, ((NetHandlerPlayServer) event.handler).playerEntity);
     }
 
-    public void onFMLProxyPacketData(NetworkManager manager, FMLProxyPacket packet, EntityPlayer player)
-    {
+    public void onFMLProxyPacketData(NetworkManager manager, FMLProxyPacket packet, EntityPlayer player) {
         try {
-            if ((packet == null) || (packet.payload() == null)) throw new RuntimeException("Empty packet sent to Amunra channel");
+            if ((packet == null) || (packet.payload() == null))
+                throw new RuntimeException("Empty packet sent to Amunra channel");
             ByteBuf data = packet.payload();
             this.handle(data, player);
         } catch (Exception e) {

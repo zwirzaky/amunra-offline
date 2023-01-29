@@ -1,11 +1,13 @@
 package de.katzenpapst.amunra.tile;
 
-import de.katzenpapst.amunra.mothership.Mothership;
-import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityAdvanced;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+
+import de.katzenpapst.amunra.mothership.Mothership;
+import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
 
 public class TileEntityMothershipSettings extends TileEntityAdvanced implements IInventory {
 
@@ -14,20 +16,17 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public double getPacketRange()
-    {
+    public double getPacketRange() {
         return 12.0D;
     }
 
     @Override
-    public int getPacketCooldown()
-    {
+    public int getPacketCooldown() {
         return 3;
     }
 
     @Override
-    public boolean isNetworkedTile()
-    {
+    public boolean isNetworkedTile() {
         return true;
     }
 
@@ -80,13 +79,12 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     @Override
     public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
         // hm, test
-        if(!isOnMothership()) {
+        if (!isOnMothership()) {
             return false;
         }
 
-        return
-            this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this &&
-                par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this
+                && par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
     }
 
     @Override
@@ -95,8 +93,7 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
@@ -108,12 +105,10 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     public Mothership getMothership() {
-        if(!isOnMothership()) {
+        if (!isOnMothership()) {
             return null;
         }
-        return (Mothership) ((MothershipWorldProvider)worldObj.provider).getCelestialBody();
+        return (Mothership) ((MothershipWorldProvider) worldObj.provider).getCelestialBody();
     }
-
-
 
 }

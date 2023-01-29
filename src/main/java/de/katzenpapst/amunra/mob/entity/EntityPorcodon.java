@@ -2,11 +2,9 @@ package de.katzenpapst.amunra.mob.entity;
 
 import java.util.ArrayList;
 
-import de.katzenpapst.amunra.block.ARBlocks;
-import de.katzenpapst.amunra.item.ARItems;
-import de.katzenpapst.amunra.mob.MobHelper;
 import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
 import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,6 +21,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import de.katzenpapst.amunra.block.ARBlocks;
+import de.katzenpapst.amunra.item.ARItems;
+import de.katzenpapst.amunra.mob.MobHelper;
+
 public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, IEntityNonOxygenBreather {
 
     private World lastCheckedWorld = null;
@@ -36,7 +38,6 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     private boolean isIgnited = false;
     private int timeSinceIgnited = 0;
 
-
     public EntityPorcodon(World curWorld) {
         super(curWorld);
 
@@ -46,7 +47,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
         // this.tasks.addTask(2, this.aiControlledByPlayer = new EntityAIControlledByPlayer(this, 0.3F));
         this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
-        //this.tasks.addTask(4, new EntityAITempt(this, 1.2D, Items.carrot_on_a_stick, false));
+        // this.tasks.addTask(4, new EntityAITempt(this, 1.2D, Items.carrot_on_a_stick, false));
         // this.tasks.addTask(4, new EntityAITempt(this, 1.2D, Items.carrot, false));
         this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
@@ -57,25 +58,21 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
 
     }
 
-
     /**
      * Returns true if the newer Entity AI code should be run
      */
     @Override
-    public boolean isAIEnabled()
-    {
+    public boolean isAIEnabled() {
         return true;
     }
 
     @Override
-    protected void updateAITasks()
-    {
+    protected void updateAITasks() {
         super.updateAITasks();
     }
 
     @Override
-    protected void applyEntityAttributes()
-    {
+    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(15.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
@@ -86,8 +83,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * by a player and the player is holding a carrot-on-a-stick
      */
     @Override
-    public boolean canBeSteered()
-    {
+    public boolean canBeSteered() {
         return false;
     }
 
@@ -95,18 +91,16 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * @TODO figure out what this does o_O
      */
     @Override
-    protected void entityInit()
-    {
+    protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
+        this.dataWatcher.addObject(16, Byte.valueOf((byte) 0));
     }
 
     /**
      * Returns the sound this mob makes while it's alive.
      */
     @Override
-    protected String getLivingSound()
-    {
+    protected String getLivingSound() {
         return "mob.pig.say";
     }
 
@@ -114,8 +108,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * Returns the sound this mob makes when it is hurt.
      */
     @Override
-    protected String getHurtSound()
-    {
+    protected String getHurtSound() {
         return "mob.pig.say";
     }
 
@@ -123,31 +116,28 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * Returns the sound this mob makes on death.
      */
     @Override
-    protected String getDeathSound()
-    {
+    protected String getDeathSound() {
         return "mob.pig.death";
     }
 
     @Override
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
-    {
+    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_) {
         this.playSound("mob.pig.step", 0.15F, 1.0F);
     }
 
     @Override
-    protected Item getDropItem()
-    {
-        return null;//this.isBurning() ? Items.cooked_porkchop : Items.porkchop;
+    protected Item getDropItem() {
+        return null;// this.isBurning() ? Items.cooked_porkchop : Items.porkchop;
     }
 
     /**
      * Drop 0-2 items of this living's type.
+     * 
      * @param par1 - Whether this entity has recently been hit by a player.
      * @param par2 - Level of Looting used to kill this mob.
      */
     @Override
-    protected void dropFewItems(boolean hitByPlayer, int lootLevel)
-    {
+    protected void dropFewItems(boolean hitByPlayer, int lootLevel) {
         // drop at least one meat
         int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
         ItemStack toDrop = this.dropItem.copy();
@@ -174,22 +164,19 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * the animal type)
      */
     @Override
-    public boolean isBreedingItem(ItemStack item)
-    {
-        return false;//item != null && item.getItem() == Items.carrot;
+    public boolean isBreedingItem(ItemStack item) {
+        return false;// item != null && item.getItem() == Items.carrot;
     }
 
-
     @Override
-    public boolean canBreatheIn(ArrayList<IAtmosphericGas> atmosphere,
-            boolean isInSealedArea) {
+    public boolean canBreatheIn(ArrayList<IAtmosphericGas> atmosphere, boolean isInSealedArea) {
         boolean hasOxygen = isInSealedArea || atmosphere.contains(IAtmosphericGas.OXYGEN);
 
         // add stuff if oxygen exists
-        if(hasOxygen && !isIgnited) {
+        if (hasOxygen && !isIgnited) {
             ignite();
         }
-        if(!hasOxygen && isIgnited) {
+        if (!hasOxygen && isIgnited) {
             unIgnite();
         }
 
@@ -212,14 +199,11 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * Called to update the entity's position/logic.
      */
     @Override
-    public void onUpdate()
-    {
-        if (this.isEntityAlive() && isIgnited)
-        {
+    public void onUpdate() {
+        if (this.isEntityAlive() && isIgnited) {
             this.timeSinceIgnited++;
 
-            if (this.timeSinceIgnited >= this.fuseTime)
-            {
+            if (this.timeSinceIgnited >= this.fuseTime) {
                 this.timeSinceIgnited = this.fuseTime;
                 this.explode();
             }
@@ -228,14 +212,11 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         super.onUpdate();
     }
 
-    private void explode()
-    {
-        if (!this.worldObj.isRemote)
-        {
+    private void explode() {
+        if (!this.worldObj.isRemote) {
             boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
 
-
-            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)this.explosionRadius, flag);
+            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) this.explosionRadius, flag);
 
             // why is this only in the if here?
             this.setDead();
@@ -243,8 +224,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     }
 
     @Override
-    public boolean getCanSpawnHere()
-    {
+    public boolean getCanSpawnHere() {
         return MobHelper.canAnimalSpawnHere(this.worldObj, this, ARBlocks.blockMethaneGrass);
     }
 

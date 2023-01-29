@@ -1,9 +1,11 @@
 package de.katzenpapst.amunra.mob.entity;
 
-import de.katzenpapst.amunra.tile.ITileDungeonSpawner;
 import net.minecraft.util.AxisAlignedBB;
 
+import de.katzenpapst.amunra.tile.ITileDungeonSpawner;
+
 public interface IAmunRaBoss {
+
     public void setSpawner(ITileDungeonSpawner spawner);
 
     public ITileDungeonSpawner getSpawner();

@@ -1,10 +1,12 @@
 package de.katzenpapst.amunra.block;
 
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+
 import net.minecraft.block.Block;
 
 /**
  * Like BlockMetaPair, but should work in HashMaps
+ * 
  * @author katzenpapst
  *
  */
@@ -20,10 +22,10 @@ public class BlockMetaPairHashable extends BlockMetaPair {
 
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof BlockMetaPair)) {
+        if (!(other instanceof BlockMetaPair)) {
             return false;
         }
-        BlockMetaPair otherReal = (BlockMetaPair)other;
+        BlockMetaPair otherReal = (BlockMetaPair) other;
         return otherReal.getBlock() == getBlock() && otherReal.getMetadata() == getMetadata();
     }
 

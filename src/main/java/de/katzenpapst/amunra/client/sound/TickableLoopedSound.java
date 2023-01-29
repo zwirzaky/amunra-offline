@@ -13,15 +13,16 @@ public class TickableLoopedSound extends MovingSound {
         this.tile = tile;
         this.volume = 10.0F; // volume
         this.field_147663_c = 1.0F; // WTF
-        this.xPosF = tile.xCoord+0.5F;
-        this.yPosF = tile.yCoord+0.5F;
-        this.zPosF = tile.zCoord+0.5F;
+        this.xPosF = tile.xCoord + 0.5F;
+        this.yPosF = tile.yCoord + 0.5F;
+        this.zPosF = tile.zCoord + 0.5F;
         this.repeat = true;
     }
 
     @Override
     public void update() {
-        if(tile == null || tile.isInvalid() || (tile instanceof ISoundableTile && ((ISoundableTile)tile).isDonePlaying())) {
+        if (tile == null || tile.isInvalid()
+                || (tile instanceof ISoundableTile && ((ISoundableTile) tile).isDonePlaying())) {
             this.donePlaying = true;
         }
     }

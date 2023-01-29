@@ -2,11 +2,6 @@ package de.katzenpapst.amunra.client.gui.elements;
 
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import cpw.mods.fml.client.FMLClientHandler;
-import de.katzenpapst.amunra.AmunRa;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -15,9 +10,17 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import de.katzenpapst.amunra.AmunRa;
+
 public class TabButton extends GuiButton {
 
-    protected static final ResourceLocation textures = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/gui-extra.png");
+    protected static final ResourceLocation textures = new ResourceLocation(
+            AmunRa.ASSETPREFIX,
+            "textures/gui/gui-extra.png");
 
     public boolean isActive;
 
@@ -43,16 +46,15 @@ public class TabButton extends GuiButton {
      * Draws this button to the screen.
      */
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY)
-    {
-        if (this.visible)
-        {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        if (this.visible) {
             RenderHelper.disableStandardItemLighting();
 
-            this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+            this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition
+                    && mouseX < this.xPosition + this.width
+                    && mouseY < this.yPosition + this.height;
 
             int k = this.getHoverState(this.field_146123_n);
-
 
             mc.getTextureManager().bindTexture(textures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -65,25 +67,24 @@ public class TabButton extends GuiButton {
 
             this.mouseDragged(mc, mouseX, mouseY);
 
-
             //
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             mc.getTextureManager().bindTexture(texture);
-            drawFullSizedTexturedRect(xPosition+7, yPosition+5, 18, 18);
+            drawFullSizedTexturedRect(xPosition + 7, yPosition + 5, 18, 18);
 
-            //this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, l);
+            // this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition
+            // + (this.height - 8) / 2, l);
             RenderHelper.enableStandardItemLighting();
         }
     }
 
-    protected void drawFullSizedTexturedRect(int x, int y, int width, int height)
-    {
+    protected void drawFullSizedTexturedRect(int x, int y, int width, int height) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(x, y+height, this.zLevel, 0, 1);
-        tessellator.addVertexWithUV(x+width, y+height, this.zLevel, 1, 1);
-        tessellator.addVertexWithUV(x+width, y, this.zLevel, 1, 0);
+        tessellator.addVertexWithUV(x, y + height, this.zLevel, 0, 1);
+        tessellator.addVertexWithUV(x + width, y + height, this.zLevel, 1, 1);
+        tessellator.addVertexWithUV(x + width, y, this.zLevel, 1, 0);
         tessellator.addVertexWithUV(x, y, this.zLevel, 0, 0);
         tessellator.draw();
     }
@@ -93,86 +94,131 @@ public class TabButton extends GuiButton {
      * this button.
      */
     @Override
-    public int getHoverState(boolean isMouseOver)
-    {
-        if(isActive) {
+    public int getHoverState(boolean isMouseOver) {
+        if (isActive) {
             return 0;
         }
-        if(!enabled) {
+        if (!enabled) {
             return 2;
         }
         return 1;
     }
 
-    public void drawTooltip(int mouseX, int mouseY)
-    {
-        if(!this.visible || !this.field_146123_n) {
+    public void drawTooltip(int mouseX, int mouseY) {
+        if (!this.visible || !this.field_146123_n) {
             return;
         }
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         /*
-        RenderHelper.disableStandardItemLighting();
-        GL11.glDisable(GL11.GL_LIGHTING);
-        */
+         * RenderHelper.disableStandardItemLighting(); GL11.glDisable(GL11.GL_LIGHTING);
+         */
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-        boolean withinRegion = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+        boolean withinRegion = mouseX >= this.xPosition && mouseY >= this.yPosition
+                && mouseX < this.xPosition + this.width
+                && mouseY < this.yPosition + this.height;
         List<String> extraStrings = null;
 
-
-        if (this.displayString != null && !this.displayString.isEmpty() && withinRegion)
-        {
+        if (this.displayString != null && !this.displayString.isEmpty() && withinRegion) {
             FontRenderer fontRenderer = FMLClientHandler.instance().getClient().fontRenderer;
             int stringWidth = FMLClientHandler.instance().getClient().fontRenderer.getStringWidth(displayString);
-
-
 
             int tooltipX = mouseX + 12;
             int tooltipY = mouseY - 12;
             int stringHeight = 8;
 
-            if(this.extraInfo != null) {
+            if (this.extraInfo != null) {
                 stringWidth = Math.max(stringWidth, 150);
                 extraStrings = fontRenderer.listFormattedStringToWidth(extraInfo, stringWidth);
                 stringHeight += extraStrings.size() * 10;
             }
 
             this.zLevel = 300.0F;
-            //GuiElementInfoRegion.itemRenderer.zLevel = 300.0F;
+            // GuiElementInfoRegion.itemRenderer.zLevel = 300.0F;
             int colorSomething = -267386864;
-            this.drawGradientRect(tooltipX - 3, tooltipY - 4, tooltipX + stringWidth + 3, tooltipY - 3, colorSomething, colorSomething);
-            this.drawGradientRect(tooltipX - 3, tooltipY + stringHeight + 3, tooltipX + stringWidth + 3, tooltipY + stringHeight + 4, colorSomething, colorSomething);
-            this.drawGradientRect(tooltipX - 3, tooltipY - 3, tooltipX + stringWidth + 3, tooltipY + stringHeight + 3, colorSomething, colorSomething);
-            this.drawGradientRect(tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + stringHeight + 3, colorSomething, colorSomething);
-            this.drawGradientRect(tooltipX + stringWidth + 3, tooltipY - 3, tooltipX + stringWidth + 4, tooltipY + stringHeight + 3, colorSomething, colorSomething);
+            this.drawGradientRect(
+                    tooltipX - 3,
+                    tooltipY - 4,
+                    tooltipX + stringWidth + 3,
+                    tooltipY - 3,
+                    colorSomething,
+                    colorSomething);
+            this.drawGradientRect(
+                    tooltipX - 3,
+                    tooltipY + stringHeight + 3,
+                    tooltipX + stringWidth + 3,
+                    tooltipY + stringHeight + 4,
+                    colorSomething,
+                    colorSomething);
+            this.drawGradientRect(
+                    tooltipX - 3,
+                    tooltipY - 3,
+                    tooltipX + stringWidth + 3,
+                    tooltipY + stringHeight + 3,
+                    colorSomething,
+                    colorSomething);
+            this.drawGradientRect(
+                    tooltipX - 4,
+                    tooltipY - 3,
+                    tooltipX - 3,
+                    tooltipY + stringHeight + 3,
+                    colorSomething,
+                    colorSomething);
+            this.drawGradientRect(
+                    tooltipX + stringWidth + 3,
+                    tooltipY - 3,
+                    tooltipX + stringWidth + 4,
+                    tooltipY + stringHeight + 3,
+                    colorSomething,
+                    colorSomething);
             int otherColorSomething = 1347420415;
             int j2 = (otherColorSomething & 16711422) >> 1 | otherColorSomething & -16777216;
-            this.drawGradientRect(tooltipX - 3, tooltipY - 3 + 1, tooltipX - 3 + 1, tooltipY + stringHeight + 3 - 1, otherColorSomething, j2);
-            this.drawGradientRect(tooltipX + stringWidth + 2, tooltipY - 3 + 1, tooltipX + stringWidth + 3, tooltipY + stringHeight + 3 - 1, otherColorSomething, j2);
-            this.drawGradientRect(tooltipX - 3, tooltipY - 3, tooltipX + stringWidth + 3, tooltipY - 3 + 1, otherColorSomething, otherColorSomething);
-            this.drawGradientRect(tooltipX - 3, tooltipY + stringHeight + 2, tooltipX + stringWidth + 3, tooltipY + stringHeight + 3, j2, j2);
+            this.drawGradientRect(
+                    tooltipX - 3,
+                    tooltipY - 3 + 1,
+                    tooltipX - 3 + 1,
+                    tooltipY + stringHeight + 3 - 1,
+                    otherColorSomething,
+                    j2);
+            this.drawGradientRect(
+                    tooltipX + stringWidth + 2,
+                    tooltipY - 3 + 1,
+                    tooltipX + stringWidth + 3,
+                    tooltipY + stringHeight + 3 - 1,
+                    otherColorSomething,
+                    j2);
+            this.drawGradientRect(
+                    tooltipX - 3,
+                    tooltipY - 3,
+                    tooltipX + stringWidth + 3,
+                    tooltipY - 3 + 1,
+                    otherColorSomething,
+                    otherColorSomething);
+            this.drawGradientRect(
+                    tooltipX - 3,
+                    tooltipY + stringHeight + 2,
+                    tooltipX + stringWidth + 3,
+                    tooltipY + stringHeight + 3,
+                    j2,
+                    j2);
 
             fontRenderer.drawStringWithShadow(displayString, tooltipX, tooltipY, -1);
 
-            //EnumColor.RED
+            // EnumColor.RED
 
-
-            if(extraStrings != null) {
-                for(int i=0;i<extraStrings.size();i++) {
-                    fontRenderer.drawStringWithShadow(extraStrings.get(i), tooltipX, tooltipY+(i+1)*10, 0x7777FF);
+            if (extraStrings != null) {
+                for (int i = 0; i < extraStrings.size(); i++) {
+                    fontRenderer.drawStringWithShadow(extraStrings.get(i), tooltipX, tooltipY + (i + 1) * 10, 0x7777FF);
                 }
             }
 
-
-
             this.zLevel = 0.0F;
-            //GuiElementInfoRegion.itemRenderer.zLevel = 0.0F;
+            // GuiElementInfoRegion.itemRenderer.zLevel = 0.0F;
         }
 
-        /*GL11.glEnable(GL11.GL_LIGHTING);
-
-        RenderHelper.enableStandardItemLighting();
-        */
+        /*
+         * GL11.glEnable(GL11.GL_LIGHTING); RenderHelper.enableStandardItemLighting();
+         */
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
     }

@@ -7,11 +7,13 @@ import net.minecraft.item.ItemStack;
 public class RocketRecipeHelper {
 
     ArrayList<ItemStack>[] stacks = new ArrayList[3];
-    /*ArrayList<ItemStack> stack2 = new ArrayList<ItemStack>();
-    ArrayList<ItemStack> stack3 = new ArrayList<ItemStack>();*/
+    /*
+     * ArrayList<ItemStack> stack2 = new ArrayList<ItemStack>(); ArrayList<ItemStack> stack3 = new
+     * ArrayList<ItemStack>();
+     */
 
     public RocketRecipeHelper() {
-        for(int i=0;i<stacks.length;i++) {
+        for (int i = 0; i < stacks.length; i++) {
             stacks[i] = new ArrayList<ItemStack>();
         }
     }
@@ -43,6 +45,7 @@ public class RocketRecipeHelper {
 
     /**
      * Adds permutations of 1 and 2 items, either can be null
+     * 
      * @param one
      * @param otherTwo
      */
@@ -62,6 +65,7 @@ public class RocketRecipeHelper {
 
     /**
      * Adds permutations for 3 different items
+     * 
      * @param stack1
      * @param stack2
      * @param stack3
@@ -94,6 +98,7 @@ public class RocketRecipeHelper {
 
     /**
      * Just adds the stack to everything
+     * 
      * @param stack
      */
     public void addSame(ItemStack stack) {

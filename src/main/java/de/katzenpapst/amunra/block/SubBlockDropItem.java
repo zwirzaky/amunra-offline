@@ -2,10 +2,11 @@ package de.katzenpapst.amunra.block;
 
 import java.util.Random;
 
-import de.katzenpapst.amunra.item.ItemDamagePair;
 import net.minecraft.item.Item;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
+
+import de.katzenpapst.amunra.item.ItemDamagePair;
 
 public class SubBlockDropItem extends SubBlock {
 
@@ -34,12 +35,7 @@ public class SubBlockDropItem extends SubBlock {
         super(name, texture, tool, harvestLevel);
     }
 
-    public SubBlockDropItem(
-            String name,
-            String texture,
-            String tool,
-            int harvestLevel,
-            float hardness,
+    public SubBlockDropItem(String name, String texture, String tool, int harvestLevel, float hardness,
             float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
@@ -55,8 +51,7 @@ public class SubBlockDropItem extends SubBlock {
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random)
-    {
+    public int quantityDropped(int meta, int fortune, Random random) {
         int j = random.nextInt(fortune + 2) - 1;
 
         if (j < 0) {
@@ -64,33 +59,30 @@ public class SubBlockDropItem extends SubBlock {
         }
 
         int result = (int) (this.quantityDropped(random) * (j + 1) * bonusDropMultiplier);
-        if(result < baseDropRateMin) {
+        if (result < baseDropRateMin) {
             result = baseDropRateMin;
         }
         return result;
 
-        //return Math.min(random.nextInt(3)+random.nextInt(10)*fortune, 9);
+        // return Math.min(random.nextInt(3)+random.nextInt(10)*fortune, 9);
     }
 
     /**
-     * Returns the quantity of items to drop on block destruction.
-     * There is no metadata here, so if this stuff is called from the outside, I can't do shit
+     * Returns the quantity of items to drop on block destruction. There is no metadata here, so if this stuff is called
+     * from the outside, I can't do shit
      */
     @Override
-    public int quantityDropped(Random rand)
-    {
+    public int quantityDropped(Random rand) {
         return baseDropRateMin;
     }
 
     @Override
-    public int damageDropped(int meta)
-    {
+    public int damageDropped(int meta) {
         return droppedItems != null ? droppedItems.getDamage() : super.damageDropped(meta);
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune)
-    {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return droppedItems != null ? droppedItems.getItem() : super.getItemDropped(meta, random, fortune);
     }
 
@@ -117,8 +109,8 @@ public class SubBlockDropItem extends SubBlock {
 
     @Override
     public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
-        if(!dropsSelf()) {
-            if(xpDropMin <= xpDropMax) {
+        if (!dropsSelf()) {
+            if (xpDropMin <= xpDropMax) {
                 return xpDropMin;
             }
             MathHelper.getRandomIntegerInRange(rand, xpDropMin, xpDropMax);

@@ -29,7 +29,8 @@ public class MothershipWorldProviderSaveFile extends WorldSavedData {
 
     public static MothershipWorldProviderSaveFile getSaveFile(World world) {
         MapStorage storage = world.perWorldStorage;
-        MothershipWorldProviderSaveFile result = (MothershipWorldProviderSaveFile)storage.loadData(MothershipWorldProviderSaveFile.class, saveFileId);
+        MothershipWorldProviderSaveFile result = (MothershipWorldProviderSaveFile) storage
+                .loadData(MothershipWorldProviderSaveFile.class, saveFileId);
         if (result == null) {
             result = new MothershipWorldProviderSaveFile(saveFileId);
             storage.setData(saveFileId, result);

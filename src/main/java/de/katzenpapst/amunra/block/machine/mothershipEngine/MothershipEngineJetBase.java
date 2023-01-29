@@ -2,14 +2,8 @@ package de.katzenpapst.amunra.block.machine.mothershipEngine;
 
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.GuiIds;
-import de.katzenpapst.amunra.block.machine.AbstractBlockMothershipRestricted;
-import de.katzenpapst.amunra.item.ItemDamagePair;
-import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.GuiIds;
+import de.katzenpapst.amunra.block.machine.AbstractBlockMothershipRestricted;
+import de.katzenpapst.amunra.item.ItemDamagePair;
+import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 
 public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRestricted {
 
@@ -38,28 +40,23 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
      */
     abstract protected ItemDamagePair getItem();
 
-
     protected TileEntityMothershipEngineAbstract getMyTileEntity(World world, int x, int y, int z) {
         TileEntity t = world.getTileEntity(x, y, z);
-        if(t == null || !(t instanceof TileEntityMothershipEngineAbstract)) {
+        if (t == null || !(t instanceof TileEntityMothershipEngineAbstract)) {
             // TODO throw exception instead
             return null;
         }
-        return (TileEntityMothershipEngineAbstract)t;
+        return (TileEntityMothershipEngineAbstract) t;
     }
-
-
 
     @Override
-    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase user, ItemStack stack)
-    {
-    }
+    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase user, ItemStack stack) {}
 
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
         TileEntity leTile = world.getTileEntity(x, y, z);
-        if(leTile instanceof TileEntityMothershipEngineAbstract) {
-            ((TileEntityMothershipEngineAbstract)leTile).scheduleUpdate();
+        if (leTile instanceof TileEntityMothershipEngineAbstract) {
+            ((TileEntityMothershipEngineAbstract) leTile).scheduleUpdate();
             // world.markBlockForUpdate(x, y, z);
         }
     }
@@ -69,8 +66,7 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
      *
      */
     @Override
-    public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta)
-    {
+    public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
         return meta;
     }
 
@@ -83,20 +79,17 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return AmunRa.dummyRendererId;
     }
 
     @Override
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
-    {
+    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_) {
         return this.getItem().getItem();
     }
 
     @Override
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
-    {
+    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
         /**
          * Returns whether or not this bed block is the head of the bed.
          */
@@ -104,11 +97,9 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return false;
     }
-
 
     @Override
     protected void openGui(World world, int x, int y, int z, EntityPlayer entityPlayer) {
@@ -119,7 +110,6 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     public boolean hasTileEntity(int metadata) {
         return true;
     }
-
 
     @Override
     public int damageDropped(int meta) {
@@ -137,16 +127,14 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest)
-    {
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
         return removedByPlayer(world, player, x, y, z);
     }
 
     @Override
     @Deprecated
-    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z)
-    {
-        if(this.canBeMoved(world, x, y, z)) {
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
+        if (this.canBeMoved(world, x, y, z)) {
             return super.removedByPlayer(world, player, x, y, z);
         }
         return false;

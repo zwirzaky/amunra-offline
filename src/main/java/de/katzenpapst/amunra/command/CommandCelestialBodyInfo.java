@@ -3,25 +3,25 @@ package de.katzenpapst.amunra.command;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import com.google.common.collect.Lists;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 
+import com.google.common.collect.Lists;
+
 public class CommandCelestialBodyInfo extends CommandBase {
 
-    public CommandCelestialBodyInfo() {
-    }
+    public CommandCelestialBodyInfo() {}
 
     @Override
-    public int getRequiredPermissionLevel()
-    {
+    public int getRequiredPermissionLevel() {
         return 0;
     }
 
@@ -37,8 +37,8 @@ public class CommandCelestialBodyInfo extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
-        if(args.length < 1) {
-            throw new WrongUsageException("Not enough arguments, usage: "+this.getCommandUsage(sender));
+        if (args.length < 1) {
+            throw new WrongUsageException("Not enough arguments, usage: " + this.getCommandUsage(sender));
         }
 
         List<CelestialBody> foundBodies = new ArrayList<CelestialBody>();
@@ -50,27 +50,27 @@ public class CommandCelestialBodyInfo extends CommandBase {
 
         // ClientProxyCore.mc.thePlayer
         // look here first
-        for(CelestialBody body: celestialBodyList) {
-            if(body.getLocalizedName().toLowerCase().contains(name)) {
+        for (CelestialBody body : celestialBodyList) {
+            if (body.getLocalizedName().toLowerCase().contains(name)) {
                 foundBodies.add(body);
             }
         }
 
-
         Collection<SolarSystem> systems = GalaxyRegistry.getRegisteredSolarSystems().values();
-        for(SolarSystem sys: systems) {
-            if(sys.getMainStar().getLocalizedName().toLowerCase().contains(name)) {
+        for (SolarSystem sys : systems) {
+            if (sys.getMainStar().getLocalizedName().toLowerCase().contains(name)) {
                 foundBodies.add(sys.getMainStar());
             }
         }
-        if(foundBodies.isEmpty()) {
-//            GCCoreUtil.translate("gui.energyStorage.desc.0")
-            //sender.addChatMessage(new ChatComponentTranslation("info.message.celestialbodysearch.none", name));
+        if (foundBodies.isEmpty()) {
+            // GCCoreUtil.translate("gui.energyStorage.desc.0")
+            // sender.addChatMessage(new ChatComponentTranslation("info.message.celestialbodysearch.none", name));
             sender.addChatMessage(new ChatComponentTranslation("info.message.celestialbodysearch.none", name));
         } else {
-            sender.addChatMessage(new ChatComponentTranslation("info.message.celestialbodysearch.some", foundBodies.size(), name));
+            sender.addChatMessage(
+                    new ChatComponentTranslation("info.message.celestialbodysearch.some", foundBodies.size(), name));
 
-            for(CelestialBody body: foundBodies) {
+            for (CelestialBody body : foundBodies) {
                 StringBuilder sb = new StringBuilder();
 
                 sb.append(body.getLocalizedName());
@@ -82,18 +82,13 @@ public class CommandCelestialBodyInfo extends CommandBase {
 
         }
 
-
-
-
-        /*sender.
-        for(Planet p: planets) {
-            p.getLocalizedName()
-        }*/
+        /*
+         * sender. for(Planet p: planets) { p.getLocalizedName() }
+         */
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender sender)
-    {
+    public boolean canCommandSenderUseCommand(ICommandSender sender) {
         return true;
     }
 }

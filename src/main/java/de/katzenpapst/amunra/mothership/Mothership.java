@@ -6,14 +6,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.helper.AstronomyHelper;
-import de.katzenpapst.amunra.helper.PlayerID;
-import de.katzenpapst.amunra.tick.TickHandlerServer;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
@@ -22,6 +14,7 @@ import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
 import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
 import micdoodle8.mods.galacticraft.api.galaxies.Star;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -32,13 +25,22 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.helper.AstronomyHelper;
+import de.katzenpapst.amunra.helper.PlayerID;
+import de.katzenpapst.amunra.tick.TickHandlerServer;
+
 public class Mothership extends CelestialBody {
 
     public enum PermissionMode {
-        ALL,        // everyone
-        NONE,       // only owner
-        WHITELIST,  // owner+everyone on list
-        BLACKLIST   // everyone except people on list
+        ALL, // everyone
+        NONE, // only owner
+        WHITELIST, // owner+everyone on list
+        BLACKLIST // everyone except people on list
     }
 
     // protected List<PlayerID> playerList = new ArrayList<PlayerID>();
@@ -47,7 +49,7 @@ public class Mothership extends CelestialBody {
     protected Set<PlayerID> playerSetUsage = new HashSet<PlayerID>();
 
     protected PermissionMode permModeLanding = PermissionMode.NONE;
-    protected PermissionMode permModeUsage   = PermissionMode.NONE;
+    protected PermissionMode permModeUsage = PermissionMode.NONE;
 
     protected PlayerID owner;
 
@@ -58,19 +60,18 @@ public class Mothership extends CelestialBody {
 
     protected long travelTimeTotal;
     protected long travelTimeRemaining;
-    //protected long timestampDeparture;
-    //protected long timestampArrival;
+    // protected long timestampDeparture;
+    // protected long timestampArrival;
 
     protected boolean inTransit = false;
 
     protected int mothershipId;
 
-
     // the backslash should definitely not be valid for unlocalizedName
     public static final String nameSeparator = "\\";
 
     public Mothership(int id, PlayerID owner) {
-        super("mothership_"+id);
+        super("mothership_" + id);
         mothershipId = id;
 
         this.owner = owner;
@@ -84,7 +85,7 @@ public class Mothership extends CelestialBody {
     }
 
     public boolean setParent(CelestialBody parent) {
-        if(parent instanceof Satellite) {
+        if (parent instanceof Satellite) {
             return false;
         }
 
@@ -106,7 +107,7 @@ public class Mothership extends CelestialBody {
     public void setPlayerListLanding(Collection<PlayerID> list) {
         playerSetLanding.clear();
         playerSetLanding.addAll(list);
-        //playerSetLanding = list;
+        // playerSetLanding = list;
     }
 
     public Set<PlayerID> getPlayerListUsage() {
@@ -139,32 +140,27 @@ public class Mothership extends CelestialBody {
     }
 
     @Override
-    public boolean getReachable()
-    {
+    public boolean getReachable() {
         return this.isReachable;
     }
 
     @Override
-    public void setUnreachable()
-    {
+    public void setUnreachable() {
         // noop
         this.isReachable = true;
     }
 
     @Override
-    public String getLocalizedName()
-    {
-        if(msName.isEmpty()) {
+    public String getLocalizedName() {
+        if (msName.isEmpty()) {
             msName = String.format(StatCollector.translateToLocal("mothership.default.name"), mothershipId);
         }
         return msName;
     }
 
-    public void setLocalizedName(String newName)
-    {
+    public void setLocalizedName(String newName) {
         msName = newName;
     }
-
 
     public boolean isInTransit() {
         return inTransit;
@@ -172,10 +168,11 @@ public class Mothership extends CelestialBody {
 
     /**
      * Returns the parent, if stationary
+     * 
      * @return
      */
     public CelestialBody getParent() {
-        if(this.inTransit) {
+        if (this.inTransit) {
             return null;
         }
         return currentParent;
@@ -183,10 +180,11 @@ public class Mothership extends CelestialBody {
 
     /**
      * Returns the previous parent, if in transit
+     * 
      * @return
      */
     public CelestialBody getSource() {
-        if(this.inTransit) {
+        if (this.inTransit) {
             return previousParent;
         }
         return null;
@@ -194,6 +192,7 @@ public class Mothership extends CelestialBody {
 
     /**
      * Returns the destination or the parent if stationary
+     * 
      * @return
      */
     public CelestialBody getDestination() {
@@ -201,18 +200,18 @@ public class Mothership extends CelestialBody {
     }
 
     /**
-     * Only do stuff regarding this object itself, send the packets and stuff at someplace else.
-     * This should only ever be called from the the MothershipWorldProvider!
+     * Only do stuff regarding this object itself, send the packets and stuff at someplace else. This should only ever
+     * be called from the the MothershipWorldProvider!
      *
      * @param target
      * @return
      */
     public boolean startTransit(CelestialBody target, long travelTime) {
-        if(!canBeOrbited(target) || this.isInTransit()) {
+        if (!canBeOrbited(target) || this.isInTransit()) {
             return false;
         }
 
-        if(travelTime > AmunRa.config.mothershipMaxTravelTime) {
+        if (travelTime > AmunRa.config.mothershipMaxTravelTime) {
             return false;
         }
 
@@ -232,11 +231,11 @@ public class Mothership extends CelestialBody {
 
     /**
      * This should only ever be called from the the MothershipWorldProvider!
+     * 
      * @return
      */
-    public boolean endTransit()
-    {
-        if(!this.inTransit) {
+    public boolean endTransit() {
+        if (!this.inTransit) {
             return false;
         }
         FMLLog.info("Mothership %d finished transit", this.getID());
@@ -249,9 +248,8 @@ public class Mothership extends CelestialBody {
         return true;
     }
 
-    public boolean forceArrival()
-    {
-        if(!this.inTransit) {
+    public boolean forceArrival() {
+        if (!this.inTransit) {
             return false;
         }
         this.travelTimeRemaining = 0;
@@ -260,13 +258,14 @@ public class Mothership extends CelestialBody {
 
     /**
      * Gets the MothershipWorldProvider of this mothership. Will probably load the world if it isn't. Server only.
+     * 
      * @return
      */
     // @ SideOnly(Side.SERVER)
     public MothershipWorldProvider getWorldProviderServer() {
         MinecraftServer mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
         WorldServer ws = mcServer.worldServerForDimension(this.getDimensionID());
-        if(ws == null || !(ws.provider instanceof MothershipWorldProvider)) {
+        if (ws == null || !(ws.provider instanceof MothershipWorldProvider)) {
             return null;
         }
         return (MothershipWorldProvider) ws.provider;
@@ -274,36 +273,33 @@ public class Mothership extends CelestialBody {
 
     /**
      * Basically checks if the current world is the world of this MS, if yes, returns the provider. Client only.
+     * 
      * @return
      */
-    @ SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public MothershipWorldProvider getWorldProviderClient() {
         World ws = ClientProxyCore.mc.theWorld;
-        if (ws != null && ws.provider.dimensionId == this.getDimensionID())
-        {
+        if (ws != null && ws.provider.dimensionId == this.getDimensionID()) {
             return (MothershipWorldProvider) ws.provider;
         }
         return null;
     }
 
     /*
-    public double getSpeed() {
-        // 0.001 makes sun <--> earth have 1kt (50 seconds), and earth<-->ra 13,15Mt (182 hours)
-        return 0.001D; // for now
-    }*/
+     * public double getSpeed() { // 0.001 makes sun <--> earth have 1kt (50 seconds), and earth<-->ra 13,15Mt (182
+     * hours) return 0.001D; // for now }
+     */
 
     public double getTravelDistanceTo(CelestialBody target) {
         return AstronomyHelper.getDistance(currentParent, target);
     }
-/*
-    public int getTravelTimeTo(CelestialBody target) {
-        return getTravelTimeTo(getTravelDistanceTo(target), this.getSpeed());
-    }
-*/
-    /*public int getTravelTimeTo(double distance, double speed) {
-
-        return (int) Math.ceil(distance/speed) + 80;
-    }*/
+    /*
+     * public int getTravelTimeTo(CelestialBody target) { return getTravelTimeTo(getTravelDistanceTo(target),
+     * this.getSpeed()); }
+     */
+    /*
+     * public int getTravelTimeTo(double distance, double speed) { return (int) Math.ceil(distance/speed) + 80; }
+     */
 
     /**
      * For rendering bars and such
@@ -314,9 +310,9 @@ public class Mothership extends CelestialBody {
     public int getScaledTravelTime(int barLength) {
         float remain = this.getRemainingTravelTime();
         float total = this.getTotalTravelTime();
-        float relative = remain/total;
-        float scaled = (1-relative)*barLength;
-        return (int)(scaled);
+        float relative = remain / total;
+        float scaled = (1 - relative) * barLength;
+        return (int) (scaled);
     }
 
     public PlayerID getOwner() {
@@ -334,15 +330,12 @@ public class Mothership extends CelestialBody {
     }
 
     public static boolean canBeOrbited(CelestialBody body) {
-        return (
-            (AmunRa.config.mothershipMaxTier >= body.getTierRequirement()) &&
-            (body instanceof Planet) || (body instanceof Moon) || (body instanceof Star) &&
-            !AmunRa.config.mothershipBodiesNoOrbit.contains(body.getName())
-        );
+        return ((AmunRa.config.mothershipMaxTier >= body.getTierRequirement()) && (body instanceof Planet)
+                || (body instanceof Moon)
+                || (body instanceof Star) && !AmunRa.config.mothershipBodiesNoOrbit.contains(body.getName()));
     }
 
-    public CelestialBody setDimensionInfo(int dimID)
-    {
+    public CelestialBody setDimensionInfo(int dimID) {
         return this.setDimensionInfo(dimID, MothershipWorldProvider.class);
     }
 
@@ -360,32 +353,32 @@ public class Mothership extends CelestialBody {
 
         String[] parts = bodyName.split(Pattern.quote(nameSeparator));
 
-        for(int i=0;i<parts.length;i++) {
-            switch(i) {
-            case 0:
-                //
-                curSys = GalaxyRegistry.getRegisteredSolarSystems().get(parts[i]);
-                body = curSys.getMainStar();
-                break;
-            case 1:
-                body = GalaxyRegistry.getRegisteredPlanets().get(parts[i]);
-                // sanity check
-                if(!((Planet)body).getParentSolarSystem().equals(curSys)) {
-                    throw new RuntimeException("Planet "+body.getName()+" is not in "+bodyName);
-                }
-                break;
-            case 2:
-                moon = GalaxyRegistry.getRegisteredMoons().get(parts[i]);
-                // sanity checks
-                if(!((Moon)moon).getParentPlanet().equals(body)) {
-                    throw new RuntimeException("Moon "+moon.getName()+" is not in "+bodyName);
-                }
-                // at this point, we are done anyway
-                return moon;
+        for (int i = 0; i < parts.length; i++) {
+            switch (i) {
+                case 0:
+                    //
+                    curSys = GalaxyRegistry.getRegisteredSolarSystems().get(parts[i]);
+                    body = curSys.getMainStar();
+                    break;
+                case 1:
+                    body = GalaxyRegistry.getRegisteredPlanets().get(parts[i]);
+                    // sanity check
+                    if (!((Planet) body).getParentSolarSystem().equals(curSys)) {
+                        throw new RuntimeException("Planet " + body.getName() + " is not in " + bodyName);
+                    }
+                    break;
+                case 2:
+                    moon = GalaxyRegistry.getRegisteredMoons().get(parts[i]);
+                    // sanity checks
+                    if (!((Moon) moon).getParentPlanet().equals(body)) {
+                        throw new RuntimeException("Moon " + moon.getName() + " is not in " + bodyName);
+                    }
+                    // at this point, we are done anyway
+                    return moon;
             }
         }
-        if(body == null) {
-            throw new RuntimeException("Could not find body for "+bodyName);
+        if (body == null) {
+            throw new RuntimeException("Could not find body for " + bodyName);
         }
         return body;
     }
@@ -399,14 +392,14 @@ public class Mothership extends CelestialBody {
     public static CelestialBody findBodyByGCBodyName(String bodyName) {
         Collection<SolarSystem> sysList = GalaxyRegistry.getRegisteredSolarSystems().values();
         CelestialBody body;
-        for(SolarSystem sys: sysList) {
+        for (SolarSystem sys : sysList) {
             body = sys.getMainStar();
-            if(body.getName().equals(bodyName)) {
+            if (body.getName().equals(bodyName)) {
                 return body;
             }
         }
         body = GalaxyRegistry.getRegisteredPlanets().get(bodyName);
-        if(body != null) {
+        if (body != null) {
             return body;
         }
 
@@ -416,18 +409,19 @@ public class Mothership extends CelestialBody {
 
     /**
      * Automatically
+     * 
      * @param str
      * @return
      */
     public static CelestialBody findBodyByString(String str) {
-        if(str.contains(nameSeparator)) {
+        if (str.contains(nameSeparator)) {
             return findBodyByNamePath(str);
         }
         return findBodyByGCBodyName(str);
     }
 
     public static Mothership createFromNBT(NBTTagCompound data) {
-        if(!data.hasKey("id") || !data.hasKey("owner")) {
+        if (!data.hasKey("id") || !data.hasKey("owner")) {
             throw new RuntimeException("Invalid Mothership!");
         }
         int id = data.getInteger("id");
@@ -442,7 +436,7 @@ public class Mothership extends CelestialBody {
         CelestialBody foundParent = findBodyByNamePath(parentId);
 
         String prevParentId = data.getString("prevParentName");
-        if(!prevParentId.isEmpty()) {
+        if (!prevParentId.isEmpty()) {
             result.previousParent = findBodyByNamePath(prevParentId);
         }
 
@@ -454,30 +448,21 @@ public class Mothership extends CelestialBody {
         result.setDimensionInfo(data.getInteger("dim"));
         result.isReachable = true;
 
-        //float distance = setFloat("orbitDistance", this.getRelativeDistanceFromCenter().unScaledDistance);
+        // float distance = setFloat("orbitDistance", this.getRelativeDistanceFromCenter().unScaledDistance);
 
         result.readSettingsFromNBT(data);
 
         return result;
     }
 
-    /*public void readFromNBT(NBTTagCompound data) {
-        String parentId = data.getString("parentName");
-        CelestialBody foundParent = findBodyByNamePath(parentId);
-
-        String prevParentId = data.getString("prevParentName");
-        if(!prevParentId.isEmpty()) {
-            previousParent = findBodyByNamePath(prevParentId);
-        }
-
-        currentParent = foundParent;
-        inTransit = data.getBoolean("inTransit");
-        travelTimeRemaining = data.getInteger("travelTimeRemaining");
-        travelTimeTotal = data.getInteger("travelTimeTotal");
-        msName = data.getString("name");
-        setDimensionInfo(data.getInteger("dim"));
-        isReachable = true;
-    }*/
+    /*
+     * public void readFromNBT(NBTTagCompound data) { String parentId = data.getString("parentName"); CelestialBody
+     * foundParent = findBodyByNamePath(parentId); String prevParentId = data.getString("prevParentName");
+     * if(!prevParentId.isEmpty()) { previousParent = findBodyByNamePath(prevParentId); } currentParent = foundParent;
+     * inTransit = data.getBoolean("inTransit"); travelTimeRemaining = data.getInteger("travelTimeRemaining");
+     * travelTimeTotal = data.getInteger("travelTimeTotal"); msName = data.getString("name");
+     * setDimensionInfo(data.getInteger("dim")); isReachable = true; }
+     */
 
     public void writeToNBT(NBTTagCompound data) {
         data.setString("owner", this.owner.getUUID().toString());
@@ -485,60 +470,57 @@ public class Mothership extends CelestialBody {
         data.setInteger("id", this.mothershipId);
         data.setInteger("dim", this.dimensionID);
 
-
         String parentId = AstronomyHelper.getOrbitableBodyName(this.currentParent);
         data.setString("parentName", parentId);
 
-        if(this.previousParent != null) {
+        if (this.previousParent != null) {
             String prevParentId = AstronomyHelper.getOrbitableBodyName(this.previousParent);
-            data.setString("prevParentName",prevParentId);
+            data.setString("prevParentName", prevParentId);
         }
 
         data.setBoolean("inTransit", this.inTransit);
         data.setLong("travelTimeRemaining", this.travelTimeRemaining);
         data.setLong("travelTimeTotal", this.travelTimeTotal);
 
-
-
         writeSettingsToNBT(data);
     }
 
-
     /**
      * "Settings" are things which a player can change
+     * 
      * @param data
      */
     public void readSettingsFromNBT(NBTTagCompound data) {
-        if(data.hasKey("bodyIcon")) {
+        if (data.hasKey("bodyIcon")) {
             this.setBodyIcon(new ResourceLocation(data.getString("bodyIcon")));
         }
-        if(data.hasKey("name")) {
+        if (data.hasKey("name")) {
             this.msName = data.getString("name");
         }
 
         NBTTagList list = data.getTagList("playerList", Constants.NBT.TAG_COMPOUND);
         playerSetLanding = new HashSet<PlayerID>();
-        //playerList.clear();
-        for(int i=0;i<list.tagCount();i++) {
+        // playerList.clear();
+        for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound playerData = list.getCompoundTagAt(i);
             PlayerID pd = new PlayerID(playerData);
             playerSetLanding.add(pd);
         }
 
-        if(data.hasKey("permissionMode")) {
+        if (data.hasKey("permissionMode")) {
             int modeIndex = data.getInteger("permissionMode");
             permModeLanding = PermissionMode.values()[modeIndex];
         }
 
         list = data.getTagList("playerListUse", Constants.NBT.TAG_COMPOUND);
         playerSetUsage = new HashSet<PlayerID>();
-        for(int i=0;i<list.tagCount();i++) {
+        for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound playerData = list.getCompoundTagAt(i);
             PlayerID pd = new PlayerID(playerData);
             playerSetUsage.add(pd);
         }
 
-        if(data.hasKey("permissionModeUse")) {
+        if (data.hasKey("permissionModeUse")) {
             int modeIndex = data.getInteger("permissionModeUse");
             permModeUsage = PermissionMode.values()[modeIndex];
         }
@@ -550,14 +532,14 @@ public class Mothership extends CelestialBody {
 
         NBTTagList list = new NBTTagList();
 
-        for(PlayerID p: playerSetLanding) {
+        for (PlayerID p : playerSetLanding) {
             list.appendTag(p.getNbt());
         }
         data.setTag("playerList", list);
 
         list = new NBTTagList();
 
-        for(PlayerID p: playerSetUsage) {
+        for (PlayerID p : playerSetUsage) {
             list.appendTag(p.getNbt());
         }
         data.setTag("playerListUse", list);
@@ -605,7 +587,7 @@ public class Mothership extends CelestialBody {
 
     public boolean isPlayerUsagePermitted(EntityPlayer player) {
 
-        if(player.capabilities.isCreativeMode) {
+        if (player.capabilities.isCreativeMode) {
             return true;
         }
 
@@ -620,7 +602,7 @@ public class Mothership extends CelestialBody {
      */
     public boolean isPlayerLandingPermitted(EntityPlayer player) {
 
-        if(player.capabilities.isCreativeMode) {
+        if (player.capabilities.isCreativeMode) {
             return true;
         }
 
@@ -630,16 +612,16 @@ public class Mothership extends CelestialBody {
     protected boolean isPlayerPermitted(EntityPlayer player, PermissionMode mode) {
         PlayerID playerId = new PlayerID(player);
 
-        switch(this.permModeLanding) {
-        case ALL:
-            return true;
-        case BLACKLIST:
-            return this.isPlayerOwner(playerId) || !this.playerSetLanding.contains(playerId);
-        case WHITELIST:
-            return this.isPlayerOwner(playerId) || this.playerSetLanding.contains(playerId);
-        case NONE:
-        default:
-            return this.isPlayerOwner(playerId);
+        switch (this.permModeLanding) {
+            case ALL:
+                return true;
+            case BLACKLIST:
+                return this.isPlayerOwner(playerId) || !this.playerSetLanding.contains(playerId);
+            case WHITELIST:
+                return this.isPlayerOwner(playerId) || this.playerSetLanding.contains(playerId);
+            case NONE:
+            default:
+                return this.isPlayerOwner(playerId);
         }
     }
 }

@@ -3,12 +3,13 @@ package de.katzenpapst.amunra.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.katzenpapst.amunra.mothership.Mothership;
-import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
-import de.katzenpapst.amunra.tick.TickHandlerServer;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
+
+import de.katzenpapst.amunra.mothership.Mothership;
+import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
+import de.katzenpapst.amunra.tick.TickHandlerServer;
 
 public class CommandMothershipInfo extends CommandBase {
 
@@ -18,8 +19,7 @@ public class CommandMothershipInfo extends CommandBase {
     }
 
     @Override
-    public int getRequiredPermissionLevel()
-    {
+    public int getRequiredPermissionLevel() {
         return 2;
     }
 
@@ -34,23 +34,21 @@ public class CommandMothershipInfo extends CommandBase {
         HashMap<Integer, Mothership> data = TickHandlerServer.mothershipData.getMotherships();
         Mothership playerMS = null;
 
-        if(sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
-            playerMS = (Mothership) ((MothershipWorldProvider)sender.getEntityWorld().provider).getCelestialBody();
+        if (sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
+            playerMS = (Mothership) ((MothershipWorldProvider) sender.getEntityWorld().provider).getCelestialBody();
         }
 
-
-        if(data.size() <= 0) {
+        if (data.size() <= 0) {
             sender.addChatMessage(new ChatComponentText("No registered motherships"));
         } else {
-            sender.addChatMessage(new ChatComponentText(data.size()+" registered motherships"));
+            sender.addChatMessage(new ChatComponentText(data.size() + " registered motherships"));
 
-
-            for(Map.Entry<Integer, Mothership> entry: data.entrySet()) {
+            for (Map.Entry<Integer, Mothership> entry : data.entrySet()) {
                 Mothership ship = entry.getValue();
                 int id = entry.getKey();
                 StringBuilder sb = new StringBuilder();
 
-                if(playerMS == ship) {
+                if (playerMS == ship) {
                     sb.append(">");
                 } else {
                     sb.append(" ");
@@ -65,7 +63,7 @@ public class CommandMothershipInfo extends CommandBase {
                 sb.append("', DIM ");
                 sb.append(ship.getDimensionID());
                 sb.append(", ");
-                if(ship.isInTransit()) {
+                if (ship.isInTransit()) {
                     sb.append("in transit to ");
                     sb.append(ship.getDestination().getName());
                 } else {

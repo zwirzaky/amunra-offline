@@ -9,8 +9,7 @@ import de.katzenpapst.amunra.world.WorldGenOre;
 public class AnubisBiomeDecorator extends AmunraBiomeDecorator {
 
     @Override
-    protected List<WorldGenOre> getOreGenerators()
-    {
+    protected List<WorldGenOre> getOreGenerators() {
         List<WorldGenOre> list = super.getOreGenerators();
         list.add(new WorldGenOre(ARBlocks.oreCryoBasalt, 6, ARBlocks.blockBasalt, 8, 8, 45));
         list.add(new WorldGenOre(ARBlocks.oreAluBasalt, 8, ARBlocks.blockBasalt, 23, 0, 60));

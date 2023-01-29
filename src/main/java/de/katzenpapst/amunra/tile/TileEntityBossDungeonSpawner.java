@@ -4,16 +4,13 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.katzenpapst.amunra.helper.NbtHelper;
-import de.katzenpapst.amunra.mob.entity.EntityMummyBoss;
-import de.katzenpapst.amunra.mob.entity.IAmunRaBoss;
-import de.katzenpapst.amunra.vec.Vector3int;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedCreeper;
 import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedSkeleton;
 import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedSpider;
 import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedZombie;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityAdvanced;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,6 +18,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import de.katzenpapst.amunra.helper.NbtHelper;
+import de.katzenpapst.amunra.mob.entity.EntityMummyBoss;
+import de.katzenpapst.amunra.mob.entity.IAmunRaBoss;
+import de.katzenpapst.amunra.vec.Vector3int;
 
 public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements ITileDungeonSpawner {
 
@@ -34,14 +36,13 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     public TileEntityBossDungeonSpawner() {
         super();
 
-        bossClass =  EntityMummyBoss.class;
+        bossClass = EntityMummyBoss.class;
 
         // test
-        //this.setRoom(new Vector3(), size);
+        // this.setRoom(new Vector3(), size);
     }
 
-    public List<Class<? extends EntityLiving>> getDisabledCreatures()
-    {
+    public List<Class<? extends EntityLiving>> getDisabledCreatures() {
         List<Class<? extends EntityLiving>> list = new ArrayList<Class<? extends EntityLiving>>();
         list.add(EntityEvolvedSkeleton.class);
         list.add(EntityEvolvedZombie.class);
@@ -52,18 +53,15 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
 
     @SuppressWarnings("unchecked")
     @Override
-    public void updateEntity()
-    {
+    public void updateEntity() {
         super.updateEntity();
 
-        if (this.roomArea == null)
-        {
+        if (this.roomArea == null) {
             return;
         }
 
-        if (!this.worldObj.isRemote)
-        {
-            if(this.boss != null && ((Entity)this.boss).isDead) {
+        if (!this.worldObj.isRemote) {
+            if (this.boss != null && ((Entity) this.boss).isDead) {
                 this.boss = null;
                 this.spawned = false;
             }
@@ -71,16 +69,16 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
             List<Entity> entitiesInRoom = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.roomArea);
             int numPlayers = 0;
             boolean isBossInRoom = false;
-            for(Entity ent : entitiesInRoom) {
-                if(ent instanceof EntityPlayer) {
+            for (Entity ent : entitiesInRoom) {
+                if (ent instanceof EntityPlayer) {
                     numPlayers++;
-                } else if(bossClass.isInstance(ent)) {
-                    IAmunRaBoss curBoss = (IAmunRaBoss)ent;
-                    if(this.boss == null && curBoss.getSpawner() == this) {
+                } else if (bossClass.isInstance(ent)) {
+                    IAmunRaBoss curBoss = (IAmunRaBoss) ent;
+                    if (this.boss == null && curBoss.getSpawner() == this) {
                         this.boss = curBoss;
                         isBossInRoom = true;
                     } else {
-                        if(boss != null && boss.equals(curBoss)) {
+                        if (boss != null && boss.equals(curBoss)) {
                             isBossInRoom = true;
                         }
                     }
@@ -89,14 +87,11 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                 }
             }
 
+            if (numPlayers > 0) {
 
-            if(numPlayers > 0) {
-
-                if (this.boss == null && !this.isBossDefeated && !this.spawned)
-                {
+                if (this.boss == null && !this.isBossDefeated && !this.spawned) {
                     // try spawning the boss
-                    try
-                    {
+                    try {
                         Constructor<?> c = this.bossClass.getConstructor(new Class[] { World.class });
                         this.boss = (IAmunRaBoss) c.newInstance(new Object[] { this.worldObj });
                         ((Entity) this.boss).setPosition(this.xCoord + 0.5, this.yCoord + 1.0, this.zCoord + 0.5);
@@ -105,15 +100,13 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                         this.spawned = true;
                         isBossInRoom = true;
                         this.worldObj.spawnEntityInWorld((Entity) this.boss);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             } else {
                 // check if we have a boss and the player walked out
-                if(this.boss != null && !this.isBossDefeated && this.spawned) {
+                if (this.boss != null && !this.isBossDefeated && this.spawned) {
                     // despawn boss
 
                     this.boss.despawnBoss();
@@ -122,7 +115,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                 }
             }
 
-            if(!isBossInRoom && this.spawned && this.boss != null) {
+            if (!isBossInRoom && this.spawned && this.boss != null) {
                 // do something?
                 this.boss.despawnBoss();
                 this.boss = null;
@@ -131,58 +124,49 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         }
     }
 
-    public void playSpawnSound(Entity entity)
-    {
+    public void playSpawnSound(Entity entity) {
         this.worldObj.playSoundAtEntity(entity, GalacticraftCore.TEXTURE_PREFIX + "ambience.scaryscape", 9.0F, 1.4F);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+    public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
         this.spawned = nbt.getBoolean("spawned");
-        //this.playerInRange = this.lastPlayerInRange = nbt.getBoolean("playerInRange");
+        // this.playerInRange = this.lastPlayerInRange = nbt.getBoolean("playerInRange");
         this.isBossDefeated = nbt.getBoolean("defeated");
 
-        try
-        {
+        try {
             this.bossClass = (Class<? extends IAmunRaBoss>) Class.forName(nbt.getString("bossClass"));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if(nbt.hasKey("roomArea")) {
+        if (nbt.hasKey("roomArea")) {
             roomArea = NbtHelper.readAABB(nbt.getCompoundTag("roomArea"));
         }
-        /*if(nbt.hasKey("spawnedBoss")) {
-            Entity ent = this.worldObj.getEntityByID(nbt.getInteger("spawnedBoss"));
-            if(ent != null && ent instanceof IAmunRaBoss) {
-                boss = (IAmunRaBoss)ent;
-            }
-        }*/
+        /*
+         * if(nbt.hasKey("spawnedBoss")) { Entity ent = this.worldObj.getEntityByID(nbt.getInteger("spawnedBoss"));
+         * if(ent != null && ent instanceof IAmunRaBoss) { boss = (IAmunRaBoss)ent; } }
+         */
 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt)
-    {
+    public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
         nbt.setBoolean("spawned", spawned);
         nbt.setBoolean("defeated", isBossDefeated);
 
-        if(roomArea != null) {
+        if (roomArea != null) {
             nbt.setTag("roomArea", NbtHelper.getAsNBT(roomArea));
         }
 
-        /*if(boss != null) {
-            int id = ((Entity)boss).getEntityId();
-            nbt.setInteger("spawnedBoss", id);
-        }*/
+        /*
+         * if(boss != null) { int id = ((Entity)boss).getEntityId(); nbt.setInteger("spawnedBoss", id); }
+         */
     }
 
     @Override

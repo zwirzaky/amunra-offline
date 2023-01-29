@@ -1,12 +1,11 @@
 package de.katzenpapst.amunra.inventory;
 
-import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 
+import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
+
 public class ContainerMothershipSettings extends ContainerWithPlayerInventory {
-
-
 
     public ContainerMothershipSettings(InventoryPlayer par1InventoryPlayer, TileEntityMothershipSettings tile) {
         super(tile);
@@ -16,7 +15,7 @@ public class ContainerMothershipSettings extends ContainerWithPlayerInventory {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return ((TileEntityMothershipSettings)this.tileEntity).isUseableByPlayer(player);
+        return ((TileEntityMothershipSettings) this.tileEntity).isUseableByPlayer(player);
     }
 
 }

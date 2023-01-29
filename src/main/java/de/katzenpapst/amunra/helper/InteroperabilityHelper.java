@@ -6,7 +6,7 @@ public class InteroperabilityHelper {
 
     public static void initCompatibility() {
         try {
-            if(Class.forName("cofh.api.block.IDismantleable") != null) {
+            if (Class.forName("cofh.api.block.IDismantleable") != null) {
                 hasIDismantleable = true;
             }
         } catch (ClassNotFoundException e) {

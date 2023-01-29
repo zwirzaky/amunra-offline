@@ -1,8 +1,9 @@
 package de.katzenpapst.amunra.block.bush;
 
-import de.katzenpapst.amunra.block.ARBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+
+import de.katzenpapst.amunra.block.ARBlocks;
 
 public class MethaneTallGrass extends SubBlockBush {
 
@@ -11,33 +12,31 @@ public class MethaneTallGrass extends SubBlockBush {
         // TODO Auto-generated constructor stub
     }
 
-    public MethaneTallGrass(String name, String texture, String tool,
-            int harvestLevel) {
+    public MethaneTallGrass(String name, String texture, String tool, int harvestLevel) {
         super(name, texture, tool, harvestLevel);
         // TODO Auto-generated constructor stub
     }
 
-    public MethaneTallGrass(String name, String texture, String tool,
-            int harvestLevel, float hardness, float resistance) {
+    public MethaneTallGrass(String name, String texture, String tool, int harvestLevel, float hardness,
+            float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }
 
-
     @Override
     public boolean canPlaceOn(Block blockToCheck, int metaToCheck, int meta) {
-        return (
-                (blockToCheck == ARBlocks.blockMethaneGrass.getBlock() && metaToCheck == ARBlocks.blockMethaneGrass.getMetadata()) ||
-                (blockToCheck == ARBlocks.blockVacuumGrass.getBlock() && metaToCheck == ARBlocks.blockVacuumGrass.getMetadata())
-                );
-        //return true;
+        return ((blockToCheck == ARBlocks.blockMethaneGrass.getBlock()
+                && metaToCheck == ARBlocks.blockMethaneGrass.getMetadata())
+                || (blockToCheck == ARBlocks.blockVacuumGrass.getBlock()
+                        && metaToCheck == ARBlocks.blockVacuumGrass.getMetadata()));
+        // return true;
     }
 
     @Override
     public boolean canBlockStay(World world, int x, int y, int z) {
-        Block belowBlock = world.getBlock(x, y-1, z);
+        Block belowBlock = world.getBlock(x, y - 1, z);
         int myMeta = world.getBlockMetadata(x, y, z);
-        int belowMeta = world.getBlockMetadata(x, y-1, z);
+        int belowMeta = world.getBlockMetadata(x, y - 1, z);
         return this.canPlaceOn(belowBlock, belowMeta, myMeta);
     }
 

@@ -15,7 +15,7 @@ public class ItemDamagePair {
     }
 
     public ItemDamagePair(ItemStack stack) {
-        this.item   = stack.getItem();
+        this.item = stack.getItem();
         this.damage = stack.getItemDamage();
     }
 
@@ -28,10 +28,10 @@ public class ItemDamagePair {
     }
 
     public Item getSubItem() {
-        if(!(item instanceof ItemBasicMulti)) {
+        if (!(item instanceof ItemBasicMulti)) {
             return item;
         }
-        return ((ItemBasicMulti)item).getSubItem(damage);
+        return ((ItemBasicMulti) item).getSubItem(damage);
     }
 
     public ItemStack getItemStack(int numItems) {
@@ -40,24 +40,24 @@ public class ItemDamagePair {
 
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof ItemDamagePair)) {
+        if (!(other instanceof ItemDamagePair)) {
             return false;
         }
-        ItemDamagePair otherCast = (ItemDamagePair)other;
+        ItemDamagePair otherCast = (ItemDamagePair) other;
 
         return isSameItem(otherCast.getItem(), otherCast.getDamage());
     }
 
     @Override
     public int hashCode() {
-        if(item instanceof ItemBlock) {
-            return ((ItemBlock)this.item).field_150939_a.hashCode() ^ ~damage;
+        if (item instanceof ItemBlock) {
+            return ((ItemBlock) this.item).field_150939_a.hashCode() ^ ~damage;
         }
         return item.hashCode() ^ ~damage;
     }
 
     public boolean isSameItem(ItemStack stack) {
-        if(stack == null) {
+        if (stack == null) {
             return false;
         }
         return isSameItem(stack.getItem(), stack.getItemDamage());
@@ -66,18 +66,18 @@ public class ItemDamagePair {
     public boolean isSameItem(Item item, int damage) {
 
         // this matters anyway, do it here before the other mess
-        if(this.damage != damage) {
+        if (this.damage != damage) {
             return false;
         }
-        if(item instanceof ItemBlock) {
-            if(this.item instanceof ItemBlock) {
+        if (item instanceof ItemBlock) {
+            if (this.item instanceof ItemBlock) {
                 // compare blocks... *sigh*
-                return ((ItemBlock)this.item).field_150939_a == ((ItemBlock)item).field_150939_a;
+                return ((ItemBlock) this.item).field_150939_a == ((ItemBlock) item).field_150939_a;
             } else {
                 return false;
             }
         } else {
-            if(this.item instanceof ItemBlock) {
+            if (this.item instanceof ItemBlock) {
                 return false;
             } else {
                 return this.item == item;

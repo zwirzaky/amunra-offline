@@ -4,6 +4,35 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody.ScalableDistance;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
+import micdoodle8.mods.galacticraft.api.galaxies.Star;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.dimension.TeleportTypeMoon;
+import micdoodle8.mods.galacticraft.core.dimension.TeleportTypeOverworld;
+import micdoodle8.mods.galacticraft.core.dimension.TeleportTypeSpaceStation;
+import micdoodle8.mods.galacticraft.core.items.GCItems;
+import micdoodle8.mods.galacticraft.core.util.CreativeTabGC;
+import micdoodle8.mods.galacticraft.planets.asteroids.dimension.TeleportTypeAsteroids;
+import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -35,9 +64,9 @@ import de.katzenpapst.amunra.event.FurnaceHandler;
 import de.katzenpapst.amunra.helper.InteroperabilityHelper;
 import de.katzenpapst.amunra.item.ARItems;
 import de.katzenpapst.amunra.mob.RobotVillagerProfession;
+import de.katzenpapst.amunra.mob.entity.EntityARVillager;
 import de.katzenpapst.amunra.mob.entity.EntityAlienBug;
 import de.katzenpapst.amunra.mob.entity.EntityMummyBoss;
-import de.katzenpapst.amunra.mob.entity.EntityARVillager;
 import de.katzenpapst.amunra.mob.entity.EntityPorcodon;
 import de.katzenpapst.amunra.mob.entity.EntityRobotVillager;
 import de.katzenpapst.amunra.mob.entity.EntitySentry;
@@ -68,38 +97,14 @@ import de.katzenpapst.amunra.world.maahes.MaahesWorldProvider;
 import de.katzenpapst.amunra.world.mehen.MehenWorldProvider;
 import de.katzenpapst.amunra.world.neper.NeperWorldProvider;
 import de.katzenpapst.amunra.world.seth.SethWorldProvider;
-import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody.ScalableDistance;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Moon;
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
-import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
-import micdoodle8.mods.galacticraft.api.galaxies.Star;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.dimension.TeleportTypeMoon;
-import micdoodle8.mods.galacticraft.core.dimension.TeleportTypeOverworld;
-import micdoodle8.mods.galacticraft.core.dimension.TeleportTypeSpaceStation;
-import micdoodle8.mods.galacticraft.core.items.GCItems;
-import micdoodle8.mods.galacticraft.core.util.CreativeTabGC;
-import micdoodle8.mods.galacticraft.planets.asteroids.dimension.TeleportTypeAsteroids;
-import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid = AmunRa.MODID, version = AmunRa.VERSION, dependencies = "required-after:GalacticraftCore; required-after:GalacticraftMars",
-name = AmunRa.MODNAME)
-public class AmunRa
-{
+@Mod(
+        modid = AmunRa.MODID,
+        version = AmunRa.VERSION,
+        dependencies = "required-after:GalacticraftCore; required-after:GalacticraftMars",
+        name = AmunRa.MODNAME)
+public class AmunRa {
+
     public static final String MODID = "GalacticraftAmunRa";
     public static final String MODNAME = "Amun-Ra";
     public static final String VERSION = "GRADLETOKEN_VERSION";
@@ -149,7 +154,9 @@ public class AmunRa
     protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<ResourceLocation>();
     protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<ResourceLocation>();
 
-    @SidedProxy(clientSide = "de.katzenpapst.amunra.proxy.ClientProxy", serverSide = "de.katzenpapst.amunra.proxy.ServerProxy")
+    @SidedProxy(
+            clientSide = "de.katzenpapst.amunra.proxy.ClientProxy",
+            serverSide = "de.katzenpapst.amunra.proxy.ServerProxy")
     public static ARSidedProxy proxy;
 
     protected void loadJsonConfig() {
@@ -157,13 +164,10 @@ public class AmunRa
     }
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());
 
         config.processConfig(configFile);
-
-
 
         ARBlocks.initBlocks();
         ARItems.initItems();
@@ -212,18 +216,18 @@ public class AmunRa
         possibleMothershipTextures.add(loc);
     }
 
-    private HashSet<String> configGetStringHashSet(Configuration config, String name, String category, String[] defaultValues, String comment) {
+    private HashSet<String> configGetStringHashSet(Configuration config, String name, String category,
+            String[] defaultValues, String comment) {
         String[] data = config.getStringList(name, category, defaultValues, comment);
         HashSet<String> result = new HashSet<String>();
-        for(String str: data) {
+        for (String str : data) {
             result.add(str);
         }
         return result;
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         AmunRa.arTab = new CreativeTabGC(CreativeTabs.getNextID(), "AmunRaTab", ARItems.shuttleItem, 0);
 
         packetPipeline = ARChannelHandler.init();
@@ -234,14 +238,11 @@ public class AmunRa
         initOtherEntities();
         RecipeHelper.initRecipes();
 
-
-
         proxy.init(event);
     }
 
     @EventHandler
-    public void serverStarting(FMLServerStartingEvent event)
-    {
+    public void serverStarting(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandShuttleTeleport());
         event.registerServerCommand(new CommandMoveMothership());
         event.registerServerCommand(new CommandMothershipInfo());
@@ -249,14 +250,12 @@ public class AmunRa
     }
 
     @EventHandler
-    public void serverInit(FMLServerStartedEvent event)
-    {
+    public void serverInit(FMLServerStartedEvent event) {
         TickHandlerServer.restart();
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
+    public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
 
         NetworkRegistry.INSTANCE.registerGuiHandler(AmunRa.instance, new GuiHandler());
@@ -269,8 +268,7 @@ public class AmunRa
         InteroperabilityHelper.initCompatibility();
     }
 
-    private void doCompatibilityChecks()
-    {
+    private void doCompatibilityChecks() {
         // sanity checks go here
         // verify crafting
         RecipeHelper.verifyNasaWorkbenchCrafting();
@@ -281,22 +279,28 @@ public class AmunRa
     }
 
     // stolen from GC....
-    public int nextInternalID()
-    {
-        nextID ++;
+    public int nextInternalID() {
+        nextID++;
         return nextID - 1;
     }
 
-    public void registerCreature(Class<? extends Entity> entityClass, String entityName, int eggBgColor, int eggFgColor) {
+    public void registerCreature(Class<? extends Entity> entityClass, String entityName, int eggBgColor,
+            int eggFgColor) {
         int newID = EntityRegistry.instance().findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, newID, eggBgColor, eggFgColor);
         EntityRegistry.registerModEntity(entityClass, entityName, nextInternalID(), AmunRa.instance, 80, 3, true);
     }
 
-
-    public void registerNonMobEntity(Class<? extends Entity> var0, String var1, int trackingDistance, int updateFreq, boolean sendVel)
-    {
-        EntityRegistry.registerModEntity(var0, var1, nextInternalID(), AmunRa.instance, trackingDistance, updateFreq, sendVel);
+    public void registerNonMobEntity(Class<? extends Entity> var0, String var1, int trackingDistance, int updateFreq,
+            boolean sendVel) {
+        EntityRegistry.registerModEntity(
+                var0,
+                var1,
+                nextInternalID(),
+                AmunRa.instance,
+                trackingDistance,
+                updateFreq,
+                sendVel);
     }
 
     public void registerTileEntities() {
@@ -307,7 +311,8 @@ public class AmunRa
         GameRegistry.registerTileEntity(TileEntityMothershipEngineBooster.class, "AmunRa Mothership Engine Booster");
 
         GameRegistry.registerTileEntity(TileEntityMothershipEngineIon.class, "AmunRa Mothership Ion Engine");
-        GameRegistry.registerTileEntity(TileEntityMothershipEngineBoosterIon.class, "AmunRa Mothership Ion Engine Booster");
+        GameRegistry
+                .registerTileEntity(TileEntityMothershipEngineBoosterIon.class, "AmunRa Mothership Ion Engine Booster");
 
         GameRegistry.registerTileEntity(TileEntityBlockScale.class, "AmunRa Block Scale");
 
@@ -318,32 +323,24 @@ public class AmunRa
         GameRegistry.registerTileEntity(TileEntityGravitation.class, "AmunRa Gravity Engine");
         GameRegistry.registerTileEntity(TileEntityBossDungeonSpawner.class, "AmunRa Dungeon Spawner Osiris");
 
-
         GameRegistry.registerTileEntity(TileEntityARChest.class, "AmunRa Chest");
         GameRegistry.registerTileEntity(TileEntityARChestLarge.class, "AmunRa Chest Large");
     }
 
-
     protected void initCreatures() {
         registerCreature(EntityPorcodon.class, "porcodon", 0xff9d9d, 0x4fc451);
 
-        registerCreature(EntityARVillager.class, "alienVillagerAR",
-                0x292233,
-                0xa38e36);
+        registerCreature(EntityARVillager.class, "alienVillagerAR", 0x292233, 0xa38e36);
         registerCreature(EntityRobotVillager.class, "robotVillager", 0x626260, 0x141514);
 
         registerCreature(EntitySentry.class, "sentryRobot", 0x626260, 0x141514);
 
-
         registerCreature(EntityAlienBug.class, "alienBug", 0x40201e, 0x312c2b);
-
 
         registerCreature(EntityMummyBoss.class, "osirisBoss", 0x40201e, 0xffff0b);// ffff0b
 
-
         // register trading stuff
         registerTrading();
-
 
     }
 
@@ -351,84 +348,136 @@ public class AmunRa
         registerNonMobEntity(EntityLaserArrow.class, "laserArrow", 150, 5, true);
         registerNonMobEntity(EntityCryoArrow.class, "cryoArrow", 150, 5, true);
         registerNonMobEntity(EntityShuttle.class, "Shuttle", 150, 1, false);
-        registerNonMobEntity(EntityShuttleFake.class, "ShuttleFake",150, 5, false);
+        registerNonMobEntity(EntityShuttleFake.class, "ShuttleFake", 150, 5, false);
         registerNonMobEntity(EntityOsirisBossFireball.class, "cryoArrow", 150, 5, true);
     }
 
-
-
-
-
     protected void registerTrading() {
-        RobotVillagerProfession.addProfession(new RobotVillagerProfession(
-                new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/electricFurnace.png"),
-                "furnace")
-                .addRecipe(Items.beef, 4, Items.cooked_beef)
-                .addRecipe(new ItemStack(Items.iron_axe, 1), new ItemStack(Items.emerald, 6), new ItemStack(Items.iron_ingot, 3))
-                .addRecipe(new ItemStack(Items.iron_door, 1), new ItemStack(Items.emerald, 12), new ItemStack(Items.iron_ingot, 6))
-                .addRecipe(new ItemStack(Items.iron_hoe, 1), new ItemStack(Items.emerald, 4), new ItemStack(Items.iron_ingot, 2))
-                .addRecipe(new ItemStack(Items.iron_pickaxe, 1), new ItemStack(Items.emerald, 6), new ItemStack(Items.iron_ingot, 3))
-                .addRecipe(new ItemStack(Items.iron_shovel,  1), new ItemStack(Items.emerald, 2), new ItemStack(Items.iron_ingot, 1))
-                );
+        RobotVillagerProfession.addProfession(
+                new RobotVillagerProfession(
+                        new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/electricFurnace.png"),
+                        "furnace")
+                                .addRecipe(Items.beef, 4, Items.cooked_beef)
+                                .addRecipe(
+                                        new ItemStack(Items.iron_axe, 1),
+                                        new ItemStack(Items.emerald, 6),
+                                        new ItemStack(Items.iron_ingot, 3))
+                                .addRecipe(
+                                        new ItemStack(Items.iron_door, 1),
+                                        new ItemStack(Items.emerald, 12),
+                                        new ItemStack(Items.iron_ingot, 6))
+                                .addRecipe(
+                                        new ItemStack(Items.iron_hoe, 1),
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(Items.iron_ingot, 2))
+                                .addRecipe(
+                                        new ItemStack(Items.iron_pickaxe, 1),
+                                        new ItemStack(Items.emerald, 6),
+                                        new ItemStack(Items.iron_ingot, 3))
+                                .addRecipe(
+                                        new ItemStack(Items.iron_shovel, 1),
+                                        new ItemStack(Items.emerald, 2),
+                                        new ItemStack(Items.iron_ingot, 1)));
 
         ItemStack emptyCan = new ItemStack(GCItems.oilCanister, 1, GCItems.oilCanister.getMaxDamage());
 
-
         // offers oxygen refill, and maybe other stuff, TBD
-        RobotVillagerProfession.addProfession(new RobotVillagerProfession(
-                new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/machine_compressor_1.png"),
-                "compressor")
-                .addRecipe(emptyCan, new ItemStack(Items.emerald, 24), new ItemStack(AsteroidsItems.canisterLOX, 1, 1))
-                .addRecipe(emptyCan, new ItemStack(Items.emerald, 4), new ItemStack(AsteroidsItems.canisterLN2, 1, 1))
-                .addRecipe(new ItemStack(Items.emerald, 2), emptyCan)
-                .addRecipe(new ItemStack(GCItems.oxTankLight, 1, GCItems.oxTankLight.getMaxDamage()), new ItemStack(Items.emerald, 4), new ItemStack(GCItems.oxTankLight, 1))
-                .addRecipe(new ItemStack(GCItems.oxTankMedium, 1, GCItems.oxTankMedium.getMaxDamage()), new ItemStack(Items.emerald, 8), new ItemStack(GCItems.oxTankMedium, 1))
-                .addRecipe(new ItemStack(GCItems.oxTankHeavy, 1, GCItems.oxTankHeavy.getMaxDamage()), new ItemStack(Items.emerald, 16), new ItemStack(GCItems.oxTankHeavy, 1))
-                );
+        RobotVillagerProfession.addProfession(
+                new RobotVillagerProfession(
+                        new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/machine_compressor_1.png"),
+                        "compressor")
+                                .addRecipe(
+                                        emptyCan,
+                                        new ItemStack(Items.emerald, 24),
+                                        new ItemStack(AsteroidsItems.canisterLOX, 1, 1))
+                                .addRecipe(
+                                        emptyCan,
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(AsteroidsItems.canisterLN2, 1, 1))
+                                .addRecipe(new ItemStack(Items.emerald, 2), emptyCan)
+                                .addRecipe(
+                                        new ItemStack(GCItems.oxTankLight, 1, GCItems.oxTankLight.getMaxDamage()),
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(GCItems.oxTankLight, 1))
+                                .addRecipe(
+                                        new ItemStack(GCItems.oxTankMedium, 1, GCItems.oxTankMedium.getMaxDamage()),
+                                        new ItemStack(Items.emerald, 8),
+                                        new ItemStack(GCItems.oxTankMedium, 1))
+                                .addRecipe(
+                                        new ItemStack(GCItems.oxTankHeavy, 1, GCItems.oxTankHeavy.getMaxDamage()),
+                                        new ItemStack(Items.emerald, 16),
+                                        new ItemStack(GCItems.oxTankHeavy, 1)));
 
         /*
-         * can't make the battery work, because it resets on being crafted
-        	// register battery refill
-        	RobotVillagerProfession.addProfession(new RobotVillagerProfession(
-        			new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/coalGenerator.png"),
-        			"generator")
-        		.addRecipe(new ItemStack(GCItems.battery, 1, GCItems.battery.getMaxDamage()), new ItemStack(Items.emerald, 8) , new ItemStack(GCItems.battery, 1, 50))
-        	);*/
-        RobotVillagerProfession.addProfession(new RobotVillagerProfession(
-                new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/refinery_front.png"),
-                "refinery")
-                .addRecipe(new ItemStack(GCItems.oilCanister, 1, 1), new ItemStack(Items.emerald, 16), new ItemStack(GCItems.fuelCanister, 1, 1))
-                .addRecipe(emptyCan, new ItemStack(Items.emerald, 26), new ItemStack(GCItems.fuelCanister, 1, 1))
-                );
-        RobotVillagerProfession.addProfession(new RobotVillagerProfession(
-                new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/electric_compressor.png"),
-                "ingotcompressor")
-                .addRecipe(new ItemStack(Items.iron_ingot, 2), new ItemStack(Items.emerald, 4), new ItemStack(GCItems.basicItem, 1, 11))// 11 = iron
+         * can't make the battery work, because it resets on being crafted // register battery refill
+         * RobotVillagerProfession.addProfession(new RobotVillagerProfession( new
+         * ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/coalGenerator.png"), "generator")
+         * .addRecipe(new ItemStack(GCItems.battery, 1, GCItems.battery.getMaxDamage()), new ItemStack(Items.emerald, 8)
+         * , new ItemStack(GCItems.battery, 1, 50)) );
+         */
+        RobotVillagerProfession.addProfession(
+                new RobotVillagerProfession(
+                        new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/refinery_front.png"),
+                        "refinery")
+                                .addRecipe(
+                                        new ItemStack(GCItems.oilCanister, 1, 1),
+                                        new ItemStack(Items.emerald, 16),
+                                        new ItemStack(GCItems.fuelCanister, 1, 1))
+                                .addRecipe(
+                                        emptyCan,
+                                        new ItemStack(Items.emerald, 26),
+                                        new ItemStack(GCItems.fuelCanister, 1, 1)));
+        RobotVillagerProfession.addProfession(
+                new RobotVillagerProfession(
+                        new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/electric_compressor.png"),
+                        "ingotcompressor")
+                                .addRecipe(
+                                        new ItemStack(Items.iron_ingot, 2),
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(GCItems.basicItem, 1, 11))// 11 = iron
 
-                .addRecipe(new ItemStack(GCItems.basicItem, 2, 5), new ItemStack(Items.emerald, 4), new ItemStack(GCItems.basicItem, 1, 8))// 8 = alu
-                .addRecipe(new ItemStack(GCItems.basicItem, 2, 4), new ItemStack(Items.emerald, 4), new ItemStack(GCItems.basicItem, 1, 7))// 7 = tin
-                .addRecipe(new ItemStack(GCItems.basicItem, 2, 3), new ItemStack(Items.emerald, 4), new ItemStack(GCItems.basicItem, 1, 6))// 6 = copper
-                );
+                                .addRecipe(
+                                        new ItemStack(GCItems.basicItem, 2, 5),
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(GCItems.basicItem, 1, 8))// 8 = alu
+                                .addRecipe(
+                                        new ItemStack(GCItems.basicItem, 2, 4),
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(GCItems.basicItem, 1, 7))// 7 = tin
+                                .addRecipe(
+                                        new ItemStack(GCItems.basicItem, 2, 3),
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(GCItems.basicItem, 1, 6))// 6 = copper
+        );
 
-        RobotVillagerProfession.addProfession(new RobotVillagerProfession(
-                new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/circuit_fabricator.png"),
-                "circuitfabricator")
-                .addRecipe(new ItemStack(Items.dye, 1, 4), new ItemStack(Items.emerald, 4), new ItemStack(GCItems.basicItem, 9, 12))// solar thingys
-                .addRecipe(new ItemStack(Blocks.redstone_torch), new ItemStack(Items.emerald, 6), new ItemStack(GCItems.basicItem, 3, 13))// basic wafer
-                .addRecipe(new ItemStack(Items.repeater), new ItemStack(Items.emerald, 8), new ItemStack(GCItems.basicItem, 2, 14))// advanced wafer
-                .addRecipe(new ItemStack(Items.ender_pearl), new ItemStack(Items.emerald, 10), ARItems.baseItem.getItemStack("waferEnder", 1))// ender wafer
+        RobotVillagerProfession.addProfession(
+                new RobotVillagerProfession(
+                        new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/blocks/circuit_fabricator.png"),
+                        "circuitfabricator")
+                                .addRecipe(
+                                        new ItemStack(Items.dye, 1, 4),
+                                        new ItemStack(Items.emerald, 4),
+                                        new ItemStack(GCItems.basicItem, 9, 12))// solar thingys
+                                .addRecipe(
+                                        new ItemStack(Blocks.redstone_torch),
+                                        new ItemStack(Items.emerald, 6),
+                                        new ItemStack(GCItems.basicItem, 3, 13))// basic wafer
+                                .addRecipe(
+                                        new ItemStack(Items.repeater),
+                                        new ItemStack(Items.emerald, 8),
+                                        new ItemStack(GCItems.basicItem, 2, 14))// advanced wafer
+                                .addRecipe(
+                                        new ItemStack(Items.ender_pearl),
+                                        new ItemStack(Items.emerald, 10),
+                                        ARItems.baseItem.getItemStack("waferEnder", 1))// ender wafer
 
+        );
 
-                );
-
-        /*RobotVillagerProfession.addProfession(new RobotVillagerProfession(
-        			new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/crafter.png"),
-        			"crafter")
-        		.addRecipe(new ItemStack(Items.dye, 1, 4), new ItemStack(Items.emerald, 4), new ItemStack(GCItems.basicItem, 9, 12))
-
-
-
-        	);*/
+        /*
+         * RobotVillagerProfession.addProfession(new RobotVillagerProfession( new ResourceLocation(AmunRa.ASSETPREFIX,
+         * "textures/blocks/crafter.png"), "crafter") .addRecipe(new ItemStack(Items.dye, 1, 4), new
+         * ItemStack(Items.emerald, 4), new ItemStack(GCItems.basicItem, 9, 12)) );
+         */
     }
 
     protected void initCelestialBodies() {
@@ -441,13 +490,10 @@ public class AmunRa
         starRa.setBodyIcon(new ResourceLocation(this.ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
         starRa.setParentSolarSystem(systemAmunRa);
 
-
-
         starAmun = createPlanet("starAmun", "sun-blue.png", Math.PI * 0.1, 0.7, 0.9);
         starAmun.setRelativeSize(3.0F);
         starAmun.setParentSolarSystem(systemAmunRa);
         GalaxyRegistry.registerPlanet(starAmun);
-
 
         // two inner planets
         planetOsiris = createPlanet("osiris", "planet-mercury.png", Math.PI * 0.8, 0.34, 0.4);
@@ -463,8 +509,6 @@ public class AmunRa
         planetHorus.setTierRequired(config.planetDefaultTier);
         GalaxyRegistry.registerPlanet(planetHorus);
 
-
-
         // gas giant
         planetBaal = createPlanet("baal", "planet-gas03.png", Math.PI * 1.9, 1.2, 1.4);
         planetBaal.setParentSolarSystem(systemAmunRa);
@@ -479,7 +523,7 @@ public class AmunRa
         GalaxyRegistry.registerMoon(moonBaalRings);
 
         // moon god, but something to do with the creation of life? so maybe stuff here as well
-        moonKhonsu = createMoon("khonsu", "moon.png", 1.9*Math.PI, 12.45, 110);
+        moonKhonsu = createMoon("khonsu", "moon.png", 1.9 * Math.PI, 12.45, 110);
         moonKhonsu.setParentPlanet(planetBaal);
         moonKhonsu.setRelativeSize(0.45F);
         GalaxyRegistry.registerMoon(moonKhonsu);
@@ -505,8 +549,6 @@ public class AmunRa
         moonIah.setRelativeSize(0.21F);
         GalaxyRegistry.registerMoon(moonIah);
 
-
-
         // an asteroid belt. todo figure the other stuff out later
         asteroidBeltMehen = createPlanet("asteroidBeltMehen", "micromoon.png", Math.PI * 0.19, 1.4, 1.6);
         asteroidBeltMehen.setParentSolarSystem(systemAmunRa);
@@ -520,7 +562,6 @@ public class AmunRa
         planetSekhmet.setParentSolarSystem(systemAmunRa);
         planetSekhmet.setRelativeSize(2.42F);
         GalaxyRegistry.registerPlanet(planetSekhmet);
-
 
         // ... and it's moons
         // cat goddess, of course it's a moon of sekhmet
@@ -558,7 +599,6 @@ public class AmunRa
         GalacticraftRegistry.registerTeleportType(SethWorldProvider.class, new TeleportTypeMoon());
         GalaxyRegistry.registerMoon(moonSeth);
 
-
         // a small rocky planet
         planetAnubis = createPlanet("anubis", "moon.png", Math.PI * 0.36, 1.9, 2.2);
         planetAnubis.setParentSolarSystem(systemAmunRa);
@@ -568,19 +608,20 @@ public class AmunRa
         planetAnubis.setTierRequired(config.planetDefaultTier);
         GalaxyRegistry.registerPlanet(planetAnubis);
 
-        //..with a moon nonetheless
+        // ..with a moon nonetheless
         moonKebe = createMoon("kebe", "moon.png", 5.1, 19, 253);
         moonKebe.setRelativeSize(0.32F);
         moonKebe.setParentPlanet(planetAnubis);
         GalaxyRegistry.registerMoon(moonKebe);
 
         // For motherships:
-        boolean flag = DimensionManager.registerProviderType(config.mothershipProviderID, MothershipWorldProvider.class, false);
-        if(!flag) {
-            throw new RuntimeException("Could not register provider mothership provider ID. Please change I:mothershipProviderID in the config.");
+        boolean flag = DimensionManager
+                .registerProviderType(config.mothershipProviderID, MothershipWorldProvider.class, false);
+        if (!flag) {
+            throw new RuntimeException(
+                    "Could not register provider mothership provider ID. Please change I:mothershipProviderID in the config.");
         }
         GalacticraftRegistry.registerTeleportType(MothershipWorldProvider.class, new TeleportTypeSpaceStation());
-
 
         // default stuff
         config.setStaticConfigValues();
@@ -598,25 +639,16 @@ public class AmunRa
         return pl;
     }
 
-    protected void setCelestialBodyStuff(CelestialBody body, String texture, double phaseShift, double distance, double orbitTime) {
-        body.setBodyIcon(new ResourceLocation(this.ASSETPREFIX, "textures/gui/celestialbodies/"+texture))
-        .setPhaseShift((float) phaseShift)
-        .setRelativeDistanceFromCenter(new ScalableDistance((float)distance, (float)distance))
-        .setRelativeOrbitTime((float)orbitTime);
+    protected void setCelestialBodyStuff(CelestialBody body, String texture, double phaseShift, double distance,
+            double orbitTime) {
+        body.setBodyIcon(new ResourceLocation(this.ASSETPREFIX, "textures/gui/celestialbodies/" + texture))
+                .setPhaseShift((float) phaseShift)
+                .setRelativeDistanceFromCenter(new ScalableDistance((float) distance, (float) distance))
+                .setRelativeOrbitTime((float) orbitTime);
     }
     /*
-    @SideOnly(Side.CLIENT)
-    public void setClientMothershipData(MothershipWorldData data) {
-        mothershipDataClient = data;
-    }
-
-    public MothershipWorldData getMothershipData() {
-        if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            return this.mothershipDataClient;
-        }
-        return TickHandlerServer.mothershipData;
-
-    }
-
+     * @SideOnly(Side.CLIENT) public void setClientMothershipData(MothershipWorldData data) { mothershipDataClient =
+     * data; } public MothershipWorldData getMothershipData() { if(FMLCommonHandler.instance().getSide() == Side.CLIENT)
+     * { return this.mothershipDataClient; } return TickHandlerServer.mothershipData; }
      */
 }

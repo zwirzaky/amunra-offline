@@ -3,12 +3,14 @@ package de.katzenpapst.amunra.nei;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
-import java.util.Map.Entry;
 
 import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
+
 import net.minecraft.item.ItemStack;
+
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
@@ -43,8 +45,10 @@ public class NEIAmunRaConfig implements IConfigureNEI {
     public void loadConfig() {
         // this is just a copy of the recipe. Couldn't I automate it?
 
-//        this.addCircuitFabricatorRecipe(new ItemStack(Items.diamond), new ItemStack(Items.redstone), new ItemStack(Items.ender_pearl), ARItems.waferEnder.getItemStack(1));
-//        this.addCircuitFabricatorRecipe(ARItems.lithiumGem.getItemStack(1), new ItemStack(Items.redstone), new ItemStack(Items.paper), ARItems.lithiumMesh.getItemStack(1));
+        // this.addCircuitFabricatorRecipe(new ItemStack(Items.diamond), new ItemStack(Items.redstone), new
+        // ItemStack(Items.ender_pearl), ARItems.waferEnder.getItemStack(1));
+        // this.addCircuitFabricatorRecipe(ARItems.lithiumGem.getItemStack(1), new ItemStack(Items.redstone), new
+        // ItemStack(Items.paper), ARItems.lithiumMesh.getItemStack(1));
 
         // now do the circfab
         initCircuitFabricatorRecipes();
@@ -59,26 +63,26 @@ public class NEIAmunRaConfig implements IConfigureNEI {
     }
 
     private void initShuttleRecipes() {
-        Vector<INasaWorkbenchRecipe> data =
-                RecipeHelper.getAllRecipesFor(ARItems.shuttleItem);
+        Vector<INasaWorkbenchRecipe> data = RecipeHelper.getAllRecipesFor(ARItems.shuttleItem);
         int[][] slotData = ContainerSchematicShuttle.slotCoordinateMapping;
         // let's see if I can convert it
         int offsetX = -4;
         int offsetY = 0;
 
-        for(INasaWorkbenchRecipe recipe: data) {
+        for (INasaWorkbenchRecipe recipe : data) {
             ArrayList<PositionedStack> input1 = new ArrayList<PositionedStack>();
 
-            for(int i=0; i<recipe.getRecipeSize();i++) {
+            for (int i = 0; i < recipe.getRecipeSize(); i++) {
                 int[] coords = slotData[i];
-                ItemStack curStack = recipe.getRecipeInput().get(i+1);
-                if(curStack == null) {
+                ItemStack curStack = recipe.getRecipeInput().get(i + 1);
+                if (curStack == null) {
                     continue;
                 }
-                input1.add(new PositionedStack(curStack, coords[0]+offsetX, coords[1]+offsetY));
+                input1.add(new PositionedStack(curStack, coords[0] + offsetX, coords[1] + offsetY));
             }
 
-            shuttleRecipes.put(input1, new PositionedStack(recipe.getRecipeOutput(), 142 + offsetX, 18 + 69 + 9 + offsetY ));
+            shuttleRecipes
+                    .put(input1, new PositionedStack(recipe.getRecipeOutput(), 142 + offsetX, 18 + 69 + 9 + offsetY));
         }
     }
 
@@ -86,11 +90,9 @@ public class NEIAmunRaConfig implements IConfigureNEI {
         return shuttleRecipes.entrySet();
     }
 
-
-
     private void initCircuitFabricatorRecipes() {
         ArrayList<CircuitFabricatorRecipe> recipes = RecipeHelper.getCircuitFabricatorRecipes();
-        for(CircuitFabricatorRecipe recipe: recipes) {
+        for (CircuitFabricatorRecipe recipe : recipes) {
             // add it
             HashMap<Integer, PositionedStack> input1 = new HashMap<Integer, PositionedStack>();
             // slot 0 = gem
@@ -103,7 +105,7 @@ public class NEIAmunRaConfig implements IConfigureNEI {
             input1.put(3, new PositionedStack(recipe.getRedstone(), 117, 51));
             // optional
             Object optional = recipe.getOptional();
-            if(optional != null) {
+            if (optional != null) {
                 input1.put(4, new PositionedStack(optional, 140, 25));
             }
             this.registerCircuitFabricatorRecipe(input1, new PositionedStack(recipe.output, 147, 91));
@@ -113,41 +115,28 @@ public class NEIAmunRaConfig implements IConfigureNEI {
     /**
      *
      * @param slotGem
-
+     * 
      * @param redstone
      * @param optional
-     * @param output
-     * /
-    private void addCircuitFabricatorRecipe(ItemStack slotGem, ItemStack redstone, ItemStack optional, ItemStack output) {
-        HashMap<Integer, PositionedStack> input1 = new HashMap<Integer, PositionedStack>();
-        // slot 0 = gem
-        input1.put(0, new PositionedStack(slotGem, 10, 22));
-        int siliconCount = OreDictionary.getOres(ConfigManagerCore.otherModsSilicon).size();
-        ItemStack[] silicons = new ItemStack[siliconCount + 1];
-        silicons[0] = new ItemStack(GCItems.basicItem, 1, 2);
-        for (int j = 0; j < siliconCount; j++)
-        {
-            silicons[j + 1] = OreDictionary.getOres("itemSilicon").get(j);
-        }
-        input1.put(1, new PositionedStack(silicons, 69, 51));
-        input1.put(2, new PositionedStack(silicons, 69, 69));
-        // redstone
-        input1.put(3, new PositionedStack(redstone, 117, 51));
-        // optional
-        if(optional != null) {
-            input1.put(4, new PositionedStack(optional, 140, 25));
-        }
-        this.registerCircuitFabricatorRecipe(input1, new PositionedStack(output, 147, 91));
-    }*/
+     * @param output   / private void addCircuitFabricatorRecipe(ItemStack slotGem, ItemStack redstone, ItemStack
+     *                 optional, ItemStack output) { HashMap<Integer, PositionedStack> input1 = new HashMap<Integer,
+     *                 PositionedStack>(); // slot 0 = gem input1.put(0, new PositionedStack(slotGem, 10, 22)); int
+     *                 siliconCount = OreDictionary.getOres(ConfigManagerCore.otherModsSilicon).size(); ItemStack[]
+     *                 silicons = new ItemStack[siliconCount + 1]; silicons[0] = new ItemStack(GCItems.basicItem, 1, 2);
+     *                 for (int j = 0; j < siliconCount; j++) { silicons[j + 1] =
+     *                 OreDictionary.getOres("itemSilicon").get(j); } input1.put(1, new PositionedStack(silicons, 69,
+     *                 51)); input1.put(2, new PositionedStack(silicons, 69, 69)); // redstone input1.put(3, new
+     *                 PositionedStack(redstone, 117, 51)); // optional if(optional != null) { input1.put(4, new
+     *                 PositionedStack(optional, 140, 25)); } this.registerCircuitFabricatorRecipe(input1, new
+     *                 PositionedStack(output, 147, 91)); }
+     */
 
-    public void registerCircuitFabricatorRecipe(HashMap<Integer, PositionedStack> input, PositionedStack output)
-    {
+    public void registerCircuitFabricatorRecipe(HashMap<Integer, PositionedStack> input, PositionedStack output) {
         circuitFabricatorRecipes.put(input, output);
     }
 
     public static Set<Entry<HashMap<Integer, PositionedStack>, PositionedStack>> getCircuitFabricatorRecipes() {
         return circuitFabricatorRecipes.entrySet();
     }
-
 
 }

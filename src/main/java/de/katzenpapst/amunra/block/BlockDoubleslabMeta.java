@@ -3,11 +3,8 @@ package de.katzenpapst.amunra.block;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.item.ItemSlabMulti;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,12 +15,18 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.item.ItemSlabMulti;
+
 public class BlockDoubleslabMeta extends BlockBasicMeta {
 
     protected final BlockSlabMeta slabMetablock;
 
     /**
      * I think this has to match the Slabs, meta-wise
+     * 
      * @param name
      * @param mat
      */
@@ -33,25 +36,20 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
         slabMetablock.setDoubleslabMeta(this);
     }
 
-
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
-    {
-        //int meta = world.getBlockMetadata(x, y, z);
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        // int meta = world.getBlockMetadata(x, y, z);
         return slabMetablock.getPickBlock(target, world, x, y, z);
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
-    {
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 
         int count = quantityDropped(metadata, fortune, world.rand);
-        for(int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             Item item = getItemDropped(metadata, world.rand, fortune);
-            if (item != null)
-            {
+            if (item != null) {
                 ret.add(new ItemStack(item, 1, damageDropped(metadata)));
             }
         }
@@ -61,47 +59,44 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
 
     @Override
     public String getUnlocalizedSubBlockName(int meta) {
-        return this.getSubBlock(meta).getUnlocalizedName()+".slab";
+        return this.getSubBlock(meta).getUnlocalizedName() + ".slab";
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune)
-    {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return slabMetablock.getItemDropped(meta, random, fortune);
         // return Item.getItemFromBlock(slabMetablock);
     }
 
     @Override
-    public int damageDropped(int meta)
-    {
+    public int damageDropped(int meta) {
         return getDistinctionMeta(meta);
     }
 
     @Override
-    public int getDamageValue(World world, int x, int y, int z)
-    {
-        return getDistinctionMeta( world.getBlockMetadata(x, y, z) );
+    public int getDamageValue(World world, int x, int y, int z) {
+        return getDistinctionMeta(world.getBlockMetadata(x, y, z));
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random)
-    {
+    public int quantityDropped(int meta, int fortune, Random random) {
         return 2;
     }
 
     @Override
     public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
 
-        if(meta >= subBlocksArray.length || meta < 0) {
-            throw new IllegalArgumentException("Meta "+meta+" must be <= "+(subBlocksArray.length-1)+" && >= 0");
+        if (meta >= subBlocksArray.length || meta < 0) {
+            throw new IllegalArgumentException(
+                    "Meta " + meta + " must be <= " + (subBlocksArray.length - 1) + " && >= 0");
         }
 
-        if(subBlocksArray[meta] != null) {
-            throw new IllegalArgumentException("Meta "+meta+" is already in use");
+        if (subBlocksArray[meta] != null) {
+            throw new IllegalArgumentException("Meta " + meta + " is already in use");
         }
 
-        if(nameMetaMap.get(sb.getUnlocalizedName()) != null) {
-            throw new IllegalArgumentException("Name "+sb.getUnlocalizedName()+" is already in use");
+        if (nameMetaMap.get(sb.getUnlocalizedName()) != null) {
+            throw new IllegalArgumentException("Name " + sb.getUnlocalizedName() + " is already in use");
         }
         // sb.setParent(this);
         nameMetaMap.put(sb.getUnlocalizedName(), meta);
@@ -120,8 +115,8 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
     @Override
     public int getMetaByName(String name) {
         Integer i = nameMetaMap.get(name);
-        if(i == null) {
-            throw new IllegalArgumentException("Subblock "+name+" doesn't exist");
+        if (i == null) {
+            throw new IllegalArgumentException("Subblock " + name + " doesn't exist");
         }
         return i;
     }
@@ -139,10 +134,9 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
-        for(SubBlock sb: subBlocksArray) {
-            if(sb != null) {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        for (SubBlock sb : subBlocksArray) {
+            if (sb != null) {
                 sb.registerBlockIcons(par1IconRegister);
             }
         }
@@ -150,8 +144,7 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public CreativeTabs getCreativeTabToDisplayOn()
-    {
+    public CreativeTabs getCreativeTabToDisplayOn() {
         return null;
     }
 
@@ -159,17 +152,22 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
     public void register() {
         // try to checking what the slabMetablock has
         // slabMetablock.getAllSubBlocks()
-        for(int i=0;i<slabMetablock.getAllSubBlocks().length;i++) {
+        for (int i = 0; i < slabMetablock.getAllSubBlocks().length; i++) {
             SubBlock sb = slabMetablock.getSubBlock(i);
-            if(sb != null) {
+            if (sb != null) {
                 addSubBlock(i, sb);
             }
         }
-        GameRegistry.registerBlock(this, ItemSlabMulti.class, this.getUnlocalizedName(), (Block)slabMetablock, (Block)this);
+        GameRegistry.registerBlock(
+                this,
+                ItemSlabMulti.class,
+                this.getUnlocalizedName(),
+                (Block) slabMetablock,
+                (Block) this);
 
-        for(int i=0;i<subBlocksArray.length;i++) {
+        for (int i = 0; i < subBlocksArray.length; i++) {
             SubBlock sb = subBlocksArray[i];
-            if(sb != null) {
+            if (sb != null) {
                 this.setHarvestLevel(sb.getHarvestTool(0), sb.getHarvestLevel(0), i);
             }
         }

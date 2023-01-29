@@ -2,9 +2,10 @@ package de.katzenpapst.amunra.helper;
 
 import java.util.UUID;
 
-import de.katzenpapst.amunra.AmunRa;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+
+import de.katzenpapst.amunra.AmunRa;
 
 public class PlayerID {
 
@@ -46,20 +47,20 @@ public class PlayerID {
 
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof PlayerID)) {
+        if (!(other instanceof PlayerID)) {
             return false;
         }
 
-        if(AmunRa.config.mothershipUserMatchUUID) {
-            return ((PlayerID)other).userUUID.equals(userUUID);
+        if (AmunRa.config.mothershipUserMatchUUID) {
+            return ((PlayerID) other).userUUID.equals(userUUID);
         } else {
-            return ((PlayerID)other).userName.equals(userName);
+            return ((PlayerID) other).userName.equals(userName);
         }
     }
 
     @Override
     public int hashCode() {
-        if(AmunRa.config.mothershipUserMatchUUID) {
+        if (AmunRa.config.mothershipUserMatchUUID) {
             return userUUID.hashCode();
         } else {
             return userName.hashCode();
@@ -67,7 +68,7 @@ public class PlayerID {
     }
 
     public boolean isSameUser(EntityPlayer player) {
-        if(AmunRa.config.mothershipUserMatchUUID) {
+        if (AmunRa.config.mothershipUserMatchUUID) {
             return this.userUUID.equals(player.getUniqueID());
         } else {
             return this.userName.equals(player.getDisplayName());

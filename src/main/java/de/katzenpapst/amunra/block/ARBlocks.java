@@ -1,5 +1,17 @@
 package de.katzenpapst.amunra.block;
 
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
+import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.oredict.OreDictionary;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.bush.ARTreeSapling;
@@ -23,18 +35,9 @@ import de.katzenpapst.amunra.block.ore.BlockOreMulti;
 import de.katzenpapst.amunra.block.ore.SubBlockOre;
 import de.katzenpapst.amunra.block.ore.SubBlockOreMultidrop;
 import de.katzenpapst.amunra.item.ItemDamagePair;
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
-import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class ARBlocks {
+
     public static BlockBasicMeta metaBlockRock;
     public static BlockBasicMeta metaBlockCrystal;
     public static BlockBasicMeta metaBlockDirt;
@@ -66,7 +69,7 @@ public class ARBlocks {
 
     public static BlockMetaPair osirisBossSpawner;
 
-    //public static BlockMetaPair blockDarkMatter;
+    // public static BlockMetaPair blockDarkMatter;
     public static BlockMetaPair blockBasalt;
     public static BlockMetaPair blockRedRock;
     public static BlockMetaPair blockYellowCobble;
@@ -81,11 +84,9 @@ public class ARBlocks {
     public static BlockMetaPair blockObsidianBrick;
     public static BlockMetaPair blockUraniumBlock;
 
-
     public static BlockMetaPair blockBasaltRegolith;
     public static BlockMetaPair blockMethaneDirt;
     public static BlockMetaPair blockDust;
-
 
     public static BlockMetaPair blockMethaneGrass;
     public static BlockMetaPair blockVacuumGrass;
@@ -111,7 +112,6 @@ public class ARBlocks {
     public static BlockMetaPair oreTitaniumBasalt;
     public static BlockMetaPair oreUraniumBasalt;
 
-
     public static BlockMetaPair blockMethaneTGrass;
     public static BlockMetaPair blockMethaneLog;
     public static BlockMetaPair blockPodBark;
@@ -120,7 +120,6 @@ public class ARBlocks {
     public static BlockMetaPair blockMethaneLeaf;
     public static BlockMetaPair blockMethaneSapling;
     public static BlockMetaPair blockPodSapling;
-
 
     public static SubBlockOre subGold;
     public static SubBlockOre subAlu;
@@ -216,9 +215,8 @@ public class ARBlocks {
     public static BlockMetaPair chestAlu;
     public static BlockMetaPair chestSteel;
 
-
     public static SubBlock getSubBlock(BlockMetaPair bmp) {
-        return ((IMetaBlock)bmp.getBlock()).getSubBlock(bmp.getMetadata());
+        return ((IMetaBlock) bmp.getBlock()).getSubBlock(bmp.getMetadata());
     }
 
     public static ItemStack getItemStack(BlockMetaPair input, int amount) {
@@ -233,8 +231,7 @@ public class ARBlocks {
         return new ItemDamagePair(Item.getItemFromBlock(input.getBlock()), input.getMetadata());
     }
 
-    public static void initBlocks()
-    {
+    public static void initBlocks() {
         // blast resistance: http://minecraft.gamepedia.com/Explosion#Blast_Resistance
         // hardness: http://minecraft.gamepedia.com/Breaking#Blocks_by_hardness
         // net.minecraft.init.Blocks
@@ -242,75 +239,66 @@ public class ARBlocks {
         // micdoodle8.mods.galacticraft.planets.asteroids.blocks.AsteroidBlocks
         // micdoodle8.mods.galacticraft.planets.mars.blocks.MarsBlocks
 
-
         // MULTIORES
         // sub-ores first
-        subGold = (SubBlockOre) new SubBlockOre("oreGold", "amunra:ore-gold")
-                .setOredictNames("oreGold")
+        subGold = (SubBlockOre) new SubBlockOre("oreGold", "amunra:ore-gold").setOredictNames("oreGold")
                 .setHarvestInfo("pickaxe", 1).setHardness(3).setResistance(5);
 
         subAlu = (SubBlockOre) new SubBlockOre("oreAluminium", "amunra:ore-alu")
-                .setOredictNames("oreAluminum", "oreAluminium", "oreNaturalAluminum")
-                .setHarvestInfo("pickaxe", 2).setHardness(3).setResistance(5);
+                .setOredictNames("oreAluminum", "oreAluminium", "oreNaturalAluminum").setHarvestInfo("pickaxe", 2)
+                .setHardness(3).setResistance(5);
 
-        subCopper = (SubBlockOre) new SubBlockOre("oreCopper", "amunra:ore-copper")
-                .setOredictNames("oreCopper")
+        subCopper = (SubBlockOre) new SubBlockOre("oreCopper", "amunra:ore-copper").setOredictNames("oreCopper")
                 .setHarvestInfo("pickaxe", 2).setHardness(3).setResistance(5);
 
         subCryo = (SubBlockOre) new SubBlockOre("oreCryo", "amunra:ore-cryo")
                 // no idea for a oredictname for this one...
                 .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
-        subDesh = (SubBlockOre) new SubBlockOre("oreDesh", "amunra:ore-desh")
-                .setOredictNames("oreDesh")
+        subDesh = (SubBlockOre) new SubBlockOre("oreDesh", "amunra:ore-desh").setOredictNames("oreDesh")
                 .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
-        subDiamond = (SubBlockOre) new SubBlockOre("oreDiamond", "amunra:ore-diamond")
-                .setOredictNames("oreDiamond")
+        subDiamond = (SubBlockOre) new SubBlockOre("oreDiamond", "amunra:ore-diamond").setOredictNames("oreDiamond")
                 .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
-        subEmerald = (SubBlockOre) new SubBlockOre("oreEmerald", "amunra:ore-emerald")
-                .setOredictNames("oreEmerald")
+        subEmerald = (SubBlockOre) new SubBlockOre("oreEmerald", "amunra:ore-emerald").setOredictNames("oreEmerald")
                 .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
-        subIron = (SubBlockOre) new SubBlockOre("oreIron", "amunra:ore-iron")
-                .setOredictNames("oreIron")
+        subIron = (SubBlockOre) new SubBlockOre("oreIron", "amunra:ore-iron").setOredictNames("oreIron")
                 .setHarvestInfo("pickaxe", 2).setHardness(3).setResistance(5);
 
-        subLapis = (SubBlockOre) new SubBlockOre("oreLapis", "amunra:ore-lapis")
-                .setOredictNames("oreLapis").setHarvestInfo("pickaxe", 1).setHardness(3).setResistance(5);
+        subLapis = (SubBlockOre) new SubBlockOre("oreLapis", "amunra:ore-lapis").setOredictNames("oreLapis")
+                .setHarvestInfo("pickaxe", 1).setHardness(3).setResistance(5);
 
-        subLithium = (SubBlockOre) new SubBlockOre("oreLithium", "amunra:ore-lithium")
-                .setOredictNames("oreLithium").setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
-
-        subRuby = (SubBlockOre) new SubBlockOre("oreRuby", "amunra:ore-ruby")
-                .setOredictNames("oreRuby").setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
-
-        subSilicon = (SubBlockOre) new SubBlockOre("oreSilicon", "amunra:ore-silicon")
-                .setOredictNames("oreSilicon").setHarvestInfo("pickaxe", 1).setHardness(3).setResistance(5);
-
-        subTin = (SubBlockOre) new SubBlockOre("oreTin", "amunra:ore-tin")
-                .setOredictNames("oreTin").setHarvestInfo("pickaxe", 2).setHardness(3).setResistance(5);
-
-        subTitanium = (SubBlockOreMultidrop) new SubBlockOreMultidrop("oreTitanium", "amunra:ore-titanium")
-                .setOredictNames("oreTitanium")
+        subLithium = (SubBlockOre) new SubBlockOre("oreLithium", "amunra:ore-lithium").setOredictNames("oreLithium")
                 .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
-        subCoal = (SubBlockOre) new SubBlockOre("oreCoal", "amunra:ore-coal")
-                .setOredictNames("oreCoal").setHarvestInfo("pickaxe", 1).setHardness(2).setResistance(5);
+        subRuby = (SubBlockOre) new SubBlockOre("oreRuby", "amunra:ore-ruby").setOredictNames("oreRuby")
+                .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
-        subLead = (SubBlockOre) new SubBlockOre("oreLead", "amunra:ore-lead")
-                .setOredictNames("oreLead").setHarvestInfo("pickaxe", 2).setHardness(2).setResistance(5);
+        subSilicon = (SubBlockOre) new SubBlockOre("oreSilicon", "amunra:ore-silicon").setOredictNames("oreSilicon")
+                .setHarvestInfo("pickaxe", 1).setHardness(3).setResistance(5);
 
-        subUranium = (SubBlockOre) new SubBlockOre("oreUranium", "amunra:ore-uranium")
-                .setOredictNames("oreUranium").setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
+        subTin = (SubBlockOre) new SubBlockOre("oreTin", "amunra:ore-tin").setOredictNames("oreTin")
+                .setHarvestInfo("pickaxe", 2).setHardness(3).setResistance(5);
 
-        subSteel = (SubBlockOre) new SubBlockOre("oreSteel", "amunra:ore-steel")
-                .setOredictNames("oreSteel").setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
+        subTitanium = (SubBlockOreMultidrop) new SubBlockOreMultidrop("oreTitanium", "amunra:ore-titanium")
+                .setOredictNames("oreTitanium").setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
+
+        subCoal = (SubBlockOre) new SubBlockOre("oreCoal", "amunra:ore-coal").setOredictNames("oreCoal")
+                .setHarvestInfo("pickaxe", 1).setHardness(2).setResistance(5);
+
+        subLead = (SubBlockOre) new SubBlockOre("oreLead", "amunra:ore-lead").setOredictNames("oreLead")
+                .setHarvestInfo("pickaxe", 2).setHardness(2).setResistance(5);
+
+        subUranium = (SubBlockOre) new SubBlockOre("oreUranium", "amunra:ore-uranium").setOredictNames("oreUranium")
+                .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
+
+        subSteel = (SubBlockOre) new SubBlockOre("oreSteel", "amunra:ore-steel").setOredictNames("oreSteel")
+                .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
         subBone = (SubBlockOreMultidrop) new SubBlockOreMultidrop("oreBone", "amunra:ore-bone")
                 .setHarvestInfo("pickaxe", 1).setHardness(1).setResistance(5);
-
 
         // for the drops, see
         // de.katzenpapst.amunra.item.ARItems.initOreDrops()
@@ -319,27 +307,27 @@ public class ARBlocks {
 
         metaBlockBasaltOre = new BlockOreMulti("basaltMultiOre", "amunra:basalt", Material.rock);
         metaBlockBasaltOre.setMultiblockHarvestLevel(1).setHardness(2.0F).setResistance(10.0F);
-        oreGoldBasalt       = metaBlockBasaltOre.addSubBlock(0, subGold);
-        oreAluBasalt        = metaBlockBasaltOre.addSubBlock(1, subAlu);
-        oreCopperBasalt     = metaBlockBasaltOre.addSubBlock(2, subCopper);
-        oreTinBasalt        = metaBlockBasaltOre.addSubBlock(3, subTin);
-        oreCryoBasalt       = metaBlockBasaltOre.addSubBlock(4, subCryo);
-        oreLithiumBasalt    = metaBlockBasaltOre.addSubBlock(5, subLithium);
-        oreIronBasalt       = metaBlockBasaltOre.addSubBlock(6, subIron);
-        oreLapisBasalt      = metaBlockBasaltOre.addSubBlock(7, subLapis);
-        oreSiliconBasalt    = metaBlockBasaltOre.addSubBlock(8, subSilicon);
-        //oreEmeraldObsid        = multiBlockBasaltOre.addSubBlock(9, subEmerald);
-        oreTitaniumBasalt   = metaBlockBasaltOre.addSubBlock(9, subTitanium);
-        oreUraniumBasalt    = metaBlockBasaltOre.addSubBlock(10, subUranium);
+        oreGoldBasalt = metaBlockBasaltOre.addSubBlock(0, subGold);
+        oreAluBasalt = metaBlockBasaltOre.addSubBlock(1, subAlu);
+        oreCopperBasalt = metaBlockBasaltOre.addSubBlock(2, subCopper);
+        oreTinBasalt = metaBlockBasaltOre.addSubBlock(3, subTin);
+        oreCryoBasalt = metaBlockBasaltOre.addSubBlock(4, subCryo);
+        oreLithiumBasalt = metaBlockBasaltOre.addSubBlock(5, subLithium);
+        oreIronBasalt = metaBlockBasaltOre.addSubBlock(6, subIron);
+        oreLapisBasalt = metaBlockBasaltOre.addSubBlock(7, subLapis);
+        oreSiliconBasalt = metaBlockBasaltOre.addSubBlock(8, subSilicon);
+        // oreEmeraldObsid = multiBlockBasaltOre.addSubBlock(9, subEmerald);
+        oreTitaniumBasalt = metaBlockBasaltOre.addSubBlock(9, subTitanium);
+        oreUraniumBasalt = metaBlockBasaltOre.addSubBlock(10, subUranium);
         metaBlockBasaltOre.register();
 
         // OBSIDIAN ORE
         metaBlockObsidianOre = new BlockOreMulti("obsidianMultiOre", "obsidian", Material.rock);
         metaBlockObsidianOre.setMultiblockHarvestLevel(3).setHardness(50.0F).setResistance(6000.0F);
         oreDiamondObsid = metaBlockObsidianOre.addSubBlock(0, subDiamond);
-        oreRubyObsid    = metaBlockObsidianOre.addSubBlock(1, subRuby);
+        oreRubyObsid = metaBlockObsidianOre.addSubBlock(1, subRuby);
         oreUraniumObsid = metaBlockObsidianOre.addSubBlock(2, subUranium);
-        oreLeadObsid    = metaBlockObsidianOre.addSubBlock(3, subLead);
+        oreLeadObsid = metaBlockObsidianOre.addSubBlock(3, subLead);
         oreEmeraldObsid = metaBlockObsidianOre.addSubBlock(9, subEmerald);
         metaBlockObsidianOre.register();
 
@@ -347,12 +335,12 @@ public class ARBlocks {
         metaBlockHardClayOre = new BlockOreMulti("hardClayMultiOre", "hardened_clay", Material.rock);
         metaBlockHardClayOre.setMultiblockHarvestLevel(1).setHardness(1.25F).setResistance(30.0F);
 
-        oreCoalHardClay     = metaBlockHardClayOre.addSubBlock(0, subCoal);
-        oreSiliconHardClay  = metaBlockHardClayOre.addSubBlock(1, subSilicon);
-        oreAluHardClay      = metaBlockHardClayOre.addSubBlock(2, subAlu);
-        oreCopperHardClay   = metaBlockHardClayOre.addSubBlock(3, subCopper);
-        oreTinHardClay      = metaBlockHardClayOre.addSubBlock(4, subTin);
-        oreIronHardClay     = metaBlockHardClayOre.addSubBlock(5, subIron);
+        oreCoalHardClay = metaBlockHardClayOre.addSubBlock(0, subCoal);
+        oreSiliconHardClay = metaBlockHardClayOre.addSubBlock(1, subSilicon);
+        oreAluHardClay = metaBlockHardClayOre.addSubBlock(2, subAlu);
+        oreCopperHardClay = metaBlockHardClayOre.addSubBlock(3, subCopper);
+        oreTinHardClay = metaBlockHardClayOre.addSubBlock(4, subTin);
+        oreIronHardClay = metaBlockHardClayOre.addSubBlock(5, subIron);
 
         metaBlockHardClayOre.register();
 
@@ -362,74 +350,102 @@ public class ARBlocks {
         metaBlockConcreteOre.setPrefixOwnBlockName(true);
 
         oreSteelConcrete = metaBlockConcreteOre.addSubBlock(0, subSteel);
-        oreBoneConcrete  = metaBlockConcreteOre.addSubBlock(1, subBone);
+        oreBoneConcrete = metaBlockConcreteOre.addSubBlock(1, subBone);
 
         metaBlockConcreteOre.register();
 
-
-        metaBlockAsteroidOre = new BlockOreMulti("asteroidMultiOre1", AsteroidsModule.TEXTURE_PREFIX + "asteroid0", Material.rock);
-        oreRubyAsteroid     = metaBlockAsteroidOre.addSubBlock(0, subRuby);
-        oreEmeraldAsteroid  = metaBlockAsteroidOre.addSubBlock(1, subEmerald);
-        oreDiamondAsteroid  = metaBlockAsteroidOre.addSubBlock(2, subDiamond);
-        oreLithiumAsteroid  = metaBlockAsteroidOre.addSubBlock(3, subLithium);
-        oreGoldAsteroid     = metaBlockAsteroidOre.addSubBlock(4, subGold);
-        oreLapisAsteroid    = metaBlockAsteroidOre.addSubBlock(5, subLapis);
-        oreLeadAsteroid     = metaBlockAsteroidOre.addSubBlock(6, subLead);
-        oreUraniumAsteroid  = metaBlockAsteroidOre.addSubBlock(7, subUranium);
-        oreCopperAsteroid   = metaBlockAsteroidOre.addSubBlock(8, subCopper);
+        metaBlockAsteroidOre = new BlockOreMulti(
+                "asteroidMultiOre1",
+                AsteroidsModule.TEXTURE_PREFIX + "asteroid0",
+                Material.rock);
+        oreRubyAsteroid = metaBlockAsteroidOre.addSubBlock(0, subRuby);
+        oreEmeraldAsteroid = metaBlockAsteroidOre.addSubBlock(1, subEmerald);
+        oreDiamondAsteroid = metaBlockAsteroidOre.addSubBlock(2, subDiamond);
+        oreLithiumAsteroid = metaBlockAsteroidOre.addSubBlock(3, subLithium);
+        oreGoldAsteroid = metaBlockAsteroidOre.addSubBlock(4, subGold);
+        oreLapisAsteroid = metaBlockAsteroidOre.addSubBlock(5, subLapis);
+        oreLeadAsteroid = metaBlockAsteroidOre.addSubBlock(6, subLead);
+        oreUraniumAsteroid = metaBlockAsteroidOre.addSubBlock(7, subUranium);
+        oreCopperAsteroid = metaBlockAsteroidOre.addSubBlock(8, subCopper);
         metaBlockAsteroidOre.register();
 
         /*
-        // ICE ORE
-        metaBlockIceOre = new BlockOreMulti("iceMultiOre", "ice_packed", Material.ice);
-        metaBlockIceOre.setMultiblockHarvestLevel(1).setHardness(0.5F).setResistance(2.5F).setStepSound(Block.soundTypeGlass);
-
-        //blockRegistry.addObject(174, "packed_ice", (new BlockPackedIce()).setHardness(0.5F).setStepSound(soundTypeGlass).setBlockName("icePacked").setBlockTextureName("ice_packed"));
-        //Blocks.packed_ice.slipperiness;
-        metaBlockIceOre.register();
+         * // ICE ORE metaBlockIceOre = new BlockOreMulti("iceMultiOre", "ice_packed", Material.ice);
+         * metaBlockIceOre.setMultiblockHarvestLevel(1).setHardness(0.5F).setResistance(2.5F).setStepSound(Block.
+         * soundTypeGlass); //blockRegistry.addObject(174, "packed_ice", (new
+         * BlockPackedIce()).setHardness(0.5F).setStepSound(soundTypeGlass).setBlockName("icePacked").
+         * setBlockTextureName("ice_packed")); //Blocks.packed_ice.slipperiness; metaBlockIceOre.register();
          */
 
         metaBlockBossSpawner = new BlockMetaNonOpaqueInternal("bossSpawner", Material.air);
-        osirisBossSpawner = metaBlockBossSpawner.addSubBlock(0, (SubBlock) new SubBlockBossSpawner("bossSpawner", GalacticraftCore.TEXTURE_PREFIX + "blank").setBlockUnbreakable());
+        osirisBossSpawner = metaBlockBossSpawner.addSubBlock(
+                0,
+                (SubBlock) new SubBlockBossSpawner("bossSpawner", GalacticraftCore.TEXTURE_PREFIX + "blank")
+                        .setBlockUnbreakable());
         metaBlockBossSpawner.register();
 
-        //Blocks
-        //        Block block = (new Block(Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundTypePiston).setBlockName("stonebrick").setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName("cobblestone");
-        metaBlockRock = new BlockBasicMeta("baseBlockRock",Material.rock);
-        // blockRegistry.addObject(7, "bedrock", (new Block(Material.rock)).setBlockUnbreakable().setResistance(6000000.0F).setStepSound(soundTypePiston).setBlockName("bedrock").disableStats().setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName("bedrock"));
-        //blockDarkMatter = multiBlockRock.addSubBlock(0, new SubBlock("darkMatter", "amunra:darkmatter", "pickaxe", 9000, 9000, 9000));
-        blockBasaltCobble   = metaBlockRock.addSubBlock(0,  new SubBlock("basaltcobble", "amunra:basaltcobble", "pickaxe", 1, 2.0F, 10.0F));
-        blockBasalt         = metaBlockRock.addSubBlock(1,  new SubBlockRock("basalt", "amunra:basalt", "pickaxe", 1, 2.0F, 10.0F).setBlockToDrop(blockBasaltCobble));
-        blockRedCobble      = metaBlockRock.addSubBlock(2,  new SubBlock("redrockcobble", "amunra:redrockcobble", "pickaxe", 1, 2.0F, 10.0F));
-        blockRedRock        = metaBlockRock.addSubBlock(3,  new SubBlockRock("redrock", "amunra:redrock", "pickaxe", 1, 2.0F, 10.0F).setBlockToDrop(blockRedCobble));
-        blockYellowCobble   = metaBlockRock.addSubBlock(4,  new SubBlock("yellowcobble", "amunra:olivinebasaltcobble", "pickaxe", 1, 2.0F, 10.0F));
-        blockYellowRock     = metaBlockRock.addSubBlock(5,  new SubBlockRock("yellowrock", "amunra:olivinebasalt", "pickaxe", 1, 2.0F, 10.0F).setBlockToDrop(blockYellowCobble));
-        blockAluCrate       = metaBlockRock.addSubBlock(6,  new SubBlockMassive("alucrate", "amunra:alucrate", "pickaxe", 0, 1, 1).setMass(0.1F));
+        // Blocks
+        // Block block = (new
+        // Block(Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundTypePiston).setBlockName("stonebrick").setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName("cobblestone");
+        metaBlockRock = new BlockBasicMeta("baseBlockRock", Material.rock);
+        // blockRegistry.addObject(7, "bedrock", (new
+        // Block(Material.rock)).setBlockUnbreakable().setResistance(6000000.0F).setStepSound(soundTypePiston).setBlockName("bedrock").disableStats().setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName("bedrock"));
+        // blockDarkMatter = multiBlockRock.addSubBlock(0, new SubBlock("darkMatter", "amunra:darkmatter", "pickaxe",
+        // 9000, 9000, 9000));
+        blockBasaltCobble = metaBlockRock
+                .addSubBlock(0, new SubBlock("basaltcobble", "amunra:basaltcobble", "pickaxe", 1, 2.0F, 10.0F));
+        blockBasalt = metaBlockRock.addSubBlock(
+                1,
+                new SubBlockRock("basalt", "amunra:basalt", "pickaxe", 1, 2.0F, 10.0F)
+                        .setBlockToDrop(blockBasaltCobble));
+        blockRedCobble = metaBlockRock
+                .addSubBlock(2, new SubBlock("redrockcobble", "amunra:redrockcobble", "pickaxe", 1, 2.0F, 10.0F));
+        blockRedRock = metaBlockRock.addSubBlock(
+                3,
+                new SubBlockRock("redrock", "amunra:redrock", "pickaxe", 1, 2.0F, 10.0F)
+                        .setBlockToDrop(blockRedCobble));
+        blockYellowCobble = metaBlockRock
+                .addSubBlock(4, new SubBlock("yellowcobble", "amunra:olivinebasaltcobble", "pickaxe", 1, 2.0F, 10.0F));
+        blockYellowRock = metaBlockRock.addSubBlock(
+                5,
+                new SubBlockRock("yellowrock", "amunra:olivinebasalt", "pickaxe", 1, 2.0F, 10.0F)
+                        .setBlockToDrop(blockYellowCobble));
+        blockAluCrate = metaBlockRock
+                .addSubBlock(6, new SubBlockMassive("alucrate", "amunra:alucrate", "pickaxe", 0, 1, 1).setMass(0.1F));
 
-        blockBasaltBrick    = metaBlockRock.addSubBlock(7,  new SubBlock("basaltbrick", "amunra:basaltbrick", "pickaxe", 1, 2.0F, 10.0F));
-        blockSmoothBasalt   = metaBlockRock.addSubBlock(8,  new SubBlock("smoothbasalt", "amunra:smoothbasalt", "pickaxe", 1, 2.0F, 10.0F));
-        blockObsidianBrick  = metaBlockRock.addSubBlock(9,  new SubBlock("obsidianbrick", "amunra:obsidianbrick", "pickaxe", 3, 50.0F, 6000.0F));
-        blockOldConcrete    = metaBlockRock.addSubBlock(10, new SubBlock("oldConcrete", "amunra:concrete2", "pickaxe", 3, 3.0F, 20.0F));
+        blockBasaltBrick = metaBlockRock
+                .addSubBlock(7, new SubBlock("basaltbrick", "amunra:basaltbrick", "pickaxe", 1, 2.0F, 10.0F));
+        blockSmoothBasalt = metaBlockRock
+                .addSubBlock(8, new SubBlock("smoothbasalt", "amunra:smoothbasalt", "pickaxe", 1, 2.0F, 10.0F));
+        blockObsidianBrick = metaBlockRock
+                .addSubBlock(9, new SubBlock("obsidianbrick", "amunra:obsidianbrick", "pickaxe", 3, 50.0F, 6000.0F));
+        blockOldConcrete = metaBlockRock
+                .addSubBlock(10, new SubBlock("oldConcrete", "amunra:concrete2", "pickaxe", 3, 3.0F, 20.0F));
 
-        blockUraniumBlock   = metaBlockRock.addSubBlock(11,  new SubBlockMassive("blockUranium", "amunra:deco_uranium_block", "pickaxe", 0, 1, 1).setMass(1000.0F));
+        blockUraniumBlock = metaBlockRock.addSubBlock(
+                11,
+                new SubBlockMassive("blockUranium", "amunra:deco_uranium_block", "pickaxe", 0, 1, 1).setMass(1000.0F));
 
+        blockMsBase = metaBlockRock.addSubBlock(
+                12,
+                new SubBlockMassive(
+                        "msBaseBlock",
+                        GalacticraftCore.TEXTURE_PREFIX + "deco_aluminium_4",
+                        "",
+                        -1,
+                        -1.0F,
+                        6000000.0F).setMass(0.1F));
 
-        blockMsBase       = metaBlockRock.addSubBlock(12,  new SubBlockMassive("msBaseBlock", GalacticraftCore.TEXTURE_PREFIX + "deco_aluminium_4", "", -1, -1.0F, 6000000.0F).setMass(0.1F));
+        blockWorkbench = metaBlockRock.addSubBlock(13, new CraftingBlock("workbench"));
 
-        blockWorkbench    = metaBlockRock.addSubBlock(13, new CraftingBlock("workbench"));
-
-        blockDarkmatter   = metaBlockRock.addSubBlock(14, new SubBlockDropItem("darkMatter", "amunra:darkmatter", "pickaxe", 5, 50, 6000.0F));
-
-
+        blockDarkmatter = metaBlockRock
+                .addSubBlock(14, new SubBlockDropItem("darkMatter", "amunra:darkmatter", "pickaxe", 5, 50, 6000.0F));
 
         metaBlockRock.register();
 
-
-
-
-
         metaBlockCrystal = new BlockBasicMeta("baseBlockCrystal", Material.glass);
-        // blockRegistry.addObject(89, "glowstone", (new BlockGlowstone(Material.glass)).setHardness(0.3F).setStepSound(soundTypeGlass).setLightLevel(1.0F).setBlockName("lightgem").setBlockTextureName("glowstone"));
+        // blockRegistry.addObject(89, "glowstone", (new
+        // BlockGlowstone(Material.glass)).setHardness(0.3F).setStepSound(soundTypeGlass).setLightLevel(1.0F).setBlockName("lightgem").setBlockTextureName("glowstone"));
 
         SubBlock coral = new SubBlock("glowCoral", "amunra:coral", "pickaxe", 2, 0.9F, 2.75F);
         coral.setStepSound(Block.soundTypeGlass);
@@ -439,55 +455,71 @@ public class ARBlocks {
 
         metaBlockCrystal.register();
 
-
         metaBlockDirt = new BlockBasicMeta("baseBlockGround", Material.ground);
         metaBlockDirt.setStepSound(Block.soundTypeGravel);
 
-
-        blockMethaneDirt    = metaBlockDirt.addSubBlock(0, new SubBlock("methanedirt", "amunra:methanedirt", "shovel", 0, 0.5F, 2.5F));
-        blockDust           = metaBlockDirt.addSubBlock(1, new DustBlock("dustblock", "amunra:dust", "shovel", 0, 0, 0));
+        blockMethaneDirt = metaBlockDirt
+                .addSubBlock(0, new SubBlock("methanedirt", "amunra:methanedirt", "shovel", 0, 0.5F, 2.5F));
+        blockDust = metaBlockDirt.addSubBlock(1, new DustBlock("dustblock", "amunra:dust", "shovel", 0, 0, 0));
 
         metaBlockDirt.register();
 
-
         metaBlockGrass = new BlockGrassMeta("baseGrass", Material.grass);
         metaBlockGrass.setStepSound(Block.soundTypeGrass);
-        blockMethaneGrass         = metaBlockGrass.addSubBlock(0, new MethaneGrass("methanegrass"));
-        blockUnderwaterGrass      = metaBlockGrass.addSubBlock(1, new UnderwaterGrass("underwaterBlueGrass", "amunra:claygrasstop", "amunra:claygrassside", "clay"));
-        blockVacuumGrass          = metaBlockGrass.addSubBlock(2, new VacuumGrass("vaccumRedGrass", "amunra:methanegrass-2", "amunra:methanegrassside-2", "amunra:methanedirt"));
+        blockMethaneGrass = metaBlockGrass.addSubBlock(0, new MethaneGrass("methanegrass"));
+        blockUnderwaterGrass = metaBlockGrass.addSubBlock(
+                1,
+                new UnderwaterGrass("underwaterBlueGrass", "amunra:claygrasstop", "amunra:claygrassside", "clay"));
+        blockVacuumGrass = metaBlockGrass.addSubBlock(
+                2,
+                new VacuumGrass(
+                        "vaccumRedGrass",
+                        "amunra:methanegrass-2",
+                        "amunra:methanegrassside-2",
+                        "amunra:methanedirt"));
         metaBlockGrass.register();
 
         metaBlockFalling = new BlockFallingMeta("baseFalling", Material.sand);
         metaBlockFalling.setStepSound(Block.soundTypeGravel);
 
-        blockObsidiSand     = metaBlockFalling.addSubBlock(0, new SubBlock("obsidianSand", "amunra:obsidiansand", "shovel", 2, 20.0F, 100.0F));
-        blockObsidiGravel   = metaBlockFalling.addSubBlock(1, new SubBlock("obsidianGravel", "amunra:obsidiangravel", "shovel", 2, 30.0F, 300.0F));
-        blockBasaltRegolith = metaBlockFalling.addSubBlock(2, new SubBlock("basaltregolith", "amunra:black_stone", "shovel", 1, 1.0F, 3.0F));
+        blockObsidiSand = metaBlockFalling
+                .addSubBlock(0, new SubBlock("obsidianSand", "amunra:obsidiansand", "shovel", 2, 20.0F, 100.0F));
+        blockObsidiGravel = metaBlockFalling
+                .addSubBlock(1, new SubBlock("obsidianGravel", "amunra:obsidiangravel", "shovel", 2, 30.0F, 300.0F));
+        blockBasaltRegolith = metaBlockFalling
+                .addSubBlock(2, new SubBlock("basaltregolith", "amunra:black_stone", "shovel", 1, 1.0F, 3.0F));
 
         metaBlockFalling.register();
 
-        //Blocks.diamond_ore
+        // Blocks.diamond_ore
 
         metaBlockPlant = new BlockBushMulti("basePlant", Material.plants);
         metaBlockPlant.setStepSound(Block.soundTypeGrass);
-        blockMethaneTGrass = metaBlockPlant.addSubBlock(0, (SubBlock) new MethaneTallGrass("methaneTallGrass", "amunra:methanetallgrass")
-                .setHarvestInfo(null, 0).setHardness(0.0F));
+        blockMethaneTGrass = metaBlockPlant.addSubBlock(
+                0,
+                (SubBlock) new MethaneTallGrass("methaneTallGrass", "amunra:methanetallgrass").setHarvestInfo(null, 0)
+                        .setHardness(0.0F));
         metaBlockPlant.register();
 
         // LOGS
         metaBlockLog = new BlockLogMeta("log1", Material.wood);
         metaBlockLog.setStepSound(Block.soundTypeWood);
 
-        blockMethaneLog = metaBlockLog.addSubBlock(0, new SubBlockWood("methanewood", "amunra:log_methane", "amunra:log_methane_top", "axe", 1));
+        blockMethaneLog = metaBlockLog.addSubBlock(
+                0,
+                new SubBlockWood("methanewood", "amunra:log_methane", "amunra:log_methane_top", "axe", 1));
 
         metaBlockLog.register();
 
         // WOOD, other wood, etc
-        metaBlockNonRotational  = new BlockBasicMeta("wood1", Material.wood);
-        blockPodBark            = metaBlockNonRotational.addSubBlock(0, new SubBlock("podBark", "amunra:pod_bark", "axe", 0));
-        blockPodLeaf            = metaBlockNonRotational.addSubBlock(1, (SubBlock) new PodMeatBlock("podleaf", "amunra:podleaves").setLightLevel(0.8F));
-        blockMethanePlanks      = metaBlockNonRotational.addSubBlock(2, new SubBlock("methanePlanks", "amunra:planks_methane", "axe", 0));
-        blockPodPlanks          = metaBlockNonRotational.addSubBlock(3, new SubBlock("podPlanks", "amunra:planks_pod", "axe", 0));
+        metaBlockNonRotational = new BlockBasicMeta("wood1", Material.wood);
+        blockPodBark = metaBlockNonRotational.addSubBlock(0, new SubBlock("podBark", "amunra:pod_bark", "axe", 0));
+        blockPodLeaf = metaBlockNonRotational
+                .addSubBlock(1, (SubBlock) new PodMeatBlock("podleaf", "amunra:podleaves").setLightLevel(0.8F));
+        blockMethanePlanks = metaBlockNonRotational
+                .addSubBlock(2, new SubBlock("methanePlanks", "amunra:planks_methane", "axe", 0));
+        blockPodPlanks = metaBlockNonRotational
+                .addSubBlock(3, new SubBlock("podPlanks", "amunra:planks_pod", "axe", 0));
         metaBlockNonRotational.register();
 
         // LEAVES
@@ -500,44 +532,50 @@ public class ARBlocks {
         metaBlockSapling = new BlockBushMulti("saplings", Material.grass, 7);
         metaBlockSapling.setTickRandomly(true);
 
-        blockMethaneSapling = metaBlockSapling.addSubBlock(0, new ARTreeSapling("mTreeSapling", "amunra:methane_tree_sapling").setWood(blockMethaneLog).setLeaves(blockMethaneLeaf));
-        blockPodSapling     = metaBlockSapling.addSubBlock(1, new PodSapling("podSapling", "amunra:lumipod_sapling").setWood(blockPodBark).setLeaves(blockPodLeaf));
-
+        blockMethaneSapling = metaBlockSapling.addSubBlock(
+                0,
+                new ARTreeSapling("mTreeSapling", "amunra:methane_tree_sapling").setWood(blockMethaneLog)
+                        .setLeaves(blockMethaneLeaf));
+        blockPodSapling = metaBlockSapling.addSubBlock(
+                1,
+                new PodSapling("podSapling", "amunra:lumipod_sapling").setWood(blockPodBark).setLeaves(blockPodLeaf));
 
         metaBlockSapling.register();
 
         // MACHINES
         metaBlockMachine = new BlockMachineMeta("machines1", Material.iron);
 
-        blockIsotopeGeneratorBasic = metaBlockMachine.addSubBlock(0, new BlockIsotopeGenerator(
-                "isotopeGeneratorBasic",
-                AmunRa.TEXTUREPREFIX + "machine_nuclear", // AmunRa.TEXTUREPREFIX + "machine_nuclear"
-                GalacticraftCore.TEXTURE_PREFIX + "machine_output",
-                GalacticraftCore.TEXTURE_PREFIX + "machine_blank",
-                0.5F
-            )
-        );
+        blockIsotopeGeneratorBasic = metaBlockMachine.addSubBlock(
+                0,
+                new BlockIsotopeGenerator(
+                        "isotopeGeneratorBasic",
+                        AmunRa.TEXTUREPREFIX + "machine_nuclear", // AmunRa.TEXTUREPREFIX + "machine_nuclear"
+                        GalacticraftCore.TEXTURE_PREFIX + "machine_output",
+                        GalacticraftCore.TEXTURE_PREFIX + "machine_blank",
+                        0.5F));
 
-        blockIsotopeGeneratorAdvanced = metaBlockMachine.addSubBlock(1, new BlockIsotopeGenerator(
-                "isotopeGeneratorAdvanced",
-                AmunRa.TEXTUREPREFIX + "machine_nuclear_advanced", // AmunRa.TEXTUREPREFIX + "machine_nuclear"
-                AsteroidsModule.TEXTURE_PREFIX + "machine_output",
-                AsteroidsModule.TEXTURE_PREFIX + "machine",
-                5.0F
-            )
-        );
+        blockIsotopeGeneratorAdvanced = metaBlockMachine.addSubBlock(
+                1,
+                new BlockIsotopeGenerator(
+                        "isotopeGeneratorAdvanced",
+                        AmunRa.TEXTUREPREFIX + "machine_nuclear_advanced", // AmunRa.TEXTUREPREFIX + "machine_nuclear"
+                        AsteroidsModule.TEXTURE_PREFIX + "machine_output",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine",
+                        5.0F));
 
-        blockMothershipController = metaBlockMachine.addSubBlock(2, new BlockMothershipController(
-                "mothershipController",
-                AmunRa.TEXTUREPREFIX + "controller",
-                AsteroidsModule.TEXTURE_PREFIX + "machine"
-            )
-        );
+        blockMothershipController = metaBlockMachine.addSubBlock(
+                2,
+                new BlockMothershipController(
+                        "mothershipController",
+                        AmunRa.TEXTUREPREFIX + "controller",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine"));
 
-        blockMothershipSettings = metaBlockMachine.addSubBlock(3, new BlockMothershipSettings(
-                "mothershipSettings",
-                AmunRa.TEXTUREPREFIX + "settings-terminal",
-                AsteroidsModule.TEXTURE_PREFIX + "machine"));
+        blockMothershipSettings = metaBlockMachine.addSubBlock(
+                3,
+                new BlockMothershipSettings(
+                        "mothershipSettings",
+                        AmunRa.TEXTUREPREFIX + "settings-terminal",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine"));
 
         metaBlockMachine.register();
 
@@ -546,51 +584,58 @@ public class ARBlocks {
         metaBlockMothershipEngineJet = new BlockMothershipJetMeta("machines2", Material.iron);
 
         // rocket engine
-        blockMsEngineRocketJet = metaBlockMothershipEngineJet.addSubBlock(0, new MothershipEngineJetRocket(
-                "mothershipEngineRocketJet",
-                AsteroidsModule.TEXTURE_PREFIX + "machine",
-                AmunRa.TEXTUREPREFIX+"mothership-jet-rocket"//AsteroidsModule.TEXTURE_PREFIX + "machine"
-            )
-        );
+        blockMsEngineRocketJet = metaBlockMothershipEngineJet.addSubBlock(
+                0,
+                new MothershipEngineJetRocket(
+                        "mothershipEngineRocketJet",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine",
+                        AmunRa.TEXTUREPREFIX + "mothership-jet-rocket"// AsteroidsModule.TEXTURE_PREFIX + "machine"
+                ));
 
-        blockMsEngineIonJet = metaBlockMothershipEngineJet.addSubBlock(1, new MothershipEngineJetIon(
-                "mothershipEngineRocketJetIon",
-                AsteroidsModule.TEXTURE_PREFIX + "machine",
-                AmunRa.TEXTUREPREFIX+"mothership-jet-ion"
-            )
-        );
+        blockMsEngineIonJet = metaBlockMothershipEngineJet.addSubBlock(
+                1,
+                new MothershipEngineJetIon(
+                        "mothershipEngineRocketJetIon",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine",
+                        AmunRa.TEXTUREPREFIX + "mothership-jet-ion"));
 
         metaBlockMothershipEngineJet.register();
 
         metaBlockMachine2 = new BlockMachineMeta("machines3", Material.iron);
 
-        blockScale = metaBlockMachine2.addSubBlock(0, new BlockScale("blockScale",
-                AmunRa.TEXTUREPREFIX+"scale_side",
-                AmunRa.TEXTUREPREFIX+"scale_top",
-                AmunRa.TEXTUREPREFIX+"scale",
-                GalacticraftCore.TEXTURE_PREFIX+"machine"));
+        blockScale = metaBlockMachine2.addSubBlock(
+                0,
+                new BlockScale(
+                        "blockScale",
+                        AmunRa.TEXTUREPREFIX + "scale_side",
+                        AmunRa.TEXTUREPREFIX + "scale_top",
+                        AmunRa.TEXTUREPREFIX + "scale",
+                        GalacticraftCore.TEXTURE_PREFIX + "machine"));
 
-        blockGravity = metaBlockMachine2.addSubBlock(1, new BlockGravitation("gravity",
-                AmunRa.TEXTUREPREFIX + "gravity",
-                AsteroidsModule.TEXTURE_PREFIX + "machine_input",
-                AsteroidsModule.TEXTURE_PREFIX + "machine",
-                AsteroidsModule.TEXTURE_PREFIX + "machine_input")
-                );
+        blockGravity = metaBlockMachine2.addSubBlock(
+                1,
+                new BlockGravitation(
+                        "gravity",
+                        AmunRa.TEXTUREPREFIX + "gravity",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine_input",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine_input"));
 
         metaBlockMachine2.register();
 
         metaBlockMachineSpecialRender1 = new BlockMachineMetaDummyRender("machines4", Material.iron);
 
-        blockShuttleDock = metaBlockMachineSpecialRender1.addSubBlock(0, new BlockShuttleDock("shuttleDock", AsteroidsModule.TEXTURE_PREFIX + "machine"));
+        blockShuttleDock = metaBlockMachineSpecialRender1
+                .addSubBlock(0, new BlockShuttleDock("shuttleDock", AsteroidsModule.TEXTURE_PREFIX + "machine"));
 
-        blockHydro = metaBlockMachineSpecialRender1.addSubBlock(1, new BlockHydroponics(
-                "hydroponics",
-                GalacticraftCore.TEXTURE_PREFIX+"machine_input"));
+        blockHydro = metaBlockMachineSpecialRender1
+                .addSubBlock(1, new BlockHydroponics("hydroponics", GalacticraftCore.TEXTURE_PREFIX + "machine_input"));
 
         metaBlockMachineSpecialRender1.register();
 
         metaBlockFake = new BlockMetaFake("blockFake", Material.iron);
-        fakeBlockSealable = metaBlockFake.addSubBlock(0, new FakeBlock("fakeBlockSealable", AsteroidsModule.TEXTURE_PREFIX + "machine"));
+        fakeBlockSealable = metaBlockFake
+                .addSubBlock(0, new FakeBlock("fakeBlockSealable", AsteroidsModule.TEXTURE_PREFIX + "machine"));
         metaBlockFake.register();
 
         initChests();
@@ -598,27 +643,24 @@ public class ARBlocks {
         // boosters, aka the blocks which are attached to the jets
         metaBlockMothershipEngineBooster = new BlockMothershipBoosterMeta("msBoosters1", Material.iron);
 
-        blockMsEngineRocketBooster = metaBlockMothershipEngineBooster.addSubBlock(0, new MothershipEngineBoosterBase(
-                "mothershipEngineRocketBooster",
-                AsteroidsModule.TEXTURE_PREFIX + "machine",
-                AsteroidsModule.TEXTURE_PREFIX + "machine_side"
-            )
-        );
+        blockMsEngineRocketBooster = metaBlockMothershipEngineBooster.addSubBlock(
+                0,
+                new MothershipEngineBoosterBase(
+                        "mothershipEngineRocketBooster",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine_side"));
 
-        blockMsEngineIonBooster = metaBlockMothershipEngineBooster.addSubBlock(1, new MothershipEngineBoosterIon(
-                "mothershipEngineRocketBoosterIon",
-                AsteroidsModule.TEXTURE_PREFIX + "machine",
-                AsteroidsModule.TEXTURE_PREFIX + "machine_side_warning"
-            )
-        );
+        blockMsEngineIonBooster = metaBlockMothershipEngineBooster.addSubBlock(
+                1,
+                new MothershipEngineBoosterIon(
+                        "mothershipEngineRocketBoosterIon",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine",
+                        AsteroidsModule.TEXTURE_PREFIX + "machine_side_warning"));
 
         metaBlockMothershipEngineBooster.register();
         // MOTHERSHIP ENGINES END
 
-
         setLeafDroppingSapling(blockMethaneLeaf, blockMethaneSapling);
-
-
 
         // STAIRS
         stairsObsidianBrick = new BlockStairsAR(blockObsidianBrick);
@@ -648,7 +690,12 @@ public class ARBlocks {
     }
 
     private static void initChests() {
-        BlockARChest chestBlock = new BlockARChest(Material.rock, "aluChest", new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-alu-single.png"), new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-alu-double.png"), AmunRa.TEXTUREPREFIX+"alucrate");
+        BlockARChest chestBlock = new BlockARChest(
+                Material.rock,
+                "aluChest",
+                new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-alu-single.png"),
+                new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-alu-double.png"),
+                AmunRa.TEXTUREPREFIX + "alucrate");
         chestBlock.setMass(1.0F);
         chestBlock.setHarvestLevel("pickaxe", 0);
         chestBlock.setHardness(1.0F).setResistance(1.0F);
@@ -656,8 +703,11 @@ public class ARBlocks {
         GameRegistry.registerBlock(chestBlock, ItemBlockDesc.class, chestBlock.getUnlocalizedName());
         chestAlu = new BlockMetaPair(chestBlock, (byte) 0);
 
-
-        BlockARChest steelChest = new BlockARChestLarge(Material.rock, "steelChest", new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-steel-single.png"), GalacticraftCore.TEXTURE_PREFIX+"machine_blank");
+        BlockARChest steelChest = new BlockARChestLarge(
+                Material.rock,
+                "steelChest",
+                new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-steel-single.png"),
+                GalacticraftCore.TEXTURE_PREFIX + "machine_blank");
         steelChest.setMass(4.0F);
         steelChest.setHarvestLevel("pickaxe", 0);
         steelChest.setHardness(3.0F).setResistance(50.0F);
@@ -670,27 +720,27 @@ public class ARBlocks {
         // SLABS
 
         // rock
-        metaSlabRock        = new BlockSlabMeta("rockSlab", Material.rock);
-        metaDoubleslabRock  = new BlockDoubleslabMeta("rockDoubleslab", Material.rock, metaSlabRock);
-        slabBasaltBlock     = metaSlabRock.addSubBlock(0, blockBasalt);
-        slabBasaltBrick     = metaSlabRock.addSubBlock(1, blockBasaltBrick);
-        slabBasaltSmooth    = metaSlabRock.addSubBlock(2, blockSmoothBasalt);
-        slabObsidianBrick   = metaSlabRock.addSubBlock(3, blockObsidianBrick);
-        slabAluCrate        = metaSlabRock.addSubBlock(4, blockAluCrate);
+        metaSlabRock = new BlockSlabMeta("rockSlab", Material.rock);
+        metaDoubleslabRock = new BlockDoubleslabMeta("rockDoubleslab", Material.rock, metaSlabRock);
+        slabBasaltBlock = metaSlabRock.addSubBlock(0, blockBasalt);
+        slabBasaltBrick = metaSlabRock.addSubBlock(1, blockBasaltBrick);
+        slabBasaltSmooth = metaSlabRock.addSubBlock(2, blockSmoothBasalt);
+        slabObsidianBrick = metaSlabRock.addSubBlock(3, blockObsidianBrick);
+        slabAluCrate = metaSlabRock.addSubBlock(4, blockAluCrate);
         metaDoubleslabRock.register(); // register the doubleslab first
         metaSlabRock.register();
 
         // wood
-        metaSlabWood        = new BlockSlabMeta("woodSlab", Material.wood);
-        metaDoubleslabWood  = new BlockDoubleslabMeta("woodDoubleslab", Material.wood, metaSlabWood);
-        slabPodPlanks       = metaSlabWood.addSubBlock(0, blockPodPlanks);
-        slabMethanePlanks   = metaSlabWood.addSubBlock(1, blockMethanePlanks);
+        metaSlabWood = new BlockSlabMeta("woodSlab", Material.wood);
+        metaDoubleslabWood = new BlockDoubleslabMeta("woodDoubleslab", Material.wood, metaSlabWood);
+        slabPodPlanks = metaSlabWood.addSubBlock(0, blockPodPlanks);
+        slabMethanePlanks = metaSlabWood.addSubBlock(1, blockMethanePlanks);
         metaDoubleslabWood.register();
         metaSlabWood.register();
     }
 
     private static void setLeafDroppingSapling(BlockMetaPair leaf, BlockMetaPair sapling) {
-        ((SubBlockLeaf)((BlockLeafMeta)leaf.getBlock()).getSubBlock(leaf.getMetadata())).setSaplingDropped(sapling);
+        ((SubBlockLeaf) ((BlockLeafMeta) leaf.getBlock()).getSubBlock(leaf.getMetadata())).setSaplingDropped(sapling);
     }
 
     protected static void registerOreDict() {
@@ -711,13 +761,10 @@ public class ARBlocks {
         // blockUraniumBlock
         OreDictionary.registerOre("blockUranium", getItemStack(blockUraniumBlock, 1));
 
-
-
     }
 
-
     public static SubBlockOre getSubBlockOre(BlockMetaPair bmp) {
-        return (SubBlockOre) ((BlockBasicMeta)bmp.getBlock()).getSubBlock(bmp.getMetadata());
+        return (SubBlockOre) ((BlockBasicMeta) bmp.getBlock()).getSubBlock(bmp.getMetadata());
     }
 
 }

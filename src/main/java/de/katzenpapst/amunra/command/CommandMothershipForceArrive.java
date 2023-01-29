@@ -1,10 +1,11 @@
 package de.katzenpapst.amunra.command;
 
-import de.katzenpapst.amunra.mothership.Mothership;
-import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
+
+import de.katzenpapst.amunra.mothership.Mothership;
+import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
 
 public class CommandMothershipForceArrive extends CommandBase {
 
@@ -13,8 +14,7 @@ public class CommandMothershipForceArrive extends CommandBase {
     }
 
     @Override
-    public int getRequiredPermissionLevel()
-    {
+    public int getRequiredPermissionLevel() {
         return 2;
     }
 
@@ -30,13 +30,13 @@ public class CommandMothershipForceArrive extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
-        if(sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
-            MothershipWorldProvider msProvider = ((MothershipWorldProvider)sender.getEntityWorld().provider);
+        if (sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
+            MothershipWorldProvider msProvider = ((MothershipWorldProvider) sender.getEntityWorld().provider);
 
-            if(!((Mothership)msProvider.getCelestialBody()).isInTransit()) {
+            if (!((Mothership) msProvider.getCelestialBody()).isInTransit()) {
                 sender.addChatMessage(new ChatComponentText("Mothership not in transit"));
             } else {
-                ((Mothership)msProvider.getCelestialBody()).forceArrival();
+                ((Mothership) msProvider.getCelestialBody()).forceArrival();
             }
         } else {
             sender.addChatMessage(new ChatComponentText("Not on a mothership"));

@@ -1,9 +1,11 @@
 package de.katzenpapst.amunra.inventory;
 
-import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
+
 import net.minecraft.entity.player.InventoryPlayer;
+
+import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 
 public class ContainerIonEngine extends ContainerRocketEngine {
 
@@ -16,6 +18,5 @@ public class ContainerIonEngine extends ContainerRocketEngine {
         super.initSlots(tile);
         this.addSlotToContainer(new SlotSpecific(tile, 1, 152, 86, ItemElectricBase.class));
     }
-
 
 }

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeGenBaseOrbit;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
@@ -26,32 +27,27 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     }
 
     @Override
-    public boolean unloadQueuedChunks()
-    {
+    public boolean unloadQueuedChunks() {
         return false;
     }
 
     @Override
-    public int getLoadedChunkCount()
-    {
+    public int getLoadedChunkCount() {
         return 0;
     }
 
     @Override
-    public boolean saveChunks(boolean var1, IProgressUpdate var2)
-    {
+    public boolean saveChunks(boolean var1, IProgressUpdate var2) {
         return true;
     }
 
     @Override
-    public boolean canSave()
-    {
+    public boolean canSave() {
         return true;
     }
 
     @Override
-    public Chunk provideChunk(int chunkX, int chunkZ)
-    {
+    public Chunk provideChunk(int chunkX, int chunkZ) {
         this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
         final Block[] ids = new Block[32768];
         Arrays.fill(ids, Blocks.air);
@@ -60,25 +56,21 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
         final Chunk chunk = new Chunk(this.worldObjNonPrivate, ids, meta, chunkX, chunkZ);
 
         final byte[] biomesArray = chunk.getBiomeArray();
-        for (int i = 0; i < biomesArray.length; ++i)
-        {
+        for (int i = 0; i < biomesArray.length; ++i) {
             biomesArray[i] = (byte) BiomeGenBaseOrbit.space.biomeID;
         }
-
 
         chunk.generateSkylightMap();
         return chunk;
     }
 
     @Override
-    public boolean chunkExists(int par1, int par2)
-    {
+    public boolean chunkExists(int par1, int par2) {
         return true;
     }
 
     @Override
-    public void populate(IChunkProvider par1IChunkProvider, int chunkX, int chunkZ)
-    {
+    public void populate(IChunkProvider par1IChunkProvider, int chunkX, int chunkZ) {
 
         BlockFalling.fallInstantly = true;
         final int blockX = chunkX * 16;
@@ -87,8 +79,7 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
         final long seed1 = this.rand.nextLong() / 2L * 2L + 1L;
         final long seed2 = this.rand.nextLong() / 2L * 2L + 1L;
         this.rand.setSeed(chunkX * seed1 + chunkZ * seed2 ^ this.worldObjNonPrivate.getSeed());
-        if (blockX == 0 && blockZ == 0)
-        {
+        if (blockX == 0 && blockZ == 0) {
             // this generates the basis structure
 
             new MothershipWorldGen().generate(this.worldObjNonPrivate, this.rand, 0, 64, 0);

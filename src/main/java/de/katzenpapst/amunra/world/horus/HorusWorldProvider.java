@@ -2,12 +2,13 @@ package de.katzenpapst.amunra.world.horus;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
+
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.IChunkProvider;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.world.AmunraWorldChunkManager;
 import de.katzenpapst.amunra.world.AmunraWorldProvider;
-
 
 public class HorusWorldProvider extends AmunraWorldProvider {
 

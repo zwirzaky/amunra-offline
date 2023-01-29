@@ -2,6 +2,12 @@ package de.katzenpapst.amunra.block.machine.mothershipEngine;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
@@ -10,11 +16,6 @@ import de.katzenpapst.amunra.item.ARItems;
 import de.katzenpapst.amunra.item.ItemDamagePair;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineIon;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class MothershipEngineJetIon extends MothershipEngineJetBase {
 
@@ -27,15 +28,15 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     @Override
     protected TileEntityMothershipEngineIon getMyTileEntity(World world, int x, int y, int z) {
         TileEntity t = world.getTileEntity(x, y, z);
-        if(t == null || !(t instanceof TileEntityMothershipEngineIon)) {
+        if (t == null || !(t instanceof TileEntityMothershipEngineIon)) {
             return null;
         }
-        return (TileEntityMothershipEngineIon)t;
+        return (TileEntityMothershipEngineIon) t;
     }
 
     @Override
-    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
+            float hitY, float hitZ) {
         // do the isRemote thing here, too?
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_ION_ENGINE, world, x, y, z);
         return true;
@@ -48,41 +49,36 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata)
-    {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityMothershipEngineIon();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return AmunRa.dummyRendererId;
     }
 
     @Override
     protected ItemDamagePair getItem() {
-        if(item == null) {
+        if (item == null) {
             item = ARItems.jetItemIon;
         }
         return item;
     }
 
     @Override
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
-    {
+    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_) {
         return item.getItem();
     }
 
     @Override
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
-    {
+    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
         /**
          * Returns whether or not this bed block is the head of the bed.
          */
         return item.getItem();
     }
-
 
     @Override
     public int damageDropped(int meta) {
@@ -92,8 +88,8 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
         TileEntity leTile = world.getTileEntity(x, y, z);
-        if(leTile instanceof TileEntityMothershipEngineAbstract) {
-            ((TileEntityMothershipEngineAbstract)leTile).scheduleUpdate();
+        if (leTile instanceof TileEntityMothershipEngineAbstract) {
+            ((TileEntityMothershipEngineAbstract) leTile).scheduleUpdate();
             // world.markBlockForUpdate(x, y, z);
         }
     }
@@ -103,8 +99,7 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
      *
      */
     @Override
-    public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta)
-    {
+    public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
         return meta;
     }
 

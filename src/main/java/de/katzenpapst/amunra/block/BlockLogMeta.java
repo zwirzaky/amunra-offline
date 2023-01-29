@@ -1,8 +1,7 @@
 package de.katzenpapst.amunra.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,79 +10,76 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockLogMeta extends BlockBasicMeta {
 
-	public BlockLogMeta(String name, Material mat) {
-		super(name, mat, 4); // only 4 subblocks of wood are possible
-	}
+    public BlockLogMeta(String name, Material mat) {
+        super(name, mat, 4); // only 4 subblocks of wood are possible
+    }
 
-	@Override
-	public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
-		if(!(sb instanceof SubBlockWood)) {
-			throw new IllegalArgumentException("BlockWoodMulti can only accept SubBlockWood");
-		}
-		return super.addSubBlock(meta, sb);
-	}
-
-	@Override
-	public SubBlock getSubBlock(int meta) {
-		return subBlocksArray[(meta & 3)]; // use only the first 2 bits, the rest is rotation
-	}
-
-	@SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta)
-    {
-		// /*Face 0 (Bottom Face) 	Face 1 (Top Face) 	Face 2 (Northern Face) 	Face 3 (Southern Face) 	Face 4 (Western Face) 	Face 5 (Eastern Face)*/
-		int rotationMeta = (meta & 12) >> 2;
-
-		return getSubBlock(meta).getIcon(side, rotationMeta);
+    public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
+        if (!(sb instanceof SubBlockWood)) {
+            throw new IllegalArgumentException("BlockWoodMulti can only accept SubBlockWood");
+        }
+        return super.addSubBlock(meta, sb);
     }
 
-	@Override
-	public int damageDropped(int meta)
-    {
-		return super.damageDropped(meta & 3);
+    @Override
+    public SubBlock getSubBlock(int meta) {
+        return subBlocksArray[(meta & 3)]; // use only the first 2 bits, the rest is rotation
     }
 
-	@Override
-	public boolean isWood(IBlockAccess world, int x, int y, int z)
-    {
-         return true;
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int side, int meta) {
+        // /*Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
+        // Face 5 (Eastern Face)*/
+        int rotationMeta = (meta & 12) >> 2;
+
+        return getSubBlock(meta).getIcon(side, rotationMeta);
     }
 
-	/**
+    @Override
+    public int damageDropped(int meta) {
+        return super.damageDropped(meta & 3);
+    }
+
+    @Override
+    public boolean isWood(IBlockAccess world, int x, int y, int z) {
+        return true;
+    }
+
+    /**
      * The type of render function that is called for this block
      */
     @Override
-	public int getRenderType()
-    {
+    public int getRenderType() {
         return 31; // ..?
     }
 
     @Override
-	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
-    {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         int meta = world.getBlockMetadata(x, y, z);
-        if (getSubBlock(meta) != null)
-        {
+        if (getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
         }
 
         return super.getPickBlock(target, world, x, y, z);
     }
 
-	/**
+    /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
     @Override
-	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
-    {
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ,
+            int metadata) {
         int actualMeta = metadata & 3;
         byte rotationalMeta = 0;
 
-        switch (side)
-        {
+        switch (side) {
             case 0:
             case 1:
                 rotationalMeta = 0;
@@ -101,8 +97,7 @@ public class BlockLogMeta extends BlockBasicMeta {
     }
 
     @Override
-	public boolean canSustainLeaves(IBlockAccess world, int x, int y, int z)
-    {
+    public boolean canSustainLeaves(IBlockAccess world, int x, int y, int z) {
         return true;
     }
 

@@ -1,7 +1,8 @@
 package de.katzenpapst.amunra.client;
 
-import de.katzenpapst.amunra.vec.Vector2int;
 import net.minecraft.util.ResourceLocation;
+
+import de.katzenpapst.amunra.vec.Vector2int;
 
 public class RingsRenderInfo {
 

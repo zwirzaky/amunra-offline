@@ -1,12 +1,14 @@
 package de.katzenpapst.amunra.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
 import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
 
 public class BlockMachineMetaDummyRender extends BlockMachineMeta implements IPartialSealableBlock {
 
@@ -20,35 +22,29 @@ public class BlockMachineMetaDummyRender extends BlockMachineMeta implements IPa
         // TODO Auto-generated constructor stub
     }
 
-
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return false;
     }
 
     @Override
-    public boolean isBlockNormalCube()
-    {
+    public boolean isBlockNormalCube() {
         return false;
     }
 
     @Override
-    public boolean isNormalCube()
-    {
+    public boolean isNormalCube() {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return AmunRa.dummyRendererId;
     }
 

@@ -12,8 +12,7 @@ public class TileEntityARChestLarge extends TileEntityARChest {
      * Returns the number of slots in the inventory.
      */
     @Override
-    public int getSizeInventory()
-    {
+    public int getSizeInventory() {
         return 54;
     }
 

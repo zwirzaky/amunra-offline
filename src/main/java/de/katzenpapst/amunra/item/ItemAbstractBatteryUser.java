@@ -4,6 +4,7 @@ import java.util.List;
 
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.items.GCItems;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,27 +15,24 @@ import net.minecraft.world.World;
 
 public class ItemAbstractBatteryUser extends ItemElectricBase {
 
-
-
     @Override
     public float getMaxElectricityStored(ItemStack theItem) {
-        if(theItem.getTagCompound() == null) {
+        if (theItem.getTagCompound() == null) {
             theItem.setTagCompound(new NBTTagCompound());
         }
-        if(theItem.getTagCompound().hasKey("maxEnergy")) {
+        if (theItem.getTagCompound().hasKey("maxEnergy")) {
             return theItem.getTagCompound().getFloat("maxEnergy");
         }
 
         ItemStack bat = getUsedBattery(theItem, false);
-        float maxEnergy = ((ItemElectricBase)bat.getItem()).getMaxElectricityStored(bat);
+        float maxEnergy = ((ItemElectricBase) bat.getItem()).getMaxElectricityStored(bat);
         theItem.getTagCompound().setFloat("maxEnergy", maxEnergy);
         return maxEnergy;
-        //return 15000; // fallback
+        // return 15000; // fallback
     }
 
     @Override
-    public void onCreated(ItemStack itemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+    public void onCreated(ItemStack itemStack, World par2World, EntityPlayer par3EntityPlayer) {
         // important NOT to call the parent for this, because there are crafting recipes
         // which create non-empty rayguns
         // this.setElectricity(itemStack, 0);
@@ -48,27 +46,26 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
      * @return
      */
     public ItemStack getUsedBattery(ItemStack theItem, boolean setEnergy) {
-        if (theItem.getTagCompound() == null)
-        {
+        if (theItem.getTagCompound() == null) {
             theItem.setTagCompound(new NBTTagCompound());
         }
 
         NBTTagCompound stackNBT = theItem.getTagCompound().getCompoundTag("batteryStack");
         ItemStack batteryStack = null;
-        if(stackNBT == null) {
+        if (stackNBT == null) {
             // default?
             batteryStack = new ItemStack(GCItems.battery, 1, 0);
         } else {
             batteryStack = ItemStack.loadItemStackFromNBT(stackNBT);
-            if(batteryStack == null) {
+            if (batteryStack == null) {
                 batteryStack = new ItemStack(GCItems.battery, 1, 0);
             }
         }
 
-
         // ItemStack bat = new ItemStack(getUsedBatteryID(theItem), 1, 0);
-        if(setEnergy) {
-            ((ItemElectricBase)batteryStack.getItem()).setElectricity(batteryStack, this.getElectricityStored(theItem));
+        if (setEnergy) {
+            ((ItemElectricBase) batteryStack.getItem())
+                    .setElectricity(batteryStack, this.getElectricityStored(theItem));
         }
         return batteryStack;
     }
@@ -80,22 +77,22 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
      * @param battery
      */
     public void setUsedBattery(ItemStack theItem, ItemStack battery) {
-        if (theItem.getTagCompound() == null)
-        {
+        if (theItem.getTagCompound() == null) {
             theItem.setTagCompound(new NBTTagCompound());
         }
 
         NBTTagCompound batteryStackCompound = new NBTTagCompound();
         battery.writeToNBT(batteryStackCompound);
 
-        theItem.getTagCompound().setFloat("maxEnergy", ((ItemElectricBase)battery.getItem()).getMaxElectricityStored(battery));
+        theItem.getTagCompound()
+                .setFloat("maxEnergy", ((ItemElectricBase) battery.getItem()).getMaxElectricityStored(battery));
         theItem.getTagCompound().setTag("batteryStack", batteryStackCompound);
 
-        this.setElectricity(theItem, ((ItemElectricBase)battery.getItem()).getElectricityStored(battery));
+        this.setElectricity(theItem, ((ItemElectricBase) battery.getItem()).getElectricityStored(battery));
     }
 
     public Item getUsedBatteryID(ItemStack theItem) {
-        if(theItem.getTagCompound().hasKey("batteryStack")) {
+        if (theItem.getTagCompound().hasKey("batteryStack")) {
             NBTTagCompound stackNBT = theItem.getTagCompound().getCompoundTag("batteryStack");
             ItemStack batteryStack = ItemStack.loadItemStackFromNBT(stackNBT);
 
@@ -112,18 +109,18 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
         // I'm somewhat afraid regarding the efficiency of this
         // this.setUsedBattery(stack, battery);
         // maybe this is better
-        this.setElectricity(stack, ((ItemElectricBase)battery.getItem()).getElectricityStored(battery));
+        this.setElectricity(stack, ((ItemElectricBase) battery.getItem()).getElectricityStored(battery));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4)
-    {
+    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
         Item batItem = getUsedBatteryID(itemStack);
         //
-        String s = StatCollector.translateToLocal("item.battery-using-item.powerlevel")+": " + StatCollector.translateToLocal(batItem.getUnlocalizedName()+".name");
+        String s = StatCollector.translateToLocal("item.battery-using-item.powerlevel") + ": "
+                + StatCollector.translateToLocal(batItem.getUnlocalizedName() + ".name");
 
         list.add(s);
     }

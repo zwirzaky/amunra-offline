@@ -1,5 +1,12 @@
 package de.katzenpapst.amunra.block.machine;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
@@ -7,12 +14,6 @@ import de.katzenpapst.amunra.GuiIds;
 import de.katzenpapst.amunra.block.BlockMachineMeta;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
 
@@ -26,26 +27,23 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
         iconFront = par1IconRegister.registerIcon(frontTexture);
-        //this.blockIcon = iconFront;
+        // this.blockIcon = iconFront;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        int realMeta = ((BlockMachineMeta)this.parent).getRotationMeta(meta);
+    public IIcon getIcon(int side, int meta) {
+        int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
         // we have the front thingy at front.. but what is front?
         // east is the output
         // I think front is south
         ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
-        //ForgeDirection output = CoordHelper.rotateForgeDirection(ForgeDirection.EAST, realMeta);
+        // ForgeDirection output = CoordHelper.rotateForgeDirection(ForgeDirection.EAST, realMeta);
 
-
-        if(side == front.ordinal()) {
+        if (side == front.ordinal()) {
             return this.iconFront;
         }
 
@@ -54,14 +52,12 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
     }
 
     @Override
-    protected void openGui(World world, int x, int y, int z, EntityPlayer entityPlayer)
-    {
+    protected void openGui(World world, int x, int y, int z, EntityPlayer entityPlayer) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_SETTINGS, world, x, y, z);
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata)
-    {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityMothershipSettings();
     }
 

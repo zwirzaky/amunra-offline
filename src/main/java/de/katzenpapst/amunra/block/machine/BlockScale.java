@@ -1,17 +1,18 @@
 package de.katzenpapst.amunra.block.machine;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.block.BlockMachineMeta;
-import de.katzenpapst.amunra.block.SubBlockMachine;
-import de.katzenpapst.amunra.helper.CoordHelper;
-import de.katzenpapst.amunra.tile.TileEntityBlockScale;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.block.BlockMachineMeta;
+import de.katzenpapst.amunra.block.SubBlockMachine;
+import de.katzenpapst.amunra.helper.CoordHelper;
+import de.katzenpapst.amunra.tile.TileEntityBlockScale;
 
 public class BlockScale extends SubBlockMachine {
 
@@ -31,8 +32,7 @@ public class BlockScale extends SubBlockMachine {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
 
         iconTop = par1IconRegister.registerIcon(topTexture);
@@ -43,30 +43,27 @@ public class BlockScale extends SubBlockMachine {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        int realMeta = ((BlockMachineMeta)this.parent).getRotationMeta(meta);
+    public IIcon getIcon(int side, int meta) {
+        int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
 
         ForgeDirection sideFD = ForgeDirection.getOrientation(side);
 
-
-        switch(sideFD) {
-        case UP:
-            return this.iconTop;
-        case DOWN:
-            return this.iconBottom;
-        default:
-            ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
-            if(sideFD == front) {
-                return this.iconFront;
-            }
-            return this.blockIcon;
+        switch (sideFD) {
+            case UP:
+                return this.iconTop;
+            case DOWN:
+                return this.iconBottom;
+            default:
+                ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
+                if (sideFD == front) {
+                    return this.iconFront;
+                }
+                return this.blockIcon;
         }
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata)
-    {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityBlockScale();
     }
 
@@ -78,8 +75,8 @@ public class BlockScale extends SubBlockMachine {
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
         TileEntity leTile = world.getTileEntity(x, y, z);
-        if(leTile instanceof TileEntityBlockScale) {
-            ((TileEntityBlockScale)leTile).doUpdate();
+        if (leTile instanceof TileEntityBlockScale) {
+            ((TileEntityBlockScale) leTile).doUpdate();
             // world.markBlockForUpdate(x, y, z);
         }
     }

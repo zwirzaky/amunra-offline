@@ -1,10 +1,21 @@
 package de.katzenpapst.amunra.client.gui.tabs;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown.IDropboxCallback;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.ITextBoxCallback;
+import micdoodle8.mods.galacticraft.core.util.ColorUtil;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+
 import de.katzenpapst.amunra.client.gui.GuiMothershipSettings;
 import de.katzenpapst.amunra.client.gui.GuiMothershipSettings.IMothershipSettingsTab;
 import de.katzenpapst.amunra.client.gui.elements.StringSelectBox;
@@ -12,18 +23,9 @@ import de.katzenpapst.amunra.client.gui.elements.StringSelectBox.ISelectBoxCallb
 import de.katzenpapst.amunra.helper.PlayerID;
 import de.katzenpapst.amunra.mothership.Mothership;
 import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown.IDropboxCallback;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.ITextBoxCallback;
-import micdoodle8.mods.galacticraft.core.util.ColorUtil;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
 
-abstract public class AbstractPermissionTab extends AbstractTab implements IDropboxCallback, ITextBoxCallback, ISelectBoxCallback, IMothershipSettingsTab {
-
+abstract public class AbstractPermissionTab extends AbstractTab
+        implements IDropboxCallback, ITextBoxCallback, ISelectBoxCallback, IMothershipSettingsTab {
 
     protected final TileEntityMothershipSettings tile;
 
@@ -34,7 +36,7 @@ abstract public class AbstractPermissionTab extends AbstractTab implements IDrop
     protected GuiButton addBtn;
     protected GuiButton rmBtn;
 
-    //protected Set<PlayerID> playerIdList =  new HashSet<PlayerID>();
+    // protected Set<PlayerID> playerIdList = new HashSet<PlayerID>();
     protected List<PlayerID> playerIdList = new ArrayList<PlayerID>();
 
     protected Map<Mothership.PermissionMode, String> permissionModeMap = new HashMap<Mothership.PermissionMode, String>();
@@ -42,14 +44,23 @@ abstract public class AbstractPermissionTab extends AbstractTab implements IDrop
     protected String error = "";
     protected float errorTime = 0;
 
-    public AbstractPermissionTab(TileEntityMothershipSettings tile, GuiMothershipSettings parent, Minecraft mc, int width, int height, int xSize, int ySize) {
+    public AbstractPermissionTab(TileEntityMothershipSettings tile, GuiMothershipSettings parent, Minecraft mc,
+            int width, int height, int xSize, int ySize) {
         super(parent, mc, width, height, xSize, ySize);
         this.tile = tile;
 
-        permissionModeMap.put(Mothership.PermissionMode.ALL, GCCoreUtil.translate("tile.mothershipSettings.permission.allowAll"));
-        permissionModeMap.put(Mothership.PermissionMode.NONE, GCCoreUtil.translate("tile.mothershipSettings.permission.allowNone"));
-        permissionModeMap.put(Mothership.PermissionMode.WHITELIST, GCCoreUtil.translate("tile.mothershipSettings.permission.whitelist"));
-        permissionModeMap.put(Mothership.PermissionMode.BLACKLIST, GCCoreUtil.translate("tile.mothershipSettings.permission.blacklist"));
+        permissionModeMap.put(
+                Mothership.PermissionMode.ALL,
+                GCCoreUtil.translate("tile.mothershipSettings.permission.allowAll"));
+        permissionModeMap.put(
+                Mothership.PermissionMode.NONE,
+                GCCoreUtil.translate("tile.mothershipSettings.permission.allowNone"));
+        permissionModeMap.put(
+                Mothership.PermissionMode.WHITELIST,
+                GCCoreUtil.translate("tile.mothershipSettings.permission.whitelist"));
+        permissionModeMap.put(
+                Mothership.PermissionMode.BLACKLIST,
+                GCCoreUtil.translate("tile.mothershipSettings.permission.blacklist"));
     }
 
     protected abstract void addUsername(Mothership mothership, String userName);
@@ -57,19 +68,19 @@ abstract public class AbstractPermissionTab extends AbstractTab implements IDrop
     protected abstract void removeUsernameFromList(int position);
 
     @Override
-    public boolean actionPerformed(GuiButton btn)
-    {
-        if(btn == addBtn) {
+    public boolean actionPerformed(GuiButton btn) {
+        if (btn == addBtn) {
             //
-            // AmunRa.packetPipeline.sendToServer(new PacketSimpleAR(EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER, this.tile.getMothership().getID(), textBoxUsername.text));
+            // AmunRa.packetPipeline.sendToServer(new PacketSimpleAR(EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER,
+            // this.tile.getMothership().getID(), textBoxUsername.text));
             addUsername(this.tile.getMothership(), textBoxUsername.text);
             textBoxUsername.text = "";
             addBtn.enabled = false;
             return true;
         }
-        if(btn == rmBtn) {
+        if (btn == rmBtn) {
             int selection = selectBox.getSelectedStringIndex();
-            if(selection != -1) {
+            if (selection != -1) {
                 removeUsernameFromList(selection);
                 selectBox.clearSelection();
                 applyData();
@@ -90,7 +101,7 @@ abstract public class AbstractPermissionTab extends AbstractTab implements IDrop
         int num = Mothership.PermissionMode.values().length;
         String[] result = new String[num];
 
-        for(int i=0;i<num;i++) {
+        for (int i = 0; i < num; i++) {
             result[i] = permissionModeMap.get(Mothership.PermissionMode.values()[i]);
         }
 
@@ -108,27 +119,35 @@ abstract public class AbstractPermissionTab extends AbstractTab implements IDrop
         final int guiX = (this.width - this.xSize) / 2;
         final int guiY = (this.height - this.ySize) / 2;
 
+        modeDropdown = new GuiElementDropdown(1, this, guiX + 90, guiY + 14, getDropdownOptions());
 
+        textBoxUsername = new GuiElementTextBox(2, this, guiX + 5, guiY + 30, 95, 20, "", false, 50, false);
 
-        modeDropdown = new GuiElementDropdown(1, this, guiX+90, guiY+14, getDropdownOptions());
+        selectBox = new StringSelectBox(this, 3, guiX + 5, guiY + 50, 95, 50);
 
-        textBoxUsername = new GuiElementTextBox(2, this, guiX+5, guiY+30, 95, 20, "", false, 50, false);
-
-        selectBox = new StringSelectBox(this, 3, guiX+5, guiY+50, 95, 50);
-
-
-        addBtn = new GuiButton(4, guiX+100, guiY+30, 70, 20, GCCoreUtil.translate("tile.mothershipSettings.permission.addUser"));
-        rmBtn = new GuiButton(5, guiX+100, guiY+50, 70, 20, GCCoreUtil.translate("tile.mothershipSettings.permission.removeUser"));
+        addBtn = new GuiButton(
+                4,
+                guiX + 100,
+                guiY + 30,
+                70,
+                20,
+                GCCoreUtil.translate("tile.mothershipSettings.permission.addUser"));
+        rmBtn = new GuiButton(
+                5,
+                guiX + 100,
+                guiY + 50,
+                70,
+                20,
+                GCCoreUtil.translate("tile.mothershipSettings.permission.removeUser"));
         rmBtn.enabled = false;
         addBtn.enabled = false;
 
-        /*this.addButton(applyButton);*/
+        /* this.addButton(applyButton); */
         this.addButton(modeDropdown);
         this.addButton(selectBox);
         this.addButton(addBtn);
         this.addButton(rmBtn);
         this.addTextBox(textBoxUsername);
-
 
         resetData();
     }
@@ -139,23 +158,26 @@ abstract public class AbstractPermissionTab extends AbstractTab implements IDrop
     }
 
     @Override
-    protected void drawExtraScreenElements(int mouseX, int mouseY, float ticks)
-    {
+    protected void drawExtraScreenElements(int mouseX, int mouseY, float ticks) {
         final int guiX = (this.width - this.xSize) / 2;
         final int guiY = (this.height - this.ySize) / 2;
 
-        this.fontRendererObj.drawString(this.getTooltip(), guiX+5, guiY+5, 4210752);
+        this.fontRendererObj.drawString(this.getTooltip(), guiX + 5, guiY + 5, 4210752);
 
+        this.fontRendererObj.drawString(
+                GCCoreUtil.translate("tile.mothershipSettings.permission.allowLabel") + ":",
+                guiX + 9,
+                guiY + 16,
+                4210752);
 
-        this.fontRendererObj.drawString(GCCoreUtil.translate("tile.mothershipSettings.permission.allowLabel") + ":", guiX+9, guiY+16, 4210752);
-
-        if(errorTime > 0) {
-            this.fontRendererObj.drawSplitString(error, guiX+102, guiY+80, 70, 4210752);
+        if (errorTime > 0) {
+            this.fontRendererObj.drawSplitString(error, guiX + 102, guiY + 80, 70, 4210752);
             errorTime -= ticks;
         }
-        //this.fontRendererObj.drawString("fooo", guiX+102, guiY+80, 4210752);
+        // this.fontRendererObj.drawString("fooo", guiX+102, guiY+80, 4210752);
 
-        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), guiX+8, guiY+this.ySize - 94, 4210752);
+        this.fontRendererObj
+                .drawString(GCCoreUtil.translate("container.inventory"), guiX + 8, guiY + this.ySize - 94, 4210752);
     }
 
     // DROPDOWN SHIT
@@ -210,6 +232,5 @@ abstract public class AbstractPermissionTab extends AbstractTab implements IDrop
         error = message;
         errorTime = 60.0F;
     }
-
 
 }

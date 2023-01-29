@@ -38,16 +38,15 @@ public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
 
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof MothershipFuelDisplayFluid)) {
+        if (!(other instanceof MothershipFuelDisplayFluid)) {
             return false;
         }
-        return fluid == ((MothershipFuelDisplayFluid)other).fluid;
+        return fluid == ((MothershipFuelDisplayFluid) other).fluid;
     }
 
     @Override
     public int hashCode() {
         return fluid.hashCode() + 89465;
     }
-
 
 }

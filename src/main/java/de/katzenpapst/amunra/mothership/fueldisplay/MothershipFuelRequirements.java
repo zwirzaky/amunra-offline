@@ -12,15 +12,15 @@ public class MothershipFuelRequirements {
     }
 
     public void add(MothershipFuelDisplay fuel, int amount) {
-        if(!data.containsKey(fuel)) {
+        if (!data.containsKey(fuel)) {
             data.put(fuel, amount);
         } else {
-            data.put(fuel, data.get(fuel)+amount);
+            data.put(fuel, data.get(fuel) + amount);
         }
     }
 
     public void merge(MothershipFuelRequirements other) {
-        for(MothershipFuelDisplay fuel: other.data.keySet()) {
+        for (MothershipFuelDisplay fuel : other.data.keySet()) {
             add(fuel, other.data.get(fuel));
         }
     }
@@ -34,7 +34,7 @@ public class MothershipFuelRequirements {
     }
 
     public int get(MothershipFuelDisplay key) {
-        if(data.containsKey(key)) {
+        if (data.containsKey(key)) {
             return data.get(key);
         }
         return 0;

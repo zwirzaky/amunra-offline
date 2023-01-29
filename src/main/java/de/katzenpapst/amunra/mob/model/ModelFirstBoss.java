@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 
 public class ModelFirstBoss extends ModelBiped {
 
-    //protected ModelRenderer frontmask;
+    // protected ModelRenderer frontmask;
     protected ModelRenderer headTopPart;
     protected ModelRenderer headSidePart1;
     protected ModelRenderer headSidePart2;
@@ -13,20 +13,17 @@ public class ModelFirstBoss extends ModelBiped {
     protected ModelRenderer beard;
 
     public ModelFirstBoss() {
-        //super(0.0F);
+        // super(0.0F);
         super(0.0F, 0.0F, 64, 64);
 
         // other stuff
         addHelmet();
     }
 
-    /*public ModelFirstBoss(float scaleOrSo) {
-        super(scaleOrSo);
-    }
-
-    public ModelFirstBoss(float scaleOrSo, float someYoffset, int textureX, int textureY) {
-        super(scaleOrSo, someYoffset, textureX, textureY);
-    }*/
+    /*
+     * public ModelFirstBoss(float scaleOrSo) { super(scaleOrSo); } public ModelFirstBoss(float scaleOrSo, float
+     * someYoffset, int textureX, int textureY) { super(scaleOrSo, someYoffset, textureX, textureY); }
+     */
 
     protected void addHelmet() {
         textureWidth = 64;
@@ -77,8 +74,7 @@ public class ModelFirstBoss extends ModelBiped {
         this.bipedHead.addChild(beard);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;

@@ -2,9 +2,10 @@ package de.katzenpapst.amunra.block;
 
 import java.util.Random;
 
-import de.katzenpapst.amunra.item.ARItems;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+
+import de.katzenpapst.amunra.item.ARItems;
 
 public class DustBlock extends SubBlock implements IMassiveBlock {
 
@@ -16,8 +17,7 @@ public class DustBlock extends SubBlock implements IMassiveBlock {
         super(name, texture, tool, harvestLevel);
     }
 
-    public DustBlock(String name, String texture, String tool,
-            int harvestLevel, float hardness, float resistance) {
+    public DustBlock(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
@@ -27,21 +27,18 @@ public class DustBlock extends SubBlock implements IMassiveBlock {
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune)
-    {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return ARItems.dustMote.getItem();
     }
 
     @Override
-    public int damageDropped(int meta)
-    {
+    public int damageDropped(int meta) {
         return ARItems.dustMote.getDamage();
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random)
-    {
-        return Math.min(random.nextInt(3)+random.nextInt(10)*fortune, 9);
+    public int quantityDropped(int meta, int fortune, Random random) {
+        return Math.min(random.nextInt(3) + random.nextInt(10) * fortune, 9);
     }
 
     @Override

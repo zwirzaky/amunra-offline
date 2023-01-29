@@ -1,15 +1,17 @@
 package de.katzenpapst.amunra.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.GuiIds;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.GuiIds;
 
 public class CraftingBlock extends SubBlock {
 
@@ -19,7 +21,7 @@ public class CraftingBlock extends SubBlock {
     protected IIcon blockIconSide;
 
     public CraftingBlock(String name) {
-        //super
+        // super
         super(name, "amunra:crafter", "pickaxe", 1, 5.0F, 5.0F);
         this.setStepSound(Block.soundTypeMetal);
 
@@ -27,8 +29,7 @@ public class CraftingBlock extends SubBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
         blockIcon = par1IconRegister.registerIcon(getTextureName());
         blockIconSide = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine_side");
         blockIconBottom = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine");
@@ -37,15 +38,14 @@ public class CraftingBlock extends SubBlock {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta)
-    {
-        switch(side) {
-        case 0:
-            return blockIconBottom;
-        case 1:
-            return blockIcon;
-        default:
-            return blockIconSide;
+    public IIcon getIcon(int side, int meta) {
+        switch (side) {
+            case 0:
+                return blockIconBottom;
+            case 1:
+                return blockIcon;
+            default:
+                return blockIconSide;
         }
     }
 
@@ -55,25 +55,22 @@ public class CraftingBlock extends SubBlock {
      * @param world The World Object.
      * @param x     , y, z The coordinate of the block.
      * @param side  The side the player clicked on.
-     * @param hitX  , hitY, hitZ The position the player clicked on relative to
-     *              the block.
+     * @param hitX  , hitY, hitZ The position the player clicked on relative to the block.
      */
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
+            float hitY, float hitZ) {
 
-        //onBlockActivated
+        // onBlockActivated
 
-        if (world.isRemote)
-        {
+        if (world.isRemote) {
             return true;
-        }
-        else
-        {
+        } else {
             entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_CRAFTING, world, x, y, z);
             return true;
         }
     }
 
 }
-// blockRegistry.addObject(58, "crafting_table", (new BlockWorkbench()).setHardness(2.5F).setStepSound(soundTypeWood).setBlockName("workbench").setBlockTextureName("crafting_table"));
+// blockRegistry.addObject(58, "crafting_table", (new
+// BlockWorkbench()).setHardness(2.5F).setStepSound(soundTypeWood).setBlockName("workbench").setBlockTextureName("crafting_table"));
