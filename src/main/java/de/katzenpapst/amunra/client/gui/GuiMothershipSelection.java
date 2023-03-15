@@ -85,7 +85,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
             World world) {
         // possibleBodies should be largely irrelevant here
         // hack
-        super(true, possibleBodies);
+        super(MapMode.VIEW, possibleBodies);
         // triggerBlock = blockToReturn;
 
         this.world = world;

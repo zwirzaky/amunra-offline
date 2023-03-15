@@ -33,7 +33,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     protected BoxInt2D exitBtnArea = new BoxInt2D();
     protected BoxInt2D buildMsBtnArea = new BoxInt2D();
 
-    public GuiShuttleSelection(boolean mapMode, List<CelestialBody> possibleBodies) {
+    public GuiShuttleSelection(MapMode mapMode, List<CelestialBody> possibleBodies) {
         super(mapMode, possibleBodies);
     }
 
@@ -277,6 +277,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
 
                 } // if itemstack
                 else if (next instanceof ArrayList) {
+                    @SuppressWarnings("unchecked")
                     ArrayList<ItemStack> items = (ArrayList<ItemStack>) next;
 
                     int amount = 0;
@@ -310,7 +311,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     93,
                     12);
 
-            if (!this.mapMode) {
+            if (this.mapMode != MapMode.VIEW) {
                 if (buildMsBtnArea.isWithin(mousePosX, mousePosY)) {
                     this.drawTexturedModalRect(
                             buildMsBtnArea.minX,
@@ -348,7 +349,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     true,
                     false);
 
-            if (!mapMode) {
+            if (this.mapMode != MapMode.VIEW) {
                 this.drawSplitString(
                         GCCoreUtil.translate("gui.message.createSS.name").toUpperCase(),
                         width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
@@ -429,7 +430,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         boolean clickHandled = false;
         // CelestialBody curSelection = this.selectedBody;
 
-        if (!this.mapMode) {
+        if (this.mapMode != MapMode.VIEW) {
             if (exitBtnArea.isWithin(x, y)) {
                 cancelLaunch();
                 clickHandled = true;

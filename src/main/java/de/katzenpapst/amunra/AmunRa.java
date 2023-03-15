@@ -101,7 +101,7 @@ import de.katzenpapst.amunra.world.seth.SethWorldProvider;
 @Mod(
         modid = AmunRa.MODID,
         version = AmunRa.VERSION,
-        dependencies = "required-after:GalacticraftCore; required-after:GalacticraftMars",
+        dependencies = "required-after:GalacticraftCore@[3.0.61-GTNH,);required-after:GalacticraftMars",
         name = AmunRa.MODNAME)
 public class AmunRa {
 
