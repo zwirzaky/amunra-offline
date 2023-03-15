@@ -80,7 +80,6 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
                 .sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, ship.getID(), nbt));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();

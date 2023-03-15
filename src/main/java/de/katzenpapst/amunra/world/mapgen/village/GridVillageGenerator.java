@@ -8,6 +8,7 @@ import net.minecraft.util.MathHelper;
 
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 import de.katzenpapst.amunra.world.mapgen.StructureGenerator;
+import de.katzenpapst.amunra.world.mapgen.pyramid.PyramidRoom;
 
 public class GridVillageGenerator extends StructureGenerator {
 
@@ -70,7 +71,7 @@ public class GridVillageGenerator extends StructureGenerator {
         Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
         GridVillageStart start = new GridVillageStart(this.worldObj, xChunkCoord, zChunkCoord, rand4structure);
-        ArrayList compList = generateSubComponents(components, rand4structure, 0);
+        ArrayList<PyramidRoom> compList = generateSubComponents(components, rand4structure, 0);
         /*
          * ArrayList compList = new ArrayList(); // now prepare the actual component list for(SubComponentData entry:
          * components) { try { // generate the minimum amount GridVillageComponent cmp = null; int nrGenerated = 0;

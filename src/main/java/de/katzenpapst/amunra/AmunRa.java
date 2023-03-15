@@ -204,10 +204,12 @@ public class AmunRa {
         proxy.preInit(event);
     }
 
+    @SuppressWarnings("unchecked")
     public List<ResourceLocation> getPossibleMothershipTextures() {
         return (List<ResourceLocation>) possibleMothershipTextures.clone();
     }
 
+    @SuppressWarnings("unchecked")
     public List<ResourceLocation> getPossibleAsteroidTextures() {
         return (List<ResourceLocation>) possibleAsteroidTextures.clone();
     }
@@ -286,7 +288,7 @@ public class AmunRa {
 
     public void registerCreature(Class<? extends Entity> entityClass, String entityName, int eggBgColor,
             int eggFgColor) {
-        int newID = EntityRegistry.instance().findGlobalUniqueEntityId();
+        int newID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, newID, eggBgColor, eggFgColor);
         EntityRegistry.registerModEntity(entityClass, entityName, nextInternalID(), AmunRa.instance, 80, 3, true);
     }
@@ -487,7 +489,7 @@ public class AmunRa {
         systemAmunRa.setMainStar(starRa).setMapPosition(new Vector3(1.5F, -1.15F, 0.0F));
         GalaxyRegistry.registerSolarSystem(systemAmunRa);
 
-        starRa.setBodyIcon(new ResourceLocation(this.ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
+        starRa.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
         starRa.setParentSolarSystem(systemAmunRa);
 
         starAmun = createPlanet("starAmun", "sun-blue.png", Math.PI * 0.1, 0.7, 0.9);
@@ -641,7 +643,7 @@ public class AmunRa {
 
     protected void setCelestialBodyStuff(CelestialBody body, String texture, double phaseShift, double distance,
             double orbitTime) {
-        body.setBodyIcon(new ResourceLocation(this.ASSETPREFIX, "textures/gui/celestialbodies/" + texture))
+        body.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/" + texture))
                 .setPhaseShift((float) phaseShift)
                 .setRelativeDistanceFromCenter(new ScalableDistance((float) distance, (float) distance))
                 .setRelativeOrbitTime((float) orbitTime);

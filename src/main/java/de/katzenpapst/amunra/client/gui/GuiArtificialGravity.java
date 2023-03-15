@@ -38,7 +38,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
             AmunRa.ASSETPREFIX,
             "textures/gui/gravity.png");
 
-    protected List<GuiElementTextBox> inputFieldList = new ArrayList();
+    protected List<GuiElementTextBox> inputFieldList = new ArrayList<>();
 
     private GuiElementTextBox leftValueField;
     private GuiElementTextBox rightValueField;
@@ -147,6 +147,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();
@@ -300,6 +301,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         this.buttonList.add(checkboxInvert);
     }
 
+    @SuppressWarnings("unchecked")
     protected void addInputField(GuiElementTextBox box) {
         this.buttonList.add(box);
         this.inputFieldList.add(box);

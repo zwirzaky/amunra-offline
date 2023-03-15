@@ -39,7 +39,7 @@ public class SubItem extends Item {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
     @Override

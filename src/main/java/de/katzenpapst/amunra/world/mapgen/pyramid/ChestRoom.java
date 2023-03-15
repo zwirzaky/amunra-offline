@@ -81,14 +81,14 @@ public class ChestRoom extends PyramidRoom {
 
     protected void placeChest(String lootCat, int x, int y, int z, int chunkX, int chunkZ, Block[] arrayOfIDs,
             byte[] arrayOfMeta) {
-        if (this.placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, chest)) {
+        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, chest)) {
             this.parent.addPopulator(new FillChest(x, y, z, chest, lootCat));
         }
     }
 
     protected void placeSpawner(String entityName, int x, int y, int z, int chunkX, int chunkZ, Block[] arrayOfIDs,
             byte[] arrayOfMeta) {
-        if (this.placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, spawner)) {
+        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, spawner)) {
             this.parent.addPopulator(new SetSpawnerEntity(x, y, z, entityName));
         }
     }

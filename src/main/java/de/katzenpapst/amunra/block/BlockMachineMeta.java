@@ -163,13 +163,18 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
         int meta = world.getBlockMetadata(x, y, z);
         if (getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
         }
 
-        return super.getPickBlock(target, world, x, y, z);
+        return super.getPickBlock(target, world, x, y, z, player);
+    }
+
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        return this.getPickBlock(target, world, x, y, z, null);
     }
 
     @Override

@@ -68,7 +68,8 @@ public class GridVillageStart extends BaseStructureStart {
         return true;
     }
 
-    public void setComponents(ArrayList components) {
+    @SuppressWarnings("unchecked")
+    public void setComponents(@SuppressWarnings("rawtypes") ArrayList components) {
 
         // byte should be enough for gridsize
 

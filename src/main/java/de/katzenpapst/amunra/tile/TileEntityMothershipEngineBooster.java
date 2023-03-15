@@ -53,7 +53,7 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     protected int masterY;
     protected int masterZ;
 
-    protected Class masterType;
+    protected Class<?> masterType;
 
     public TileEntityMothershipEngineBooster() {
         this.masterType = TileEntityMothershipEngineJet.class;

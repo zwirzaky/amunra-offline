@@ -14,7 +14,7 @@ public class ItemBaseBattery extends ItemElectricBase {
     public ItemBaseBattery(String assetName, float capacity) {
         super();
         this.setUnlocalizedName(assetName);
-        this.setTextureName(AmunRa.instance.TEXTUREPREFIX + assetName);
+        this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);
         this.capacity = capacity;
     }
 
@@ -25,7 +25,7 @@ public class ItemBaseBattery extends ItemElectricBase {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
     @Override

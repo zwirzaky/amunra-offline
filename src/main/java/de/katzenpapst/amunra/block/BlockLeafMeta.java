@@ -12,6 +12,7 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -208,13 +209,18 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
         int meta = world.getBlockMetadata(x, y, z) & 3;
         if (getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
         }
 
-        return super.getPickBlock(target, world, x, y, z);
+        return super.getPickBlock(target, world, x, y, z, player);
+    }
+
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        return this.getPickBlock(target, world, x, y, z, null);
     }
 
     @Override

@@ -14,10 +14,10 @@ public class AIFollowClosest extends EntityAIBase {
     private float maxDistanceForPlayer;
     private int lookTime;
     private float someProbability;
-    private Class watchedClass;
+    private Class<?> watchedClass;
     protected float minDistance;
 
-    public AIFollowClosest(EntityLiving user, Class classToFollow, float maxDistance, float minDistance) {
+    public AIFollowClosest(EntityLiving user, Class<?> classToFollow, float maxDistance, float minDistance) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;
         this.maxDistanceForPlayer = maxDistance;
@@ -25,7 +25,7 @@ public class AIFollowClosest extends EntityAIBase {
         this.setMutexBits(2);
     }
 
-    public AIFollowClosest(EntityLiving user, Class classToFollow, float maxDistance, float minDistance,
+    public AIFollowClosest(EntityLiving user, Class<?> classToFollow, float maxDistance, float minDistance,
             float probability) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;

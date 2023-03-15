@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.world.mapgen.pyramid.PyramidRoom;
 
 /**
  * I'll do a subdivision now: StructureGenerator and Structure For each StructureGenerator there is a subclass of
@@ -51,7 +52,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param subCompData
      * @return
      */
-    private ArrayList cloneSubComponentList(ArrayList<SubComponentData> subCompData) {
+    private ArrayList<SubComponentData> cloneSubComponentList(ArrayList<SubComponentData> subCompData) {
         ArrayList<SubComponentData> result = new ArrayList<SubComponentData>();
 
         for (SubComponentData entry : subCompData) {
@@ -135,8 +136,9 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param limit       the result will not have more entries than this. if 0, a random limit will be used
      * @return
      */
-    protected ArrayList generateSubComponents(ArrayList<SubComponentData> subCompData, Random rand, int limit) {
-        ArrayList compList = new ArrayList();
+    protected ArrayList<PyramidRoom> generateSubComponents(ArrayList<SubComponentData> subCompData, Random rand,
+            int limit) {
+        ArrayList<PyramidRoom> compList = new ArrayList<>();
         HashMap<String, Integer> typeAmountMapping = new HashMap<String, Integer>();
 
         if (limit <= 0) {
@@ -173,7 +175,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
                     // pick this
                     BaseStructureComponent cmp = generateComponent(entry);
                     if (cmp != null) {
-                        compList.add(cmp);
+                        compList.add((PyramidRoom) cmp);
                     }
                     curAmount = curAmount + 1;
                     typeAmountMapping.put(typeName, curAmount);
@@ -237,6 +239,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     protected IChunkProvider chunkProvider = null;
 
     public class BaseStructureMap extends HashMap<Long, BaseStructureStart> {
+
+        private static final long serialVersionUID = -4123587272811107730L;
     };
 
     protected BaseStructureMap structureMap = new BaseStructureMap();

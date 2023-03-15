@@ -115,7 +115,7 @@ public class SolarField extends GridVillageComponent {
                 } else if (x == startX + 1 && z == zCenter) {
                     // ok now how to rotate it?
                     // I think the first 2 bits are the orientation
-                    int storageMetadata = this.rotateStandardMetadata(2, this.coordMode);
+                    int storageMetadata = rotateStandardMetadata(2, this.coordMode);
                     if (AmunRa.config.villageAdvancedMachines) {
                         storageMetadata = storageMetadata | 8;
                     }
@@ -139,7 +139,7 @@ public class SolarField extends GridVillageComponent {
     }
 
     private void placeSolarPanel(Block[] blocks, byte[] metas, int chunkX, int chunkZ, int x, int y, int z, int meta) {
-        int rotationMetadata = this.rotateStandardMetadata(meta, this.coordMode);
+        int rotationMetadata = rotateStandardMetadata(meta, this.coordMode);
         if (AmunRa.config.villageAdvancedMachines) {
             rotationMetadata = rotationMetadata | BlockSolar.ADVANCED_METADATA;
         }

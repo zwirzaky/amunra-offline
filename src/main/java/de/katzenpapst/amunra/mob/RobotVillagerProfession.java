@@ -55,21 +55,25 @@ public class RobotVillagerProfession {
         return merchantList;
     }
 
+    @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(MerchantRecipe recipe) {
         merchantList.add(recipe);
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(ItemStack input1, ItemStack input2, ItemStack output) {
         merchantList.add(new MerchantRecipe(input1, input2, output));
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(ItemStack input, ItemStack output) {
         merchantList.add(new MerchantRecipe(input, output));
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(Item singleInputItem, int numEmeralds, Item singleOutputItem) {
         merchantList.add(
                 new MerchantRecipe(

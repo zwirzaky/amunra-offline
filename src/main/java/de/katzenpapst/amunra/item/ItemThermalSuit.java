@@ -72,7 +72,7 @@ public class ItemThermalSuit extends Item implements IItemThermal {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
     @Override

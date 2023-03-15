@@ -15,7 +15,7 @@ import de.katzenpapst.amunra.mob.model.ModelARVillager;
 public class RenderARVillager extends RenderLiving {
 
     private static final ResourceLocation villagerTexture = new ResourceLocation(
-            AmunRa.instance.ASSETPREFIX,
+            AmunRa.ASSETPREFIX,
             "textures/entity/villager-2.png");
 
     protected ModelARVillager villagerModel;

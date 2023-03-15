@@ -153,9 +153,8 @@ public class ClientProxy extends ARSidedProxy {
                 Item.getItemFromBlock(ARBlocks.metaBlockMothershipEngineJet),
                 new ItemRendererJet(
                         new IModelCustom[] { engineModel, engineModelIon },
-                        new ResourceLocation[] {
-                                new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/model/jet.png"),
-                                new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/model/jet-ion.png") }));
+                        new ResourceLocation[] { new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/jet.png"),
+                                new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/jet-ion.png") }));
 
     }
 
@@ -189,8 +188,7 @@ public class ClientProxy extends ARSidedProxy {
                         new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/jet.png")));
         ClientRegistry.bindTileEntitySpecialRenderer(
                 TileEntityMothershipEngineBooster.class,
-                new RenderMothershipBooster(
-                        new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/blocks/jet-base.png")));
+                new RenderMothershipBooster(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png")));
 
         ClientRegistry.bindTileEntitySpecialRenderer(
                 TileEntityMothershipEngineIon.class,
@@ -200,7 +198,7 @@ public class ClientProxy extends ARSidedProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(
                 TileEntityMothershipEngineBoosterIon.class,
                 new RenderMothershipBooster(
-                        new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/blocks/jet-base-ion.png")));
+                        new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base-ion.png")));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBlockScale.class, new RenderBlockScale());
 

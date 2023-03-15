@@ -10,9 +10,7 @@ import de.katzenpapst.amunra.AmunRa;
 
 public class ModelShuttleDock {
 
-    private final ResourceLocation texture = new ResourceLocation(
-            AmunRa.instance.ASSETPREFIX,
-            "textures/model/dock.png");
+    private final ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/dock.png");
 
     // not really a model, but meh
     public ModelShuttleDock() {
