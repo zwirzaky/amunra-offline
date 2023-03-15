@@ -107,7 +107,7 @@ public class AmunRa {
 
     public static final String MODID = "GalacticraftAmunRa";
     public static final String MODNAME = "Amun-Ra";
-    public static final String VERSION = "GRADLETOKEN_VERSION";
+    public static final String VERSION = Tags.VERSION;
 
     public static ARChannelHandler packetPipeline;
 
