@@ -206,7 +206,6 @@ public class EntityMummyBoss extends EntityMob
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onDeathUpdate() {
         ++this.deathTicks;

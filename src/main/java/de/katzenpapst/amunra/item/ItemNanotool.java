@@ -122,7 +122,7 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
     public boolean hasEnoughEnergyAndMode(ItemStack stack, float energy, Mode mode) {

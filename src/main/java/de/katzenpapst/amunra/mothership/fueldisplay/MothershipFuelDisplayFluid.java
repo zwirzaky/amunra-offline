@@ -16,6 +16,7 @@ public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
         return fluid.getIcon();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public String getDisplayName() {
         return fluid.getLocalizedName();

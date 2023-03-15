@@ -19,9 +19,7 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
 
     private RenderBlocks blockRenderer = null;
 
-    private ResourceLocation texture = new ResourceLocation(
-            AmunRa.instance.ASSETPREFIX,
-            "textures/blocks/jet-base.png");
+    private ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png");
 
     public RenderMothershipBooster(ResourceLocation texture) {
         this.texture = texture;

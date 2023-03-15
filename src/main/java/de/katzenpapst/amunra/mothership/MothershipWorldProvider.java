@@ -538,6 +538,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         long travelTime = AstronomyHelper.getTravelTimeAU(totalMass, generalData.thrust, distance);
 
         // now check if all engines in the set can burn for that long
+        @SuppressWarnings("unchecked")
         HashSet<Vector3int> curEngineLocations = (HashSet<Vector3int>) engineLocations.clone();
         boolean success = false;
         MothershipFuelRequirements fuelReqs = new MothershipFuelRequirements();

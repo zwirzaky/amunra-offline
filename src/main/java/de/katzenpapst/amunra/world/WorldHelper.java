@@ -133,7 +133,7 @@ public class WorldHelper {
     public static boolean isSolid(World worldObj, int x, int y, int z, boolean checkTop) {
         Block b = worldObj.getBlock(x, y, z);
         if (checkTop) {
-            return worldObj.doesBlockHaveSolidTopSurface(worldObj, x, y, z);
+            return World.doesBlockHaveSolidTopSurface(worldObj, x, y, z);
         }
         // getBlocksMovement returns true when the block does NOT block movement...
         return !b.getBlocksMovement(worldObj, x, y, z) && b.getMaterial().isSolid();

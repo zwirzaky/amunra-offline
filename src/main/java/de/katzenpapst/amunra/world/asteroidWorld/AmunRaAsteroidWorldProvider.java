@@ -27,7 +27,7 @@ import de.katzenpapst.amunra.helper.AstronomyHelper;
 abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids {
 
     // Used to list asteroid centres to external code that needs to know them
-    protected HashSet<AsteroidData> asteroids = new HashSet();
+    protected HashSet<AsteroidData> asteroids = new HashSet<>();
     protected boolean dataNotLoaded = true;
     protected AsteroidSaveData datafile;
     protected double solarMultiplier = -1D;
@@ -279,7 +279,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
             return null;
         }
 
-        TreeMap<Integer, BlockVec3> targets = new TreeMap();
+        TreeMap<Integer, BlockVec3> targets = new TreeMap<>();
 
         for (AsteroidData roid : this.asteroids) {
             BlockVec3 test = roid.centre;
@@ -306,7 +306,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
         int max = Math.max(count, targets.size());
         if (max <= 0) return null;
 
-        ArrayList<BlockVec3> returnValues = new ArrayList();
+        ArrayList<BlockVec3> returnValues = new ArrayList<>();
         int i = 0;
         int offset = EntityAstroMiner.MINE_LENGTH_AST / 2;
         for (BlockVec3 target : targets.values()) {

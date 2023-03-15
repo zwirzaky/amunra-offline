@@ -61,7 +61,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
     protected BoxInt2D messageButtonBox = new BoxInt2D();
 
-    public GuiARCelestialSelection(boolean mapMode, List<CelestialBody> possibleBodies) {
+    public GuiARCelestialSelection(MapMode mapMode, List<CelestialBody> possibleBodies) {
         super(mapMode, possibleBodies);
         shuttlePossibleBodies = possibleBodies;
     }
@@ -331,7 +331,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         }
 
         if (!preEvent.isCanceled()) {
-            int size = this.getWidthForCelestialBodyStatic(moon);
+            int size = getWidthForCelestialBodyStatic(moon);
             this.drawTexturedModalRect(
                     -size / 2,
                     -size / 2,
@@ -527,7 +527,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                     }
 
                     if (!preEvent.isCanceled()) {
-                        int size = this.getWidthForMothershipStatic(ms);
+                        int size = getWidthForMothershipStatic(ms);
                         this.drawTexturedModalRect(
                                 -size / 2,
                                 -size / 2,

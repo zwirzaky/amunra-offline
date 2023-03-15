@@ -106,7 +106,7 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity instanceof TileEntityMulti) {
             BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
@@ -115,13 +115,23 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
                 Block mainBlockID = world.getBlock(mainBlockPosition.x, mainBlockPosition.y, mainBlockPosition.z);
 
                 if (Blocks.air != mainBlockID) {
-                    return mainBlockID
-                            .getPickBlock(target, world, mainBlockPosition.x, mainBlockPosition.y, mainBlockPosition.z);
+                    return mainBlockID.getPickBlock(
+                            target,
+                            world,
+                            mainBlockPosition.x,
+                            mainBlockPosition.y,
+                            mainBlockPosition.z,
+                            player);
                 }
             }
         }
 
         return null;
+    }
+
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        return this.getPickBlock(target, world, x, y, z, null);
     }
 
     @Override

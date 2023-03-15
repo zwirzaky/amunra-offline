@@ -70,7 +70,7 @@ public class ItemJet extends ItemBlockMulti {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
     /**
@@ -150,9 +150,11 @@ public class ItemJet extends ItemBlockMulti {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List info,
+            boolean advanced) {
         if (this.field_150939_a instanceof IBlockShiftDesc
                 && ((IBlockShiftDesc) this.field_150939_a).showDescription(stack.getItemDamage())) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {

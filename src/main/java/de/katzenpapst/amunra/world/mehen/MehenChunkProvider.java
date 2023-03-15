@@ -17,6 +17,7 @@ public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
         super(par1World, par2, par4);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int i, int j, int k) {
         if (par1EnumCreatureType == EnumCreatureType.monster) {

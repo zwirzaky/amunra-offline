@@ -49,7 +49,7 @@ public class PyramidRoom extends BaseStructureComponent {
             roomBB.maxY += floorLevel;
             roomHeightFixed = true;
         }
-        StructureBoundingBox actualRoomBB = this.intersectBoundingBoxes(chunkBB, roomBB);
+        StructureBoundingBox actualRoomBB = intersectBoundingBoxes(chunkBB, roomBB);
         if (actualRoomBB != null) {
             // fillBox(arrayOfIDs, arrayOfMeta, actualRoomBB, Blocks.air, (byte) 0);
             for (int x = actualRoomBB.minX; x <= actualRoomBB.maxX; x++) {
@@ -161,7 +161,7 @@ public class PyramidRoom extends BaseStructureComponent {
 
     protected void makeEntrance(Block[] arrayOfIDs, byte[] arrayOfMeta, StructureBoundingBox chunkBB, int chunkX,
             int chunkZ, BlockMetaPair floorMat) {
-        StructureBoundingBox entrBoxIntersect = this.intersectBoundingBoxes(entranceBB, chunkBB);
+        StructureBoundingBox entrBoxIntersect = intersectBoundingBoxes(entranceBB, chunkBB);
 
         if (entrBoxIntersect != null) {
             // fillBox(arrayOfIDs, arrayOfMeta, entrBoxIntersect, Blocks.air, (byte) 0);

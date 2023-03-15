@@ -91,6 +91,7 @@ public class GuiHydroponics extends GuiContainerGC {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();

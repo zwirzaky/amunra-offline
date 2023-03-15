@@ -12,6 +12,7 @@ import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection.MapMode;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.network.IPacket;
 import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
@@ -208,7 +209,6 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
     private EnumSimplePacket type;
     private List<Object> data;
-    static private String spamCheckString;
 
     public PacketSimpleAR() {}
 
@@ -314,7 +314,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                     if (FMLClientHandler.instance().getClient().theWorld != null) {
                         if (!(FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection)) {
-                            GuiShuttleSelection gui = new GuiShuttleSelection(false, possibleCelestialBodies);
+                            GuiShuttleSelection gui = new GuiShuttleSelection(MapMode.TRAVEL, possibleCelestialBodies);
                             gui.spaceStationMap = spaceStationData;
                             FMLClientHandler.instance().getClient().displayGuiScreen(gui);
                         } else {
