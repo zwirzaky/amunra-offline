@@ -1,16 +1,21 @@
-[
-    {
-      "modid": "${modId}",
-      "name": "${modName}",
-      "description": "Trying out some stuff",
-      "version": "${modVersion}",
-      "mcversion": "${minecraftVersion}",
-      "url": "https://github.com/GTNewHorizons/amunra",
-      "updateUrl": "",
-      "authorList": ["Pra"],
-      "credits": "vos6434 (mothership icons), Byomakuta (asteroid icons), AugiteSoul (random translations/descriptions)",
-      "logoFile": "",
-      "screenshots": [],
-      "dependencies": []
-    }
-]
+{
+	"modListVersion": 2,
+	"modList": [{
+		"modid": "${modId}",
+		"name": "${modName}",
+		"description": "Trying out some stuff",
+		"version": "${modVersion}",
+		"mcversion": "${minecraftVersion}",
+		"url": "hhttps://github.com/GTNewHorizons/amunra",
+		"updateUrl": "",
+		"authorList": ["Pra"],
+		"credits": "vos6434 (mothership icons), Byomakuta (asteroid icons), AugiteSoul (random translations/descriptions)",
+		"logoFile": "",
+		"screenshots": [],
+		"parent": "",
+		"requiredMods": [],
+		"dependencies": [],
+		"dependants": [],
+		"useDependencyInformation": true
+	}]
+}
