@@ -27,9 +27,6 @@ import de.katzenpapst.amunra.mob.MobHelper;
 
 public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, IEntityNonOxygenBreather {
 
-    private World lastCheckedWorld = null;
-    private boolean canBreathInCurWorld = false;
-
     private ItemStack dropItem = null;
 
     final private int explosionRadius = 3;

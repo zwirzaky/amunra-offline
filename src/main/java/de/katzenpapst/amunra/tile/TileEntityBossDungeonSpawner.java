@@ -51,7 +51,6 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         return list;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void updateEntity() {
         super.updateEntity();

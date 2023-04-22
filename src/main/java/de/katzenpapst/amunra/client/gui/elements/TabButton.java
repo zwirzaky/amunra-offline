@@ -104,7 +104,6 @@ public class TabButton extends GuiButton {
         return 1;
     }
 
-    @SuppressWarnings("unchecked")
     public void drawTooltip(int mouseX, int mouseY) {
         if (!this.visible || !this.field_146123_n) {
             return;

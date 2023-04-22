@@ -29,7 +29,6 @@ import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.WorldUtil;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -409,29 +408,6 @@ public class ShuttleTeleportHelper {
 
         // playerStats.rocketItem = null;
 
-    }
-
-    private static void removeEntityFromWorld(World var0, Entity var1, boolean directlyRemove) {
-        if (var1 instanceof EntityPlayer) {
-            final EntityPlayer var2 = (EntityPlayer) var1;
-            var2.closeScreen();
-            var0.playerEntities.remove(var2);
-            var0.updateAllPlayersSleepingFlag();
-            final int var3 = var1.chunkCoordX;
-            final int var4 = var1.chunkCoordZ;
-
-            if (var1.addedToChunk && var0.getChunkProvider().chunkExists(var3, var4)) {
-                var0.getChunkFromChunkCoords(var3, var4).removeEntity(var1);
-                var0.getChunkFromChunkCoords(var3, var4).isModified = true;
-            }
-
-            if (directlyRemove) {
-                var0.loadedEntityList.remove(var1);
-                var0.onEntityRemoved(var1);
-            }
-        }
-
-        var1.isDead = false;
     }
 
     /**

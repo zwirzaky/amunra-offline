@@ -1,7 +1,6 @@
 package de.katzenpapst.amunra;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
@@ -217,16 +216,6 @@ public class AmunRa {
 
     public void addPossibleMothershipTexture(ResourceLocation loc) {
         possibleMothershipTextures.add(loc);
-    }
-
-    private HashSet<String> configGetStringHashSet(Configuration config, String name, String category,
-            String[] defaultValues, String comment) {
-        String[] data = config.getStringList(name, category, defaultValues, comment);
-        HashSet<String> result = new HashSet<String>();
-        for (String str : data) {
-            result.add(str);
-        }
-        return result;
     }
 
     @EventHandler

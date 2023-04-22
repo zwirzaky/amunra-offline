@@ -1,12 +1,10 @@
 package de.katzenpapst.amunra.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
@@ -16,8 +14,6 @@ import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineBooster;
 
 public class RenderMothershipBooster extends TileEntitySpecialRenderer {
-
-    private RenderBlocks blockRenderer = null;
 
     private ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png");
 
@@ -166,11 +162,6 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float partialTickTime) {
         renderMSBooster((TileEntityMothershipEngineBooster) entity, x, y, z, partialTickTime);
-    }
-
-    @Override
-    public void func_147496_a(World world) {
-        this.blockRenderer = new RenderBlocks(world);
     }
 
 }

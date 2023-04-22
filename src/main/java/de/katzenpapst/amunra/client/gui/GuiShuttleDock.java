@@ -56,7 +56,6 @@ public class GuiShuttleDock extends GuiContainerGC {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();

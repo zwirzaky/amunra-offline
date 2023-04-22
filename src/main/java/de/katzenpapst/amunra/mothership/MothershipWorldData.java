@@ -30,7 +30,6 @@ import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
 public class MothershipWorldData extends WorldSavedData {
 
     public static final String saveDataID = "ARMothershipData";
-    private NBTTagCompound dataCompound;
 
     // orbit distances should stay the same
     private HashMap<CelestialBody, Float> orbitDistances;

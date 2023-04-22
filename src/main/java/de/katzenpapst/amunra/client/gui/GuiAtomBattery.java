@@ -61,7 +61,6 @@ public class GuiAtomBattery extends GuiContainerGC {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();
@@ -136,26 +135,6 @@ public class GuiAtomBattery extends GuiContainerGC {
                 4210752);
 
         this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 4210752);
-    }
-
-    private String getStatus() {
-        if (this.generatorTile.getDisabled(0)) {
-            return EnumColor.ORANGE + GCCoreUtil.translate("gui.status.disabled.name");
-        }
-
-        if (!this.generatorTile.getWorldObj().isDaytime()) {
-            return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.blockedfully.name");
-        }
-
-        if (this.generatorTile.getWorldObj().isRaining() || this.generatorTile.getWorldObj().isThundering()) {
-            return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.raining.name");
-        }
-
-        if (this.generatorTile.generateWatts > 0) {
-            return EnumColor.DARK_GREEN + GCCoreUtil.translate("gui.status.collectingenergy.name");
-        }
-
-        return EnumColor.ORANGE + GCCoreUtil.translate("gui.status.unknown.name");
     }
 
     @Override
