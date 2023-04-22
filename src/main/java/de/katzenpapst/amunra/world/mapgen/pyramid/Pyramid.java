@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraftforge.common.ChestGenHooks;
 
-import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.item.ARItems;
@@ -153,7 +153,7 @@ public class Pyramid extends BaseStructureStart {
         // initRooms();
         initLoot();
 
-        FMLLog.info("Generating Pyramid at " + startX + "/" + startZ);
+        AmunRa.LOGGER.debug("Generating Pyramid at {}/{}", startX, startZ);
     }
     /*
      * protected void initRooms() { for(int i=0;i<12;i++) { PyramidRoom room = new PyramidRoom(); room.setParent(this);

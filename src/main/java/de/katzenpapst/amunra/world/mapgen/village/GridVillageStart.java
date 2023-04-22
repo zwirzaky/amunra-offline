@@ -11,7 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
-import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
@@ -45,7 +45,7 @@ public class GridVillageStart extends BaseStructureStart {
         int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
         int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
 
-        FMLLog.info("Generating the Village at x=" + startBlockX + ", z=" + startBlockZ);
+        AmunRa.LOGGER.debug("Generating the Village at x={}, z={}", startBlockX, startBlockZ);
 
         componentsByGrid = new HashMap<Integer, GridVillageComponent>();
     }

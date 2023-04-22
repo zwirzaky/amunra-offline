@@ -33,6 +33,9 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -159,9 +162,7 @@ public class AmunRa {
             serverSide = "de.katzenpapst.amunra.proxy.ServerProxy")
     public static ARSidedProxy proxy;
 
-    protected void loadJsonConfig() {
-
-    }
+    public static final Logger LOGGER = LogManager.getLogger(MODNAME);
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {

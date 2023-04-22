@@ -15,7 +15,7 @@ import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
-import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.AmunRa;
 
 /**
  * I'll do a subdivision now: StructureGenerator and Structure For each StructureGenerator there is a subclass of
@@ -84,9 +84,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     private BaseStructureComponent generateComponent(SubComponentData entry) {
         try {
             return entry.clazz.getConstructor().newInstance();
-        } catch (Throwable e) {
-            FMLLog.info("Instantiating " + entry.clazz.getCanonicalName() + " failed");
-            e.printStackTrace();
+        } catch (Exception e) {
+            AmunRa.LOGGER.error("Instantiating " + entry.clazz.getCanonicalName() + " failed", e);
         }
         return null;
     }
@@ -130,7 +129,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param limit       the result will not have more entries than this. if 0, a random limit will be used
      * @return
      */
-    protected List<BaseStructureComponent> generateSubComponents(List<SubComponentData> subCompData, Random rand, int limit) {
+    protected List<BaseStructureComponent> generateSubComponents(List<SubComponentData> subCompData, Random rand,
+            int limit) {
         List<BaseStructureComponent> compList = new ArrayList<>();
         HashMap<String, Integer> typeAmountMapping = new HashMap<String, Integer>();
 
@@ -221,9 +221,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         try {
 
             result = resultClass.getConstructor().newInstance();
-        } catch (Throwable e) {
-            FMLLog.info("Instantiating " + resultClass.getCanonicalName() + " failed");
-            e.printStackTrace();
+        } catch (Exception e) {
+            AmunRa.LOGGER.error("Instantiating " + resultClass.getCanonicalName() + " failed", e);
         }
 
         return result;
@@ -346,13 +345,11 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
             BaseStructureStart start = structureMap.get(key);
             start.populateChunk(world, origXChunkCoord, origZChunkCoord);
         } else {
-            FMLLog.info(
-                    "No " + this.getName()
-                            + " for population for coords "
-                            + (xChunkCoord * 16)
-                            + "/"
-                            + (zChunkCoord * 16)
-                            + ", that's weird...");
+            AmunRa.LOGGER.warn(
+                    "No {} for population for coords {}/{}, that's weird...",
+                    this.getName(),
+                    xChunkCoord * 16,
+                    zChunkCoord * 16);
         }
 
     }

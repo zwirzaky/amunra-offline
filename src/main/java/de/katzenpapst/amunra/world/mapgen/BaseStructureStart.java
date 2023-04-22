@@ -10,7 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 
-import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.populator.AbstractPopulator;
 import de.katzenpapst.amunra.world.mapgen.populator.SpawnEntity;
@@ -64,11 +64,10 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
 
         if (populatorsByChunk.containsKey(key)) {
             // this is bad, this shouldn't happen
-            FMLLog.info(
-                    "Tried to prepare populator list for chunk " + chunkX
-                            + "/"
-                            + chunkZ
-                            + ". This could mean that the chunk is being generated twice.");
+            AmunRa.LOGGER.error(
+                    "Tried to prepare populator list for chunk {}/{}. This could mean that the chunk is being generated twice.",
+                    chunkX,
+                    chunkZ);
             return;
         }
 
@@ -93,7 +92,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
 
         Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
         if (!populatorsByChunk.containsKey(chunkKey)) {
-            FMLLog.info("No populator list for chunk " + chunkX + "/" + chunkZ);
+            AmunRa.LOGGER.warn("No populator list for chunk {}/{}", chunkX, chunkZ);
             return;
         }
         PopulatorMap curMap = populatorsByChunk.get(chunkKey);
@@ -101,7 +100,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
 
         for (AbstractPopulator p : curMap.values()) {
             if (!p.populate(world)) {
-                FMLLog.info("Populator " + p.getClass().getCanonicalName() + " failed...");
+                AmunRa.LOGGER.error("Populator {} failed...", p.getClass().getCanonicalName());
             }
         }
 
@@ -120,21 +119,18 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
 
         Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
         if (!populatorsByChunk.containsKey(chunkKey)) {
-            FMLLog.info(
-                    "Cannot add populator for " + chunkX
-                            + "/"
-                            + chunkZ
-                            + ", offender: "
-                            + p.getClass().getCanonicalName()
-                            + ". Probably it's the wrong chunk");
+            AmunRa.LOGGER.error(
+                    "Cannot add populator for {}/{}, offender: {}. Probably it's the wrong chunk",
+                    chunkX,
+                    chunkZ,
+                    p.getClass().getCanonicalName());
             return;
         }
         PopulatorMap curMap = populatorsByChunk.get(chunkKey);
 
         BlockVec3 key = p.getBlockVec3();
         if (curMap.containsKey(key)) {
-            FMLLog.info(
-                    "Cannot add populator for " + key.toString() + ", offender: " + p.getClass().getCanonicalName());
+            AmunRa.LOGGER.error("Cannot add populator for {}, offender: {}", key, p.getClass().getCanonicalName());
             return;
         }
         // pack the coords
