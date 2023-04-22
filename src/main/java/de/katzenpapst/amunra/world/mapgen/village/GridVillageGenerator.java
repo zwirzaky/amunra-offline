@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.util.MathHelper;
+
 import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 import de.katzenpapst.amunra.world.mapgen.StructureGenerator;
@@ -24,7 +25,7 @@ public class GridVillageGenerator extends StructureGenerator {
     protected int gridSize = 32;
 
     protected Map<Long, GridVillageStart> structureMap = new HashMap<>(); // Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(p_151538_2_,
-                                                                                                    // p_151538_3_)
+                                                                          // p_151538_3_)
 
     public void addComponentType(Class<? extends GridVillageComponent> clazz, float probability) {
         addComponentType(clazz, probability, 0, 0);

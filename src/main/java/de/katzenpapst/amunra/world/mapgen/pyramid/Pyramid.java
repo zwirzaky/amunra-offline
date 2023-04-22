@@ -185,7 +185,7 @@ public class Pyramid extends BaseStructureStart {
         Object[] tempList = roomList.toArray();
 
         for (int i = 0; i < 12; i++) {
-            if(tempList[i] instanceof PyramidRoom room) {
+            if (tempList[i] instanceof PyramidRoom room) {
                 room.setParent(this);
                 StructureBoundingBox roomBB = this.getSmallRoomBB(i + 1);
                 roomBB.minY = 0;
