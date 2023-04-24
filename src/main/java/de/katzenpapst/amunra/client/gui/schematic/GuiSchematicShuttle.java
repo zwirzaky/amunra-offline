@@ -34,7 +34,6 @@ public class GuiSchematicShuttle extends GuiContainer implements ISchematicResul
         this.ySize = 220;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();

@@ -28,10 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import org.apache.logging.log4j.Level;
-
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.block.BlockStairsAR;
@@ -713,11 +710,11 @@ public class RecipeHelper {
                     // FMLRelaunchLog.log(AmunRa.MODID, Level.ERROR, "Possible Page ID conflict:
                     // "+page.getClass().getName()+" and "+oldPage.getClass().getName()+" on "+curPageID);
                 } else {
-                    FMLRelaunchLog.log(
-                            AmunRa.MODID,
-                            Level.WARN,
-                            "Possible Page ID conflict: " + page.getClass()
-                                    .getName() + " and " + oldPage.getClass().getName() + " on " + curPageID);
+                    AmunRa.LOGGER.warn(
+                            "Possible Page ID conflict: {} and {} on {}",
+                            page.getClass().getName(),
+                            oldPage.getClass().getName(),
+                            curPageID);
                 }
             } else {
                 pagesByPageID.put(curPageID, page);
@@ -729,11 +726,11 @@ public class RecipeHelper {
                     throw new RuntimeException(
                             "Please change shuttleGuiId in the config file. " + curGuiID + " is already in use.");
                 }
-                FMLRelaunchLog.log(
-                        AmunRa.MODID,
-                        Level.WARN,
-                        "Possible GUI ID conflict: " + page.getClass()
-                                .getName() + " and " + oldPage.getClass().getName() + " on " + curGuiID);
+                AmunRa.LOGGER.warn(
+                        "Possible Page ID conflict: {} and {} on {}",
+                        page.getClass().getName(),
+                        oldPage.getClass().getName(),
+                        curPageID);
             } else {
                 pagesByGuiID.put(curGuiID, page);
             }

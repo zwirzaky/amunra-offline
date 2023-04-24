@@ -25,7 +25,6 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
             AmunRa.ASSETPREFIX,
             "textures/gui/mothership_icons/0.png");
 
-    private final TileEntityMothershipSettings tile;
     private Mothership ship;
 
     /*
@@ -49,7 +48,6 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
     public TabMothershipCustom(TileEntityMothershipSettings tile, GuiMothershipSettings parent, Minecraft mc, int width,
             int height, int xSize, int ySize) {
         super(parent, mc, width, height, xSize, ySize);
-        this.tile = tile;
         this.ship = tile.getMothership();
         mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
 

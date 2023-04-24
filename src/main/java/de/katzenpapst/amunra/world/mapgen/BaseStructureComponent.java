@@ -18,10 +18,6 @@ abstract public class BaseStructureComponent {
     protected int coordMode = 0;
     protected StructureBoundingBox structBB;
 
-    public BaseStructureComponent() {
-        // TODO Auto-generated constructor stub
-    }
-
     public int getGroundLevel() {
         return groundLevel;
     }

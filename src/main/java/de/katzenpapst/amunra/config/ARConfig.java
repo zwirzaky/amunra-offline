@@ -7,7 +7,6 @@ import java.util.Set;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
 
@@ -17,9 +16,6 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.client.RingsRenderInfo;
 import de.katzenpapst.amunra.helper.AstronomyHelper;
@@ -243,10 +239,7 @@ public class ARConfig {
         for (String str : sunData) {
             String[] parts1 = str.split(":", 2);
             if (parts1.length < 2) {
-                FMLRelaunchLog.log(
-                        Constants.MOD_NAME_SIMPLE,
-                        Level.WARN,
-                        "'" + parts1 + "' is not a valid sun configuration");
+                AmunRa.LOGGER.warn("'{}' is not a valid sun configuration", str);
                 continue;
             }
             String body = parts1[0];
@@ -276,8 +269,7 @@ public class ARConfig {
         for (String str : ringData) {
             String[] parts1 = str.split(":", 5);
             if (parts1.length < 5) {
-                FMLRelaunchLog
-                        .log(Constants.MOD_NAME_SIMPLE, Level.WARN, "'" + str + "' is not a valid ring configuration");
+                AmunRa.LOGGER.warn("'{}' is not a valid ring configuration", str);
                 continue;
             }
             String body = parts1[0];
@@ -287,8 +279,7 @@ public class ARConfig {
             String textureName = parts1[4];
 
             if (gapStart <= 0 || gapEnd <= 0 || gapEnd <= gapStart) {
-                FMLRelaunchLog
-                        .log(Constants.MOD_NAME_SIMPLE, Level.WARN, "'" + str + "' is not a valid ring configuration");
+                AmunRa.LOGGER.warn("'{}' is not a valid ring configuration", str);
                 continue;
             }
 

@@ -13,7 +13,6 @@ import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
 import micdoodle8.mods.galacticraft.api.galaxies.Star;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -104,11 +103,6 @@ public class SkyProviderDynamic extends IRenderHandler {
 
     protected ArrayList<BodyRenderTask> farBodiesToRender = new ArrayList<BodyRenderTask>();
     protected ArrayList<BodyRenderTask> nearBodiesToRender = new ArrayList<BodyRenderTask>();
-
-    private static final ResourceLocation overworldTexture = new ResourceLocation(
-            GalacticraftCore.ASSET_PREFIX,
-            "textures/gui/celestialbodies/earth.png");
-    private static final ResourceLocation sunTexture = new ResourceLocation("textures/environment/sun.png");
 
     // angle of the system in the sky
     private static float planetAxisAngle = -19.0F;
@@ -1190,35 +1184,6 @@ public class SkyProviderDynamic extends IRenderHandler {
 
     }
 
-    private void drawAtmosphereOverlay(double scale, double zIndex, Tessellator tessellator1) {
-        // double factor = 0;
-        /*
-         * TODO make this work. or maybe actually find a way to make the fog obscure the planets? double horizonOffse =
-         * 0.02; if(angle < PI_HALF-horizonOffse) { factor = angle; } else if(angle > PI_DOUBLE-PI_HALF-horizonOffse) {
-         * factor = (PI_DOUBLE-angle); } factor = (PI_HALF-horizonOffse-factor)/(PI_HALF-horizonOffse);
-         */
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-        if (planetSkyColor.xCoord < 0.01F && planetSkyColor.yCoord < 0.01F && planetSkyColor.zCoord < 0.01) {
-            return;
-        }
-
-        GL11.glColor4f(
-                (float) planetSkyColor.xCoord,
-                (float) planetSkyColor.yCoord,
-                (float) planetSkyColor.zCoord,
-                (float) (1));
-
-        // it could be possible to adjust the colors and uv values at specific vertices in order
-        // to simulate halfmoon etc
-        tessellator1.startDrawingQuads();
-        tessellator1.addVertexWithUV(-scale, zIndex + 0.01F, -scale, 0, 0);
-        tessellator1.addVertexWithUV(scale, zIndex + 0.01F, -scale, 1, 0);
-        tessellator1.addVertexWithUV(scale, zIndex + 0.01F, scale, 1, 1);
-        tessellator1.addVertexWithUV(-scale, zIndex + 0.01F, scale, 0, 1);
-        tessellator1.draw();
-    }
-
     private void drawPhaseOverlay(double phaseAngle, CelestialBody body, double overlayScale, Tessellator tessellator1,
             double zIndex) {
         double startOffset = 0;
@@ -1347,10 +1312,6 @@ public class SkyProviderDynamic extends IRenderHandler {
         }
 
         var2.draw();
-    }
-
-    private Vec3 getCustomSkyColor() {
-        return Vec3.createVectorHelper(0.26796875D, 0.1796875D, 0.0D);
     }
 
     public float getSkyBrightness(float par1) {

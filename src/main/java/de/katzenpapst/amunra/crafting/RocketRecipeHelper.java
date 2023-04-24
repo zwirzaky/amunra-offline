@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class RocketRecipeHelper {
 
+    @SuppressWarnings("unchecked")
     ArrayList<ItemStack>[] stacks = new ArrayList[3];
     /*
      * ArrayList<ItemStack> stack2 = new ArrayList<ItemStack>(); ArrayList<ItemStack> stack3 = new

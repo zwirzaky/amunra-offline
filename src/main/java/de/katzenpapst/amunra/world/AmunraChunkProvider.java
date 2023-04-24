@@ -3,7 +3,6 @@ package de.katzenpapst.amunra.world;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.ChunkProviderSpace;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 abstract public class AmunraChunkProvider extends ChunkProviderSpace {
@@ -65,15 +64,6 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
         } else {
             return d1 + (d2 - d1) * t;
         }
-    }
-
-    private int getHighestNonAir(Block[] blocks, int x, int z) {
-        for (int y = 127; y > 1; y--) {
-            if (blocks[this.getIndex(x, y, z)] != Blocks.air) {
-                return y;
-            }
-        }
-        return 1;
     }
 
     protected int getIndex(int x, int y, int z) {

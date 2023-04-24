@@ -41,8 +41,6 @@ public class TickHandlerServer {
          */
     }
 
-    private boolean clientConnected;
-
     public TickHandlerServer() {}
 
     @SubscribeEvent

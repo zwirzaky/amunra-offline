@@ -10,7 +10,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
-import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 
@@ -52,7 +52,7 @@ public class Volcano extends BaseStructureStart {
                 startX + radius,
                 startZ + radius);
         this.setStructureBoundingBox(bb);
-        FMLLog.info("Generating Volcano at " + startX + "/" + startZ);
+        AmunRa.LOGGER.debug("Generating Volcano at {}/{}", startX, startZ);
 
         testGrad = new Gradient(this.rand.nextLong(), 4, 0.25F);
         testGrad.setFrequency(0.05F);

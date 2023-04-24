@@ -17,7 +17,6 @@ public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
 
     public BlockMothershipBoosterMeta(String name, Material material) {
         super(name, material);
-        // TODO Auto-generated constructor stub
     }
 
     @Override

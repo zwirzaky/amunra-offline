@@ -40,11 +40,6 @@ public class TileEntityHydroponics extends TileEntityOxygen
     public float lastOxygenCollected;
     private ItemStack[] containingItems = new ItemStack[2];
 
-    private boolean isInitialised = false;
-    private boolean producedLastTick = false;
-
-    // protected ItemStack plantedSeed = null;
-
     @NetworkedField(targetSide = Side.CLIENT)
     public float plantGrowthStatus = -1.0F;
 
@@ -67,7 +62,6 @@ public class TileEntityHydroponics extends TileEntityOxygen
         super.updateEntity();
 
         if (!this.worldObj.isRemote) {
-            producedLastTick = this.storedOxygen < this.maxOxygen;
 
             // this makes the thing output oxygen
             this.produceOxygen();

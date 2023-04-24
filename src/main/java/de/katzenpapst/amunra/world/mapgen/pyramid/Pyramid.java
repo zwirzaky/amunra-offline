@@ -1,7 +1,7 @@
 package de.katzenpapst.amunra.world.mapgen.pyramid;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
@@ -16,10 +16,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraftforge.common.ChestGenHooks;
 
-import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.item.ARItems;
+import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 
 public class Pyramid extends BaseStructureStart {
@@ -36,7 +37,6 @@ public class Pyramid extends BaseStructureStart {
 
     private int mainRoomOffset = 3;
 
-    private int sideRoomWidth = 13;
     private int innerRoomOffset = 13;
 
     private int smallRoomWidth = 17;
@@ -153,7 +153,7 @@ public class Pyramid extends BaseStructureStart {
         // initRooms();
         initLoot();
 
-        FMLLog.info("Generating Pyramid at " + startX + "/" + startZ);
+        AmunRa.LOGGER.debug("Generating Pyramid at {}/{}", startX, startZ);
     }
     /*
      * protected void initRooms() { for(int i=0;i<12;i++) { PyramidRoom room = new PyramidRoom(); room.setParent(this);
@@ -169,7 +169,7 @@ public class Pyramid extends BaseStructureStart {
      * centralRoom.setParent(this); }
      */
 
-    public void setSmallRooms(ArrayList<PyramidRoom> roomList) {
+    public void setSmallRooms(List<BaseStructureComponent> roomList) {
         if (roomList.size() < 12) {
             while (roomList.size() < 12) {
                 PyramidRoom filler = new PyramidRoom();
@@ -185,14 +185,15 @@ public class Pyramid extends BaseStructureStart {
         Object[] tempList = roomList.toArray();
 
         for (int i = 0; i < 12; i++) {
-            PyramidRoom room = (PyramidRoom) tempList[i];
-            room.setParent(this);
-            StructureBoundingBox roomBB = this.getSmallRoomBB(i + 1);
-            roomBB.minY = 0;
-            roomBB.maxY = 4;
-            StructureBoundingBox entranceBB = this.getRoomEntranceBox(i + 1, roomBB);
-            room.setBoundingBoxes(entranceBB, roomBB);
-            this.roomList[i] = room;
+            if (tempList[i] instanceof PyramidRoom room) {
+                room.setParent(this);
+                StructureBoundingBox roomBB = this.getSmallRoomBB(i + 1);
+                roomBB.minY = 0;
+                roomBB.maxY = 4;
+                StructureBoundingBox entranceBB = this.getRoomEntranceBox(i + 1, roomBB);
+                room.setBoundingBoxes(entranceBB, roomBB);
+                this.roomList[i] = room;
+            }
         }
     }
 
@@ -580,7 +581,7 @@ public class Pyramid extends BaseStructureStart {
         int chunkZ = CoordHelper.blockToChunk(chunkBB.minZ);
 
         for (PyramidRoom r : roomList) {
-            if (r.getStructureBoundingBox().intersectsWith(chunkBB)) {
+            if (r != null && r.getStructureBoundingBox().intersectsWith(chunkBB)) {
                 r.generateChunk(chunkX, chunkZ, blocks, metas);
             }
         }

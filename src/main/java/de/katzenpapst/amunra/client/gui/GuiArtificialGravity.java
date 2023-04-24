@@ -147,7 +147,6 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();
@@ -301,7 +300,6 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         this.buttonList.add(checkboxInvert);
     }
 
-    @SuppressWarnings("unchecked")
     protected void addInputField(GuiElementTextBox box) {
         this.buttonList.add(box);
         this.inputFieldList.add(box);

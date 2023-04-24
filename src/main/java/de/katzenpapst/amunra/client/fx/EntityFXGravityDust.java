@@ -7,11 +7,6 @@ import net.minecraft.world.World;
 
 public class EntityFXGravityDust extends EntityFX {
 
-    private final float portalParticleScale;
-    private final double portalPosX;
-    private final double portalPosY;
-    private final double portalPosZ;
-
     public EntityFXGravityDust(World par1World, Vector3 position, Vector3 motion) {
         super(par1World, position.x, position.y, position.z, motion.x, motion.y, motion.z);
 
@@ -27,8 +22,6 @@ public class EntityFXGravityDust extends EntityFX {
             position.y += 2;
         }
 
-        double sqDist = xDev * xDev + zDev * zDev + 0.01;
-
         double maxLength = 1.2;
 
         this.setPosition(position.x, position.y, position.z);
@@ -36,10 +29,6 @@ public class EntityFXGravityDust extends EntityFX {
         this.motionX = 0;// motion.x;
         this.motionY = motion.y;
         this.motionZ = 0;// motion.z;
-        this.portalPosX = this.posX = position.x;
-        this.portalPosY = this.posY = position.y;
-        this.portalPosZ = this.posZ = position.z;
-        this.portalParticleScale = this.particleScale = (float) Math.min(0.06D / (sqDist), 0.1);
         Vector3 color = new Vector3(0.4, 0.4, 0.4);
         // Vector3 color = new Vector3(1.0, 0.4, 0.4);
         this.particleRed = color.floatX();

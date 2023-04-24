@@ -36,7 +36,6 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
         super.initGui();
     }
 
-    @SuppressWarnings("unchecked")
     public int addTab(AbstractTab tab) {
         if (tabList.add(tab)) {
             tab.initGui();

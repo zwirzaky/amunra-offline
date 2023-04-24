@@ -51,7 +51,6 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         return list;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void updateEntity() {
         super.updateEntity();
@@ -66,7 +65,8 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                 this.spawned = false;
             }
 
-            List<Entity> entitiesInRoom = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.roomArea);
+            List<EntityLivingBase> entitiesInRoom = this.worldObj
+                    .getEntitiesWithinAABB(EntityLivingBase.class, this.roomArea);
             int numPlayers = 0;
             boolean isBossInRoom = false;
             for (Entity ent : entitiesInRoom) {

@@ -3,7 +3,9 @@ package de.katzenpapst.amunra.world.mapgen;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
@@ -13,8 +15,7 @@ import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
-import cpw.mods.fml.common.FMLLog;
-import de.katzenpapst.amunra.world.mapgen.pyramid.PyramidRoom;
+import de.katzenpapst.amunra.AmunRa;
 
 /**
  * I'll do a subdivision now: StructureGenerator and Structure For each StructureGenerator there is a subclass of
@@ -52,15 +53,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param subCompData
      * @return
      */
-    private ArrayList<SubComponentData> cloneSubComponentList(ArrayList<SubComponentData> subCompData) {
-        ArrayList<SubComponentData> result = new ArrayList<SubComponentData>();
-
-        for (SubComponentData entry : subCompData) {
-            SubComponentData newEntry = entry.copy();
-            result.add(newEntry);
-        }
-
-        return result;
+    private List<SubComponentData> cloneSubComponentList(List<SubComponentData> subCompData) {
+        return subCompData.stream().map(SubComponentData::copy).collect(Collectors.toList());
     }
 
     /**
@@ -71,7 +65,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param subCompData
      * @return
      */
-    private float getProbabilityMaximum(ArrayList<SubComponentData> subCompData) {
+    private float getProbabilityMaximum(List<SubComponentData> subCompData) {
         float sum = 0.0F;
         for (SubComponentData entry : subCompData) {
             sum += entry.probability;
@@ -90,9 +84,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     private BaseStructureComponent generateComponent(SubComponentData entry) {
         try {
             return entry.clazz.getConstructor().newInstance();
-        } catch (Throwable e) {
-            FMLLog.info("Instantiating " + entry.clazz.getCanonicalName() + " failed");
-            e.printStackTrace();
+        } catch (Exception e) {
+            AmunRa.LOGGER.error("Instantiating " + entry.clazz.getCanonicalName() + " failed", e);
         }
         return null;
     }
@@ -106,7 +99,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param rand
      * @return
      */
-    private int findComponentLimit(ArrayList<SubComponentData> subCompData, Random rand) {
+    private int findComponentLimit(List<SubComponentData> subCompData, Random rand) {
         int minComponents = 0;
         int maxComponents = 0;
         boolean everythingHasMax = true;
@@ -136,16 +129,16 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param limit       the result will not have more entries than this. if 0, a random limit will be used
      * @return
      */
-    protected ArrayList<PyramidRoom> generateSubComponents(ArrayList<SubComponentData> subCompData, Random rand,
+    protected List<BaseStructureComponent> generateSubComponents(List<SubComponentData> subCompData, Random rand,
             int limit) {
-        ArrayList<PyramidRoom> compList = new ArrayList<>();
+        List<BaseStructureComponent> compList = new ArrayList<>();
         HashMap<String, Integer> typeAmountMapping = new HashMap<String, Integer>();
 
         if (limit <= 0) {
             limit = findComponentLimit(subCompData, rand);
         }
 
-        ArrayList<SubComponentData> curComponents = this.cloneSubComponentList(subCompData);
+        List<SubComponentData> curComponents = this.cloneSubComponentList(subCompData);
 
         while (true) {
             Iterator<SubComponentData> itr = curComponents.iterator();
@@ -175,7 +168,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
                     // pick this
                     BaseStructureComponent cmp = generateComponent(entry);
                     if (cmp != null) {
-                        compList.add((PyramidRoom) cmp);
+                        compList.add(cmp);
                     }
                     curAmount = curAmount + 1;
                     typeAmountMapping.put(typeName, curAmount);
@@ -208,7 +201,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param rand
      * @return
      */
-    protected BaseStructureComponent generateOneComponent(ArrayList<SubComponentData> subCompData, Random rand) {
+    protected BaseStructureComponent generateOneComponent(List<SubComponentData> subCompData, Random rand) {
 
         BaseStructureComponent result = null;
         Class<? extends BaseStructureComponent> resultClass = null;
@@ -228,9 +221,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         try {
 
             result = resultClass.getConstructor().newInstance();
-        } catch (Throwable e) {
-            FMLLog.info("Instantiating " + resultClass.getCanonicalName() + " failed");
-            e.printStackTrace();
+        } catch (Exception e) {
+            AmunRa.LOGGER.error("Instantiating " + resultClass.getCanonicalName() + " failed", e);
         }
 
         return result;
@@ -353,13 +345,11 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
             BaseStructureStart start = structureMap.get(key);
             start.populateChunk(world, origXChunkCoord, origZChunkCoord);
         } else {
-            FMLLog.info(
-                    "No " + this.getName()
-                            + " for population for coords "
-                            + (xChunkCoord * 16)
-                            + "/"
-                            + (zChunkCoord * 16)
-                            + ", that's weird...");
+            AmunRa.LOGGER.warn(
+                    "No {} for population for coords {}/{}, that's weird...",
+                    this.getName(),
+                    xChunkCoord * 16,
+                    zChunkCoord * 16);
         }
 
     }

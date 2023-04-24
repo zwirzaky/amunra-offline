@@ -396,7 +396,6 @@ public class EntityMummyBoss extends EntityMob
     public void despawnBoss() {
         AxisAlignedBB aabb = this.roomArea.expand(11, 11, 11);
 
-        @SuppressWarnings("unchecked")
         List<EntityPlayer> entitiesWithin2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);
 
         for (EntityPlayer p : entitiesWithin2) {
