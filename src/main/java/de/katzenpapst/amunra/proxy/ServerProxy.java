@@ -12,7 +12,7 @@ public class ServerProxy extends ARSidedProxy {
     public void preInit(FMLPreInitializationEvent event) {
         try {
             MinecraftServer s = MinecraftServer.getServer();
-            if (s.isDedicatedServer() && !s.isServerInOnlineMode()) {
+            if (s.isDedicatedServer() && !s.isServerInOnlineMode() && !AmunRa.isDevEnvironment()) {
                 AmunRa.LOGGER.fatal("Server is running in offline mode. This is not supported.");
                 FMLCommonHandler.instance().exitJava(-10, false);
             }
