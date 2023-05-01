@@ -1,13 +1,12 @@
 package de.katzenpapst.amunra.world.mapgen.pyramid;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.util.AxisAlignedBB;
 
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.mob.entity.EntityMummyBoss;
 import de.katzenpapst.amunra.world.mapgen.populator.InitBossSpawner;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BossRoom extends PyramidRoom {
 

@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.block.machine.mothershipEngine;
 
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +16,7 @@ import de.katzenpapst.amunra.block.machine.AbstractBlockMothershipRestricted;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineBooster;
 import de.katzenpapst.amunra.vec.Vector3int;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestricted {
 

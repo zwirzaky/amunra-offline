@@ -3,8 +3,6 @@ package de.katzenpapst.amunra;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
@@ -37,6 +35,7 @@ import de.katzenpapst.amunra.tile.TileEntityMothershipController;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
 import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
 import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 public class GuiHandler implements IGuiHandler {
 

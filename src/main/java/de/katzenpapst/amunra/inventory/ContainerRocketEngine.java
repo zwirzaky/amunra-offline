@@ -1,13 +1,12 @@
 package de.katzenpapst.amunra.inventory;
 
-import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemBucket;
 import net.minecraftforge.fluids.ItemFluidContainer;
 
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
+import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerRocketEngine extends ContainerWithPlayerInventory {
 

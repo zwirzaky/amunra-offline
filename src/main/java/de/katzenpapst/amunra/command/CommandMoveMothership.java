@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.command;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -11,6 +9,7 @@ import de.katzenpapst.amunra.helper.AstronomyHelper;
 import de.katzenpapst.amunra.mothership.Mothership;
 import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 public class CommandMoveMothership extends CommandBase {
 

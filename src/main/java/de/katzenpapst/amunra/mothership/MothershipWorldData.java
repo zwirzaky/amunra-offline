@@ -7,13 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody.ScalableDistance;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Moon;
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
-import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -26,6 +19,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.PlayerID;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody.ScalableDistance;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
 
 public class MothershipWorldData extends WorldSavedData {
 

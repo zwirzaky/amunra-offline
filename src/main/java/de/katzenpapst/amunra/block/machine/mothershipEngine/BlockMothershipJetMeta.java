@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.block.machine.mothershipEngine;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -14,6 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.BlockMachineMetaDummyRender;
 import de.katzenpapst.amunra.block.SubBlock;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
 

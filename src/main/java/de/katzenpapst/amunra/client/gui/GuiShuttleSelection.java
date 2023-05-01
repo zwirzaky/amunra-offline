@@ -4,14 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.IChildBody;
-import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
-import micdoodle8.mods.galacticraft.api.recipe.SpaceStationRecipe;
-import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
-import micdoodle8.mods.galacticraft.core.util.ColorUtil;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 
@@ -24,6 +16,13 @@ import de.katzenpapst.amunra.helper.ShuttleTeleportHelper;
 import de.katzenpapst.amunra.mothership.Mothership;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
 import de.katzenpapst.amunra.vec.BoxInt2D;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.IChildBody;
+import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
+import micdoodle8.mods.galacticraft.api.recipe.SpaceStationRecipe;
+import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.util.ColorUtil;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiShuttleSelection extends GuiARCelestialSelection {
 

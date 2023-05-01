@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -26,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.BlockMassHelper;
 import de.katzenpapst.amunra.item.ItemSlabMulti;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBlock {
 

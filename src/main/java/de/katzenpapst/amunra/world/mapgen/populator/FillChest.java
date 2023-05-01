@@ -1,11 +1,11 @@
 package de.katzenpapst.amunra.world.mapgen.populator;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class FillChest extends AbstractPopulator {
 

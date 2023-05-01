@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.event;
 
-import micdoodle8.mods.galacticraft.core.items.ItemBattery;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +12,7 @@ import de.katzenpapst.amunra.item.ItemBaseBattery;
 import de.katzenpapst.amunra.item.ItemCryogun;
 import de.katzenpapst.amunra.item.ItemNanotool;
 import de.katzenpapst.amunra.item.ItemRaygun;
+import micdoodle8.mods.galacticraft.core.items.ItemBattery;
 
 public class CraftingHandler {
 

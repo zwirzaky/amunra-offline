@@ -2,9 +2,6 @@ package de.katzenpapst.amunra.mob.entity;
 
 import java.util.ArrayList;
 
-import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
-import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -16,6 +13,9 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
+import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
 
 public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreather, IEntityBreathable {
 

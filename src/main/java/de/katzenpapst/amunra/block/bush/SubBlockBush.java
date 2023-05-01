@@ -3,8 +3,6 @@ package de.katzenpapst.amunra.block.bush;
 import java.util.ArrayList;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.item.ItemStack;
@@ -15,6 +13,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
 
 import de.katzenpapst.amunra.block.SubBlock;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPlantable {
 

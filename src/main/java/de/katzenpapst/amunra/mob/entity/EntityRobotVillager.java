@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -42,6 +40,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.mob.RobotVillagerProfession;
+import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
 
 public class EntityRobotVillager extends EntityAgeable implements IEntityBreathable, INpc, IMerchant {
 

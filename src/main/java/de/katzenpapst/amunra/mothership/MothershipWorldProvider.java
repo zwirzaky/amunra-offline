@@ -2,17 +2,6 @@ package de.katzenpapst.amunra.mothership;
 
 import java.util.HashSet;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.Moon;
-import micdoodle8.mods.galacticraft.api.galaxies.Star;
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldProviderSpace;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.api.world.IExitHeight;
-import micdoodle8.mods.galacticraft.api.world.ISolarLevel;
-import micdoodle8.mods.galacticraft.api.world.IZeroGDimension;
-import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
-import micdoodle8.mods.galacticraft.core.util.WorldUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -47,6 +36,16 @@ import de.katzenpapst.amunra.tick.TickHandlerServer;
 import de.katzenpapst.amunra.tile.ITileMothershipEngine;
 import de.katzenpapst.amunra.vec.Vector2int;
 import de.katzenpapst.amunra.vec.Vector3int;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Star;
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldProviderSpace;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.api.world.IExitHeight;
+import micdoodle8.mods.galacticraft.api.world.ISolarLevel;
+import micdoodle8.mods.galacticraft.api.world.IZeroGDimension;
+import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
+import micdoodle8.mods.galacticraft.core.util.WorldUtil;
 
 public class MothershipWorldProvider extends WorldProviderSpace implements IZeroGDimension, ISolarLevel, IExitHeight {
 

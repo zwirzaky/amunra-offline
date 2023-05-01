@@ -3,12 +3,6 @@ package de.katzenpapst.amunra.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
-import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,6 +14,11 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.inventory.ContainerHydroponics;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
 import de.katzenpapst.amunra.tile.TileEntityHydroponics;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
+import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiHydroponics extends GuiContainerGC {
 

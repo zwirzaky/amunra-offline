@@ -2,8 +2,6 @@ package de.katzenpapst.amunra.client.fx;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
@@ -12,6 +10,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
+
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class EntityFXMothershipIonFlame extends EntityFX {
 

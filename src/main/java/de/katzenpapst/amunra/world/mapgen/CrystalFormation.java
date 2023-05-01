@@ -2,14 +2,13 @@ package de.katzenpapst.amunra.world.mapgen;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import de.katzenpapst.amunra.world.WorldHelper;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class CrystalFormation extends WorldGenerator {
 

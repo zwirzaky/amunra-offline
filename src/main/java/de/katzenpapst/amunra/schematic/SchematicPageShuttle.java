@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.schematic;
 
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -13,6 +11,7 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.client.gui.schematic.GuiSchematicShuttle;
 import de.katzenpapst.amunra.inventory.schematic.ContainerSchematicShuttle;
 import de.katzenpapst.amunra.item.ARItems;
+import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
 
 public class SchematicPageShuttle implements ISchematicPage {
 

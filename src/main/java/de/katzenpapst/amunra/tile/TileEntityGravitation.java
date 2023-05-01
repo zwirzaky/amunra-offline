@@ -2,13 +2,6 @@ package de.katzenpapst.amunra.tile;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.entity.IAntiGrav;
-import micdoodle8.mods.galacticraft.api.power.IEnergyHandlerGC;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
-import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlock;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -23,6 +16,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.helper.NbtHelper;
+import micdoodle8.mods.galacticraft.api.entity.IAntiGrav;
+import micdoodle8.mods.galacticraft.api.power.IEnergyHandlerGC;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlock;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class TileEntityGravitation extends TileBaseElectricBlock implements IInventory, IEnergyHandlerGC {
 

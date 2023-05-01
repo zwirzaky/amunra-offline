@@ -2,8 +2,6 @@ package de.katzenpapst.amunra.block.machine.mothershipEngine;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +17,7 @@ import de.katzenpapst.amunra.GuiIds;
 import de.katzenpapst.amunra.block.machine.AbstractBlockMothershipRestricted;
 import de.katzenpapst.amunra.item.ItemDamagePair;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRestricted {
 

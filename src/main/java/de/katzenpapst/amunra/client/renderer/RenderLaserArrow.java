@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.client.renderer;
 
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
@@ -14,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import de.katzenpapst.amunra.entity.EntityBaseLaserArrow;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 
 public class RenderLaserArrow extends Render {
 

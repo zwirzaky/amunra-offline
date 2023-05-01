@@ -1,10 +1,10 @@
 package de.katzenpapst.amunra.mob;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class MobHelper {
 

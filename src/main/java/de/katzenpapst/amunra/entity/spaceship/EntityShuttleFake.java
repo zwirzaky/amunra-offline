@@ -3,8 +3,6 @@ package de.katzenpapst.amunra.entity.spaceship;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import micdoodle8.mods.galacticraft.core.entities.EntityCelestialFake;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 
@@ -12,6 +10,7 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.ShuttleTeleportHelper;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.entities.EntityCelestialFake;
 
 /**
  * This is my version of EntityCelestialFake, for special stuff

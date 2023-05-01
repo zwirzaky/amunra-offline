@@ -1,10 +1,5 @@
 package de.katzenpapst.amunra.block;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
-import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -35,6 +30,10 @@ import de.katzenpapst.amunra.block.ore.BlockOreMulti;
 import de.katzenpapst.amunra.block.ore.SubBlockOre;
 import de.katzenpapst.amunra.block.ore.SubBlockOreMultidrop;
 import de.katzenpapst.amunra.item.ItemDamagePair;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
+import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
 
 public class ARBlocks {
 

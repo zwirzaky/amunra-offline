@@ -7,8 +7,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
-import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
-
 import net.minecraft.item.ItemStack;
 
 import codechicken.nei.PositionedStack;
@@ -21,6 +19,7 @@ import de.katzenpapst.amunra.inventory.schematic.ContainerSchematicShuttle;
 import de.katzenpapst.amunra.item.ARItems;
 import de.katzenpapst.amunra.nei.recipehandler.ARCircuitFab;
 import de.katzenpapst.amunra.nei.recipehandler.ARNasaWorkbenchShuttle;
+import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
 
 public class NEIAmunRaConfig implements IConfigureNEI {
 

@@ -4,12 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -19,6 +13,11 @@ import net.minecraftforge.common.config.Configuration;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.client.RingsRenderInfo;
 import de.katzenpapst.amunra.helper.AstronomyHelper;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
 
 public class ARConfig {
 

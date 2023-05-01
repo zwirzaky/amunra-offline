@@ -1,11 +1,11 @@
 package de.katzenpapst.amunra.mothership.fueldisplay;
 
-import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.items.GCItems;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+
+import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
+import micdoodle8.mods.galacticraft.core.items.GCItems;
 
 public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
 

@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.block;
 
-import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -9,6 +7,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
 
 public class BlockMachineMetaDummyRender extends BlockMachineMeta implements IPartialSealableBlock {
 

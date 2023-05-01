@@ -2,12 +2,11 @@ package de.katzenpapst.amunra.world;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.core.perlin.generator.Gradient;
-
 import net.minecraft.block.Block;
 
 import de.katzenpapst.amunra.helper.CoordHelper;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.core.perlin.generator.Gradient;
 
 /**
  * Basically this thing is just one wrapper for a copy of ChunkProviderSpace::generateTerrain, just that it isn't inside

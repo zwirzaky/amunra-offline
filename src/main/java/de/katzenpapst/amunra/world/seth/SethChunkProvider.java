@@ -3,10 +3,6 @@ package de.katzenpapst.amunra.world.seth;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -20,6 +16,9 @@ import de.katzenpapst.amunra.world.AmunraChunkProvider;
 import de.katzenpapst.amunra.world.TerrainGenerator;
 import de.katzenpapst.amunra.world.mapgen.CrystalFormation;
 import de.katzenpapst.amunra.world.mapgen.volcano.VolcanoGenerator;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 public class SethChunkProvider extends AmunraChunkProvider {
 

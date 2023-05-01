@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.item;
 
-import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -10,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 
 public class SubItem extends Item {
 

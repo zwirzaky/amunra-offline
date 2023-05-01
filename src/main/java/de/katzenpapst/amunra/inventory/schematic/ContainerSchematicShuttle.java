@@ -3,9 +3,6 @@ package de.katzenpapst.amunra.inventory.schematic;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import micdoodle8.mods.galacticraft.core.inventory.SlotRocketBenchResult;
-import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -20,6 +17,8 @@ import de.katzenpapst.amunra.crafting.RecipeHelper;
 import de.katzenpapst.amunra.item.ARItems;
 import de.katzenpapst.amunra.item.ItemDamagePair;
 import de.katzenpapst.amunra.vec.Vector3int;
+import micdoodle8.mods.galacticraft.core.inventory.SlotRocketBenchResult;
+import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerSchematicShuttle extends Container {
 

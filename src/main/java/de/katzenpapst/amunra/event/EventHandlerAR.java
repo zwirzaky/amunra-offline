@@ -1,12 +1,5 @@
 package de.katzenpapst.amunra.event;
 
-import micdoodle8.mods.galacticraft.api.event.ZeroGravityEvent;
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler.ThermalArmorEvent;
-import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -18,6 +11,12 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.item.ItemThermalSuit;
 import de.katzenpapst.amunra.mob.DamageSourceAR;
 import de.katzenpapst.amunra.mob.entity.IEntityNonOxygenBreather;
+import micdoodle8.mods.galacticraft.api.event.ZeroGravityEvent;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler.ThermalArmorEvent;
+import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 
 public class EventHandlerAR {
 

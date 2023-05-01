@@ -1,11 +1,10 @@
 package de.katzenpapst.amunra.world.mapgen.populator;
 
-import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import de.katzenpapst.amunra.helper.CoordHelper;
+import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 
 abstract public class AbstractPopulator {
 

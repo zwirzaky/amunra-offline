@@ -2,8 +2,6 @@ package de.katzenpapst.amunra.block.machine;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +14,7 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.GuiIds;
 import de.katzenpapst.amunra.block.SubBlockMachine;
 import de.katzenpapst.amunra.tile.TileEntityHydroponics;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class BlockHydroponics extends SubBlockMachine {
 

@@ -5,15 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Moon;
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
-import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
-import micdoodle8.mods.galacticraft.api.galaxies.Star;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GLAllocation;
@@ -32,6 +23,14 @@ import cpw.mods.fml.client.FMLClientHandler;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.client.RingsRenderInfo;
 import de.katzenpapst.amunra.helper.AstronomyHelper;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
+import micdoodle8.mods.galacticraft.api.galaxies.Star;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 
 public class SkyProviderDynamic extends IRenderHandler {
 

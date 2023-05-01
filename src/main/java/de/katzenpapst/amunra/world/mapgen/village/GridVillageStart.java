@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -16,6 +14,7 @@ import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class GridVillageStart extends BaseStructureStart {
 

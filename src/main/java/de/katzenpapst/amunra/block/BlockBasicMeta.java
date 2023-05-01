@@ -5,12 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.block.IDetectableResource;
-import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
-import micdoodle8.mods.galacticraft.api.block.IPlantableBlock;
-import micdoodle8.mods.galacticraft.api.block.ITerraformableBlock;
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -35,6 +29,11 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.bush.SubBlockBush;
 import de.katzenpapst.amunra.helper.BlockMassHelper;
 import de.katzenpapst.amunra.item.ItemBlockMulti;
+import micdoodle8.mods.galacticraft.api.block.IDetectableResource;
+import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
+import micdoodle8.mods.galacticraft.api.block.IPlantableBlock;
+import micdoodle8.mods.galacticraft.api.block.ITerraformableBlock;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableResource, IPlantableBlock,
         ITerraformableBlock, IMassiveBlock, IPartialSealableBlock {

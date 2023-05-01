@@ -2,10 +2,6 @@ package de.katzenpapst.amunra.item;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.item.IItemThermal;
-import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +14,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.api.item.IItemThermal;
+import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class ItemThermalSuit extends Item implements IItemThermal {
 

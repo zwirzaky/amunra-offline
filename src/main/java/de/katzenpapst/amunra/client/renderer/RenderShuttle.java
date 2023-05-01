@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.client.renderer;
 
-import micdoodle8.mods.galacticraft.api.prefab.entity.EntitySpaceshipBase;
-
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
@@ -12,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.api.prefab.entity.EntitySpaceshipBase;
 
 public class RenderShuttle extends Render {
 

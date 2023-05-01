@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.world.mapgen.pyramid;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -9,6 +7,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.populator.TouchBlock;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class PyramidRoom extends BaseStructureComponent {
 

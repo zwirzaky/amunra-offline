@@ -1,8 +1,5 @@
 package de.katzenpapst.amunra.world.mapgen.village;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.init.Blocks;
@@ -10,6 +7,8 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.mob.entity.EntityRobotVillager;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
 
 public class BoxHouseComponent extends GridVillageComponent {
 

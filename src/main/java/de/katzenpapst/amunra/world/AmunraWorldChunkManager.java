@@ -1,8 +1,8 @@
 package de.katzenpapst.amunra.world;
 
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldChunkManagerSpace;
-
 import net.minecraft.world.biome.BiomeGenBase;
+
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldChunkManagerSpace;
 
 public class AmunraWorldChunkManager extends WorldChunkManagerSpace {
 

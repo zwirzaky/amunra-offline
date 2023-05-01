@@ -2,9 +2,6 @@ package de.katzenpapst.amunra.item;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,6 +21,8 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.block.BlockMachineMeta;
 import de.katzenpapst.amunra.block.machine.mothershipEngine.MothershipEngineJetBase;
+import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class ItemJet extends ItemBlockMulti {
 

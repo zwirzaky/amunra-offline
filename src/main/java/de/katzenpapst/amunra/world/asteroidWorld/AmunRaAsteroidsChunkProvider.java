@@ -6,18 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
-import micdoodle8.mods.galacticraft.core.perlin.NoiseModule;
-import micdoodle8.mods.galacticraft.core.perlin.generator.Billowed;
-import micdoodle8.mods.galacticraft.core.perlin.generator.Gradient;
-import micdoodle8.mods.galacticraft.planets.asteroids.blocks.AsteroidBlocks;
-import micdoodle8.mods.galacticraft.planets.asteroids.dimension.WorldProviderAsteroids;
-import micdoodle8.mods.galacticraft.planets.asteroids.world.gen.BiomeGenBaseAsteroids;
-import micdoodle8.mods.galacticraft.planets.asteroids.world.gen.SpecialAsteroidBlock;
-import micdoodle8.mods.galacticraft.planets.asteroids.world.gen.SpecialAsteroidBlockHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockFalling;
@@ -36,6 +24,17 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.WorldGenTallgrassMeta;
 import de.katzenpapst.amunra.world.WorldGenTreeBySapling;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
+import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
+import micdoodle8.mods.galacticraft.core.perlin.NoiseModule;
+import micdoodle8.mods.galacticraft.core.perlin.generator.Billowed;
+import micdoodle8.mods.galacticraft.core.perlin.generator.Gradient;
+import micdoodle8.mods.galacticraft.planets.asteroids.blocks.AsteroidBlocks;
+import micdoodle8.mods.galacticraft.planets.asteroids.dimension.WorldProviderAsteroids;
+import micdoodle8.mods.galacticraft.planets.asteroids.world.gen.BiomeGenBaseAsteroids;
+import micdoodle8.mods.galacticraft.planets.asteroids.world.gen.SpecialAsteroidBlock;
+import micdoodle8.mods.galacticraft.planets.asteroids.world.gen.SpecialAsteroidBlockHandler;
 
 /**
  * This is copypaste from ChunkProviderAsteroids. I would have extended that class, but everything there is private

@@ -2,11 +2,11 @@ package de.katzenpapst.amunra.block;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class UnderwaterGrass extends SubBlockGrass {
 

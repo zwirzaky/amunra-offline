@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.tile;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -11,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 
 import de.katzenpapst.amunra.block.IMetaBlock;
 import de.katzenpapst.amunra.helper.BlockMassHelper;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class TileEntityBlockScale extends TileEntity {
 

@@ -2,16 +2,6 @@ package de.katzenpapst.amunra.tile;
 
 import java.util.EnumSet;
 
-import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
-import micdoodle8.mods.galacticraft.api.transmission.NetworkType;
-import micdoodle8.mods.galacticraft.api.transmission.tile.IConnector;
-import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
-import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectricalSource;
-import micdoodle8.mods.galacticraft.core.network.IPacketReceiver;
-import micdoodle8.mods.galacticraft.core.util.Annotations.NetworkedField;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -25,6 +15,15 @@ import de.katzenpapst.amunra.block.BlockMachineMeta;
 import de.katzenpapst.amunra.block.SubBlockMachine;
 import de.katzenpapst.amunra.block.machine.BlockIsotopeGenerator;
 import de.katzenpapst.amunra.helper.CoordHelper;
+import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
+import micdoodle8.mods.galacticraft.api.transmission.NetworkType;
+import micdoodle8.mods.galacticraft.api.transmission.tile.IConnector;
+import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
+import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectricalSource;
+import micdoodle8.mods.galacticraft.core.network.IPacketReceiver;
+import micdoodle8.mods.galacticraft.core.util.Annotations.NetworkedField;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSource
         implements IPacketReceiver, IDisableableMachine, IInventory, ISidedInventory, IConnector {

@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import micdoodle8.mods.galacticraft.core.nei.CircuitFabricatorRecipeHandler;
 import codechicken.nei.PositionedStack;
 import de.katzenpapst.amunra.nei.NEIAmunRaConfig;
+import micdoodle8.mods.galacticraft.core.nei.CircuitFabricatorRecipeHandler;
 
 public class ARCircuitFab extends CircuitFabricatorRecipeHandler {
 

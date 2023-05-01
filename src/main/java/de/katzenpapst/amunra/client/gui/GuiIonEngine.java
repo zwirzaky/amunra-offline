@@ -3,16 +3,15 @@ package de.katzenpapst.amunra.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
-import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.inventory.ContainerIonEngine;
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
+import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiIonEngine extends GuiRocketEngine {
 

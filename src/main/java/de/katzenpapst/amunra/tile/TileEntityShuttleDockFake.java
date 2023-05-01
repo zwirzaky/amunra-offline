@@ -2,17 +2,17 @@ package de.katzenpapst.amunra.tile;
 
 import java.util.HashSet;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fluids.FluidStack;
+
 import micdoodle8.mods.galacticraft.api.entity.ICargoEntity;
 import micdoodle8.mods.galacticraft.api.entity.IDockable;
 import micdoodle8.mods.galacticraft.api.entity.IFuelable;
 import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityMulti;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.fluids.FluidStack;
 
 public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuelable, IFuelDock, ICargoEntity {
 

@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.world.mapgen;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -9,6 +7,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.populator.SetSignText;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 abstract public class BaseStructureComponent {
 

@@ -1,11 +1,5 @@
 package de.katzenpapst.amunra.command;
 
-import micdoodle8.mods.galacticraft.api.entity.IRocketType;
-import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.items.GCItems;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -18,6 +12,11 @@ import net.minecraft.world.WorldServer;
 
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
+import micdoodle8.mods.galacticraft.api.entity.IRocketType;
+import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
+import micdoodle8.mods.galacticraft.core.items.GCItems;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class CommandShuttleTeleport extends CommandBase {
 
