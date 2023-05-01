@@ -16,6 +16,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.WorldServer;
 
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
 
 public class CommandShuttleTeleport extends CommandBase {
@@ -69,7 +70,7 @@ public class CommandShuttleTeleport extends CommandBase {
                         EntityShuttle.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE, false);
                         // WorldUtil.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        AmunRa.LOGGER.error("Failed to open celestial selection", e);
                         throw e;
                     }
 

@@ -18,7 +18,6 @@ import micdoodle8.mods.galacticraft.core.network.IPacket;
 import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -218,8 +217,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
     public PacketSimpleAR(EnumSimplePacket packetType, List<Object> data) {
         if (packetType.getDecodeClasses().length != data.size()) {
-            // GCLog.info("Simple Packet Core found data length different than packet type");
-            new RuntimeException().printStackTrace();
+            AmunRa.LOGGER.warn("Found data length different than packet type", new RuntimeException());
         }
 
         this.type = packetType;
@@ -233,7 +231,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
         try {
             NetworkUtil.encodeData(buffer, this.data);
         } catch (IOException e) {
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Could not encode data", e);
         }
     }
 
@@ -249,11 +247,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 // GCLog.severe("Galacticraft packet length problem for packet type " + this.type.toString());
             }
         } catch (Exception e) {
-            System.err.println(
-                    "[Galacticraft] Error handling simple packet type: " + this.type.toString()
-                            + " "
-                            + buffer.toString());
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Error handling simple packet type: " + this.type + " " + buffer, e);
         }
     }
 
@@ -469,7 +463,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 try {
                     // final WorldProvider provider = WorldUtil.getProviderForNameServer((String) this.data.get(0));
                     final Integer dim = ((Integer) this.data.get(0));
-                    GCLog.info("Will teleport to (" + dim.toString() + ")");
+                    AmunRa.LOGGER.info("Will teleport to ({})", dim);
 
                     if (playerBase.worldObj instanceof WorldServer) {
                         mShip = TickHandlerServer.mothershipData.getByDimensionId(dim);
@@ -497,10 +491,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                     }
                 } catch (final Exception e) {
-                    GCLog.severe(
-                            "Error occurred when attempting to transfer entity to dimension: "
-                                    + (Integer) this.data.get(0));
-                    e.printStackTrace();
+                    AmunRa.LOGGER.error(
+                            "Error occurred when attempting to transfer entity to dimension: " + this.data.get(0),
+                            e);
                 }
                 break;
             case S_CANCEL_SHUTTLE:

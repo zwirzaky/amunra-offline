@@ -7,7 +7,6 @@ import java.util.TreeMap;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.planets.asteroids.dimension.WorldProviderAsteroids;
 import micdoodle8.mods.galacticraft.planets.asteroids.entities.EntityAstroMiner;
 
@@ -311,7 +310,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
         int offset = EntityAstroMiner.MINE_LENGTH_AST / 2;
         for (BlockVec3 target : targets.values()) {
             BlockVec3 coords = target.clone();
-            GCLog.debug("Found nearby asteroid at " + target.toString());
+            AmunRa.LOGGER.debug("Found nearby asteroid at {}", target);
             switch (facing) {
                 case 2:
                     coords.z += offset;
