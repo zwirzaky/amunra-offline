@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.block.machine;
 
-import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.SubBlockMachine;
 import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
+import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 
 public class BlockShuttleDock extends SubBlockMachine {
 

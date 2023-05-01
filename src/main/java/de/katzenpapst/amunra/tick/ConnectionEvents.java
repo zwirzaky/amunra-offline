@@ -1,11 +1,11 @@
 package de.katzenpapst.amunra.tick;
 
-import micdoodle8.mods.galacticraft.core.util.MapUtil;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerConnectionFromClientEvent;
 import de.katzenpapst.amunra.network.packet.ConnectionPacketAR;
+import micdoodle8.mods.galacticraft.core.util.MapUtil;
 
 public class ConnectionEvents {
 

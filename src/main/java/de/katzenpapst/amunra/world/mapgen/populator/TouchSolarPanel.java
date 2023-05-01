@@ -1,10 +1,10 @@
 package de.katzenpapst.amunra.world.mapgen.populator;
 
-import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-import micdoodle8.mods.galacticraft.core.tile.TileEntitySolar;
-
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
+import micdoodle8.mods.galacticraft.core.tile.TileEntitySolar;
 
 public class TouchSolarPanel extends AbstractPopulator {
 

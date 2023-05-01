@@ -2,11 +2,6 @@ package de.katzenpapst.amunra.client.gui.tabs;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.ITextBoxCallback;
-import micdoodle8.mods.galacticraft.core.util.ColorUtil;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +13,10 @@ import de.katzenpapst.amunra.client.gui.GuiMothershipSettings.IMothershipSetting
 import de.katzenpapst.amunra.client.gui.elements.DynamicTexturedButton;
 import de.katzenpapst.amunra.mothership.Mothership;
 import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.ITextBoxCallback;
+import micdoodle8.mods.galacticraft.core.util.ColorUtil;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback, IMothershipSettingsTab {
 

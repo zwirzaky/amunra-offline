@@ -2,14 +2,13 @@ package de.katzenpapst.amunra.mothership;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import de.katzenpapst.amunra.block.ARBlocks;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
 
 public class MothershipWorldGen extends WorldGenerator {
 

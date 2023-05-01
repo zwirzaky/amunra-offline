@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.client.renderer.item;
 
-import micdoodle8.mods.galacticraft.core.entities.EntityTier1Rocket;
-
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,6 +16,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
+import micdoodle8.mods.galacticraft.core.entities.EntityTier1Rocket;
 
 public class ItemRendererShuttle implements IItemRenderer {
 

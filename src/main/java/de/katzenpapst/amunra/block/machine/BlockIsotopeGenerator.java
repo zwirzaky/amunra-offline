@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.block.machine;
 
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -17,6 +15,7 @@ import de.katzenpapst.amunra.block.BlockMachineMeta;
 import de.katzenpapst.amunra.block.SubBlockMachine;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.tile.TileEntityIsotopeGenerator;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class BlockIsotopeGenerator extends SubBlockMachine {
 

@@ -5,13 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown.IDropboxCallback;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.ITextBoxCallback;
-import micdoodle8.mods.galacticraft.core.util.ColorUtil;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +16,12 @@ import de.katzenpapst.amunra.client.gui.elements.StringSelectBox.ISelectBoxCallb
 import de.katzenpapst.amunra.helper.PlayerID;
 import de.katzenpapst.amunra.mothership.Mothership;
 import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown.IDropboxCallback;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.ITextBoxCallback;
+import micdoodle8.mods.galacticraft.core.util.ColorUtil;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 abstract public class AbstractPermissionTab extends AbstractTab
         implements IDropboxCallback, ITextBoxCallback, ISelectBoxCallback, IMothershipSettingsTab {

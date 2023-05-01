@@ -2,9 +2,6 @@ package de.katzenpapst.amunra.mob.entity;
 
 import java.util.ArrayList;
 
-import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
-import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -24,6 +21,8 @@ import net.minecraft.world.World;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.item.ARItems;
 import de.katzenpapst.amunra.mob.MobHelper;
+import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
+import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
 
 public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, IEntityNonOxygenBreather {
 

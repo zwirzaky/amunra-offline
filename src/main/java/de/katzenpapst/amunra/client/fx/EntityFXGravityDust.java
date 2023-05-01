@@ -1,9 +1,9 @@
 package de.katzenpapst.amunra.client.fx;
 
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class EntityFXGravityDust extends EntityFX {
 

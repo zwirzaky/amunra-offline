@@ -2,9 +2,9 @@ package de.katzenpapst.amunra.block;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.item.Item;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 /**
  * Subblock which drops some kind of cobble when harvested

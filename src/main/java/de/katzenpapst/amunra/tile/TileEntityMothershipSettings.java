@@ -1,13 +1,12 @@
 package de.katzenpapst.amunra.tile;
 
-import micdoodle8.mods.galacticraft.core.tile.TileEntityAdvanced;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 import de.katzenpapst.amunra.mothership.Mothership;
 import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
+import micdoodle8.mods.galacticraft.core.tile.TileEntityAdvanced;
 
 public class TileEntityMothershipSettings extends TileEntityAdvanced implements IInventory {
 

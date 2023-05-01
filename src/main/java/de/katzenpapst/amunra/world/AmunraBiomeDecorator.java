@@ -3,9 +3,9 @@ package de.katzenpapst.amunra.world;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
-
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
 
 public class AmunraBiomeDecorator extends BiomeDecoratorSpace {
 

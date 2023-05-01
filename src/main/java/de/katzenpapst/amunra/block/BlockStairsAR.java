@@ -2,8 +2,6 @@ package de.katzenpapst.amunra.block;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.MapColor;
@@ -24,6 +22,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.BlockMassHelper;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
 

@@ -1,10 +1,5 @@
 package de.katzenpapst.amunra.tick;
 
-import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-import micdoodle8.mods.galacticraft.core.client.CloudRenderer;
-import micdoodle8.mods.galacticraft.core.client.SkyProviderOrbit;
-import micdoodle8.mods.galacticraft.planets.asteroids.client.SkyProviderAsteroids;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 
@@ -20,6 +15,10 @@ import de.katzenpapst.amunra.mothership.SkyProviderMothership;
 import de.katzenpapst.amunra.world.AmunraWorldProvider;
 import de.katzenpapst.amunra.world.SkyProviderDynamic;
 import de.katzenpapst.amunra.world.asteroidWorld.AmunRaAsteroidWorldProvider;
+import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
+import micdoodle8.mods.galacticraft.core.client.CloudRenderer;
+import micdoodle8.mods.galacticraft.core.client.SkyProviderOrbit;
+import micdoodle8.mods.galacticraft.planets.asteroids.client.SkyProviderAsteroids;
 
 public class TickHandlerClient {
 

@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.mob;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ChatComponentTranslation;
@@ -10,6 +8,7 @@ import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.IChatComponent;
 
 import de.katzenpapst.amunra.entity.EntityBaseLaserArrow;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 public class DamageSourceAR {
 

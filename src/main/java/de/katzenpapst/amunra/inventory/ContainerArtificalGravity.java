@@ -1,12 +1,12 @@
 package de.katzenpapst.amunra.inventory;
 
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
-import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
+
+import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerArtificalGravity extends ContainerWithPlayerInventory {
 

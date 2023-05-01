@@ -3,8 +3,6 @@ package de.katzenpapst.amunra.world.mapgen;
 import java.util.HashMap;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -14,6 +12,7 @@ import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.populator.AbstractPopulator;
 import de.katzenpapst.amunra.world.mapgen.populator.SpawnEntity;
+import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 
 abstract public class BaseStructureStart extends BaseStructureComponent {
 

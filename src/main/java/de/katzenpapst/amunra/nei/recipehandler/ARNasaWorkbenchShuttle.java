@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
@@ -17,6 +15,7 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import de.katzenpapst.amunra.client.gui.schematic.GuiSchematicShuttle;
 import de.katzenpapst.amunra.nei.NEIAmunRaConfig;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
 

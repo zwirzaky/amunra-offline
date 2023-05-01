@@ -2,8 +2,6 @@ package de.katzenpapst.amunra.world.neper;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -11,6 +9,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.AmunraBiomeDecorator;
 import de.katzenpapst.amunra.world.WorldGenOre;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class NeperBiomeDecorator extends AmunraBiomeDecorator {
 

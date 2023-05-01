@@ -1,7 +1,5 @@
 package de.katzenpapst.amunra.proxy;
 
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -10,6 +8,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class ARSidedProxy {
 

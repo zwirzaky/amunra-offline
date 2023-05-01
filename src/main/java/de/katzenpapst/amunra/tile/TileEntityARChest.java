@@ -3,8 +3,6 @@ package de.katzenpapst.amunra.tile;
 import java.util.Iterator;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +17,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import de.katzenpapst.amunra.block.BlockARChest;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class TileEntityARChest extends TileEntity implements IInventory {
 

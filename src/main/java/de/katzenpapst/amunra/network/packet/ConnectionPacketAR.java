@@ -2,8 +2,6 @@ package de.katzenpapst.amunra.network.packet;
 
 import java.io.IOException;
 
-import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,6 +19,7 @@ import de.katzenpapst.amunra.mothership.MothershipWorldData;
 import de.katzenpapst.amunra.tick.TickHandlerServer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
 
 public class ConnectionPacketAR {
 

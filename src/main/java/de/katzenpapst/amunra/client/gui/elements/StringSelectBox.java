@@ -3,8 +3,6 @@ package de.katzenpapst.amunra.client.gui.elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.client.gui.screen.SmallFontRenderer;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
@@ -13,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.core.client.gui.screen.SmallFontRenderer;
 
 public class StringSelectBox extends GuiButton {
 

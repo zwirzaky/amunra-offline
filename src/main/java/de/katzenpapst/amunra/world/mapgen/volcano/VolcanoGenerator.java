@@ -2,12 +2,11 @@ package de.katzenpapst.amunra.world.mapgen.volcano;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.util.MathHelper;
 
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 import de.katzenpapst.amunra.world.mapgen.StructureGenerator;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class VolcanoGenerator extends StructureGenerator {
 
