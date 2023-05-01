@@ -1,5 +1,8 @@
 package de.katzenpapst.amunra.helper;
 
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.astronomy.AngleDistance;
+import de.katzenpapst.amunra.mothership.Mothership;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.IChildBody;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
@@ -9,9 +12,6 @@ import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
 import micdoodle8.mods.galacticraft.api.galaxies.Star;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.astronomy.AngleDistance;
-import de.katzenpapst.amunra.mothership.Mothership;
 
 public class AstronomyHelper {
 

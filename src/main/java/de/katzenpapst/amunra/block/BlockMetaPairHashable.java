@@ -1,8 +1,8 @@
 package de.katzenpapst.amunra.block;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 /**
  * Like BlockMetaPair, but should work in HashMaps

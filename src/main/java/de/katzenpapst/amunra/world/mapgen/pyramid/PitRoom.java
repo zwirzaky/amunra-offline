@@ -1,9 +1,9 @@
 package de.katzenpapst.amunra.world.mapgen.pyramid;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class PitRoom extends PyramidRoom {
 

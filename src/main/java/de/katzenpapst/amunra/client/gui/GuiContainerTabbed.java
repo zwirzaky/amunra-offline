@@ -3,14 +3,13 @@ package de.katzenpapst.amunra.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.inventory.Container;
 
 import de.katzenpapst.amunra.client.gui.elements.TabButton;
 import de.katzenpapst.amunra.client.gui.tabs.AbstractTab;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
 
 abstract public class GuiContainerTabbed extends GuiContainerGC {
 

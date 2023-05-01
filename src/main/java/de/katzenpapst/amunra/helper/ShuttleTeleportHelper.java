@@ -4,6 +4,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.S07PacketRespawn;
+import net.minecraft.network.play.server.S1DPacketEntityEffect;
+import net.minecraft.network.play.server.S1FPacketSetExperience;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.fluids.FluidStack;
+
+import com.google.common.collect.Lists;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
+import de.katzenpapst.amunra.item.ItemShuttle;
+import de.katzenpapst.amunra.mothership.Mothership;
+import de.katzenpapst.amunra.mothership.MothershipWorldData;
+import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
+import de.katzenpapst.amunra.tick.TickHandlerServer;
+import de.katzenpapst.amunra.vec.Vector3int;
+import de.katzenpapst.amunra.world.ShuttleDockHandler;
+import de.katzenpapst.amunra.world.WorldHelper;
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
@@ -24,37 +52,7 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.items.ItemParaChute;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.WorldUtil;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S07PacketRespawn;
-import net.minecraft.network.play.server.S1DPacketEntityEffect;
-import net.minecraft.network.play.server.S1FPacketSetExperience;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.ChunkCoordIntPair;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fluids.FluidStack;
-
-import com.google.common.collect.Lists;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
-import de.katzenpapst.amunra.item.ItemShuttle;
-import de.katzenpapst.amunra.mothership.Mothership;
-import de.katzenpapst.amunra.mothership.MothershipWorldData;
-import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
-import de.katzenpapst.amunra.tick.TickHandlerServer;
-import de.katzenpapst.amunra.vec.Vector3int;
-import de.katzenpapst.amunra.world.ShuttleDockHandler;
-import de.katzenpapst.amunra.world.WorldHelper;
 
 public class ShuttleTeleportHelper {
 
@@ -74,7 +72,7 @@ public class ShuttleTeleportHelper {
                         : mcServer.worldServerForDimension(dimensionID);
 
                 if (targetWorld == null) {
-                    System.err.println(
+                    AmunRa.LOGGER.error(
                             "Cannot Transfer Entity to Dimension: Could not get World for Dimension " + dimensionID);
                     return null;
                 }
@@ -110,18 +108,13 @@ public class ShuttleTeleportHelper {
             if (entity instanceof EntityPlayerMP) {
                 player = (EntityPlayerMP) entity;
                 World worldOld = player.worldObj;
-                if (ConfigManagerCore.enableDebug) {
-                    try {
-                        GCLog.info("DEBUG: Attempting to remove player from old dimension " + oldDimID);
-                        ((WorldServer) worldOld).getPlayerManager().removePlayer(player);
-                        GCLog.info("DEBUG: Successfully removed player from old dimension " + oldDimID);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        ((WorldServer) worldOld).getPlayerManager().removePlayer(player);
-                    } catch (Exception e) {}
+
+                try {
+                    AmunRa.LOGGER.debug("Attempting to remove player from old dimension {}", oldDimID);
+                    ((WorldServer) worldOld).getPlayerManager().removePlayer(player);
+                    AmunRa.LOGGER.debug("Successfully removed player from old dimension {}", oldDimID);
+                } catch (Exception e) {
+                    AmunRa.LOGGER.warn("Failed to remove player from old dimension", e);
                 }
 
                 player.closeScreen(); // redundant?
@@ -129,9 +122,7 @@ public class ShuttleTeleportHelper {
                 stats.usingPlanetSelectionGui = false;
 
                 player.dimension = dimID;
-                if (ConfigManagerCore.enableDebug) {
-                    GCLog.info("DEBUG: Sending respawn packet to player for dim " + dimID);
-                }
+                AmunRa.LOGGER.debug("Sending respawn packet to player for dim {}", dimID);
                 player.playerNetServerHandler.sendPacket(
                         new S07PacketRespawn(
                                 dimID,
@@ -174,9 +165,7 @@ public class ShuttleTeleportHelper {
                 spawnPos = type.getPlayerSpawnLocation((WorldServer) entity.worldObj, player);
                 ChunkCoordIntPair pair = worldNew.getChunkFromChunkCoords(spawnPos.intX(), spawnPos.intZ())
                         .getChunkCoordIntPair();
-                if (ConfigManagerCore.enableDebug) {
-                    GCLog.info("DEBUG: Loading first chunk in new dimension.");
-                }
+                AmunRa.LOGGER.debug("Loading first chunk in new dimension.");
                 ((WorldServer) worldNew).theChunkProviderServer.loadChunk(pair.chunkXPos, pair.chunkZPos);
                 // entity.setLocationAndAngles(spawnPos.x, spawnPos.y, spawnPos.z, entity.rotationYaw,
                 // entity.rotationPitch);
@@ -197,10 +186,10 @@ public class ShuttleTeleportHelper {
                         entity.rotationPitch);
                 // worldNew.updateEntityWithOptionalForce(entity, false);
 
-                GCLog.info(
-                        "Server attempting to transfer player " + player.getGameProfile().getName()
-                                + " to dimension "
-                                + worldNew.provider.dimensionId);
+                AmunRa.LOGGER.info(
+                        "Server attempting to transfer player {} to dimension {}",
+                        player.getGameProfile().getName(),
+                        worldNew.provider.dimensionId);
 
                 player.theItemInWorldManager.setWorld((WorldServer) worldNew);
                 player.mcServer.getConfigurationManager().updateTimeAndWeatherForPlayer(player, (WorldServer) worldNew);
@@ -241,10 +230,10 @@ public class ShuttleTeleportHelper {
                         entity.rotationPitch);
                 worldNew.updateEntityWithOptionalForce(entity, false);
 
-                GCLog.info(
-                        "Server attempting to transfer player " + player.getGameProfile().getName()
-                                + " within same dimension "
-                                + worldNew.provider.dimensionId);
+                AmunRa.LOGGER.info(
+                        "Server attempting to transfer player {} within same dimension {}",
+                        player.getGameProfile().getName(),
+                        worldNew.provider.dimensionId);
             }
         }
         GCPlayerStats playerStats = GCPlayerStats.get(player);

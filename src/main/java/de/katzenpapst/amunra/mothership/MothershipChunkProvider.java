@@ -3,8 +3,6 @@ package de.katzenpapst.amunra.mothership;
 import java.util.Arrays;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.core.world.gen.BiomeGenBaseOrbit;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
@@ -13,6 +11,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderGenerate;
+
+import micdoodle8.mods.galacticraft.core.world.gen.BiomeGenBaseOrbit;
 
 public class MothershipChunkProvider extends ChunkProviderGenerate { // for now, just like this
 

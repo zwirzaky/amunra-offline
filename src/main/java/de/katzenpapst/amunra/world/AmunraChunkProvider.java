@@ -1,9 +1,9 @@
 package de.katzenpapst.amunra.world;
 
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.ChunkProviderSpace;
-
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.ChunkProviderSpace;
 
 abstract public class AmunraChunkProvider extends ChunkProviderSpace {
 

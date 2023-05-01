@@ -3,8 +3,6 @@ package de.katzenpapst.amunra.block.bush;
 import java.util.ArrayList;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
@@ -18,6 +16,7 @@ import net.minecraftforge.common.IShearable;
 
 import de.katzenpapst.amunra.block.BlockBasicMeta;
 import de.katzenpapst.amunra.block.SubBlock;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 // SEE net.minecraft.block.BlockBush
 public class BlockBushMulti extends BlockBasicMeta implements IGrowable, IShearable, IPlantable {

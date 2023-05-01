@@ -2,9 +2,6 @@ package de.katzenpapst.amunra.world.mapgen.volcano;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.core.perlin.generator.Gradient;
-
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -13,6 +10,8 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.core.perlin.generator.Gradient;
 
 public class Volcano extends BaseStructureStart {
 

@@ -1,8 +1,5 @@
 package de.katzenpapst.amunra.mob.entity;
 
-import micdoodle8.mods.galacticraft.api.entity.IAntiGrav;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.monster.IMob;
@@ -15,6 +12,8 @@ import net.minecraft.world.World;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import micdoodle8.mods.galacticraft.api.entity.IAntiGrav;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAntiGrav {
 

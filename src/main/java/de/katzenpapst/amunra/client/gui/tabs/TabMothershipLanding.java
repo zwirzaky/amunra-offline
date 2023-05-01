@@ -1,8 +1,5 @@
 package de.katzenpapst.amunra.client.gui.tabs;
 
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -14,6 +11,8 @@ import de.katzenpapst.amunra.mothership.Mothership.PermissionMode;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR.EnumSimplePacket;
 import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class TabMothershipLanding extends AbstractPermissionTab {
 

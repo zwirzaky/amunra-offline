@@ -6,21 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
-import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
-import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection.MapMode;
-import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.network.IPacket;
-import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
-
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -59,6 +44,19 @@ import de.katzenpapst.amunra.tile.TileEntityHydroponics;
 import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
+import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection.MapMode;
+import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
+import micdoodle8.mods.galacticraft.core.network.IPacket;
+import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
+import micdoodle8.mods.galacticraft.core.network.PacketSimple;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class PacketSimpleAR extends Packet implements IPacket {
 
@@ -68,7 +66,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
         /**
          * Teleport the current player in his shuttle. params: - dimension_id: target dimension
          */
-        S_TELEPORT_SHUTTLE(Side.SERVER, Integer.class),
+        S_TELEPORT_SHUTTLE(Side.SERVER, int.class),
 
         /**
          * If the player is currently in shuttle GUI, send him back
@@ -83,41 +81,41 @@ public class PacketSimpleAR extends Packet implements IPacket {
         /**
          * Start a mothership transit params: - mothership_id: id of the ship to move - body_name: target body name
          */
-        S_MOTHERSHIP_TRANSIT_START(Side.SERVER, Integer.class, String.class),
+        S_MOTHERSHIP_TRANSIT_START(Side.SERVER, int.class, String.class),
 
         /**
          * Causes a mothership world provider to update itself (count total mass, etc) params: - dimension_id: dimension
          * ID of the world
          */
-        S_MOTHERSHIP_UPDATE(Side.SERVER, Integer.class),
+        S_MOTHERSHIP_UPDATE(Side.SERVER, int.class),
 
         /**
          * Sends Mothership customisation parameters to the server params: - mothership_id: ID of the ship - nbt_data:
          * subset of mothership data
          */
-        S_SET_MOTHERSHIP_SETTINGS(Side.SERVER, Integer.class, NBTTagCompound.class),
+        S_SET_MOTHERSHIP_SETTINGS(Side.SERVER, int.class, NBTTagCompound.class),
 
         /**
          * Sends a username to the server and hopes that the server finds a user by that name params: - mothership_id -
          * player_name - type
          */
-        S_ADD_MOTHERSHIP_PLAYER(Side.SERVER, Integer.class, String.class, Integer.class),
+        S_ADD_MOTHERSHIP_PLAYER(Side.SERVER, int.class, String.class, int.class),
 
         /**
          * Performs a shuttle dock operation params: - x - y - z coordinates of the dock - op ordinal of the operation
          */
-        S_DOCK_OPERATION(Side.SERVER, Integer.class, Integer.class, Integer.class, Integer.class),
+        S_DOCK_OPERATION(Side.SERVER, int.class, int.class, int.class, int.class),
 
         /**
          * Performs a hydroponics tile operation - x - y - z coordinates of the dock - op ordinal of the operation
          */
-        S_HYDROPONICS_OPERATION(Side.SERVER, Integer.class, Integer.class, Integer.class, Integer.class),
+        S_HYDROPONICS_OPERATION(Side.SERVER, int.class, int.class, int.class, int.class),
 
         /**
          * Updates the gravity side of an artifical gravity block - BlockVec3 pos: position of the block - BlockVec3
          * min: min of the AABB - BlockVec3 max: max of the AABB - Double gravityStrength
          */
-        S_ARTIFICIAL_GRAVITY_SETTINGS(Side.SERVER, BlockVec3.class, BlockVec3.class, BlockVec3.class, Double.class),
+        S_ARTIFICIAL_GRAVITY_SETTINGS(Side.SERVER, BlockVec3.class, BlockVec3.class, BlockVec3.class, double.class),
 
         // ===================== CLIENT =====================
         /**
@@ -146,17 +144,17 @@ public class PacketSimpleAR extends Packet implements IPacket {
          * Sent back to all clients, informing them that the transit has started params: - mothership_id: id of the ship
          * - target_body_name: name of the target - travel_time: the travel time in ticks, as calculated by the server
          */
-        C_MOTHERSHIP_TRANSIT_STARTED(Side.CLIENT, Integer.class, String.class, Long.class),
+        C_MOTHERSHIP_TRANSIT_STARTED(Side.CLIENT, int.class, String.class, long.class),
 
         /**
          * Informs the client that an attempt to start a mothership transit has failed params: - mothership_id
          */
-        C_MOTHERSHIP_TRANSIT_FAILED(Side.CLIENT, Integer.class),
+        C_MOTHERSHIP_TRANSIT_FAILED(Side.CLIENT, int.class),
 
         /**
          * Informs the client that a transit has ended params: - mothership_id
          */
-        C_MOTHERSHIP_TRANSIT_ENDED(Side.CLIENT, Integer.class),
+        C_MOTHERSHIP_TRANSIT_ENDED(Side.CLIENT, int.class),
 
         /**
          * Returns the data from a previous S_MOTHERSHIP_UPDATE to all clients in the dimension
@@ -164,7 +162,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
          * params: - dimension_id: the dimension id of the ship - nbt_data: the data to be read by the
          * MothershipWorldProvider
          */
-        C_MOTHERSHIP_DATA(Side.CLIENT, Integer.class, NBTTagCompound.class),
+        C_MOTHERSHIP_DATA(Side.CLIENT, int.class, NBTTagCompound.class),
 
         /**
          * Tells the client that the prev. add player operation failed params: - error_message - player_name
@@ -176,7 +174,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
          *
          * params: - mothership_id - nbt_data
          */
-        C_MOTHERSHIP_SETTINGS_CHANGED(Side.CLIENT, Integer.class, NBTTagCompound.class),
+        C_MOTHERSHIP_SETTINGS_CHANGED(Side.CLIENT, int.class, NBTTagCompound.class),
 
         /**
          * Tells the client that a previous S_TELEPORT_SHUTTLE has failed because of a permission error params: -
@@ -218,8 +216,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
     public PacketSimpleAR(EnumSimplePacket packetType, List<Object> data) {
         if (packetType.getDecodeClasses().length != data.size()) {
-            // GCLog.info("Simple Packet Core found data length different than packet type");
-            new RuntimeException().printStackTrace();
+            AmunRa.LOGGER.warn("Found data length different than packet type", new RuntimeException());
         }
 
         this.type = packetType;
@@ -233,7 +230,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
         try {
             NetworkUtil.encodeData(buffer, this.data);
         } catch (IOException e) {
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Could not encode data", e);
         }
     }
 
@@ -249,11 +246,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 // GCLog.severe("Galacticraft packet length problem for packet type " + this.type.toString());
             }
         } catch (Exception e) {
-            System.err.println(
-                    "[Galacticraft] Error handling simple packet type: " + this.type.toString()
-                            + " "
-                            + buffer.toString());
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Error handling simple packet type: " + this.type + " " + buffer, e);
         }
     }
 
@@ -358,10 +351,10 @@ public class PacketSimpleAR extends Packet implements IPacket {
                             .mothershipCreationFailed();
                 }
                 break;
-            case C_MOTHERSHIP_TRANSIT_STARTED:// (Side.CLIENT, Integer.class, String.class, Long.class),
-                motherShip = mData.getByMothershipId((Integer) this.data.get(0));
+            case C_MOTHERSHIP_TRANSIT_STARTED:// (Side.CLIENT, int.class, String.class, long.class),
+                motherShip = mData.getByMothershipId((int) this.data.get(0));
                 targetBody = Mothership.findBodyByNamePath((String) this.data.get(1));
-                long travelTime = (Long) this.data.get(2);
+                long travelTime = (long) this.data.get(2);
 
                 motherShip.startTransit(targetBody, travelTime);
 
@@ -373,8 +366,8 @@ public class PacketSimpleAR extends Packet implements IPacket {
             case C_MOTHERSHIP_TRANSIT_FAILED:
                 // not sure what to actually do here
                 break;
-            case C_MOTHERSHIP_TRANSIT_ENDED: // (Side.CLIENT, Integer.class);
-                motherShip = mData.getByMothershipId((Integer) this.data.get(0));
+            case C_MOTHERSHIP_TRANSIT_ENDED: // (Side.CLIENT, int.class);
+                motherShip = mData.getByMothershipId((int) this.data.get(0));
 
                 motherShip.getWorldProviderClient().endTransit();
 
@@ -384,7 +377,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 }
                 break;
             case C_MOTHERSHIP_DATA:
-                int dimId = (Integer) this.data.get(0);
+                int dimId = (int) this.data.get(0);
                 nbt = (NBTTagCompound) this.data.get(1);
                 WorldProvider playerWorldProvider = player.getEntityWorld().provider;
                 if (playerWorldProvider.dimensionId == dimId
@@ -407,7 +400,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 }
                 break;
             case C_MOTHERSHIP_SETTINGS_CHANGED:
-                int mothershipId = (Integer) this.data.get(0);
+                int mothershipId = (int) this.data.get(0);
                 nbt = (NBTTagCompound) this.data.get(1);
                 Mothership mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
                 mShip.readSettingsFromNBT(nbt);
@@ -468,8 +461,8 @@ public class PacketSimpleAR extends Packet implements IPacket {
             case S_TELEPORT_SHUTTLE: // S_TELEPORT_ENTITY
                 try {
                     // final WorldProvider provider = WorldUtil.getProviderForNameServer((String) this.data.get(0));
-                    final Integer dim = ((Integer) this.data.get(0));
-                    GCLog.info("Will teleport to (" + dim.toString() + ")");
+                    final Integer dim = ((int) this.data.get(0));
+                    AmunRa.LOGGER.info("Will teleport to ({})", dim);
 
                     if (playerBase.worldObj instanceof WorldServer) {
                         mShip = TickHandlerServer.mothershipData.getByDimensionId(dim);
@@ -497,10 +490,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                     }
                 } catch (final Exception e) {
-                    GCLog.severe(
-                            "Error occurred when attempting to transfer entity to dimension: "
-                                    + (Integer) this.data.get(0));
-                    e.printStackTrace();
+                    AmunRa.LOGGER.error(
+                            "Error occurred when attempting to transfer entity to dimension: " + this.data.get(0),
+                            e);
                 }
                 break;
             case S_CANCEL_SHUTTLE:
@@ -538,9 +530,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
                             playerBase);
                 }
                 break;
-            case S_MOTHERSHIP_TRANSIT_START: // (Side.SERVER, Integer.class, String.class),
+            case S_MOTHERSHIP_TRANSIT_START: // (Side.SERVER, int.class, String.class),
                 // expects motheship ID and target name path
-                mothershipId = (Integer) this.data.get(0);
+                mothershipId = (int) this.data.get(0);
                 bodyName = (String) this.data.get(1);
 
                 mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
@@ -566,7 +558,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 break;
             case S_MOTHERSHIP_UPDATE:
                 // why am I doing it like this?
-                int dimId = (Integer) this.data.get(0);
+                int dimId = (int) this.data.get(0);
                 mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
                 world = mcServer.worldServerForDimension(dimId);
 
@@ -575,7 +567,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 }
                 break;
             case S_SET_MOTHERSHIP_SETTINGS:
-                mothershipId = (Integer) this.data.get(0);
+                mothershipId = (int) this.data.get(0);
                 NBTTagCompound nbt = (NBTTagCompound) this.data.get(1);
                 mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
                 mShip.readSettingsFromNBT(nbt);
@@ -591,9 +583,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 TickHandlerServer.mothershipData.markDirty();
                 break;
             case S_ADD_MOTHERSHIP_PLAYER:
-                mothershipId = (Integer) this.data.get(0);
+                mothershipId = (int) this.data.get(0);
                 String name = (String) this.data.get(1);
-                int type = (Integer) this.data.get(2);
+                int type = (int) this.data.get(2);
                 mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
                 if (playerBase.worldObj instanceof WorldServer) {
                     world = (WorldServer) playerBase.worldObj;
@@ -636,20 +628,20 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                 break;
             case S_DOCK_OPERATION:
-                x = (Integer) this.data.get(0);
-                y = (Integer) this.data.get(1);
-                z = (Integer) this.data.get(2);
-                op = (Integer) this.data.get(3);
+                x = (int) this.data.get(0);
+                y = (int) this.data.get(1);
+                z = (int) this.data.get(2);
+                op = (int) this.data.get(3);
                 tileEntity = playerBase.worldObj.getTileEntity(x, y, z);
                 if (tileEntity instanceof TileEntityShuttleDock) {
                     ((TileEntityShuttleDock) tileEntity).performDockOperation(op, playerBase);
                 }
                 break;
             case S_HYDROPONICS_OPERATION:
-                x = (Integer) this.data.get(0);
-                y = (Integer) this.data.get(1);
-                z = (Integer) this.data.get(2);
-                op = (Integer) this.data.get(3);
+                x = (int) this.data.get(0);
+                y = (int) this.data.get(1);
+                z = (int) this.data.get(2);
+                op = (int) this.data.get(3);
 
                 tileEntity = playerBase.worldObj.getTileEntity(x, y, z);
                 if (tileEntity instanceof TileEntityHydroponics) {

@@ -1,10 +1,10 @@
 package de.katzenpapst.amunra.block;
 
-import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class SubBlockMachine extends SubBlock implements ItemBlockDesc.IBlockShiftDesc {
 

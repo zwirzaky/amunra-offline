@@ -2,9 +2,6 @@ package de.katzenpapst.amunra.network.packet;
 
 import java.io.IOException;
 
-import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,18 +19,15 @@ import de.katzenpapst.amunra.mothership.MothershipWorldData;
 import de.katzenpapst.amunra.tick.TickHandlerServer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
 
 public class ConnectionPacketAR {
 
-    public static final String CHANNEL = AmunRa.MODID + "$connection";
+    public static final String CHANNEL = "amunra$connection";
     public static FMLEventChannel bus;
 
     public static final byte ID_MOTHERSHIP_LIST = (byte) 150;
     public static final byte ID_CONFIG_OVERRIDE = (byte) 151;
-
-    public ConnectionPacketAR() {
-        // TODO Auto-generated constructor stub
-    }
 
     public void handle(ByteBuf payload, EntityPlayer player) {
         int packetId = payload.readByte();
@@ -42,7 +36,7 @@ public class ConnectionPacketAR {
         try {
             nbt = NetworkUtil.readNBTTagCompound(payload);
         } catch (IOException e) {
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Could not read NBT data from payload", e);
             return;
         }
 
@@ -77,7 +71,7 @@ public class ConnectionPacketAR {
         try {
             NetworkUtil.writeNBTTagCompound(nbt, payload);
         } catch (IOException e) {
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Could not write NBT data to payload", e);
         }
 
         return new FMLProxyPacket(payload, CHANNEL);
@@ -94,7 +88,7 @@ public class ConnectionPacketAR {
         try {
             NetworkUtil.writeNBTTagCompound(nbt, payload);
         } catch (IOException e) {
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Could not write NBT data to payload", e);
         }
 
         return new FMLProxyPacket(payload, CHANNEL);
@@ -122,9 +116,7 @@ public class ConnectionPacketAR {
             ByteBuf data = packet.payload();
             this.handle(data, player);
         } catch (Exception e) {
-            GCLog.severe("Amunra login packet handler: Failed to read packet");
-            GCLog.severe(e.toString());
-            e.printStackTrace();
+            AmunRa.LOGGER.error("Amunra login packet handler: Failed to read packet", e);
         }
     }
 

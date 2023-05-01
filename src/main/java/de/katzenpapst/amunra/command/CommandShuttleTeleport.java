@@ -1,11 +1,5 @@
 package de.katzenpapst.amunra.command;
 
-import micdoodle8.mods.galacticraft.api.entity.IRocketType;
-import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.items.GCItems;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -16,13 +10,15 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.WorldServer;
 
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
+import micdoodle8.mods.galacticraft.api.entity.IRocketType;
+import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
+import micdoodle8.mods.galacticraft.core.items.GCItems;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class CommandShuttleTeleport extends CommandBase {
-
-    public CommandShuttleTeleport() {
-        // TODO Auto-generated constructor stub
-    }
 
     @Override
     public int getRequiredPermissionLevel() {
@@ -30,7 +26,7 @@ public class CommandShuttleTeleport extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender var1) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.getCommandName() + " [<player>]";
     }
 
@@ -40,16 +36,15 @@ public class CommandShuttleTeleport extends CommandBase {
     }
 
     @Override
-    public void processCommand(ICommandSender icommandsender, String[] astring) {
+    public void processCommand(ICommandSender sender, String[] args) {
         EntityPlayerMP playerBase = null;
 
-        if (astring.length < 2) {
+        if (args.length < 2) {
             try {
-                if (astring.length == 1) {
-                    playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(astring[0], true);
+                if (args.length == 1) {
+                    playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(args[0], true);
                 } else {
-                    playerBase = PlayerUtil
-                            .getPlayerBaseServerFromPlayerUsername(icommandsender.getCommandSenderName(), true);
+                    playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getCommandSenderName(), true);
                 }
 
                 if (playerBase != null) {
@@ -69,23 +64,21 @@ public class CommandShuttleTeleport extends CommandBase {
                         EntityShuttle.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE, false);
                         // WorldUtil.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        AmunRa.LOGGER.error("Failed to open celestial selection", e);
                         throw e;
                     }
 
-                    // VersionUtil.notifyAdmins(icommandsender, this, "commands.dimensionteleport", new Object[] {
+                    // VersionUtil.notifyAdmins(sender, this, "commands.dimensionteleport", new Object[] {
                     // String.valueOf(EnumColor.GREY + "[" + playerBase.getCommandSenderName()), "]" });
                 } else {
-                    throw new Exception("Could not find player with name: " + astring[0]);
+                    throw new Exception("Could not find player with name: " + args[0]);
                 }
-            } catch (final Exception var6) {
-                throw new CommandException(var6.getMessage(), new Object[0]);
+            } catch (final Exception e) {
+                throw new CommandException(e.getMessage());
             }
         } else {
             throw new WrongUsageException(
-                    GCCoreUtil
-                            .translateWithFormat("commands.dimensiontp.tooMany", this.getCommandUsage(icommandsender)),
-                    new Object[0]);
+                    GCCoreUtil.translateWithFormat("commands.dimensiontp.tooMany", this.getCommandUsage(sender)));
         }
     }
 

@@ -59,15 +59,12 @@ public class ShuttleDockHandler extends WorldSavedData {
             }
             tileMap.put(dimID, curList);
         }
-        // logDebugInfo();
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbt) {
 
         NBTTagList totalNbtList = new NBTTagList();
-
-        // logDebugInfo();
 
         for (int dimID : tileMap.keySet()) {
 
@@ -109,16 +106,6 @@ public class ShuttleDockHandler extends WorldSavedData {
             return set.get(pos);
         }
         return false;
-    }
-
-    protected static void logDebugInfo() {
-        System.out.println("== shuttle dock helper ==");
-        for (int dimID : tileMap.keySet()) {
-            System.out.println("  " + dimID + ": ");
-            for (Vector3int pos : tileMap.get(dimID).keySet()) {
-                System.out.println("    " + pos + ": " + tileMap.get(dimID).get(pos));
-            }
-        }
     }
 
     public static void setStoredAvailability(TileEntityShuttleDock dock, boolean isAvailable) {

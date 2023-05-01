@@ -1,10 +1,10 @@
 package de.katzenpapst.amunra.tile;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityAdvanced;
 import de.katzenpapst.amunra.block.BlockMachineMeta;
 import de.katzenpapst.amunra.block.SubBlockMachine;
 import de.katzenpapst.amunra.mothership.Mothership;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.core.tile.TileEntityAdvanced;
 
 public class TileEntityMothershipController extends TileEntityAdvanced {
 

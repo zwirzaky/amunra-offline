@@ -1,8 +1,5 @@
 package de.katzenpapst.amunra.client.renderer;
 
-import micdoodle8.mods.galacticraft.api.transmission.tile.IOxygenReceiver;
-import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
-
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -12,6 +9,8 @@ import org.lwjgl.opengl.GL11;
 
 import de.katzenpapst.amunra.client.renderer.model.ModelHydroponics;
 import de.katzenpapst.amunra.tile.TileEntityHydroponics;
+import micdoodle8.mods.galacticraft.api.transmission.tile.IOxygenReceiver;
+import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 
 public class RenderHydroponics extends TileEntitySpecialRenderer {
 

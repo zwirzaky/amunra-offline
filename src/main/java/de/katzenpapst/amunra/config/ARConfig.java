@@ -4,12 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -19,6 +13,11 @@ import net.minecraftforge.common.config.Configuration;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.client.RingsRenderInfo;
 import de.katzenpapst.amunra.helper.AstronomyHelper;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
 
 public class ARConfig {
 
@@ -86,8 +85,6 @@ public class ARConfig {
     private final String[] defaultAsteroidBelts = { "okblekbelt", "saturnrings" };
 
     // public boolean mothershipUserRestriction = true;
-
-    public boolean mothershipUserMatchUUID = true;
 
     public ARConfig() {}
 
@@ -189,12 +186,6 @@ public class ARConfig {
 
         // mothershipUserRestriction = config.getBoolean("restrictMothershipToOwner", "mothership", true, "If true, only
         // the one who built the mothership will be able to use it. If false, anyone can");
-
-        mothershipUserMatchUUID = config.getBoolean(
-                "matchUsersByUUID",
-                "mothership",
-                mothershipUserMatchUUID,
-                "If true, users will be identified by UUID, if false by username. You will probably only want the latter if you run an 'offline' server...");
 
         // rendering
         mothershipNumStarLines = config.getInt(
@@ -333,7 +324,6 @@ public class ARConfig {
         data.setInteger("msMaxTravelTime", mothershipMaxTravelTime);
         data.setFloat("msFuelFactor", mothershipFuelFactor);
         data.setFloat("msSpeedFactor", mothershipSpeedFactor);
-        data.setBoolean("msMatchUUID", mothershipUserMatchUUID);
         data.setInteger("planetDefaultTier", planetDefaultTier);
 
         return data;
@@ -354,7 +344,6 @@ public class ARConfig {
         mothershipMaxTravelTime = data.getInteger("msMaxTravelTime");
         mothershipFuelFactor = data.getFloat("msFuelFactor");
         mothershipSpeedFactor = data.getFloat("msSpeedFactor");
-        mothershipUserMatchUUID = data.getBoolean("msMatchUUID");
         planetDefaultTier = data.getInteger("planetDefaultTier");
     }
 

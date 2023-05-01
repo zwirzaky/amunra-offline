@@ -4,11 +4,11 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.util.StatCollector;
+
 import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
-import net.minecraft.util.StatCollector;
 
 public class GuiHelper {
 

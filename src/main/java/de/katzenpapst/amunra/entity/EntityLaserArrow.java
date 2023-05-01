@@ -1,8 +1,5 @@
 package de.katzenpapst.amunra.entity;
 
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,6 +17,8 @@ import net.minecraft.world.World;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.mob.DamageSourceAR;
 import de.katzenpapst.amunra.world.WorldHelper;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 
 public class EntityLaserArrow extends EntityBaseLaserArrow {
 

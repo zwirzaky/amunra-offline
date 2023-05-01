@@ -1,11 +1,10 @@
 package de.katzenpapst.amunra.item;
 
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
 import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 
 public class ItemBaseBattery extends ItemElectricBase {
 

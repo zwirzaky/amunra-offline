@@ -2,8 +2,6 @@ package de.katzenpapst.amunra.network;
 
 import java.util.EnumMap;
 
-import micdoodle8.mods.galacticraft.core.network.IPacket;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
@@ -13,11 +11,11 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.relauncher.Side;
-import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.network.packet.PacketSimpleAR;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+import micdoodle8.mods.galacticraft.core.network.IPacket;
 
 public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
 
@@ -30,7 +28,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
     public static ARChannelHandler init() {
         ARChannelHandler channelHandler = new ARChannelHandler();
         channelHandler.channels = NetworkRegistry.INSTANCE
-                .newChannel(AmunRa.MODID + "$generic", channelHandler, new ARPacketHandler());
+                .newChannel("amunra$generic", channelHandler, new ARPacketHandler());
         return channelHandler;
     }
 

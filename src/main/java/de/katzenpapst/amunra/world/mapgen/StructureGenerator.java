@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
-
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -16,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 import de.katzenpapst.amunra.AmunRa;
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 /**
  * I'll do a subdivision now: StructureGenerator and Structure For each StructureGenerator there is a subclass of

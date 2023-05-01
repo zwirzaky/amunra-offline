@@ -4,9 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-import micdoodle8.mods.galacticraft.planets.mars.items.MarsItems;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -22,6 +19,8 @@ import de.katzenpapst.amunra.helper.CoordHelper;
 import de.katzenpapst.amunra.item.ARItems;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.planets.mars.items.MarsItems;
 
 public class Pyramid extends BaseStructureStart {
 

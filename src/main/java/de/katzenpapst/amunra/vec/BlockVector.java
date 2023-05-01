@@ -1,8 +1,8 @@
 package de.katzenpapst.amunra.vec;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 /**
  * This is supposed to hold everything necessary to find a block

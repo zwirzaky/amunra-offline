@@ -2,13 +2,12 @@ package de.katzenpapst.amunra.world;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
-
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import de.katzenpapst.amunra.block.BlockBasicMeta;
 import de.katzenpapst.amunra.block.bush.AbstractSapling;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class WorldGenTreeBySapling extends WorldGenAbstractTree {
 

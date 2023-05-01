@@ -1,9 +1,5 @@
 package de.katzenpapst.amunra.client.gui.schematic;
 
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicResultPage;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -15,6 +11,9 @@ import org.lwjgl.opengl.GL11;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.inventory.schematic.ContainerSchematicShuttle;
 import de.katzenpapst.amunra.item.ARItems;
+import micdoodle8.mods.galacticraft.api.recipe.ISchematicResultPage;
+import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiSchematicShuttle extends GuiContainer implements ISchematicResultPage {
 
