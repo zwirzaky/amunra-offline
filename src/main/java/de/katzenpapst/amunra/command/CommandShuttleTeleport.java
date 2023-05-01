@@ -21,10 +21,6 @@ import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
 
 public class CommandShuttleTeleport extends CommandBase {
 
-    public CommandShuttleTeleport() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
     public int getRequiredPermissionLevel() {
         return 1;

@@ -30,10 +30,6 @@ public class ConnectionPacketAR {
     public static final byte ID_MOTHERSHIP_LIST = (byte) 150;
     public static final byte ID_CONFIG_OVERRIDE = (byte) 151;
 
-    public ConnectionPacketAR() {
-        // TODO Auto-generated constructor stub
-    }
-
     public void handle(ByteBuf payload, EntityPlayer player) {
         int packetId = payload.readByte();
         NBTTagCompound nbt;
