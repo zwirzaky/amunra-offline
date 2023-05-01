@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -637,6 +638,11 @@ public class AmunRa {
                 .setRelativeDistanceFromCenter(new ScalableDistance((float) distance, (float) distance))
                 .setRelativeOrbitTime((float) orbitTime);
     }
+
+    public static boolean isDevEnvironment() {
+        return (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    }
+
     /*
      * @SideOnly(Side.CLIENT) public void setClientMothershipData(MothershipWorldData data) { mothershipDataClient =
      * data; } public MothershipWorldData getMothershipData() { if(FMLCommonHandler.instance().getSide() == Side.CLIENT)
