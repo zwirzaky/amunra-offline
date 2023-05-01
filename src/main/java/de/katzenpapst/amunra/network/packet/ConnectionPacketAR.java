@@ -24,7 +24,7 @@ import io.netty.buffer.Unpooled;
 
 public class ConnectionPacketAR {
 
-    public static final String CHANNEL = AmunRa.MODID + "$connection";
+    public static final String CHANNEL = "amunra$connection";
     public static FMLEventChannel bus;
 
     public static final byte ID_MOTHERSHIP_LIST = (byte) 150;
