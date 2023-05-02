@@ -11,24 +11,24 @@ public class MothershipWorldProviderSaveFile extends WorldSavedData {
 
     public NBTTagCompound data = null;
 
-    public MothershipWorldProviderSaveFile(String p_i2141_1_) {
+    public MothershipWorldProviderSaveFile(final String p_i2141_1_) {
         super(p_i2141_1_);
 
         data = new NBTTagCompound();
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         data = nbt.getCompoundTag("data");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         nbt.setTag("data", data);
     }
 
-    public static MothershipWorldProviderSaveFile getSaveFile(World world) {
-        MapStorage storage = world.perWorldStorage;
+    public static MothershipWorldProviderSaveFile getSaveFile(final World world) {
+        final MapStorage storage = world.perWorldStorage;
         MothershipWorldProviderSaveFile result = (MothershipWorldProviderSaveFile) storage
                 .loadData(MothershipWorldProviderSaveFile.class, saveFileId);
         if (result == null) {

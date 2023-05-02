@@ -33,12 +33,12 @@ public class StringSelectBox extends GuiButton {
 
     public SmallFontRenderer font;
 
-    public StringSelectBox(ISelectBoxCallback parent, int id, int xPos, int yPos, int width, int height) {
+    public StringSelectBox(final ISelectBoxCallback parent, final int id, final int xPos, final int yPos, final int width, final int height) {
         super(id, xPos, yPos, width, height, "");
 
         this.parent = parent;
 
-        Minecraft mc = FMLClientHandler.instance().getClient();
+        final Minecraft mc = FMLClientHandler.instance().getClient();
 
         this.font = new SmallFontRenderer(
                 mc.gameSettings,
@@ -55,13 +55,13 @@ public class StringSelectBox extends GuiButton {
         clearSelection();
     }
 
-    public void addString(String str) {
+    public void addString(final String str) {
         strings.add(str);
 
         //
     }
 
-    public void setSelection(int selection) {
+    public void setSelection(final int selection) {
         if (selection >= 0 && selection < strings.size() && this.selectedStringIndex != selection) {
             this.selectedStringIndex = selection;
             parent.onSelectionChanged(this, selectedStringIndex);
@@ -90,7 +90,7 @@ public class StringSelectBox extends GuiButton {
         return null;
     }
 
-    public void deleteStringAt(int index) {
+    public void deleteStringAt(final int index) {
         strings.remove(index);
         clearSelection();
     }
@@ -99,9 +99,9 @@ public class StringSelectBox extends GuiButton {
      * Draws this button to the screen.
      */
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(final Minecraft mc, final int mouseX, final int mouseY) {
         if (this.visible) {
-            int color = 0xFFa6a6a6;
+            final int color = 0xFFa6a6a6;
             // outer box
             this.drawGradientRect(
                     this.xPosition,
@@ -110,7 +110,7 @@ public class StringSelectBox extends GuiButton {
                     this.yPosition + this.height,
                     color,
                     color);
-            int colorBlack = 0xFF000000;
+            final int colorBlack = 0xFF000000;
             // inner box
             this.drawGradientRect(
                     this.xPosition + 1,
@@ -121,15 +121,15 @@ public class StringSelectBox extends GuiButton {
                     colorBlack);
 
             // strings
-            int colorGreen = 0xFF00FF00;
+            final int colorGreen = 0xFF00FF00;
             // selectedStringIndex = 1;
-            int colorSelection = 0x99008AFF;
-            int displayLines = Math.min(strings.size(), maxLines);
+            final int colorSelection = 0x99008AFF;
+            final int displayLines = Math.min(strings.size(), maxLines);
             for (int i = 0; i < displayLines; i++) {
-                int curYoffset = i * textSize;
-                int actualIndex = i + scrollOffset;
+                final int curYoffset = i * textSize;
+                final int actualIndex = i + scrollOffset;
 
-                int colorText = colorGreen;
+                final int colorText = colorGreen;
 
                 if (actualIndex == selectedStringIndex) {
                     this.drawGradientRect(
@@ -193,15 +193,15 @@ public class StringSelectBox extends GuiButton {
      * e).
      */
     @Override
-    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+    public boolean mousePressed(final Minecraft mc, final int mouseX, final int mouseY) {
         if (!super.mousePressed(mc, mouseX, mouseY)) {
             return false;
         }
         // otherwise do stuff
         // first, try the arrows
         if (maxLines < strings.size()) {
-            int btnMaxX = this.xPosition + this.width - 1;
-            int btnMinX = this.xPosition + this.width - 1 - 8;
+            final int btnMaxX = this.xPosition + this.width - 1;
+            final int btnMinX = this.xPosition + this.width - 1 - 8;
 
             if (btnMinX <= mouseX && mouseX <= btnMaxX) {
 
@@ -233,10 +233,10 @@ public class StringSelectBox extends GuiButton {
         }
 
         // are we changing selection?
-        int relativeY = mouseY - this.yPosition;
-        int lineClicked = relativeY / textSize;
+        final int relativeY = mouseY - this.yPosition;
+        final int lineClicked = relativeY / textSize;
         if (lineClicked < strings.size()) {
-            int newIndex = lineClicked + scrollOffset;
+            final int newIndex = lineClicked + scrollOffset;
             this.setSelection(newIndex);
             return true;
         }

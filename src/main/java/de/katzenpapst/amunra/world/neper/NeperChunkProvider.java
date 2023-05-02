@@ -29,7 +29,7 @@ public class NeperChunkProvider extends AmunraChunkProvider {
     protected final BlockMetaPair grassBlock = new BlockMetaPair(Blocks.grass, (byte) 0);
     protected final BlockMetaPair stoneBlock = new BlockMetaPair(Blocks.stone, (byte) 0);
 
-    public NeperChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+    public NeperChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
     }
 
@@ -77,9 +77,9 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected SpawnListEntry[] getMonsters() {
-        SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
-        SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
-        SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
+        final SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
+        final SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
+        final SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
 
         return new SpawnListEntry[] { skele, creeper, zombie };
     }
@@ -110,13 +110,13 @@ public class NeperChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void onChunkProvide(int cX, int cZ, Block[] blocks, byte[] metadata) {}
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {}
 
     @Override
-    public void onPopulate(IChunkProvider provider, int cX, int cZ) {}
+    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {}
 
     @Override
-    public boolean chunkExists(int x, int y) {
+    public boolean chunkExists(final int x, final int y) {
         return false;
     }
 

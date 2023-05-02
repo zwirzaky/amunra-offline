@@ -39,7 +39,7 @@ public class ContainerSchematicShuttle extends Container {
             // chests
             { 93, 12 }, { 119, 12 }, { 145, 12 } };
 
-    public ContainerSchematicShuttle(InventoryPlayer player, int x, int y, int z) {
+    public ContainerSchematicShuttle(final InventoryPlayer player, final int x, final int y, final int z) {
         // mostCompleteRecipe = RecipeHelper.getMostCompleteRecipeFor(craftingResult);
 
         slotTypes = RecipeHelper.getNasaWorkbenchRecipeForContainer(craftingResult);
@@ -51,7 +51,7 @@ public class ContainerSchematicShuttle extends Container {
         int slotX;
         int slotY;
 
-        Vector3int pos = new Vector3int(x, y, z);
+        final Vector3int pos = new Vector3int(x, y, z);
 
         // at this point, the slots are assembled
         this.makeSlots(pos, player.player);
@@ -73,17 +73,17 @@ public class ContainerSchematicShuttle extends Container {
         this.onCraftMatrixChanged(this.craftMatrix);
     }
 
-    protected void makeSlots(Vector3int sparkPos, EntityPlayer player) {
+    protected void makeSlots(final Vector3int sparkPos, final EntityPlayer player) {
 
         for (int slotNr = 0; slotNr < slotCoordinateMapping.length; slotNr++) {
-            int[] coords = slotCoordinateMapping[slotNr];
-            int x = coords[0];
-            int y = coords[1];
+            final int[] coords = slotCoordinateMapping[slotNr];
+            final int x = coords[0];
+            final int y = coords[1];
 
-            HashSet<ItemDamagePair> possibleItems = slotTypes.get(slotNr + 1);
+            final HashSet<ItemDamagePair> possibleItems = slotTypes.get(slotNr + 1);
 
             if (possibleItems != null) {
-                ItemDamagePair[] asArray = new ItemDamagePair[possibleItems.size()];
+                final ItemDamagePair[] asArray = new ItemDamagePair[possibleItems.size()];
                 possibleItems.toArray(asArray);
                 this.addSlotToContainer(
                         new SlotSchematicShuttle(this.craftMatrix, slotNr + 1, x, y, sparkPos, player, asArray));
@@ -95,7 +95,7 @@ public class ContainerSchematicShuttle extends Container {
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer par1EntityPlayer) {
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer) {
         super.onContainerClosed(par1EntityPlayer);
 
         if (!this.worldObj.isRemote) {
@@ -110,7 +110,7 @@ public class ContainerSchematicShuttle extends Container {
     }
 
     @Override
-    public void onCraftMatrixChanged(IInventory par1IInventory) {
+    public void onCraftMatrixChanged(final IInventory par1IInventory) {
         // now this will require my custom recipe
         // is this the only place where I need the recipe?
         // seems like that
@@ -119,13 +119,13 @@ public class ContainerSchematicShuttle extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer) {
         return true;
     }
 
-    protected boolean mergeSingleSlot(ItemStack mergeFrom, Slot slotToMergeTo) {
+    protected boolean mergeSingleSlot(final ItemStack mergeFrom, final Slot slotToMergeTo) {
 
-        ItemStack targetStack = slotToMergeTo.getStack();
+        final ItemStack targetStack = slotToMergeTo.getStack();
 
         if (targetStack == null) {
             // I think this means I can just put it in
@@ -139,7 +139,7 @@ public class ContainerSchematicShuttle extends Container {
                 && (!mergeFrom.getHasSubtypes() || mergeFrom.getItemDamage() == targetStack.getItemDamage())
                 && ItemStack.areItemStackTagsEqual(mergeFrom, targetStack)) {
 
-            int newMax = targetStack.stackSize + mergeFrom.stackSize;
+            final int newMax = targetStack.stackSize + mergeFrom.stackSize;
 
             if (newMax <= mergeFrom.getMaxStackSize()) {
                 // everything fits into targetStack
@@ -161,7 +161,7 @@ public class ContainerSchematicShuttle extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slotNr) {
+    public ItemStack transferStackInSlot(final EntityPlayer player, final int slotNr) {
         ItemStack resultStack = null;
 
         final Slot slot = (Slot) this.inventorySlots.get(slotNr);
@@ -185,7 +185,7 @@ public class ContainerSchematicShuttle extends Container {
                 // check if this works for any of my slots
                 boolean found = false;
                 for (int i = 0; i < numSlotsAdded; i++) {
-                    Slot curSlot = (Slot) this.inventorySlots.get(i);
+                    final Slot curSlot = (Slot) this.inventorySlots.get(i);
                     if (curSlot instanceof SlotSpecific) {
                         if (((SlotSpecific) curSlot).isItemValid(stack)) {
                             // attempt merge
@@ -239,7 +239,7 @@ public class ContainerSchematicShuttle extends Container {
      * }
      */
 
-    protected boolean mergeOneItem(ItemStack stack, int startSlot, int endSlotMaybe, boolean wtf) {
+    protected boolean mergeOneItem(final ItemStack stack, final int startSlot, final int endSlotMaybe, final boolean wtf) {
         boolean flag1 = false;
         if (stack.stackSize > 0) {
             Slot slot;
@@ -250,7 +250,7 @@ public class ContainerSchematicShuttle extends Container {
                 slotStack = slot.getStack();
 
                 if (slotStack == null) {
-                    ItemStack stackOneItem = stack.copy();
+                    final ItemStack stackOneItem = stack.copy();
                     stackOneItem.stackSize = 1;
                     stack.stackSize--;
                     slot.putStack(stackOneItem);

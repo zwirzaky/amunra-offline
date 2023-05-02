@@ -15,22 +15,22 @@ import de.katzenpapst.amunra.block.SubBlock;
 
 public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
 
-    public BlockMothershipBoosterMeta(String name, Material material) {
+    public BlockMothershipBoosterMeta(final String name, final Material material) {
         super(name, material);
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack itemStack) {
-        int metadata = world.getBlockMetadata(x, y, z);
-        SubBlock sb = this.getSubBlock(metadata);
+    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase entityLiving, final ItemStack itemStack) {
+        final int metadata = world.getBlockMetadata(x, y, z);
+        final SubBlock sb = this.getSubBlock(metadata);
         if (sb != null) {
             sb.onBlockPlacedBy(world, x, y, z, entityLiving, itemStack);
         }
     }
 
     @Override
-    public boolean onUseWrench(World par1World, int x, int y, int z, EntityPlayer par5EntityPlayer, int side,
-            float hitX, float hitY, float hitZ) {
+    public boolean onUseWrench(final World par1World, final int x, final int y, final int z, final EntityPlayer par5EntityPlayer, final int side,
+            final float hitX, final float hitY, final float hitZ) {
         return false;
     }
 
@@ -61,7 +61,7 @@ public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public void dropEntireInventory(World world, int x, int y, int z, Block block, int par6) {
+    public void dropEntireInventory(final World world, final int x, final int y, final int z, final Block block, final int par6) {
         return; // NOOP
     }
 

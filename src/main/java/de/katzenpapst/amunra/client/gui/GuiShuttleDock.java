@@ -35,7 +35,7 @@ public class GuiShuttleDock extends GuiContainerGC {
 
     private GuiElementInfoRegion shuttleInfoRegion;
 
-    public GuiShuttleDock(InventoryPlayer player, TileEntityShuttleDock tile) {
+    public GuiShuttleDock(final InventoryPlayer player, final TileEntityShuttleDock tile) {
         super(new ContainerShuttleDock(player, tile));
         this.tile = tile;
         this.ySize = 210;
@@ -43,7 +43,7 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
+    protected void actionPerformed(final GuiButton par1GuiButton) {
         switch (par1GuiButton.id) {
             case 0:
                 tile.performDockOperationClient(DockOperation.GET_SHUTTLE);
@@ -71,7 +71,7 @@ public class GuiShuttleDock extends GuiContainerGC {
                 this.height,
                 this);
 
-        List<String> descrStrings = new ArrayList<String>();
+        final List<String> descrStrings = new ArrayList<String>();
         descrStrings.add("foobar");
 
         this.shuttleInfoRegion.tooltipStrings = descrStrings;
@@ -111,8 +111,8 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        String displayString = this.tile.getInventoryName();
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
+        final String displayString = this.tile.getInventoryName();
         this.fontRendererObj.drawString(
                 displayString,
                 this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2,
@@ -123,11 +123,11 @@ public class GuiShuttleDock extends GuiContainerGC {
         this.shuttleInfoRegion.tooltipStrings.clear();
         this.shuttleInfoRegion.tooltipStrings.addAll(getStatus());
 
-        ItemStack stack = tile.getStackInSlot(0);
-        boolean hasShuttle = tile.hasShuttle();
+        final ItemStack stack = tile.getStackInSlot(0);
+        final boolean hasShuttle = tile.hasShuttle();
         boolean hasItem = false;
         if (stack != null) {
-            hasItem = (stack.stackSize > 0 && stack.getItem() instanceof ItemShuttle);
+            hasItem = stack.stackSize > 0 && stack.getItem() instanceof ItemShuttle;
         }
         buttonGetShuttle.enabled = !hasItem && hasShuttle;
         buttonPutShuttle.enabled = hasItem && !hasShuttle && !isObstructed;
@@ -152,7 +152,7 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(final float partialTicks, final int mouseX, final int mouseY) {
         final int xPos = (this.width - this.xSize) / 2;
         final int yPos = (this.height - this.ySize) / 2;
         this.mc.renderEngine.bindTexture(solarGuiTexture);

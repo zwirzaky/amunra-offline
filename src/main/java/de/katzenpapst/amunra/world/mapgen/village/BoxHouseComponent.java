@@ -15,13 +15,13 @@ public class BoxHouseComponent extends GridVillageComponent {
     protected int houseHeight = 5;
 
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] blocks, byte[] metas) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] blocks, final byte[] metas) {
 
         // now, how to get the height?
-        StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX << 4),
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX << 4),
                                                                               // (chunkX<< 4), (chunkX+1 << 4)-1,
                                                                               // (chunkX+1 << 4)-1);
-        int fallbackGround = this.parent.getWorldGroundLevel();
+        final int fallbackGround = this.parent.getWorldGroundLevel();
         if (groundLevel == -1) {
             groundLevel = getAverageGroundLevel(blocks, metas, getStructureBoundingBox(), chunkBB, fallbackGround);
             if (groundLevel == -1) {
@@ -29,26 +29,26 @@ public class BoxHouseComponent extends GridVillageComponent {
             }
         }
 
-        StructureBoundingBox myBB = this.getStructureBoundingBox();
-        BlockMetaPair mat = ((GridVillageStart) this.parent).getWallMaterial();
-        BlockMetaPair floor = ((GridVillageStart) this.parent).getFloorMaterial();
-        BlockMetaPair padding = ((GridVillageStart) this.parent).getFillMaterial();
-        BlockMetaPair path = ((GridVillageStart) this.parent).getPathMaterial();
-        BlockMetaPair glassPane = new BlockMetaPair(Blocks.glass_pane, (byte) 0);
-        BlockMetaPair air = new BlockMetaPair(Blocks.air, (byte) 0);
+        final StructureBoundingBox myBB = this.getStructureBoundingBox();
+        final BlockMetaPair mat = ((GridVillageStart) this.parent).getWallMaterial();
+        final BlockMetaPair floor = ((GridVillageStart) this.parent).getFloorMaterial();
+        final BlockMetaPair padding = ((GridVillageStart) this.parent).getFillMaterial();
+        final BlockMetaPair path = ((GridVillageStart) this.parent).getPathMaterial();
+        final BlockMetaPair glassPane = new BlockMetaPair(Blocks.glass_pane, (byte) 0);
+        final BlockMetaPair air = new BlockMetaPair(Blocks.air, (byte) 0);
 
         // draw floor first
-        int startX = 1;
-        int stopX = myBB.getXSize() - 2;
-        int startZ = 1;
-        int stopZ = myBB.getZSize() - 2;
+        final int startX = 1;
+        final int stopX = myBB.getXSize() - 2;
+        final int startZ = 1;
+        final int stopZ = myBB.getZSize() - 2;
 
-        int xCenter = (int) Math.ceil((stopX - startX) / 2 + startX);
-        int zCenter = (int) Math.ceil((stopZ - startZ) / 2 + startZ);
+        final int xCenter = (int) Math.ceil((stopX - startX) / 2 + startX);
+        final int zCenter = (int) Math.ceil((stopZ - startZ) / 2 + startZ);
         for (int x = startX; x <= stopX; x++) {
             for (int z = startZ; z <= stopZ; z++) {
 
-                int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
+                final int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
                 if (highestGroundBlock == -1) {
                     continue; // that should mean that we aren't in the right chunk
                 }
@@ -155,7 +155,7 @@ public class BoxHouseComponent extends GridVillageComponent {
 
             }
         }
-        int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, xCenter, startZ - 1);
+        final int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, xCenter, startZ - 1);
         // stuff before the door
         if (highestGroundBlock != -1) {
             // groundLevel and groundLevel +1 should be free, and potentially place
@@ -175,26 +175,26 @@ public class BoxHouseComponent extends GridVillageComponent {
 
     }
 
-    protected void spawnVillager(int x, int y, int z) {
-        EntityCreature villager = new EntityRobotVillager(this.parent.getWorld());
+    protected void spawnVillager(final int x, final int y, final int z) {
+        final EntityCreature villager = new EntityRobotVillager(this.parent.getWorld());
         villager.onSpawnWithEgg(null);// NO IDEA
-        int xOffset = getXWithOffset(x, z);
+        final int xOffset = getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        int zOffset = getZWithOffset(x, z);
+        final int zOffset = getZWithOffset(x, z);
         this.parent.spawnLater(villager, xOffset, y, zOffset);
     }
 
-    private boolean shouldGenerateWindowHere(int x, int y, int z, int doorPos, int startX, int stopX, int startZ,
-            int stopZ) {
+    private boolean shouldGenerateWindowHere(final int x, final int y, final int z, final int doorPos, final int startX, final int stopX, final int startZ,
+            final int stopZ) {
         if (y > this.houseHeight - 3 || y < 1) {
             return false;
         }
 
-        if ((x == startX || x == stopX) && z > startZ + 1 && z < stopZ - 1 && ((z - startZ) % 2 == 0)) {
+        if ((x == startX || x == stopX) && z > startZ + 1 && z < stopZ - 1 && (z - startZ) % 2 == 0) {
             return true;
         }
 
-        if ((z == startZ || z == stopZ) && x > startX + 1 && x < stopX - 1 && ((x - startX) % 2 == 0)) {
+        if ((z == startZ || z == stopZ) && x > startX + 1 && x < stopX - 1 && (x - startX) % 2 == 0) {
             if (z == startZ && (x == doorPos + 1 || x == doorPos - 1)) {
                 return false;
             }

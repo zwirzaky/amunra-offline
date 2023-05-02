@@ -26,7 +26,7 @@ public class GuiHydroponics extends GuiContainerGC {
             AmunRa.ASSETPREFIX,
             "textures/gui/hydroponics.png");
 
-    private GuiElementInfoRegion oxygenInfoRegion = new GuiElementInfoRegion(
+    private final GuiElementInfoRegion oxygenInfoRegion = new GuiElementInfoRegion(
             (this.width - this.xSize) / 2 + 112,
             (this.height - this.ySize) / 2 + 24,
             56,
@@ -35,7 +35,7 @@ public class GuiHydroponics extends GuiContainerGC {
             this.width,
             this.height,
             this);
-    private GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(
+    private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(
             (this.width - this.xSize) / 2 + 112,
             (this.height - this.ySize) / 2 + 37,
             56,
@@ -45,11 +45,11 @@ public class GuiHydroponics extends GuiContainerGC {
             this.height,
             this);
 
-    private TileEntityHydroponics tile;
+    private final TileEntityHydroponics tile;
 
     private GuiButton button;
 
-    public GuiHydroponics(InventoryPlayer player, TileEntityHydroponics tile) {
+    public GuiHydroponics(final InventoryPlayer player, final TileEntityHydroponics tile) {
         super(new ContainerHydroponics(player, tile));
         this.ySize = 201;
         this.xSize = 176;
@@ -57,10 +57,10 @@ public class GuiHydroponics extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
+    protected void actionPerformed(final GuiButton par1GuiButton) {
         if (par1GuiButton.id == 0) {
             // do the stuff
-            float growthStatus = tile.getPlantGrowthStatus();
+            final float growthStatus = tile.getPlantGrowthStatus();
             if (growthStatus < 0) {
                 AmunRa.packetPipeline.sendToServer(
                         new PacketSimpleAR(
@@ -93,7 +93,7 @@ public class GuiHydroponics extends GuiContainerGC {
     @Override
     public void initGui() {
         super.initGui();
-        List<String> batterySlotDesc = new ArrayList<String>();
+        final List<String> batterySlotDesc = new ArrayList<String>();
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.0"));
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.1"));
         this.infoRegions.add(
@@ -117,7 +117,7 @@ public class GuiHydroponics extends GuiContainerGC {
         this.electricInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.electricInfoRegion);
 
-        float growStatus = tile.getPlantGrowthStatus();
+        final float growStatus = tile.getPlantGrowthStatus();
 
         button = new GuiButton(
                 0,
@@ -132,16 +132,16 @@ public class GuiHydroponics extends GuiContainerGC {
         this.buttonList.add(button);
     }
 
-    private void updateTheButton(float growStatus) {
+    private void updateTheButton(final float growStatus) {
         // tile.hydroponics.fertilize
         if (growStatus < 0) {
             button.displayString = GCCoreUtil.translate("tile.hydroponics.plant");
-            ItemStack stack = tile.getStackInSlot(1);
-            button.enabled = (stack != null) && stack.stackSize > 0 && TileEntityHydroponics.seeds.isSameItem(stack);
+            final ItemStack stack = tile.getStackInSlot(1);
+            button.enabled = stack != null && stack.stackSize > 0 && TileEntityHydroponics.seeds.isSameItem(stack);
         } else if (growStatus < 1.0F) {
             button.displayString = GCCoreUtil.translate("tile.hydroponics.fertilize");
-            ItemStack stack = tile.getStackInSlot(1);
-            button.enabled = (stack != null) && stack.stackSize > 0 && TileEntityHydroponics.bonemeal.isSameItem(stack);
+            final ItemStack stack = tile.getStackInSlot(1);
+            button.enabled = stack != null && stack.stackSize > 0 && TileEntityHydroponics.bonemeal.isSameItem(stack);
         } else {
             button.displayString = GCCoreUtil.translate("tile.hydroponics.harvest");
             button.enabled = true;
@@ -149,8 +149,8 @@ public class GuiHydroponics extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        float growStatus = tile.getPlantGrowthStatus();
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
+        final float growStatus = tile.getPlantGrowthStatus();
         this.fontRendererObj.drawString(this.tile.getInventoryName(), 8, 10, 4210752);
         GCCoreUtil.drawStringRightAligned(
                 GCCoreUtil.translate("gui.message.out.name") + ":",
@@ -165,7 +165,7 @@ public class GuiHydroponics extends GuiContainerGC {
                 4210752,
                 this.fontRendererObj);
 
-        String plantStatus = getPlantStatus(growStatus);
+        final String plantStatus = getPlantStatus(growStatus);
         if (growStatus < 0) {
             GCCoreUtil.drawStringCentered(
                     GCCoreUtil.translate("gui.message.status.name") + ": " + plantStatus,
@@ -187,7 +187,7 @@ public class GuiHydroponics extends GuiContainerGC {
                     60,
                     4210752,
                     this.fontRendererObj);
-            String status = GCCoreUtil.translate("gui.status.collecting.name") + ": "
+            final String status = GCCoreUtil.translate("gui.status.collecting.name") + ": "
                     + (int) (0.5F + Math
                             .min(this.tile.lastOxygenCollected * 20F, TileEntityHydroponics.OUTPUT_PER_TICK * 20F))
                     + GCCoreUtil.translate("gui.perSecond");
@@ -199,19 +199,18 @@ public class GuiHydroponics extends GuiContainerGC {
         this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 90 + 2, 4210752);
     }
 
-    private String getPlantStatus(float growStatus) {
+    private String getPlantStatus(final float growStatus) {
         if (growStatus < 0) {
             return EnumColor.DARK_RED + GCCoreUtil.translate("tile.hydroponics.noplant");
-        } else {
-            if (growStatus < 1.0F) {
-                return EnumColor.YELLOW.getCode() + Math.floor(tile.getPlantGrowthStatus() * 100) + "%";
-            }
+        }
+        if (growStatus < 1.0F) {
+            return EnumColor.YELLOW.getCode() + Math.floor(tile.getPlantGrowthStatus() * 100) + "%";
         }
         return EnumColor.DARK_GREEN + "100%";
     }
 
     private String getStatus() {
-        String returnValue = this.tile.getGUIstatus();
+        final String returnValue = this.tile.getGUIstatus();
         /*
          * if (returnValue.equals(EnumColor.DARK_GREEN + GCCoreUtil.translate("gui.status.active.name")) &&
          * this.tile.lastOxygenCollected <= 0.0F) { return EnumColor.DARK_RED +
@@ -222,7 +221,7 @@ public class GuiHydroponics extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(guiTexture);
         final int var5 = (this.width - this.xSize) / 2;
@@ -243,7 +242,7 @@ public class GuiHydroponics extends GuiContainerGC {
                 this.drawTexturedModalRect(var5 + 100, var6 + 24, 187, 0, 10, 10);
             }
 
-            List<String> oxygenDesc = new ArrayList<String>();
+            final List<String> oxygenDesc = new ArrayList<String>();
             oxygenDesc.add(GCCoreUtil.translate("gui.oxygenStorage.desc.0"));
             oxygenDesc.add(
                     EnumColor.YELLOW + GCCoreUtil.translate("gui.oxygenStorage.desc.1")
@@ -252,7 +251,7 @@ public class GuiHydroponics extends GuiContainerGC {
                                     + (int) Math.floor(this.tile.maxOxygen)));
             this.oxygenInfoRegion.tooltipStrings = oxygenDesc;
 
-            List<String> electricityDesc = new ArrayList<String>();
+            final List<String> electricityDesc = new ArrayList<String>();
             electricityDesc.add(GCCoreUtil.translate("gui.energyStorage.desc.0"));
             EnergyDisplayHelper.getEnergyDisplayTooltip(
                     this.tile.getEnergyStoredGC(),

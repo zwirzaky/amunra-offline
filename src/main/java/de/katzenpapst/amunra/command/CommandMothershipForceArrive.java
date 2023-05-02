@@ -24,14 +24,14 @@ public class CommandMothershipForceArrive extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return "/" + this.getCommandName();
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender, final String[] args) {
         if (sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
-            MothershipWorldProvider msProvider = ((MothershipWorldProvider) sender.getEntityWorld().provider);
+            final MothershipWorldProvider msProvider = (MothershipWorldProvider) sender.getEntityWorld().provider;
 
             if (!((Mothership) msProvider.getCelestialBody()).isInTransit()) {
                 sender.addChatMessage(new ChatComponentText("Mothership not in transit"));

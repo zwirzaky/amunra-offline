@@ -15,23 +15,23 @@ public class MothershipEngineJetRocket extends MothershipEngineJetBase {
 
     protected ItemDamagePair item = null;
 
-    public MothershipEngineJetRocket(String name, String texture, String iconTexture) {
+    public MothershipEngineJetRocket(final String name, final String texture, final String iconTexture) {
         super(name, texture, iconTexture);
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         return this.blockIcon;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityMothershipEngineJet();
     }
 

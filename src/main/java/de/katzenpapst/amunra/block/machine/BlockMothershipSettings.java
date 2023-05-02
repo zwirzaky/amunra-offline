@@ -20,14 +20,14 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
     protected final String frontTexture;
     private IIcon iconFront = null;
 
-    public BlockMothershipSettings(String name, String frontTexture, String sideTexture) {
+    public BlockMothershipSettings(final String name, final String frontTexture, final String sideTexture) {
         super(name, sideTexture);
 
         this.frontTexture = frontTexture;
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
         iconFront = par1IconRegister.registerIcon(frontTexture);
         // this.blockIcon = iconFront;
@@ -35,12 +35,12 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
-        int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
+    public IIcon getIcon(final int side, final int meta) {
+        final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
         // we have the front thingy at front.. but what is front?
         // east is the output
         // I think front is south
-        ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
+        final ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
         // ForgeDirection output = CoordHelper.rotateForgeDirection(ForgeDirection.EAST, realMeta);
 
         if (side == front.ordinal()) {
@@ -52,17 +52,17 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
     }
 
     @Override
-    protected void openGui(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+    protected void openGui(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_SETTINGS, world, x, y, z);
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityMothershipSettings();
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 }

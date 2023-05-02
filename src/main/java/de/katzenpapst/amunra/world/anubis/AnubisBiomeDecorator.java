@@ -11,7 +11,7 @@ public class AnubisBiomeDecorator extends AmunraBiomeDecorator {
 
     @Override
     protected List<WorldGenOre> getOreGenerators() {
-        List<WorldGenOre> list = super.getOreGenerators();
+        final List<WorldGenOre> list = super.getOreGenerators();
         
         if(AmunRa.config.generateOres) {
             list.add(new WorldGenOre(ARBlocks.oreCryoBasalt, 6, ARBlocks.blockBasalt, 8, 8, 45));

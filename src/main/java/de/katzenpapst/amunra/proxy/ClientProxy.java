@@ -99,7 +99,7 @@ public class ClientProxy extends ARSidedProxy {
     public static final float GRAVITY_NEG_FACTOR = 0.054F / 0.05F;
 
     @Override
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(final FMLPreInitializationEvent event) {
         // try stuff
         ClientCommandHandler.instance.registerCommand(new CommandCelestialBodyInfo());
 
@@ -112,20 +112,20 @@ public class ClientProxy extends ARSidedProxy {
     }
 
     @Override
-    public void init(FMLInitializationEvent event) {
-        ISimpleBlockRenderingHandler myISBRH = new BlockRendererMultiOre();
+    public void init(final FMLInitializationEvent event) {
+        final ISimpleBlockRenderingHandler myISBRH = new BlockRendererMultiOre();
         RenderingRegistry.registerBlockHandler(myISBRH.getRenderId(), myISBRH);
 
-        ISimpleBlockRenderingHandler dummyRenderer = new BlockRendererDummy();
+        final ISimpleBlockRenderingHandler dummyRenderer = new BlockRendererDummy();
         RenderingRegistry.registerBlockHandler(dummyRenderer.getRenderId(), dummyRenderer);
 
-        ISimpleBlockRenderingHandler msBoosterRenderer = new BlockRendererMothershipBooster();
+        final ISimpleBlockRenderingHandler msBoosterRenderer = new BlockRendererMothershipBooster();
         RenderingRegistry.registerBlockHandler(msBoosterRenderer.getRenderId(), msBoosterRenderer);
 
-        ISimpleBlockRenderingHandler chestRenderer = new BlockRendererARChest();
+        final ISimpleBlockRenderingHandler chestRenderer = new BlockRendererARChest();
         RenderingRegistry.registerBlockHandler(chestRenderer.getRenderId(), chestRenderer);
 
-        SystemRenderEventHandler clientEventHandler = new SystemRenderEventHandler();
+        final SystemRenderEventHandler clientEventHandler = new SystemRenderEventHandler();
         FMLCommonHandler.instance().bus().register(clientEventHandler);
         MinecraftForge.EVENT_BUS.register(clientEventHandler);
 
@@ -133,7 +133,7 @@ public class ClientProxy extends ARSidedProxy {
     }
 
     @Override
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(final FMLPostInitializationEvent event) {
         rocketModel = AdvancedModelLoader.loadModel(new ResourceLocation(AmunRa.ASSETPREFIX, "models/shuttle2.obj"));
         engineModel = AdvancedModelLoader.loadModel(new ResourceLocation(AmunRa.ASSETPREFIX, "models/jet.obj"));
         engineModelIon = AdvancedModelLoader.loadModel(new ResourceLocation(AmunRa.ASSETPREFIX, "models/jet-ion.obj"));
@@ -213,7 +213,7 @@ public class ClientProxy extends ARSidedProxy {
     }
 
     @Override
-    public void spawnParticles(ParticleType type, World world, Vector3 pos, Vector3 motion) {
+    public void spawnParticles(final ParticleType type, final World world, final Vector3 pos, final Vector3 motion) {
 
         if (!world.isRemote) {
             return;
@@ -241,19 +241,19 @@ public class ClientProxy extends ARSidedProxy {
     }
 
     @Override
-    public void playTileEntitySound(TileEntity tile, ResourceLocation resource) {
+    public void playTileEntitySound(final TileEntity tile, final ResourceLocation resource) {
         if (!tile.getWorldObj().isRemote) {
             return;
         }
-        TickableLoopedSound snd = new TickableLoopedSound(tile, resource);
+        final TickableLoopedSound snd = new TickableLoopedSound(tile, resource);
         Minecraft.getMinecraft().getSoundHandler().playSound(snd);
 
     }
 
-    private boolean hasActiveGravityDisabler(EntityPlayerSP p) {
-        for (ItemStack stack : p.inventory.mainInventory) {
+    private boolean hasActiveGravityDisabler(final EntityPlayerSP p) {
+        for (final ItemStack stack : p.inventory.mainInventory) {
             if (ARItems.gravityDisabler.isSameItem(stack)) {
-                SubItemToggle si = (SubItemToggle) ARItems.gravityDisabler.getSubItem();
+                final SubItemToggle si = (SubItemToggle) ARItems.gravityDisabler.getSubItem();
                 if (si.getState(stack)) {
                     return true;
                 }
@@ -267,12 +267,12 @@ public class ClientProxy extends ARSidedProxy {
      * This should somehow mark the player as ignored
      */
     @Override
-    public void handlePlayerArtificalGravity(EntityPlayer player, double gravity) {
+    public void handlePlayerArtificalGravity(final EntityPlayer player, final double gravity) {
         if (player instanceof EntityPlayerSP) {
             if (!Minecraft.getMinecraft().thePlayer.equals(player)) {
                 return;
             }
-            EntityPlayerSP p = (EntityPlayerSP) player;
+            final EntityPlayerSP p = (EntityPlayerSP) player;
 
             if (this.hasActiveGravityDisabler(p)) {
                 return;
@@ -289,10 +289,8 @@ public class ClientProxy extends ARSidedProxy {
                 if (p.movementInput.jump && p.onGround && jumpTimer <= 0) {
                     p.jump();
                     jumpTimer = 10;
-                } else {
-                    if (jumpTimer > 0) {
-                        jumpTimer--;
-                    }
+                } else if (jumpTimer > 0) {
+                    jumpTimer--;
                 }
             }
 
@@ -313,7 +311,7 @@ public class ClientProxy extends ARSidedProxy {
     }
 
     @Override
-    public boolean doCancelGravityEvent(EntityPlayer player) {
+    public boolean doCancelGravityEvent(final EntityPlayer player) {
         return TickHandlerClient.playerGravityState > 0;
     }
 }

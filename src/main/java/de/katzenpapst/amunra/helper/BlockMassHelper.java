@@ -18,27 +18,26 @@ public class BlockMassHelper {
 
     private static HashMap<BlockMetaPairHashable, Float> blockMassMap = new HashMap<BlockMetaPairHashable, Float>();
 
-    public static float getBlockMass(World world, Block block, int meta, int x, int y, int z) {
+    public static float getBlockMass(final World world, final Block block, final int meta, final int x, final int y, final int z) {
         // first, the mass
         if (block.isAir(world, x, y, z)) {
             return 0.0F;
         }
         if (block instanceof IMassiveBlock) {
             return ((IMassiveBlock) block).getMass(world, x, y, z, meta);
-        } else {
-            BlockMetaPairHashable bmph = new BlockMetaPairHashable(block, (byte) meta);
-            if (blockMassMap.containsKey(bmph)) {
-                return blockMassMap.get(bmph);
-            }
-            float guessedMass = guessBlockMass(world, block, meta, x, y, z);
-
-            blockMassMap.put(bmph, guessedMass);
-
-            return guessedMass;
         }
+        final BlockMetaPairHashable bmph = new BlockMetaPairHashable(block, (byte) meta);
+        if (blockMassMap.containsKey(bmph)) {
+            return blockMassMap.get(bmph);
+        }
+        final float guessedMass = guessBlockMass(world, block, meta, x, y, z);
+
+        blockMassMap.put(bmph, guessedMass);
+
+        return guessedMass;
     }
 
-    public static float guessBlockMass(World world, Block block, int meta, int x, int y, int z) {
+    public static float guessBlockMass(final World world, final Block block, final int meta, final int x, final int y, final int z) {
 
         if (block instanceof IFluidBlock) {
             return getMassForFluid(((IFluidBlock) block).getFluid());
@@ -64,13 +63,13 @@ public class BlockMassHelper {
 
     }
 
-    public static float getMassForFluid(Fluid fluid) {
-        int density = fluid.getDensity();
+    public static float getMassForFluid(final Fluid fluid) {
+        final int density = fluid.getDensity();
         // assume density to be in grams until I have a better idea
-        return ((float) density) / 1000.0F;
+        return (float) density / 1000.0F;
     }
 
-    public static float getMassFromHardnessAndMaterial(float hardness, Material material) {
+    public static float getMassFromHardnessAndMaterial(final float hardness, final Material material) {
         float m = hardness;
         if (m < 0.1F) {
             m = 0.1F;

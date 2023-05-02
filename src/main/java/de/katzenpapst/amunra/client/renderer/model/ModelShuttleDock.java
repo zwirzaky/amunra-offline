@@ -17,7 +17,7 @@ public class ModelShuttleDock {
         // this.texture = texture;
     }
 
-    public void render(Tessellator tessellator, boolean renderConnector) {
+    public void render(final Tessellator tessellator, final boolean renderConnector) {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft.getMinecraft().renderEngine.bindTexture(texture);
@@ -81,10 +81,10 @@ public class ModelShuttleDock {
         }
     }
 
-    protected void renderConnector(Tessellator tessellator) {
+    protected void renderConnector(final Tessellator tessellator) {
         // now try to draw the thing
-        float scale = 0.9F;
-        GL11.glTranslatef(0.0F, (1.0F - scale), 0.75F);
+        final float scale = 0.9F;
+        GL11.glTranslatef(0.0F, 1.0F - scale, 0.75F);
         GL11.glScalef(0.8F, scale, 0.75F);
 
         // right side // 0,75/0 -> 1/0.5

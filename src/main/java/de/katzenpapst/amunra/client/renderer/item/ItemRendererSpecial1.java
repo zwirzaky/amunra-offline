@@ -19,8 +19,8 @@ import de.katzenpapst.amunra.client.renderer.model.ModelShuttleDock;
  */
 public class ItemRendererSpecial1 implements IItemRenderer {
 
-    private ModelShuttleDock model;
-    private ModelHydroponics modelHydro;
+    private final ModelShuttleDock model;
+    private final ModelHydroponics modelHydro;
 
     public ItemRendererSpecial1() {
         model = new ModelShuttleDock();
@@ -28,31 +28,29 @@ public class ItemRendererSpecial1 implements IItemRenderer {
     }
 
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+    public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
 
         // I think this prevents this thing from doing other items
-        if (item.getItemDamage() == ARBlocks.blockShuttleDock.getMetadata()
-                || item.getItemDamage() == ARBlocks.blockHydro.getMetadata()) {
-            switch (type) {
-                case ENTITY:
-                case EQUIPPED:
-                case EQUIPPED_FIRST_PERSON:
-                case INVENTORY:
-                    return true;
-                default:
-                    return false;
-            }
-        } else {
+        if ((item.getItemDamage() != ARBlocks.blockShuttleDock.getMetadata()) && (item.getItemDamage() != ARBlocks.blockHydro.getMetadata())) {
             return false;
+        }
+        switch (type) {
+            case ENTITY:
+            case EQUIPPED:
+            case EQUIPPED_FIRST_PERSON:
+            case INVENTORY:
+                return true;
+            default:
+                return false;
         }
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item, final ItemRendererHelper helper) {
         return true;
     }
 
-    protected void renderHydroponics(ItemRenderType type, RenderBlocks render, ItemStack item) {
+    protected void renderHydroponics(final ItemRenderType type, final RenderBlocks render, final ItemStack item) {
         GL11.glPushMatrix();
         switch (type) {
             case ENTITY:
@@ -80,7 +78,7 @@ public class ItemRendererSpecial1 implements IItemRenderer {
         GL11.glPopMatrix();
     }
 
-    protected void renderDock(ItemRenderType type, RenderBlocks render, ItemStack item) {
+    protected void renderDock(final ItemRenderType type, final RenderBlocks render, final ItemStack item) {
         GL11.glPushMatrix();
         switch (type) {
             case ENTITY:
@@ -109,7 +107,7 @@ public class ItemRendererSpecial1 implements IItemRenderer {
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+    public void renderItem(final ItemRenderType type, final ItemStack item, final Object... data) {
         if (this.handleRenderType(item, type)) {
             switch (type) {
                 case EQUIPPED:

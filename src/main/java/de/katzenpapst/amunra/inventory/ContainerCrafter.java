@@ -18,7 +18,7 @@ public class ContainerCrafter extends ContainerWorkbench {
     protected int posYFU;
     protected int posZFU;
 
-    public ContainerCrafter(InventoryPlayer playerInv, World world, int x, int y, int z) {
+    public ContainerCrafter(final InventoryPlayer playerInv, final World world, final int x, final int y, final int z) {
         super(playerInv, world, x, y, z);
         worldFU = world;
         posXFU = x;
@@ -27,10 +27,10 @@ public class ContainerCrafter extends ContainerWorkbench {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(final EntityPlayer player) {
         // either using a crafting block, or a crafting tool
-        Block b = player.worldObj.getBlock(posXFU, posYFU, posZFU);
-        int meta = player.worldObj.getBlockMetadata(posXFU, posYFU, posZFU);
+        final Block b = player.worldObj.getBlock(posXFU, posYFU, posZFU);
+        final int meta = player.worldObj.getBlockMetadata(posXFU, posYFU, posZFU);
 
         if (ARBlocks.blockWorkbench.getBlock() == b && ARBlocks.blockWorkbench.getMetadata() == meta) {
             return player.getDistanceSq(
@@ -40,12 +40,11 @@ public class ContainerCrafter extends ContainerWorkbench {
         }
 
         // not the block, check for item
-        ItemStack stack = player.inventory.getCurrentItem();
+        final ItemStack stack = player.inventory.getCurrentItem();
 
         if (stack != null && stack.getItem() == ARItems.nanotool) {
             return ARItems.nanotool.getMode(stack) == ItemNanotool.Mode.WORKBENCH;
-        } else {
-            return false;
         }
+        return false;
     }
 }

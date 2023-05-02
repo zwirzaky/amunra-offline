@@ -74,7 +74,7 @@ public class ModelFirstBoss extends ModelBiped {
         this.bipedHead.addChild(beard);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z) {
+    private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;

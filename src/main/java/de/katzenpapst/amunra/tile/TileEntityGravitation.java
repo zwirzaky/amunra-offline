@@ -51,13 +51,13 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
 
     @Override
     public Packet getDescriptionPacket() {
-        NBTTagCompound data = new NBTTagCompound();
+        final NBTTagCompound data = new NBTTagCompound();
         this.writeToNBT(data);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, data);
     }
 
     @Override
-    public void onDataPacket(NetworkManager netManager, S35PacketUpdateTileEntity packet) {
+    public void onDataPacket(final NetworkManager netManager, final S35PacketUpdateTileEntity packet) {
         readFromNBT(packet.func_148857_g());
     }
 
@@ -84,8 +84,8 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     public AxisAlignedBB getRotatedAABB() {
-        int rotationMeta = this.getRotationMeta();
-        AxisAlignedBB in = getGravityBox();
+        final int rotationMeta = this.getRotationMeta();
+        final AxisAlignedBB in = getGravityBox();
 
         /*
          * Z ^ | maxVec | v +-----------------+ | | | | | | | | | +--+ | | | | | | X--+ | | | | |
@@ -140,7 +140,7 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
      * public void setGravityVector(Vector3 vec) { //this.gravityVector = vec; gravity = vec.y; }
      */
 
-    public void setGravityForce(double value) {
+    public void setGravityForce(final double value) {
         gravity = value;
     }
 
@@ -157,21 +157,21 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
         return gravityBox;
     }
 
-    public void setGravityBox(AxisAlignedBB box) {
+    public void setGravityBox(final AxisAlignedBB box) {
         gravityBox = box;
     }
 
     protected void doGravity() {
-        AxisAlignedBB box = getActualGravityBox();
+        final AxisAlignedBB box = getActualGravityBox();
 
         if (!worldObj.isRemote) {
             final List<?> list = this.worldObj.getEntitiesWithinAABB(Entity.class, box);
 
-            for (Object e : list) {
+            for (final Object e : list) {
                 if (e instanceof IAntiGrav) {
                     continue;
                 }
-                Entity ent = (Entity) e;
+                final Entity ent = (Entity) e;
                 if (!(ent instanceof EntityPlayer)) {
                     ent.addVelocity(0.0D, gravity, 0.0D);
                     // do something with the fall distance
@@ -184,8 +184,8 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
         } else {
             // player stuff has to be done on client
             final List<?> list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, box);
-            for (Object e : list) {
-                EntityPlayer p = (EntityPlayer) e;
+            for (final Object e : list) {
+                final EntityPlayer p = (EntityPlayer) e;
                 AmunRa.proxy.handlePlayerArtificalGravity(p, gravity);
             }
         }
@@ -197,46 +197,44 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
+    public ItemStack getStackInSlot(final int slot) {
         return containingItems[slot];
     }
 
     @Override
-    public ItemStack decrStackSize(int slotNr, int amount) {
-        if (this.containingItems[slotNr] != null) {
-            ItemStack newStack;
-
-            if (this.containingItems[slotNr].stackSize <= amount) {
-                newStack = this.containingItems[slotNr];
-                this.containingItems[slotNr] = null;
-                return newStack;
-            } else {
-                newStack = this.containingItems[slotNr].splitStack(amount);
-
-                if (this.containingItems[slotNr].stackSize == 0) {
-                    this.containingItems[slotNr] = null;
-                }
-
-                return newStack;
-            }
-        } else {
+    public ItemStack decrStackSize(final int slotNr, final int amount) {
+        if (this.containingItems[slotNr] == null) {
             return null;
+        }
+        ItemStack newStack;
+
+        if (this.containingItems[slotNr].stackSize <= amount) {
+            newStack = this.containingItems[slotNr];
+            this.containingItems[slotNr] = null;
+            return newStack;
+        } else {
+            newStack = this.containingItems[slotNr].splitStack(amount);
+
+            if (this.containingItems[slotNr].stackSize == 0) {
+                this.containingItems[slotNr] = null;
+            }
+
+            return newStack;
         }
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slotNr) {
+    public ItemStack getStackInSlotOnClosing(final int slotNr) {
         if (this.containingItems[slotNr] != null) {
             final ItemStack var2 = this.containingItems[slotNr];
             this.containingItems[slotNr] = null;
             return var2;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.containingItems = NbtHelper.readInventory(nbt, containingItems.length);
 
@@ -246,22 +244,20 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
                 grav = -0.05D;
             }
             this.setGravityForce(grav);
-        } else {
-            // backwards compatibility
-            if (nbt.hasKey("gravity")) {
-                Vector3 grav = new Vector3(nbt.getCompoundTag("gravity"));
-                this.setGravityForce(grav.y);
-            }
+        } else // backwards compatibility
+        if (nbt.hasKey("gravity")) {
+            final Vector3 grav = new Vector3(nbt.getCompoundTag("gravity"));
+            this.setGravityForce(grav.y);
         }
         if (nbt.hasKey("aabb")) {
-            AxisAlignedBB box = NbtHelper.readAABB(nbt.getCompoundTag("aabb"));
+            final AxisAlignedBB box = NbtHelper.readAABB(nbt.getCompoundTag("aabb"));
             this.setGravityBox(box);
         }
         updateEnergyConsumption();
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         NbtHelper.writeInventory(nbt, containingItems);
 
@@ -269,7 +265,7 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
          * NBTTagCompound gravityVectorNBT = new NBTTagCompound(); gravityVector.writeToNBT(gravityVectorNBT);
          */
 
-        NBTTagCompound aabbNBT = NbtHelper.getAsNBT(gravityBox);
+        final NBTTagCompound aabbNBT = NbtHelper.getAsNBT(gravityBox);
 
         // nbt.setTag("gravity", gravityVectorNBT);
         nbt.setDouble("gravforce", gravity);
@@ -277,7 +273,7 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     @Override
-    public void setInventorySlotContents(int slotNr, ItemStack stack) {
+    public void setInventorySlotContents(final int slotNr, final ItemStack stack) {
         this.containingItems[slotNr] = stack;
 
         if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
@@ -307,7 +303,7 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int slotNr, ItemStack stack) {
+    public boolean isItemValidForSlot(final int slotNr, final ItemStack stack) {
 
         switch (slotNr) {
             case 0: // battery
@@ -323,7 +319,7 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
         return !this.getDisabled(0);
     }
 
-    public int getRotationMeta(int meta) {
+    public int getRotationMeta(final int meta) {
         return (meta & 12) >> 2;
     }
 
@@ -333,7 +329,7 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
 
     @Override
     public ForgeDirection getElectricInputDirection() {
-        int metadata = getRotationMeta();
+        final int metadata = getRotationMeta();
         return CoordHelper.rotateForgeDirection(ForgeDirection.NORTH, metadata);
     }
 
@@ -343,13 +339,13 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     public void updateEnergyConsumption() {
-        double strength = Math.abs(gravity); // getGravityVector().getMagnitude();
-        AxisAlignedBB box = getGravityBox();
+        final double strength = Math.abs(gravity); // getGravityVector().getMagnitude();
+        final AxisAlignedBB box = getGravityBox();
 
-        Vector3 size = new Vector3(box.maxX - box.minX + 1, box.maxY - box.minY + 1, box.maxZ - box.minZ + 1);
-        double numBlocks = size.x * size.y * size.z;
+        final Vector3 size = new Vector3(box.maxX - box.minX + 1, box.maxY - box.minY + 1, box.maxZ - box.minZ + 1);
+        final double numBlocks = size.x * size.y * size.z;
 
-        float maxExtract = (float) (numBlocks * strength);
+        final float maxExtract = (float) (numBlocks * strength);
         this.storage.setMaxExtract(maxExtract);
     }
 }

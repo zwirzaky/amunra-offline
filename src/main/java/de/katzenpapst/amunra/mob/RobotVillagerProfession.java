@@ -18,26 +18,26 @@ public class RobotVillagerProfession {
 
     protected static ArrayList<RobotVillagerProfession> professionRegistry = new ArrayList<RobotVillagerProfession>();
 
-    public static int addProfession(RobotVillagerProfession prof) {
+    public static int addProfession(final RobotVillagerProfession prof) {
         professionRegistry.add(prof);
         return professionRegistry.size() - 1;
     }
 
-    public static RobotVillagerProfession getProfession(int profession) {
+    public static RobotVillagerProfession getProfession(final int profession) {
         return professionRegistry.get(profession);
     }
 
-    public static int getRandomProfession(Random rand) {
+    public static int getRandomProfession(final Random rand) {
         return rand.nextInt(professionRegistry.size());
     }
 
-    public RobotVillagerProfession(ResourceLocation icon, String name, MerchantRecipeList list) {
+    public RobotVillagerProfession(final ResourceLocation icon, final String name, final MerchantRecipeList list) {
         this.icon = icon;
         this.name = name;
         merchantList = list;
     }
 
-    public RobotVillagerProfession(ResourceLocation icon, String name) {
+    public RobotVillagerProfession(final ResourceLocation icon, final String name) {
         this.icon = icon;
         this.name = name;
         merchantList = new MerchantRecipeList();
@@ -56,25 +56,25 @@ public class RobotVillagerProfession {
     }
 
     @SuppressWarnings("unchecked")
-    public RobotVillagerProfession addRecipe(MerchantRecipe recipe) {
+    public RobotVillagerProfession addRecipe(final MerchantRecipe recipe) {
         merchantList.add(recipe);
         return this;
     }
 
     @SuppressWarnings("unchecked")
-    public RobotVillagerProfession addRecipe(ItemStack input1, ItemStack input2, ItemStack output) {
+    public RobotVillagerProfession addRecipe(final ItemStack input1, final ItemStack input2, final ItemStack output) {
         merchantList.add(new MerchantRecipe(input1, input2, output));
         return this;
     }
 
     @SuppressWarnings("unchecked")
-    public RobotVillagerProfession addRecipe(ItemStack input, ItemStack output) {
+    public RobotVillagerProfession addRecipe(final ItemStack input, final ItemStack output) {
         merchantList.add(new MerchantRecipe(input, output));
         return this;
     }
 
     @SuppressWarnings("unchecked")
-    public RobotVillagerProfession addRecipe(Item singleInputItem, int numEmeralds, Item singleOutputItem) {
+    public RobotVillagerProfession addRecipe(final Item singleInputItem, final int numEmeralds, final Item singleOutputItem) {
         merchantList.add(
                 new MerchantRecipe(
                         new ItemStack(singleInputItem, 1),

@@ -31,7 +31,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
     protected static final float distanceToKeep = 10.0F;
 
-    public EntityFlyingMob(World world) {
+    public EntityFlyingMob(final World world) {
         super(world);
     }
 
@@ -49,12 +49,11 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
      * Called when the entity is attacked.
      */
     @Override
-    public boolean attackEntityFrom(DamageSource dmgSrc, float amount) {
+    public boolean attackEntityFrom(final DamageSource dmgSrc, final float amount) {
         if (this.isEntityInvulnerable()) {
             return false;
-        } else {
-            return super.attackEntityFrom(dmgSrc, amount);
         }
+        return super.attackEntityFrom(dmgSrc, amount);
     }
 
     @Override
@@ -68,11 +67,11 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
     protected void findWaypoint() {
         if (this.targetedEntity != null) {
             // attempt to move closer to the target
-            Vector3 targetVec = new Vector3(targetedEntity);
+            final Vector3 targetVec = new Vector3(targetedEntity);
             Vector3 myPos = new Vector3(this);
-            Vector3 thisToTarget = myPos.difference(targetVec);
+            final Vector3 thisToTarget = myPos.difference(targetVec);
             // I don't get around sqrt'ing here
-            double distance = thisToTarget.getMagnitude();
+            final double distance = thisToTarget.getMagnitude();
             thisToTarget.scale(distanceToKeep / distance); // scale the vector to distanceToKeep
             myPos = targetVec.translate(thisToTarget);
             // this should be correct now...
@@ -97,9 +96,9 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
         this.despawnEntity();
         this.prevAttackCounter = this.attackCounter;
-        double deltaX = this.waypointX - this.posX;
-        double deltaY = this.waypointY - this.posY;
-        double deltaZ = this.waypointZ - this.posZ;
+        final double deltaX = this.waypointX - this.posX;
+        final double deltaY = this.waypointY - this.posY;
+        final double deltaZ = this.waypointZ - this.posZ;
         double distanceSq = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
 
         if (this.targetedEntity != null && this.targetedEntity.isDead) {
@@ -135,15 +134,15 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
             }
         }
 
-        double maxTargetDistance = 64.0D;
+        final double maxTargetDistance = 64.0D;
 
         if (this.targetedEntity != null
                 && this.targetedEntity.getDistanceSqToEntity(this) < maxTargetDistance * maxTargetDistance) {
             this.faceEntity(this.targetedEntity, 10.0F, (float) this.getVerticalFaceSpeed());
-            double accelX = this.targetedEntity.posX - this.posX;
-            double accelY = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F)
+            final double accelX = this.targetedEntity.posX - this.posX;
+            final double accelY = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F)
                     - (this.posY + (double) (this.height / 2.0F));
-            double accelZ = this.targetedEntity.posZ - this.posZ;
+            final double accelZ = this.targetedEntity.posZ - this.posZ;
             this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(accelX, accelZ)) * 180.0F / (float) Math.PI;
 
             if (this.canEntityBeSeen(this.targetedEntity)) {
@@ -186,8 +185,8 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
         }
 
         if (!this.worldObj.isRemote) {
-            byte b1 = this.dataWatcher.getWatchableObjectByte(16);
-            byte b0 = (byte) (this.attackCounter > 10 ? 1 : 0);
+            final byte b1 = this.dataWatcher.getWatchableObjectByte(16);
+            final byte b0 = (byte) (this.attackCounter > 10 ? 1 : 0);
 
             if (b1 != b0) {
                 this.dataWatcher.updateObject(16, Byte.valueOf(b0));
@@ -198,11 +197,11 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
     /**
      * True if the ghast has an unobstructed line of travel to the waypoint.
      */
-    protected boolean isCourseTraversable(double p_70790_1_, double p_70790_3_, double p_70790_5_, double distance) {
-        double relDeltaX = (this.waypointX - this.posX) / distance;
-        double relDeltaY = (this.waypointY - this.posY) / distance;
-        double relDeltaZ = (this.waypointZ - this.posZ) / distance;
-        AxisAlignedBB axisalignedbb = this.boundingBox.copy();
+    protected boolean isCourseTraversable(final double p_70790_1_, final double p_70790_3_, final double p_70790_5_, final double distance) {
+        final double relDeltaX = (this.waypointX - this.posX) / distance;
+        final double relDeltaY = (this.waypointY - this.posY) / distance;
+        final double relDeltaZ = (this.waypointZ - this.posZ) / distance;
+        final AxisAlignedBB axisalignedbb = this.boundingBox.copy();
 
         for (int i = 1; (double) i < distance; ++i) {
             axisalignedbb.offset(relDeltaX, relDeltaY, relDeltaZ);
@@ -246,7 +245,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
     @Override
-    public void writeEntityToNBT(NBTTagCompound nbt) {
+    public void writeEntityToNBT(final NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
         nbt.setInteger("ExplosionPower", this.explosionStrength);
     }
@@ -255,7 +254,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
     @Override
-    public void readEntityFromNBT(NBTTagCompound nbt) {
+    public void readEntityFromNBT(final NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
 
         if (nbt.hasKey("ExplosionPower", 99)) {

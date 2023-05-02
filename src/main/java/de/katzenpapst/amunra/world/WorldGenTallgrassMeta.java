@@ -12,11 +12,11 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class WorldGenTallgrassMeta extends WorldGenerator {
 
-    private Block tallGrassBlock;
-    private int tallGrassMetadata;
-    private SubBlockBush plant;
+    private final Block tallGrassBlock;
+    private final int tallGrassMetadata;
+    private final SubBlockBush plant;
 
-    public WorldGenTallgrassMeta(BlockBushMulti block, int meta) {
+    public WorldGenTallgrassMeta(final BlockBushMulti block, final int meta) {
         this.tallGrassBlock = block;
         this.tallGrassMetadata = meta;
 
@@ -24,12 +24,12 @@ public class WorldGenTallgrassMeta extends WorldGenerator {
 
     }
 
-    public WorldGenTallgrassMeta(BlockMetaPair grass) {
+    public WorldGenTallgrassMeta(final BlockMetaPair grass) {
         this((BlockBushMulti) grass.getBlock(), grass.getMetadata());
     }
 
     @Override
-    public boolean generate(World world, Random rand, int x, int y, int z) {
+    public boolean generate(final World world, final Random rand, final int x, int y, final int z) {
         Block block;
 
         do {
@@ -41,9 +41,9 @@ public class WorldGenTallgrassMeta extends WorldGenerator {
         } while (y > 0);
 
         for (int l = 0; l < 128; ++l) {
-            int curX = x + rand.nextInt(8) - rand.nextInt(8);
-            int curY = y + rand.nextInt(4) - rand.nextInt(4);
-            int curZ = z + rand.nextInt(8) - rand.nextInt(8);
+            final int curX = x + rand.nextInt(8) - rand.nextInt(8);
+            final int curY = y + rand.nextInt(4) - rand.nextInt(4);
+            final int curZ = z + rand.nextInt(8) - rand.nextInt(8);
 
             if (world.isAirBlock(curX, curY, curZ) && plant.canPlaceOn(
                     world.getBlock(curX, curY - 1, curZ),

@@ -214,19 +214,19 @@ public class ARBlocks {
     public static BlockMetaPair chestAlu;
     public static BlockMetaPair chestSteel;
 
-    public static SubBlock getSubBlock(BlockMetaPair bmp) {
+    public static SubBlock getSubBlock(final BlockMetaPair bmp) {
         return ((IMetaBlock) bmp.getBlock()).getSubBlock(bmp.getMetadata());
     }
 
-    public static ItemStack getItemStack(BlockMetaPair input, int amount) {
+    public static ItemStack getItemStack(final BlockMetaPair input, final int amount) {
         return new ItemStack(input.getBlock(), amount, input.getMetadata());
     }
 
-    public static ItemDamagePair getBlockItemDamagePair(Block block, int meta) {
+    public static ItemDamagePair getBlockItemDamagePair(final Block block, final int meta) {
         return new ItemDamagePair(Item.getItemFromBlock(block), meta);
     }
 
-    public static ItemDamagePair getBlockItemDamagePair(BlockMetaPair input) {
+    public static ItemDamagePair getBlockItemDamagePair(final BlockMetaPair input) {
         return new ItemDamagePair(Item.getItemFromBlock(input.getBlock()), input.getMetadata());
     }
 
@@ -446,7 +446,7 @@ public class ARBlocks {
         // blockRegistry.addObject(89, "glowstone", (new
         // BlockGlowstone(Material.glass)).setHardness(0.3F).setStepSound(soundTypeGlass).setLightLevel(1.0F).setBlockName("lightgem").setBlockTextureName("glowstone"));
 
-        SubBlock coral = new SubBlock("glowCoral", "amunra:coral", "pickaxe", 2, 0.9F, 2.75F);
+        final SubBlock coral = new SubBlock("glowCoral", "amunra:coral", "pickaxe", 2, 0.9F, 2.75F);
         coral.setStepSound(Block.soundTypeGlass);
         coral.setLightLevel(1.0F);
 
@@ -689,7 +689,7 @@ public class ARBlocks {
     }
 
     private static void initChests() {
-        BlockARChest chestBlock = new BlockARChest(
+        final BlockARChest chestBlock = new BlockARChest(
                 Material.rock,
                 "aluChest",
                 new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-alu-single.png"),
@@ -702,7 +702,7 @@ public class ARBlocks {
         GameRegistry.registerBlock(chestBlock, ItemBlockDesc.class, chestBlock.getUnlocalizedName());
         chestAlu = new BlockMetaPair(chestBlock, (byte) 0);
 
-        BlockARChest steelChest = new BlockARChestLarge(
+        final BlockARChest steelChest = new BlockARChestLarge(
                 Material.rock,
                 "steelChest",
                 new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/chest-steel-single.png"),
@@ -738,7 +738,7 @@ public class ARBlocks {
         metaSlabWood.register();
     }
 
-    private static void setLeafDroppingSapling(BlockMetaPair leaf, BlockMetaPair sapling) {
+    private static void setLeafDroppingSapling(final BlockMetaPair leaf, final BlockMetaPair sapling) {
         ((SubBlockLeaf) ((BlockLeafMeta) leaf.getBlock()).getSubBlock(leaf.getMetadata())).setSaplingDropped(sapling);
     }
 
@@ -762,7 +762,7 @@ public class ARBlocks {
 
     }
 
-    public static SubBlockOre getSubBlockOre(BlockMetaPair bmp) {
+    public static SubBlockOre getSubBlockOre(final BlockMetaPair bmp) {
         return (SubBlockOre) ((BlockBasicMeta) bmp.getBlock()).getSubBlock(bmp.getMetadata());
     }
 

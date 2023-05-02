@@ -55,7 +55,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      */
 
     @Override
-    public boolean canSpaceshipTierPass(int tier) {
+    public boolean canSpaceshipTierPass(final int tier) {
         return tier >= AmunRa.config.planetDefaultTier;
     }
 
@@ -77,7 +77,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public Vec3 getFogColor(float celestialAngle, float partialTicksIThink) {
+    public Vec3 getFogColor(final float celestialAngle, final float partialTicksIThink) {
         float dayFactor = MathHelper.cos(celestialAngle * (float) Math.PI * 2.0F) * 2.0F + 0.5F;
 
         if (dayFactor < 0.0F) {
@@ -88,7 +88,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
             dayFactor = 1.0F;
         }
 
-        Vector3 baseColor = getFogColor();
+        final Vector3 baseColor = getFogColor();
 
         float r = baseColor.floatX();
         float g = baseColor.floatY();
@@ -102,9 +102,9 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
     @Override
     public float getSolarSize() {
         // this works only for planets...
-        CelestialBody body = this.getCelestialBody();
+        final CelestialBody body = this.getCelestialBody();
 
-        if (body instanceof Moon moon) {
+        if (body instanceof final Moon moon) {
             return 1.0F / moon.getParentPlanet().getRelativeDistanceFromCenter().unScaledDistance;
         }
         return 1.0F / body.getRelativeDistanceFromCenter().unScaledDistance;
@@ -125,11 +125,11 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      */
 
     @Override
-    public Vec3 getSkyColor(Entity cameraEntity, float partialTicks) {
-        Vector3 skyColorBase = this.getSkyColor();
+    public Vec3 getSkyColor(final Entity cameraEntity, final float partialTicks) {
+        final Vector3 skyColorBase = this.getSkyColor();
         // return Vec3.createVectorHelper(skyColor.floatX(), skyColor.floatY(), skyColor.floatZ());
         // return new Vector3(0.60588, 0.7745, 1);
-        float celestialAngle = this.worldObj.getCelestialAngle(partialTicks);
+        final float celestialAngle = this.worldObj.getCelestialAngle(partialTicks);
         float dayFactor = MathHelper.cos(celestialAngle * (float) Math.PI * 2.0F) * 2.0F + 0.5F;
 
         if (dayFactor < 0.0F) {
@@ -171,7 +171,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public float getSunBrightness(float partialTicks) {
+    public float getSunBrightness(final float partialTicks) {
 
         float factor = worldObj.getSunBrightnessBody(partialTicks) + getAmunBrightnessFactor(partialTicks);
         if (factor > 1.0F) {
@@ -188,7 +188,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      * @return The current brightness factor
      */
     @Override
-    public float getSunBrightnessFactor(float partialTicks) {
+    public float getSunBrightnessFactor(final float partialTicks) {
         // I *think* that I could use this to make eclipses etc work
         float factor = worldObj.getSunBrightnessFactor(partialTicks) + getAmunBrightnessFactor(partialTicks);
 
@@ -199,18 +199,18 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
         return factor;
     }
 
-    protected float getAmunBrightnessFactor(float partialTicks) {
+    protected float getAmunBrightnessFactor(final float partialTicks) {
         CelestialBody curBody = this.getCelestialBody();
         if (curBody instanceof Moon) {
             curBody = ((Moon) curBody).getParentPlanet();
         }
-        AngleDistance ad = AstronomyHelper
+        final AngleDistance ad = AstronomyHelper
                 .projectBodyToSky(curBody, AmunRa.instance.starAmun, partialTicks, this.worldObj.getWorldTime());
         // ad.angle is in pi
 
         // the angle I get is relative to celestialAngle
         float brightnessFactor = 1.0F
-                - (MathHelper.cos((this.worldObj.getCelestialAngle(partialTicks)) * (float) Math.PI * 2.0F + ad.angle)
+                - (MathHelper.cos(this.worldObj.getCelestialAngle(partialTicks) * (float) Math.PI * 2.0F + ad.angle)
                         * 2.0F + 0.5F);
 
         if (brightnessFactor < 0) {

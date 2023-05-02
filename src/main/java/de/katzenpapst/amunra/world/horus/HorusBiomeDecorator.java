@@ -13,10 +13,10 @@ public class HorusBiomeDecorator extends AmunraBiomeDecorator {
 
     @Override
     protected List<WorldGenOre> getOreGenerators() {
-        List<WorldGenOre> list = super.getOreGenerators();
+        final List<WorldGenOre> list = super.getOreGenerators();
         
         if(AmunRa.config.generateOres) {
-            BlockMetaPair obsidian = new BlockMetaPair(Blocks.obsidian, (byte) 0);
+            final BlockMetaPair obsidian = new BlockMetaPair(Blocks.obsidian, (byte) 0);
 
             list.add(new WorldGenOre(ARBlocks.oreDiamondObsid, 8, obsidian, 8, 2, 45));
             list.add(new WorldGenOre(ARBlocks.oreRubyObsid, 12, obsidian, 12, 8, 50));

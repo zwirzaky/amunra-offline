@@ -13,28 +13,28 @@ import de.katzenpapst.amunra.vec.Vector3int;
 
 public class MothershipEngineBoosterIon extends MothershipEngineBoosterBase {
 
-    public MothershipEngineBoosterIon(String name, String texture, String activeTexture) {
+    public MothershipEngineBoosterIon(final String name, final String texture, final String activeTexture) {
         super(name, texture, activeTexture);
         // TODO Auto-generated constructor stub
     }
 
-    public MothershipEngineBoosterIon(String name, String texture, String activeTexture, String tool,
-            int harvestLevel) {
+    public MothershipEngineBoosterIon(final String name, final String texture, final String activeTexture, final String tool,
+            final int harvestLevel) {
         super(name, texture, activeTexture, tool, harvestLevel);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
-        TileEntity leTile = world.getTileEntity(x, y, z);
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
+            final float hitY, final float hitZ) {
+        final TileEntity leTile = world.getTileEntity(x, y, z);
         if (leTile == null || !(leTile instanceof TileEntityMothershipEngineBooster)) {
             return false;
         }
-        TileEntityMothershipEngineBooster tile = (TileEntityMothershipEngineBooster) leTile;
+        final TileEntityMothershipEngineBooster tile = (TileEntityMothershipEngineBooster) leTile;
 
         if (tile.hasMaster()) {
-            Vector3int pos = tile.getMasterPosition();
+            final Vector3int pos = tile.getMasterPosition();
 
             entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_ION_ENGINE, world, pos.x, pos.y, pos.z);
             return true;
@@ -42,14 +42,14 @@ public class MothershipEngineBoosterIon extends MothershipEngineBoosterBase {
         return false;
     }
 
-    public MothershipEngineBoosterIon(String name, String texture, String activeTexture, String tool, int harvestLevel,
-            float hardness, float resistance) {
+    public MothershipEngineBoosterIon(final String name, final String texture, final String activeTexture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, activeTexture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityMothershipEngineBoosterIon();
     }
 

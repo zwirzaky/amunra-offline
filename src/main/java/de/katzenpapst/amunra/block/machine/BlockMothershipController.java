@@ -20,7 +20,7 @@ public class BlockMothershipController extends AbstractBlockMothershipRestricted
     protected final String frontTexture;
     private IIcon iconFront = null;
 
-    public BlockMothershipController(String name, String frontTexture, String sideTexture) {
+    public BlockMothershipController(final String name, final String frontTexture, final String sideTexture) {
         super(name, sideTexture);
         this.frontTexture = frontTexture;
     }
@@ -30,13 +30,13 @@ public class BlockMothershipController extends AbstractBlockMothershipRestricted
      * @param side
      * @return
      */
-    public static boolean isSideEnergyOutput(int side) {
+    public static boolean isSideEnergyOutput(final int side) {
         // wait, wat?
         return false;
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
         iconFront = par1IconRegister.registerIcon(frontTexture);
         // this.blockIcon = iconFront;
@@ -44,12 +44,12 @@ public class BlockMothershipController extends AbstractBlockMothershipRestricted
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
-        int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
+    public IIcon getIcon(final int side, final int meta) {
+        final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
         // we have the front thingy at front.. but what is front?
         // east is the output
         // I think front is south
-        ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
+        final ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
         // ForgeDirection output = CoordHelper.rotateForgeDirection(ForgeDirection.EAST, realMeta);
 
         if (side == front.ordinal()) {
@@ -69,12 +69,12 @@ public class BlockMothershipController extends AbstractBlockMothershipRestricted
      * @return A instance of a class extending TileEntity
      */
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityMothershipController();
     }
 
     @Override
-    protected void openGui(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+    protected void openGui(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MOTHERSHIPCONTROLLER, world, x, y, z);
     }
 }

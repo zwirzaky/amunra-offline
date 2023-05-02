@@ -26,7 +26,7 @@ public class TickHandlerClient {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent event) {
+    public void onClientTick(final ClientTickEvent event) {
         final Minecraft minecraft = FMLClientHandler.instance().getClient();
 
         final WorldClient world = minecraft.theWorld;
@@ -69,7 +69,7 @@ public class TickHandlerClient {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onPlayerTick(PlayerTickEvent event) {
+    public void onPlayerTick(final PlayerTickEvent event) {
         if (playerGravityState > 0 && event.phase == Phase.END) {
             playerGravityState--;
         }

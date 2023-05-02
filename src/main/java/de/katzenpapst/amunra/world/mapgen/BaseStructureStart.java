@@ -40,7 +40,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
     // protected int startY;
     protected int startZ;
 
-    public BaseStructureStart(World world, int chunkX, int chunkZ, Random rand) {
+    public BaseStructureStart(final World world, final int chunkX, final int chunkZ, final Random rand) {
 
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
@@ -58,8 +58,8 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
         populatorsByChunk = new PopulatorByChunkMap();
     }
 
-    protected void preparePopulatorListForChunk(int chunkX, int chunkZ) {
-        Long key = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
+    protected void preparePopulatorListForChunk(final int chunkX, final int chunkZ) {
+        final Long key = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
 
         if (populatorsByChunk.containsKey(key)) {
             // this is bad, this shouldn't happen
@@ -81,23 +81,23 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
      * This should be overridden, but then called before anything else happens
      */
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         preparePopulatorListForChunk(chunkX, chunkZ);
 
         return true;
     }
 
-    public void populateChunk(World world, int chunkX, int chunkZ) {
+    public void populateChunk(final World world, final int chunkX, final int chunkZ) {
 
-        Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
+        final Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
         if (!populatorsByChunk.containsKey(chunkKey)) {
             AmunRa.LOGGER.warn("No populator list for chunk {}/{}", chunkX, chunkZ);
             return;
         }
-        PopulatorMap curMap = populatorsByChunk.get(chunkKey);
+        final PopulatorMap curMap = populatorsByChunk.get(chunkKey);
         populatorsByChunk.remove(chunkKey);// remove it already, at this point, it's too late
 
-        for (AbstractPopulator p : curMap.values()) {
+        for (final AbstractPopulator p : curMap.values()) {
             if (!p.populate(world)) {
                 AmunRa.LOGGER.error("Populator {} failed...", p.getClass().getCanonicalName());
             }
@@ -107,16 +107,16 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
 
     }
 
-    public void addPopulator(AbstractPopulator p) {
+    public void addPopulator(final AbstractPopulator p) {
         // ok I can't do that
         // this.worldObj.getChunkFromBlockCoords(p_72938_1_, p_72938_2_)
-        int chunkX = CoordHelper.blockToChunk(p.getX());// p.getX() >> 4;
-        int chunkZ = CoordHelper.blockToChunk(p.getZ());
+        final int chunkX = CoordHelper.blockToChunk(p.getX());// p.getX() >> 4;
+        final int chunkZ = CoordHelper.blockToChunk(p.getZ());
 
         // p_72938_1_ >> 4, p_72938_2_ >>
         // 16
 
-        Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
+        final Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
         if (!populatorsByChunk.containsKey(chunkKey)) {
             AmunRa.LOGGER.error(
                     "Cannot add populator for {}/{}, offender: {}. Probably it's the wrong chunk",
@@ -125,9 +125,9 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
                     p.getClass().getCanonicalName());
             return;
         }
-        PopulatorMap curMap = populatorsByChunk.get(chunkKey);
+        final PopulatorMap curMap = populatorsByChunk.get(chunkKey);
 
-        BlockVec3 key = p.getBlockVec3();
+        final BlockVec3 key = p.getBlockVec3();
         if (curMap.containsKey(key)) {
             AmunRa.LOGGER.error("Cannot add populator for {}, offender: {}", key, p.getClass().getCanonicalName());
             return;
@@ -136,8 +136,8 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
         curMap.put(key, p);
     }
 
-    public void spawnLater(Entity ent, int x, int y, int z) {
-        SpawnEntity p = new SpawnEntity(x, y, z, ent);
+    public void spawnLater(final Entity ent, final int x, final int y, final int z) {
+        final SpawnEntity p = new SpawnEntity(x, y, z, ent);
         addPopulator(p);
     }
 

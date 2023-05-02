@@ -10,14 +10,14 @@ public class ItemBaseBattery extends ItemElectricBase {
 
     final protected float capacity;
 
-    public ItemBaseBattery(String assetName, float capacity) {
+    public ItemBaseBattery(final String assetName, final float capacity) {
         super();
         this.setUnlocalizedName(assetName);
         this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);
         this.capacity = capacity;
     }
 
-    public ItemBaseBattery(String assetName, float capacity, float maxTransfer) {
+    public ItemBaseBattery(final String assetName, final float capacity, final float maxTransfer) {
         this(assetName, capacity);
         this.transferMax = maxTransfer;
     }
@@ -28,7 +28,7 @@ public class ItemBaseBattery extends ItemElectricBase {
     }
 
     @Override
-    public float getMaxElectricityStored(ItemStack itemStack) {
+    public float getMaxElectricityStored(final ItemStack itemStack) {
         return this.capacity;
     }
 

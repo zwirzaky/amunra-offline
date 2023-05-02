@@ -78,7 +78,7 @@ public class TileEntityHydroponics extends TileEntityOxygen
      * must respect this or you will generate infinite oxygen.
      */
     @Override
-    public float getOxygenProvide(ForgeDirection direction) {
+    public float getOxygenProvide(final ForgeDirection direction) {
         return this.getOxygenOutputDirections().contains(direction) ? Math.min(OUTPUT_PER_TICK, this.getOxygenStored())
                 : 0.0F;
     }
@@ -99,7 +99,7 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public boolean isItemValidForSlot(int slotNr, ItemStack stack) {
+    public boolean isItemValidForSlot(final int slotNr, final ItemStack stack) {
 
         switch (slotNr) {
             case 0: // battery
@@ -124,17 +124,17 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int side) {
+    public int[] getAccessibleSlotsFromSide(final int side) {
         return new int[] { 0, 1 };
     }
 
     @Override
-    public boolean canInsertItem(int slotID, ItemStack itemstack, int side) {
+    public boolean canInsertItem(final int slotID, final ItemStack itemstack, final int side) {
         return this.isItemValidForSlot(slotID, itemstack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, int side) {
+    public boolean canExtractItem(final int slot, final ItemStack stack, final int side) {
         return slot == 0 || slot == 1;
     }
 
@@ -144,29 +144,29 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
+    public ItemStack getStackInSlot(final int slot) {
         return containingItems[slot];
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.containingItems = this.readStandardItemsFromNBT(nbt);
         this.plantGrowthStatus = nbt.getFloat("growthStatus");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         this.writeStandardItemsToNBT(nbt);
         nbt.setFloat("growthStatus", plantGrowthStatus);
         // plantedSeed
     }
 
-    public ItemStack[] readStandardItemsFromNBT(NBTTagCompound nbt) {
+    public ItemStack[] readStandardItemsFromNBT(final NBTTagCompound nbt) {
         final NBTTagList itemTag = nbt.getTagList("Items", 10);
-        int length = containingItems.length;
-        ItemStack[] result = new ItemStack[length];
+        final int length = containingItems.length;
+        final ItemStack[] result = new ItemStack[length];
 
         for (int i = 0; i < itemTag.tagCount(); ++i) {
             final NBTTagCompound stackNbt = itemTag.getCompoundTagAt(i);
@@ -179,9 +179,9 @@ public class TileEntityHydroponics extends TileEntityOxygen
         return result;
     }
 
-    public void writeStandardItemsToNBT(NBTTagCompound nbt) {
+    public void writeStandardItemsToNBT(final NBTTagCompound nbt) {
         final NBTTagList list = new NBTTagList();
-        int length = containingItems.length;
+        final int length = containingItems.length;
 
         for (int i = 0; i < length; ++i) {
             if (containingItems[i] != null) {
@@ -196,37 +196,35 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public ItemStack decrStackSize(int slotNr, int amount) {
-        if (this.containingItems[slotNr] != null) {
-            ItemStack newStack;
-
-            if (this.containingItems[slotNr].stackSize <= amount) {
-                newStack = this.containingItems[slotNr];
-                this.containingItems[slotNr] = null;
-                return newStack;
-            } else {
-                newStack = this.containingItems[slotNr].splitStack(amount);
-
-                if (this.containingItems[slotNr].stackSize == 0) {
-                    this.containingItems[slotNr] = null;
-                }
-
-                return newStack;
-            }
-        } else {
+    public ItemStack decrStackSize(final int slotNr, final int amount) {
+        if (this.containingItems[slotNr] == null) {
             return null;
+        }
+        ItemStack newStack;
+
+        if (this.containingItems[slotNr].stackSize <= amount) {
+            newStack = this.containingItems[slotNr];
+            this.containingItems[slotNr] = null;
+            return newStack;
+        } else {
+            newStack = this.containingItems[slotNr].splitStack(amount);
+
+            if (this.containingItems[slotNr].stackSize == 0) {
+                this.containingItems[slotNr] = null;
+            }
+
+            return newStack;
         }
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slotNr) {
+    public ItemStack getStackInSlotOnClosing(final int slotNr) {
         if (this.containingItems[slotNr] != null) {
             final ItemStack var2 = this.containingItems[slotNr];
             this.containingItems[slotNr] = null;
             return var2;
-        } else {
-            return null;
         }
+        return null;
     }
 
     protected void generateOxygen() {
@@ -237,7 +235,7 @@ public class TileEntityHydroponics extends TileEntityOxygen
                 // divide by 10 for display
                 // use it right away for actual generation?
 
-                float generationRate = 0.3F * 10.0F * this.plantGrowthStatus * AmunRa.config.hydroponicsFactor; // should
+                final float generationRate = 0.3F * 10.0F * this.plantGrowthStatus * AmunRa.config.hydroponicsFactor; // should
                                                                                                                 // be 4x
                                                                                                                 // the
                                                                                                                 // regular
@@ -288,7 +286,7 @@ public class TileEntityHydroponics extends TileEntityOxygen
      */
 
     @Override
-    public void setInventorySlotContents(int slotNr, ItemStack stack) {
+    public void setInventorySlotContents(final int slotNr, final ItemStack stack) {
         this.containingItems[slotNr] = stack;
 
         if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
@@ -351,14 +349,14 @@ public class TileEntityHydroponics extends TileEntityOxygen
         if (plantGrowthStatus < 1) {
             return new ItemStack[] { seeds.getItemStack(1) };
         }
-        int numSeeds = worldObj.rand.nextInt(4);
+        final int numSeeds = worldObj.rand.nextInt(4);
         return new ItemStack[] { new ItemStack(Items.wheat, 1, 0), seeds.getItemStack(numSeeds) };
     }
 
-    public void harvest(EntityPlayer player) {
+    public void harvest(final EntityPlayer player) {
 
-        ItemStack[] harvest = getHarvest();
-        for (ItemStack stack : harvest) {
+        final ItemStack[] harvest = getHarvest();
+        for (final ItemStack stack : harvest) {
             if (!player.inventory.addItemStackToInventory(stack)) {
                 WorldHelper.dropItemInWorld(worldObj, stack, player);
             }
@@ -366,8 +364,8 @@ public class TileEntityHydroponics extends TileEntityOxygen
         this.plantGrowthStatus = 0.0F;
     }
 
-    public void performOperation(int op, EntityPlayerMP playerBase) {
-        OperationType realOp = OperationType.values()[op];
+    public void performOperation(final int op, final EntityPlayerMP playerBase) {
+        final OperationType realOp = OperationType.values()[op];
         ItemStack stack;
         switch (realOp) {
             case PLANT_SEED:
@@ -405,7 +403,7 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this
                 && par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
     }

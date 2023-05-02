@@ -44,13 +44,13 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z) {
 
         if (FMLCommonHandler.instance().getEffectiveSide() != Side.SERVER) {
             return null;
         }
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        final TileEntity tile = world.getTileEntity(x, y, z);
 
         switch (ID) {
             case GuiIds.GUI_ATOMBATTERY:
@@ -76,18 +76,18 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     // @SideOnly(Side.CLIENT)
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z) {
         if (FMLCommonHandler.instance().getEffectiveSide() != Side.CLIENT) {
             return null;
         }
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        final TileEntity tile = world.getTileEntity(x, y, z);
 
         switch (ID) {
             case GuiIds.GUI_ATOMBATTERY:
                 return new GuiAtomBattery(player.inventory, (TileEntityIsotopeGenerator) tile);
             case GuiIds.GUI_MOTHERSHIPCONTROLLER:
-                List<CelestialBody> possibleCelestialBodies = new ArrayList<CelestialBody>();
+                final List<CelestialBody> possibleCelestialBodies = new ArrayList<CelestialBody>();
                 return new GuiMothershipSelection(
                         possibleCelestialBodies,
                         (TileEntityMothershipController) tile,

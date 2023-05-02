@@ -20,7 +20,7 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     // ...sigh...
     protected final World worldObjNonPrivate;
 
-    public MothershipChunkProvider(World par1World, long par2, boolean par4) {
+    public MothershipChunkProvider(final World par1World, final long par2, final boolean par4) {
         super(par1World, par2, par4);
         this.rand = new Random(par2);
         worldObjNonPrivate = par1World;
@@ -37,7 +37,7 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     }
 
     @Override
-    public boolean saveChunks(boolean var1, IProgressUpdate var2) {
+    public boolean saveChunks(final boolean var1, final IProgressUpdate var2) {
         return true;
     }
 
@@ -47,7 +47,7 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     }
 
     @Override
-    public Chunk provideChunk(int chunkX, int chunkZ) {
+    public Chunk provideChunk(final int chunkX, final int chunkZ) {
         this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
         final Block[] ids = new Block[32768];
         Arrays.fill(ids, Blocks.air);
@@ -65,12 +65,12 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     }
 
     @Override
-    public boolean chunkExists(int par1, int par2) {
+    public boolean chunkExists(final int par1, final int par2) {
         return true;
     }
 
     @Override
-    public void populate(IChunkProvider par1IChunkProvider, int chunkX, int chunkZ) {
+    public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
 
         BlockFalling.fallInstantly = true;
         final int blockX = chunkX * 16;

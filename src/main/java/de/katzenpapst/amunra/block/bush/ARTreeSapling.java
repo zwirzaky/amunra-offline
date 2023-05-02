@@ -15,27 +15,27 @@ public class ARTreeSapling extends AbstractSapling {
     protected int canopyCenter = 5;
     protected int minStemHeight = 2;
 
-    public ARTreeSapling(String name, String texture) {
+    public ARTreeSapling(final String name, final String texture) {
         super(name, texture);
     }
 
     @Override
-    public boolean canPlaceOn(BlockMetaPair blockToCheck, int meta) {
+    public boolean canPlaceOn(final BlockMetaPair blockToCheck, final int meta) {
         return canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
     }
 
     @Override
-    public boolean canPlaceOn(Block blockToCheck, int metaToCheck, int meta) {
-        return (blockToCheck == ARBlocks.blockMethaneDirt.getBlock()
-                && metaToCheck == ARBlocks.blockMethaneDirt.getMetadata())
-                || (blockToCheck == ARBlocks.blockMethaneGrass.getBlock()
-                        && metaToCheck == ARBlocks.blockMethaneGrass.getMetadata())
-                || (blockToCheck == ARBlocks.blockVacuumGrass.getBlock()
-                        && metaToCheck == ARBlocks.blockVacuumGrass.getMetadata());
+    public boolean canPlaceOn(final Block blockToCheck, final int metaToCheck, final int meta) {
+        return blockToCheck == ARBlocks.blockMethaneDirt.getBlock()
+                && metaToCheck == ARBlocks.blockMethaneDirt.getMetadata()
+                || blockToCheck == ARBlocks.blockMethaneGrass.getBlock()
+                        && metaToCheck == ARBlocks.blockMethaneGrass.getMetadata()
+                || blockToCheck == ARBlocks.blockVacuumGrass.getBlock()
+                        && metaToCheck == ARBlocks.blockVacuumGrass.getMetadata();
     }
 
-    protected boolean canGenerateHere(World world, Random rand, int x, int y, int z, int stemHeight,
-            int halfCanopyWidth, int canopyHeight) {
+    protected boolean canGenerateHere(final World world, final Random rand, final int x, final int y, final int z, final int stemHeight,
+            final int halfCanopyWidth, final int canopyHeight) {
         // check stem first
         for (int curY = y; curY <= y + stemHeight; ++curY) {
             if (!this.canReplaceBlock(world, x, curY, z)) {
@@ -47,13 +47,10 @@ public class ARTreeSapling extends AbstractSapling {
 
             for (int curX = x - halfCanopyWidth; curX <= x + halfCanopyWidth; ++curX) {
                 for (int curZ = z - halfCanopyWidth; curZ <= z + halfCanopyWidth; ++curZ) {
-                    if (curY >= 0 && curY < 256) {
-                        // Block block = world.getBlock(curX, curY, curZ);
-
-                        if (!this.canReplaceBlock(world, curX, curY, curZ)) {
-                            return false;
-                        }
-                    } else {
+                    if ((curY < 0) || (curY >= 256)) {
+                        return false;
+                    }
+                    if (!this.canReplaceBlock(world, curX, curY, curZ)) {
                         return false;
                     }
                 }
@@ -74,12 +71,12 @@ public class ARTreeSapling extends AbstractSapling {
      * @return
      */
     @Override
-    public boolean generate(World world, Random rand, int x, int y, int z, boolean notify) {
-        int curTreeHeight = rand.nextInt(3) + this.minStemHeight + this.canopyHeight;
+    public boolean generate(final World world, final Random rand, final int x, final int y, final int z, final boolean notify) {
+        final int curTreeHeight = rand.nextInt(3) + this.minStemHeight + this.canopyHeight;
 
-        int halfWidth = (int) Math.ceil((this.canopyWidth - 1) / 2);
-        int halfHeight = (int) Math.ceil((this.canopyHeight - 1) / 2);
-        int stemHeight = curTreeHeight - this.canopyHeight;
+        final int halfWidth = (int) Math.ceil((this.canopyWidth - 1) / 2);
+        final int halfHeight = (int) Math.ceil((this.canopyHeight - 1) / 2);
+        final int stemHeight = curTreeHeight - this.canopyHeight;
 
         int highestYLeaf = 0;
 
@@ -90,10 +87,10 @@ public class ARTreeSapling extends AbstractSapling {
                 return false;
             }
 
-            Block block2 = world.getBlock(x, y - 1, z);
-            int meta2 = world.getBlockMetadata(x, y - 1, z);
+            final Block block2 = world.getBlock(x, y - 1, z);
+            final int meta2 = world.getBlockMetadata(x, y - 1, z);
 
-            boolean isSoil = this.canPlaceOn(new BlockMetaPair(block2, (byte) meta2), 0);// block2.canSustainPlant(world,
+            final boolean isSoil = this.canPlaceOn(new BlockMetaPair(block2, (byte) meta2), 0);// block2.canSustainPlant(world,
                                                                                          // x, y - 1, z,
                                                                                          // ForgeDirection.UP,
                                                                                          // (IPlantable)this);
@@ -110,7 +107,7 @@ public class ARTreeSapling extends AbstractSapling {
                             // check the ellipsoid stuff
                             // if(Math.pow((curX-x)/halfWidth,2) + Math.pow((curY1-y-canopyCenter)/halfHeight, 2) +
                             // Math.pow((curZ-z)/halfWidth, 2) <= 1) {
-                            double eFactor = getEllipsoidFactor(
+                            final double eFactor = getEllipsoidFactor(
                                     curX - x,
                                     curY - y - canopyCenter,
                                     curZ - z,
@@ -124,7 +121,7 @@ public class ARTreeSapling extends AbstractSapling {
                                     }
                                 }
                                 // draw them
-                                Block block1 = world.getBlock(curX, curY, curZ);
+                                final Block block1 = world.getBlock(curX, curY, curZ);
 
                                 if (block1.isAir(world, curX, curY, curZ) || block1.isLeaves(world, curX, curY, curZ)
                                         || isBlockReplaceable(block1)) {
@@ -174,7 +171,7 @@ public class ARTreeSapling extends AbstractSapling {
         return false;
     }
 
-    protected double getEllipsoidFactor(float x, float y, float z, float widthZX, float height) {
+    protected double getEllipsoidFactor(final float x, final float y, final float z, final float widthZX, final float height) {
         return Math.pow(x, 2) / (widthZX * widthZX) + Math.pow(y, 2) / (height * height)
                 + Math.pow(z, 2) / (widthZX * widthZX);
     }

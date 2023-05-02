@@ -11,25 +11,25 @@ public class SubBlockWood extends SubBlock {
     protected String textureTop;
     protected IIcon topIcon;
 
-    public SubBlockWood(String name, String textureSide, String textureTop) {
+    public SubBlockWood(final String name, final String textureSide, final String textureTop) {
         super(name, textureSide, "axe", 0);
         this.textureTop = textureTop;
     }
 
-    public SubBlockWood(String name, String textureSide, String textureTop, String tool, int harvestLevel) {
+    public SubBlockWood(final String name, final String textureSide, final String textureTop, final String tool, final int harvestLevel) {
         super(name, textureSide, tool, harvestLevel);
         this.textureTop = textureTop;
     }
 
-    public SubBlockWood(String name, String textureSide, String textureTop, String tool, int harvestLevel,
-            float hardness, float resistance) {
+    public SubBlockWood(final String name, final String textureSide, final String textureTop, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, textureSide, tool, harvestLevel, hardness, resistance);
         this.textureTop = textureTop;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         this.blockIcon = par1IconRegister.registerIcon(this.getTextureName());
         this.topIcon = par1IconRegister.registerIcon(this.textureTop);
 
@@ -41,7 +41,7 @@ public class SubBlockWood extends SubBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         /*
          * Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
          * Face 5 (Eastern Face)

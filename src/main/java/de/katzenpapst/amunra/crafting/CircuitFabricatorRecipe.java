@@ -17,13 +17,13 @@ public class CircuitFabricatorRecipe {
     public ItemStack[] redstone;
     public ItemStack[] optional;
 
-    public CircuitFabricatorRecipe(ItemStack output, ItemStack[] crystal, ItemStack[] silicon1, ItemStack[] silicon2,
-            ItemStack[] redstone) {
+    public CircuitFabricatorRecipe(final ItemStack output, final ItemStack[] crystal, final ItemStack[] silicon1, final ItemStack[] silicon2,
+            final ItemStack[] redstone) {
         this(output, crystal, silicon1, silicon2, redstone, null);
     }
 
-    public CircuitFabricatorRecipe(ItemStack output, ItemStack[] crystal, ItemStack[] silicon1, ItemStack[] silicon2,
-            ItemStack[] redstone, ItemStack[] optional) {
+    public CircuitFabricatorRecipe(final ItemStack output, final ItemStack[] crystal, final ItemStack[] silicon1, final ItemStack[] silicon2,
+            final ItemStack[] redstone, final ItemStack[] optional) {
         this.crystal = crystal;
         this.silicon1 = silicon1;
         this.silicon2 = silicon2;

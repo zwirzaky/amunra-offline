@@ -12,20 +12,20 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
  */
 public class BlockMetaPairHashable extends BlockMetaPair {
 
-    public BlockMetaPairHashable(Block block, byte metadata) {
+    public BlockMetaPairHashable(final Block block, final byte metadata) {
         super(block, metadata);
     }
 
-    public BlockMetaPairHashable(BlockMetaPair bmp) {
+    public BlockMetaPairHashable(final BlockMetaPair bmp) {
         super(bmp.getBlock(), bmp.getMetadata());
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof BlockMetaPair)) {
             return false;
         }
-        BlockMetaPair otherReal = (BlockMetaPair) other;
+        final BlockMetaPair otherReal = (BlockMetaPair) other;
         return otherReal.getBlock() == getBlock() && otherReal.getMetadata() == getMetadata();
     }
 

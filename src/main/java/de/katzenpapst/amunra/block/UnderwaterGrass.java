@@ -10,16 +10,16 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class UnderwaterGrass extends SubBlockGrass {
 
-    private BlockMetaPair dirtVersion;
+    private final BlockMetaPair dirtVersion;
 
-    public UnderwaterGrass(String name, String textureTop, String textureSide, String textureBottom) {
+    public UnderwaterGrass(final String name, final String textureTop, final String textureSide, final String textureBottom) {
         super(name, textureTop, textureSide, textureBottom);
 
         dirtVersion = new BlockMetaPair(Blocks.clay, (byte) 0);
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random) {
+    public int quantityDropped(final int meta, final int fortune, final Random random) {
         return this.getDirtBlock().getBlock().quantityDropped(this.getDirtBlock().getMetadata(), fortune, random);
     }
 
@@ -45,11 +45,11 @@ public class UnderwaterGrass extends SubBlockGrass {
      * @return
      */
     @Override
-    public boolean canLiveHere(World world, int x, int y, int z) {
+    public boolean canLiveHere(final World world, final int x, final int y, final int z) {
         // this can only live underwater
         // TODO add special check for fences, grasses etc
         // Blocks.
-        Block blockAbove = world.getBlock(x, y + 1, z);
+        final Block blockAbove = world.getBlock(x, y + 1, z);
         return blockAbove == Blocks.water || blockAbove == Blocks.flowing_water;
     }
 
@@ -57,7 +57,7 @@ public class UnderwaterGrass extends SubBlockGrass {
      *
      */
     @Override
-    public boolean canSpread(World world, int x, int y, int z) {
+    public boolean canSpread(final World world, final int x, final int y, final int z) {
         // if it can live, then it can spread, no extra checks
         return true;
     }

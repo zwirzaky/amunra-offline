@@ -16,7 +16,7 @@ import micdoodle8.mods.galacticraft.core.items.GCItems;
 public class ItemAbstractBatteryUser extends ItemElectricBase {
 
     @Override
-    public float getMaxElectricityStored(ItemStack theItem) {
+    public float getMaxElectricityStored(final ItemStack theItem) {
         if (theItem.getTagCompound() == null) {
             theItem.setTagCompound(new NBTTagCompound());
         }
@@ -24,15 +24,15 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
             return theItem.getTagCompound().getFloat("maxEnergy");
         }
 
-        ItemStack bat = getUsedBattery(theItem, false);
-        float maxEnergy = ((ItemElectricBase) bat.getItem()).getMaxElectricityStored(bat);
+        final ItemStack bat = getUsedBattery(theItem, false);
+        final float maxEnergy = ((ItemElectricBase) bat.getItem()).getMaxElectricityStored(bat);
         theItem.getTagCompound().setFloat("maxEnergy", maxEnergy);
         return maxEnergy;
         // return 15000; // fallback
     }
 
     @Override
-    public void onCreated(ItemStack itemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public void onCreated(final ItemStack itemStack, final World par2World, final EntityPlayer par3EntityPlayer) {
         // important NOT to call the parent for this, because there are crafting recipes
         // which create non-empty rayguns
         // this.setElectricity(itemStack, 0);
@@ -45,12 +45,12 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
      * @param setEnergy if true, the result itemstack will also have the energy of the current battery user
      * @return
      */
-    public ItemStack getUsedBattery(ItemStack theItem, boolean setEnergy) {
+    public ItemStack getUsedBattery(final ItemStack theItem, final boolean setEnergy) {
         if (theItem.getTagCompound() == null) {
             theItem.setTagCompound(new NBTTagCompound());
         }
 
-        NBTTagCompound stackNBT = theItem.getTagCompound().getCompoundTag("batteryStack");
+        final NBTTagCompound stackNBT = theItem.getTagCompound().getCompoundTag("batteryStack");
         ItemStack batteryStack = null;
         if (stackNBT == null) {
             // default?
@@ -76,12 +76,12 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
      * @param theItem
      * @param battery
      */
-    public void setUsedBattery(ItemStack theItem, ItemStack battery) {
+    public void setUsedBattery(final ItemStack theItem, final ItemStack battery) {
         if (theItem.getTagCompound() == null) {
             theItem.setTagCompound(new NBTTagCompound());
         }
 
-        NBTTagCompound batteryStackCompound = new NBTTagCompound();
+        final NBTTagCompound batteryStackCompound = new NBTTagCompound();
         battery.writeToNBT(batteryStackCompound);
 
         theItem.getTagCompound()
@@ -91,10 +91,10 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
         this.setElectricity(theItem, ((ItemElectricBase) battery.getItem()).getElectricityStored(battery));
     }
 
-    public Item getUsedBatteryID(ItemStack theItem) {
+    public Item getUsedBatteryID(final ItemStack theItem) {
         if (theItem.getTagCompound().hasKey("batteryStack")) {
-            NBTTagCompound stackNBT = theItem.getTagCompound().getCompoundTag("batteryStack");
-            ItemStack batteryStack = ItemStack.loadItemStackFromNBT(stackNBT);
+            final NBTTagCompound stackNBT = theItem.getTagCompound().getCompoundTag("batteryStack");
+            final ItemStack batteryStack = ItemStack.loadItemStackFromNBT(stackNBT);
 
             return batteryStack.getItem();
         }
@@ -102,8 +102,8 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int stackNumber, boolean isBeingHeld) {
-        ItemStack battery = this.getUsedBattery(stack, true);
+    public void onUpdate(final ItemStack stack, final World world, final Entity entity, final int stackNumber, final boolean isBeingHeld) {
+        final ItemStack battery = this.getUsedBattery(stack, true);
         battery.getItem().onUpdate(battery, world, entity, stackNumber, isBeingHeld);
         // do I write the battery back in?
         // I'm somewhat afraid regarding the efficiency of this
@@ -114,12 +114,12 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4) {
+    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list, final boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
-        Item batItem = getUsedBatteryID(itemStack);
+        final Item batItem = getUsedBatteryID(itemStack);
         //
-        String s = StatCollector.translateToLocal("item.battery-using-item.powerlevel") + ": "
+        final String s = StatCollector.translateToLocal("item.battery-using-item.powerlevel") + ": "
                 + StatCollector.translateToLocal(batItem.getUnlocalizedName() + ".name");
 
         list.add(s);

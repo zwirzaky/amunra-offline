@@ -24,24 +24,24 @@ public class SubItemToggle extends SubItem {
     @SideOnly(Side.CLIENT)
     protected IIcon inactItemIcon;
 
-    public SubItemToggle(String name, String assetName, String inactiveAssetName) {
+    public SubItemToggle(final String name, final String assetName, final String inactiveAssetName) {
         super(name, assetName);
         this.inactiveAssetName = inactiveAssetName;
     }
 
-    public SubItemToggle(String name, String assetName, String inactiveAssetName, String info) {
+    public SubItemToggle(final String name, final String assetName, final String inactiveAssetName, final String info) {
         super(name, assetName, info);
         this.inactiveAssetName = inactiveAssetName;
     }
 
-    public SubItemToggle(String name, String assetName, String inactiveAssetName, String info, boolean defaultState) {
+    public SubItemToggle(final String name, final String assetName, final String inactiveAssetName, final String info, final boolean defaultState) {
         super(name, assetName, info);
         this.inactiveAssetName = inactiveAssetName;
         this.defaultState = defaultState;
     }
 
-    public boolean getState(ItemStack stack) {
-        NBTTagCompound nbt = stack.getTagCompound();
+    public boolean getState(final ItemStack stack) {
+        final NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null || !nbt.hasKey("toggleState")) {
             return defaultState;
         }
@@ -49,7 +49,7 @@ public class SubItemToggle extends SubItem {
         return nbt.getBoolean("toggleState");
     }
 
-    public void setState(ItemStack stack, boolean state) {
+    public void setState(final ItemStack stack, final boolean state) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null) {
             nbt = new NBTTagCompound();
@@ -59,7 +59,7 @@ public class SubItemToggle extends SubItem {
         nbt.setBoolean("toggleState", state);
     }
 
-    public void toggleState(ItemStack stack) {
+    public void toggleState(final ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null || !nbt.hasKey("toggleState")) {
             nbt = new NBTTagCompound();
@@ -72,7 +72,7 @@ public class SubItemToggle extends SubItem {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister registerer) {
+    public void registerIcons(final IIconRegister registerer) {
         super.registerIcons(registerer);
         inactItemIcon = registerer.registerIcon(AmunRa.TEXTUREPREFIX + inactiveAssetName);
     }
@@ -82,7 +82,7 @@ public class SubItemToggle extends SubItem {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconIndex(ItemStack stack) {
+    public IIcon getIconIndex(final ItemStack stack) {
         if (this.getState(stack)) {
             return this.itemIcon;
         }
@@ -99,7 +99,7 @@ public class SubItemToggle extends SubItem {
      * @return the icon
      */
     @Override
-    public IIcon getIcon(ItemStack stack, int pass) {
+    public IIcon getIcon(final ItemStack stack, final int pass) {
         if (this.getState(stack)) {
             return this.itemIcon;
         }
@@ -110,14 +110,14 @@ public class SubItemToggle extends SubItem {
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+    public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
         this.toggleState(itemStack);
         return itemStack;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4) {
+    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list, final boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
         if (this.getState(itemStack)) {

@@ -11,7 +11,7 @@ public class MothershipFuelRequirements {
         data = new HashMap<MothershipFuelDisplay, Integer>();
     }
 
-    public void add(MothershipFuelDisplay fuel, int amount) {
+    public void add(final MothershipFuelDisplay fuel, final int amount) {
         if (!data.containsKey(fuel)) {
             data.put(fuel, amount);
         } else {
@@ -19,8 +19,8 @@ public class MothershipFuelRequirements {
         }
     }
 
-    public void merge(MothershipFuelRequirements other) {
-        for (MothershipFuelDisplay fuel : other.data.keySet()) {
+    public void merge(final MothershipFuelRequirements other) {
+        for (final MothershipFuelDisplay fuel : other.data.keySet()) {
             add(fuel, other.data.get(fuel));
         }
     }
@@ -33,7 +33,7 @@ public class MothershipFuelRequirements {
         data.clear();
     }
 
-    public int get(MothershipFuelDisplay key) {
+    public int get(final MothershipFuelDisplay key) {
         if (data.containsKey(key)) {
             return data.get(key);
         }

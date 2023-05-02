@@ -29,13 +29,13 @@ public class ConnectionPacketAR {
     public static final byte ID_MOTHERSHIP_LIST = (byte) 150;
     public static final byte ID_CONFIG_OVERRIDE = (byte) 151;
 
-    public void handle(ByteBuf payload, EntityPlayer player) {
-        int packetId = payload.readByte();
+    public void handle(final ByteBuf payload, final EntityPlayer player) {
+        final int packetId = payload.readByte();
         NBTTagCompound nbt;
         // now try this
         try {
             nbt = NetworkUtil.readNBTTagCompound(payload);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             AmunRa.LOGGER.error("Could not read NBT data from payload", e);
             return;
         }
@@ -62,15 +62,15 @@ public class ConnectionPacketAR {
     }
 
     public static FMLProxyPacket createConfigPacket() {
-        ByteBuf payload = Unpooled.buffer();
+        final ByteBuf payload = Unpooled.buffer();
 
         payload.writeByte(ID_CONFIG_OVERRIDE);
 
-        NBTTagCompound nbt = AmunRa.config.getServerOverrideData();
+        final NBTTagCompound nbt = AmunRa.config.getServerOverrideData();
 
         try {
             NetworkUtil.writeNBTTagCompound(nbt, payload);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             AmunRa.LOGGER.error("Could not write NBT data to payload", e);
         }
 
@@ -78,16 +78,16 @@ public class ConnectionPacketAR {
     }
 
     public static FMLProxyPacket createMothershipPacket() {
-        ByteBuf payload = Unpooled.buffer();
+        final ByteBuf payload = Unpooled.buffer();
 
         payload.writeByte(ID_MOTHERSHIP_LIST);
 
-        NBTTagCompound nbt = new NBTTagCompound();
+        final NBTTagCompound nbt = new NBTTagCompound();
         TickHandlerServer.mothershipData.writeToNBT(nbt);
 
         try {
             NetworkUtil.writeNBTTagCompound(nbt, payload);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             AmunRa.LOGGER.error("Could not write NBT data to payload", e);
         }
 
@@ -96,26 +96,26 @@ public class ConnectionPacketAR {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onPacketData(FMLNetworkEvent.ClientCustomPacketEvent event) {
-        FMLProxyPacket pkt = event.packet;
+    public void onPacketData(final FMLNetworkEvent.ClientCustomPacketEvent event) {
+        final FMLProxyPacket pkt = event.packet;
 
         onFMLProxyPacketData(event.manager, pkt, Minecraft.getMinecraft().thePlayer);
     }
 
     @SubscribeEvent
-    public void onPacketData(FMLNetworkEvent.ServerCustomPacketEvent event) {
-        FMLProxyPacket pkt = event.packet;
+    public void onPacketData(final FMLNetworkEvent.ServerCustomPacketEvent event) {
+        final FMLProxyPacket pkt = event.packet;
 
         onFMLProxyPacketData(event.manager, pkt, ((NetHandlerPlayServer) event.handler).playerEntity);
     }
 
-    public void onFMLProxyPacketData(NetworkManager manager, FMLProxyPacket packet, EntityPlayer player) {
+    public void onFMLProxyPacketData(final NetworkManager manager, final FMLProxyPacket packet, final EntityPlayer player) {
         try {
-            if ((packet == null) || (packet.payload() == null))
+            if (packet == null || packet.payload() == null)
                 throw new RuntimeException("Empty packet sent to Amunra channel");
-            ByteBuf data = packet.payload();
+            final ByteBuf data = packet.payload();
             this.handle(data, player);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             AmunRa.LOGGER.error("Amunra login packet handler: Failed to read packet", e);
         }
     }

@@ -43,12 +43,12 @@ public class TickHandlerServer {
     public TickHandlerServer() {}
 
     @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+    public void onServerTick(final TickEvent.ServerTickEvent event) {
+        final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         if (server == null) return;
         if (event.phase == TickEvent.Phase.START) {
             if (TickHandlerServer.dockData == null) {
-                World world = server.worldServerForDimension(0);
+                final World world = server.worldServerForDimension(0);
                 TickHandlerServer.dockData = (ShuttleDockHandler) world.mapStorage
                         .loadData(ShuttleDockHandler.class, ShuttleDockHandler.saveDataID);
                 // why am I doublechecking this?
@@ -58,7 +58,7 @@ public class TickHandlerServer {
                 }
             }
             if (TickHandlerServer.mothershipData == null) {
-                World world = server.worldServerForDimension(0);
+                final World world = server.worldServerForDimension(0);
                 TickHandlerServer.mothershipData = (MothershipWorldData) world.mapStorage
                         .loadData(MothershipWorldData.class, MothershipWorldData.saveDataID);
                 // AmunRa.instance.mothershipRegistry = TickHandlerServer.mothershipData;
@@ -79,7 +79,7 @@ public class TickHandlerServer {
     }
 
     @SubscribeEvent
-    public void onWorldTick(WorldTickEvent event) {
+    public void onWorldTick(final WorldTickEvent event) {
         if (event.phase == Phase.START) {
             final WorldServer world = (WorldServer) event.world;
 
@@ -93,7 +93,7 @@ public class TickHandlerServer {
                         // failsafe?
                         if (e.worldObj.provider instanceof MothershipWorldProvider) {
                             if (e.posY < 0) {
-                                CelestialBody parent = ((MothershipWorldProvider) e.worldObj.provider).getParent();
+                                final CelestialBody parent = ((MothershipWorldProvider) e.worldObj.provider).getParent();
                                 if (parent == null) {
                                     // jumped off mid-transit
                                     if (e instanceof EntityLivingBase) {
@@ -104,7 +104,7 @@ public class TickHandlerServer {
                                 } else {
 
                                     if (!parent.getReachable()
-                                            || (parent.getTierRequirement() > AmunRa.config.mothershipMaxTier)) {
+                                            || parent.getTierRequirement() > AmunRa.config.mothershipMaxTier) {
                                         // crash into
                                         if (e instanceof EntityLivingBase) {
                                             ((EntityLivingBase) e).attackEntityFrom(
@@ -138,22 +138,20 @@ public class TickHandlerServer {
                                                 }
                                     }
                                 }
-                            } else { // if(e.posY < 0) {
-                                if (e instanceof EntityAutoRocket) {
-                                    EntityAutoRocket rocket = (EntityAutoRocket) e;
+                            } else if (e instanceof EntityAutoRocket) {
+                                final EntityAutoRocket rocket = (EntityAutoRocket) e;
 
-                                    MothershipWorldProvider msProvider = (MothershipWorldProvider) e.worldObj.provider;
-                                    if (msProvider.isInTransit()) {
+                                final MothershipWorldProvider msProvider = (MothershipWorldProvider) e.worldObj.provider;
+                                if (msProvider.isInTransit()) {
 
-                                        if (rocket.launchPhase == EnumLaunchPhase.IGNITED.ordinal()) {
-                                            rocket.cancelLaunch();
-                                        } else if (rocket.launchPhase == EnumLaunchPhase.LAUNCHED.ordinal()) {
-                                            if (rocket instanceof EntityShuttle) {
-                                                ((EntityShuttle) rocket).setLanding();
-                                            } else {
-                                                rocket.dropShipAsItem();
-                                                rocket.setDead();
-                                            }
+                                    if (rocket.launchPhase == EnumLaunchPhase.IGNITED.ordinal()) {
+                                        rocket.cancelLaunch();
+                                    } else if (rocket.launchPhase == EnumLaunchPhase.LAUNCHED.ordinal()) {
+                                        if (rocket instanceof EntityShuttle) {
+                                            ((EntityShuttle) rocket).setLanding();
+                                        } else {
+                                            rocket.dropShipAsItem();
+                                            rocket.setDead();
                                         }
                                     }
                                 }
@@ -167,8 +165,8 @@ public class TickHandlerServer {
     }
 
     @SubscribeEvent
-    public void onPlayerLogin(PlayerLoggedInEvent event) {
-        WorldProvider provider = event.player.getEntityWorld().provider;
+    public void onPlayerLogin(final PlayerLoggedInEvent event) {
+        final WorldProvider provider = event.player.getEntityWorld().provider;
 
         if (provider instanceof MothershipWorldProvider) {
             ((MothershipWorldProvider) provider).sendPacketsToClient((EntityPlayerMP) event.player);
@@ -177,17 +175,17 @@ public class TickHandlerServer {
     }
 
     @SubscribeEvent
-    public void onPlayerChangedDimension(PlayerChangedDimensionEvent event) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        WorldServer world = server.worldServerForDimension(event.toDim);
+    public void onPlayerChangedDimension(final PlayerChangedDimensionEvent event) {
+        final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        final WorldServer world = server.worldServerForDimension(event.toDim);
         if (world.provider instanceof MothershipWorldProvider) {
             ((MothershipWorldProvider) world.provider).sendPacketsToClient((EntityPlayerMP) event.player);
         }
         // event.
     }
 
-    protected void sendPlayerInShuttleToPlanet(EntityPlayerMP player, EntityShuttle shuttle, World world,
-            int dimensionID) {
+    protected void sendPlayerInShuttleToPlanet(final EntityPlayerMP player, final EntityShuttle shuttle, final World world,
+            final int dimensionID) {
         if (world.isRemote) {
             return;
         }

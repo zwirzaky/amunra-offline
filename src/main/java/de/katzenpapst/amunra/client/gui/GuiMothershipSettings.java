@@ -33,11 +33,11 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
             "textures/gui/ms_settings.png");
 
     private final TileEntityMothershipSettings tile;
-    private Mothership ship;
+    private final Mothership ship;
 
     protected List<ResourceLocation> mothershipTextures;
 
-    public GuiMothershipSettings(InventoryPlayer par1InventoryPlayer, TileEntityMothershipSettings tile) {
+    public GuiMothershipSettings(final InventoryPlayer par1InventoryPlayer, final TileEntityMothershipSettings tile) {
         super(new ContainerMothershipSettings(par1InventoryPlayer, tile));
         this.ySize = 201;
         this.xSize = 176;
@@ -48,7 +48,7 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float ticksProbably, int somethingX, int somethingY) {
+    protected void drawGuiContainerBackgroundLayer(final float ticksProbably, final int somethingX, final int somethingY) {
         GL11.glPushMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(guiTexture);
@@ -59,22 +59,22 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
         GL11.glPopMatrix();
     }
 
-    public void mothershipOperationFailed(String message) {
-        AbstractTab curTab = this.getActiveTab();
+    public void mothershipOperationFailed(final String message) {
+        final AbstractTab curTab = this.getActiveTab();
         if (curTab instanceof IMothershipSettingsTab) {
             ((IMothershipSettingsTab) curTab).mothershipOperationFailed(message);
         }
     }
 
     public void mothershipResponsePacketRecieved() {
-        AbstractTab curTab = this.getActiveTab();
+        final AbstractTab curTab = this.getActiveTab();
         if (curTab instanceof IMothershipSettingsTab) {
             ((IMothershipSettingsTab) curTab).mothershipResponsePacketRecieved();
         }
     }
 
     public void sendMothershipSettingsPacket() {
-        NBTTagCompound nbt = new NBTTagCompound();
+        final NBTTagCompound nbt = new NBTTagCompound();
         ship.writeSettingsToNBT(nbt);
         AmunRa.packetPipeline
                 .sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, ship.getID(), nbt));

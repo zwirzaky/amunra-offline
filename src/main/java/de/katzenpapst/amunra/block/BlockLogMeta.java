@@ -14,12 +14,12 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockLogMeta extends BlockBasicMeta {
 
-    public BlockLogMeta(String name, Material mat) {
+    public BlockLogMeta(final String name, final Material mat) {
         super(name, mat, 4); // only 4 subblocks of wood are possible
     }
 
     @Override
-    public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
+    public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
         if (!(sb instanceof SubBlockWood)) {
             throw new IllegalArgumentException("BlockWoodMulti can only accept SubBlockWood");
         }
@@ -27,27 +27,27 @@ public class BlockLogMeta extends BlockBasicMeta {
     }
 
     @Override
-    public SubBlock getSubBlock(int meta) {
-        return subBlocksArray[(meta & 3)]; // use only the first 2 bits, the rest is rotation
+    public SubBlock getSubBlock(final int meta) {
+        return subBlocksArray[meta & 3]; // use only the first 2 bits, the rest is rotation
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         // /*Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
         // Face 5 (Eastern Face)*/
-        int rotationMeta = (meta & 12) >> 2;
+        final int rotationMeta = (meta & 12) >> 2;
 
         return getSubBlock(meta).getIcon(side, rotationMeta);
     }
 
     @Override
-    public int damageDropped(int meta) {
+    public int damageDropped(final int meta) {
         return super.damageDropped(meta & 3);
     }
 
     @Override
-    public boolean isWood(IBlockAccess world, int x, int y, int z) {
+    public boolean isWood(final IBlockAccess world, final int x, final int y, final int z) {
         return true;
     }
 
@@ -60,8 +60,8 @@ public class BlockLogMeta extends BlockBasicMeta {
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+        final int meta = world.getBlockMetadata(x, y, z);
         if (getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
         }
@@ -73,9 +73,9 @@ public class BlockLogMeta extends BlockBasicMeta {
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
     @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ,
-            int metadata) {
-        int actualMeta = metadata & 3;
+    public int onBlockPlaced(final World world, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ,
+            final int metadata) {
+        final int actualMeta = metadata & 3;
         byte rotationalMeta = 0;
 
         switch (side) {
@@ -96,7 +96,7 @@ public class BlockLogMeta extends BlockBasicMeta {
     }
 
     @Override
-    public boolean canSustainLeaves(IBlockAccess world, int x, int y, int z) {
+    public boolean canSustainLeaves(final IBlockAccess world, final int x, final int y, final int z) {
         return true;
     }
 

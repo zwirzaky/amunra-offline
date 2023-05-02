@@ -13,15 +13,15 @@ abstract public class ContainerWithPlayerInventory extends Container {
 
     protected IInventory tileEntity;
 
-    public ContainerWithPlayerInventory(IInventory tile) {
+    public ContainerWithPlayerInventory(final IInventory tile) {
         tileEntity = tile;
     }
 
-    protected void initPlayerInventorySlots(InventoryPlayer player) {
+    protected void initPlayerInventorySlots(final InventoryPlayer player) {
         initPlayerInventorySlots(player, 0);
     }
 
-    protected void initPlayerInventorySlots(InventoryPlayer player, int yOffset) {
+    protected void initPlayerInventorySlots(final InventoryPlayer player, final int yOffset) {
         int y;
         int x;
 
@@ -40,13 +40,13 @@ abstract public class ContainerWithPlayerInventory extends Container {
 
     // let's try to fix shiftclicking
     @Override
-    protected Slot addSlotToContainer(Slot slot) {
+    protected Slot addSlotToContainer(final Slot slot) {
         return super.addSlotToContainer(slot);
     }
 
-    protected boolean mergeSingleSlot(ItemStack mergeFrom, Slot slotToMergeTo) {
+    protected boolean mergeSingleSlot(final ItemStack mergeFrom, final Slot slotToMergeTo) {
 
-        ItemStack targetStack = slotToMergeTo.getStack();
+        final ItemStack targetStack = slotToMergeTo.getStack();
 
         if (targetStack == null) {
             // I think this means I can just put it in
@@ -60,7 +60,7 @@ abstract public class ContainerWithPlayerInventory extends Container {
                 && (!mergeFrom.getHasSubtypes() || mergeFrom.getItemDamage() == targetStack.getItemDamage())
                 && ItemStack.areItemStackTagsEqual(mergeFrom, targetStack)) {
 
-            int newMax = targetStack.stackSize + mergeFrom.stackSize;
+            final int newMax = targetStack.stackSize + mergeFrom.stackSize;
 
             if (newMax <= mergeFrom.getMaxStackSize()) {
                 // everything fits into targetStack
@@ -82,7 +82,7 @@ abstract public class ContainerWithPlayerInventory extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slotNr) {
+    public ItemStack transferStackInSlot(final EntityPlayer player, final int slotNr) {
         ItemStack resultStack = null;
 
         final Slot slot = (Slot) this.inventorySlots.get(slotNr);
@@ -106,7 +106,7 @@ abstract public class ContainerWithPlayerInventory extends Container {
                 // check if this works for any of my slots
                 boolean found = false;
                 for (int i = 0; i < numSlotsAdded; i++) {
-                    Slot curSlot = (Slot) this.inventorySlots.get(i);
+                    final Slot curSlot = (Slot) this.inventorySlots.get(i);
                     if (curSlot instanceof SlotSpecific) {
                         if (((SlotSpecific) curSlot).isItemValid(stack)) {
                             // attempt merge

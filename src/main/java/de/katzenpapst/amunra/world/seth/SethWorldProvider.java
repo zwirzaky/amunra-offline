@@ -57,7 +57,7 @@ public class SethWorldProvider extends AmunraWorldProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean doesXZShowFog(int p_76568_1_, int p_76568_2_) {
+    public boolean doesXZShowFog(final int p_76568_1_, final int p_76568_2_) {
         return false;
     }
 

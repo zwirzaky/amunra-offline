@@ -23,7 +23,7 @@ public class SubBlockOreMultidrop extends SubBlockOre {
         // the probability to be evaluated at all. fortune will be multiplied onto this
         public float probability = 1;
 
-        public DroppedItem(Item item, int meta, int minDrop, int maxDrop, float probability) {
+        public DroppedItem(final Item item, final int meta, final int minDrop, final int maxDrop, final float probability) {
             this.item = item;
             this.metadata = meta;
             this.minDrop = minDrop;
@@ -34,44 +34,44 @@ public class SubBlockOreMultidrop extends SubBlockOre {
 
     protected ArrayList<DroppedItem> dropList = new ArrayList<DroppedItem>();
 
-    public SubBlockOreMultidrop(String name, String texture) {
+    public SubBlockOreMultidrop(final String name, final String texture) {
         super(name, texture);
     }
 
-    public SubBlockOreMultidrop addDroppedItem(Item item, int metadata, int minDrop, int maxDrop, float probability) {
+    public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop, final int maxDrop, final float probability) {
         dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, probability));
         return this;
     }
 
-    public SubBlockOreMultidrop addDroppedItem(Item item, int metadata, int minDrop, int maxDrop) {
+    public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop, final int maxDrop) {
         dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, 1));
         return this;
     }
 
-    public SubBlockOreMultidrop addDroppedItem(ItemDamagePair idp, int minDrop, int maxDrop) {
+    public SubBlockOreMultidrop addDroppedItem(final ItemDamagePair idp, final int minDrop, final int maxDrop) {
         addDroppedItem(idp.getItem(), idp.getDamage(), minDrop, maxDrop);
         return this;
     }
 
-    public SubBlockOreMultidrop addDroppedItem(ItemDamagePair idp, int minDrop, int maxDrop, float probability) {
+    public SubBlockOreMultidrop addDroppedItem(final ItemDamagePair idp, final int minDrop, final int maxDrop, final float probability) {
         addDroppedItem(idp.getItem(), idp.getDamage(), minDrop, maxDrop, probability);
         return this;
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-        for (DroppedItem di : dropList) {
+    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata, final int fortune) {
+        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        for (final DroppedItem di : dropList) {
             if (di.probability < 1) {
-                float effectiveProb = di.probability * fortune;
+                final float effectiveProb = di.probability * fortune;
                 if (effectiveProb < 1) {
                     if (this.rand.nextFloat() >= effectiveProb) {
                         continue; // skip this
                     }
                 }
             }
-            float bonusDrop = Math.round(fortune * this.rand.nextInt(di.maxDrop - di.minDrop + 1) / 3.0F);
-            int numDrops = (int) (bonusDrop + di.minDrop);
+            final float bonusDrop = Math.round(fortune * this.rand.nextInt(di.maxDrop - di.minDrop + 1) / 3.0F);
+            final int numDrops = (int) (bonusDrop + di.minDrop);
             if (numDrops > 0) {
                 ret.add(new ItemStack(di.item, numDrops, di.metadata));
             }

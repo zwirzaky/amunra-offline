@@ -36,25 +36,25 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public ItemStack getStackInSlot(int slotIn) {
+    public ItemStack getStackInSlot(final int slotIn) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ItemStack decrStackSize(int index, int count) {
+    public ItemStack decrStackSize(final int index, final int count) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int index) {
+    public ItemStack getStackInSlotOnClosing(final int index) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setInventorySlotContents(final int index, final ItemStack stack) {
         // TODO Auto-generated method stub
 
     }
@@ -76,7 +76,7 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
         // hm, test
         if (!isOnMothership()) {
             return false;
@@ -95,12 +95,12 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
+    public boolean isItemValidForSlot(final int index, final ItemStack stack) {
         return false;
     }
 
     public boolean isOnMothership() {
-        return (this.worldObj.provider instanceof MothershipWorldProvider);
+        return this.worldObj.provider instanceof MothershipWorldProvider;
     }
 
     public Mothership getMothership() {

@@ -43,7 +43,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     }
 
     public List<Class<? extends EntityLiving>> getDisabledCreatures() {
-        List<Class<? extends EntityLiving>> list = new ArrayList<Class<? extends EntityLiving>>();
+        final List<Class<? extends EntityLiving>> list = new ArrayList<Class<? extends EntityLiving>>();
         list.add(EntityEvolvedSkeleton.class);
         list.add(EntityEvolvedZombie.class);
         list.add(EntityEvolvedSpider.class);
@@ -65,22 +65,20 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                 this.spawned = false;
             }
 
-            List<EntityLivingBase> entitiesInRoom = this.worldObj
+            final List<EntityLivingBase> entitiesInRoom = this.worldObj
                     .getEntitiesWithinAABB(EntityLivingBase.class, this.roomArea);
             int numPlayers = 0;
             boolean isBossInRoom = false;
-            for (Entity ent : entitiesInRoom) {
+            for (final Entity ent : entitiesInRoom) {
                 if (ent instanceof EntityPlayer) {
                     numPlayers++;
                 } else if (bossClass.isInstance(ent)) {
-                    IAmunRaBoss curBoss = (IAmunRaBoss) ent;
+                    final IAmunRaBoss curBoss = (IAmunRaBoss) ent;
                     if (this.boss == null && curBoss.getSpawner() == this) {
                         this.boss = curBoss;
                         isBossInRoom = true;
-                    } else {
-                        if (boss != null && boss.equals(curBoss)) {
-                            isBossInRoom = true;
-                        }
+                    } else if (boss != null && boss.equals(curBoss)) {
+                        isBossInRoom = true;
                     }
                 } else if (this.getDisabledCreatures().contains(ent.getClass())) {
                     ent.setDead();
@@ -92,7 +90,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                 if (this.boss == null && !this.isBossDefeated && !this.spawned) {
                     // try spawning the boss
                     try {
-                        Constructor<?> c = this.bossClass.getConstructor(new Class[] { World.class });
+                        final Constructor<?> c = this.bossClass.getConstructor(new Class[] { World.class });
                         this.boss = (IAmunRaBoss) c.newInstance(new Object[] { this.worldObj });
                         ((Entity) this.boss).setPosition(this.xCoord + 0.5, this.yCoord + 1.0, this.zCoord + 0.5);
                         this.boss.setRoomArea(roomArea);
@@ -100,19 +98,17 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                         this.spawned = true;
                         isBossInRoom = true;
                         this.worldObj.spawnEntityInWorld((Entity) this.boss);
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         AmunRa.LOGGER.warn("Failed to spawn boss", e);
                     }
                 }
-            } else {
-                // check if we have a boss and the player walked out
-                if (this.boss != null && !this.isBossDefeated && this.spawned) {
-                    // despawn boss
+            } else // check if we have a boss and the player walked out
+            if (this.boss != null && !this.isBossDefeated && this.spawned) {
+                // despawn boss
 
-                    this.boss.despawnBoss();
-                    this.boss = null;
-                    this.spawned = false;
-                }
+                this.boss.despawnBoss();
+                this.boss = null;
+                this.spawned = false;
             }
 
             if (!isBossInRoom && this.spawned && this.boss != null) {
@@ -124,13 +120,13 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         }
     }
 
-    public void playSpawnSound(Entity entity) {
+    public void playSpawnSound(final Entity entity) {
         this.worldObj.playSoundAtEntity(entity, GalacticraftCore.TEXTURE_PREFIX + "ambience.scaryscape", 9.0F, 1.4F);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
         this.spawned = nbt.getBoolean("spawned");
@@ -139,7 +135,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
 
         try {
             this.bossClass = (Class<? extends IAmunRaBoss>) Class.forName(nbt.getString("bossClass"));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             AmunRa.LOGGER.warn("Failed to parse bossClass from NBT data", e);
         }
 
@@ -154,7 +150,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
         nbt.setBoolean("spawned", spawned);
@@ -170,7 +166,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     }
 
     @Override
-    public void setSpawnedBoss(IAmunRaBoss boss) {
+    public void setSpawnedBoss(final IAmunRaBoss boss) {
         this.boss = boss;
     }
 
@@ -205,7 +201,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     }
 
     @Override
-    public void setRoomArea(AxisAlignedBB aabb) {
+    public void setRoomArea(final AxisAlignedBB aabb) {
         roomArea = aabb.copy();
     }
 
@@ -219,7 +215,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     }
 
     @Override
-    public void setBossClass(Class<? extends IAmunRaBoss> theClass) {
+    public void setBossClass(final Class<? extends IAmunRaBoss> theClass) {
         bossClass = theClass;
     }
 

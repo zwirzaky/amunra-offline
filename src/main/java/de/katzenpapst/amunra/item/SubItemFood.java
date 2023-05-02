@@ -27,20 +27,20 @@ public class SubItemFood extends SubItem {
     // itemRegistry.addObject(367, "rotten_flesh", (new ItemFood(4, 0.1F, true)).setPotionEffect(Potion.hunger.id, 30,
     // 0, 0.8F).setUnlocalizedName("rottenFlesh").setTextureName("rotten_flesh"));
 
-    public SubItemFood(String name, String assetName, int healAmount, float saturationModifier) {
+    public SubItemFood(final String name, final String assetName, final int healAmount, final float saturationModifier) {
         super(name, assetName);
         this.healAmount = healAmount;
         this.saturationModifier = saturationModifier;
     }
 
-    public SubItemFood(String name, String assetName, String info, int healAmount, float saturationModifier) {
+    public SubItemFood(final String name, final String assetName, final String info, final int healAmount, final float saturationModifier) {
         super(name, assetName, info);
         this.healAmount = healAmount;
         this.saturationModifier = saturationModifier;
     }
 
     @Override
-    public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
+    public ItemStack onEaten(final ItemStack itemStack, final World world, final EntityPlayer player) {
         --itemStack.stackSize;
 
         player.getFoodStats().addStats(this.getHealAmount(itemStack), this.getSaturationModifier(itemStack));
@@ -49,7 +49,7 @@ public class SubItemFood extends SubItem {
         return itemStack;
     }
 
-    protected void onFoodEaten(ItemStack itemStack, World world, EntityPlayer player) {
+    protected void onFoodEaten(final ItemStack itemStack, final World world, final EntityPlayer player) {
         if (!world.isRemote && this.potionId > 0 && world.rand.nextFloat() < this.potionEffectProbability) {
             player.addPotionEffect(new PotionEffect(this.potionId, this.potionDuration * 20, this.potionAmplifier));
         }
@@ -59,7 +59,7 @@ public class SubItemFood extends SubItem {
      * How long it takes to use or consume an item
      */
     @Override
-    public int getMaxItemUseDuration(ItemStack itemStack) {
+    public int getMaxItemUseDuration(final ItemStack itemStack) {
         return 32;
     }
 
@@ -67,7 +67,7 @@ public class SubItemFood extends SubItem {
      * returns the action that specifies what animation to play when the items is being used
      */
     @Override
-    public EnumAction getItemUseAction(ItemStack itemStack) {
+    public EnumAction getItemUseAction(final ItemStack itemStack) {
         return EnumAction.eat;
     }
 
@@ -75,7 +75,7 @@ public class SubItemFood extends SubItem {
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+    public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
         if (entityPlayer.canEat(this.alwaysEdible)) {
             entityPlayer.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
         }
@@ -83,11 +83,11 @@ public class SubItemFood extends SubItem {
         return itemStack;
     }
 
-    public int getHealAmount(ItemStack itemStack) {
+    public int getHealAmount(final ItemStack itemStack) {
         return this.healAmount;
     }
 
-    public float getSaturationModifier(ItemStack itemStack) {
+    public float getSaturationModifier(final ItemStack itemStack) {
         return this.saturationModifier;
     }
 
@@ -95,7 +95,7 @@ public class SubItemFood extends SubItem {
      * sets a potion effect on the item. Args: int potionId, int duration (will be multiplied by 20), int amplifier,
      * float probability of effect happening
      */
-    public SubItemFood setPotionEffect(int potionId, int duration, int amplifier, float probability) {
+    public SubItemFood setPotionEffect(final int potionId, final int duration, final int amplifier, final float probability) {
         this.potionId = potionId;
         this.potionDuration = duration;
         this.potionAmplifier = amplifier;

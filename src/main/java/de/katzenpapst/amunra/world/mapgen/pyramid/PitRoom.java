@@ -10,13 +10,13 @@ public class PitRoom extends PyramidRoom {
     protected int pitSize = 7;
 
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
-        int size = (pitSize - 1) / 2;
+        final int size = (pitSize - 1) / 2;
 
-        BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
+        final BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
 
         for (int x = -size; x <= size; x++) {
             for (int z = -size; z <= size; z++) {

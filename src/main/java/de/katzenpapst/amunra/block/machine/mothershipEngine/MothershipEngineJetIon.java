@@ -21,13 +21,13 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
 
     protected ItemDamagePair item = null;
 
-    public MothershipEngineJetIon(String name, String texture, String iconTexture) {
+    public MothershipEngineJetIon(final String name, final String texture, final String iconTexture) {
         super(name, texture, iconTexture);
     }
 
     @Override
-    protected TileEntityMothershipEngineIon getMyTileEntity(World world, int x, int y, int z) {
-        TileEntity t = world.getTileEntity(x, y, z);
+    protected TileEntityMothershipEngineIon getMyTileEntity(final World world, final int x, final int y, final int z) {
+        final TileEntity t = world.getTileEntity(x, y, z);
         if (t == null || !(t instanceof TileEntityMothershipEngineIon)) {
             return null;
         }
@@ -35,8 +35,8 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     }
 
     @Override
-    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
+            final float hitY, final float hitZ) {
         // do the isRemote thing here, too?
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_ION_ENGINE, world, x, y, z);
         return true;
@@ -44,12 +44,12 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityMothershipEngineIon();
     }
 
@@ -68,12 +68,12 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     }
 
     @Override
-    public Item getItem(World worldIn, int x, int y, int z) {
+    public Item getItem(final World worldIn, final int x, final int y, final int z) {
         return item.getItem();
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune) {
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
         /**
          * Returns whether or not this bed block is the head of the bed.
          */
@@ -81,13 +81,13 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     }
 
     @Override
-    public int damageDropped(int meta) {
+    public int damageDropped(final int meta) {
         return item.getDamage();
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-        TileEntity leTile = world.getTileEntity(x, y, z);
+    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
+        final TileEntity leTile = world.getTileEntity(x, y, z);
         if (leTile instanceof TileEntityMothershipEngineAbstract) {
             ((TileEntityMothershipEngineAbstract) leTile).scheduleUpdate();
             // world.markBlockForUpdate(x, y, z);
@@ -99,13 +99,13 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
      *
      */
     @Override
-    public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
+    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ, final int meta) {
         return meta;
     }
 
     @Override
-    public boolean onUseWrench(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onUseWrench(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
+            final float hitY, final float hitZ) {
         // TODO rotate the tile entity
         return false;
     }

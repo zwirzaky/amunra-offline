@@ -11,11 +11,11 @@ public class BoxInt2D {
         this(0, 0, 0, 0);
     }
 
-    public BoxInt2D(int minX, int minY, int maxX, int maxY) {
+    public BoxInt2D(final int minX, final int minY, final int maxX, final int maxY) {
         setValues(minX, minY, maxX, maxY);
     }
 
-    public void setPositionSize(int x, int y, int width, int height) {
+    public void setPositionSize(final int x, final int y, final int width, final int height) {
         this.minX = x;
         this.minY = y;
 
@@ -23,7 +23,7 @@ public class BoxInt2D {
         this.maxY = y + height;
     }
 
-    public void setValues(int minX, int minY, int maxX, int maxY) {
+    public void setValues(final int minX, final int minY, final int maxX, final int maxY) {
         if (minX <= maxX) {
             this.minX = minX;
             this.maxX = maxX;
@@ -49,17 +49,17 @@ public class BoxInt2D {
         return this.maxY - this.minY;
     }
 
-    public boolean isWithin(int x, int y) {
+    public boolean isWithin(final int x, final int y) {
         return x >= minX && x <= maxX && y >= minY && y <= maxY;
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof BoxInt2D)) {
             return false;
         }
 
-        BoxInt2D realOther = (BoxInt2D) other;
+        final BoxInt2D realOther = (BoxInt2D) other;
 
         return this.minX == realOther.minX && this.minY == realOther.minY
                 && this.maxX == realOther.maxX

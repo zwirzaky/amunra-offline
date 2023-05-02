@@ -10,18 +10,18 @@ public class PlayerID {
     protected UUID userUUID;
     protected String userName;
 
-    public PlayerID(UUID userUUID, String userName) {
+    public PlayerID(final UUID userUUID, final String userName) {
         this.userUUID = userUUID;
         this.userName = userName;
     }
 
-    public PlayerID(EntityPlayer player) {
+    public PlayerID(final EntityPlayer player) {
         this.userUUID = player.getUniqueID();
         this.userName = player.getDisplayName();
     }
 
-    public PlayerID(NBTTagCompound nbt) {
-        String uuid = nbt.getString("uuid");
+    public PlayerID(final NBTTagCompound nbt) {
+        final String uuid = nbt.getString("uuid");
         this.userUUID = UUID.fromString(uuid);
         this.userName = nbt.getString("name");
     }
@@ -35,7 +35,7 @@ public class PlayerID {
     }
 
     public NBTTagCompound getNbt() {
-        NBTTagCompound nbt = new NBTTagCompound();
+        final NBTTagCompound nbt = new NBTTagCompound();
 
         nbt.setString("uuid", userUUID.toString());
         nbt.setString("name", userName);
@@ -44,7 +44,7 @@ public class PlayerID {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof PlayerID)) {
             return false;
         }
@@ -56,7 +56,7 @@ public class PlayerID {
         return userUUID.hashCode();
     }
 
-    public boolean isSameUser(EntityPlayer player) {
+    public boolean isSameUser(final EntityPlayer player) {
         return player == null ? false : this.userUUID.equals(player.getUniqueID());
     }
 

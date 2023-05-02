@@ -62,18 +62,18 @@ public class NEIAmunRaConfig implements IConfigureNEI {
     }
 
     private void initShuttleRecipes() {
-        Vector<INasaWorkbenchRecipe> data = RecipeHelper.getAllRecipesFor(ARItems.shuttleItem);
-        int[][] slotData = ContainerSchematicShuttle.slotCoordinateMapping;
+        final Vector<INasaWorkbenchRecipe> data = RecipeHelper.getAllRecipesFor(ARItems.shuttleItem);
+        final int[][] slotData = ContainerSchematicShuttle.slotCoordinateMapping;
         // let's see if I can convert it
-        int offsetX = -4;
-        int offsetY = 0;
+        final int offsetX = -4;
+        final int offsetY = 0;
 
-        for (INasaWorkbenchRecipe recipe : data) {
-            ArrayList<PositionedStack> input1 = new ArrayList<PositionedStack>();
+        for (final INasaWorkbenchRecipe recipe : data) {
+            final ArrayList<PositionedStack> input1 = new ArrayList<PositionedStack>();
 
             for (int i = 0; i < recipe.getRecipeSize(); i++) {
-                int[] coords = slotData[i];
-                ItemStack curStack = recipe.getRecipeInput().get(i + 1);
+                final int[] coords = slotData[i];
+                final ItemStack curStack = recipe.getRecipeInput().get(i + 1);
                 if (curStack == null) {
                     continue;
                 }
@@ -90,10 +90,10 @@ public class NEIAmunRaConfig implements IConfigureNEI {
     }
 
     private void initCircuitFabricatorRecipes() {
-        ArrayList<CircuitFabricatorRecipe> recipes = RecipeHelper.getCircuitFabricatorRecipes();
-        for (CircuitFabricatorRecipe recipe : recipes) {
+        final ArrayList<CircuitFabricatorRecipe> recipes = RecipeHelper.getCircuitFabricatorRecipes();
+        for (final CircuitFabricatorRecipe recipe : recipes) {
             // add it
-            HashMap<Integer, PositionedStack> input1 = new HashMap<Integer, PositionedStack>();
+            final HashMap<Integer, PositionedStack> input1 = new HashMap<Integer, PositionedStack>();
             // slot 0 = gem
             input1.put(0, new PositionedStack(recipe.getCrystal(), 10, 22));
 
@@ -103,7 +103,7 @@ public class NEIAmunRaConfig implements IConfigureNEI {
             // redstone
             input1.put(3, new PositionedStack(recipe.getRedstone(), 117, 51));
             // optional
-            Object optional = recipe.getOptional();
+            final Object optional = recipe.getOptional();
             if (optional != null) {
                 input1.put(4, new PositionedStack(optional, 140, 25));
             }
@@ -130,7 +130,7 @@ public class NEIAmunRaConfig implements IConfigureNEI {
      *                 PositionedStack(output, 147, 91)); }
      */
 
-    public void registerCircuitFabricatorRecipe(HashMap<Integer, PositionedStack> input, PositionedStack output) {
+    public void registerCircuitFabricatorRecipe(final HashMap<Integer, PositionedStack> input, final PositionedStack output) {
         circuitFabricatorRecipes.put(input, output);
     }
 

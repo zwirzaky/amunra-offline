@@ -16,7 +16,7 @@ public class VacuumGrass extends SubBlockGrass {
     @SideOnly(Side.CLIENT)
     protected IIcon blockIconBottom;
 
-    public VacuumGrass(String name, String textureTop, String textureSide, String textureBottom) {
+    public VacuumGrass(final String name, final String textureTop, final String textureSide, final String textureBottom) {
         super(name, textureTop, textureSide, textureBottom);
     }
 
@@ -42,12 +42,12 @@ public class VacuumGrass extends SubBlockGrass {
      * @return
      */
     @Override
-    public boolean canLiveHere(World world, int x, int y, int z) {
+    public boolean canLiveHere(final World world, final int x, final int y, final int z) {
 
-        return ((world.provider instanceof WorldProviderSpace)
-                && (((WorldProviderSpace) world.provider).getCelestialBody() != null)
-                && (((WorldProviderSpace) world.provider).getCelestialBody().atmosphere.isEmpty())
-                && super.canLiveHere(world, x, y, z));
+        return world.provider instanceof WorldProviderSpace
+                && ((WorldProviderSpace) world.provider).getCelestialBody() != null
+                && ((WorldProviderSpace) world.provider).getCelestialBody().atmosphere.isEmpty()
+                && super.canLiveHere(world, x, y, z);
 
     }
 }

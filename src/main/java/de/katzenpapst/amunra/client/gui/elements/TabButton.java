@@ -28,7 +28,7 @@ public class TabButton extends GuiButton {
 
     protected String extraInfo = null;
 
-    public TabButton(int id, int xPos, int yPos, String displayString, ResourceLocation texture) {
+    public TabButton(final int id, final int xPos, final int yPos, final String displayString, final ResourceLocation texture) {
         super(id, xPos, yPos, displayString);
 
         this.width = 30;
@@ -36,7 +36,7 @@ public class TabButton extends GuiButton {
         this.texture = texture;
     }
 
-    public TabButton(int id, int xPos, int yPos, String displayString, String infoString, ResourceLocation texture) {
+    public TabButton(final int id, final int xPos, final int yPos, final String displayString, final String infoString, final ResourceLocation texture) {
         this(id, xPos, yPos, displayString, texture);
 
         extraInfo = infoString;
@@ -46,7 +46,7 @@ public class TabButton extends GuiButton {
      * Draws this button to the screen.
      */
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(final Minecraft mc, final int mouseX, final int mouseY) {
         if (this.visible) {
             RenderHelper.disableStandardItemLighting();
 
@@ -54,7 +54,7 @@ public class TabButton extends GuiButton {
                     && mouseX < this.xPosition + this.width
                     && mouseY < this.yPosition + this.height;
 
-            int k = this.getHoverState(this.field_146123_n);
+            final int k = this.getHoverState(this.field_146123_n);
 
             mc.getTextureManager().bindTexture(textures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -78,9 +78,9 @@ public class TabButton extends GuiButton {
         }
     }
 
-    protected void drawFullSizedTexturedRect(int x, int y, int width, int height) {
+    protected void drawFullSizedTexturedRect(final int x, final int y, final int width, final int height) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(x, y + height, this.zLevel, 0, 1);
         tessellator.addVertexWithUV(x + width, y + height, this.zLevel, 1, 1);
@@ -94,7 +94,7 @@ public class TabButton extends GuiButton {
      * this button.
      */
     @Override
-    public int getHoverState(boolean isMouseOver) {
+    public int getHoverState(final boolean isMouseOver) {
         if (isActive) {
             return 0;
         }
@@ -104,7 +104,7 @@ public class TabButton extends GuiButton {
         return 1;
     }
 
-    public void drawTooltip(int mouseX, int mouseY) {
+    public void drawTooltip(final int mouseX, final int mouseY) {
         if (!this.visible || !this.field_146123_n) {
             return;
         }
@@ -114,17 +114,17 @@ public class TabButton extends GuiButton {
          */
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-        boolean withinRegion = mouseX >= this.xPosition && mouseY >= this.yPosition
+        final boolean withinRegion = mouseX >= this.xPosition && mouseY >= this.yPosition
                 && mouseX < this.xPosition + this.width
                 && mouseY < this.yPosition + this.height;
         List<String> extraStrings = null;
 
         if (this.displayString != null && !this.displayString.isEmpty() && withinRegion) {
-            FontRenderer fontRenderer = FMLClientHandler.instance().getClient().fontRenderer;
+            final FontRenderer fontRenderer = FMLClientHandler.instance().getClient().fontRenderer;
             int stringWidth = FMLClientHandler.instance().getClient().fontRenderer.getStringWidth(displayString);
 
-            int tooltipX = mouseX + 12;
-            int tooltipY = mouseY - 12;
+            final int tooltipX = mouseX + 12;
+            final int tooltipY = mouseY - 12;
             int stringHeight = 8;
 
             if (this.extraInfo != null) {
@@ -135,7 +135,7 @@ public class TabButton extends GuiButton {
 
             this.zLevel = 300.0F;
             // GuiElementInfoRegion.itemRenderer.zLevel = 300.0F;
-            int colorSomething = -267386864;
+            final int colorSomething = -267386864;
             this.drawGradientRect(
                     tooltipX - 3,
                     tooltipY - 4,
@@ -171,8 +171,8 @@ public class TabButton extends GuiButton {
                     tooltipY + stringHeight + 3,
                     colorSomething,
                     colorSomething);
-            int otherColorSomething = 1347420415;
-            int j2 = (otherColorSomething & 16711422) >> 1 | otherColorSomething & -16777216;
+            final int otherColorSomething = 1347420415;
+            final int j2 = (otherColorSomething & 16711422) >> 1 | otherColorSomething & -16777216;
             this.drawGradientRect(
                     tooltipX - 3,
                     tooltipY - 3 + 1,

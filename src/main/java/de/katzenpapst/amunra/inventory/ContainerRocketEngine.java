@@ -10,7 +10,7 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerRocketEngine extends ContainerWithPlayerInventory {
 
-    public ContainerRocketEngine(InventoryPlayer par1InventoryPlayer, TileEntityMothershipEngineAbstract tile) {
+    public ContainerRocketEngine(final InventoryPlayer par1InventoryPlayer, final TileEntityMothershipEngineAbstract tile) {
 
         super(tile);
 
@@ -24,12 +24,12 @@ public class ContainerRocketEngine extends ContainerWithPlayerInventory {
         initPlayerInventorySlots(par1InventoryPlayer);
     }
 
-    protected void initSlots(TileEntityMothershipEngineAbstract tile) {
+    protected void initSlots(final TileEntityMothershipEngineAbstract tile) {
         this.addSlotToContainer(new SlotSpecific(tile, 0, 8, 7, ItemFluidContainer.class, ItemBucket.class));
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer var1) {
+    public boolean canInteractWith(final EntityPlayer var1) {
         return ((TileEntityMothershipEngineAbstract) this.tileEntity).isUseableByPlayer(var1);
     }
 

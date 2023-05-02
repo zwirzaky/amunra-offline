@@ -14,19 +14,19 @@ public class SubBlockRock extends SubBlock {
 
     BlockMetaPair blockToDrop = null;
 
-    public SubBlockRock(String name, String texture) {
+    public SubBlockRock(final String name, final String texture) {
         super(name, texture);
     }
 
-    public SubBlockRock(String name, String texture, String tool, int harvestLevel) {
+    public SubBlockRock(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
     }
 
-    public SubBlockRock(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
+    public SubBlockRock(final String name, final String texture, final String tool, final int harvestLevel, final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
-    public SubBlockRock setBlockToDrop(BlockMetaPair block) {
+    public SubBlockRock setBlockToDrop(final BlockMetaPair block) {
         blockToDrop = block;
         return this;
     }
@@ -37,12 +37,12 @@ public class SubBlockRock extends SubBlock {
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune) {
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
         return Item.getItemFromBlock(blockToDrop.getBlock());
     }
 
     @Override
-    public int damageDropped(int meta) {
+    public int damageDropped(final int meta) {
         return blockToDrop.getMetadata();
     }
 

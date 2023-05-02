@@ -22,8 +22,8 @@ public class TileEntityBlockScale extends TileEntity {
     }
 
     public int getRotationMeta() {
-        Block b = worldObj.getBlock(xCoord, yCoord, zCoord);
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        final Block b = worldObj.getBlock(xCoord, yCoord, zCoord);
+        final int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         if (b instanceof IMetaBlock) {
             return ((IMetaBlock) b).getRotationMeta(meta);
         }
@@ -32,24 +32,24 @@ public class TileEntityBlockScale extends TileEntity {
 
     @Override
     public Packet getDescriptionPacket() {
-        NBTTagCompound data = new NBTTagCompound();
+        final NBTTagCompound data = new NBTTagCompound();
         this.writeToNBT(data);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, data);
     }
 
     @Override
-    public void onDataPacket(NetworkManager netManager, S35PacketUpdateTileEntity packet) {
+    public void onDataPacket(final NetworkManager netManager, final S35PacketUpdateTileEntity packet) {
         readFromNBT(packet.func_148857_g());
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setFloat("mass", this.massToDisplay);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.massToDisplay = nbt.getFloat("mass");
     }
@@ -67,8 +67,8 @@ public class TileEntityBlockScale extends TileEntity {
     }
 
     public void doUpdate() {
-        Block b = this.worldObj.getBlock(xCoord, yCoord + 1, zCoord);
-        int meta = this.worldObj.getBlockMetadata(xCoord, yCoord + 1, zCoord);
+        final Block b = this.worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+        final int meta = this.worldObj.getBlockMetadata(xCoord, yCoord + 1, zCoord);
 
         if (lastFoundBlock != null && lastFoundBlock.getBlock() == b && lastFoundBlock.getMetadata() == meta) {
             // nothing changed

@@ -17,12 +17,12 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
 
     private ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png");
 
-    public RenderMothershipBooster(ResourceLocation texture) {
+    public RenderMothershipBooster(final ResourceLocation texture) {
         this.texture = texture;
     }
 
-    protected void renderMSBooster(TileEntityMothershipEngineBooster entity, double x, double y, double z,
-            float partialTickTime) {
+    protected void renderMSBooster(final TileEntityMothershipEngineBooster entity, final double x, final double y, final double z,
+            final float partialTickTime) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
 
@@ -48,7 +48,7 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
         Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 
         //
-        TileEntityMothershipEngineAbstract masterTile = entity.getMasterTile();
+        final TileEntityMothershipEngineAbstract masterTile = entity.getMasterTile();
         if (masterTile == null) {
             BlockRenderHelper.renderFaceYNeg(tess, 0, 0.5, 0.25, 0.75, false);
             BlockRenderHelper.renderFaceYPos(tess, 0, 0.5, 0.25, 0.75, false);
@@ -61,7 +61,7 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
             int nrInMultiblock = 0;
             boolean isFirst = false;
             boolean isLast = false;
-            boolean doRotate = entity.getMasterZ() == entity.zCoord;
+            final boolean doRotate = entity.getMasterZ() == entity.zCoord;
 
             if (entity.getMasterX() == entity.xCoord) {
                 // we are on the same x
@@ -103,56 +103,54 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
                     BlockRenderHelper.renderFaceXPos(tess, 0, 0 + usageOffset, 0.25, 0.25 + usageOffset);
                 }
 
-            } else {
-                if (isFirst) {
-                    BlockRenderHelper.renderFaceYNeg(tess, 0.25, 0.5, 0.5, 0.75, doRotate);
-                    BlockRenderHelper.renderFaceYPos(tess, 0.25, 0.5, 0.5, 0.75, doRotate);
+            } else if (isFirst) {
+                BlockRenderHelper.renderFaceYNeg(tess, 0.25, 0.5, 0.5, 0.75, doRotate);
+                BlockRenderHelper.renderFaceYPos(tess, 0.25, 0.5, 0.5, 0.75, doRotate);
 
-                    if (doRotate) {
-                        BlockRenderHelper.renderFaceZNeg(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
-                        BlockRenderHelper.renderFaceZPos(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
+                if (doRotate) {
+                    BlockRenderHelper.renderFaceZNeg(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
+                    BlockRenderHelper.renderFaceZPos(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
 
-                        BlockRenderHelper.renderFaceXNeg(tess, 0, 0.75, 0.25, 1);
-                        BlockRenderHelper.renderFaceXPos(tess, 0, 0.75, 0.25, 1);
-                    } else {
-                        BlockRenderHelper.renderFaceXNeg(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
-                        BlockRenderHelper.renderFaceXPos(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
-
-                        BlockRenderHelper.renderFaceZNeg(tess, 0, 0.75, 0.25, 1);
-                        BlockRenderHelper.renderFaceZPos(tess, 0, 0.75, 0.25, 1);
-                    }
-
-                } else if (isLast) {
-                    BlockRenderHelper.renderFaceYNeg(tess, 0.75, 0.5, 1.0, 0.75, doRotate);
-                    BlockRenderHelper.renderFaceYPos(tess, 0.75, 0.5, 1.0, 0.75, doRotate);
-
-                    if (doRotate) {
-                        BlockRenderHelper.renderFaceZNeg(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
-                        BlockRenderHelper.renderFaceZPos(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
-
-                        BlockRenderHelper.renderFaceXNeg(tess, 0, 0.75, 0.25, 1);
-                        BlockRenderHelper.renderFaceXPos(tess, 0, 0.75, 0.25, 1);
-                    } else {
-                        BlockRenderHelper.renderFaceXNeg(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
-                        BlockRenderHelper.renderFaceXPos(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
-
-                        BlockRenderHelper.renderFaceZNeg(tess, 0, 0.75, 0.25, 1);
-                        BlockRenderHelper.renderFaceZPos(tess, 0, 0.75, 0.25, 1);
-                    }
-
+                    BlockRenderHelper.renderFaceXNeg(tess, 0, 0.75, 0.25, 1);
+                    BlockRenderHelper.renderFaceXPos(tess, 0, 0.75, 0.25, 1);
                 } else {
-                    BlockRenderHelper.renderFaceYNeg(tess, 0.5, 0.5, 0.75, 0.75, doRotate);
-                    BlockRenderHelper.renderFaceYPos(tess, 0.5, 0.5, 0.75, 0.75, doRotate);
+                    BlockRenderHelper.renderFaceXNeg(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
+                    BlockRenderHelper.renderFaceXPos(tess, 0.25, 0 + usageOffset, 0.5, 0.25 + usageOffset);
 
-                    if (doRotate) {
-                        BlockRenderHelper.renderFaceZNeg(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
-                        BlockRenderHelper.renderFaceZPos(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
-                    } else {
-                        BlockRenderHelper.renderFaceXNeg(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
-                        BlockRenderHelper.renderFaceXPos(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
-                    }
-
+                    BlockRenderHelper.renderFaceZNeg(tess, 0, 0.75, 0.25, 1);
+                    BlockRenderHelper.renderFaceZPos(tess, 0, 0.75, 0.25, 1);
                 }
+
+            } else if (isLast) {
+                BlockRenderHelper.renderFaceYNeg(tess, 0.75, 0.5, 1.0, 0.75, doRotate);
+                BlockRenderHelper.renderFaceYPos(tess, 0.75, 0.5, 1.0, 0.75, doRotate);
+
+                if (doRotate) {
+                    BlockRenderHelper.renderFaceZNeg(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
+                    BlockRenderHelper.renderFaceZPos(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
+
+                    BlockRenderHelper.renderFaceXNeg(tess, 0, 0.75, 0.25, 1);
+                    BlockRenderHelper.renderFaceXPos(tess, 0, 0.75, 0.25, 1);
+                } else {
+                    BlockRenderHelper.renderFaceXNeg(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
+                    BlockRenderHelper.renderFaceXPos(tess, 0.75, 0 + usageOffset, 1.0, 0.25 + usageOffset);
+
+                    BlockRenderHelper.renderFaceZNeg(tess, 0, 0.75, 0.25, 1);
+                    BlockRenderHelper.renderFaceZPos(tess, 0, 0.75, 0.25, 1);
+                }
+
+            } else {
+                BlockRenderHelper.renderFaceYNeg(tess, 0.5, 0.5, 0.75, 0.75, doRotate);
+                BlockRenderHelper.renderFaceYPos(tess, 0.5, 0.5, 0.75, 0.75, doRotate);
+
+                if (doRotate) {
+                    BlockRenderHelper.renderFaceZNeg(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
+                    BlockRenderHelper.renderFaceZPos(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
+                } else {
+                    BlockRenderHelper.renderFaceXNeg(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
+                    BlockRenderHelper.renderFaceXPos(tess, 0.5, 0 + usageOffset, 0.75, 0.25 + usageOffset);
+                }
+
             }
         }
 
@@ -160,7 +158,7 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float partialTickTime) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTickTime) {
         renderMSBooster((TileEntityMothershipEngineBooster) entity, x, y, z, partialTickTime);
     }
 

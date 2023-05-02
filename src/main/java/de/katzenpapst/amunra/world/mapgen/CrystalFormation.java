@@ -25,27 +25,27 @@ public class CrystalFormation extends WorldGenerator {
      * @param allowUpward   If true, crystals can grow upwards from the floor
      * @param allowDownward If true, crystals can grow downwards from the ceiling
      */
-    public CrystalFormation(BlockMetaPair material, BlockMetaPair airBlock, boolean allowUpward,
-            boolean allowDownward) {
+    public CrystalFormation(final BlockMetaPair material, final BlockMetaPair airBlock, final boolean allowUpward,
+            final boolean allowDownward) {
         this.material = material;
         this.airBlock = airBlock;
         this.allowDownward = allowDownward;
         this.allowUpward = allowUpward;
     }
 
-    public CrystalFormation(BlockMetaPair material) {
+    public CrystalFormation(final BlockMetaPair material) {
         this(material, null, true, true);
     }
 
-    public CrystalFormation(BlockMetaPair material, BlockMetaPair airBlock) {
+    public CrystalFormation(final BlockMetaPair material, final BlockMetaPair airBlock) {
         this(material, airBlock, true, true);
     }
 
-    public CrystalFormation(BlockMetaPair material, boolean allowUpward, boolean allowDownward) {
+    public CrystalFormation(final BlockMetaPair material, final boolean allowUpward, final boolean allowDownward) {
         this(material, null, allowUpward, allowDownward);
     }
 
-    protected boolean canPlaceHere(World world, int x, int y, int z) {
+    protected boolean canPlaceHere(final World world, final int x, final int y, final int z) {
         if (y < 0 || y > 255) {
             return false;
         }
@@ -56,14 +56,14 @@ public class CrystalFormation extends WorldGenerator {
         return WorldHelper.isBlockMetaPair(world, x, y, z, airBlock);
     }
 
-    protected boolean isSolidBlock(World world, int x, int y, int z, boolean down) {
-        ForgeDirection dir = down ? ForgeDirection.DOWN : ForgeDirection.UP;
+    protected boolean isSolidBlock(final World world, final int x, final int y, final int z, final boolean down) {
+        final ForgeDirection dir = down ? ForgeDirection.DOWN : ForgeDirection.UP;
         return world.isSideSolid(x, y, z, dir);
         // world.getBlock(x, y, z).isOpaqueCube();
         // return !world.isAirBlock(x, y, z);
     }
 
-    protected int getLowestBlock(World world, int x, int y, int z) {
+    protected int getLowestBlock(final World world, final int x, final int y, final int z) {
         for (int curY = y; curY >= 0; curY--) {
             if (!canPlaceHere(world, x, curY, z)) {
                 return curY;
@@ -72,7 +72,7 @@ public class CrystalFormation extends WorldGenerator {
         return -1;
     }
 
-    protected int getHighestBlock(World world, int x, int y, int z) {
+    protected int getHighestBlock(final World world, final int x, final int y, final int z) {
         for (int curY = y; curY <= 255; curY++) {
             if (!canPlaceHere(world, x, curY, z)) {
                 return curY;
@@ -82,106 +82,105 @@ public class CrystalFormation extends WorldGenerator {
     }
 
     @Override
-    public boolean generate(World world, Random rand, int x, int y, int z) {
+    public boolean generate(final World world, final Random rand, final int x, final int y, final int z) {
         boolean downwards = true;
 
         if (!this.canPlaceHere(world, x, y, z)) {
             return false;
-        } else {
-            // find lowest and highest block from here
-            int lowestY = getLowestBlock(world, x, y, z);
-            int highestY = getHighestBlock(world, x, y, z);
-            int actualY = 0;
+        }
+        // find lowest and highest block from here
+        final int lowestY = getLowestBlock(world, x, y, z);
+        final int highestY = getHighestBlock(world, x, y, z);
+        int actualY = 0;
 
-            if (lowestY < 0 && highestY >= 0 && allowDownward) {
+        if (lowestY < 0 && highestY >= 0 && allowDownward) {
+            downwards = true;
+        } else if (lowestY >= 0 && highestY < 0 && allowUpward) {
+            downwards = false;
+        } else if (lowestY >= 0 && highestY >= 0) {
+            // both seem to be set
+            if (allowDownward && allowUpward) {
+                downwards = rand.nextBoolean();
+            } else if (allowDownward) {
                 downwards = true;
-            } else if (lowestY >= 0 && highestY < 0 && allowUpward) {
+            } else if (allowUpward) {
                 downwards = false;
-            } else if (lowestY >= 0 && highestY >= 0) {
-                // both seem to be set
-                if (allowDownward && allowUpward) {
-                    downwards = rand.nextBoolean();
-                } else if (allowDownward) {
-                    downwards = true;
-                } else if (allowUpward) {
-                    downwards = false;
-                } else {
-                    return false;
-                }
             } else {
                 return false;
             }
+        } else {
+            return false;
+        }
+
+        if (downwards) {
+            actualY = highestY - 1; // start one below the highest
+        } else {
+            actualY = lowestY + 1; // start one above the highest
+        }
+
+        if (!canPlaceHere(world, x, actualY, z)) {
+            return false;
+        }
+
+        world.setBlock(x, actualY, z, material.getBlock(), material.getMetadata(), 2);
+
+        for (int l = 0; l < 1500; ++l) {
+            final int curX = x + rand.nextInt(8) - rand.nextInt(8);
+            int curY = actualY; // - rand.nextInt(12);
+            final int curZ = z + rand.nextInt(8) - rand.nextInt(8);
 
             if (downwards) {
-                actualY = highestY - 1; // start one below the highest
+                curY -= rand.nextInt(12);
             } else {
-                actualY = lowestY + 1; // start one above the highest
+                curY += rand.nextInt(12);
             }
 
-            if (!canPlaceHere(world, x, actualY, z)) {
-                return false;
-            }
+            if (this.canPlaceHere(world, curX, curY, curZ)) {
+                int num = 0;
 
-            world.setBlock(x, actualY, z, material.getBlock(), material.getMetadata(), 2);
+                for (int neighbour = 0; neighbour < 6; ++neighbour) {
+                    Block block = null;
+                    int meta = 0;
 
-            for (int l = 0; l < 1500; ++l) {
-                int curX = x + rand.nextInt(8) - rand.nextInt(8);
-                int curY = actualY; // - rand.nextInt(12);
-                int curZ = z + rand.nextInt(8) - rand.nextInt(8);
-
-                if (downwards) {
-                    curY -= rand.nextInt(12);
-                } else {
-                    curY += rand.nextInt(12);
-                }
-
-                if (this.canPlaceHere(world, curX, curY, curZ)) {
-                    int num = 0;
-
-                    for (int neighbour = 0; neighbour < 6; ++neighbour) {
-                        Block block = null;
-                        int meta = 0;
-
-                        switch (neighbour) {
-                            case 0:
-                                block = world.getBlock(curX - 1, curY, curZ);
-                                meta = world.getBlockMetadata(curX - 1, curY, curZ);
-                                break;
-                            case 1:
-                                block = world.getBlock(curX + 1, curY, curZ);
-                                meta = world.getBlockMetadata(curX + 1, curY, curZ);
-                                break;
-                            case 2:
-                                block = world.getBlock(curX, curY - 1, curZ);
-                                meta = world.getBlockMetadata(curX, curY - 1, curZ);
-                                break;
-                            case 3:
-                                block = world.getBlock(curX, curY + 1, curZ);
-                                meta = world.getBlockMetadata(curX, curY + 1, curZ);
-                                break;
-                            case 4:
-                                block = world.getBlock(curX, curY, curZ - 1);
-                                meta = world.getBlockMetadata(curX, curY, curZ - 1);
-                                break;
-                            case 5:
-                                block = world.getBlock(curX, curY, curZ + 1);
-                                meta = world.getBlockMetadata(curX, curY, curZ + 1);
-                                break;
-                        }
-
-                        if (block == this.material.getBlock() && meta == this.material.getMetadata()) {
-                            ++num;
-                        }
+                    switch (neighbour) {
+                        case 0:
+                            block = world.getBlock(curX - 1, curY, curZ);
+                            meta = world.getBlockMetadata(curX - 1, curY, curZ);
+                            break;
+                        case 1:
+                            block = world.getBlock(curX + 1, curY, curZ);
+                            meta = world.getBlockMetadata(curX + 1, curY, curZ);
+                            break;
+                        case 2:
+                            block = world.getBlock(curX, curY - 1, curZ);
+                            meta = world.getBlockMetadata(curX, curY - 1, curZ);
+                            break;
+                        case 3:
+                            block = world.getBlock(curX, curY + 1, curZ);
+                            meta = world.getBlockMetadata(curX, curY + 1, curZ);
+                            break;
+                        case 4:
+                            block = world.getBlock(curX, curY, curZ - 1);
+                            meta = world.getBlockMetadata(curX, curY, curZ - 1);
+                            break;
+                        case 5:
+                            block = world.getBlock(curX, curY, curZ + 1);
+                            meta = world.getBlockMetadata(curX, curY, curZ + 1);
+                            break;
                     }
 
-                    if (num == 1) {
-                        world.setBlock(curX, curY, curZ, this.material.getBlock(), this.material.getMetadata(), 2);
+                    if (block == this.material.getBlock() && meta == this.material.getMetadata()) {
+                        ++num;
                     }
                 }
-            }
 
-            return true;
+                if (num == 1) {
+                    world.setBlock(curX, curY, curZ, this.material.getBlock(), this.material.getMetadata(), 2);
+                }
+            }
         }
+
+        return true;
     }
 
 }

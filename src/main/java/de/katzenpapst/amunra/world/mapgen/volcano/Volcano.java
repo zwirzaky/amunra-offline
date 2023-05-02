@@ -37,15 +37,15 @@ public class Volcano extends BaseStructureStart {
         return hasMagmaChamber;
     }
 
-    public void setHasMagmaChamber(boolean hasMagmaChamber) {
+    public void setHasMagmaChamber(final boolean hasMagmaChamber) {
         this.hasMagmaChamber = hasMagmaChamber;
     }
 
-    public Volcano(World world, int chunkX, int chunkZ, Random rand) {
+    public Volcano(final World world, final int chunkX, final int chunkZ, final Random rand) {
         super(world, chunkX, chunkZ, rand);
-        int startX = CoordHelper.chunkToMinBlock(chunkX) + MathHelper.getRandomIntegerInRange(rand, 0, 15);
-        int startZ = CoordHelper.chunkToMinBlock(chunkZ) + MathHelper.getRandomIntegerInRange(rand, 0, 15);
-        StructureBoundingBox bb = new StructureBoundingBox(
+        final int startX = CoordHelper.chunkToMinBlock(chunkX) + MathHelper.getRandomIntegerInRange(rand, 0, 15);
+        final int startZ = CoordHelper.chunkToMinBlock(chunkZ) + MathHelper.getRandomIntegerInRange(rand, 0, 15);
+        final StructureBoundingBox bb = new StructureBoundingBox(
                 startX - radius,
                 startZ - radius,
                 startX + radius,
@@ -66,23 +66,23 @@ public class Volcano extends BaseStructureStart {
 
     }
 
-    protected double getHeightFromDistance(double distance) {
-        return maxHeight * ((this.radius - distance) / ((double) this.radius));
+    protected double getHeightFromDistance(final double distance) {
+        return maxHeight * ((this.radius - distance) / (double) this.radius);
     }
 
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] blocks, byte[] metas) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] blocks, final byte[] metas) {
         super.generateChunk(chunkX, chunkZ, blocks, metas);
 
         // test first
-        StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);
-        StructureBoundingBox myBB = this.getStructureBoundingBox();
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);
+        final StructureBoundingBox myBB = this.getStructureBoundingBox();
 
         if (!chunkBB.intersectsWith(myBB)) {
             return false;
         }
 
-        int fallbackGround = this.getWorldGroundLevel();
+        final int fallbackGround = this.getWorldGroundLevel();
         if (groundLevel == -1) {
             groundLevel = getAverageGroundLevel(blocks, metas, getStructureBoundingBox(), chunkBB, fallbackGround);
             if (groundLevel == -1) {
@@ -90,15 +90,15 @@ public class Volcano extends BaseStructureStart {
             }
         }
 
-        int xCenter = myBB.getCenterX();
-        int zCenter = myBB.getCenterZ();
+        final int xCenter = myBB.getCenterX();
+        final int zCenter = myBB.getCenterZ();
 
-        double sqRadius = Math.pow(this.radius, 2);
+        final double sqRadius = Math.pow(this.radius, 2);
 
         // int maxVolcanoHeight = (maxHeight+groundLevel);
 
         // after this radius, falloff will be used
-        int faloffRadius = radius - falloffWidth;
+        final int faloffRadius = radius - falloffWidth;
 
         // TODO: make all height variables absolute, then try to figure out
         // why the fuck it explodes with noise
@@ -120,16 +120,16 @@ public class Volcano extends BaseStructureStart {
                     lowestBlock = maxDepth;
                 }
 
-                int xRel = x - xCenter;
-                int zRel = z - zCenter;
+                final int xRel = x - xCenter;
+                final int zRel = z - zCenter;
 
-                int sqDistance = xRel * xRel + zRel * zRel;
+                final int sqDistance = xRel * xRel + zRel * zRel;
 
-                double heightAtCalderaBorder = getHeightFromDistance(calderaRadius) + groundLevel;
-                double fluidHeight = getHeightFromDistance(shaftRadius) + groundLevel;
+                final double heightAtCalderaBorder = getHeightFromDistance(calderaRadius) + groundLevel;
+                final double fluidHeight = getHeightFromDistance(shaftRadius) + groundLevel;
 
                 if (sqDistance <= sqRadius) {
-                    double distance = Math.sqrt(sqDistance);
+                    final double distance = Math.sqrt(sqDistance);
 
                     int height;
                     if (distance <= this.shaftRadius) {
@@ -141,8 +141,8 @@ public class Volcano extends BaseStructureStart {
 
                         if (distance > faloffRadius && lowestBlock < height && groundLevel > lowestBlock) {
                             // somewhat of a falloff at the edges
-                            double faloffFactor = (distance - faloffRadius) / ((double) this.falloffWidth);
-                            height = (int) (this.lerp(height, lowestBlock, faloffFactor));
+                            final double faloffFactor = (distance - faloffRadius) / (double) this.falloffWidth;
+                            height = (int) this.lerp(height, lowestBlock, faloffFactor);
 
                         }
 
@@ -196,9 +196,9 @@ public class Volcano extends BaseStructureStart {
                 if (hasMagmaChamber) {
                     // ellipsoid: x²/a² + y²/b² + z²/c² = 1
                     for (int y = 0; y < this.magmaChamberHeight; y++) {
-                        if ((xRel * xRel / magmaChamberWidth * magmaChamberWidth
+                        if (xRel * xRel / magmaChamberWidth * magmaChamberWidth
                                 + y * y / magmaChamberHeight * magmaChamberHeight
-                                + zRel * zRel / magmaChamberWidth * magmaChamberWidth) <= 1
+                                + zRel * zRel / magmaChamberWidth * magmaChamberWidth <= 1
 
                         ) {
                             placeBlockAbs(blocks, metas, x, y + maxDepth, z, chunkX, chunkZ, fluid);
@@ -218,7 +218,7 @@ public class Volcano extends BaseStructureStart {
         return fluid;
     }
 
-    public void setFluid(BlockMetaPair fluid) {
+    public void setFluid(final BlockMetaPair fluid) {
         this.fluid = fluid;
     }
 
@@ -226,7 +226,7 @@ public class Volcano extends BaseStructureStart {
         return mountainMaterial;
     }
 
-    public void setMountainMaterial(BlockMetaPair mountainMaterial) {
+    public void setMountainMaterial(final BlockMetaPair mountainMaterial) {
         this.mountainMaterial = mountainMaterial;
     }
 
@@ -234,7 +234,7 @@ public class Volcano extends BaseStructureStart {
         return shaftMaterial;
     }
 
-    public void setShaftMaterial(BlockMetaPair shaftMaterial) {
+    public void setShaftMaterial(final BlockMetaPair shaftMaterial) {
         this.shaftMaterial = shaftMaterial;
     }
 
@@ -242,7 +242,7 @@ public class Volcano extends BaseStructureStart {
         return maxDepth;
     }
 
-    public void setMaxDepth(int maxDepth) {
+    public void setMaxDepth(final int maxDepth) {
         this.maxDepth = maxDepth;
     }
 
@@ -250,7 +250,7 @@ public class Volcano extends BaseStructureStart {
         return radius;
     }
 
-    public void setRadius(int radius) {
+    public void setRadius(final int radius) {
         this.radius = radius;
     }
 

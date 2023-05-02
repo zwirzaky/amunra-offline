@@ -8,11 +8,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMetaNonOpaqueInternal extends BlockBasicMeta {
 
-    public BlockMetaNonOpaqueInternal(String name, Material mat, int numSubBlocks) {
+    public BlockMetaNonOpaqueInternal(final String name, final Material mat, final int numSubBlocks) {
         super(name, mat, numSubBlocks);
     }
 
-    public BlockMetaNonOpaqueInternal(String name, Material mat) {
+    public BlockMetaNonOpaqueInternal(final String name, final Material mat) {
         super(name, mat);
     }
 

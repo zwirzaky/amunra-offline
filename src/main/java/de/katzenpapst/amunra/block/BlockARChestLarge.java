@@ -15,15 +15,15 @@ public class BlockARChestLarge extends BlockARChest {
      * bigChestTexture, fallbackTexture); }
      */
 
-    public BlockARChestLarge(Material material, String blockName, ResourceLocation smallChestTexture,
-            String fallbackTexture) {
+    public BlockARChestLarge(final Material material, final String blockName, final ResourceLocation smallChestTexture,
+            final String fallbackTexture) {
         super(material, blockName, smallChestTexture, fallbackTexture);
 
         this.canDoublechest = false;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(final World world, final int meta) {
         return new TileEntityARChestLarge();
     }
 

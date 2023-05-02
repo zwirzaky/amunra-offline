@@ -28,7 +28,7 @@ public class ItemJet extends ItemBlockMulti {
 
     protected IIcon[] icons;
 
-    public ItemJet(BlockMachineMeta blockMothershipEngineRocket, String assetName) {
+    public ItemJet(final BlockMachineMeta blockMothershipEngineRocket, final String assetName) {
         super(blockMothershipEngineRocket);
         // blockMeta = blockMothershipEngineRocket.getMetadata();
         this.setMaxDamage(0);
@@ -48,18 +48,18 @@ public class ItemJet extends ItemBlockMulti {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(ItemStack par1ItemStack) {
+    public EnumRarity getRarity(final ItemStack par1ItemStack) {
         // colors the name
         return ClientProxyCore.galacticraftItem;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister reg) {
-        int length = ((BlockMachineMeta) field_150939_a).getNumPossibleSubBlocks();
+    public void registerIcons(final IIconRegister reg) {
+        final int length = ((BlockMachineMeta) field_150939_a).getNumPossibleSubBlocks();
         icons = new IIcon[length];
         for (int i = 0; i < length; i++) {
-            MothershipEngineJetBase sb = (MothershipEngineJetBase) ((BlockMachineMeta) field_150939_a).getSubBlock(i);
+            final MothershipEngineJetBase sb = (MothershipEngineJetBase) ((BlockMachineMeta) field_150939_a).getSubBlock(i);
             if (sb != null) {
                 icons[i] = reg.registerIcon(sb.getItemIconName());
             }
@@ -83,13 +83,13 @@ public class ItemJet extends ItemBlockMulti {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int dmg) {
+    public IIcon getIconFromDamage(final int dmg) {
         return icons[dmg];
         // return ((BlockMachineMeta)field_150939_a).getSubBlock(dmg).getIcon(1, 0);
     }
 
     @Override
-    public int getMetadata(int damage) {
+    public int getMetadata(final int damage) {
         return damage;
     }
 
@@ -101,8 +101,8 @@ public class ItemJet extends ItemBlockMulti {
      * @param side   The side the player (or machine) right-clicked on.
      */
     @Override
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
-            float hitX, float hitY, float hitZ, int metadata) {
+    public boolean placeBlockAt(final ItemStack stack, final EntityPlayer player, final World world, final int x, final int y, final int z, final int side,
+            final float hitX, final float hitY, final float hitZ, int metadata) {
 
         /**
          * 0 -> +Y 1 -> -Y 2 -> -Z 3 -> +Z 4 -> -X 5 -> +X
@@ -152,8 +152,8 @@ public class ItemJet extends ItemBlockMulti {
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List info,
-            boolean advanced) {
+    public void addInformation(final ItemStack stack, final EntityPlayer player, @SuppressWarnings("rawtypes") final List info,
+            final boolean advanced) {
         if (this.field_150939_a instanceof IBlockShiftDesc
                 && ((IBlockShiftDesc) this.field_150939_a).showDescription(stack.getItemDamage())) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {

@@ -63,15 +63,15 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         containingItems = new ItemStack[1]; // one item
     }
 
-    protected void dropItemsAtExit(List<ItemStack> cargo) {
-        Vector3 pos = this.getExitPosition();
+    protected void dropItemsAtExit(final List<ItemStack> cargo) {
+        final Vector3 pos = this.getExitPosition();
         for (final ItemStack item : cargo) {
-            EntityItem itemEntity = new EntityItem(this.worldObj, pos.x, pos.y, pos.z, item);
+            final EntityItem itemEntity = new EntityItem(this.worldObj, pos.x, pos.y, pos.z, item);
             this.worldObj.spawnEntityInWorld(itemEntity);
         }
     }
 
-    public void performDockOperation(int op, EntityPlayerMP player) {
+    public void performDockOperation(final int op, final EntityPlayerMP player) {
         if (op >= DockOperation.values().length) {
             return;
         }
@@ -84,7 +84,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
      * @param op
      * @param player
      */
-    public void performDockOperation(DockOperation op, EntityPlayerMP player) {
+    public void performDockOperation(final DockOperation op, final EntityPlayerMP player) {
         if (actionCooldown > 0) {
             return;
         }
@@ -104,8 +104,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                 if (this.isObstructed()) {
                     return;
                 }
-                shuttleItem = ((ItemShuttle) stack.getItem());
-                Vector3 pos = this.getShuttlePosition();
+                shuttleItem = (ItemShuttle) stack.getItem();
+                final Vector3 pos = this.getShuttlePosition();
                 shuttleEntity = shuttleItem.spawnRocketEntity(stack, worldObj, pos.x, pos.y, pos.z);
                 // shuttleEntity.setPad(this);
                 this.dockEntity(shuttleEntity);
@@ -124,11 +124,11 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                 if (stack != null) {
                     return;
                 }
-                shuttleEntity = ((EntityShuttle) dockedEntity);
+                shuttleEntity = (EntityShuttle) dockedEntity;
                 // if(shuttleEntity.addCargo(stack, doAdd))
                 stack = shuttleEntity.getItemRepresentation();
 
-                List<ItemStack> cargo = shuttleEntity.getCargoContents();
+                final List<ItemStack> cargo = shuttleEntity.getCargoContents();
                 dropItemsAtExit(cargo);
 
                 this.setInventorySlotContents(0, stack);
@@ -141,7 +141,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                 if (this.dockedEntity == null) {
                     return;
                 }
-                shuttleEntity = ((EntityShuttle) dockedEntity);
+                shuttleEntity = (EntityShuttle) dockedEntity;
                 if (shuttleEntity.riddenByEntity != null) {
                     return;
                 }
@@ -158,16 +158,16 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
-    public void performDockOperationClient(DockOperation op) {
-        int opInt = op.ordinal();
+    public void performDockOperationClient(final DockOperation op) {
+        final int opInt = op.ordinal();
 
-        Object[] payload = new Object[] { this.xCoord, this.yCoord, this.zCoord, opInt };
+        final Object[] payload = new Object[] { this.xCoord, this.yCoord, this.zCoord, opInt };
         AmunRa.packetPipeline
                 .sendToServer(new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.S_DOCK_OPERATION, payload));
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.containingItems = this.readStandardItemsFromNBT(nbt);
         hasShuttleDocked = nbt.getBoolean("hasShuttle");
@@ -175,17 +175,17 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         this.writeStandardItemsToNBT(nbt);
         nbt.setBoolean("hasShuttle", hasShuttleDocked);
         nbt.setInteger("actionCooldown", actionCooldown);
     }
 
-    public ItemStack[] readStandardItemsFromNBT(NBTTagCompound nbt) {
+    public ItemStack[] readStandardItemsFromNBT(final NBTTagCompound nbt) {
         final NBTTagList itemTag = nbt.getTagList("Items", 10);
-        int length = containingItems.length;
-        ItemStack[] result = new ItemStack[length];
+        final int length = containingItems.length;
+        final ItemStack[] result = new ItemStack[length];
 
         for (int i = 0; i < itemTag.tagCount(); ++i) {
             final NBTTagCompound stackNbt = itemTag.getCompoundTagAt(i);
@@ -202,9 +202,9 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         return this.hasShuttleDocked;
     }
 
-    public void writeStandardItemsToNBT(NBTTagCompound nbt) {
+    public void writeStandardItemsToNBT(final NBTTagCompound nbt) {
         final NBTTagList list = new NBTTagList();
-        int length = containingItems.length;
+        final int length = containingItems.length;
 
         for (int i = 0; i < length; ++i) {
             if (containingItems[i] != null) {
@@ -220,7 +220,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
     @Override
     public Packet getDescriptionPacket() {
-        NBTTagCompound nbt = new NBTTagCompound();
+        final NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);
 
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
@@ -228,7 +228,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
+    public void onDataPacket(final NetworkManager net, final S35PacketUpdateTileEntity packet) {
         readFromNBT(packet.func_148857_g());
     }
 
@@ -275,14 +275,14 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     protected void repositionEntity() {
-        Vector3 pos = getShuttlePosition();
+        final Vector3 pos = getShuttlePosition();
 
         ((Entity) this.dockedEntity).setPosition(pos.x, pos.y, pos.z);
     }
 
     protected void dockNearbyShuttle() {
         // this is an awful hack...
-        Vector3 expectedPosition = this.getShuttlePosition();
+        final Vector3 expectedPosition = this.getShuttlePosition();
         final List<?> list = this.worldObj.getEntitiesWithinAABB(
                 EntityShuttle.class,
                 AxisAlignedBB.getBoundingBox(
@@ -329,22 +329,19 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
             }
             if (this.dockedEntity != null) {
 
-                EntityShuttle shuttle = ((EntityShuttle) this.dockedEntity);
+                final EntityShuttle shuttle = (EntityShuttle) this.dockedEntity;
                 // before we do anything else
                 if (shuttle.isDead) {
                     this.dockedEntity = null;
+                } else if (shuttle.launchPhase == EnumLaunchPhase.LAUNCHED.ordinal()) {
+                    // undock
+                    shuttle.setPad(null);
+                    this.dockedEntity = null;
+                    updateAvailabilityInWorldData();
                 } else {
-
-                    if (shuttle.launchPhase == EnumLaunchPhase.LAUNCHED.ordinal()) {
-                        // undock
-                        shuttle.setPad(null);
-                        this.dockedEntity = null;
-                        updateAvailabilityInWorldData();
-                    } else {
-                        // from time to time, reposition?
-                        if (this.ticks % 40 == 0) {
-                            repositionEntity();
-                        }
+                    // from time to time, reposition?
+                    if (this.ticks % 40 == 0) {
+                        repositionEntity();
                     }
                 }
             }
@@ -372,14 +369,14 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     protected void updateAvailabilityInWorldData() {
-        boolean curAvailability = this.isAvailable();
-        boolean wasAvailableLastCheck = ShuttleDockHandler.getStoredAvailability(this);
+        final boolean curAvailability = this.isAvailable();
+        final boolean wasAvailableLastCheck = ShuttleDockHandler.getStoredAvailability(this);
         if (wasAvailableLastCheck != curAvailability) {
             ShuttleDockHandler.setStoredAvailability(this, curAvailability);
         }
     }
 
-    public int getRotationMeta(int meta) {
+    public int getRotationMeta(final int meta) {
         return (meta & 12) >> 2;
     }
 
@@ -388,7 +385,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public EnumCargoLoadingState addCargo(ItemStack stack, boolean doAdd) {
+    public EnumCargoLoadingState addCargo(final ItemStack stack, final boolean doAdd) {
         if (this.dockedEntity != null) {
             return this.dockedEntity.addCargo(stack, doAdd);
         }
@@ -397,7 +394,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public RemovalResult removeCargo(boolean doRemove) {
+    public RemovalResult removeCargo(final boolean doRemove) {
         if (this.dockedEntity != null) {
             return this.dockedEntity.removeCargo(doRemove);
         }
@@ -405,7 +402,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         return new RemovalResult(EnumCargoLoadingState.NOTARGET, null);
     }
 
-    protected void checkTileAt(HashSet<ILandingPadAttachable> connectedTiles, int x, int y, int z) {
+    protected void checkTileAt(final HashSet<ILandingPadAttachable> connectedTiles, final int x, final int y, final int z) {
         final TileEntity tile = this.worldObj.getTileEntity(x, y, z);
 
         if (tile != null && tile instanceof ILandingPadAttachable
@@ -417,7 +414,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
     @Override
     public HashSet<ILandingPadAttachable> getConnectedTiles() {
-        HashSet<ILandingPadAttachable> connectedTiles = new HashSet<ILandingPadAttachable>();
+        final HashSet<ILandingPadAttachable> connectedTiles = new HashSet<ILandingPadAttachable>();
 
         // check the blocks in a doorframe form around me
         // below
@@ -449,8 +446,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public boolean isBlockAttachable(IBlockAccess world, int x, int y, int z) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+    public boolean isBlockAttachable(final IBlockAccess world, final int x, final int y, final int z) {
+        final TileEntity tile = world.getTileEntity(x, y, z);
         // maybe prevent launch controllers from working here?
         if (tile != null && tile instanceof ILandingPadAttachable) {
             return ((ILandingPadAttachable) tile).canAttachToLandingPad(world, this.xCoord, this.yCoord, this.zCoord);
@@ -465,7 +462,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public void dockEntity(IDockable entity) {
+    public void dockEntity(final IDockable entity) {
         if (entity == this.dockedEntity) {
             return;
         }
@@ -480,7 +477,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public int addFuel(FluidStack fluid, boolean doFill) {
+    public int addFuel(final FluidStack fluid, final boolean doFill) {
         if (this.dockedEntity != null) {
             return this.dockedEntity.addFuel(fluid, doFill);
         }
@@ -489,7 +486,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public FluidStack removeFuel(int amount) {
+    public FluidStack removeFuel(final int amount) {
         if (this.dockedEntity != null) {
             return this.dockedEntity.removeFuel(amount);
         }
@@ -530,16 +527,16 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public boolean onActivated(EntityPlayer entityPlayer) {
+    public boolean onActivated(final EntityPlayer entityPlayer) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_SHUTTLE_DOCK, this.worldObj, xCoord, yCoord, zCoord);
         return true;
     }
 
     @Override
-    public void onCreate(BlockVec3 placedPosition) {
+    public void onCreate(final BlockVec3 placedPosition) {
         ShuttleDockHandler.addDock(this);
 
-        int buildHeight = this.worldObj.getHeight() - 1;
+        final int buildHeight = this.worldObj.getHeight() - 1;
 
         if (placedPosition.y + 1 > buildHeight) return;
 
@@ -549,10 +546,10 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public void onDestroy(TileEntity callingBlock) {
+    public void onDestroy(final TileEntity callingBlock) {
         ShuttleDockHandler.removeDock(this);
 
-        Block b = this.worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+        final Block b = this.worldObj.getBlock(xCoord, yCoord + 1, zCoord);
         if (b == ARBlocks.metaBlockFake) {
             this.worldObj.setBlockToAir(xCoord, yCoord + 1, zCoord);
         }
@@ -574,46 +571,44 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
+    public ItemStack getStackInSlot(final int slot) {
         return containingItems[slot];
     }
 
     @Override
-    public ItemStack decrStackSize(int slotNr, int quantity) {
-        if (this.containingItems[slotNr] != null) {
-            ItemStack resultStack;
-
-            if (this.containingItems[slotNr].stackSize <= quantity) {
-                resultStack = this.containingItems[slotNr];
-                this.containingItems[slotNr] = null;
-                return resultStack;
-            } else {
-                resultStack = this.containingItems[slotNr].splitStack(quantity);
-
-                if (this.containingItems[slotNr].stackSize == 0) {
-                    this.containingItems[slotNr] = null;
-                }
-
-                return resultStack;
-            }
-        } else {
+    public ItemStack decrStackSize(final int slotNr, final int quantity) {
+        if (this.containingItems[slotNr] == null) {
             return null;
+        }
+        ItemStack resultStack;
+
+        if (this.containingItems[slotNr].stackSize <= quantity) {
+            resultStack = this.containingItems[slotNr];
+            this.containingItems[slotNr] = null;
+            return resultStack;
+        } else {
+            resultStack = this.containingItems[slotNr].splitStack(quantity);
+
+            if (this.containingItems[slotNr].stackSize == 0) {
+                this.containingItems[slotNr] = null;
+            }
+
+            return resultStack;
         }
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slotNr) {
+    public ItemStack getStackInSlotOnClosing(final int slotNr) {
         if (this.containingItems[slotNr] != null) {
             final ItemStack result = this.containingItems[slotNr];
             this.containingItems[slotNr] = null;
             return result;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
-    public void setInventorySlotContents(int slotNr, ItemStack newStack) {
+    public void setInventorySlotContents(final int slotNr, final ItemStack newStack) {
         this.containingItems[slotNr] = newStack;
 
         if (newStack != null && newStack.stackSize > this.getInventoryStackLimit()) {
@@ -632,8 +627,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return (player.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D);
+    public boolean isUseableByPlayer(final EntityPlayer player) {
+        return player.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
 
     }
 
@@ -644,12 +639,12 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int slotNr, ItemStack item) {
+    public boolean isItemValidForSlot(final int slotNr, final ItemStack item) {
 
-        return slotNr == 0 && (item.getItem() instanceof ItemShuttle);
+        return slotNr == 0 && item.getItem() instanceof ItemShuttle;
     }
 
-    protected boolean areBlocksWithin(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+    protected boolean areBlocksWithin(final int minX, final int minY, final int minZ, final int maxX, final int maxY, final int maxZ) {
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
@@ -663,8 +658,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     public boolean isObstructed() {
-        int minY = yCoord - 2;
-        int maxY = yCoord + 3;
+        final int minY = yCoord - 2;
+        final int maxY = yCoord + 3;
         int minX;
         int maxX;
         int minZ;

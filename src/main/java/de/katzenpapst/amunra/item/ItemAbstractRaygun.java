@@ -21,7 +21,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
     // the player rightclicks
     protected boolean chargeMode = false;
 
-    public ItemAbstractRaygun(String assetName) {
+    public ItemAbstractRaygun(final String assetName) {
         this.setUnlocalizedName(assetName);
         this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);
         this.maxStackSize = 1;
@@ -46,7 +46,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
      */
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack itemStack, World world, EntityPlayer entityPlayer, int itemInUseCount) {
+    public void onPlayerStoppedUsing(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer, final int itemInUseCount) {
         if (!this.chargeMode) {
             return;
         }
@@ -60,7 +60,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
      */
 
     @Override
-    public int getMaxItemUseDuration(ItemStack itemStack) {
+    public int getMaxItemUseDuration(final ItemStack itemStack) {
         return 72000;
     }
 
@@ -68,7 +68,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
      * returns the action that specifies what animation to play when the items is being used
      */
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
+    public EnumAction getItemUseAction(final ItemStack stack) {
         return EnumAction.bow;
     }
 
@@ -76,7 +76,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+    public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
         /*
          * ArrowNockEvent event = new ArrowNockEvent(entityPlayer, itemStack); MinecraftForge.EVENT_BUS.post(event); if
          * (event.isCanceled()) { return event.result; }
@@ -87,15 +87,13 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
             if (!this.chargeMode) {
                 fire(itemStack, entityPlayer, world);
             }
-        } else {
-            if (!world.isRemote) {
-                world.playSoundAtEntity(
-                        entityPlayer,
-                        getEmptySound(),
-                        1.0F,
-                        1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + 0.5F);
+        } else if (!world.isRemote) {
+            world.playSoundAtEntity(
+                    entityPlayer,
+                    getEmptySound(),
+                    1.0F,
+                    1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + 0.5F);
 
-            }
         }
 
         return itemStack;
@@ -113,7 +111,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
         return AmunRa.TEXTUREPREFIX + "weapon.lasergun.empty";
     }
 
-    protected boolean fire(ItemStack itemStack, EntityPlayer entityPlayer, World world) {
+    protected boolean fire(final ItemStack itemStack, final EntityPlayer entityPlayer, final World world) {
         if (!entityPlayer.capabilities.isCreativeMode) {
             this.setElectricity(
                     itemStack,
@@ -131,20 +129,20 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
         return true;
     }
 
-    protected float getModifiedEnergyPerShot(ItemStack stack) {
+    protected float getModifiedEnergyPerShot(final ItemStack stack) {
         float base = this.getEnergyPerShot();
 
-        int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, stack);
+        final int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, stack);
         // max level seems to be 5
-        float relativeEff = ((float) efficiency) / 10.0F;
+        final float relativeEff = (float) efficiency / 10.0F;
 
         base = base * (1.0F - relativeEff);
 
         return base;
     }
 
-    protected void spawnProjectile(ItemStack itemStack, EntityPlayer entityPlayer, World world) {
-        EntityBaseLaserArrow ent = createProjectile(itemStack, entityPlayer, world);
+    protected void spawnProjectile(final ItemStack itemStack, final EntityPlayer entityPlayer, final World world) {
+        final EntityBaseLaserArrow ent = createProjectile(itemStack, entityPlayer, world);
 
         // enchantment stuff
 
@@ -164,13 +162,13 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister) {
+    public void registerIcons(final IIconRegister iconRegister) {
         this.itemIcon = iconRegister.registerIcon(this.getIconString());
         // this.itemEmptyIcon = iconRegister.registerIcon(this.getIconString() + "_empty");
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
+    public IIcon getIcon(final ItemStack stack, final int renderPass, final EntityPlayer player, final ItemStack usingItem, final int useRemaining) {
         return super.getIcon(stack, renderPass, player, usingItem, useRemaining);
 
         /*

@@ -15,14 +15,14 @@ public class SubItem extends Item {
     protected String itemInfo = null;
     protected String fuckYouName = null;// fuck you, private
 
-    public SubItem(String name, String assetName) {
+    public SubItem(final String name, final String assetName) {
         super();
         fuckYouName = name;
         this.setUnlocalizedName(name);
         this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);
     }
 
-    public SubItem(String name, String assetName, String info) {
+    public SubItem(final String name, final String assetName, final String info) {
         this(name, assetName);
         itemInfo = info;
     }
@@ -43,7 +43,7 @@ public class SubItem extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(ItemStack par1ItemStack) {
+    public EnumRarity getRarity(final ItemStack par1ItemStack) {
         return ClientProxyCore.galacticraftItem;
     }
 

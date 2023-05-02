@@ -35,11 +35,11 @@ public class GridVillageStart extends BaseStructureStart {
     /**
      * Instantiates the thing, the coords in here should be the START point
      */
-    public GridVillageStart(World world, int chunkX, int chunkZ, Random rand) {
+    public GridVillageStart(final World world, final int chunkX, final int chunkZ, final Random rand) {
 
         super(world, chunkX, chunkZ, rand);
-        int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
-        int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
+        final int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
+        final int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
 
         AmunRa.LOGGER.debug("Generating the Village at x={}, z={}", startBlockX, startBlockZ);
 
@@ -51,7 +51,7 @@ public class GridVillageStart extends BaseStructureStart {
      * the chunk is done and won't be touched again
      */
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
         drawGrid(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
@@ -59,7 +59,7 @@ public class GridVillageStart extends BaseStructureStart {
         return true;
     }
 
-    public void setComponents(List<BaseStructureComponent> components) {
+    public void setComponents(final List<BaseStructureComponent> components) {
 
         // byte should be enough for gridsize
 
@@ -68,12 +68,12 @@ public class GridVillageStart extends BaseStructureStart {
         gridSideLength = (int) Math.ceil(Math.sqrt(numGridElements));
 
         // now the effective grid width is this.gridSize+3
-        int effectiveGridSize = this.gridSize + 3;
+        final int effectiveGridSize = this.gridSize + 3;
 
-        int squareWidth = effectiveGridSize * gridSideLength;
+        final int squareWidth = effectiveGridSize * gridSideLength;
 
-        int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
-        int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
+        final int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
+        final int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
 
         // my own structBB
         structBB = new StructureBoundingBox();
@@ -84,7 +84,7 @@ public class GridVillageStart extends BaseStructureStart {
         structBB.minY = 0;
         structBB.maxY = 255;
 
-        int totalGridElems = gridSideLength * gridSideLength;
+        final int totalGridElems = gridSideLength * gridSideLength;
         // pad the components
         for (int i = numGridElements; i < totalGridElems; i++) {
             components.add(GridVillageComponent.DUMMY);
@@ -94,13 +94,13 @@ public class GridVillageStart extends BaseStructureStart {
 
         byte gridX = 0;
         byte gridZ = 0;
-        for (BaseStructureComponent comp : components) {
+        for (final BaseStructureComponent comp : components) {
             if (comp == GridVillageComponent.DUMMY || !(comp instanceof GridVillageComponent)) {
                 continue;
             }
-            int index = gridX + (gridZ << 8);
+            final int index = gridX + (gridZ << 8);
 
-            StructureBoundingBox componentBox = new StructureBoundingBox(
+            final StructureBoundingBox componentBox = new StructureBoundingBox(
                     structBB.minX + effectiveGridSize * gridX + 2,
                     structBB.minZ + effectiveGridSize * gridZ + 2,
                     structBB.minX + effectiveGridSize * gridX + 1 + this.gridSize,
@@ -127,7 +127,7 @@ public class GridVillageStart extends BaseStructureStart {
         return pathMaterial;
     }
 
-    public void setPathMaterial(BlockMetaPair pathMaterial) {
+    public void setPathMaterial(final BlockMetaPair pathMaterial) {
         this.pathMaterial = pathMaterial;
     }
 
@@ -135,7 +135,7 @@ public class GridVillageStart extends BaseStructureStart {
         return wallMaterial;
     }
 
-    public void setWallMaterial(BlockMetaPair wallMaterial) {
+    public void setWallMaterial(final BlockMetaPair wallMaterial) {
         this.wallMaterial = wallMaterial;
     }
 
@@ -143,7 +143,7 @@ public class GridVillageStart extends BaseStructureStart {
         return floorMaterial;
     }
 
-    public void setFloorMaterial(BlockMetaPair floorMaterial) {
+    public void setFloorMaterial(final BlockMetaPair floorMaterial) {
         this.floorMaterial = floorMaterial;
     }
 
@@ -151,23 +151,23 @@ public class GridVillageStart extends BaseStructureStart {
         return fillMaterial;
     }
 
-    public void setFillMaterial(BlockMetaPair fillMaterial) {
+    public void setFillMaterial(final BlockMetaPair fillMaterial) {
         this.fillMaterial = fillMaterial;
     }
 
-    protected void drawStuffInGrid(int chunkX, int chunkZ, int gridX, int gridZ, Block[] arrayOfIDs,
-            byte[] arrayOfMeta) {
+    protected void drawStuffInGrid(final int chunkX, final int chunkZ, final int gridX, final int gridZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
         // now how do I calculate the grid's position?
         // I think it's
-        int effectiveGridSize = this.gridSize + 3;
-        int testX = structBB.minX + effectiveGridSize * gridX + 2;
-        int testZ = structBB.minZ + effectiveGridSize * gridZ + 2;
+        final int effectiveGridSize = this.gridSize + 3;
+        final int testX = structBB.minX + effectiveGridSize * gridX + 2;
+        final int testZ = structBB.minZ + effectiveGridSize * gridZ + 2;
 
         // now try
         for (int x = 0; x < this.gridSize; x++) {
             for (int z = 0; z < this.gridSize; z++) {
-                int relX = CoordHelper.abs2rel(testX + x, chunkX);
-                int relZ = CoordHelper.abs2rel(testZ + z, chunkZ);
+                final int relX = CoordHelper.abs2rel(testX + x, chunkX);
+                final int relZ = CoordHelper.abs2rel(testZ + z, chunkZ);
                 placeBlockOnGround(
                         arrayOfIDs,
                         arrayOfMeta,
@@ -179,10 +179,10 @@ public class GridVillageStart extends BaseStructureStart {
         }
     }
 
-    protected void drawGrid(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    protected void drawGrid(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         // hmmm how do I do this now?
         // length of the square
-        int effectiveGridSize = this.gridSize + 3;
+        final int effectiveGridSize = this.gridSize + 3;
 
         /*
          * StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ); int minGroundLevel =
@@ -191,23 +191,23 @@ public class GridVillageStart extends BaseStructureStart {
 
         for (int x = structBB.minX; x < structBB.maxX; x++) {
             for (int z = structBB.minZ; z < structBB.maxZ; z++) {
-                int testX = x - structBB.minX;
-                int testZ = z - structBB.minZ;
+                final int testX = x - structBB.minX;
+                final int testZ = z - structBB.minZ;
                 boolean drawX = false;
                 boolean drawZ = false;
 
-                if (testX != 0 && (testX % effectiveGridSize) == 0) {
+                if (testX != 0 && testX % effectiveGridSize == 0) {
                     drawX = true;
                 }
-                if (testZ != 0 && (testZ % effectiveGridSize) == 0) {
+                if (testZ != 0 && testZ % effectiveGridSize == 0) {
                     drawZ = true;
                 }
 
                 if (!drawX && !drawZ) {
                     continue;
                 }
-                int relX = CoordHelper.abs2rel(x, chunkX);
-                int relZ = CoordHelper.abs2rel(z, chunkZ);
+                final int relX = CoordHelper.abs2rel(x, chunkX);
+                final int relZ = CoordHelper.abs2rel(z, chunkZ);
 
                 if (drawX && drawZ) {
                     // crossing
@@ -329,33 +329,33 @@ public class GridVillageStart extends BaseStructureStart {
     /**
      * Places a block into the topmost solid block
      */
-    protected void placeBlockOnGround(Block[] arrayOfIDs, byte[] arrayOfMeta, int relX, int relZ, Block block,
-            int meta) {
+    protected void placeBlockOnGround(final Block[] arrayOfIDs, final byte[] arrayOfMeta, final int relX, final int relZ, final Block block,
+            final int meta) {
         if (relX < 0 || relX >= 16 || relZ < 0 || relZ >= 16) {
             return;
         }
-        int y = GridVillageComponent.getHighestSolidBlock(arrayOfIDs, arrayOfMeta, relX, relZ);
+        final int y = GridVillageComponent.getHighestSolidBlock(arrayOfIDs, arrayOfMeta, relX, relZ);
         GridVillageComponent.placeBlockRel(arrayOfIDs, arrayOfMeta, relX, y - 1, relZ, block, meta);
     }
 
-    protected void drawGridComponents(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    protected void drawGridComponents(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
 
         // int effectiveGridSize = this.gridSize+3;
 
-        StructureBoundingBox chunkBox = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox(chunkX*16,
+        final StructureBoundingBox chunkBox = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox(chunkX*16,
                                                                                // chunkZ*16, chunkX*16+15,
                                                                                // chunkZ*16+15);
 
         for (int gridX = 0; gridX < gridSideLength; gridX++) {
             for (int gridZ = 0; gridZ < gridSideLength; gridZ++) {
 
-                int index = gridX + (gridZ << 8);
+                final int index = gridX + (gridZ << 8);
 
                 if (!componentsByGrid.containsKey(index)) {
                     continue;
                 }
 
-                GridVillageComponent curComp = componentsByGrid.get(index);
+                final GridVillageComponent curComp = componentsByGrid.get(index);
 
                 // fail for chunk z = -28
                 // ALL components should intersect with -27

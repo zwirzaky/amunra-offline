@@ -191,7 +191,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
         private Side targetSide;
         private Class<?>[] decodeAs;
 
-        private EnumSimplePacket(Side targetSide, Class<?>... decodeAs) {
+        private EnumSimplePacket(final Side targetSide, final Class<?>... decodeAs) {
             this.targetSide = targetSide;
             this.decodeAs = decodeAs;
         }
@@ -210,11 +210,11 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
     public PacketSimpleAR() {}
 
-    public PacketSimpleAR(EnumSimplePacket packetType, Object... data) {
+    public PacketSimpleAR(final EnumSimplePacket packetType, final Object... data) {
         this(packetType, Arrays.asList(data));
     }
 
-    public PacketSimpleAR(EnumSimplePacket packetType, List<Object> data) {
+    public PacketSimpleAR(final EnumSimplePacket packetType, final List<Object> data) {
         if (packetType.getDecodeClasses().length != data.size()) {
             AmunRa.LOGGER.warn("Found data length different than packet type", new RuntimeException());
         }
@@ -224,18 +224,18 @@ public class PacketSimpleAR extends Packet implements IPacket {
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext context, ByteBuf buffer) {
+    public void encodeInto(final ChannelHandlerContext context, final ByteBuf buffer) {
         buffer.writeInt(this.type.ordinal());
 
         try {
             NetworkUtil.encodeData(buffer, this.data);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             AmunRa.LOGGER.error("Could not encode data", e);
         }
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext context, ByteBuf buffer) {
+    public void decodeInto(final ChannelHandlerContext context, final ByteBuf buffer) {
         this.type = EnumSimplePacket.values()[buffer.readInt()];
 
         try {
@@ -245,14 +245,14 @@ public class PacketSimpleAR extends Packet implements IPacket {
             if (buffer.readableBytes() > 0) {
                 // GCLog.severe("Galacticraft packet length problem for packet type " + this.type.toString());
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             AmunRa.LOGGER.error("Error handling simple packet type: " + this.type + " " + buffer, e);
         }
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void handleClientSide(EntityPlayer player) {
+    public void handleClientSide(final EntityPlayer player) {
         if (!(player instanceof EntityClientPlayerMP)) {
             return;
         }
@@ -270,20 +270,20 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 if (String.valueOf(this.data.get(0))
                         .equals(FMLClientHandler.instance().getClient().thePlayer.getGameProfile().getName())) {
                     // TODO refactor
-                    String dimensionList = (String) this.data.get(1);
+                    final String dimensionList = (String) this.data.get(1);
                     final String[] destinations = dimensionList.split("\\?");
-                    List<CelestialBody> possibleCelestialBodies = Lists.newArrayList();
-                    Map<Integer, Map<String, GuiCelestialSelection.StationDataGUI>> spaceStationData = Maps
+                    final List<CelestialBody> possibleCelestialBodies = Lists.newArrayList();
+                    final Map<Integer, Map<String, GuiCelestialSelection.StationDataGUI>> spaceStationData = Maps
                             .newHashMap();
-                    for (String str : destinations) {
+                    for (final String str : destinations) {
                         CelestialBody celestialBody = ShuttleTeleportHelper.getReachableCelestialBodiesForName(str);
 
                         if (celestialBody == null && str.contains("$")) {
-                            String[] values = str.split("\\$");
+                            final String[] values = str.split("\\$");
 
-                            int homePlanetID = Integer.parseInt(values[4]);
+                            final int homePlanetID = Integer.parseInt(values[4]);
 
-                            for (Satellite satellite : GalaxyRegistry.getRegisteredSatellites().values()) {
+                            for (final Satellite satellite : GalaxyRegistry.getRegisteredSatellites().values()) {
                                 if (satellite.getParentPlanet().getDimensionID() == homePlanetID) {
                                     celestialBody = satellite;
                                     break;
@@ -307,12 +307,12 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                     if (FMLClientHandler.instance().getClient().theWorld != null) {
                         if (!(FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection)) {
-                            GuiShuttleSelection gui = new GuiShuttleSelection(MapMode.TRAVEL, possibleCelestialBodies);
+                            final GuiShuttleSelection gui = new GuiShuttleSelection(MapMode.TRAVEL, possibleCelestialBodies);
                             gui.spaceStationMap = spaceStationData;
                             FMLClientHandler.instance().getClient().displayGuiScreen(gui);
                         } else {
-                            GuiShuttleSelection gui = ((GuiShuttleSelection) FMLClientHandler.instance()
-                                    .getClient().currentScreen);
+                            final GuiShuttleSelection gui = (GuiShuttleSelection) FMLClientHandler.instance()
+                                    .getClient().currentScreen;
                             gui.setPossibleBodies(possibleCelestialBodies);
                             gui.spaceStationMap = spaceStationData;
                         }
@@ -354,7 +354,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
             case C_MOTHERSHIP_TRANSIT_STARTED:// (Side.CLIENT, int.class, String.class, long.class),
                 motherShip = mData.getByMothershipId((int) this.data.get(0));
                 targetBody = Mothership.findBodyByNamePath((String) this.data.get(1));
-                long travelTime = (long) this.data.get(2);
+                final long travelTime = (long) this.data.get(2);
 
                 motherShip.startTransit(targetBody, travelTime);
 
@@ -377,9 +377,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 }
                 break;
             case C_MOTHERSHIP_DATA:
-                int dimId = (int) this.data.get(0);
+                final int dimId = (int) this.data.get(0);
                 nbt = (NBTTagCompound) this.data.get(1);
-                WorldProvider playerWorldProvider = player.getEntityWorld().provider;
+                final WorldProvider playerWorldProvider = player.getEntityWorld().provider;
                 if (playerWorldProvider.dimensionId == dimId
                         && playerWorldProvider instanceof MothershipWorldProvider) {
                     // don't do this otherwise
@@ -393,16 +393,16 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 break;
             case C_ADD_MOTHERSHIP_PLAYER_FAILED:
                 if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiMothershipSettings) {
-                    String msg = (String) this.data.get(0);
-                    String name = (String) this.data.get(1);
+                    final String msg = (String) this.data.get(0);
+                    final String name = (String) this.data.get(1);
                     ((GuiMothershipSettings) FMLClientHandler.instance().getClient().currentScreen)
                             .mothershipOperationFailed(GCCoreUtil.translateWithFormat(msg, name));
                 }
                 break;
             case C_MOTHERSHIP_SETTINGS_CHANGED:
-                int mothershipId = (int) this.data.get(0);
+                final int mothershipId = (int) this.data.get(0);
                 nbt = (NBTTagCompound) this.data.get(1);
-                Mothership mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
+                final Mothership mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
                 mShip.readSettingsFromNBT(nbt);
 
                 if (player.worldObj.provider.dimensionId == mShip.getDimensionID()
@@ -413,7 +413,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 break;
             case C_TELEPORT_SHUTTLE_PERMISSION_ERROR:
                 if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection) {
-                    String owner = (String) this.data.get(0);
+                    final String owner = (String) this.data.get(0);
                     ((GuiShuttleSelection) FMLClientHandler.instance().getClient().currentScreen).showMessageBox(
                             GCCoreUtil.translate("gui.message.mothership.permissionError"),
                             GCCoreUtil.translateWithFormat("gui.message.mothership.notAllowed", owner));
@@ -424,8 +424,8 @@ public class PacketSimpleAR extends Packet implements IPacket {
         } // end of case
     }
 
-    private PlayerID getPlayerIdByName(WorldServer world, String name) {
-        EntityPlayer otherPlayer = world.getPlayerEntityByName(name);
+    private PlayerID getPlayerIdByName(final WorldServer world, final String name) {
+        final EntityPlayer otherPlayer = world.getPlayerEntityByName(name);
         if (otherPlayer == null) {
             return null;
         }
@@ -433,16 +433,16 @@ public class PacketSimpleAR extends Packet implements IPacket {
     }
 
     @Override
-    public void handleServerSide(EntityPlayer player) {
+    public void handleServerSide(final EntityPlayer player) {
 
-        EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayer(player, false);
+        final EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayer(player, false);
         MinecraftServer mcServer;
 
         if (playerBase == null) {
             return;
         }
 
-        GCPlayerStats stats = GCPlayerStats.get(playerBase);
+        final GCPlayerStats stats = GCPlayerStats.get(playerBase);
 
         String bodyName;
         Integer mothershipId;
@@ -461,7 +461,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
             case S_TELEPORT_SHUTTLE: // S_TELEPORT_ENTITY
                 try {
                     // final WorldProvider provider = WorldUtil.getProviderForNameServer((String) this.data.get(0));
-                    final Integer dim = ((int) this.data.get(0));
+                    final Integer dim = (int) this.data.get(0);
                     AmunRa.LOGGER.info("Will teleport to ({})", dim);
 
                     if (playerBase.worldObj instanceof WorldServer) {
@@ -558,7 +558,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 break;
             case S_MOTHERSHIP_UPDATE:
                 // why am I doing it like this?
-                int dimId = (int) this.data.get(0);
+                final int dimId = (int) this.data.get(0);
                 mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
                 world = mcServer.worldServerForDimension(dimId);
 
@@ -584,13 +584,13 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 break;
             case S_ADD_MOTHERSHIP_PLAYER:
                 mothershipId = (int) this.data.get(0);
-                String name = (String) this.data.get(1);
-                int type = (int) this.data.get(2);
+                final String name = (String) this.data.get(1);
+                final int type = (int) this.data.get(2);
                 mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
                 if (playerBase.worldObj instanceof WorldServer) {
                     world = (WorldServer) playerBase.worldObj;
 
-                    PlayerID playerId = getPlayerIdByName(world, name);
+                    final PlayerID playerId = getPlayerIdByName(world, name);
 
                     // EntityPlayer otherPlayer = world.getPlayerEntityByName(name);
                     if (playerId != null) {
@@ -649,11 +649,11 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 }
                 break;
             case S_ARTIFICIAL_GRAVITY_SETTINGS:
-                BlockVec3 pos = (BlockVec3) this.data.get(0);
-                BlockVec3 min = (BlockVec3) this.data.get(1);
-                BlockVec3 max = (BlockVec3) this.data.get(2);
-                double strength = (double) this.data.get(3);
-                AxisAlignedBB box = AxisAlignedBB.getBoundingBox(min.x, min.y, min.z, max.x, max.y, max.z);
+                final BlockVec3 pos = (BlockVec3) this.data.get(0);
+                final BlockVec3 min = (BlockVec3) this.data.get(1);
+                final BlockVec3 max = (BlockVec3) this.data.get(2);
+                final double strength = (double) this.data.get(3);
+                final AxisAlignedBB box = AxisAlignedBB.getBoundingBox(min.x, min.y, min.z, max.x, max.y, max.z);
 
                 tileEntity = pos.getTileEntity(playerBase.worldObj);
                 if (tileEntity instanceof TileEntityGravitation) {
@@ -670,18 +670,18 @@ public class PacketSimpleAR extends Packet implements IPacket {
     }
 
     @Override
-    public void readPacketData(PacketBuffer var1) {
+    public void readPacketData(final PacketBuffer var1) {
         this.decodeInto(null, var1);
     }
 
     @Override
-    public void writePacketData(PacketBuffer var1) {
+    public void writePacketData(final PacketBuffer var1) {
         this.encodeInto(null, var1);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void processPacket(INetHandler var1) {
+    public void processPacket(final INetHandler var1) {
         /*
          * if (this.type != EnumSimplePacket.C_UPDATE_SPACESTATION_LIST && this.type !=
          * EnumSimplePacket.C_UPDATE_PLANETS_LIST && this.type != EnumSimplePacket.C_UPDATE_CONFIGS) { return; }

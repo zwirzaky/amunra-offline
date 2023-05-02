@@ -13,12 +13,12 @@ import de.katzenpapst.amunra.client.BlockRenderHelper;
 
 public class ModelHydroponics {
 
-    private ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/hydroponics2.png");
+    private final ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/hydroponics2.png");
 
     public ModelHydroponics() {}
 
-    public void render(Tessellator tess, float growthStatus, boolean connectNorth, boolean connectSouth,
-            boolean connectWest, boolean connectEast) {
+    public void render(final Tessellator tess, final float growthStatus, final boolean connectNorth, final boolean connectSouth,
+            final boolean connectWest, final boolean connectEast) {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 
@@ -92,10 +92,10 @@ public class ModelHydroponics {
 
             tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
 
-            double factor = 0.6;
+            final double factor = 0.6;
             GL11.glScaled(factor, factor, factor);
 
-            int wheatState = (int) (growthStatus * 7);
+            final int wheatState = (int) (growthStatus * 7);
 
             renderWheat(wheatState, 0.5 / factor - 0.5, 1.0 / factor, 0.5 / factor - 0.5);
         }
@@ -103,7 +103,7 @@ public class ModelHydroponics {
 
     }
 
-    protected void renderConnector(Tessellator tess) {
+    protected void renderConnector(final Tessellator tess) {
         // try doing the box
         // +Y
         tess.startDrawingQuads();
@@ -145,18 +145,18 @@ public class ModelHydroponics {
         // box END
     }
 
-    protected void renderWheat(int meta, double x, double y, double z) {
-        Tessellator tessellator = Tessellator.instance;
+    protected void renderWheat(final int meta, final double x, final double y, final double z) {
+        final Tessellator tessellator = Tessellator.instance;
         // IIcon iicon = this.getBlockIconFromSideAndMetadata(p_147795_1_, 0, p_147795_2_);
-        IIcon iicon = Blocks.wheat.getIcon(0, meta);
+        final IIcon iicon = Blocks.wheat.getIcon(0, meta);
 
-        ResourceLocation resourcelocation = Minecraft.getMinecraft().renderEngine.getResourceLocation(0);
+        final ResourceLocation resourcelocation = Minecraft.getMinecraft().renderEngine.getResourceLocation(0);
         Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 
-        double d3 = (double) iicon.getMinU();
-        double d4 = (double) iicon.getMinV();
-        double d5 = (double) iicon.getMaxU();
-        double d6 = (double) iicon.getMaxV();
+        final double d3 = (double) iicon.getMinU();
+        final double d4 = (double) iicon.getMinV();
+        final double d5 = (double) iicon.getMaxU();
+        final double d6 = (double) iicon.getMaxV();
         double d7 = x + 0.5D - 0.25D;
         double d8 = x + 0.5D + 0.25D;
         double d9 = z + 0.5D - 0.5D;

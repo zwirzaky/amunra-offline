@@ -14,11 +14,11 @@ public class ModelRobotVillager extends ModelVillager {
     float ticks = 0;
     int curVisorPhase = 0;
 
-    public ModelRobotVillager(float par1) {
+    public ModelRobotVillager(final float par1) {
         this(par1, 0.0F, 64, 64);
     }
 
-    public ModelRobotVillager(float scaleOrSo, float par2, int textureX, int textureY) {
+    public ModelRobotVillager(final float scaleOrSo, final float par2, final int textureX, final int textureY) {
         super(scaleOrSo, par2, 0, 0);
 
         this.villagerHead = new ModelRenderer(this).setTextureSize(textureX, textureY);
@@ -63,14 +63,14 @@ public class ModelRobotVillager extends ModelVillager {
 
     }
 
-    private ModelRenderer generateArm(float scaleOrSo, float par2, int textureX, int textureY, boolean mirror) {
+    private ModelRenderer generateArm(final float scaleOrSo, final float par2, final int textureX, final int textureY, final boolean mirror) {
 
         float factor = 1.0F;
         if (mirror) {
             factor = -1.0F;
         }
 
-        ModelRenderer arm = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        final ModelRenderer arm = new ModelRenderer(this).setTextureSize(textureX, textureY);
 
         arm.setRotationPoint(-5.5F * factor, 0.5F + par2, 0.0F);
 
@@ -79,24 +79,24 @@ public class ModelRobotVillager extends ModelVillager {
 
         arm.mirror = mirror;
 
-        ModelRenderer clawFrontUpper = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        final ModelRenderer clawFrontUpper = new ModelRenderer(this).setTextureSize(textureX, textureY);
         clawFrontUpper.setRotationPoint(0, 8.5F, -1.0F);
         clawFrontUpper.setTextureOffset(40, 50).addBox(-0.5F, 0.5F, -0.5F, 1, 2, 1, scaleOrSo + 0.004F);
 
         clawFrontUpper.rotateAngleX = -(float) Math.PI / 4;
 
-        ModelRenderer clawBackUpper = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        final ModelRenderer clawBackUpper = new ModelRenderer(this).setTextureSize(textureX, textureY);
         clawBackUpper.setRotationPoint(0, 8.5F, 1.0F);
         clawBackUpper.setTextureOffset(40, 50).addBox(-0.5F, 0.5F, -0.5F, 1, 2, 1, scaleOrSo + 0.004F);
 
         clawBackUpper.rotateAngleX = (float) Math.PI / 4;
 
-        ModelRenderer clawFrontLower = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        final ModelRenderer clawFrontLower = new ModelRenderer(this).setTextureSize(textureX, textureY);
         clawFrontLower.setRotationPoint(0.0F, 9.5F, 3.0F);
         clawFrontLower.setTextureOffset(40, 50).addBox(-0.5F, 0.5F, -0.5F, 1, 2, 1, scaleOrSo + 0.004F);
         clawFrontLower.rotateAngleX = -(float) Math.PI / 4;
 
-        ModelRenderer clawBackLower = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        final ModelRenderer clawBackLower = new ModelRenderer(this).setTextureSize(textureX, textureY);
         clawBackLower.setRotationPoint(0.0F, 9.5F, -3.0F);
         clawBackLower.setTextureOffset(40, 50).addBox(-0.5F, 0.5F, -0.5F, 1, 2, 1, scaleOrSo + 0.004F);
 
@@ -115,8 +115,8 @@ public class ModelRobotVillager extends ModelVillager {
      * "far" arms and legs can swing at most.
      */
     @Override
-    public void setRotationAngles(float time, float walkSpeed, float appendageRotation, float rotationYaw,
-            float rotationPitch, float scale, Entity p_78087_7_) {
+    public void setRotationAngles(final float time, final float walkSpeed, final float appendageRotation, final float rotationYaw,
+            final float rotationPitch, final float scale, final Entity p_78087_7_) {
         this.villagerHead.rotateAngleY = rotationYaw / (180F / (float) Math.PI);
         this.villagerHead.rotateAngleX = rotationPitch / (180F / (float) Math.PI);
         /*
@@ -133,8 +133,8 @@ public class ModelRobotVillager extends ModelVillager {
      * Sets the models various rotation angles then renders the model.
      */
     @Override
-    public void render(Entity curEntity, float timeOrSo, float p_78088_3_, float p_78088_4_, float p_78088_5_,
-            float p_78088_6_, float p_78088_7_) {
+    public void render(final Entity curEntity, final float timeOrSo, final float p_78088_3_, final float p_78088_4_, final float p_78088_5_,
+            final float p_78088_6_, final float p_78088_7_) {
         this.setRotationAngles(timeOrSo, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, curEntity);
 
         // animateVisor(timeOrSo);

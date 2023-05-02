@@ -10,7 +10,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class PodMeatBlock extends SubBlock {
 
-    public PodMeatBlock(String name, String texture) {
+    public PodMeatBlock(final String name, final String texture) {
         super(name, texture, "axe", 1);
     }
 
@@ -20,12 +20,12 @@ public class PodMeatBlock extends SubBlock {
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune) {
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
         return Item.getItemFromBlock(ARBlocks.blockPodSapling.getBlock());
     }
 
     @Override
-    public int damageDropped(int meta) {
+    public int damageDropped(final int meta) {
         return ARBlocks.blockPodSapling.getMetadata();
     }
 
@@ -44,8 +44,8 @@ public class PodMeatBlock extends SubBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z,
-            int side) {
+    public boolean shouldSideBeRendered(final IBlockAccess worldIn, final int x, final int y, final int z,
+            final int side) {
         return super.shouldSideBeRendered(worldIn, x, y, z, 1 - side);
     }
 
@@ -53,7 +53,7 @@ public class PodMeatBlock extends SubBlock {
      * Returns the quantity of items to drop on block destruction.
      */
     @Override
-    public int quantityDropped(Random random) {
+    public int quantityDropped(final Random random) {
         return random.nextInt(100) > 90 ? 1 : 0;
     }
 
@@ -61,8 +61,8 @@ public class PodMeatBlock extends SubBlock {
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
     @Override
-    public int quantityDroppedWithBonus(int fortune, Random random) {
-        return random.nextInt(100) > (90 - 10 * fortune) ? 1 : 0;
+    public int quantityDroppedWithBonus(final int fortune, final Random random) {
+        return random.nextInt(100) > 90 - 10 * fortune ? 1 : 0;
     }
 
     /**
@@ -74,7 +74,7 @@ public class PodMeatBlock extends SubBlock {
      * @return The number of items to drop
      */
     @Override
-    public int quantityDropped(int meta, int fortune, Random random) {
+    public int quantityDropped(final int meta, final int fortune, final Random random) {
         /**
          * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
          */

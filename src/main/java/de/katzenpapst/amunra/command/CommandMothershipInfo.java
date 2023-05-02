@@ -24,14 +24,14 @@ public class CommandMothershipInfo extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return "/" + this.getCommandName() + " <name>";
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] params) {
+    public void processCommand(final ICommandSender sender, final String[] params) {
         // no params
-        HashMap<Integer, Mothership> data = TickHandlerServer.mothershipData.getMotherships();
+        final HashMap<Integer, Mothership> data = TickHandlerServer.mothershipData.getMotherships();
         Mothership playerMS = null;
 
         if (sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
@@ -43,10 +43,10 @@ public class CommandMothershipInfo extends CommandBase {
         } else {
             sender.addChatMessage(new ChatComponentText(data.size() + " registered motherships"));
 
-            for (Map.Entry<Integer, Mothership> entry : data.entrySet()) {
-                Mothership ship = entry.getValue();
-                int id = entry.getKey();
-                StringBuilder sb = new StringBuilder();
+            for (final Map.Entry<Integer, Mothership> entry : data.entrySet()) {
+                final Mothership ship = entry.getValue();
+                final int id = entry.getKey();
+                final StringBuilder sb = new StringBuilder();
 
                 if (playerMS == ship) {
                     sb.append(">");

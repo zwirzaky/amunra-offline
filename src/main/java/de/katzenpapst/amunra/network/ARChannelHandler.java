@@ -26,23 +26,23 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
     }
 
     public static ARChannelHandler init() {
-        ARChannelHandler channelHandler = new ARChannelHandler();
+        final ARChannelHandler channelHandler = new ARChannelHandler();
         channelHandler.channels = NetworkRegistry.INSTANCE
                 .newChannel("amunra$generic", channelHandler, new ARPacketHandler());
         return channelHandler;
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, IPacket msg, ByteBuf target) throws Exception {
+    public void encodeInto(final ChannelHandlerContext ctx, final IPacket msg, final ByteBuf target) throws Exception {
         msg.encodeInto(ctx, target);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, IPacket msg) {
+    public void decodeInto(final ChannelHandlerContext ctx, final ByteBuf source, final IPacket msg) {
         msg.decodeInto(ctx, source);
     }
 
-    public void sendToAll(IPacket message) {
+    public void sendToAll(final IPacket message) {
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALL);
         channels.get(Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
@@ -54,7 +54,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
      * @param message The message to send
      * @param player  The player to send it to
      */
-    public void sendTo(IPacket message, EntityPlayerMP player) {
+    public void sendTo(final IPacket message, final EntityPlayerMP player) {
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
@@ -68,7 +68,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
      * @param message The message to send
      * @param point   The {@link TargetPoint} around which to send
      */
-    public void sendToAllAround(IPacket message, NetworkRegistry.TargetPoint point) {
+    public void sendToAllAround(final IPacket message, final NetworkRegistry.TargetPoint point) {
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
@@ -82,7 +82,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
      * @param message     The message to send
      * @param dimensionId The dimension id to target
      */
-    public void sendToDimension(IPacket message, int dimensionId) {
+    public void sendToDimension(final IPacket message, final int dimensionId) {
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.DIMENSION);
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(dimensionId);
@@ -94,7 +94,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
      *
      * @param message The message to send
      */
-    public void sendToServer(IPacket message) {
+    public void sendToServer(final IPacket message) {
         channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
         channels.get(Side.CLIENT).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);

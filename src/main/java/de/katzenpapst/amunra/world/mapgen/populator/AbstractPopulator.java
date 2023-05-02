@@ -13,13 +13,13 @@ abstract public class AbstractPopulator {
 
     public abstract boolean populate(World world);
 
-    public AbstractPopulator(int x, int y, int z) {
+    public AbstractPopulator(final int x, final int y, final int z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public boolean isInChunk(int chunkX, int chunkZ) {
+    public boolean isInChunk(final int chunkX, final int chunkZ) {
         return CoordHelper.getChunkBB(chunkX, chunkZ).isVecInside(x, y, z);
     }
 

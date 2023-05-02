@@ -14,12 +14,12 @@ import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
 public class SolarField extends GridVillageComponent {
 
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] blocks, byte[] metas) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] blocks, final byte[] metas) {
 
         // now, how to get the height?
-        StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox(chunkX*16,
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox(chunkX*16,
                                                                               // chunkZ*16, chunkX*16+15, chunkZ*16+15);
-        int fallbackGround = this.parent.getWorldGroundLevel();
+        final int fallbackGround = this.parent.getWorldGroundLevel();
         if (groundLevel == -1) {
             groundLevel = getAverageGroundLevel(blocks, metas, getStructureBoundingBox(), chunkBB, fallbackGround);
             if (groundLevel == -1) {
@@ -27,21 +27,21 @@ public class SolarField extends GridVillageComponent {
             }
         }
 
-        StructureBoundingBox myBB = this.getStructureBoundingBox();
+        final StructureBoundingBox myBB = this.getStructureBoundingBox();
         // BlockMetaPair mat = ((GridVillageStart)this.parent).getWallMaterial();
-        BlockMetaPair floor = ((GridVillageStart) this.parent).getFloorMaterial();
-        BlockMetaPair padding = ((GridVillageStart) this.parent).getFillMaterial();
+        final BlockMetaPair floor = ((GridVillageStart) this.parent).getFloorMaterial();
+        final BlockMetaPair padding = ((GridVillageStart) this.parent).getFillMaterial();
 
         // draw floor first
-        int startX = 0;
-        int stopX = myBB.getXSize();
-        int startZ = 0;
-        int stopZ = myBB.getZSize();
+        final int startX = 0;
+        final int stopX = myBB.getXSize();
+        final int startZ = 0;
+        final int stopZ = myBB.getZSize();
 
         // int xCenter = (int)Math.ceil((stopX-startX)/2+startX);
-        int zCenter = (int) Math.ceil((stopZ - startZ) / 2 + startZ);
+        final int zCenter = (int) Math.ceil((stopZ - startZ) / 2 + startZ);
 
-        int aluWireMetadata = AmunRa.config.villageAdvancedMachines ? 1 : 0;
+        final int aluWireMetadata = AmunRa.config.villageAdvancedMachines ? 1 : 0;
 
         for (int x = startX; x < stopX; x++) {
             for (int z = startZ; z < stopZ; z++) {
@@ -49,7 +49,7 @@ public class SolarField extends GridVillageComponent {
                 // int x = this.translateX(rawX, rawZ);
                 // int z = this.translateZ(rawX, rawZ);
 
-                int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
+                final int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
                 if (highestGroundBlock == -1) {
                     continue; // that should mean that we aren't in the right chunk
                 }
@@ -137,7 +137,7 @@ public class SolarField extends GridVillageComponent {
 
     }
 
-    private void placeSolarPanel(Block[] blocks, byte[] metas, int chunkX, int chunkZ, int x, int y, int z, int meta) {
+    private void placeSolarPanel(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z, final int meta) {
         int rotationMetadata = rotateStandardMetadata(meta, this.coordMode);
         if (AmunRa.config.villageAdvancedMachines) {
             rotationMetadata = rotationMetadata | BlockSolar.ADVANCED_METADATA;

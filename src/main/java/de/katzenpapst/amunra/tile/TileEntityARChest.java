@@ -84,7 +84,7 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      * Returns the stack in slot i
      */
     @Override
-    public ItemStack getStackInSlot(int par1) {
+    public ItemStack getStackInSlot(final int par1) {
         return this.chestContents[par1];
     }
 
@@ -93,27 +93,26 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      * new stack.
      */
     @Override
-    public ItemStack decrStackSize(int slotNr, int nrOfItems) {
-        if (this.chestContents[slotNr] != null) {
-            ItemStack itemstack;
-
-            if (this.chestContents[slotNr].stackSize <= nrOfItems) {
-                itemstack = this.chestContents[slotNr];
-                this.chestContents[slotNr] = null;
-                this.markDirty();
-                return itemstack;
-            } else {
-                itemstack = this.chestContents[slotNr].splitStack(nrOfItems);
-
-                if (this.chestContents[slotNr].stackSize == 0) {
-                    this.chestContents[slotNr] = null;
-                }
-
-                this.markDirty();
-                return itemstack;
-            }
-        } else {
+    public ItemStack decrStackSize(final int slotNr, final int nrOfItems) {
+        if (this.chestContents[slotNr] == null) {
             return null;
+        }
+        ItemStack itemstack;
+
+        if (this.chestContents[slotNr].stackSize <= nrOfItems) {
+            itemstack = this.chestContents[slotNr];
+            this.chestContents[slotNr] = null;
+            this.markDirty();
+            return itemstack;
+        } else {
+            itemstack = this.chestContents[slotNr].splitStack(nrOfItems);
+
+            if (this.chestContents[slotNr].stackSize == 0) {
+                this.chestContents[slotNr] = null;
+            }
+
+            this.markDirty();
+            return itemstack;
         }
     }
 
@@ -122,21 +121,20 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      * like when you close a workbench GUI.
      */
     @Override
-    public ItemStack getStackInSlotOnClosing(int par1) {
+    public ItemStack getStackInSlotOnClosing(final int par1) {
         if (this.chestContents[par1] != null) {
             final ItemStack itemstack = this.chestContents[par1];
             this.chestContents[par1] = null;
             return itemstack;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
     @Override
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack) {
         this.chestContents[par1] = par2ItemStack;
 
         if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
@@ -150,7 +148,7 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      * Reads a tile entity from NBT.
      */
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
         final NBTTagList nbttaglist = nbt.getTagList("Items", 10);
@@ -170,7 +168,7 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      * Writes a tile entity to NBT.
      */
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
         final NBTTagList nbttaglist = new NBTTagList();
@@ -200,7 +198,7 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
     @Override
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this
                 && par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
     }
@@ -215,7 +213,7 @@ public class TileEntityARChest extends TileEntity implements IInventory {
         this.adjacentChestChecked = false;
     }
 
-    private void resetAdjacentChestOrSomething(TileEntityARChest par1TileEntityChest, int direction) {
+    private void resetAdjacentChestOrSomething(final TileEntityARChest par1TileEntityChest, final int direction) {
         if (par1TileEntityChest.isInvalid()) {
             this.adjacentChestChecked = false;
         } else if (this.adjacentChestChecked) {
@@ -303,7 +301,7 @@ public class TileEntityARChest extends TileEntity implements IInventory {
         return true;
     }
 
-    private boolean isSameChestType(int x, int y, int z) {
+    private boolean isSameChestType(final int x, final int y, final int z) {
         if (chestType == null) {
             chestType = new BlockMetaPair(this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord), (byte) 0);
         }
@@ -426,13 +424,12 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      * Called when a client event is received with the event number and argument, see World.sendClientEvent
      */
     @Override
-    public boolean receiveClientEvent(int par1, int par2) {
+    public boolean receiveClientEvent(final int par1, final int par2) {
         if (par1 == 1) {
             this.numUsingPlayers = par2;
             return true;
-        } else {
-            return super.receiveClientEvent(par1, par2);
         }
+        return super.receiveClientEvent(par1, par2);
     }
 
     @Override
@@ -481,12 +478,12 @@ public class TileEntityARChest extends TileEntity implements IInventory {
     }
 
     @Override
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack) {
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack) {
         return true;
     }
 
     @SuppressWarnings("rawtypes")
-    public static boolean isOcelotBlockingChest(World par0World, int par1, int par2, int par3) {
+    public static boolean isOcelotBlockingChest(final World par0World, final int par1, final int par2, final int par3) {
         final Iterator var4 = par0World.getEntitiesWithinAABB(
                 EntityOcelot.class,
                 AxisAlignedBB.getBoundingBox(par1, par2 + 1, par3, par1 + 1, par2 + 2, par3 + 1)).iterator();

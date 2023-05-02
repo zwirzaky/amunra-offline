@@ -29,25 +29,25 @@ public class RenderRobotVillager extends RenderLiving {
         this.villagerModel = (ModelRobotVillager) this.mainModel;
     }
 
-    protected int shouldVillagerRenderPass(EntityRobotVillager par1EntityVillager, int par2, float par3) {
+    protected int shouldVillagerRenderPass(final EntityRobotVillager par1EntityVillager, final int par2, final float par3) {
         return -1;
     }
 
-    public void renderVillager(EntityRobotVillager par1EntityVillager, double par2, double par4, double par6,
-            float par8, float par9) {
+    public void renderVillager(final EntityRobotVillager par1EntityVillager, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         super.doRender(par1EntityVillager, par2, par4, par6, par8, par9);
     }
 
-    protected void renderVillagerEquipedItems(EntityRobotVillager par1EntityVillager, float par2) {
+    protected void renderVillagerEquipedItems(final EntityRobotVillager par1EntityVillager, final float par2) {
         super.renderEquippedItems(par1EntityVillager, par2);
 
         // try some stuff
         renderFrontPlate(par1EntityVillager);
     }
 
-    private void renderFrontPlate(EntityRobotVillager par1EntityVillager) {
+    private void renderFrontPlate(final EntityRobotVillager par1EntityVillager) {
 
-        RobotVillagerProfession prof = RobotVillagerProfession.getProfession(par1EntityVillager.getProfession());
+        final RobotVillagerProfession prof = RobotVillagerProfession.getProfession(par1EntityVillager.getProfession());
         if (prof == null) {
 
             // something weird happened
@@ -61,9 +61,9 @@ public class RenderRobotVillager extends RenderLiving {
         // "textures/entity/icons/refinery_front.png"));
         this.bindTexture(prof.getIcon());
         TextureUtil.func_152777_a(false, false, 1.0F);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
 
-        float scale = 0.45F;
+        final float scale = 0.45F;
 
         // float f4 = -0.25F;
 
@@ -88,7 +88,7 @@ public class RenderRobotVillager extends RenderLiving {
         TextureUtil.func_147945_b();
     }
 
-    protected void preRenderVillager(EntityRobotVillager par1EntityVillager, float par2) {
+    protected void preRenderVillager(final EntityRobotVillager par1EntityVillager, final float par2) {
         float f1 = 0.9375F;
 
         if (par1EntityVillager.getGrowingAge() < 0) {
@@ -102,38 +102,38 @@ public class RenderRobotVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9) {
         this.renderVillager((EntityRobotVillager) par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
     @Override
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2) {
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2) {
         this.preRenderVillager((EntityRobotVillager) par1EntityLivingBase, par2);
     }
 
     @Override
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3) {
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3) {
         return this.shouldVillagerRenderPass((EntityRobotVillager) par1EntityLivingBase, par2, par3);
     }
 
     @Override
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2) {
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2) {
         this.renderVillagerEquipedItems((EntityRobotVillager) par1EntityLivingBase, par2);
     }
 
     @Override
-    public void doRender(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8,
-            float par9) {
+    public void doRender(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8,
+            final float par9) {
         this.renderVillager((EntityRobotVillager) par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity par1Entity) {
+    protected ResourceLocation getEntityTexture(final Entity par1Entity) {
         return RenderRobotVillager.villagerTexture;
     }
 
     @Override
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9) {
         this.renderVillager((EntityRobotVillager) par1Entity, par2, par4, par6, par8, par9);
     }
 }

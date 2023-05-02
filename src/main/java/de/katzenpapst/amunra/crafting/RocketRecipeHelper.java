@@ -19,28 +19,28 @@ public class RocketRecipeHelper {
         }
     }
 
-    public RocketRecipeHelper(ItemStack one) {
+    public RocketRecipeHelper(final ItemStack one) {
         this();
         addSame(one);
     }
 
-    public RocketRecipeHelper(ItemStack one, ItemStack otherTwo) {
+    public RocketRecipeHelper(final ItemStack one, final ItemStack otherTwo) {
         this();
         addPermutation1And2(one, otherTwo);
     }
 
-    public RocketRecipeHelper(ItemStack stack1, ItemStack stack2, ItemStack stack3) {
+    public RocketRecipeHelper(final ItemStack stack1, final ItemStack stack2, final ItemStack stack3) {
         this();
         addPermutation3different(stack1, stack2, stack3);
     }
 
-    public ItemStack[] getStackArray(int i) {
-        ItemStack[] result = new ItemStack[i];
+    public ItemStack[] getStackArray(final int i) {
+        final ItemStack[] result = new ItemStack[i];
         stacks[i].toArray(result);
         return result;
     }
 
-    public ArrayList<ItemStack> getStacks(int i) {
+    public ArrayList<ItemStack> getStacks(final int i) {
         return stacks[i];
     }
 
@@ -50,7 +50,7 @@ public class RocketRecipeHelper {
      * @param one
      * @param otherTwo
      */
-    public void addPermutation1And2(ItemStack one, ItemStack otherTwo) {
+    public void addPermutation1And2(final ItemStack one, final ItemStack otherTwo) {
         stacks[0].add(one);
         stacks[1].add(otherTwo);
         stacks[2].add(otherTwo);
@@ -71,7 +71,7 @@ public class RocketRecipeHelper {
      * @param stack2
      * @param stack3
      */
-    public void addPermutation3different(ItemStack stack1, ItemStack stack2, ItemStack stack3) {
+    public void addPermutation3different(final ItemStack stack1, final ItemStack stack2, final ItemStack stack3) {
         stacks[0].add(stack1);
         stacks[1].add(stack2);
         stacks[2].add(stack3);
@@ -102,7 +102,7 @@ public class RocketRecipeHelper {
      * 
      * @param stack
      */
-    public void addSame(ItemStack stack) {
+    public void addSame(final ItemStack stack) {
         stacks[0].add(stack);
         stacks[1].add(stack);
         stacks[2].add(stack);

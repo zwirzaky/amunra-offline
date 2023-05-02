@@ -11,7 +11,7 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
     public static final int CHUNK_SIZE_Y = 256;
     public static final int CHUNK_SIZE_Z = 16;
 
-    public AmunraChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+    public AmunraChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
     }
 
@@ -25,8 +25,8 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
      * I failed fixing this. I might do this as mapgen instead
      */
     @Override
-    public void makeCrater(int craterX, int craterZ, int chunkX, int chunkZ, int size, Block[] chunkArray,
-            byte[] metaArray) {
+    public void makeCrater(final int craterX, final int craterZ, final int chunkX, final int chunkZ, final int size, final Block[] chunkArray,
+            final byte[] metaArray) {
         /*
          * final double centerFalloff = 0.01; final double borderFalloff = 0.02; final double centerHeightFactor = 0.5;
          * final double borderHeightFactor = 1; final double craterHeight = 9; final double borderStartLimit = 0.75;
@@ -51,17 +51,18 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
     /**
      * Because private...
      */
-    protected double fuckYouLerp(double d1, double d2, double t) {
+    protected double fuckYouLerp(final double d1, final double d2, final double t) {
         if (t < 0.0) {
             return d1;
-        } else if (t > 1.0) {
+        }
+        if (t > 1.0) {
             return d2;
         } else {
             return d1 + (d2 - d1) * t;
         }
     }
 
-    protected int getIndex(int x, int y, int z) {
+    protected int getIndex(final int x, final int y, final int z) {
         return (x * 16 + z) * 256 + y;
     }
 

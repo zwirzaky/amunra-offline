@@ -12,17 +12,16 @@ import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
 public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
 
-    public MehenChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+    public MehenChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
     }
 
     @Override
-    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, int x, int y, int z) {
+    public List<SpawnListEntry> getPossibleCreatures(final EnumCreatureType creatureType, final int x, final int y, final int z) {
         if (creatureType == EnumCreatureType.monster) {
             return Arrays.asList(new SpawnListEntry(EntitySentry.class, 3000, 1, 3));
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override

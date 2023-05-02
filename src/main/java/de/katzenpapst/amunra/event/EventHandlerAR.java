@@ -21,15 +21,15 @@ import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 public class EventHandlerAR {
 
     @SubscribeEvent
-    public void entityLivingEvent(LivingUpdateEvent event) {
-        EntityLivingBase entityLiving = event.entityLiving;
+    public void entityLivingEvent(final LivingUpdateEvent event) {
+        final EntityLivingBase entityLiving = event.entityLiving;
         if (!(entityLiving instanceof IEntityNonOxygenBreather)) {
             return;
         }
 
         if (entityLiving.ticksExisted % 100 == 0) {
             CelestialBody body;
-            boolean isInSealedArea = OxygenUtil.isAABBInBreathableAirBlock(entityLiving);
+            final boolean isInSealedArea = OxygenUtil.isAABBInBreathableAirBlock(entityLiving);
 
             if (entityLiving.worldObj.provider instanceof IGalacticraftWorldProvider) {
                 body = ((IGalacticraftWorldProvider) entityLiving.worldObj.provider).getCelestialBody();
@@ -44,7 +44,7 @@ public class EventHandlerAR {
     }
 
     @SubscribeEvent
-    public void onThermalArmorEvent(ThermalArmorEvent event) {
+    public void onThermalArmorEvent(final ThermalArmorEvent event) {
         // I sure hope this works with other mods...
 
         if (event.armorStack != null && event.armorStack.getItem() instanceof ItemThermalSuit) {
@@ -55,7 +55,7 @@ public class EventHandlerAR {
     }
 
     @SideOnly(Side.CLIENT)
-    private void provessGravityEvent(ZeroGravityEvent event) {
+    private void provessGravityEvent(final ZeroGravityEvent event) {
         if (!(event.entity instanceof EntityPlayer)) {
             return;
         }
@@ -68,13 +68,13 @@ public class EventHandlerAR {
     // gravity events. these should be client-only
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onGravityEvent(ZeroGravityEvent.InFreefall event) {
+    public void onGravityEvent(final ZeroGravityEvent.InFreefall event) {
         this.provessGravityEvent(event);
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onGravityEvent(ZeroGravityEvent.Motion event) {
+    public void onGravityEvent(final ZeroGravityEvent.Motion event) {
         this.provessGravityEvent(event);
     }
 }

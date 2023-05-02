@@ -25,7 +25,7 @@ public class SystemRenderEventHandler {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onRingRender(CelestialBodyRenderEvent.CelestialRingRenderEvent.Pre renderEvent) {
+    public void onRingRender(final CelestialBodyRenderEvent.CelestialRingRenderEvent.Pre renderEvent) {
         // sky: D:\Code\Galacticraft\src\main\java\micdoodle8\mods\galacticraft\planets\mars\client\SkyProviderMars.java
         if (renderEvent.celestialBody.equals(AmunRa.instance.asteroidBeltMehen)
                 || renderEvent.celestialBody.equals(AmunRa.instance.moonBaalRings)) {
@@ -33,13 +33,13 @@ public class SystemRenderEventHandler {
         }
     }
 
-    protected void drawAsteroidRings(CelestialBodyRenderEvent.CelestialRingRenderEvent.Pre renderEvent,
-            CelestialBody aroundBody) {
+    protected void drawAsteroidRings(final CelestialBodyRenderEvent.CelestialRingRenderEvent.Pre renderEvent,
+            final CelestialBody aroundBody) {
 
-        Vector3f mapPos = renderEvent.parentOffset;
+        final Vector3f mapPos = renderEvent.parentOffset;
 
-        float xOffset = (float) mapPos.x;
-        float yOffset = (float) mapPos.y;
+        final float xOffset = (float) mapPos.x;
+        final float yOffset = (float) mapPos.y;
 
         if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiCelestialSelection)
             GL11.glColor4f(0.7F, 0.0F, 0.0F, 0.5F);
@@ -122,7 +122,7 @@ public class SystemRenderEventHandler {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onBodyRender(CelestialBodyRenderEvent.Pre renderEvent) {
+    public void onBodyRender(final CelestialBodyRenderEvent.Pre renderEvent) {
         if (renderEvent.celestialBody.equals(AmunRa.instance.asteroidBeltMehen)
                 || renderEvent.celestialBody.equals(AmunRa.instance.moonBaalRings)) {
             GL11.glRotatef(Sys.getTime() / 10.0F % 360, 0, 0, 1);
@@ -131,7 +131,7 @@ public class SystemRenderEventHandler {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onSpecialRender(EventSpecialRender event) {
+    public void onSpecialRender(final EventSpecialRender event) {
         NetworkRenderer.renderNetworks(FMLClientHandler.instance().getClient().theWorld, event.partialTicks);
     }
 }

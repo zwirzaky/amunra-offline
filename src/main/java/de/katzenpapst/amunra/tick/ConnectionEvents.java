@@ -21,14 +21,14 @@ public class ConnectionEvents {
      */
 
     @SubscribeEvent
-    public void onConnectionReceived(ServerConnectionFromClientEvent event) {
+    public void onConnectionReceived(final ServerConnectionFromClientEvent event) {
         event.manager.scheduleOutboundPacket(ConnectionPacketAR.createMothershipPacket());
         // config packet
         event.manager.scheduleOutboundPacket(ConnectionPacketAR.createConfigPacket());
     }
 
     @SubscribeEvent
-    public void onConnectionOpened(ClientConnectedToServerEvent event) {
+    public void onConnectionOpened(final ClientConnectedToServerEvent event) {
         // stolen from GC...
         if (!event.isLocal) {
             clientConnected = true;
@@ -37,7 +37,7 @@ public class ConnectionEvents {
     }
 
     @SubscribeEvent
-    public void onConnectionClosed(ClientDisconnectionFromServerEvent event) {
+    public void onConnectionClosed(final ClientDisconnectionFromServerEvent event) {
         if (clientConnected) {
             clientConnected = false;
             // unregister motherships here

@@ -35,8 +35,8 @@ public class GuiRocketEngine extends GuiContainerGC {
 
     protected boolean isEngineObstructed;
 
-    public GuiRocketEngine(Container container, TileEntityMothershipEngineAbstract tileEngine,
-            ResourceLocation texture) {
+    public GuiRocketEngine(final Container container, final TileEntityMothershipEngineAbstract tileEngine,
+            final ResourceLocation texture) {
         super(container);
         this.tileEngine = tileEngine;
         this.ySize = 201;
@@ -50,7 +50,7 @@ public class GuiRocketEngine extends GuiContainerGC {
         guiTexture = texture;
     }
 
-    public GuiRocketEngine(InventoryPlayer player, TileEntityMothershipEngineAbstract tileEngine) {
+    public GuiRocketEngine(final InventoryPlayer player, final TileEntityMothershipEngineAbstract tileEngine) {
 
         this(
                 new ContainerRocketEngine(player, tileEngine),
@@ -59,7 +59,7 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
+    protected void actionPerformed(final GuiButton par1GuiButton) {
         switch (par1GuiButton.id) {
             case 0:
                 GalacticraftCore.packetPipeline.sendToServer(
@@ -84,7 +84,7 @@ public class GuiRocketEngine extends GuiContainerGC {
                         20,
                         GCCoreUtil.translate("gui.button.enable.name")));
 
-        List<String> fuelTankDesc = new ArrayList<String>();
+        final List<String> fuelTankDesc = new ArrayList<String>();
         fuelTankDesc.add("");
         tankInfo = new GuiElementInfoRegion(
                 (this.width - this.xSize) / 2 + 7,
@@ -106,7 +106,7 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
         int offsetY = 35;
 
         this.buttonEnable.displayString = !this.tileEngine.getDisabled(0)
@@ -167,7 +167,7 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(guiTexture);
         final int xPos = (this.width - this.xSize) / 2;
@@ -186,8 +186,8 @@ public class GuiRocketEngine extends GuiContainerGC {
 
         // other stuff
         // jet
-        int jetX = 32;
-        int jetY = 28;
+        final int jetX = 32;
+        final int jetY = 28;
         this.drawTexturedModalRect(xPos + jetX, yPos + jetY, 192, 0, 22, 11);
         if (this.tileEngine.isInUse()) {
             // fire

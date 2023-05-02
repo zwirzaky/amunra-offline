@@ -28,7 +28,7 @@ public class ModelSentry extends ModelBase {
         body.setTextureSize(64, 32);
         body.mirror = true;
 
-        float yOffset = -8F;
+        final float yOffset = -8F;
 
         leftarm = new ModelRenderer(this, 0, 0);
         leftarm.addBox(-1F, 0F, -1F, 2, 12, 2);
@@ -61,7 +61,7 @@ public class ModelSentry extends ModelBase {
         body.addChild(bottomarm);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z) {
+    private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
@@ -73,8 +73,8 @@ public class ModelSentry extends ModelBase {
      * "far" arms and legs can swing at most.
      */
     @Override
-    public void setRotationAngles(float limbSwingTime, float linbSwingAmount, float somethingWhatever, float rotationY,
-            float rotationX, float p_78087_6_, Entity p_78087_7_) {
+    public void setRotationAngles(final float limbSwingTime, final float linbSwingAmount, final float somethingWhatever, final float rotationY,
+            final float rotationX, final float p_78087_6_, final Entity p_78087_7_) {
         this.body.rotateAngleY = rotationY / (180F / (float) Math.PI);
         this.body.rotateAngleX = rotationX / (180F / (float) Math.PI);
 
@@ -89,8 +89,8 @@ public class ModelSentry extends ModelBase {
      * Sets the models various rotation angles then renders the model.
      */
     @Override
-    public void render(Entity entity, float limbSwingTime, float limbSwingAmplitude, float totalTimeMaybe,
-            float rotationY, float rotationX, float someConstant) {
+    public void render(final Entity entity, final float limbSwingTime, final float limbSwingAmplitude, final float totalTimeMaybe,
+            final float rotationY, final float rotationX, final float someConstant) {
         this.setRotationAngles(
                 limbSwingTime,
                 limbSwingAmplitude,

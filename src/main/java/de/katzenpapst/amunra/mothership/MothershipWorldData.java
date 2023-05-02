@@ -31,7 +31,7 @@ public class MothershipWorldData extends WorldSavedData {
     public static final String saveDataID = "ARMothershipData";
 
     // orbit distances should stay the same
-    private HashMap<CelestialBody, Float> orbitDistances;
+    private final HashMap<CelestialBody, Float> orbitDistances;
 
     private int highestId = 0;
     private int numTicksWithoutSave = 0;
@@ -41,7 +41,7 @@ public class MothershipWorldData extends WorldSavedData {
 
     protected HashMap<Integer, Mothership> mothershipsByDimension;
 
-    public MothershipWorldData(String id) {
+    public MothershipWorldData(final String id) {
         super(id);
         mothershipIdList = new HashMap<Integer, Mothership>();
         mothershipsByDimension = new HashMap<Integer, Mothership>();
@@ -54,24 +54,24 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     protected void updateAllOrbits() {
-        HashMap<CelestialBody, Integer> bodies = this.getBodiesWithShips();
-        for (CelestialBody b : bodies.keySet()) {
+        final HashMap<CelestialBody, Integer> bodies = this.getBodiesWithShips();
+        for (final CelestialBody b : bodies.keySet()) {
             this.updateOrbitsFor(b);
         }
     }
 
-    protected void updateOrbitsFor(CelestialBody parent) {
+    protected void updateOrbitsFor(final CelestialBody parent) {
         if (parent == null) return;
 
-        List<Mothership> list = getMothershipsForParent(parent);
-        int numShips = list.size();
-        float twoPi = (float) Math.PI * 2;
-        float angle = (twoPi / numShips);
-        Random rand = new Random(parent.getName().hashCode());
+        final List<Mothership> list = getMothershipsForParent(parent);
+        final int numShips = list.size();
+        final float twoPi = (float) Math.PI * 2;
+        final float angle = twoPi / numShips;
+        final Random rand = new Random(parent.getName().hashCode());
         float phaseOffset = rand.nextFloat() * twoPi;
-        float orbitDistance = getMothershipOrbitDistanceFor(parent);
+        final float orbitDistance = getMothershipOrbitDistanceFor(parent);
 
-        for (Mothership ms : list) {
+        for (final Mothership ms : list) {
 
             if (phaseOffset > twoPi) {
                 phaseOffset -= twoPi;
@@ -84,7 +84,7 @@ public class MothershipWorldData extends WorldSavedData {
         this.markDirty();
     }
 
-    public float getMothershipOrbitDistanceFor(CelestialBody parent) {
+    public float getMothershipOrbitDistanceFor(final CelestialBody parent) {
         if (orbitDistances.get(parent) != null) {
             return orbitDistances.get(parent);
         }
@@ -93,13 +93,13 @@ public class MothershipWorldData extends WorldSavedData {
         float orbitSize = -1;
         if (parent instanceof Planet) {
             // now try to find out what the closest thing here is
-            for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
+            for (final Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
                 if (moon.getParentPlanet() != parent) continue;
                 if (orbitSize == -1 || orbitSize > moon.getRelativeDistanceFromCenter().unScaledDistance) {
                     orbitSize = moon.getRelativeDistanceFromCenter().unScaledDistance;
                 }
             }
-            for (Satellite satellite : GalaxyRegistry.getRegisteredSatellites().values()) {
+            for (final Satellite satellite : GalaxyRegistry.getRegisteredSatellites().values()) {
                 if (satellite.getParentPlanet() != parent) {
                     continue;
                 }
@@ -130,8 +130,8 @@ public class MothershipWorldData extends WorldSavedData {
      * @return
      */
     // @SideOnly(Side.SERVER)
-    public Mothership registerNewMothership(EntityPlayer player, CelestialBody currentParent) {
-        int newId = ++highestId;
+    public Mothership registerNewMothership(final EntityPlayer player, final CelestialBody currentParent) {
+        final int newId = ++highestId;
 
         // failsafe
         if (mothershipIdList.get(newId) != null) {
@@ -139,11 +139,11 @@ public class MothershipWorldData extends WorldSavedData {
         }
 
         // find dimension ID
-        int newDimensionID = DimensionManager.getNextFreeDimId();
+        final int newDimensionID = DimensionManager.getNextFreeDimId();
 
         DimensionManager.registerDimension(newDimensionID, AmunRa.config.mothershipProviderID);
 
-        Mothership ship = new Mothership(newId, new PlayerID(player));
+        final Mothership ship = new Mothership(newId, new PlayerID(player));
         ship.setParent(currentParent);
         ship.setDimensionInfo(newDimensionID);
 
@@ -153,7 +153,7 @@ public class MothershipWorldData extends WorldSavedData {
 
         this.markDirty();
 
-        NBTTagCompound data = new NBTTagCompound();
+        final NBTTagCompound data = new NBTTagCompound();
         ship.writeToNBT(data);
 
         AmunRa.packetPipeline.sendToAll(
@@ -168,7 +168,7 @@ public class MothershipWorldData extends WorldSavedData {
      * @return the definite mothership object as it should be used and stuff
      */
     @SideOnly(Side.CLIENT)
-    public Mothership addMothership(Mothership ship) {
+    public Mothership addMothership(final Mothership ship) {
 
         if (MinecraftServer.getServer() != null && !MinecraftServer.getServer().isDedicatedServer()) {
             // don't do this on an integrated SSP server, because for these, the list is up to date already
@@ -202,15 +202,15 @@ public class MothershipWorldData extends WorldSavedData {
      * @param parent
      * @return
      */
-    public int getNumMothershipsForParent(CelestialBody parent) {
+    public int getNumMothershipsForParent(final CelestialBody parent) {
         int result = 0;
 
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
+        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            final Map.Entry<Integer, Mothership> pair = it.next();
+            final Mothership curM = (Mothership) pair.getValue();
 
-            CelestialBody curParent = curM.getParent();
+            final CelestialBody curParent = curM.getParent();
             if (curParent != null && curParent.equals(parent)) {
                 result++;
             }
@@ -219,11 +219,11 @@ public class MothershipWorldData extends WorldSavedData {
         return result;
     }
 
-    public boolean hasMothershipsInOrbit(CelestialBody parent) {
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
+    public boolean hasMothershipsInOrbit(final CelestialBody parent) {
+        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            final Map.Entry<Integer, Mothership> pair = it.next();
+            final Mothership curM = (Mothership) pair.getValue();
 
             if (curM.getParent() == parent) return true;
         }
@@ -236,15 +236,15 @@ public class MothershipWorldData extends WorldSavedData {
      * @param parent
      * @return
      */
-    public List<Mothership> getMothershipsForParent(CelestialBody parent) {
-        LinkedList<Mothership> result = new LinkedList<Mothership>();
+    public List<Mothership> getMothershipsForParent(final CelestialBody parent) {
+        final LinkedList<Mothership> result = new LinkedList<Mothership>();
 
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
+        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            final Map.Entry<Integer, Mothership> pair = it.next();
+            final Mothership curM = (Mothership) pair.getValue();
 
-            CelestialBody curParent = curM.getParent();
+            final CelestialBody curParent = curM.getParent();
             if (curParent != null && curParent.equals(parent)) {
                 result.add(curM);
             }
@@ -259,13 +259,13 @@ public class MothershipWorldData extends WorldSavedData {
      * @param player
      * @return
      */
-    public int getNumMothershipsForPlayer(PlayerID player) {
+    public int getNumMothershipsForPlayer(final PlayerID player) {
         int num = 0;
 
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
+        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            final Map.Entry<Integer, Mothership> pair = it.next();
+            final Mothership curM = (Mothership) pair.getValue();
 
             if (curM.isPlayerOwner(player)) {
                 num++;
@@ -275,7 +275,7 @@ public class MothershipWorldData extends WorldSavedData {
         return num;
     }
 
-    public int getNumMothershipsForPlayer(EntityPlayer player) {
+    public int getNumMothershipsForPlayer(final EntityPlayer player) {
         return getNumMothershipsForPlayer(new PlayerID(player));
     }
 
@@ -285,13 +285,13 @@ public class MothershipWorldData extends WorldSavedData {
      * @return a map where the key is the celestial body and the value is the number of motherships around it
      */
     public HashMap<CelestialBody, Integer> getBodiesWithShips() {
-        HashMap<CelestialBody, Integer> result = new HashMap<CelestialBody, Integer>();
+        final HashMap<CelestialBody, Integer> result = new HashMap<CelestialBody, Integer>();
 
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
+        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = (Mothership) pair.getValue();
-            CelestialBody parent = curM.getParent();
+            final Map.Entry<Integer, Mothership> pair = it.next();
+            final Mothership curM = (Mothership) pair.getValue();
+            final CelestialBody parent = curM.getParent();
             if (parent == null) continue;
 
             if (result.get(parent) == null) {
@@ -305,19 +305,19 @@ public class MothershipWorldData extends WorldSavedData {
         return result;
     }
 
-    public Mothership getByDimensionId(int dimId) {
+    public Mothership getByDimensionId(final int dimId) {
         return mothershipsByDimension.get(dimId);
     }
 
-    public Mothership getByMothershipId(int id) {
+    public Mothership getByMothershipId(final int id) {
         return mothershipIdList.get(id);
     }
 
-    public Mothership getByName(String name) {
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
+    public Mothership getByName(final String name) {
+        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            final Map.Entry<Integer, Mothership> pair = it.next();
+            final Mothership curM = (Mothership) pair.getValue();
             if (curM.getName().equals(name)) {
                 return curM;
             }
@@ -329,14 +329,14 @@ public class MothershipWorldData extends WorldSavedData {
      * This should only ever be called when the save is loaded initially
      */
     @Override
-    public void readFromNBT(NBTTagCompound data) {
-        NBTTagList tagList = data.getTagList("MothershipList", 10);
+    public void readFromNBT(final NBTTagCompound data) {
+        final NBTTagList tagList = data.getTagList("MothershipList", 10);
         mothershipIdList.clear();
         mothershipsByDimension.clear();
 
         for (int i = 0; i < tagList.tagCount(); i++) {
-            NBTTagCompound nbt2 = tagList.getCompoundTagAt(i); // I think I have to unregister them on player logout.
-            Mothership m = Mothership.createFromNBT(nbt2);
+            final NBTTagCompound nbt2 = tagList.getCompoundTagAt(i); // I think I have to unregister them on player logout.
+            final Mothership m = Mothership.createFromNBT(nbt2);
             if (highestId < m.getID()) {
                 highestId = m.getID();
             }
@@ -387,12 +387,12 @@ public class MothershipWorldData extends WorldSavedData {
      *
      * @param dimId
      */
-    protected void maybeRegisterDimension(int dimId) {
+    protected void maybeRegisterDimension(final int dimId) {
         if (!DimensionManager.isDimensionRegistered(dimId)) {
             DimensionManager.registerDimension(dimId, AmunRa.config.mothershipProviderID);
         } else {
             // just check if it's registered the right way
-            int type = DimensionManager.getProviderType(dimId);
+            final int type = DimensionManager.getProviderType(dimId);
             if (type != AmunRa.config.mothershipProviderID) {
                 throw new RuntimeException(
                         "Dimension " + dimId + " could not be registered for mothership because it's already taken");
@@ -401,12 +401,12 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound data) {
-        NBTTagList tagList = new NBTTagList();
+    public void writeToNBT(final NBTTagCompound data) {
+        final NBTTagList tagList = new NBTTagList();
 
         // HashMap<Integer, Mothership> mothershipIdList
-        for (Mothership m : mothershipIdList.values()) {
-            NBTTagCompound nbt2 = new NBTTagCompound();
+        for (final Mothership m : mothershipIdList.values()) {
+            final NBTTagCompound nbt2 = new NBTTagCompound();
             m.writeToNBT(nbt2);
             tagList.appendTag(nbt2);
         }
@@ -416,7 +416,7 @@ public class MothershipWorldData extends WorldSavedData {
 
     public void tickAllMotherships() {
         boolean hasChanged = false;
-        for (Mothership m : mothershipIdList.values()) {
+        for (final Mothership m : mothershipIdList.values()) {
             if (!m.isInTransit()) {
                 continue;
             }
@@ -432,7 +432,7 @@ public class MothershipWorldData extends WorldSavedData {
                         new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_MOTHERSHIP_TRANSIT_ENDED, m.getID()));
             }
         }
-        if (hasChanged || (!hasChanged && numTicksWithoutSave > 0)) {
+        if (hasChanged || !hasChanged && numTicksWithoutSave > 0) {
             // if no changes, but still unsaved changes
             if (numTicksWithoutSave >= 1200) {
                 numTicksWithoutSave = 0;
@@ -450,7 +450,7 @@ public class MothershipWorldData extends WorldSavedData {
      * This is just so that the progress bar is updated on client
      */
     public void tickAllMothershipsClient() {
-        for (Mothership m : mothershipIdList.values()) {
+        for (final Mothership m : mothershipIdList.values()) {
             if (!m.isInTransit()) {
                 continue;
             }
@@ -462,7 +462,7 @@ public class MothershipWorldData extends WorldSavedData {
 
     public void unregisterAllMotherships() {
 
-        for (Integer dimID : mothershipsByDimension.keySet()) {
+        for (final Integer dimID : mothershipsByDimension.keySet()) {
             DimensionManager.unregisterDimension(dimID);
         }
 

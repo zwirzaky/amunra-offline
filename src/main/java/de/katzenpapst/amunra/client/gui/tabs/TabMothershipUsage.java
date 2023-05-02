@@ -20,22 +20,22 @@ public class TabMothershipUsage extends AbstractPermissionTab {
             AmunRa.ASSETPREFIX,
             "textures/gui/usage-permission.png");
 
-    public TabMothershipUsage(TileEntityMothershipSettings tile, GuiMothershipSettings parent, Minecraft mc, int width,
-            int height, int xSize, int ySize) {
+    public TabMothershipUsage(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent, final Minecraft mc, final int width,
+            final int height, final int xSize, final int ySize) {
         super(tile, parent, mc, width, height, xSize, ySize);
     }
 
     @Override
     public void resetData() {
-        Mothership.PermissionMode pm = this.tile.getMothership().getUsagePermissionMode();
+        final Mothership.PermissionMode pm = this.tile.getMothership().getUsagePermissionMode();
         modeDropdown.selectedOption = pm.ordinal();
         playerIdList.clear();
 
-        Mothership m = this.tile.getMothership();
+        final Mothership m = this.tile.getMothership();
 
         playerIdList.addAll(m.getPlayerListUsage());
         selectBox.clear();
-        for (PlayerID pid : playerIdList) {
+        for (final PlayerID pid : playerIdList) {
             selectBox.addString(pid.getName());
         }
     }
@@ -51,21 +51,21 @@ public class TabMothershipUsage extends AbstractPermissionTab {
     }
 
     @Override
-    public void onSelectionChanged(GuiElementDropdown dropdown, int selection) {
+    public void onSelectionChanged(final GuiElementDropdown dropdown, final int selection) {
         if (dropdown == modeDropdown) {
-            PermissionMode mode = PermissionMode.values()[selection];
+            final PermissionMode mode = PermissionMode.values()[selection];
             tile.getMothership().setUsagePermissionMode(mode);
             this.applyData();
         }
     }
 
     @Override
-    public int getInitialSelection(GuiElementDropdown dropdown) {
+    public int getInitialSelection(final GuiElementDropdown dropdown) {
         return this.tile.getMothership().getUsagePermissionMode().ordinal();
     }
 
     @Override
-    protected void addUsername(Mothership mothership, String userName) {
+    protected void addUsername(final Mothership mothership, final String userName) {
         AmunRa.packetPipeline.sendToServer(
                 new PacketSimpleAR(
                         EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER,
@@ -75,7 +75,7 @@ public class TabMothershipUsage extends AbstractPermissionTab {
     }
 
     @Override
-    protected void removeUsernameFromList(int position) {
+    protected void removeUsernameFromList(final int position) {
         playerIdList.remove(position);
         tile.getMothership().setPlayerListUsage(playerIdList);
     }

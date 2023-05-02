@@ -9,14 +9,14 @@ import de.katzenpapst.amunra.AmunRa;
 public class ServerProxy extends ARSidedProxy {
 
     @Override
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(final FMLPreInitializationEvent event) {
         try {
-            MinecraftServer s = MinecraftServer.getServer();
+            final MinecraftServer s = MinecraftServer.getServer();
             if (s.isDedicatedServer() && !s.isServerInOnlineMode() && !AmunRa.isDevEnvironment()) {
                 AmunRa.LOGGER.fatal("Server is running in offline mode. This is not supported.");
                 FMLCommonHandler.instance().exitJava(-10, false);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             AmunRa.LOGGER.error(
                     "Could not detect whenever server is in online mode. Things might break if the server is in offline mode.");
         }

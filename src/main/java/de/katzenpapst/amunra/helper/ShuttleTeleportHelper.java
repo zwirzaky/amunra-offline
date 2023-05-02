@@ -58,14 +58,14 @@ public class ShuttleTeleportHelper {
 
     public ShuttleTeleportHelper() {}
 
-    public static Entity transferEntityToDimension(Entity entity, int dimensionID, WorldServer world) {
+    public static Entity transferEntityToDimension(final Entity entity, final int dimensionID, final WorldServer world) {
         // boolean transferInv = true;
         // EntityAutoRocket ridingRocket = null;
         if (!world.isRemote) {
             // GalacticraftCore.packetPipeline.sendToAll(new PacketSimple(EnumSimplePacket.C_UPDATE_PLANETS_LIST,
             // WorldUtil.getPlanetList()));
 
-            MinecraftServer mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
+            final MinecraftServer mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
 
             if (mcServer != null) {
                 final WorldServer targetWorld = world.provider.dimensionId == dimensionID ? world
@@ -89,7 +89,7 @@ public class ShuttleTeleportHelper {
         return null;
     }
 
-    private static Entity teleportEntity(World worldNew, Entity entity, int dimID, ITeleportType type) {
+    private static Entity teleportEntity(final World worldNew, final Entity entity, final int dimID, final ITeleportType type) {
         if (entity.ridingEntity != null) {
             if (entity.ridingEntity instanceof EntitySpaceshipBase) entity.mountEntity(entity.ridingEntity);
             else if (entity.ridingEntity instanceof EntityCelestialFake) {
@@ -98,27 +98,27 @@ public class ShuttleTeleportHelper {
             }
         }
 
-        boolean dimChange = entity.worldObj != worldNew;
+        final boolean dimChange = entity.worldObj != worldNew;
         entity.worldObj.updateEntityWithOptionalForce(entity, false);
         EntityPlayerMP player = null;
         Vector3 spawnPos = null;
-        int oldDimID = entity.worldObj.provider.dimensionId;
+        final int oldDimID = entity.worldObj.provider.dimensionId;
 
         if (dimChange) {
             if (entity instanceof EntityPlayerMP) {
                 player = (EntityPlayerMP) entity;
-                World worldOld = player.worldObj;
+                final World worldOld = player.worldObj;
 
                 try {
                     AmunRa.LOGGER.debug("Attempting to remove player from old dimension {}", oldDimID);
                     ((WorldServer) worldOld).getPlayerManager().removePlayer(player);
                     AmunRa.LOGGER.debug("Successfully removed player from old dimension {}", oldDimID);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     AmunRa.LOGGER.warn("Failed to remove player from old dimension", e);
                 }
 
                 player.closeScreen(); // redundant?
-                GCPlayerStats stats = GCPlayerStats.get(player);
+                final GCPlayerStats stats = GCPlayerStats.get(player);
                 stats.usingPlanetSelectionGui = false;
 
                 player.dimension = dimID;
@@ -135,7 +135,7 @@ public class ShuttleTeleportHelper {
                     if (WorldUtil.registeredSpaceStations.containsKey(dimID))
                     // TODO This has never been effective before due to the earlier bug - what does it actually do?
                     {
-                        NBTTagCompound var2 = new NBTTagCompound();
+                        final NBTTagCompound var2 = new NBTTagCompound();
                         SpaceStationWorldData.getStationData(worldNew, dimID, player).writeToNBT(var2);
                         GalacticraftCore.packetPipeline.sendTo(
                                 new PacketSimple(
@@ -149,7 +149,7 @@ public class ShuttleTeleportHelper {
                 worldOld.updateAllPlayersSleepingFlag();
                 if (player.addedToChunk
                         && worldOld.getChunkProvider().chunkExists(player.chunkCoordX, player.chunkCoordZ)) {
-                    Chunk chunkOld = worldOld.getChunkFromChunkCoords(player.chunkCoordX, player.chunkCoordZ);
+                    final Chunk chunkOld = worldOld.getChunkFromChunkCoords(player.chunkCoordX, player.chunkCoordZ);
                     chunkOld.removeEntity(player);
                     chunkOld.isModified = true;
                 }
@@ -163,7 +163,7 @@ public class ShuttleTeleportHelper {
 
                 // ok this is important
                 spawnPos = type.getPlayerSpawnLocation((WorldServer) entity.worldObj, player);
-                ChunkCoordIntPair pair = worldNew.getChunkFromChunkCoords(spawnPos.intX(), spawnPos.intZ())
+                final ChunkCoordIntPair pair = worldNew.getChunkFromChunkCoords(spawnPos.intX(), spawnPos.intZ())
                         .getChunkCoordIntPair();
                 AmunRa.LOGGER.debug("Loading first chunk in new dimension.");
                 ((WorldServer) worldNew).theChunkProviderServer.loadChunk(pair.chunkXPos, pair.chunkZPos);
@@ -195,49 +195,47 @@ public class ShuttleTeleportHelper {
                 player.mcServer.getConfigurationManager().updateTimeAndWeatherForPlayer(player, (WorldServer) worldNew);
                 player.mcServer.getConfigurationManager().syncPlayerInventory(player);
 
-                for (Object o : player.getActivePotionEffects()) {
-                    PotionEffect var10 = (PotionEffect) o;
+                for (final Object o : player.getActivePotionEffects()) {
+                    final PotionEffect var10 = (PotionEffect) o;
                     player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), var10));
                 }
 
                 player.playerNetServerHandler.sendPacket(
                         new S1FPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
             }
-        } else {
-            // Same dimension player transfer
-            if (entity instanceof EntityPlayerMP) {
-                player = (EntityPlayerMP) entity;
-                player.closeScreen();
-                GCPlayerStats stats = GCPlayerStats.get(player);
-                stats.usingPlanetSelectionGui = false;
+        } else // Same dimension player transfer
+        if (entity instanceof EntityPlayerMP) {
+            player = (EntityPlayerMP) entity;
+            player.closeScreen();
+            final GCPlayerStats stats = GCPlayerStats.get(player);
+            stats.usingPlanetSelectionGui = false;
 
-                if (worldNew.provider instanceof WorldProviderOrbit) GalacticraftCore.packetPipeline
-                        .sendTo(new PacketSimple(EnumSimplePacket.C_RESET_THIRD_PERSON, new Object[] {}), player);
-                worldNew.updateEntityWithOptionalForce(entity, false);
+            if (worldNew.provider instanceof WorldProviderOrbit) GalacticraftCore.packetPipeline
+                    .sendTo(new PacketSimple(EnumSimplePacket.C_RESET_THIRD_PERSON, new Object[] {}), player);
+            worldNew.updateEntityWithOptionalForce(entity, false);
 
-                spawnPos = type.getPlayerSpawnLocation((WorldServer) entity.worldObj, (EntityPlayerMP) entity);
-                player.playerNetServerHandler.setPlayerLocation(
-                        spawnPos.x,
-                        spawnPos.y,
-                        spawnPos.z,
-                        entity.rotationYaw,
-                        entity.rotationPitch);
-                entity.setLocationAndAngles(
-                        spawnPos.x,
-                        spawnPos.y,
-                        spawnPos.z,
-                        entity.rotationYaw,
-                        entity.rotationPitch);
-                worldNew.updateEntityWithOptionalForce(entity, false);
+            spawnPos = type.getPlayerSpawnLocation((WorldServer) entity.worldObj, (EntityPlayerMP) entity);
+            player.playerNetServerHandler.setPlayerLocation(
+                    spawnPos.x,
+                    spawnPos.y,
+                    spawnPos.z,
+                    entity.rotationYaw,
+                    entity.rotationPitch);
+            entity.setLocationAndAngles(
+                    spawnPos.x,
+                    spawnPos.y,
+                    spawnPos.z,
+                    entity.rotationYaw,
+                    entity.rotationPitch);
+            worldNew.updateEntityWithOptionalForce(entity, false);
 
-                AmunRa.LOGGER.info(
-                        "Server attempting to transfer player {} within same dimension {}",
-                        player.getGameProfile().getName(),
-                        worldNew.provider.dimensionId);
-            }
+            AmunRa.LOGGER.info(
+                    "Server attempting to transfer player {} within same dimension {}",
+                    player.getGameProfile().getName(),
+                    worldNew.provider.dimensionId);
         }
-        GCPlayerStats playerStats = GCPlayerStats.get(player);
-        boolean usingShuttle = playerStats.rocketItem != null && (playerStats.rocketItem instanceof ItemShuttle);
+        final GCPlayerStats playerStats = GCPlayerStats.get(player);
+        final boolean usingShuttle = playerStats.rocketItem != null && playerStats.rocketItem instanceof ItemShuttle;
 
         if (spawnPos == null) {
             // this should now happen
@@ -291,7 +289,7 @@ public class ShuttleTeleportHelper {
             // land in shuttle
             GCPlayerHandler.setUsingParachute(player, playerStats, false);
 
-            ItemShuttle shuttle = (ItemShuttle) playerStats.rocketItem;
+            final ItemShuttle shuttle = (ItemShuttle) playerStats.rocketItem;
 
             if (GCPlayerStats.get(player).teleportCooldown <= 0) {
                 if (player.capabilities.isFlying) {
@@ -310,8 +308,8 @@ public class ShuttleTeleportHelper {
         return entity;
     }
 
-    private static void landInShuttle(World world, EntityPlayerMP player, ItemShuttle item, Vector3 spawnPos) {
-        GCPlayerStats playerStats = GCPlayerStats.get(player);
+    private static void landInShuttle(final World world, final EntityPlayerMP player, final ItemShuttle item, Vector3 spawnPos) {
+        final GCPlayerStats playerStats = GCPlayerStats.get(player);
 
         // failsafe! yes, this happened...
         if (world.provider instanceof IExitHeight) {
@@ -330,14 +328,14 @@ public class ShuttleTeleportHelper {
             // look for a dock
             dock = ShuttleDockHandler.findAvailableDock(world.provider.dimensionId);
             if (dock != null) {
-                double yTemp = spawnPos.y;
+                final double yTemp = spawnPos.y;
                 spawnPos = dock.toVector3();
                 spawnPos.y = yTemp;
                 itemDropPosition = spawnPos.clone();
             }
         }
 
-        EntityShuttle shuttle = item.spawnRocketEntity(
+        final EntityShuttle shuttle = item.spawnRocketEntity(
                 new ItemStack(playerStats.rocketItem, 1, playerStats.rocketType),
                 world,
                 spawnPos.x,
@@ -350,7 +348,7 @@ public class ShuttleTeleportHelper {
 
         shuttle.fuelTank.setFluid(new FluidStack(GalacticraftCore.fluidFuel, playerStats.fuelLevel));
 
-        ItemStack[] cargoStack = playerStats.rocketStacks.clone();
+        final ItemStack[] cargoStack = playerStats.rocketStacks.clone();
 
         if (playerStats.launchpadStack != null && playerStats.launchpadStack.stackSize > 0
                 && playerStats.launchpadStack.getItem() != null) {
@@ -406,17 +404,17 @@ public class ShuttleTeleportHelper {
      * @param body
      * @return
      */
-    private static HashMap<String, Integer> getArrayOfChildren(EntityPlayerMP playerBase, CelestialBody body) {
-        HashMap<String, Integer> result = new HashMap<String, Integer>();
+    private static HashMap<String, Integer> getArrayOfChildren(final EntityPlayerMP playerBase, final CelestialBody body) {
+        final HashMap<String, Integer> result = new HashMap<String, Integer>();
 
         if (body.getReachable()) {
-            int planetId = body.getDimensionID();
+            final int planetId = body.getDimensionID();
             // add the body itself
             result.put(body.getName(), planetId);
             // seems like you can only have sats for reachable bodies
             // try the sats
             // List<Satellite> sats = GalaxyRegistry.getSatellitesForCelestialBody(body);
-            for (Integer element : WorldUtil.registeredSpaceStations.keySet()) {
+            for (final Integer element : WorldUtil.registeredSpaceStations.keySet()) {
                 final SpaceStationWorldData data = SpaceStationWorldData
                         .getStationData(playerBase.worldObj, element, null);
                 if (data.getHomePlanet() == planetId) {
@@ -443,9 +441,9 @@ public class ShuttleTeleportHelper {
         }
 
         // now the motherships
-        MothershipWorldData msData = TickHandlerServer.mothershipData;
-        List<Mothership> msList = msData.getMothershipsForParent(body);
-        for (Mothership m : msList) {
+        final MothershipWorldData msData = TickHandlerServer.mothershipData;
+        final List<Mothership> msList = msData.getMothershipsForParent(body);
+        for (final Mothership m : msList) {
             result.put(m.getName(), m.getDimensionID());
         }
 
@@ -459,15 +457,16 @@ public class ShuttleTeleportHelper {
      * @param body
      * @return
      */
-    public static CelestialBody getParentPlanet(CelestialBody body) {
+    public static CelestialBody getParentPlanet(final CelestialBody body) {
         if (body instanceof Planet) {
             return body;
-        } else if (body instanceof Moon) {
+        }
+        if (body instanceof Moon) {
             return ((Moon) body).getParentPlanet();
         } else if (body instanceof Satellite) {
             return ((Satellite) body).getParentPlanet();
         } else if (body instanceof Mothership) {
-            CelestialBody parent = ((Mothership) body).getParent();
+            final CelestialBody parent = ((Mothership) body).getParent();
             return getParentPlanet(parent);
         }
         return null;
@@ -479,8 +478,8 @@ public class ShuttleTeleportHelper {
      * @param name
      * @return
      */
-    public static CelestialBody getReachableCelestialBodiesForName(String name) {
-        CelestialBody ms = TickHandlerServer.mothershipData.getByName(name);
+    public static CelestialBody getReachableCelestialBodiesForName(final String name) {
+        final CelestialBody ms = TickHandlerServer.mothershipData.getByName(name);
         if (ms != null) {
             return ms;
         }
@@ -493,18 +492,18 @@ public class ShuttleTeleportHelper {
      * @param name
      * @return
      */
-    public static CelestialBody getAnyCelestialBodyForName(String name) {
-        CelestialBody ms = TickHandlerServer.mothershipData.getByName(name);
+    public static CelestialBody getAnyCelestialBodyForName(final String name) {
+        final CelestialBody ms = TickHandlerServer.mothershipData.getByName(name);
         if (ms != null) {
             return ms;
         }
 
-        List<CelestialBody> celestialBodyList = Lists.newArrayList();
+        final List<CelestialBody> celestialBodyList = Lists.newArrayList();
         celestialBodyList.addAll(GalaxyRegistry.getRegisteredMoons().values());
         celestialBodyList.addAll(GalaxyRegistry.getRegisteredPlanets().values());
         celestialBodyList.addAll(GalaxyRegistry.getRegisteredSatellites().values());
 
-        for (CelestialBody cBody : celestialBodyList) {
+        for (final CelestialBody cBody : celestialBodyList) {
             if (cBody.getName().equals(name)) {
                 return cBody;
             }
@@ -520,8 +519,8 @@ public class ShuttleTeleportHelper {
      * @param id
      * @return
      */
-    public static CelestialBody getCelestialBodyForDimensionID(int id) {
-        CelestialBody defaultBody = WorldUtil.getReachableCelestialBodiesForDimensionID(id);
+    public static CelestialBody getCelestialBodyForDimensionID(final int id) {
+        final CelestialBody defaultBody = WorldUtil.getReachableCelestialBodiesForDimensionID(id);
         if (defaultBody != null) {
             return defaultBody;
         }
@@ -535,7 +534,7 @@ public class ShuttleTeleportHelper {
      * @param playerBase
      * @return
      */
-    public static HashMap<String, Integer> getArrayOfPossibleDimensions(EntityPlayerMP playerBase) {
+    public static HashMap<String, Integer> getArrayOfPossibleDimensions(final EntityPlayerMP playerBase) {
         // playerBase.dimension // this is where the player currently is
         CelestialBody playerBody = getCelestialBodyForDimensionID(playerBase.dimension);
         if (playerBody == null) {
@@ -543,9 +542,9 @@ public class ShuttleTeleportHelper {
             final SpaceStationWorldData data = SpaceStationWorldData
                     .getStationData(playerBase.worldObj, playerBase.dimension, null);
             if (data != null) {
-                int parentID = data.getHomePlanet();
+                final int parentID = data.getHomePlanet();
 
-                CelestialBody parentBody = getCelestialBodyForDimensionID(parentID);
+                final CelestialBody parentBody = getCelestialBodyForDimensionID(parentID);
                 if (parentBody != null) {
                     return getArrayOfChildren(playerBase, parentBody);
                 }

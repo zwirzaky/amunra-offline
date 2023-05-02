@@ -13,18 +13,18 @@ public class WorldGenTreeBySapling extends WorldGenAbstractTree {
 
     protected AbstractSapling sapling;
 
-    public WorldGenTreeBySapling(boolean doBlockNotify, int minTreeHeight, BlockMetaPair sapling) {
+    public WorldGenTreeBySapling(final boolean doBlockNotify, final int minTreeHeight, final BlockMetaPair sapling) {
         super(doBlockNotify);
         this.sapling = (AbstractSapling) ((BlockBasicMeta) sapling.getBlock()).getSubBlock(sapling.getMetadata());
     }
 
-    public WorldGenTreeBySapling(boolean doBlockNotify, int minTreeHeight, AbstractSapling sapling) {
+    public WorldGenTreeBySapling(final boolean doBlockNotify, final int minTreeHeight, final AbstractSapling sapling) {
         super(doBlockNotify);
         this.sapling = sapling;
     }
 
     @Override
-    public boolean generate(World world, Random rand, int x, int y, int z) {
+    public boolean generate(final World world, final Random rand, final int x, final int y, final int z) {
         return this.sapling.generate(world, rand, x, y, z, false);
     }
 }

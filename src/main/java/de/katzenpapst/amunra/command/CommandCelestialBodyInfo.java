@@ -31,33 +31,33 @@ public class CommandCelestialBodyInfo extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return "/" + this.getCommandName() + " <name>";
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender, final String[] args) {
         if (args.length < 1) {
             throw new WrongUsageException("Not enough arguments, usage: " + this.getCommandUsage(sender));
         }
 
-        List<CelestialBody> foundBodies = new ArrayList<CelestialBody>();
+        final List<CelestialBody> foundBodies = new ArrayList<CelestialBody>();
 
-        String name = args[0].toLowerCase();
-        List<CelestialBody> celestialBodyList = Lists.newArrayList();
+        final String name = args[0].toLowerCase();
+        final List<CelestialBody> celestialBodyList = Lists.newArrayList();
         celestialBodyList.addAll(GalaxyRegistry.getRegisteredMoons().values());
         celestialBodyList.addAll(GalaxyRegistry.getRegisteredPlanets().values());
 
         // ClientProxyCore.mc.thePlayer
         // look here first
-        for (CelestialBody body : celestialBodyList) {
+        for (final CelestialBody body : celestialBodyList) {
             if (body.getLocalizedName().toLowerCase().contains(name)) {
                 foundBodies.add(body);
             }
         }
 
-        Collection<SolarSystem> systems = GalaxyRegistry.getRegisteredSolarSystems().values();
-        for (SolarSystem sys : systems) {
+        final Collection<SolarSystem> systems = GalaxyRegistry.getRegisteredSolarSystems().values();
+        for (final SolarSystem sys : systems) {
             if (sys.getMainStar().getLocalizedName().toLowerCase().contains(name)) {
                 foundBodies.add(sys.getMainStar());
             }
@@ -70,8 +70,8 @@ public class CommandCelestialBodyInfo extends CommandBase {
             sender.addChatMessage(
                     new ChatComponentTranslation("info.message.celestialbodysearch.some", foundBodies.size(), name));
 
-            for (CelestialBody body : foundBodies) {
-                StringBuilder sb = new StringBuilder();
+            for (final CelestialBody body : foundBodies) {
+                final StringBuilder sb = new StringBuilder();
 
                 sb.append(body.getLocalizedName());
                 sb.append(" : ");
@@ -88,7 +88,7 @@ public class CommandCelestialBodyInfo extends CommandBase {
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender sender) {
+    public boolean canCommandSenderUseCommand(final ICommandSender sender) {
         return true;
     }
 }

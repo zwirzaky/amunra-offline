@@ -164,8 +164,8 @@ public class AmunRa {
     public static final Logger LOGGER = LogManager.getLogger(MODNAME);
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());
+    public void preInit(final FMLPreInitializationEvent event) {
+        final Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());
 
         config.processConfig(configFile);
 
@@ -214,12 +214,12 @@ public class AmunRa {
         return (List<ResourceLocation>) possibleAsteroidTextures.clone();
     }
 
-    public void addPossibleMothershipTexture(ResourceLocation loc) {
+    public void addPossibleMothershipTexture(final ResourceLocation loc) {
         possibleMothershipTextures.add(loc);
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event) {
+    public void init(final FMLInitializationEvent event) {
         AmunRa.arTab = new CreativeTabGC(CreativeTabs.getNextID(), "AmunRaTab", ARItems.shuttleItem, 0);
 
         packetPipeline = ARChannelHandler.init();
@@ -234,7 +234,7 @@ public class AmunRa {
     }
 
     @EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void serverStarting(final FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandShuttleTeleport());
         event.registerServerCommand(new CommandMoveMothership());
         event.registerServerCommand(new CommandMothershipInfo());
@@ -242,12 +242,12 @@ public class AmunRa {
     }
 
     @EventHandler
-    public void serverInit(FMLServerStartedEvent event) {
+    public void serverInit(final FMLServerStartedEvent event) {
         TickHandlerServer.restart();
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(final FMLPostInitializationEvent event) {
         proxy.postInit(event);
 
         NetworkRegistry.INSTANCE.registerGuiHandler(AmunRa.instance, new GuiHandler());
@@ -276,15 +276,15 @@ public class AmunRa {
         return nextID - 1;
     }
 
-    public void registerCreature(Class<? extends Entity> entityClass, String entityName, int eggBgColor,
-            int eggFgColor) {
-        int newID = EntityRegistry.findGlobalUniqueEntityId();
+    public void registerCreature(final Class<? extends Entity> entityClass, final String entityName, final int eggBgColor,
+            final int eggFgColor) {
+        final int newID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, newID, eggBgColor, eggFgColor);
         EntityRegistry.registerModEntity(entityClass, entityName, nextInternalID(), AmunRa.instance, 80, 3, true);
     }
 
-    public void registerNonMobEntity(Class<? extends Entity> var0, String var1, int trackingDistance, int updateFreq,
-            boolean sendVel) {
+    public void registerNonMobEntity(final Class<? extends Entity> var0, final String var1, final int trackingDistance, final int updateFreq,
+            final boolean sendVel) {
         EntityRegistry.registerModEntity(
                 var0,
                 var1,
@@ -371,7 +371,7 @@ public class AmunRa {
                                         new ItemStack(Items.emerald, 2),
                                         new ItemStack(Items.iron_ingot, 1)));
 
-        ItemStack emptyCan = new ItemStack(GCItems.oilCanister, 1, GCItems.oilCanister.getMaxDamage());
+        final ItemStack emptyCan = new ItemStack(GCItems.oilCanister, 1, GCItems.oilCanister.getMaxDamage());
 
         // offers oxygen refill, and maybe other stuff, TBD
         RobotVillagerProfession.addProfession(
@@ -607,7 +607,7 @@ public class AmunRa {
         GalaxyRegistry.registerMoon(moonKebe);
 
         // For motherships:
-        boolean flag = DimensionManager
+        final boolean flag = DimensionManager
                 .registerProviderType(config.mothershipProviderID, MothershipWorldProvider.class, false);
         if (!flag) {
             throw new RuntimeException(
@@ -619,20 +619,20 @@ public class AmunRa {
         config.setStaticConfigValues();
     }
 
-    protected Planet createPlanet(String name, String texture, double phaseShift, double distance, double orbitTime) {
-        Planet pl = new Planet(name);
+    protected Planet createPlanet(final String name, final String texture, final double phaseShift, final double distance, final double orbitTime) {
+        final Planet pl = new Planet(name);
         setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
         return pl;
     }
 
-    protected Moon createMoon(String name, String texture, double phaseShift, double distance, double orbitTime) {
-        Moon pl = new Moon(name);
+    protected Moon createMoon(final String name, final String texture, final double phaseShift, final double distance, final double orbitTime) {
+        final Moon pl = new Moon(name);
         setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
         return pl;
     }
 
-    protected void setCelestialBodyStuff(CelestialBody body, String texture, double phaseShift, double distance,
-            double orbitTime) {
+    protected void setCelestialBodyStuff(final CelestialBody body, final String texture, final double phaseShift, final double distance,
+            final double orbitTime) {
         body.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/" + texture))
                 .setPhaseShift((float) phaseShift)
                 .setRelativeDistanceFromCenter(new ScalableDistance((float) distance, (float) distance))

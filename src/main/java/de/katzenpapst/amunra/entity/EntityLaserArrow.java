@@ -30,28 +30,28 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
             AmunRa.ASSETPREFIX,
             "textures/entity/laserarrow.png");
 
-    public EntityLaserArrow(World world, EntityLivingBase shooter, Vector3 startVec, EntityLivingBase target) {
+    public EntityLaserArrow(final World world, final EntityLivingBase shooter, final Vector3 startVec, final EntityLivingBase target) {
         super(world, shooter, startVec, target);
     }
 
-    public EntityLaserArrow(World world) {
+    public EntityLaserArrow(final World world) {
         super(world);
         // TODO Auto-generated constructor stub
     }
 
-    public EntityLaserArrow(World world, EntityLivingBase shooter, double startX, double startY, double startZ) {
+    public EntityLaserArrow(final World world, final EntityLivingBase shooter, final double startX, final double startY, final double startZ) {
         super(world, shooter, startX, startY, startZ);
     }
 
-    public EntityLaserArrow(World world, double x, double y, double z) {
+    public EntityLaserArrow(final World world, final double x, final double y, final double z) {
         super(world, x, y, z);
     }
 
-    public EntityLaserArrow(World world, EntityLivingBase shootingEntity, EntityLivingBase target, float randMod) {
+    public EntityLaserArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target, final float randMod) {
         super(world, shootingEntity, target, randMod);
     }
 
-    public EntityLaserArrow(World par1World, EntityLivingBase par2EntityLivingBase) {
+    public EntityLaserArrow(final World par1World, final EntityLivingBase par2EntityLivingBase) {
         super(par1World, par2EntityLivingBase);
     }
 
@@ -65,11 +65,11 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
         return damage;
     }
 
-    public void setDoesFireDamage(boolean set) {
+    public void setDoesFireDamage(final boolean set) {
         this.doesFireDamage = set;
     }
 
-    public void setDamage(float newDmg) {
+    public void setDamage(final float newDmg) {
         damage = newDmg;
     }
 
@@ -84,7 +84,7 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
     }
 
     @Override
-    protected int getEntityDependentDamage(Entity ent, int regularDamage) {
+    protected int getEntityDependentDamage(final Entity ent, final int regularDamage) {
         if (ent instanceof EntityBlaze) {
             return Math.max(regularDamage / 2, 1);
         }
@@ -92,9 +92,9 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
     }
 
     @Override
-    protected void onImpactBlock(World worldObj, int x, int y, int z) {
-        Block block = worldObj.getBlock(x, y, z);
-        int meta = worldObj.getBlockMetadata(x, y, z);
+    protected void onImpactBlock(final World worldObj, final int x, final int y, final int z) {
+        final Block block = worldObj.getBlock(x, y, z);
+        final int meta = worldObj.getBlockMetadata(x, y, z);
 
         // first tests first
 
@@ -108,12 +108,12 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
             return;
         }
 
-        ItemStack smeltResult = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(block, 1, meta));
+        final ItemStack smeltResult = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(block, 1, meta));
         if (smeltResult != null) {
 
-            int blockId = Item.getIdFromItem(smeltResult.getItem());
+            final int blockId = Item.getIdFromItem(smeltResult.getItem());
             if (blockId > 0) {
-                Block b = Block.getBlockById(blockId);
+                final Block b = Block.getBlockById(blockId);
                 if (b != Blocks.air) {
                     /**
                      * Sets the block ID and metadata at a given location. Args: X, Y, Z, new block ID, new metadata,
@@ -146,16 +146,16 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
 
     }
 
-    protected void setFireToBlock(World worldObj, int x, int y, int z) {
+    protected void setFireToBlock(final World worldObj, final int x, final int y, final int z) {
         // omg
 
-        double deltaX = x + 0.5 - posX;
-        double deltaY = y + 0.5 - posY;
-        double deltaZ = z + 0.5 - posZ;
+        final double deltaX = x + 0.5 - posX;
+        final double deltaY = y + 0.5 - posY;
+        final double deltaZ = z + 0.5 - posZ;
 
-        double deltaXabs = Math.abs(deltaX);
-        double deltaYabs = Math.abs(deltaY);
-        double deltaZabs = Math.abs(deltaZ);
+        final double deltaXabs = Math.abs(deltaX);
+        final double deltaYabs = Math.abs(deltaY);
+        final double deltaZabs = Math.abs(deltaZ);
 
         if (deltaXabs > deltaYabs) {
             if (deltaXabs > deltaZabs) {
@@ -171,28 +171,26 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
                     worldObj.setBlock(x, y, z - 1, Blocks.fire);
                 }
             }
-        } else {
-            if (deltaYabs > deltaZabs) {
-                if (deltaY < 0) {
-                    worldObj.setBlock(x, y + 1, z, Blocks.fire);
-                } else {
-                    // is there even fire from below?
-                    worldObj.setBlock(x, y - 1, z, Blocks.fire);
-                }
+        } else if (deltaYabs > deltaZabs) {
+            if (deltaY < 0) {
+                worldObj.setBlock(x, y + 1, z, Blocks.fire);
             } else {
-                if (deltaZ < 0) {
-                    worldObj.setBlock(x, y, z + 1, Blocks.fire);
-                } else {
-                    worldObj.setBlock(x, y, z - 1, Blocks.fire);
-                }
+                // is there even fire from below?
+                worldObj.setBlock(x, y - 1, z, Blocks.fire);
+            }
+        } else {
+            if (deltaZ < 0) {
+                worldObj.setBlock(x, y, z + 1, Blocks.fire);
+            } else {
+                worldObj.setBlock(x, y, z - 1, Blocks.fire);
             }
         }
 
     }
 
     @Override
-    protected void onPassThrough(int x, int y, int z) {
-        Block b = worldObj.getBlock(x, y, z);
+    protected void onPassThrough(final int x, final int y, final int z) {
+        final Block b = worldObj.getBlock(x, y, z);
 
         if (b == Blocks.water) {
             this.worldObj.setBlock(x, y, z, Blocks.air);
@@ -211,14 +209,14 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
+    protected void readEntityFromNBT(final NBTTagCompound nbttagcompound) {
         super.readEntityFromNBT(nbttagcompound);
         damage = nbttagcompound.getFloat("damage");
         doesFireDamage = nbttagcompound.getBoolean("fireDmg");
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+    protected void writeEntityToNBT(final NBTTagCompound nbttagcompound) {
         super.writeEntityToNBT(nbttagcompound);
         nbttagcompound.setFloat("damage", damage);
         nbttagcompound.setBoolean("fireDmg", doesFireDamage);

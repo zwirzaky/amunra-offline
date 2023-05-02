@@ -17,11 +17,11 @@ public class ModelARVillager extends ModelVillager {
     private static final int[] tailBoxSizes = { 8, 6, 4, 2 };
     private static final float[] offsets = { -2.0F, 1.5F, 4.0F, 6.0F };
 
-    public ModelARVillager(float par1) {
+    public ModelARVillager(final float par1) {
         this(par1, 0.0F, 64, 64);
     }
 
-    public ModelARVillager(float scaleOrSo, float par2, int textureX, int textureY) {
+    public ModelARVillager(final float scaleOrSo, final float par2, final int textureX, final int textureY) {
         super(scaleOrSo, par2, 0, 0);
 
         this.villagerHead = new ModelRenderer(this).setTextureSize(textureX, textureY);
@@ -51,13 +51,13 @@ public class ModelARVillager extends ModelVillager {
         // this.brain.setRotationPoint(0.0F, 0.0F + par2, 0.0F);
         // this.brain.setTextureOffset(32, 0).addBox(-4.0F, -16.0F, -4.0F, 8, 8, 8, par1 + 0.5F);
 
-        float antennaOffset = -6.0F;
+        final float antennaOffset = -6.0F;
 
         antenna1 = new ModelRenderer(this).setTextureSize(textureX, textureY);
         antenna1.setRotationPoint(0.5F, antennaOffset + par2, 0.0F); // +1
         antenna1.setTextureOffset(54, 6).addBox(4.0F, -0.5F, -0.5F, 4, 1, 1, scaleOrSo + 0.5F);
 
-        ModelRenderer antennaTip1 = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        final ModelRenderer antennaTip1 = new ModelRenderer(this).setTextureSize(textureX, textureY);
         antennaTip1.setRotationPoint(8.0F, 0.0F, 0.0F);
         antennaTip1.setTextureOffset(56, 8).addBox(0.0F, -1.5F, -1.5F, 1, 3, 3, scaleOrSo + 0.5F);
         antennaTip1.rotateAngleX = (float) Math.PI / 4;
@@ -68,7 +68,7 @@ public class ModelARVillager extends ModelVillager {
         antenna2.setRotationPoint(-0.5F, antennaOffset + par2, 0.0F); // -1
         antenna2.setTextureOffset(54, 6).addBox(4.0F, -0.5F, -0.5F, 4, 1, 1, scaleOrSo + 0.5F);
 
-        ModelRenderer antennaTip2 = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        final ModelRenderer antennaTip2 = new ModelRenderer(this).setTextureSize(textureX, textureY);
         antennaTip2.setRotationPoint(8.0F, 0.0F, 0.0F);
         antennaTip2.setTextureOffset(56, 8).addBox(0.0F, -1.5F, -1.5F, 1, 3, 3, scaleOrSo + 0.5F);
         antennaTip2.rotateAngleX = (float) Math.PI / 4;
@@ -84,10 +84,10 @@ public class ModelARVillager extends ModelVillager {
         // float curOffset = 0;
         for (int i = 0; i < tailBoxes.length; i++) {
             tailBoxes[i] = new ModelRenderer(this).setTextureSize(textureX, textureY);
-            int[] curData = tailBoxPositions[i];
-            int curSize = tailBoxSizes[i];
-            float halfSize = curSize / 2.0F;
-            float curPos = offsets[i];
+            final int[] curData = tailBoxPositions[i];
+            final int curSize = tailBoxSizes[i];
+            final float halfSize = curSize / 2.0F;
+            final float curPos = offsets[i];
             tailBoxes[i].setRotationPoint(0.0F, 12.0F + par2, curPos - 2);
             /*
              * if(i < tailBoxes.length-1) { curOffset += (tailBoxSizes[i+1] * 2); } if(i > 0) { curOffset +=
@@ -111,15 +111,15 @@ public class ModelARVillager extends ModelVillager {
      * "far" arms and legs can swing at most.
      */
     @Override
-    public void setRotationAngles(float limbSwingTime, float limbSwingAmount, float totalTimeMaybe, float rotationY,
-            float rotationX, float someConstant, Entity theEntity) {
+    public void setRotationAngles(final float limbSwingTime, final float limbSwingAmount, final float totalTimeMaybe, final float rotationY,
+            final float rotationX, final float someConstant, final Entity theEntity) {
         this.villagerHead.rotateAngleY = rotationY / (180F / (float) Math.PI);
         this.villagerHead.rotateAngleX = rotationX / (180F / (float) Math.PI);
         this.villagerArms.rotationPointY = 3.0F;
         this.villagerArms.rotationPointZ = -1.0F;
         this.villagerArms.rotateAngleX = -0.75F;
 
-        float test = MathHelper.cos(limbSwingTime * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
+        final float test = MathHelper.cos(limbSwingTime * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
 
         this.rightVillagerLeg.rotateAngleX = test;
         this.leftVillagerLeg.rotateAngleX = MathHelper.cos(limbSwingTime * 0.6662F + (float) Math.PI) * 1.4F
@@ -134,15 +134,15 @@ public class ModelARVillager extends ModelVillager {
             // float val = MathHelper.cos(limbSwingTime * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
             // float val2 = this.leftVillagerLeg.rotateAngleX = MathHelper.cos(limbSwingTime * 0.6662F + (float)Math.PI)
             // * 1.4F * limbSwingAmount * 0.5F;
-            float curPos = offsets[i];
+            final float curPos = offsets[i];
             tailBoxes[i].rotationPointZ = curPos * test * 2 + 5 * test - 2;
         }
 
     }
 
     @Override
-    public void render(Entity curEntity, float limbSwingTime, float limbSwingAmplitude, float totalTimeMaybe,
-            float rotationY, float rotationX, float someConstant) {
+    public void render(final Entity curEntity, final float limbSwingTime, final float limbSwingAmplitude, final float totalTimeMaybe,
+            final float rotationY, final float rotationX, final float someConstant) {
         this.setRotationAngles(
                 limbSwingTime,
                 limbSwingAmplitude,

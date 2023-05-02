@@ -43,8 +43,8 @@ abstract public class AbstractPermissionTab extends AbstractTab
     protected String error = "";
     protected float errorTime = 0;
 
-    public AbstractPermissionTab(TileEntityMothershipSettings tile, GuiMothershipSettings parent, Minecraft mc,
-            int width, int height, int xSize, int ySize) {
+    public AbstractPermissionTab(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent, final Minecraft mc,
+            final int width, final int height, final int xSize, final int ySize) {
         super(parent, mc, width, height, xSize, ySize);
         this.tile = tile;
 
@@ -67,7 +67,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
     protected abstract void removeUsernameFromList(int position);
 
     @Override
-    public boolean actionPerformed(GuiButton btn) {
+    public boolean actionPerformed(final GuiButton btn) {
         if (btn == addBtn) {
             //
             // AmunRa.packetPipeline.sendToServer(new PacketSimpleAR(EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER,
@@ -78,7 +78,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
             return true;
         }
         if (btn == rmBtn) {
-            int selection = selectBox.getSelectedStringIndex();
+            final int selection = selectBox.getSelectedStringIndex();
             if (selection != -1) {
                 removeUsernameFromList(selection);
                 selectBox.clearSelection();
@@ -97,8 +97,8 @@ abstract public class AbstractPermissionTab extends AbstractTab
     }
 
     protected String[] getDropdownOptions() {
-        int num = Mothership.PermissionMode.values().length;
-        String[] result = new String[num];
+        final int num = Mothership.PermissionMode.values().length;
+        final String[] result = new String[num];
 
         for (int i = 0; i < num; i++) {
             result[i] = permissionModeMap.get(Mothership.PermissionMode.values()[i]);
@@ -108,7 +108,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
     }
 
     protected void applyData() {
-        GuiMothershipSettings actualParent = ((GuiMothershipSettings) this.parent);
+        final GuiMothershipSettings actualParent = (GuiMothershipSettings) this.parent;
         actualParent.sendMothershipSettingsPacket();
     }
 
@@ -157,7 +157,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
     }
 
     @Override
-    protected void drawExtraScreenElements(int mouseX, int mouseY, float ticks) {
+    protected void drawExtraScreenElements(final int mouseX, final int mouseY, final float ticks) {
         final int guiX = (this.width - this.xSize) / 2;
         final int guiY = (this.height - this.ySize) / 2;
 
@@ -181,7 +181,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
 
     // DROPDOWN SHIT
     @Override
-    public boolean canBeClickedBy(GuiElementDropdown dropdown, EntityPlayer player) {
+    public boolean canBeClickedBy(final GuiElementDropdown dropdown, final EntityPlayer player) {
         return true;
     }
 
@@ -195,39 +195,39 @@ abstract public class AbstractPermissionTab extends AbstractTab
 
     // TEXTBOX SHIT
     @Override
-    public boolean canPlayerEdit(GuiElementTextBox textBox, EntityPlayer player) {
+    public boolean canPlayerEdit(final GuiElementTextBox textBox, final EntityPlayer player) {
         return true;
     }
 
     @Override
-    public void onTextChanged(GuiElementTextBox textBox, String newText) {
-        addBtn.enabled = (newText != null && !newText.isEmpty());
+    public void onTextChanged(final GuiElementTextBox textBox, final String newText) {
+        addBtn.enabled = newText != null && !newText.isEmpty();
 
     }
 
     @Override
-    public String getInitialText(GuiElementTextBox textBox) {
+    public String getInitialText(final GuiElementTextBox textBox) {
         return "";
     }
 
     @Override
-    public int getTextColor(GuiElementTextBox textBox) {
+    public int getTextColor(final GuiElementTextBox textBox) {
         return ColorUtil.to32BitColor(255, 20, 255, 20);
     }
 
     @Override
-    public void onIntruderInteraction(GuiElementTextBox textBox) {
+    public void onIntruderInteraction(final GuiElementTextBox textBox) {
 
     }
 
     // STRINGSELECTBOX SHIT
     @Override
-    public void onSelectionChanged(StringSelectBox box, int selection) {
+    public void onSelectionChanged(final StringSelectBox box, final int selection) {
         rmBtn.enabled = box.hasSelection();
     }
 
     @Override
-    public void mothershipOperationFailed(String message) {
+    public void mothershipOperationFailed(final String message) {
         error = message;
         errorTime = 60.0F;
     }

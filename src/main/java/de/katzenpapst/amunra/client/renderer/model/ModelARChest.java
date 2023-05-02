@@ -15,7 +15,7 @@ public class ModelARChest {
 
     public ModelARChest() {}
 
-    public void render(BlockARChest chestBlock, boolean isDouble, double x, double y, double z) {
+    public void render(final BlockARChest chestBlock, final boolean isDouble, final double x, final double y, final double z) {
         ModelChest chestModel = null;
         // ModelLargeChest largeModel = null;
 

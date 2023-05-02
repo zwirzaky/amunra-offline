@@ -15,14 +15,14 @@ public class RenderBlockScale extends TileEntitySpecialRenderer {
     public RenderBlockScale() {}
 
     @Override
-    public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float partialTickTime) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTickTime) {
         if (!(entity instanceof TileEntityBlockScale)) {
             return;
         }
-        TileEntityBlockScale scaleEntity = (TileEntityBlockScale) entity;
+        final TileEntityBlockScale scaleEntity = (TileEntityBlockScale) entity;
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
-        int rotation = scaleEntity.getRotationMeta();
+        final int rotation = scaleEntity.getRotationMeta();
         switch (rotation) {
             case 0:
                 GL11.glRotatef(180, 0, 1, 0);
@@ -46,13 +46,13 @@ public class RenderBlockScale extends TileEntitySpecialRenderer {
         }
 
         // now try to draw some text onto the block
-        FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
+        final FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
 
-        float yOffset = (50 - fr.FONT_HEIGHT) / 2.0F + 7.0F;
+        final float yOffset = (50 - fr.FONT_HEIGHT) / 2.0F + 7.0F;
 
-        float mass = scaleEntity.getCurrentMass();
-        String toDisplay = GuiHelper.formatKilogram(mass);
-        int width = fr.getStringWidth(toDisplay); // 29 pixels
+        final float mass = scaleEntity.getCurrentMass();
+        final String toDisplay = GuiHelper.formatKilogram(mass);
+        final int width = fr.getStringWidth(toDisplay); // 29 pixels
         GL11.glScalef(0.020F, 0.020F, 0.020F);
         // I think now, translating by 1 means translating by 1 pixel
         // I also think the total width is 1/0,02 = 50

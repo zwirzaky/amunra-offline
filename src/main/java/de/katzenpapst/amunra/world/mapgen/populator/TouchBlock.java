@@ -9,14 +9,14 @@ import net.minecraft.world.chunk.Chunk;
  */
 public class TouchBlock extends AbstractPopulator {
 
-    public TouchBlock(int x, int y, int z) {
+    public TouchBlock(final int x, final int y, final int z) {
         super(x, y, z);
     }
 
     @Override
-    public boolean populate(World world) {
-        Block block = world.getBlock(x, y, z);
-        Chunk chunk = world.getChunkFromChunkCoords(x >> 4, z >> 4);
+    public boolean populate(final World world) {
+        final Block block = world.getBlock(x, y, z);
+        final Chunk chunk = world.getChunkFromChunkCoords(x >> 4, z >> 4);
         world.markAndNotifyBlock(x, y, z, chunk, block, block, 3);
         return true;
     }

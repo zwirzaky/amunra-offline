@@ -1,5 +1,6 @@
 package de.katzenpapst.amunra.config;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -90,10 +91,10 @@ public class ARConfig {
 
     public ARConfig() {}
 
-    public void processConfig(Configuration config) {
+    public void processConfig(final Configuration config) {
 
         config.load();
-        String[] emptySet = {};
+        final String[] emptySet = {};
 
         // Configuration goes here.
         // config.getInt(name, category, defaultValue, minValue, maxValue, comment)
@@ -226,26 +227,26 @@ public class ARConfig {
 
         // suns
 
-        String[] sunData = config.getStringList(
+        final String[] sunData = config.getStringList(
                 "additionalSuns",
                 "rendering",
                 defaultExtraSuns,
                 "Additional bodies to render with a colored aura, or set the aura of a specific star. \nThe bodies in here will be considered stars on motherships as well. \nFormat: '<bodyName>:<r>/<g>/<b>' with the colors as floats between 0 and 1. \nExample: 'myPlanet:1/0.6/0.1'");
-        for (String str : sunData) {
-            String[] parts1 = str.split(":", 2);
+        for (final String str : sunData) {
+            final String[] parts1 = str.split(":", 2);
             if (parts1.length < 2) {
                 AmunRa.LOGGER.warn("'{}' is not a valid sun configuration", str);
                 continue;
             }
-            String body = parts1[0];
-            String color = parts1[1];
+            final String body = parts1[0];
+            final String color = parts1[1];
 
-            String[] parts2 = color.split("/", 3);
+            final String[] parts2 = color.split("/", 3);
             if (parts2.length < 3) {
                 continue;
             }
 
-            Vector3 colorVec = new Vector3(
+            final Vector3 colorVec = new Vector3(
                     Double.parseDouble(parts2[0]),
                     Double.parseDouble(parts2[1]),
                     Double.parseDouble(parts2[2]));
@@ -256,22 +257,22 @@ public class ARConfig {
 
         // rings
 
-        String[] ringData = config.getStringList(
+        final String[] ringData = config.getStringList(
                 "planetsWithRings",
                 "rendering",
                 defaultPlanetsWithRings,
                 "Bodies to render with rings. \nThe format is: <bodyName>:<gapStart>:<gapEnd>:<Mod_Asset_Prefix>:<textureName>. \nThe 'gapStart' and 'gapEnd' is the number of pixels from the left or the top to the start of the gap for the planet and the end, respectively. \nExample: 'uranus:8:20:galacticraftcore:textures/gui/celestialbodies/uranusRings.png'");
-        for (String str : ringData) {
-            String[] parts1 = str.split(":", 5);
+        for (final String str : ringData) {
+            final String[] parts1 = str.split(":", 5);
             if (parts1.length < 5) {
                 AmunRa.LOGGER.warn("'{}' is not a valid ring configuration", str);
                 continue;
             }
-            String body = parts1[0];
-            int gapStart = Integer.valueOf(parts1[1]);
-            int gapEnd = Integer.valueOf(parts1[2]);
-            String assetPrefix = parts1[3];
-            String textureName = parts1[4];
+            final String body = parts1[0];
+            final int gapStart = Integer.valueOf(parts1[1]);
+            final int gapEnd = Integer.valueOf(parts1[2]);
+            final String assetPrefix = parts1[3];
+            final String textureName = parts1[4];
 
             if (gapStart <= 0 || gapEnd <= 0 || gapEnd <= gapStart) {
                 AmunRa.LOGGER.warn("'{}' is not a valid ring configuration", str);
@@ -307,7 +308,7 @@ public class ARConfig {
     }
 
     public NBTTagCompound getServerOverrideData() {
-        NBTTagCompound data = new NBTTagCompound();
+        final NBTTagCompound data = new NBTTagCompound();
 
         // now what do I need?
         // - not the dim IDs
@@ -316,9 +317,9 @@ public class ARConfig {
         data.setInteger("maxNumMotherships", maxNumMotherships);
 
         // data.set
-        NBTTagList bodiesNoList = new NBTTagList();
-        for (String s : mothershipBodiesNoOrbit) {
-            NBTTagString strTag = new NBTTagString(s);
+        final NBTTagList bodiesNoList = new NBTTagList();
+        for (final String s : mothershipBodiesNoOrbit) {
+            final NBTTagString strTag = new NBTTagString(s);
             // strTag.func_150285_a_();
             bodiesNoList.appendTag(strTag);
         }
@@ -333,14 +334,14 @@ public class ARConfig {
         return data;
     }
 
-    public void setServerOverrideData(NBTTagCompound data) {
+    public void setServerOverrideData(final NBTTagCompound data) {
         maxNumMotherships = data.getInteger("maxNumMotherships");
 
-        NBTTagList bodiesNoList = data
+        final NBTTagList bodiesNoList = data
                 .getTagList("msBodiesNoOrbit", net.minecraftforge.common.util.Constants.NBT.TAG_STRING);
         mothershipBodiesNoOrbit.clear();
         for (int i = 0; i < bodiesNoList.tagCount(); i++) {
-            String strData = bodiesNoList.getStringTagAt(i);
+            final String strData = bodiesNoList.getStringTagAt(i);
             mothershipBodiesNoOrbit.add(strData);
         }
 
@@ -388,21 +389,19 @@ public class ARConfig {
         }
     }
 
-    public boolean isSun(CelestialBody body) {
+    public boolean isSun(final CelestialBody body) {
         return sunColorMap.containsKey(body.getName());
     }
 
-    public boolean isAsteroidBelt(CelestialBody body) {
+    public boolean isAsteroidBelt(final CelestialBody body) {
         return asteroidBeltBodies.contains(body.getName());
     }
 
-    private HashSet<String> configGetStringHashSet(Configuration config, String name, String category,
-            String[] defaultValues, String comment) {
-        String[] data = config.getStringList(name, category, defaultValues, comment);
-        HashSet<String> result = new HashSet<String>();
-        for (String str : data) {
-            result.add(str);
-        }
+    private HashSet<String> configGetStringHashSet(final Configuration config, final String name, final String category,
+            final String[] defaultValues, final String comment) {
+        final String[] data = config.getStringList(name, category, defaultValues, comment);
+        final HashSet<String> result = new HashSet<String>();
+        Collections.addAll(result, data);
         return result;
     }
 
@@ -410,10 +409,10 @@ public class ARConfig {
      * Looks for collisions between mothershipProviderID and any dimension ID
      */
     public void verifyMothershipProviderId() {
-        CelestialBody body = GalaxyRegistry.getCelestialBodyFromDimensionID(mothershipProviderID);
+        final CelestialBody body = GalaxyRegistry.getCelestialBodyFromDimensionID(mothershipProviderID);
 
         if (body != null) {
-            String bodyName = AstronomyHelper.getDebugBodyName(body);
+            final String bodyName = AstronomyHelper.getDebugBodyName(body);
             throw new RuntimeException(
                     "Please change \"mothershipProviderID\" in the config file. " + mothershipProviderID
                             + " is already in use by "

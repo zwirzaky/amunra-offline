@@ -28,7 +28,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
 
     BlockMetaPair sourceBlock;
 
-    public BlockStairsAR(BlockMetaPair sourceBlock) {
+    public BlockStairsAR(final BlockMetaPair sourceBlock) {
         // protected constructor? WTF IS THIS SHIT?!!?!
         super(sourceBlock.getBlock(), sourceBlock.getMetadata());
         this.sourceBlock = sourceBlock;
@@ -36,7 +36,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
 
     @Override
     public String getUnlocalizedName() {
-        IMetaBlock mBlock = (IMetaBlock) this.sourceBlock.getBlock();
+        final IMetaBlock mBlock = (IMetaBlock) this.sourceBlock.getBlock();
         if (mBlock != null) {
             return "tile." + mBlock.getSubBlock(sourceBlock.getMetadata()).getUnlocalizedName() + ".stairs";
         }
@@ -59,14 +59,14 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
     }
 
     @Override
-    public float getMass(World w, int x, int y, int z, int meta) {
-        float parentMass = BlockMassHelper.getBlockMass(w, sourceBlock.getBlock(), sourceBlock.getMetadata(), x, y, z);
+    public float getMass(final World w, final int x, final int y, final int z, final int meta) {
+        final float parentMass = BlockMassHelper.getBlockMass(w, sourceBlock.getBlock(), sourceBlock.getMetadata(), x, y, z);
         // 4/6 = 2/3, because stairs
         return parentMass * 2.0F / 3.0F;
     }
 
     @Override
-    public float getBlockHardness(World world, int x, int y, int z) {
+    public float getBlockHardness(final World world, final int x, final int y, final int z) {
         return getSourceBlock().getBlockHardness(world, x, y, z);
     }
 
@@ -86,7 +86,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * @return
      */
     @Override
-    public String getHarvestTool(int metadata) {
+    public String getHarvestTool(final int metadata) {
         return sourceBlock.getBlock().getHarvestTool(metadata);
     }
 
@@ -98,7 +98,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * @return Harvest level, or -1 if not the specified tool type.
      */
     @Override
-    public int getHarvestLevel(int metadata) {
+    public int getHarvestLevel(final int metadata) {
         return sourceBlock.getBlock().getHarvestLevel(metadata);
     }
 
@@ -110,7 +110,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * @return
      */
     @Override
-    public boolean isToolEffective(String type, int metadata) {
+    public boolean isToolEffective(final String type, final int metadata) {
         return this.getHarvestTool(metadata).equals(type);
     }
 
@@ -128,8 +128,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * @return The amount of the explosion absorbed.
      */
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
-            double explosionY, double explosionZ) {
+    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y, final int z, final double explosionX,
+            final double explosionY, final double explosionZ) {
         return getSourceBlock().getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
@@ -138,7 +138,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Called when a player hits the block. Args: world, x, y, z, player
      */
     @Override
-    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
+    public void onBlockClicked(final World world, final int x, final int y, final int z, final EntityPlayer player) {
         // I don't see any reason for this to be proxied to the source block, but meh
         getSourceBlock().onBlockClicked(world, x, y, z, player);
     }
@@ -148,7 +148,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+    public void randomDisplayTick(final World world, final int x, final int y, final int z, final Random rand) {
 
         getSourceBlock().randomDisplayTick(world, x, y, z, rand);
     }
@@ -157,7 +157,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Called right before the block is destroyed by a player. Args: world, x, y, z, metaData
      */
     @Override
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
+    public void onBlockDestroyedByPlayer(final World world, final int x, final int y, final int z, final int metadata) {
         getSourceBlock().onBlockDestroyedByPlayer(world, x, y, z, metadata);
     }
 
@@ -165,7 +165,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Returns how much this block can resist explosions from the passed in entity.
      */
     @Override
-    public float getExplosionResistance(Entity ent) {
+    public float getExplosionResistance(final Entity ent) {
         return getSourceBlock().getExplosionResistance(ent);
     }
 
@@ -173,7 +173,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * How many world ticks before ticking
      */
     @Override
-    public int tickRate(World world) {
+    public int tickRate(final World world) {
         return getSourceBlock().tickRate(world);
     }
 
@@ -181,7 +181,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Can add to the passed in vector for a movement vector to be applied to the entity. Args: x, y, z, entity, vec3d
      */
     @Override
-    public void velocityToAddToEntity(World world, int x, int y, int z, Entity ent, Vec3 vec) {
+    public void velocityToAddToEntity(final World world, final int x, final int y, final int z, final Entity ent, final Vec3 vec) {
         getSourceBlock().velocityToAddToEntity(world, x, y, z, ent, vec);
     }
 
@@ -190,7 +190,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public int getMixedBrightnessForBlock(IBlockAccess world, int x, int y, int z) {
+    public int getMixedBrightnessForBlock(final IBlockAccess world, final int x, final int y, final int z) {
         return getSourceBlock().getMixedBrightnessForBlock(world, x, y, z);
     }
 
@@ -208,7 +208,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         return this.sourceBlock.getBlock().getIcon(side, this.sourceBlock.getMetadata());
     }
 
@@ -217,7 +217,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World world, final int x, final int y, final int z) {
         return getSourceBlock().getSelectedBoundingBoxFromPool(world, x, y, z);
     }
 
@@ -236,7 +236,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * @param par2 whether the player right-clicked while holding a boat
      */
     @Override
-    public boolean canCollideCheck(int meta, boolean boatRightClick) {
+    public boolean canCollideCheck(final int meta, final boolean boatRightClick) {
         return getSourceBlock().canCollideCheck(meta, boatRightClick);
     }
 
@@ -244,7 +244,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
     @Override
-    public boolean canPlaceBlockAt(World world, int x, int y, int z) {
+    public boolean canPlaceBlockAt(final World world, final int x, final int y, final int z) {
         return getSourceBlock().canPlaceBlockAt(world, x, y, z);
     }
 
@@ -252,13 +252,13 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
     @Override
-    public void onBlockAdded(World world, int x, int y, int z) {
+    public void onBlockAdded(final World world, final int x, final int y, final int z) {
         this.onNeighborBlockChange(world, x, y, z, Blocks.air);
         getSourceBlock().onBlockAdded(world, x, y, z);
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block block, final int meta) {
         getSourceBlock().breakBlock(world, x, y, z, block, meta);
     }
 
@@ -266,7 +266,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Called whenever an entity is walking on top of this block. Args: world, x, y, z, entity
      */
     @Override
-    public void onEntityWalking(World world, int x, int y, int z, Entity ent) {
+    public void onEntityWalking(final World world, final int x, final int y, final int z, final Entity ent) {
         this.getSourceBlock().onEntityWalking(world, x, y, z, ent);
     }
 
@@ -274,7 +274,7 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Ticks the block if it's been scheduled
      */
     @Override
-    public void updateTick(World world, int x, int y, int z, Random rand) {
+    public void updateTick(final World world, final int x, final int y, final int z, final Random rand) {
         this.getSourceBlock().updateTick(world, x, y, z, rand);
     }
 
@@ -286,8 +286,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * 
      */
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xOffset,
-            float yOffset, float zOffset) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player, final int side, final float xOffset,
+            final float yOffset, final float zOffset) {
         return this.getSourceBlock().onBlockActivated(world, x, y, z, player, 0, 0.0F, 0.0F, 0.0F);
     }
 
@@ -295,12 +295,12 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Called upon the block being destroyed by an explosion
      */
     @Override
-    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion kaboom) {
+    public void onBlockDestroyedByExplosion(final World world, final int x, final int y, final int z, final Explosion kaboom) {
         this.getSourceBlock().onBlockDestroyedByExplosion(world, x, y, z, kaboom);
     }
 
     @Override
-    public MapColor getMapColor(int foo) {
+    public MapColor getMapColor(final int foo) {
         return this.sourceBlock.getBlock().getMapColor(sourceBlock.getMetadata());
     }
 }

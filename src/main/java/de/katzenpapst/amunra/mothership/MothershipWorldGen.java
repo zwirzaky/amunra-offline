@@ -12,11 +12,11 @@ import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
 
 public class MothershipWorldGen extends WorldGenerator {
 
-    private BlockMetaPair groundBlock;
-    private BlockMetaPair decoBlock;
-    private BlockMetaPair glassBlock;
-    private BlockMetaPair msController;
-    private BlockMetaPair msIndestructible;
+    private final BlockMetaPair groundBlock;
+    private final BlockMetaPair decoBlock;
+    private final BlockMetaPair glassBlock;
+    private final BlockMetaPair msController;
+    private final BlockMetaPair msIndestructible;
 
     /*
      * private BlockMetaPair msJet; private BlockMetaPair msEngine;
@@ -34,7 +34,7 @@ public class MothershipWorldGen extends WorldGenerator {
     }
 
     @Override
-    public boolean generate(World world, Random rand, int centerX, int centerY, int centerZ) {
+    public boolean generate(final World world, final Random rand, final int centerX, final int centerY, final int centerZ) {
         // for this, assume the coordinates we got are the center
         // make one big plane first
         int startX = centerX - 3;
@@ -70,7 +70,7 @@ public class MothershipWorldGen extends WorldGenerator {
                 if (x == startX || x == stopX || z == startZ || z == stopZ) {
                     // roof border
                     world.setBlock(x, centerY + 4, z, groundBlock.getBlock(), groundBlock.getMetadata(), 3);
-                    if ((x > startX + 1 && x < stopX - 1) || (z > startZ + 1 && z < stopZ - 1)) {
+                    if (x > startX + 1 && x < stopX - 1 || z > startZ + 1 && z < stopZ - 1) {
                         continue;
                     }
                     // walls
@@ -102,13 +102,13 @@ public class MothershipWorldGen extends WorldGenerator {
 
         // machines
         // 0, -9 0 => controller
-        int rotationMeta = 2;
+        final int rotationMeta = 2;
         world.setBlock(
                 centerX - 3,
                 centerY + 1,
                 centerZ - 7,
                 msController.getBlock(),
-                msController.getMetadata() | (rotationMeta << 2),
+                msController.getMetadata() | rotationMeta << 2,
                 3);
         /*
          * // (-)5, -6 => booster // (-)5, -5 => engine world.setBlock(centerX+5, centerY+1, centerZ-7,

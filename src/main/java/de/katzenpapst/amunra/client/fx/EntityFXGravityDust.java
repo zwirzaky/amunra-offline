@@ -7,12 +7,12 @@ import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class EntityFXGravityDust extends EntityFX {
 
-    public EntityFXGravityDust(World par1World, Vector3 position, Vector3 motion) {
+    public EntityFXGravityDust(final World par1World, final Vector3 position, final Vector3 motion) {
         super(par1World, position.x, position.y, position.z, motion.x, motion.y, motion.z);
 
         // better position
-        double xDev = par1World.rand.nextGaussian() * 0.75;
-        double zDev = par1World.rand.nextGaussian() * 0.75;
+        final double xDev = par1World.rand.nextGaussian() * 0.75;
+        final double zDev = par1World.rand.nextGaussian() * 0.75;
 
         position.x += xDev;
         position.z += zDev;
@@ -22,27 +22,27 @@ public class EntityFXGravityDust extends EntityFX {
             position.y += 2;
         }
 
-        double maxLength = 1.2;
+        final double maxLength = 1.2;
 
         this.setPosition(position.x, position.y, position.z);
 
         this.motionX = 0;// motion.x;
         this.motionY = motion.y;
         this.motionZ = 0;// motion.z;
-        Vector3 color = new Vector3(0.4, 0.4, 0.4);
+        final Vector3 color = new Vector3(0.4, 0.4, 0.4);
         // Vector3 color = new Vector3(1.0, 0.4, 0.4);
         this.particleRed = color.floatX();
         this.particleGreen = color.floatY();
         this.particleBlue = color.floatZ();
-        double g = Math.abs(motion.y);
-        double timeNeeded = maxLength / g;
+        final double g = Math.abs(motion.y);
+        final double timeNeeded = maxLength / g;
         this.particleMaxAge = (int) (Math.random() * 10.0D + timeNeeded);
         this.noClip = true;
         this.setParticleTextureIndex((int) (Math.random() * 8.0D));
     }
 
     @Override
-    public int getBrightnessForRender(float par1) {
+    public int getBrightnessForRender(final float par1) {
         final int var2 = super.getBrightnessForRender(par1);
         float var3 = (float) this.particleAge / (float) this.particleMaxAge;
         var3 *= var3;
@@ -62,7 +62,7 @@ public class EntityFXGravityDust extends EntityFX {
      * Gets how bright this entity is.
      */
     @Override
-    public float getBrightness(float par1) {
+    public float getBrightness(final float par1) {
         final float var2 = super.getBrightness(par1);
         float var3 = (float) this.particleAge / (float) this.particleMaxAge;
         var3 = var3 * var3 * var3 * var3;

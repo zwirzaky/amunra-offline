@@ -59,9 +59,9 @@ public class TerrainGenerator {
      * @param largeFeatureFilterMod Not sure, default = 8
      * @param smallFeatureFilterMod Not sure, default = 8
      */
-    public TerrainGenerator(Random rand, BlockMetaPair stoneBlock, BlockMetaPair airBlock, float heightMod,
-            float smallFeatureMod, double mountainHeightMod, double valleyHeightMod, double seaLevel, int maxHeight,
-            float mainFeatureFilterMod, float largeFeatureFilterMod, float smallFeatureFilterMod) {
+    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock, final float heightMod,
+            final float smallFeatureMod, final double mountainHeightMod, final double valleyHeightMod, final double seaLevel, final int maxHeight,
+            final float mainFeatureFilterMod, final float largeFeatureFilterMod, final float smallFeatureFilterMod) {
         this.rand = rand;
 
         this.stoneBlock = stoneBlock;
@@ -91,8 +91,8 @@ public class TerrainGenerator {
     /**
      * "Light" constructor. The other 3 values are set to 4, 8, 8, since that's their values in ChunkProviderSpace
      */
-    public TerrainGenerator(Random rand, BlockMetaPair stoneBlock, BlockMetaPair airBlock, float heightMod,
-            float smallFeatureMod, double mountainHeightMod, double valleyHeightMod, double seaLevel, int maxHeight) {
+    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock, final float heightMod,
+            final float smallFeatureMod, final double mountainHeightMod, final double valleyHeightMod, final double seaLevel, final int maxHeight) {
         this(
                 rand,
                 stoneBlock,
@@ -112,8 +112,8 @@ public class TerrainGenerator {
      * Even "lighter" constructor. The other 4 values are set to 255, 4, 8, 8, since that's their values in
      * ChunkProviderSpace
      */
-    public TerrainGenerator(Random rand, BlockMetaPair stoneBlock, BlockMetaPair airBlock, float heightMod,
-            float smallFeatureMod, double mountainHeightMod, double valleyHeightMod, double seaLevel) {
+    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock, final float heightMod,
+            final float smallFeatureMod, final double mountainHeightMod, final double valleyHeightMod, final double seaLevel) {
         this(
                 rand,
                 stoneBlock,
@@ -134,7 +134,7 @@ public class TerrainGenerator {
      * need it in a more configurable form
      *
      */
-    public void generateTerrain(int chunkX, int chunkZ, Block[] idArray, byte[] metaArray) {
+    public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray) {
         noiseGenBase.setFrequency(0.015F);
         noiseGenSmallHill.setFrequency(0.01F);
         noiseGenMountain.setFrequency(0.01F);
@@ -171,7 +171,7 @@ public class TerrainGenerator {
                 yDev = this.lerp(baseHeight, yDev, featureFilter);
 
                 for (int y = 0; y <= this.maxHeight; y++) {
-                    int index = CoordHelper.getIndex(x, y, z);
+                    final int index = CoordHelper.getIndex(x, y, z);
                     if (y < seaLevel + yDev) {
                         idArray[index] = stoneBlock.getBlock();
                         metaArray[index] = stoneBlock.getMetadata();
@@ -184,17 +184,18 @@ public class TerrainGenerator {
         }
     }
 
-    protected double lerp(double d1, double d2, double t) {
+    protected double lerp(final double d1, final double d2, final double t) {
         if (t < 0.0) {
             return d1;
-        } else if (t > 1.0) {
+        }
+        if (t > 1.0) {
             return d2;
         } else {
             return d1 + (d2 - d1) * t;
         }
     }
 
-    protected double clamp(double x, double min, double max) {
+    protected double clamp(final double x, final double min, final double max) {
         if (x < min) {
             return min;
         }
@@ -204,7 +205,7 @@ public class TerrainGenerator {
         return x;
     }
 
-    protected double fade(double n) {
+    protected double fade(final double n) {
         return n * n * n * (n * (n * 6 - 15) + 10);
     }
 }

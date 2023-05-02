@@ -14,25 +14,25 @@ import micdoodle8.mods.galacticraft.api.prefab.entity.EntitySpaceshipBase;
 
 public class RenderShuttle extends Render {
 
-    private ResourceLocation rocketTexture;
+    private final ResourceLocation rocketTexture;
 
     protected IModelCustom rocketModelObj;
 
     protected ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/shuttle.png");
 
-    public RenderShuttle(IModelCustom spaceshipModel, String textureDomain, String texture) {
+    public RenderShuttle(final IModelCustom spaceshipModel, final String textureDomain, final String texture) {
         this.rocketModelObj = spaceshipModel;
         this.rocketTexture = new ResourceLocation(textureDomain, "textures/model/" + texture + ".png");
         this.shadowSize = 2F;
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity par1Entity) {
+    protected ResourceLocation getEntityTexture(final Entity par1Entity) {
         return this.rocketTexture;
     }
 
-    public void renderSpaceship(EntitySpaceshipBase entity, double par2, double par4, double par6, float par8,
-            float par9) {
+    public void renderSpaceship(final EntitySpaceshipBase entity, final double par2, final double par4, final double par6, final float par8,
+            final float par9) {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPushMatrix();
         final float var24 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * par9 + 180;
@@ -75,7 +75,7 @@ public class RenderShuttle extends Render {
     }
 
     @Override
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9) {
         this.renderSpaceship((EntitySpaceshipBase) par1Entity, par2, par4, par6, par8, par9);
     }
 

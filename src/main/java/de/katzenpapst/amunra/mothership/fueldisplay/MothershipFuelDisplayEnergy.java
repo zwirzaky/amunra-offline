@@ -52,13 +52,13 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
     }
 
     @Override
-    public String formatValue(float value) {
+    public String formatValue(final float value) {
         // EnergyDisplayHelper
         return EnergyDisplayHelper.getEnergyDisplayS(value);
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof MothershipFuelDisplayEnergy)) {
             return false;
         }

@@ -52,14 +52,14 @@ public class EntityShuttle extends EntityTieredRocket {
 
     protected Vector3int dockPosition = null;
 
-    public EntityShuttle(World par1World) {
+    public EntityShuttle(final World par1World) {
         super(par1World);
 
         this.setSize(1.2F, 5.5F);
         this.yOffset = 1.5F;
     }
 
-    public EntityShuttle(World world, double posX, double posY, double posZ, int type) {
+    public EntityShuttle(final World world, final double posX, final double posY, final double posZ, final int type) {
         super(world, posX, posY, posZ);
         // this.rocketType = type;
         this.setSize(1.2F, 3.5F);
@@ -69,11 +69,11 @@ public class EntityShuttle extends EntityTieredRocket {
         fuelTank = new FluidTank(getFuelCapacityFromDamage(type));
     }
 
-    public void setTargetDock(Vector3int dockPos) {
+    public void setTargetDock(final Vector3int dockPos) {
         this.targetVec = dockPos.toBlockVec3();
     }
 
-    protected void decodeItemDamage(int dmg) {
+    protected void decodeItemDamage(final int dmg) {
 
         rocketType = getRocketTypeFromDamage(dmg);
         numTanks = getNumTanksFromDamage(dmg);
@@ -92,45 +92,45 @@ public class EntityShuttle extends EntityTieredRocket {
         this.launchPhase = EnumLaunchPhase.LAUNCHED.ordinal();
     }
 
-    public static int encodeItemDamage(int numChests, int numTanks) {
-        return numChests | (numTanks << 2);
+    public static int encodeItemDamage(final int numChests, final int numTanks) {
+        return numChests | numTanks << 2;
     }
 
-    public static int getFuelCapacityFromDamage(int damage) {
-        int numTanks = getNumTanksFromDamage(damage);
+    public static int getFuelCapacityFromDamage(final int damage) {
+        final int numTanks = getNumTanksFromDamage(damage);
         return (1000 + 500 * numTanks) * ConfigManagerCore.rocketFuelFactor;
     }
 
-    public static EnumRocketType getRocketTypeFromDamage(int damage) {
+    public static EnumRocketType getRocketTypeFromDamage(final int damage) {
         return EnumRocketType.values()[getNumChestsFromDamage(damage)];
     }
 
-    public static boolean isPreFueled(int damage) {
+    public static boolean isPreFueled(final int damage) {
         return damage == 15;
     }
 
-    public static int getNumChestsFromDamage(int damage) {
+    public static int getNumChestsFromDamage(final int damage) {
         return damage & 3;
     }
 
-    public static int getNumTanksFromDamage(int damage) {
-        return (damage >> 2) & 3;
+    public static int getNumTanksFromDamage(final int damage) {
+        return damage >> 2 & 3;
     }
 
     @Override
-    public void decodePacketdata(ByteBuf buffer) {
+    public void decodePacketdata(final ByteBuf buffer) {
         this.numTanks = buffer.readInt();
         super.decodePacketdata(buffer);
     }
 
     @Override
-    public void getNetworkedData(ArrayList<Object> list) {
+    public void getNetworkedData(final ArrayList<Object> list) {
         list.add(this.numTanks);
         super.getNetworkedData(list);
     }
 
-    public EntityShuttle(World par1World, double par2, double par4, double par6, boolean reversed, int rocketType,
-            ItemStack[] inv) {
+    public EntityShuttle(final World par1World, final double par2, final double par4, final double par6, final boolean reversed, final int rocketType,
+            final ItemStack[] inv) {
         this(par1World, par2, par4, par6, rocketType);
         this.cargoItems = inv;
     }
@@ -144,7 +144,7 @@ public class EntityShuttle extends EntityTieredRocket {
         return this.rocketType.getInventorySpace();
     }
 
-    public void setCargoContents(ItemStack[] newCargo) {
+    public void setCargoContents(final ItemStack[] newCargo) {
 
         cargoItems = new ItemStack[this.getSizeInventory()];
         int curIndex = 0;
@@ -165,7 +165,7 @@ public class EntityShuttle extends EntityTieredRocket {
      * @return
      */
     public ItemStack getItemRepresentation() {
-        ItemStack rocket = new ItemStack(ARItems.shuttleItem, 1, this.encodeItemDamage());
+        final ItemStack rocket = new ItemStack(ARItems.shuttleItem, 1, this.encodeItemDamage());
         rocket.setTagCompound(new NBTTagCompound());
         rocket.getTagCompound().setInteger("RocketFuel", this.fuelTank.getFluidAmount());
 
@@ -174,7 +174,7 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     @Override
-    public ItemStack getPickedResult(MovingObjectPosition target) {
+    public ItemStack getPickedResult(final MovingObjectPosition target) {
         return new ItemStack(ARItems.shuttleItem, 1, this.encodeItemDamage());
     }
 
@@ -228,7 +228,7 @@ public class EntityShuttle extends EntityTieredRocket {
         return 0.0D;
     }
 
-    private void makeFlame(double x2, double y2, double z2, Vector3 motionVec, boolean getLaunched) {
+    private void makeFlame(final double x2, final double y2, final double z2, final Vector3 motionVec, final boolean getLaunched) {
         if (getLaunched) {
             GalacticraftCore.proxy.spawnParticle(
                     "launchFlameLaunched",
@@ -278,9 +278,9 @@ public class EntityShuttle extends EntityTieredRocket {
             return;
         }
 
-        double x1 = motionVec.x;
-        double y1 = motionVec.y;
-        double z1 = motionVec.z;
+        final double x1 = motionVec.x;
+        final double y1 = motionVec.y;
+        final double z1 = motionVec.z;
         GalacticraftCore.proxy.spawnParticle(
                 "launchFlameIdle",
                 new Vector3(x2 + 0.4 - this.rand.nextDouble() / 10, y2, z2 + 0.4 - this.rand.nextDouble() / 10),
@@ -323,7 +323,7 @@ public class EntityShuttle extends EntityTieredRocket {
                 new Object[] { riddenByEntity });
     }
 
-    protected void spawnParticles(boolean launched) {
+    protected void spawnParticles(final boolean launched) {
         if (!this.isDead) {
             double x1 = 3.2 * Math.cos(this.rotationYaw / 57.2957795D) * Math.sin(this.rotationPitch / 57.2957795D);
             double z1 = 3.2 * Math.sin(this.rotationYaw / 57.2957795D) * Math.sin(this.rotationPitch / 57.2957795D);
@@ -340,15 +340,15 @@ public class EntityShuttle extends EntityTieredRocket {
 
             final double x2 = this.posX + x1;
             final double z2 = this.posZ + z1;
-            Vector3 motionVec = new Vector3(x1, y1, z1);
-            Vector3 d1 = new Vector3(y1 * 0.1D, -x1 * 0.1D, z1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
-            Vector3 d2 = new Vector3(x1 * 0.1D, -z1 * 0.1D, y1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
-            Vector3 d3 = new Vector3(-y1 * 0.1D, x1 * 0.1D, z1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
-            Vector3 d4 = new Vector3(x1 * 0.1D, z1 * 0.1D, -y1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
-            Vector3 mv1 = motionVec.clone().translate(d1);
-            Vector3 mv2 = motionVec.clone().translate(d2);
-            Vector3 mv3 = motionVec.clone().translate(d3);
-            Vector3 mv4 = motionVec.clone().translate(d4);
+            final Vector3 motionVec = new Vector3(x1, y1, z1);
+            final Vector3 d1 = new Vector3(y1 * 0.1D, -x1 * 0.1D, z1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
+            final Vector3 d2 = new Vector3(x1 * 0.1D, -z1 * 0.1D, y1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
+            final Vector3 d3 = new Vector3(-y1 * 0.1D, x1 * 0.1D, z1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
+            final Vector3 d4 = new Vector3(x1 * 0.1D, z1 * 0.1D, -y1 * 0.1D).rotate(315 - this.rotationYaw, motionVec);
+            final Vector3 mv1 = motionVec.clone().translate(d1);
+            final Vector3 mv2 = motionVec.clone().translate(d2);
+            final Vector3 mv3 = motionVec.clone().translate(d3);
+            final Vector3 mv4 = motionVec.clone().translate(d4);
             // T3 - Four flameballs which spread
             makeFlame(x2 + d1.x, y2 + d1.y, z2 + d1.z, mv1, this.getLaunched());
             makeFlame(x2 + d2.x, y2 + d2.y, z2 + d2.z, mv2, this.getLaunched());
@@ -370,25 +370,25 @@ public class EntityShuttle extends EntityTieredRocket {
         super.failRocket();
     }
 
-    protected void repositionMountedPlayer(Entity player) {
+    protected void repositionMountedPlayer(final Entity player) {
         if (!(player instanceof EntityPlayer)) {
             return;
         }
         if (this.getLandingPad() != null && this.getLandingPad() instanceof TileEntityShuttleDock) {
             // just rotate the player away from the dock
-            TileEntityShuttleDock dock = ((TileEntityShuttleDock) this.getLandingPad());
+            final TileEntityShuttleDock dock = (TileEntityShuttleDock) this.getLandingPad();
             ((EntityPlayer) player).rotationYaw = dock.getExitRotation();
             ((EntityPlayer) player).setPositionAndUpdate(player.posX, player.posY, player.posZ);
         }
     }
 
-    protected void repositionDismountedPlayer(Entity player) {
+    protected void repositionDismountedPlayer(final Entity player) {
         if (!(player instanceof EntityPlayer)) {
             return;
         }
         if (this.getLandingPad() != null && this.getLandingPad() instanceof TileEntityShuttleDock) {
-            TileEntityShuttleDock dock = ((TileEntityShuttleDock) this.getLandingPad());
-            Vector3 pos = dock.getExitPosition();
+            final TileEntityShuttleDock dock = (TileEntityShuttleDock) this.getLandingPad();
+            final Vector3 pos = dock.getExitPosition();
             ((EntityPlayer) player).rotationYaw = dock.getExitRotation();
             ((EntityPlayer) player).setPositionAndUpdate(pos.x, pos.y, pos.z);
             // player.setPositionAndRotation(pos.x, pos.y, pos.z, 0, 0);
@@ -396,9 +396,9 @@ public class EntityShuttle extends EntityTieredRocket {
         } else {
             // try not doing this?
             // check for safe positions
-            int xPos = (int) (this.posX - 0.5D);
-            int yPos = (int) (this.posY - this.getYOffset());
-            int zPos = (int) (this.posZ - 0.5D);
+            final int xPos = (int) (this.posX - 0.5D);
+            final int yPos = (int) (this.posY - this.getYOffset());
+            final int zPos = (int) (this.posZ - 0.5D);
 
             if (this.isSafeForPlayer(xPos, yPos, zPos - 2)) {
                 ((EntityPlayer) player).setPositionAndUpdate(this.posX, yPos, this.posZ - 2);
@@ -413,8 +413,8 @@ public class EntityShuttle extends EntityTieredRocket {
         // return new Vector3(this.posX, this.posY, this.posZ);
     }
 
-    protected boolean isSafeForPlayer(double x, double y, double z) {
-        int y1 = (int) y;
+    protected boolean isSafeForPlayer(final double x, final double y, final double z) {
+        final int y1 = (int) y;
 
         return WorldHelper.isNonSolid(worldObj, (int) x, y1, (int) z)
                 && WorldHelper.isNonSolid(worldObj, (int) x, y1 + 1, (int) z)
@@ -422,11 +422,11 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     protected void tryFindAnotherDock() {
-        Vector3int dock = ShuttleDockHandler.findAvailableDock(this.worldObj.provider.dimensionId);
+        final Vector3int dock = ShuttleDockHandler.findAvailableDock(this.worldObj.provider.dimensionId);
         if (dock != null) {
 
             // reposition myself a little to be above it
-            double yBak = this.posY;
+            final double yBak = this.posY;
             this.setPosition(dock.x, yBak, dock.z);
             targetVec = dock.toBlockVec3();
         } else {
@@ -435,24 +435,23 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     protected void tryToDock() {
-        int chunkx = CoordHelper.blockToChunk(targetVec.x);
-        int chunkz = CoordHelper.blockToChunk(targetVec.z);
+        final int chunkx = CoordHelper.blockToChunk(targetVec.x);
+        final int chunkz = CoordHelper.blockToChunk(targetVec.z);
         if (worldObj.getChunkProvider().chunkExists(chunkx, chunkz)) {
 
-            TileEntity te = targetVec.getTileEntity(worldObj);
+            final TileEntity te = targetVec.getTileEntity(worldObj);
             if (te != null && te instanceof IFuelDock) {
 
-                if (te instanceof TileEntityShuttleDock) {
-                    if (((TileEntityShuttleDock) te).isAvailable()) {
-
-                        // finally
-                        ((TileEntityShuttleDock) te).dockEntity(this);
-                    } else {
-                        tryFindAnotherDock();
-                    }
-                } else {
+                if (!(te instanceof TileEntityShuttleDock)) {
                     // just a regular dock. oh well
                     return;
+                }
+                if (((TileEntityShuttleDock) te).isAvailable()) {
+
+                    // finally
+                    ((TileEntityShuttleDock) te).dockEntity(this);
+                } else {
+                    tryFindAnotherDock();
                 }
 
             } else {
@@ -577,17 +576,16 @@ public class EntityShuttle extends EntityTieredRocket {
             doKnowOnWhatImStanding = true;
         } else {
             if (dockPosition != null) {
-                TileEntity tile = worldObj.getTileEntity(dockPosition.x, dockPosition.y, dockPosition.z);
+                final TileEntity tile = worldObj.getTileEntity(dockPosition.x, dockPosition.y, dockPosition.z);
                 if (tile != null) {
                     if (tile instanceof IFuelDock) {
                         this.setPad((IFuelDock) tile);
                         this.landEntity(tile);
                         dockPosition = null;
                         return;
-                    } else {
-                        // something went wrong
-                        dockPosition = null;
                     }
+                    // something went wrong
+                    dockPosition = null;
                 }
             }
 
@@ -598,11 +596,11 @@ public class EntityShuttle extends EntityTieredRocket {
 
             // let's look downward
             // this.posY is about 3 blocks above the baseline
-            int bX = (int) (this.posX - 0.5D);
-            int bY = (int) (this.posY - 0.5D - 1);
-            int bZ = (int) (this.posZ - 0.5D);
+            final int bX = (int) (this.posX - 0.5D);
+            final int bY = (int) (this.posY - 0.5D - 1);
+            final int bZ = (int) (this.posZ - 0.5D);
 
-            Vector3int highest = WorldHelper
+            final Vector3int highest = WorldHelper
                     .getHighestNonEmptyBlock(worldObj, bX - 1, bX + 1, bY - 5, bY, bZ - 1, bZ + 1);
 
             if (highest != null) {
@@ -631,26 +629,24 @@ public class EntityShuttle extends EntityTieredRocket {
                         adjustGroundPosition(highest.y);
                     }
                 }
-            } else {
-                if (!isInZeroG) {
-                    // make the rocket land
-                    this.setLanding();
-                }
+            } else if (!isInZeroG) {
+                // make the rocket land
+                this.setLanding();
             }
         }
     }
 
     @Override
-    public void landEntity(int x, int y, int z) {
-        TileEntity tile = this.worldObj.getTileEntity(x, y, z);
+    public void landEntity(final int x, final int y, final int z) {
+        final TileEntity tile = this.worldObj.getTileEntity(x, y, z);
 
         landEntity(tile);
     }
 
-    public void landEntity(TileEntity tile) {
+    public void landEntity(final TileEntity tile) {
 
         if (tile instanceof IFuelDock) {
-            IFuelDock dock = (IFuelDock) tile;
+            final IFuelDock dock = (IFuelDock) tile;
 
             if (this.isDockValid(dock)) {
                 if (!this.worldObj.isRemote) {
@@ -669,13 +665,13 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     @Override
-    public void setPad(IFuelDock pad) {
+    public void setPad(final IFuelDock pad) {
         isOnBareGround = false;
         doKnowOnWhatImStanding = true;
         super.setPad(pad);
     }
 
-    protected void adjustGroundPosition(int blockYPos) {
+    protected void adjustGroundPosition(final int blockYPos) {
         // posY = distance-blockYPos
         this.setPosition(this.posX, getDistanceFromGround() + blockYPos, this.posZ);
         // double distance = this.posY-blockYPos;
@@ -686,10 +682,10 @@ public class EntityShuttle extends EntityTieredRocket {
         // Not launch controlled
         if (this.riddenByEntity != null && !this.worldObj.isRemote) {
             if (this.riddenByEntity instanceof EntityPlayerMP) {
-                EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
+                final EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
 
                 this.onTeleport(player);
-                GCPlayerStats stats = this.setGCPlayerStats(player);
+                final GCPlayerStats stats = this.setGCPlayerStats(player);
 
                 // this is the part which activates the celestial gui
                 toCelestialSelection(player, stats, this.getRocketTier());
@@ -701,8 +697,8 @@ public class EntityShuttle extends EntityTieredRocket {
         this.setDead();
     }
 
-    public GCPlayerStats setGCPlayerStats(EntityPlayerMP player) {
-        GCPlayerStats stats = GCPlayerStats.get(player);
+    public GCPlayerStats setGCPlayerStats(final EntityPlayerMP player) {
+        final GCPlayerStats stats = GCPlayerStats.get(player);
 
         if (this.cargoItems == null || this.cargoItems.length == 0) {
             stats.rocketStacks = new ItemStack[2];
@@ -716,19 +712,19 @@ public class EntityShuttle extends EntityTieredRocket {
         return stats;
     }
 
-    public static void toCelestialSelection(EntityPlayerMP player, GCPlayerStats stats, int tier) {
+    public static void toCelestialSelection(final EntityPlayerMP player, final GCPlayerStats stats, final int tier) {
         toCelestialSelection(player, stats, tier, true);
     }
 
-    public static void toCelestialSelection(EntityPlayerMP player, GCPlayerStats stats, int tier,
-            boolean useFakeEntity) {
+    public static void toCelestialSelection(final EntityPlayerMP player, final GCPlayerStats stats, final int tier,
+            final boolean useFakeEntity) {
         player.mountEntity(null);
         stats.spaceshipTier = tier;
         // replace this with my own stuff. this must only contain the nearby stuff
-        HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
+        final HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
         String dimensionList = "";
         int count = 0;
-        for (Entry<String, Integer> entry : map.entrySet()) {
+        for (final Entry<String, Integer> entry : map.entrySet()) {
             dimensionList = dimensionList.concat(entry.getKey() + (count < map.entrySet().size() - 1 ? "?" : ""));
             count++;
         }
@@ -743,22 +739,22 @@ public class EntityShuttle extends EntityTieredRocket {
         stats.savedPlanetList = new String(dimensionList);
 
         if (useFakeEntity) {
-            Entity fakeEntity = new EntityShuttleFake(player.worldObj, player.posX, player.posY, player.posZ, 0.0F);
+            final Entity fakeEntity = new EntityShuttleFake(player.worldObj, player.posX, player.posY, player.posZ, 0.0F);
             player.worldObj.spawnEntityInWorld(fakeEntity);
             player.mountEntity(fakeEntity);
         }
     }
 
     @Override
-    public List<ItemStack> getItemsDropped(List<ItemStack> droppedItems) {
+    public List<ItemStack> getItemsDropped(final List<ItemStack> droppedItems) {
         super.getItemsDropped(droppedItems);
-        ItemStack rocket = getItemRepresentation();
+        final ItemStack rocket = getItemRepresentation();
         droppedItems.add(rocket);
         return droppedItems;
     }
 
     public List<ItemStack> getCargoContents() {
-        ArrayList<ItemStack> droppedItemList = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> droppedItemList = new ArrayList<ItemStack>();
         if (this.cargoItems != null) {
             for (final ItemStack item : this.cargoItems) {
                 if (item != null) {
@@ -771,11 +767,11 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound nbt) {
+    protected void writeEntityToNBT(final NBTTagCompound nbt) {
         nbt.setInteger("NumTanks", numTanks);
 
         if (this.getLandingPad() != null) {
-            Vector3int pos = new Vector3int((TileEntity) this.getLandingPad());
+            final Vector3int pos = new Vector3int((TileEntity) this.getLandingPad());
             nbt.setTag("dockPosition", pos.toNBT());
             // pos.toNBT()
         }
@@ -784,13 +780,13 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound nbt) {
+    protected void readEntityFromNBT(final NBTTagCompound nbt) {
         // EnumShuttleMode.
         // this.shuttleMode = EnumShuttleMode.values()[nbt.getInteger("ShuttleMode")];
         // this.setShuttleMode(shuttleMode);
         this.numTanks = nbt.getInteger("NumTanks");
         if (nbt.hasKey("dockPosition")) {
-            NBTTagCompound dockPosNbt = nbt.getCompoundTag("dockPosition");
+            final NBTTagCompound dockPosNbt = nbt.getCompoundTag("dockPosition");
             if (dockPosNbt != null) {
                 dockPosition = new Vector3int(dockPosNbt);
             }

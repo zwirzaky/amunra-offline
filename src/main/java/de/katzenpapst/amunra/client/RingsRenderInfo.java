@@ -13,13 +13,13 @@ public class RingsRenderInfo {
 
     public Vector2int textureSize = null;
 
-    public RingsRenderInfo(ResourceLocation textureLocation, int gapStart, int gapEnd) {
+    public RingsRenderInfo(final ResourceLocation textureLocation, final int gapStart, final int gapEnd) {
         this.textureLocation = textureLocation;
         this.gapStart = gapStart;
         this.gapEnd = gapEnd;
     }
 
-    public void setTextureSize(int x, int y) {
+    public void setTextureSize(final int x, final int y) {
         textureSize = new Vector2int(x, y);
     }
 

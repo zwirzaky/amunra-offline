@@ -21,7 +21,7 @@ abstract public class BaseStructureComponent {
         return groundLevel;
     }
 
-    public void setStructureBoundingBox(StructureBoundingBox structBB) {
+    public void setStructureBoundingBox(final StructureBoundingBox structBB) {
         this.structBB = structBB;
     }
 
@@ -29,15 +29,15 @@ abstract public class BaseStructureComponent {
         return this.structBB;
     }
 
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         return true;
     }
 
-    public void setParent(BaseStructureStart parent) {
+    public void setParent(final BaseStructureStart parent) {
         this.parent = parent;
     }
 
-    public void setCoordMode(int coordMode) {
+    public void setCoordMode(final int coordMode) {
         this.coordMode = coordMode;
     }
 
@@ -56,7 +56,7 @@ abstract public class BaseStructureComponent {
      * zOffset); }
      */
 
-    protected int translateX(int x, int z) {
+    protected int translateX(final int x, final int z) {
         switch (this.coordMode) {
             case 0:
             case 2:
@@ -66,19 +66,19 @@ abstract public class BaseStructureComponent {
                 return this.structBB.maxX - (z - this.structBB.minZ);
             case 3:
                 // similar to above
-                return this.structBB.minX + (z - this.structBB.minZ);
+                return this.structBB.minX + z - this.structBB.minZ;
         }
 
         return x;
     }
 
-    protected int translateZ(int x, int z) {
+    protected int translateZ(final int x, final int z) {
         switch (this.coordMode) {
             case 0:
                 return z;
             case 1:
             case 3:
-                return this.structBB.minZ + (x - this.structBB.minX);
+                return this.structBB.minZ + x - this.structBB.minX;
             case 2:
                 return this.structBB.maxZ - (z - this.structBB.minZ);
             default:
@@ -86,13 +86,13 @@ abstract public class BaseStructureComponent {
         }
     }
 
-    protected int getHighestSolidBlockInBB(Block[] blocks, byte[] metas, int chunkX, int chunkZ, int x, int z) {
-        int xOffset = getXWithOffset(x, z);
+    protected int getHighestSolidBlockInBB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int z) {
+        final int xOffset = getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        int zOffset = getZWithOffset(x, z);
+        final int zOffset = getZWithOffset(x, z);
 
-        int relX = CoordHelper.abs2rel(xOffset, chunkX);
-        int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
+        final int relX = CoordHelper.abs2rel(xOffset, chunkX);
+        final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
         if (relX < 0 || relX >= 16 || relZ < 0 || relZ >= 16) {
             return -1;
         }
@@ -119,25 +119,25 @@ abstract public class BaseStructureComponent {
      *                return true; }
      */
 
-    protected void fillBox(Block[] blocks, byte[] metas, StructureBoundingBox box, Block block, byte meta) {
+    protected void fillBox(final Block[] blocks, final byte[] metas, final StructureBoundingBox box, final Block block, final byte meta) {
 
         for (int x = box.minX; x <= box.maxX; x++) {
             for (int y = box.minY; y <= box.maxY; y++) {
                 for (int z = box.minZ; z <= box.maxZ; z++) {
-                    int chunkX = CoordHelper.blockToChunk(x);
-                    int chunkZ = CoordHelper.blockToChunk(z);
+                    final int chunkX = CoordHelper.blockToChunk(x);
+                    final int chunkZ = CoordHelper.blockToChunk(z);
                     placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, block, meta);
                 }
             }
         }
     }
 
-    protected void fillBox(Block[] blocks, byte[] metas, StructureBoundingBox box, BlockMetaPair bmp) {
+    protected void fillBox(final Block[] blocks, final byte[] metas, final StructureBoundingBox box, final BlockMetaPair bmp) {
         this.fillBox(blocks, metas, box, bmp.getBlock(), bmp.getMetadata());
     }
 
-    public static StructureBoundingBox intersectBoundingBoxesXZ(StructureBoundingBox box1, StructureBoundingBox box2) {
-        StructureBoundingBox result = new StructureBoundingBox();
+    public static StructureBoundingBox intersectBoundingBoxesXZ(final StructureBoundingBox box1, final StructureBoundingBox box2) {
+        final StructureBoundingBox result = new StructureBoundingBox();
 
         result.minX = Math.max(box1.minX, box2.minX);
         result.minZ = Math.max(box1.minZ, box2.minZ);
@@ -152,8 +152,8 @@ abstract public class BaseStructureComponent {
         return result;
     }
 
-    public static StructureBoundingBox intersectBoundingBoxes(StructureBoundingBox box1, StructureBoundingBox box2) {
-        StructureBoundingBox result = new StructureBoundingBox();
+    public static StructureBoundingBox intersectBoundingBoxes(final StructureBoundingBox box1, final StructureBoundingBox box2) {
+        final StructureBoundingBox result = new StructureBoundingBox();
 
         result.minX = Math.max(box1.minX, box2.minX);
         result.minY = Math.max(box1.minY, box2.minY);
@@ -170,48 +170,48 @@ abstract public class BaseStructureComponent {
         return result;
     }
 
-    protected boolean placeBlockRel2BB(Block[] blocks, byte[] metas, int chunkX, int chunkZ, int x, int y, int z,
-            BlockMetaPair block) {
-        int xOffset = getXWithOffset(x, z);
+    protected boolean placeBlockRel2BB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z,
+            final BlockMetaPair block) {
+        final int xOffset = getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        int zOffset = getZWithOffset(x, z);
+        final int zOffset = getZWithOffset(x, z);
 
-        int relX = CoordHelper.abs2rel(xOffset, chunkX);
-        int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
+        final int relX = CoordHelper.abs2rel(xOffset, chunkX);
+        final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
         /*
          * if(relX < 0 || relX >= 16 || relZ < 0 || relZ >= 16) { return false; }
          */
         return placeBlockRel(blocks, metas, relX, y, relZ, block);
     }
 
-    protected BlockMetaPair getBlockRel2BB(Block[] blocks, byte[] metas, int chunkX, int chunkZ, int x, int y, int z) {
-        int xOffset = getXWithOffset(x, z);
+    protected BlockMetaPair getBlockRel2BB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z) {
+        final int xOffset = getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        int zOffset = getZWithOffset(x, z);
+        final int zOffset = getZWithOffset(x, z);
 
-        int relX = CoordHelper.abs2rel(xOffset, chunkX);
-        int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
+        final int relX = CoordHelper.abs2rel(xOffset, chunkX);
+        final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
         /*
          * if(relX < 0 || relX >= 16 || relZ < 0 || relZ >= 16) { return null; }
          */
         return getBlockRel(blocks, metas, relX, y, relZ);
     }
 
-    protected boolean placeBlockRel2BB(Block[] blocks, byte[] metas, int chunkX, int chunkZ, int x, int y, int z,
-            Block block, int meta) {
-        int xOffset = getXWithOffset(x, z);
+    protected boolean placeBlockRel2BB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z,
+            final Block block, final int meta) {
+        final int xOffset = getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        int zOffset = getZWithOffset(x, z);
+        final int zOffset = getZWithOffset(x, z);
 
-        int relX = CoordHelper.abs2rel(xOffset, chunkX);
-        int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
+        final int relX = CoordHelper.abs2rel(xOffset, chunkX);
+        final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
         if (relX < 0 || relX >= 16 || relZ < 0 || relZ >= 16) {
             return false;
         }
         return placeBlockRel(blocks, metas, relX, y, relZ, block, meta);
     }
 
-    protected int getXWithOffset(int x, int z) {
+    protected int getXWithOffset(final int x, final int z) {
         switch (this.coordMode) {
             case 0:
             case 2:
@@ -225,7 +225,7 @@ abstract public class BaseStructureComponent {
         }
     }
 
-    protected int getZWithOffset(int x, int z) {
+    protected int getZWithOffset(final int x, final int z) {
         switch (this.coordMode) {
             case 0:
                 return this.structBB.minZ + z;
@@ -239,14 +239,14 @@ abstract public class BaseStructureComponent {
         }
     }
 
-    protected void placeStandingSign(Block[] blocks, byte[] metas, int chunkX, int chunkZ, int x, int y, int z,
-            String text) {
+    protected void placeStandingSign(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z,
+            final String text) {
 
         if (placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, Blocks.standing_sign, (byte) 0)) {
-            int xOffset = getXWithOffset(x, z);
+            final int xOffset = getXWithOffset(x, z);
             // y = getYWithOffset(y);
-            int zOffset = getZWithOffset(x, z);
-            SetSignText sst = new SetSignText(xOffset, y, zOffset, text);
+            final int zOffset = getZWithOffset(x, z);
+            final SetSignText sst = new SetSignText(xOffset, y, zOffset, text);
             this.parent.addPopulator(sst);
         }
     }
@@ -260,11 +260,11 @@ abstract public class BaseStructureComponent {
      *
      * 1 0-+-2 3
      */
-    public static int rotateDoorlikeMetadata(int unrotated, int coordMode) {
+    public static int rotateDoorlikeMetadata(final int unrotated, final int coordMode) {
         return rotateUniversalMetadata(unrotated, coordMode, 1, 3, 2, 0);
     }
 
-    public static int rotateTorchMetadata(int unrotated, int coordMode) {
+    public static int rotateTorchMetadata(final int unrotated, final int coordMode) {
         // error with coordMode=1, everything is just the wrong way round
 
         return rotateStairlikeMetadata(unrotated - 1, coordMode) + 1;
@@ -276,7 +276,7 @@ abstract public class BaseStructureComponent {
      *
      * 3 1-+-0 2
      */
-    public static int rotateStairlikeMetadata(int unrotated, int coordMode) {
+    public static int rotateStairlikeMetadata(final int unrotated, final int coordMode) {
         return rotateUniversalMetadata(unrotated, coordMode, 3, 2, 0, 1);
     }
 
@@ -285,7 +285,7 @@ abstract public class BaseStructureComponent {
      *
      *         n w-+-e s
      */
-    public static int rotateUniversalMetadata(int unrotated, int coordMode, int n, int s, int e, int w) {
+    public static int rotateUniversalMetadata(final int unrotated, final int coordMode, final int n, final int s, final int e, final int w) {
         switch (coordMode) {
             /*
              * case 0: return unrotated;
@@ -313,7 +313,7 @@ abstract public class BaseStructureComponent {
     /**
      * Rotates metadata for the 2 4-+-5 3 model, aka rotateStandardMetadata +2
      */
-    public static int rotatePistonlikeMetadata(int unrotated, int coordMode) {
+    public static int rotatePistonlikeMetadata(final int unrotated, final int coordMode) {
         return rotateStandardMetadata(unrotated - 2, coordMode) + 2;
     }
 
@@ -321,17 +321,17 @@ abstract public class BaseStructureComponent {
      * Rotates the metadata which most things seem to use: 0 2-+-3 1 This should work for solar collectors and
      * trapdoors, but in a reversed non-intuitive way
      */
-    public static int rotateStandardMetadata(int unrotated, int coordMode) {
+    public static int rotateStandardMetadata(final int unrotated, final int coordMode) {
         return rotateUniversalMetadata(unrotated, coordMode, 0, 1, 3, 2);
     }
 
-    public static int getAverageGroundLevel(Block[] blocks, byte[] metas, StructureBoundingBox totalBB,
-            StructureBoundingBox chunkBB, int minimum) {
+    public static int getAverageGroundLevel(final Block[] blocks, final byte[] metas, final StructureBoundingBox totalBB,
+            final StructureBoundingBox chunkBB, final int minimum) {
         int sum = 0;
         int total = 0;
 
-        int chunkX = CoordHelper.blockToChunk(chunkBB.minX);// chunkBB.minX / 16;
-        int chunkZ = CoordHelper.blockToChunk(chunkBB.minZ);// chunkBB.minZ / 16;
+        final int chunkX = CoordHelper.blockToChunk(chunkBB.minX);// chunkBB.minX / 16;
+        final int chunkZ = CoordHelper.blockToChunk(chunkBB.minZ);// chunkBB.minZ / 16;
 
         for (int z = totalBB.minZ; z <= totalBB.maxZ; ++z) {
             for (int x = totalBB.minX; x <= totalBB.maxX; ++x) {
@@ -353,19 +353,18 @@ abstract public class BaseStructureComponent {
 
         if (total == 0) {
             return -1;
-        } else {
-            return sum / total;
         }
+        return sum / total;
     }
 
     /**
      * Get highest block in a column, chunk-relative coordinates
      */
-    public static int getHighestSolidBlock(Block[] blocks, byte[] metas, int relX, int relZ) {
+    public static int getHighestSolidBlock(final Block[] blocks, final byte[] metas, final int relX, final int relZ) {
 
         for (int y = 255; y >= 0; y--) {
-            int index = getIndex(relX, y, relZ);
-            Block curBlock = blocks[index];
+            final int index = getIndex(relX, y, relZ);
+            final Block curBlock = blocks[index];
             if (curBlock == null) {
                 continue;
             }
@@ -380,11 +379,11 @@ abstract public class BaseStructureComponent {
     /**
      * Get specific block in a column, chunk-relative coordinates
      */
-    public static int getHighestSpecificBlock(Block[] blocks, byte[] metas, int relX, int relZ, Block block,
-            byte meta) {
+    public static int getHighestSpecificBlock(final Block[] blocks, final byte[] metas, final int relX, final int relZ, final Block block,
+            final byte meta) {
 
         for (int y = 255; y >= 0; y--) {
-            int index = getIndex(relX, y, relZ);
+            final int index = getIndex(relX, y, relZ);
 
             if (blocks[index] == block && metas[index] == meta) {
                 return y;
@@ -396,7 +395,7 @@ abstract public class BaseStructureComponent {
     /**
      * Places a block into the arrays using coordinates relative to the current chunk
      */
-    public static boolean placeBlockRel(Block[] blocks, byte[] metas, int x, int y, int z, Block id, int meta) {
+    public static boolean placeBlockRel(final Block[] blocks, final byte[] metas, final int x, final int y, final int z, final Block id, final int meta) {
         if (x < 0 || x >= 16 || z < 0 || z >= 16) {
             return false;
         }
@@ -407,7 +406,7 @@ abstract public class BaseStructureComponent {
         return true;
     }
 
-    public static boolean placeBlockRel(Block[] blocks, byte[] metas, int x, int y, int z, BlockMetaPair block) {
+    public static boolean placeBlockRel(final Block[] blocks, final byte[] metas, final int x, final int y, final int z, final BlockMetaPair block) {
         if (x < 0 || x >= 16 || z < 0 || z >= 16) {
             return false;
         }
@@ -418,7 +417,7 @@ abstract public class BaseStructureComponent {
         return true;
     }
 
-    public static BlockMetaPair getBlockRel(Block[] blocks, byte[] metas, int x, int y, int z) {
+    public static BlockMetaPair getBlockRel(final Block[] blocks, final byte[] metas, final int x, final int y, final int z) {
         if (x < 0 || x >= 16 || z < 0 || z >= 16) {
             return null;
         }
@@ -431,8 +430,8 @@ abstract public class BaseStructureComponent {
      * Places a block into the arrays using absolute coordinates+coordinates of the current chunk. If the coordinates
      * are not inside the given chunk, nothing happens. Block/meta version
      */
-    public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, int cx, int cz, Block id,
-            int meta) {
+    public static boolean placeBlockAbs(final Block[] blocks, final byte[] metas, final int x, final int y, final int z, final int cx, final int cz, final Block id,
+            final int meta) {
         return placeBlockRel(blocks, metas, CoordHelper.abs2rel(x, cx), y, CoordHelper.abs2rel(z, cz), id, meta);
     }
 
@@ -440,8 +439,8 @@ abstract public class BaseStructureComponent {
      * Places a block into the arrays using absolute coordinates+coordinates of the current chunk. If the coordinates
      * are not inside the given chunk, nothing happens. BlockMetaPair version
      */
-    public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, int cx, int cz,
-            BlockMetaPair block) {
+    public static boolean placeBlockAbs(final Block[] blocks, final byte[] metas, final int x, final int y, final int z, final int cx, final int cz,
+            final BlockMetaPair block) {
         return placeBlockRel(blocks, metas, CoordHelper.abs2rel(x, cx), y, CoordHelper.abs2rel(z, cz), block);
     }
 
@@ -449,7 +448,7 @@ abstract public class BaseStructureComponent {
      * Places a block into the arrays using absolute coordinates. Assumes the chunk the coordinates are in is to be
      * edited. BlockMetaPair version
      */
-    public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, BlockMetaPair block) {
+    public static boolean placeBlockAbs(final Block[] blocks, final byte[] metas, final int x, final int y, final int z, final BlockMetaPair block) {
         return placeBlockRel(blocks, metas, CoordHelper.abs2rel(x), y, CoordHelper.abs2rel(z), block);
     }
 
@@ -457,24 +456,25 @@ abstract public class BaseStructureComponent {
      * Places a block into the arrays using absolute coordinates. Assumes the chunk the coordinates are in is to be
      * edited. Block/meta version
      */
-    public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, Block id, int meta) {
+    public static boolean placeBlockAbs(final Block[] blocks, final byte[] metas, final int x, final int y, final int z, final Block id, final int meta) {
         return placeBlockRel(blocks, metas, CoordHelper.abs2rel(x), y, CoordHelper.abs2rel(z), id, meta);
     }
 
     /**
      * Converts coordinates to the index as required for the arrays
      */
-    public static int getIndex(int x, int y, int z) {
+    public static int getIndex(final int x, final int y, final int z) {
         return (x * 16 + z) * 256 + y;
     }
 
     /**
      * lerp
      */
-    public double lerp(double d1, double d2, double t) {
+    public double lerp(final double d1, final double d2, final double t) {
         if (t < 0.0) {
             return d1;
-        } else if (t > 1.0) {
+        }
+        if (t > 1.0) {
             return d2;
         } else {
             return d1 + (d2 - d1) * t;

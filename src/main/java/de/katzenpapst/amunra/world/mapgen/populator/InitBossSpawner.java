@@ -12,15 +12,15 @@ public class InitBossSpawner extends AbstractPopulator {
 
     protected Class<? extends IAmunRaBoss> entityClass;
 
-    public InitBossSpawner(int x, int y, int z, AxisAlignedBB aabb, Class<? extends IAmunRaBoss> entityClass) {
+    public InitBossSpawner(final int x, final int y, final int z, final AxisAlignedBB aabb, final Class<? extends IAmunRaBoss> entityClass) {
         super(x, y, z);
         this.aabb = aabb;
         this.entityClass = entityClass;
     }
 
     @Override
-    public boolean populate(World world) {
-        if (world.getTileEntity(x, y, z) instanceof ITileDungeonSpawner tileDungeonSpawner) {
+    public boolean populate(final World world) {
+        if (world.getTileEntity(x, y, z) instanceof final ITileDungeonSpawner tileDungeonSpawner) {
             tileDungeonSpawner.setRoomArea(aabb);
             tileDungeonSpawner.setBossClass(entityClass);
             return true;

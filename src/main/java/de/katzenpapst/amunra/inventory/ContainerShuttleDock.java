@@ -10,7 +10,7 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerShuttleDock extends ContainerWithPlayerInventory {
 
-    public ContainerShuttleDock(InventoryPlayer player, TileEntityShuttleDock tile) {
+    public ContainerShuttleDock(final InventoryPlayer player, final TileEntityShuttleDock tile) {
         super((IInventory) tile);
 
         this.addSlotToContainer(new SlotSpecific(tile, 0, 137, 59, ItemShuttle.class));
@@ -19,7 +19,7 @@ public class ContainerShuttleDock extends ContainerWithPlayerInventory {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(final EntityPlayer player) {
         return ((TileEntityShuttleDock) this.tileEntity).isUseableByPlayer(player);
     }
 

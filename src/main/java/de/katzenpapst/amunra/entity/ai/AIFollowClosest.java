@@ -7,18 +7,18 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class AIFollowClosest extends EntityAIBase {
 
-    private EntityLiving theWatcher;
+    private final EntityLiving theWatcher;
     /** The closest entity which is being watched by this one. */
     protected Entity closestEntity;
     /** This is the Maximum distance that the AI will look for the Entity */
-    private float maxDistanceForPlayer;
+    private final float maxDistanceForPlayer;
     private int lookTime;
-    private float someProbability;
-    private Class<? extends Entity> watchedClass;
+    private final float someProbability;
+    private final Class<? extends Entity> watchedClass;
     protected float minDistance;
 
-    public AIFollowClosest(EntityLiving user, Class<? extends Entity> classToFollow, float maxDistance,
-            float minDistance) {
+    public AIFollowClosest(final EntityLiving user, final Class<? extends Entity> classToFollow, final float maxDistance,
+            final float minDistance) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;
         this.maxDistanceForPlayer = maxDistance;
@@ -26,8 +26,8 @@ public class AIFollowClosest extends EntityAIBase {
         this.setMutexBits(2);
     }
 
-    public AIFollowClosest(EntityLiving user, Class<? extends Entity> classToFollow, float maxDistance,
-            float minDistance, float probability) {
+    public AIFollowClosest(final EntityLiving user, final Class<? extends Entity> classToFollow, final float maxDistance,
+            final float minDistance, final float probability) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;
         this.maxDistanceForPlayer = maxDistance;
@@ -42,24 +42,23 @@ public class AIFollowClosest extends EntityAIBase {
     public boolean shouldExecute() {
         if (this.theWatcher.getRNG().nextFloat() >= this.someProbability) {
             return false;
-        } else {
-            if (this.theWatcher.getAttackTarget() != null) {
-                this.closestEntity = this.theWatcher.getAttackTarget();
-            }
-
-            if (this.watchedClass == EntityPlayer.class) {
-                this.closestEntity = this.theWatcher.worldObj
-                        .getClosestPlayerToEntity(this.theWatcher, (double) this.maxDistanceForPlayer);
-            } else {
-                this.closestEntity = this.theWatcher.worldObj.findNearestEntityWithinAABB(
-                        this.watchedClass,
-                        this.theWatcher.boundingBox
-                                .expand((double) this.maxDistanceForPlayer, 3.0D, (double) this.maxDistanceForPlayer),
-                        this.theWatcher);
-            }
-
-            return this.closestEntity != null;
         }
+        if (this.theWatcher.getAttackTarget() != null) {
+            this.closestEntity = this.theWatcher.getAttackTarget();
+        }
+
+        if (this.watchedClass == EntityPlayer.class) {
+            this.closestEntity = this.theWatcher.worldObj
+                    .getClosestPlayerToEntity(this.theWatcher, (double) this.maxDistanceForPlayer);
+        } else {
+            this.closestEntity = this.theWatcher.worldObj.findNearestEntityWithinAABB(
+                    this.watchedClass,
+                    this.theWatcher.boundingBox
+                            .expand((double) this.maxDistanceForPlayer, 3.0D, (double) this.maxDistanceForPlayer),
+                    this.theWatcher);
+        }
+
+        return this.closestEntity != null;
     }
 
     /**
@@ -70,9 +69,9 @@ public class AIFollowClosest extends EntityAIBase {
         return !this.closestEntity
                 .isEntityAlive()
                         ? false
-                        : (this.theWatcher.getDistanceSqToEntity(this.closestEntity)
+                        : this.theWatcher.getDistanceSqToEntity(this.closestEntity)
                                 > (double) (this.maxDistanceForPlayer * this.maxDistanceForPlayer) ? false
-                                        : this.lookTime > 0);
+                                        : this.lookTime > 0;
     }
 
     /**

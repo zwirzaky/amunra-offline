@@ -31,18 +31,18 @@ public class BlockOreMulti extends BlockBasicMeta {
      */
     protected String mbHarvestTool = null;
 
-    public BlockOreMulti(String name, String texture, Material mat) {
+    public BlockOreMulti(final String name, final String texture, final Material mat) {
         super(name, mat);
         this.textureName = texture;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         return this.blockIcon;
     }
 
-    public BlockOreMulti setMultiblockHarvestLevel(int level) {
+    public BlockOreMulti setMultiblockHarvestLevel(final int level) {
         mbHarvestLevel = level;
         return this;
     }
@@ -51,7 +51,7 @@ public class BlockOreMulti extends BlockBasicMeta {
         return mbHarvestLevel;
     }
 
-    public BlockOreMulti setMultiblockHarvestTool(String tool) {
+    public BlockOreMulti setMultiblockHarvestTool(final String tool) {
         mbHarvestTool = tool;
         return this;
     }
@@ -62,7 +62,7 @@ public class BlockOreMulti extends BlockBasicMeta {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
         this.blockIcon = par1IconRegister.registerIcon(this.textureName);
     }
@@ -75,15 +75,15 @@ public class BlockOreMulti extends BlockBasicMeta {
         GameRegistry.registerBlock(this, ItemBlockMulti.class, this.getUnlocalizedName());
 
         for (int i = 0; i < subBlocksArray.length; i++) {
-            SubBlock sb = subBlocksArray[i];
+            final SubBlock sb = subBlocksArray[i];
             if (sb != null) {
                 this.setHarvestLevel(
                         mbHarvestTool == null ? sb.getHarvestTool(0) : mbHarvestTool,
                         Math.max(sb.getHarvestLevel(0), this.getMultiblockHarvestLevel()),
                         i);
                 if (sb instanceof SubBlockOre) {
-                    SubBlockOre sbOre = ((SubBlockOre) sb);
-                    for (String name : sbOre.getOredictNames()) {
+                    final SubBlockOre sbOre = (SubBlockOre) sb;
+                    for (final String name : sbOre.getOredictNames()) {
                         OreDictionary.registerOre(name, new ItemStack(this, 1, i));
                     }
                 }
@@ -101,13 +101,13 @@ public class BlockOreMulti extends BlockBasicMeta {
     }
 
     @Override
-    public boolean isValueable(int metadata) {
+    public boolean isValueable(final int metadata) {
         return true;
     }
 
     @Override
-    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX,
-            double explosionY, double explosionZ) {
+    public float getExplosionResistance(final Entity entity, final World world, final int x, final int y, final int z, final double explosionX,
+            final double explosionY, final double explosionZ) {
         return Math.max(
                 super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ),
                 this.getExplosionResistance(entity) // default resistance, should default to this.blockResistance / 5.0F
@@ -115,7 +115,7 @@ public class BlockOreMulti extends BlockBasicMeta {
     }
 
     @Override
-    public float getBlockHardness(World par1World, int x, int y, int z) {
+    public float getBlockHardness(final World par1World, final int x, final int y, final int z) {
         return Math.max(super.getBlockHardness(par1World, x, y, z), this.blockHardness);
     }
 

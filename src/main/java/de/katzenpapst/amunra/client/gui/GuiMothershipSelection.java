@@ -80,8 +80,8 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
     // protected Map<CelestialBody, Long> travelTimeCache;
     protected Map<CelestialBody, MothershipWorldProvider.TransitDataWithDuration> transitDataCache;
 
-    public GuiMothershipSelection(List<CelestialBody> possibleBodies, TileEntityMothershipController title,
-            World world) {
+    public GuiMothershipSelection(final List<CelestialBody> possibleBodies, final TileEntityMothershipController title,
+            final World world) {
         // possibleBodies should be largely irrelevant here
         // hack
         super(MapMode.VIEW, possibleBodies);
@@ -89,7 +89,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
 
         this.world = world;
         this.provider = (MothershipWorldProvider) world.provider;
-        this.curMothership = (Mothership) (provider).getCelestialBody();
+        this.curMothership = (Mothership) provider.getCelestialBody();
         // this.travelTimeCache = new HashMap<CelestialBody, Double>();
         this.transitDataCache = new HashMap<CelestialBody, MothershipWorldProvider.TransitDataWithDuration>();
         // this.travelTimeCache = new HashMap<CelestialBody, Long>();
@@ -105,7 +105,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
      */
 
     @Override
-    public void drawButtons(int mousePosX, int mousePosY) {
+    public void drawButtons(final int mousePosX, final int mousePosY) {
         this.possibleBodies = this.shuttlePossibleBodies;
         super.drawButtons(mousePosX, mousePosY);
 
@@ -130,7 +130,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
     }
 
     @Override
-    public void drawScreen(int mousePosX, int mousePosY, float partialTicks) {
+    public void drawScreen(final int mousePosX, final int mousePosY, final float partialTicks) {
         super.drawScreen(mousePosX, mousePosY, partialTicks);
         if (ticksSinceLaunch >= 0) {
             ticksSinceLaunch += partialTicks;
@@ -140,7 +140,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         }
     }
 
-    protected void drawBodyOnGUI(CelestialBody body, int x, int y, int w, int h) {
+    protected void drawBodyOnGUI(final CelestialBody body, final int x, final int y, final int w, final int h) {
         if (body == null) {
             return;
         }
@@ -149,9 +149,9 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         this.drawFullSizedTexturedRect(x, y, w, h);
     }
 
-    public void drawFullSizedTexturedRect(int x, int y, int width, int height) {
+    public void drawFullSizedTexturedRect(final int x, final int y, final int width, final int height) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(x, y + height, this.zLevel, 0, 0);
         tessellator.addVertexWithUV(x + width, y + height, this.zLevel, 1, 0);
@@ -160,7 +160,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         tessellator.draw();
     }
 
-    protected void drawTransitBar(int length) {
+    protected void drawTransitBar(final int length) {
         // max length = 124
         this.drawTexturedModalRect(
                 width / 2 - 90 + 27,
@@ -199,7 +199,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                 false);
     }
 
-    protected void drawTransitInfo(int mousePosX, int mousePosY) {
+    protected void drawTransitInfo(final int mousePosX, final int mousePosY) {
         GL11.glColor4f(0.0F, 0.6F, 1.0F, 1);
         this.mc.renderEngine.bindTexture(guiExtra);
 
@@ -265,15 +265,15 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         }
     }
 
-    protected int getScaledTravelTime(Mothership ship, int barLength) {
-        float remain = ship.getRemainingTravelTime();
-        float total = ship.getTotalTravelTime();
-        float relative = remain / total;
-        float scaled = (1 - relative) * barLength;
-        return (int) (scaled);
+    protected int getScaledTravelTime(final Mothership ship, final int barLength) {
+        final float remain = ship.getRemainingTravelTime();
+        final float total = ship.getTotalTravelTime();
+        final float relative = remain / total;
+        final float scaled = (1 - relative) * barLength;
+        return (int) scaled;
     }
 
-    protected void drawMothershipGuiParts(int mousePosX, int mousePosY) {
+    protected void drawMothershipGuiParts(final int mousePosX, final int mousePosY) {
         // int offset=0;
         // String str;
 
@@ -306,15 +306,15 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
 
         this.mc.renderEngine.bindTexture(guiExtra);
 
-        int boxWidth = 95;
-        int boxHeight = 65;
+        final int boxWidth = 95;
+        final int boxHeight = 65;
 
-        int bottomOffset = height - offsetY;
+        final int bottomOffset = height - offsetY;
         int totalOffset = 1;// offsetY+141;
 
-        float totalMass = provider.getTotalMass();
+        final float totalMass = provider.getTotalMass();
 
-        TransitData tData = provider.getTheoreticalTransitData();
+        final TransitData tData = provider.getTheoreticalTransitData();
 
         // draw the main texture
         totalOffset = boxHeight + 1;
@@ -383,8 +383,8 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         if (curMothership.isInTransit()) {
             totalOffset -= 10;
             // figure out our speed
-            double distance = AstronomyHelper.getDistance(curMothership.getSource(), curMothership.getDestination());
-            double speed = distance / curMothership.getTotalTravelTime();
+            final double distance = AstronomyHelper.getDistance(curMothership.getSource(), curMothership.getDestination());
+            final double speed = distance / curMothership.getTotalTravelTime();
             this.smallFontRenderer.drawString(
                     GCCoreUtil.translate("gui.message.mothership.travelSpeed") + ": " + GuiHelper.formatSpeed(speed),
                     offsetX - 90,
@@ -394,15 +394,15 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         }
     }
 
-    protected void drawTargetBodyInfo(int mousePosX, int mousePosY) {
+    protected void drawTargetBodyInfo(final int mousePosX, final int mousePosY) {
         int offset = 0;
 
         GL11.glColor4f(0.0F, 0.6F, 1.0F, 1);
         this.mc.renderEngine.bindTexture(guiExtra);
 
-        MothershipWorldProvider.TransitDataWithDuration tData = getTransitDataFor(selectedBody);
+        final MothershipWorldProvider.TransitDataWithDuration tData = getTransitDataFor(selectedBody);
 
-        TravelFailReason failReason = getTravelFailReason(selectedBody, tData);
+        final TravelFailReason failReason = getTravelFailReason(selectedBody, tData);
 
         if (failReason == TravelFailReason.NONE) {
             // green
@@ -446,10 +446,10 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
 
         offset += 12;
 
-        double travelDistance = curMothership.getTravelDistanceTo(selectedBody);
+        final double travelDistance = curMothership.getTravelDistanceTo(selectedBody);
         // double shipThrust = !tData.isEmpty() ? tData.thrust : provider.getTheoreticalTransitData().thrust;
 
-        long travelTime = !tData.isEmpty() ? tData.duration : -1;
+        final long travelTime = !tData.isEmpty() ? tData.duration : -1;
         // double shipSpeed = !tData.isEmpty() ? tData.speed : provider.getTheoreticalTransitData().speed;
 
         switch (failReason) {
@@ -518,7 +518,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         }
     }
 
-    protected int drawFuelReqs(int offset, int mousePosX, int mousePosY, MothershipFuelRequirements fuelReqs) {
+    protected int drawFuelReqs(int offset, final int mousePosX, final int mousePosY, final MothershipFuelRequirements fuelReqs) {
 
         if (fuelReqs != null && !fuelReqs.isEmpty()) {
             // offset += 10;
@@ -528,7 +528,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                     offsetY + offset,
                     90,
                     ColorUtil.to32BitColor(255, 255, 255, 255));
-            for (MothershipFuelDisplay f : fuelReqs.getData().keySet()) {
+            for (final MothershipFuelDisplay f : fuelReqs.getData().keySet()) {
                 offset += 10;
 
                 // GuiHelper.formatMetric(tData.fuelReqData.get(f), f.getUnit());
@@ -555,7 +555,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         return offset;
     }
 
-    protected int drawTravelDistance(int offset, double travelDistance) {
+    protected int drawTravelDistance(int offset, final double travelDistance) {
         // travel distance
         this.smallFontRenderer.drawString(
                 GCCoreUtil.translate("gui.message.mothership.travelDistance") + ": "
@@ -568,7 +568,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         return offset;
     }
 
-    protected int drawTravelTime(int offset, double travelDistance, long travelTime) {
+    protected int drawTravelTime(final int offset, final double travelDistance, final long travelTime) {
 
         String travelTimeStr;
 
@@ -588,10 +588,10 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         return offset + 10;
     }
 
-    protected void drawItemForFuel(int x, int y, ItemStack item) {
+    protected void drawItemForFuel(final int x, final int y, final ItemStack item) {
         RenderHelper.enableGUIStandardItemLighting();
         GL11.glPushMatrix();
-        float factor = 0.5F;
+        final float factor = 0.5F;
         GL11.glScalef(factor, factor, factor);
         GuiCelestialSelection.itemRender.renderItemAndEffectIntoGUI(
                 this.fontRendererObj,
@@ -604,9 +604,9 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         GL11.glPopMatrix();
     }
 
-    protected void drawIcon(int x, int y, MothershipFuelDisplay fuelType) {
+    protected void drawIcon(final int x, final int y, final MothershipFuelDisplay fuelType) {
 
-        ResourceLocation resourcelocation = this.mc.renderEngine.getResourceLocation(fuelType.getSpriteNumber());// 0 is
+        final ResourceLocation resourcelocation = this.mc.renderEngine.getResourceLocation(fuelType.getSpriteNumber());// 0 is
                                                                                                                  // correct
         this.mc.renderEngine.bindTexture(resourcelocation);
 
@@ -619,7 +619,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
 
     }
 
-    protected TransitDataWithDuration getTransitDataFor(CelestialBody body) {
+    protected TransitDataWithDuration getTransitDataFor(final CelestialBody body) {
         TransitDataWithDuration result;
         if (!transitDataCache.containsKey(selectedBody)) {
             result = provider.getTransitDataTo(selectedBody);
@@ -634,7 +634,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         return result;
     }
 
-    protected TravelFailReason getTravelFailReason(CelestialBody body, TransitDataWithDuration tData) {
+    protected TravelFailReason getTravelFailReason(final CelestialBody body, TransitDataWithDuration tData) {
 
         if (body == null || !Mothership.canBeOrbited(body)) {
             return TravelFailReason.NOT_ORBITABLE;
@@ -648,7 +648,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
             tData = getTransitDataFor(this.selectedBody);
         }
 
-        long travelTime = tData.duration;
+        final long travelTime = tData.duration;
         if (travelTime > AmunRa.config.mothershipMaxTravelTime) {
             return TravelFailReason.TRAVEL_TOO_LONG;
         }
@@ -679,7 +679,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
      */
 
     @Override
-    protected void mouseClicked(int x, int y, int button) {
+    protected void mouseClicked(final int x, final int y, final int button) {
 
         // simple checks first
         int actualBtnX = offsetX + LAUNCHBUTTON_X;

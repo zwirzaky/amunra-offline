@@ -34,14 +34,14 @@ public class SkyProviderMothership extends SkyProviderDynamic {
 
     protected final float starLineSpeed = 20;
 
-    public SkyProviderMothership(IGalacticraftWorldProvider worldProvider) {
+    public SkyProviderMothership(final IGalacticraftWorldProvider worldProvider) {
         super(worldProvider);
         numStarLines = AmunRa.config.mothershipNumStarLines;
 
         hasHorizon = false;
     }
 
-    protected void initStarLines(int list, double radius) {
+    protected void initStarLines(final int list, final double radius) {
 
         GL11.glPushMatrix();
         GL11.glNewList(list, GL11.GL_COMPILE);
@@ -50,19 +50,19 @@ public class SkyProviderMothership extends SkyProviderDynamic {
         final Tessellator tess = Tessellator.instance;
         tess.startDrawingQuads();
 
-        double size = 0.5D;
-        double skyRadius = 100.0D;
+        final double size = 0.5D;
+        final double skyRadius = 100.0D;
         for (int starIndex = 0; starIndex < 400; ++starIndex) {
 
-            double theta = rand.nextDouble() * Math.PI * 2;
-            double angleWidth = size / skyRadius; // should be
+            final double theta = rand.nextDouble() * Math.PI * 2;
+            final double angleWidth = size / skyRadius; // should be
 
-            double x1 = Math.cos(theta - angleWidth) * skyRadius;
-            double y1 = Math.sin(theta - angleWidth) * skyRadius;
-            double x2 = Math.cos(theta + angleWidth) * skyRadius;
-            double y2 = Math.sin(theta + angleWidth) * skyRadius;
-            double zBase = (rand.nextDouble() * skyRadius * 2) - skyRadius;
-            double length = rand.nextDouble() * 20.0D;
+            final double x1 = Math.cos(theta - angleWidth) * skyRadius;
+            final double y1 = Math.sin(theta - angleWidth) * skyRadius;
+            final double x2 = Math.cos(theta + angleWidth) * skyRadius;
+            final double y2 = Math.sin(theta + angleWidth) * skyRadius;
+            final double zBase = rand.nextDouble() * skyRadius * 2 - skyRadius;
+            final double length = rand.nextDouble() * 20.0D;
 
             // DC is in front
 
@@ -91,7 +91,7 @@ public class SkyProviderMothership extends SkyProviderDynamic {
      */
 
     @Override
-    protected void renderSystem(float partialTicks, WorldClient world, Tessellator tess, Minecraft mc) {
+    protected void renderSystem(final float partialTicks, final WorldClient world, final Tessellator tess, final Minecraft mc) {
         super.renderSystem(partialTicks, world, tess, mc);
 
         // now do the planet we are orbiting
@@ -100,7 +100,7 @@ public class SkyProviderMothership extends SkyProviderDynamic {
         // rotate back
         if (this.rType != RenderType.STAR && !AmunRa.config.isSun(mothershipParent)) {
             if (!this.isAsteroidBelt) {
-                GL11.glRotatef(180 - (currentCelestialAngle * 360), 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(180 - currentCelestialAngle * 360, 1.0F, 0.0F, 0.0F);
 
                 renderPlanetByAngle(
                         tess,
@@ -119,7 +119,7 @@ public class SkyProviderMothership extends SkyProviderDynamic {
     }
 
     @Override
-    protected boolean excludeBodyFromRendering(CelestialBody body) {
+    protected boolean excludeBodyFromRendering(final CelestialBody body) {
         return body.equals(mothershipParent);
     }
     /*
@@ -183,7 +183,7 @@ public class SkyProviderMothership extends SkyProviderDynamic {
     }
 
     @Override
-    public void render(float partialTicks, WorldClient world, Minecraft mc) {
+    public void render(final float partialTicks, final WorldClient world, final Minecraft mc) {
         if (isInTransit != ((Mothership) curBody).isInTransit()) {
             initVars();
         }
@@ -195,14 +195,14 @@ public class SkyProviderMothership extends SkyProviderDynamic {
         }
     }
 
-    protected void renderTransitSky(float partialTicks, WorldClient world, Minecraft mc) {
+    protected void renderTransitSky(final float partialTicks, final WorldClient world, final Minecraft mc) {
 
         // try stuff
         if (curWorldTime == -1) {
             curWorldTime = world.getWorldTime();
         }
         // I need the actual time here
-        transitOffset = (partialTicks + world.getWorldTime() - curWorldTime);
+        transitOffset = partialTicks + world.getWorldTime() - curWorldTime;
 
         // renderStars(0);
 
@@ -213,7 +213,7 @@ public class SkyProviderMothership extends SkyProviderDynamic {
 
     }
 
-    protected void renderStarLines(float curTime) {
+    protected void renderStarLines(final float curTime) {
         //// BEGIN
 
         float angle = 0;
@@ -249,7 +249,7 @@ public class SkyProviderMothership extends SkyProviderDynamic {
 
         for (int starIndex = 0; starIndex < 400; ++starIndex) {
 
-            double theta = starLineRand.nextDouble() * Math.PI * 2;
+            final double theta = starLineRand.nextDouble() * Math.PI * 2;
 
             double x1 = 0;
             double y1 = 0;
@@ -260,13 +260,13 @@ public class SkyProviderMothership extends SkyProviderDynamic {
 
             // motion offset
             zBase += curTime * this.starLineSpeed;
-            zBase = (zBase % (cylinderLength * 2)) - cylinderLength;
+            zBase = zBase % (cylinderLength * 2) - cylinderLength;
 
             x1 = Math.cos(theta - angleWidth) * skyBoxLength;
             y1 = Math.sin(theta - angleWidth) * skyBoxLength;
             x2 = Math.cos(theta + angleWidth) * skyBoxLength;
             y2 = Math.sin(theta + angleWidth) * skyBoxLength;
-            double length = starLineRand.nextDouble() * 20.0D;
+            final double length = starLineRand.nextDouble() * 20.0D;
 
             // project the lines onto the cylinder's circles if necessary
             if (zBase < -skyBoxLength || zBase + length > skyBoxLength) {

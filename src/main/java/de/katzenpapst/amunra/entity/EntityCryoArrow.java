@@ -21,30 +21,30 @@ public class EntityCryoArrow extends EntityBaseLaserArrow {
             AmunRa.ASSETPREFIX,
             "textures/entity/cryoarrow.png");
 
-    public EntityCryoArrow(World world) {
+    public EntityCryoArrow(final World world) {
         super(world);
     }
 
-    public EntityCryoArrow(World world, double x, double y, double z) {
+    public EntityCryoArrow(final World world, final double x, final double y, final double z) {
         super(world, x, y, z);
     }
 
     @Override
-    protected int getEntityDependentDamage(Entity ent, int regularDamage) {
+    protected int getEntityDependentDamage(final Entity ent, final int regularDamage) {
         if (ent instanceof EntityBlaze) {
             return regularDamage * 2;
         }
         return regularDamage;
     }
 
-    public EntityCryoArrow(World world, EntityLivingBase shootingEntity, EntityLivingBase target, float randMod) {
+    public EntityCryoArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target, final float randMod) {
         super(world, shootingEntity, target, randMod);
     }
 
     @Override
-    protected void onPassThrough(int x, int y, int z) {
+    protected void onPassThrough(final int x, final int y, final int z) {
 
-        Block b = worldObj.getBlock(x, y, z);
+        final Block b = worldObj.getBlock(x, y, z);
 
         if (b == Blocks.water) {
             this.worldObj.setBlock(x, y, z, Blocks.ice);
@@ -60,7 +60,7 @@ public class EntityCryoArrow extends EntityBaseLaserArrow {
         //
     }
 
-    public EntityCryoArrow(World par1World, EntityLivingBase par2EntityLivingBase) {
+    public EntityCryoArrow(final World par1World, final EntityLivingBase par2EntityLivingBase) {
         super(par1World, par2EntityLivingBase);
     }
 
@@ -85,7 +85,7 @@ public class EntityCryoArrow extends EntityBaseLaserArrow {
     }
 
     @Override
-    protected void onImpactEntity(MovingObjectPosition mop) {
+    protected void onImpactEntity(final MovingObjectPosition mop) {
         if (mop.entityHit instanceof EntityLivingBase) {
             // setPotionEffect(Potion.poison.id, 30, 2, 1.0F);
             if (((EntityLivingBase) mop.entityHit).isBurning()) {
@@ -102,8 +102,8 @@ public class EntityCryoArrow extends EntityBaseLaserArrow {
     }
 
     @Override
-    protected void onImpactBlock(World worldObj, int x, int y, int z) {
-        Block block = worldObj.getBlock(x, y, z);
+    protected void onImpactBlock(final World worldObj, final int x, final int y, final int z) {
+        final Block block = worldObj.getBlock(x, y, z);
 
         /*
          * if(block == Blocks.water) { worldObj.setBlock(x, y, z, Blocks.ice); } else

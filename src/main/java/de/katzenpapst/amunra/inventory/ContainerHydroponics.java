@@ -12,12 +12,12 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerHydroponics extends ContainerWithPlayerInventory {
 
-    public ContainerHydroponics(InventoryPlayer player, TileEntityHydroponics tile) {
-        super(((IInventory) tile));
+    public ContainerHydroponics(final InventoryPlayer player, final TileEntityHydroponics tile) {
+        super((IInventory) tile);
 
         this.addSlotToContainer(new SlotSpecific(tile, 0, 32, 27, ItemElectricBase.class));
 
-        SlotSpecific secondarySlot = new SlotSpecific(
+        final SlotSpecific secondarySlot = new SlotSpecific(
                 tile,
                 1,
                 32,
@@ -31,7 +31,7 @@ public class ContainerHydroponics extends ContainerWithPlayerInventory {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(final EntityPlayer player) {
         return ((TileEntityHydroponics) this.tileEntity).isUseableByPlayer(player);
     }
 

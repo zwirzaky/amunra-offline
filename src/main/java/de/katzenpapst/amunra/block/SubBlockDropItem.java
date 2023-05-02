@@ -27,16 +27,16 @@ public class SubBlockDropItem extends SubBlock {
 
     protected boolean isValuable = false;
 
-    public SubBlockDropItem(String name, String texture) {
+    public SubBlockDropItem(final String name, final String texture) {
         super(name, texture);
     }
 
-    public SubBlockDropItem(String name, String texture, String tool, int harvestLevel) {
+    public SubBlockDropItem(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
     }
 
-    public SubBlockDropItem(String name, String texture, String tool, int harvestLevel, float hardness,
-            float resistance) {
+    public SubBlockDropItem(final String name, final String texture, final String tool, final int harvestLevel, final float hardness,
+            final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
@@ -45,13 +45,13 @@ public class SubBlockDropItem extends SubBlock {
         return droppedItems == null;
     }
 
-    public SubBlockDropItem setDroppedItem(ItemDamagePair item) {
+    public SubBlockDropItem setDroppedItem(final ItemDamagePair item) {
         droppedItems = item;
         return this;
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random) {
+    public int quantityDropped(final int meta, final int fortune, final Random random) {
         int j = random.nextInt(fortune + 2) - 1;
 
         if (j < 0) {
@@ -72,43 +72,43 @@ public class SubBlockDropItem extends SubBlock {
      * from the outside, I can't do shit
      */
     @Override
-    public int quantityDropped(Random rand) {
+    public int quantityDropped(final Random rand) {
         return baseDropRateMin;
     }
 
     @Override
-    public int damageDropped(int meta) {
+    public int damageDropped(final int meta) {
         return droppedItems != null ? droppedItems.getDamage() : super.damageDropped(meta);
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune) {
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
         return droppedItems != null ? droppedItems.getItem() : super.getItemDropped(meta, random, fortune);
     }
 
-    public SubBlockDropItem setDroppedItem(Item item) {
+    public SubBlockDropItem setDroppedItem(final Item item) {
         droppedItems = new ItemDamagePair(item, 0);
         return this;
     }
 
-    public SubBlockDropItem setMinDropRate(int val) {
+    public SubBlockDropItem setMinDropRate(final int val) {
         baseDropRateMin = val;
         return this;
     }
 
-    public SubBlockDropItem setBonusMultiplier(float val) {
+    public SubBlockDropItem setBonusMultiplier(final float val) {
         bonusDropMultiplier = val;
         return this;
     }
 
-    public SubBlockDropItem setXpDrop(int dropMin, int dropMax) {
+    public SubBlockDropItem setXpDrop(final int dropMin, final int dropMax) {
         xpDropMin = dropMin;
         xpDropMax = dropMax;
         return this;
     }
 
     @Override
-    public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
+    public int getExpDrop(final IBlockAccess world, final int metadata, final int fortune) {
         if (!dropsSelf()) {
             if (xpDropMin <= xpDropMax) {
                 return xpDropMin;
@@ -119,11 +119,11 @@ public class SubBlockDropItem extends SubBlock {
     }
 
     @Override
-    public boolean isValueable(int metadata) {
+    public boolean isValueable(final int metadata) {
         return isValuable;
     }
 
-    public SubBlockDropItem setIsValueable(boolean set) {
+    public SubBlockDropItem setIsValueable(final boolean set) {
         isValuable = set;
         return this;
     }

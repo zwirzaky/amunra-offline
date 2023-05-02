@@ -63,8 +63,8 @@ public interface IMetaBlock {
      * @param meta
      * @return
      */
-    default public int getDistinctionMeta(int meta) {
-        int numSubBlocks = this.getNumPossibleSubBlocks();
+    default public int getDistinctionMeta(final int meta) {
+        final int numSubBlocks = this.getNumPossibleSubBlocks();
         if (numSubBlocks < 4) {
             return meta & 1;
         }
@@ -83,7 +83,7 @@ public interface IMetaBlock {
      * @param meta
      * @return
      */
-    default public int getRotationMeta(int meta) {
+    default public int getRotationMeta(final int meta) {
         return (meta & 12) >> 2;
     }
 
@@ -92,7 +92,7 @@ public interface IMetaBlock {
      * @param name
      * @return
      */
-    default public BlockMetaPair getBlockMetaPair(String name) {
+    default public BlockMetaPair getBlockMetaPair(final String name) {
         return new BlockMetaPair((Block) this, (byte) getMetaByName(name));
     }
 
@@ -103,8 +103,8 @@ public interface IMetaBlock {
      * @param rotationMeta
      * @return
      */
-    default public int addRotationMeta(int baseMeta, int rotationMeta) {
-        return baseMeta | (rotationMeta << 2);
+    default public int addRotationMeta(final int baseMeta, final int rotationMeta) {
+        return baseMeta | rotationMeta << 2;
     }
 
     /////////////////////// COPYPASTE THIS INTO IMPLEMENTATIONS ////////////////////////////////////////

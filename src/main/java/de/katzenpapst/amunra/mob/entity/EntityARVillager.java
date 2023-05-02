@@ -44,7 +44,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     private int wealth;
     private boolean field_82190_bM;
 
-    public EntityARVillager(World par1World) {
+    public EntityARVillager(final World par1World) {
         super(par1World);
         this.randomTickDivider = 0;
         this.isMating = false;
@@ -98,7 +98,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
             if (this.villageObj == null) {
                 this.detachHome();
             } else {
-                ChunkCoordinates chunkcoordinates = this.villageObj.getCenter();
+                final ChunkCoordinates chunkcoordinates = this.villageObj.getCenter();
                 this.setHomeArea(
                         chunkcoordinates.posX,
                         chunkcoordinates.posY,
@@ -122,7 +122,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("Profession", this.getProfession());
         par1NBTTagCompound.setInteger("Riches", this.wealth);
@@ -133,7 +133,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setProfession(par1NBTTagCompound.getInteger("Profession"));
         this.wealth = par1NBTTagCompound.getInteger("Riches");
@@ -176,7 +176,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         return "mob.villager.death";
     }
 
-    public void setProfession(int par1) {
+    public void setProfession(final int par1) {
         this.dataWatcher.updateObject(16, Integer.valueOf(par1));
     }
 
@@ -188,11 +188,11 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         return this.isMating;
     }
 
-    public void setMating(boolean par1) {
+    public void setMating(final boolean par1) {
         this.isMating = par1;
     }
 
-    public void setPlaying(boolean par1) {
+    public void setPlaying(final boolean par1) {
         this.isPlaying = par1;
     }
 
@@ -201,7 +201,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     }
 
     @Override
-    public void setRevengeTarget(EntityLivingBase par1EntityLiving) {
+    public void setRevengeTarget(final EntityLivingBase par1EntityLiving) {
         super.setRevengeTarget(par1EntityLiving);
 
         if (this.villageObj != null && par1EntityLiving != null) {
@@ -227,7 +227,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
      * Called when the mob's health reaches 0.
      */
     @Override
-    public void onDeath(DamageSource par1DamageSource) {
+    public void onDeath(final DamageSource par1DamageSource) {
         if (this.villageObj != null) {
             final Entity entity = par1DamageSource.getEntity();
 
@@ -249,7 +249,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         super.onDeath(par1DamageSource);
     }
 
-    public void setCustomer(EntityPlayer par1EntityPlayer) {
+    public void setCustomer(final EntityPlayer par1EntityPlayer) {
         this.buyingPlayer = par1EntityPlayer;
     }
 
@@ -261,7 +261,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         return this.buyingPlayer != null;
     }
 
-    public void useRecipe(MerchantRecipe par1MerchantRecipe) {
+    public void useRecipe(final MerchantRecipe par1MerchantRecipe) {
         par1MerchantRecipe.incrementToolUses();
 
         if (par1MerchantRecipe.getItemToBuy().getItem() == Items.emerald) {
@@ -271,20 +271,25 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1) {
-        if (par1 == 12) {
-            this.generateRandomParticles("heart");
-        } else if (par1 == 13) {
-            this.generateRandomParticles("angryVillager");
-        } else if (par1 == 14) {
-            this.generateRandomParticles("happyVillager");
-        } else {
-            super.handleHealthUpdate(par1);
+    public void handleHealthUpdate(final byte par1) {
+        switch (par1) {
+            case 12:
+                this.generateRandomParticles("heart");
+                break;
+            case 13:
+                this.generateRandomParticles("angryVillager");
+                break;
+            case 14:
+                this.generateRandomParticles("happyVillager");
+                break;
+            default:
+                super.handleHealthUpdate(par1);
+                break;
         }
     }
 
     @SideOnly(Side.CLIENT)
-    private void generateRandomParticles(String par1Str) {
+    private void generateRandomParticles(final String par1Str) {
         for (int i = 0; i < 5; ++i) {
             final double d0 = this.rand.nextGaussian() * 0.02D;
             final double d1 = this.rand.nextGaussian() * 0.02D;
@@ -304,12 +309,12 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         this.field_82190_bM = true;
     }
 
-    public EntityARVillager func_90012_b(EntityAgeable par1EntityAgeable) {
+    public EntityARVillager func_90012_b(final EntityAgeable par1EntityAgeable) {
         return new EntityARVillager(this.worldObj);
     }
 
     @Override
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable) {
+    public EntityAgeable createChild(final EntityAgeable par1EntityAgeable) {
         return this.func_90012_b(par1EntityAgeable);
     }
 
@@ -319,7 +324,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     }
 
     @Override
-    public boolean canBreatheIn(ArrayList<IAtmosphericGas> atmosphere, boolean isInSealedArea) {
+    public boolean canBreatheIn(final ArrayList<IAtmosphericGas> atmosphere, final boolean isInSealedArea) {
         return atmosphere.contains(IAtmosphericGas.METHANE);
     }
 }

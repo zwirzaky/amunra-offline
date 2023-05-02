@@ -7,14 +7,14 @@ import de.katzenpapst.amunra.tile.TileEntityMothershipSettings;
 
 public class ContainerMothershipSettings extends ContainerWithPlayerInventory {
 
-    public ContainerMothershipSettings(InventoryPlayer par1InventoryPlayer, TileEntityMothershipSettings tile) {
+    public ContainerMothershipSettings(final InventoryPlayer par1InventoryPlayer, final TileEntityMothershipSettings tile) {
         super(tile);
 
         initPlayerInventorySlots(par1InventoryPlayer);
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(final EntityPlayer player) {
         return ((TileEntityMothershipSettings) this.tileEntity).isUseableByPlayer(player);
     }
 

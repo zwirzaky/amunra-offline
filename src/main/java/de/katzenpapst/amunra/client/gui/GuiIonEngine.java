@@ -17,7 +17,7 @@ public class GuiIonEngine extends GuiRocketEngine {
 
     protected GuiElementInfoRegion electricInfoRegion;
 
-    public GuiIonEngine(InventoryPlayer player, TileEntityMothershipEngineAbstract tileEngine) {
+    public GuiIonEngine(final InventoryPlayer player, final TileEntityMothershipEngineAbstract tileEngine) {
         super(
                 new ContainerIonEngine(player, tileEngine),
                 tileEngine,
@@ -41,15 +41,15 @@ public class GuiIonEngine extends GuiRocketEngine {
     };
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
         super.drawGuiContainerBackgroundLayer(var1, var2, var3);
 
-        int containerWidth = (this.width - this.xSize) / 2;
-        int containerHeight = (this.height - this.ySize) / 2;
+        final int containerWidth = (this.width - this.xSize) / 2;
+        final int containerHeight = (this.height - this.ySize) / 2;
         // this.drawTexturedModalRect(containerWidth, containerHeight, 0, 0, this.xSize, this.ySize);
         int scale;
 
-        List<String> electricityDesc = new ArrayList<String>();
+        final List<String> electricityDesc = new ArrayList<String>();
         electricityDesc.add(GCCoreUtil.translate("gui.energyStorage.desc.0"));
         EnergyDisplayHelper.getEnergyDisplayTooltip(
                 this.tileEngine.getEnergyStoredGC(),
@@ -65,7 +65,7 @@ public class GuiIonEngine extends GuiRocketEngine {
     };
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
         super.drawGuiContainerForegroundLayer(par1, par2);
 
     }

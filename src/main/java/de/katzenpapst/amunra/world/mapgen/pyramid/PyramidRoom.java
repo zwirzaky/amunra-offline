@@ -20,11 +20,11 @@ public class PyramidRoom extends BaseStructureComponent {
 
     protected int floorLevel;
 
-    public void setBoundingBoxes(StructureBoundingBox entranceBB, StructureBoundingBox roomBB) {
+    public void setBoundingBoxes(final StructureBoundingBox entranceBB, final StructureBoundingBox roomBB) {
         this.entranceBB = entranceBB;
         this.roomBB = roomBB;
 
-        StructureBoundingBox totalBox = new StructureBoundingBox(roomBB);
+        final StructureBoundingBox totalBox = new StructureBoundingBox(roomBB);
         totalBox.expandTo(entranceBB);
         this.setStructureBoundingBox(totalBox);
     }
@@ -34,11 +34,11 @@ public class PyramidRoom extends BaseStructureComponent {
     }
 
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
 
-        StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);
 
-        BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
+        final BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
 
         // StructureBoundingBox myBB = new StructureBoundingBox(roomBB);
         // int groundLevel = this.parent.getGroundLevel()+6;
@@ -48,7 +48,7 @@ public class PyramidRoom extends BaseStructureComponent {
             roomBB.maxY += floorLevel;
             roomHeightFixed = true;
         }
-        StructureBoundingBox actualRoomBB = intersectBoundingBoxes(chunkBB, roomBB);
+        final StructureBoundingBox actualRoomBB = intersectBoundingBoxes(chunkBB, roomBB);
         if (actualRoomBB != null) {
             // fillBox(arrayOfIDs, arrayOfMeta, actualRoomBB, Blocks.air, (byte) 0);
             for (int x = actualRoomBB.minX; x <= actualRoomBB.maxX; x++) {
@@ -87,8 +87,8 @@ public class PyramidRoom extends BaseStructureComponent {
         return true;
     }
 
-    protected void drawCornerColumns(int yMin, int yMax, int chunkX, int chunkZ, Block[] arrayOfIDs,
-            byte[] arrayOfMeta) {
+    protected void drawCornerColumns(final int yMin, final int yMax, final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         for (int y = yMin; y <= yMax; y++) {
             if (placeBlockAbs(
@@ -158,9 +158,9 @@ public class PyramidRoom extends BaseStructureComponent {
 
     }
 
-    protected void makeEntrance(Block[] arrayOfIDs, byte[] arrayOfMeta, StructureBoundingBox chunkBB, int chunkX,
-            int chunkZ, BlockMetaPair floorMat) {
-        StructureBoundingBox entrBoxIntersect = intersectBoundingBoxes(entranceBB, chunkBB);
+    protected void makeEntrance(final Block[] arrayOfIDs, final byte[] arrayOfMeta, final StructureBoundingBox chunkBB, final int chunkX,
+            final int chunkZ, final BlockMetaPair floorMat) {
+        final StructureBoundingBox entrBoxIntersect = intersectBoundingBoxes(entranceBB, chunkBB);
 
         if (entrBoxIntersect != null) {
             // fillBox(arrayOfIDs, arrayOfMeta, entrBoxIntersect, Blocks.air, (byte) 0);

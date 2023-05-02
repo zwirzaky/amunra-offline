@@ -19,7 +19,7 @@ public class CraftingBlock extends SubBlock {
     @SideOnly(Side.CLIENT)
     protected IIcon blockIconSide;
 
-    public CraftingBlock(String name) {
+    public CraftingBlock(final String name) {
         // super
         super(name, "amunra:crafter", "pickaxe", 1, 5.0F, 5.0F);
         this.setStepSound(Block.soundTypeMetal);
@@ -28,7 +28,7 @@ public class CraftingBlock extends SubBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         blockIcon = par1IconRegister.registerIcon(getTextureName());
         blockIconSide = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine_side");
         blockIconBottom = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine");
@@ -37,7 +37,7 @@ public class CraftingBlock extends SubBlock {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         switch (side) {
             case 0:
                 return blockIconBottom;
@@ -57,17 +57,16 @@ public class CraftingBlock extends SubBlock {
      * @param hitX  , hitY, hitZ The position the player clicked on relative to the block.
      */
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
+            final float hitY, final float hitZ) {
 
         // onBlockActivated
 
         if (world.isRemote) {
             return true;
-        } else {
-            entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_CRAFTING, world, x, y, z);
-            return true;
         }
+        entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_CRAFTING, world, x, y, z);
+        return true;
     }
 
 }

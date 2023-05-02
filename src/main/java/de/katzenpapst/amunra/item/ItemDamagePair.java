@@ -9,12 +9,12 @@ public class ItemDamagePair {
     protected Item item;
     protected int damage;
 
-    public ItemDamagePair(Item item, int damage) {
+    public ItemDamagePair(final Item item, final int damage) {
         this.item = item;
         this.damage = damage;
     }
 
-    public ItemDamagePair(ItemStack stack) {
+    public ItemDamagePair(final ItemStack stack) {
         this.item = stack.getItem();
         this.damage = stack.getItemDamage();
     }
@@ -34,16 +34,16 @@ public class ItemDamagePair {
         return ((ItemBasicMulti) item).getSubItem(damage);
     }
 
-    public ItemStack getItemStack(int numItems) {
+    public ItemStack getItemStack(final int numItems) {
         return new ItemStack(item, numItems, damage);
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof ItemDamagePair)) {
             return false;
         }
-        ItemDamagePair otherCast = (ItemDamagePair) other;
+        final ItemDamagePair otherCast = (ItemDamagePair) other;
 
         return isSameItem(otherCast.getItem(), otherCast.getDamage());
     }
@@ -56,14 +56,14 @@ public class ItemDamagePair {
         return item.hashCode() ^ ~damage;
     }
 
-    public boolean isSameItem(ItemStack stack) {
+    public boolean isSameItem(final ItemStack stack) {
         if (stack == null) {
             return false;
         }
         return isSameItem(stack.getItem(), stack.getItemDamage());
     }
 
-    public boolean isSameItem(Item item, int damage) {
+    public boolean isSameItem(final Item item, final int damage) {
 
         // this matters anyway, do it here before the other mess
         if (this.damage != damage) {
@@ -76,12 +76,11 @@ public class ItemDamagePair {
             } else {
                 return false;
             }
+        }
+        if (this.item instanceof ItemBlock) {
+            return false;
         } else {
-            if (this.item instanceof ItemBlock) {
-                return false;
-            } else {
-                return this.item == item;
-            }
+            return this.item == item;
         }
     }
 

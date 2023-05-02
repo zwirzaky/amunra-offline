@@ -48,11 +48,11 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public void beginTransit(long duration) {
+    public void beginTransit(final long duration) {
 
-        MothershipFuelRequirements reqs = this.getFuelRequirements(duration);
+        final MothershipFuelRequirements reqs = this.getFuelRequirements(duration);
 
-        int fuelReq = reqs.get(fuelType);
+        final int fuelReq = reqs.get(fuelType);
 
         this.fuelTank.drain(fuelReq, true);
 
@@ -61,7 +61,7 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    protected boolean isItemFuel(ItemStack itemstack) {
+    protected boolean isItemFuel(final ItemStack itemstack) {
 
         FluidStack containedFluid = null;
         if (itemstack.getItem() instanceof IFluidContainerItem) {
@@ -99,8 +99,8 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     @Override
     protected void spawnParticles() {
 
-        Vector3 particleStart = getExhaustPosition(1);
-        Vector3 particleDirection = getExhaustDirection().scale(5);
+        final Vector3 particleStart = getExhaustPosition(1);
+        final Vector3 particleDirection = getExhaustDirection().scale(5);
 
         AmunRa.proxy
                 .spawnParticles(ParticleType.PT_MOTHERSHIP_JET_FLAME, this.worldObj, particleStart, particleDirection);
@@ -114,7 +114,7 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid) {
+    public boolean canFill(final ForgeDirection from, final Fluid fluid) {
 
         // here, fluid is fuel
         if (!FluidUtil.testFuel(FluidRegistry.getFluidName(fluid))) {
@@ -130,7 +130,7 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public boolean isItemValidForSlot(int slotID, ItemStack itemstack) {
+    public boolean isItemValidForSlot(final int slotID, final ItemStack itemstack) {
         if (slotID == 0 && itemstack != null) {
             return this.isItemFuel(itemstack);
         }
@@ -142,17 +142,17 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int side) {
+    public int[] getAccessibleSlotsFromSide(final int side) {
         return new int[] { 0 };
     }
 
     @Override
-    public boolean canInsertItem(int slotID, ItemStack itemstack, int side) {
+    public boolean canInsertItem(final int slotID, final ItemStack itemstack, final int side) {
         return this.isItemValidForSlot(slotID, itemstack);
     }
 
     @Override
-    public boolean canExtractItem(int slotID, ItemStack itemstack, int side) {
+    public boolean canExtractItem(final int slotID, final ItemStack itemstack, final int side) {
         return slotID == 0;
     }
 
@@ -171,10 +171,10 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public MothershipFuelRequirements getFuelRequirements(long duration) {
-        int totalFuelNeed = (int) Math.ceil(this.getFuelUsagePerTick() * duration * AmunRa.config.mothershipFuelFactor);
+    public MothershipFuelRequirements getFuelRequirements(final long duration) {
+        final int totalFuelNeed = (int) Math.ceil(this.getFuelUsagePerTick() * duration * AmunRa.config.mothershipFuelFactor);
 
-        MothershipFuelRequirements result = new MothershipFuelRequirements();
+        final MothershipFuelRequirements result = new MothershipFuelRequirements();
 
         result.add(fuelType, totalFuelNeed);
 
@@ -182,8 +182,8 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public boolean canRunForDuration(long duration) {
-        MothershipFuelRequirements reqs = getFuelRequirements(duration);
+    public boolean canRunForDuration(final long duration) {
+        final MothershipFuelRequirements reqs = getFuelRequirements(duration);
 
         return reqs.get(fuelType) <= fuelTank.getFluidAmount();
     }

@@ -20,14 +20,14 @@ public class BlockRendererMultiOre implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelId, final RenderBlocks renderer) {
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 
         // draw the background
         drawBlock(block, metadata, renderer);
 
         // and then the overlay
-        SubBlock sb = ((BlockOreMulti) block).getSubBlock(metadata);
+        final SubBlock sb = ((BlockOreMulti) block).getSubBlock(metadata);
         drawBlock(sb, metadata, renderer);
 
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
@@ -35,10 +35,10 @@ public class BlockRendererMultiOre implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
-            RenderBlocks renderer) {
-        int meta = world.getBlockMetadata(x, y, z);
-        SubBlock sb = ((BlockOreMulti) block).getSubBlock(meta);
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId,
+            final RenderBlocks renderer) {
+        final int meta = world.getBlockMetadata(x, y, z);
+        final SubBlock sb = ((BlockOreMulti) block).getSubBlock(meta);
 
         // block with the background texture
         renderer.renderStandardBlock(block, x, y, z);
@@ -50,7 +50,7 @@ public class BlockRendererMultiOre implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public boolean shouldRender3DInInventory(int modelId) {
+    public boolean shouldRender3DInInventory(final int modelId) {
         return true;
     }
 
@@ -59,8 +59,8 @@ public class BlockRendererMultiOre implements ISimpleBlockRenderingHandler {
         return AmunRa.multiOreRendererId;
     }
 
-    private static void drawBlock(Block block, int meta, RenderBlocks renderer) {
-        Tessellator tessellator = Tessellator.instance;
+    private static void drawBlock(final Block block, final int meta, final RenderBlocks renderer) {
+        final Tessellator tessellator = Tessellator.instance;
 
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, -1.0F, 0.0F);

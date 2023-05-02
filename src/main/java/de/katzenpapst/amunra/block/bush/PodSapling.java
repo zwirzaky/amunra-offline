@@ -14,25 +14,23 @@ public class PodSapling extends AbstractSapling {
     protected int widthRadius = 4;
     protected int height = 10;
 
-    public PodSapling(String name, String texture) {
+    public PodSapling(final String name, final String texture) {
         super(name, texture);
     }
 
-    protected boolean canGenerateHere(World world, Random rand, int x, int y, int z, int height, double outerRadius) {
+    protected boolean canGenerateHere(final World world, final Random rand, final int x, final int y, final int z, final int height, final double outerRadius) {
         for (int curY = -1; curY < height + 3; curY++) {
             for (int curX = (int) -outerRadius; curX <= +outerRadius; curX++) {
                 for (int curZ = (int) -outerRadius; curZ <= +outerRadius; curZ++) {
                     if (curY == -1) {
-                        Block block = world.getBlock(curX + x, curY + y, curZ + z);
+                        final Block block = world.getBlock(curX + x, curY + y, curZ + z);
                         // check if the ground is dirt or grass
                         if (block.getMaterial() != Material.ground && block.getMaterial() != Material.grass
                                 && !this.isBlockReplaceable(block)) {
                             return false;
                         }
-                    } else {
-                        if (!canReplaceBlock(world, curX + x, curY + y, curZ + z)) {
-                            return false;
-                        }
+                    } else if (!canReplaceBlock(world, curX + x, curY + y, curZ + z)) {
+                        return false;
                     }
                 }
             }
@@ -41,14 +39,14 @@ public class PodSapling extends AbstractSapling {
     }
 
     @Override
-    public boolean generate(World world, Random rand, int x, int y, int z, boolean notify) {
-        double heightHalf = Math.ceil((height) / 2) + rand.nextInt(3);
-        double centerOffset = 3 + rand.nextInt(2);
+    public boolean generate(final World world, final Random rand, final int x, final int y, final int z, final boolean notify) {
+        final double heightHalf = Math.ceil(height / 2) + rand.nextInt(3);
+        final double centerOffset = 3 + rand.nextInt(2);
 
-        double outerRadius = widthRadius + rand.nextInt(3); //
+        final double outerRadius = widthRadius + rand.nextInt(3); //
 
-        double innerRadius = outerRadius - 1;
-        double innerHeightRadius = heightHalf - 1;
+        final double innerRadius = outerRadius - 1;
+        final double innerHeightRadius = heightHalf - 1;
 
         int topMostY = 0;
 
@@ -225,13 +223,13 @@ public class PodSapling extends AbstractSapling {
     }
 
     @Override
-    public boolean canPlaceOn(Block blockToCheck, int metaToCheck, int meta) {
-        return (blockToCheck == ARBlocks.blockMethaneDirt.getBlock()
-                && metaToCheck == ARBlocks.blockMethaneDirt.getMetadata())
-                || (blockToCheck == ARBlocks.blockMethaneGrass.getBlock()
-                        && metaToCheck == ARBlocks.blockMethaneGrass.getMetadata())
-                || (blockToCheck == ARBlocks.blockVacuumGrass.getBlock()
-                        && metaToCheck == ARBlocks.blockVacuumGrass.getMetadata());
+    public boolean canPlaceOn(final Block blockToCheck, final int metaToCheck, final int meta) {
+        return blockToCheck == ARBlocks.blockMethaneDirt.getBlock()
+                && metaToCheck == ARBlocks.blockMethaneDirt.getMetadata()
+                || blockToCheck == ARBlocks.blockMethaneGrass.getBlock()
+                        && metaToCheck == ARBlocks.blockMethaneGrass.getMetadata()
+                || blockToCheck == ARBlocks.blockVacuumGrass.getBlock()
+                        && metaToCheck == ARBlocks.blockVacuumGrass.getMetadata();
     }
 
 }

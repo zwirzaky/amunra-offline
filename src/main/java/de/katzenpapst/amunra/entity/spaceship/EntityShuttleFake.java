@@ -22,19 +22,19 @@ public class EntityShuttleFake extends EntityCelestialFake {
 
     private String cachedDimList = null;
 
-    public EntityShuttleFake(World world) {
+    public EntityShuttleFake(final World world) {
         super(world);
     }
 
-    public EntityShuttleFake(World world, float yOffset) {
+    public EntityShuttleFake(final World world, final float yOffset) {
         super(world, yOffset);
     }
 
-    public EntityShuttleFake(EntityPlayerMP player, float yOffset) {
+    public EntityShuttleFake(final EntityPlayerMP player, final float yOffset) {
         super(player, yOffset);
     }
 
-    public EntityShuttleFake(World world, double x, double y, double z, float yOffset) {
+    public EntityShuttleFake(final World world, final double x, final double y, final double z, final float yOffset) {
         super(world, x, y, z, yOffset);
     }
 
@@ -46,7 +46,7 @@ public class EntityShuttleFake extends EntityCelestialFake {
                 if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayerMP) {
                     // System.out.println("would send");
                     // try packet spam
-                    EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
+                    final EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
 
                     if (ticks % 160 == 0 || cachedDimList == null) {
                         // System.out.println("would update&send");
@@ -65,11 +65,11 @@ public class EntityShuttleFake extends EntityCelestialFake {
         super.onUpdate();
     }
 
-    private String getDimList(EntityPlayerMP player) {
-        HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
+    private String getDimList(final EntityPlayerMP player) {
+        final HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
         String dimensionList = "";
         int count = 0;
-        for (Entry<String, Integer> entry : map.entrySet()) {
+        for (final Entry<String, Integer> entry : map.entrySet()) {
             dimensionList = dimensionList.concat(entry.getKey() + (count < map.entrySet().size() - 1 ? "?" : ""));
             count++;
         }

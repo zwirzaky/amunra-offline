@@ -23,12 +23,12 @@ public class RenderLaserArrow extends Render {
         this.shadowSize = 0.1F;
     }
 
-    protected ResourceLocation func_110779_a(EntityBaseLaserArrow par1EntityArrow) {
+    protected ResourceLocation func_110779_a(final EntityBaseLaserArrow par1EntityArrow) {
         return par1EntityArrow.getTexture();
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity par1Entity) {
+    protected ResourceLocation getEntityTexture(final Entity par1Entity) {
         return this.func_110779_a((EntityBaseLaserArrow) par1Entity);
     }
 
@@ -39,7 +39,7 @@ public class RenderLaserArrow extends Render {
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float p_76986_8_, float p_76986_9_) {
+    public void doRender(final Entity entity, final double x, final double y, final double z, final float p_76986_8_, final float p_76986_9_) {
         this.bindEntityTexture(entity);
 
         /*
@@ -63,25 +63,25 @@ public class RenderLaserArrow extends Render {
 
         // GL11.glRotatef((entity.rotationYaw) - 90.0F, 0.0F, 1.0F, 0.0F);
         // GL11.glRotatef((entity.rotationPitch) , 0.0F, 0.0F, 1.0F);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
 
-        byte b0 = 0;
-        float f2 = 0.0F;
-        float f3 = 0.5F;
-        float f4 = (0 + b0 * 10) / 32.0F;
-        float f5 = (5 + b0 * 10) / 32.0F;
-        float f6 = 0.0F;
-        float f7 = 0.15625F;
-        float f8 = (5 + b0 * 10) / 32.0F;
-        float f9 = (10 + b0 * 10) / 32.0F;
-        float f10 = 0.05625F;
+        final byte b0 = 0;
+        final float f2 = 0.0F;
+        final float f3 = 0.5F;
+        final float f4 = (0 + b0 * 10) / 32.0F;
+        final float f5 = (5 + b0 * 10) / 32.0F;
+        final float f6 = 0.0F;
+        final float f7 = 0.15625F;
+        final float f8 = (5 + b0 * 10) / 32.0F;
+        final float f9 = (10 + b0 * 10) / 32.0F;
+        final float f10 = 0.05625F;
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
         GL11.glDepthMask(false);
-        char c0 = 61680;
-        int j = c0 % 65536;
-        int k = c0 / 65536;
+        final char c0 = 61680;
+        final int j = c0 % 65536;
+        final int k = c0 / 65536;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j / 1.0F, (float) k / 1.0F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         /*

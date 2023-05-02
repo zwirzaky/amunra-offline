@@ -27,7 +27,7 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class ItemShuttle extends Item implements IHoldableItem {
 
-    public ItemShuttle(String assetName) {
+    public ItemShuttle(final String assetName) {
         super();
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
@@ -41,8 +41,8 @@ public class ItemShuttle extends Item implements IHoldableItem {
         return AmunRa.arTab;
     }
 
-    public EntityShuttle spawnRocketEntity(ItemStack stack, World world, double centerX, double centerY,
-            double centerZ) {
+    public EntityShuttle spawnRocketEntity(final ItemStack stack, final World world, final double centerX, final double centerY,
+            final double centerZ) {
         final EntityShuttle spaceship = new EntityShuttle(world, centerX, centerY, centerZ, stack.getItemDamage());
 
         spaceship.setPosition(spaceship.posX, spaceship.posY + spaceship.getOnPadYOffset(), spaceship.posZ);
@@ -65,8 +65,8 @@ public class ItemShuttle extends Item implements IHoldableItem {
      * itemstack, player, world, x, y, z, side, hitX, hitY, hitZ
      */
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side,
-            float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack itemStack, final EntityPlayer player, final World world, final int x, final int y, final int z, final int side,
+            final float hitX, final float hitY, final float hitZ) {
         boolean padFound = false;
         TileEntity tile = null;
 
@@ -74,55 +74,54 @@ public class ItemShuttle extends Item implements IHoldableItem {
             // TODO FIX THIS, or figure out what it does
             ClientProxyCore.playerClientHandler.onBuild(8, (EntityPlayerSP) player);
             return false;
-        } else {
-            float centerX = -1;
-            float centerY = -1;
-            float centerZ = -1;
+        }
+        float centerX = -1;
+        float centerY = -1;
+        float centerZ = -1;
 
-            for (int i = -1; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    final net.minecraft.block.Block id = world.getBlock(x + i, y, z + j);
-                    int meta = world.getBlockMetadata(x + i, y, z + j);
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                final net.minecraft.block.Block id = world.getBlock(x + i, y, z + j);
+                final int meta = world.getBlockMetadata(x + i, y, z + j);
 
-                    if (id == GCBlocks.landingPadFull && meta == 0) {
-                        padFound = true;
-                        tile = world.getTileEntity(x + i, y, z + j);
+                if (id == GCBlocks.landingPadFull && meta == 0) {
+                    padFound = true;
+                    tile = world.getTileEntity(x + i, y, z + j);
 
-                        centerX = x + i + 0.5F;
-                        centerY = y + 0.4F;
-                        centerZ = z + j + 0.5F;
+                    centerX = x + i + 0.5F;
+                    centerY = y + 0.4F;
+                    centerZ = z + j + 0.5F;
 
-                        break;
-                    }
+                    break;
                 }
-
-                if (padFound) break;
             }
 
-            if (padFound) {
-                // Check whether there is already a rocket on the pad
-                if (tile instanceof TileEntityLandingPad) {
-                    if (((TileEntityLandingPad) tile).getDockedEntity() != null) return false;
-                } else {
-                    return false;
-                }
+            if (padFound) break;
+        }
 
-                spawnRocketEntity(itemStack, world, centerX, centerY, centerZ);
-
+        if (padFound) {
+            // Check whether there is already a rocket on the pad
+            if (tile instanceof TileEntityLandingPad) {
+                if (((TileEntityLandingPad) tile).getDockedEntity() != null) return false;
             } else {
-                centerX = x + 0.5F;
-                centerY = y + 0.4F;
-                centerZ = z + 0.5F;
-
-                spawnRocketEntity(itemStack, world, centerX, centerY, centerZ);
-
+                return false;
             }
-            if (!player.capabilities.isCreativeMode) {
-                itemStack.stackSize--;
 
-                if (itemStack.stackSize <= 0) {
-                    itemStack = null;
-                }
+            spawnRocketEntity(itemStack, world, centerX, centerY, centerZ);
+
+        } else {
+            centerX = x + 0.5F;
+            centerY = y + 0.4F;
+            centerZ = z + 0.5F;
+
+            spawnRocketEntity(itemStack, world, centerX, centerY, centerZ);
+
+        }
+        if (!player.capabilities.isCreativeMode) {
+            itemStack.stackSize--;
+
+            if (itemStack.stackSize <= 0) {
+                itemStack = null;
             }
         }
         return true;
@@ -130,7 +129,7 @@ public class ItemShuttle extends Item implements IHoldableItem {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(final Item par1, final CreativeTabs par2CreativeTabs, final List par3List) {
         // par3List.add(new ItemStack(par1, 1, 0));
 
         for (int numTanks = 0; numTanks <= 3; numTanks++) {
@@ -138,33 +137,33 @@ public class ItemShuttle extends Item implements IHoldableItem {
                 if (numChests + numTanks > 3) {
                     continue; // do it later
                 }
-                int dmg = numChests | (numTanks << 2);
+                final int dmg = numChests | numTanks << 2;
                 par3List.add(new ItemStack(par1, 1, dmg));
             }
         }
 
         // lastly
-        par3List.add(new ItemStack(par1, 1, 3 | (3 << 2)));
+        par3List.add(new ItemStack(par1, 1, 3 | 3 << 2));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(ItemStack par1ItemStack) {
+    public EnumRarity getRarity(final ItemStack par1ItemStack) {
         return ClientProxyCore.galacticraftItem;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {
-        int dmg = stack.getItemDamage();
-        EnumRocketType type = EntityShuttle.getRocketTypeFromDamage(dmg);
+    public void addInformation(final ItemStack stack, final EntityPlayer player, final List list, final boolean b) {
+        final int dmg = stack.getItemDamage();
+        final EnumRocketType type = EntityShuttle.getRocketTypeFromDamage(dmg);
 
         if (!type.getTooltip().isEmpty()) {
             list.add(type.getTooltip());
         }
 
-        int fuelTotal = EntityShuttle.getFuelCapacityFromDamage(dmg);
+        final int fuelTotal = EntityShuttle.getFuelCapacityFromDamage(dmg);
         if (EntityShuttle.isPreFueled(dmg)) {
             list.add(GCCoreUtil.translate("gui.message.fuel.name") + ": " + fuelTotal + " / " + fuelTotal);
             list.add(EnumColor.RED + "\u00a7o" + GCCoreUtil.translate("gui.creativeOnly.desc"));
@@ -178,17 +177,17 @@ public class ItemShuttle extends Item implements IHoldableItem {
     }
 
     @Override
-    public boolean shouldHoldLeftHandUp(EntityPlayer player) {
+    public boolean shouldHoldLeftHandUp(final EntityPlayer player) {
         return true;
     }
 
     @Override
-    public boolean shouldHoldRightHandUp(EntityPlayer player) {
+    public boolean shouldHoldRightHandUp(final EntityPlayer player) {
         return true;
     }
 
     @Override
-    public boolean shouldCrouch(EntityPlayer player) {
+    public boolean shouldCrouch(final EntityPlayer player) {
         return true;
     }
 }

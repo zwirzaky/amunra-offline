@@ -7,13 +7,13 @@ public class SpawnEntity extends AbstractPopulator {
 
     private Entity entity = null;
 
-    public SpawnEntity(int x, int y, int z, Entity ent) {
+    public SpawnEntity(final int x, final int y, final int z, final Entity ent) {
         super(x, y, z);
         entity = ent;
     }
 
     @Override
-    public boolean populate(World world) {
+    public boolean populate(final World world) {
         if (entity == null) return false;
 
         // otherwise try to spawn it now

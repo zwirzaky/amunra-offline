@@ -35,13 +35,13 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     protected final int maxWaterHeight = 60;
 
-    private TerrainGenerator oceanFloorGen;
+    private final TerrainGenerator oceanFloorGen;
 
     protected VolcanoGenerator volcanoGen;
 
     protected CrystalFormation crystalGen;
 
-    public SethChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+    public SethChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
         rockBlock = new BlockMetaPair(Blocks.packed_ice, (byte) 0);
         grassBlock = new BlockMetaPair(Blocks.snow, (byte) 0);
@@ -71,15 +71,15 @@ public class SethChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void generateTerrain(int chunkX, int chunkZ, Block[] idArray, byte[] metaArray) {
+    public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray) {
         super.generateTerrain(chunkX, chunkZ, idArray, metaArray);
 
         oceanFloorGen.generateTerrain(chunkX, chunkZ, idArray, metaArray);
     }
 
     @Override
-    public void replaceBlocksForBiome(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta,
-            BiomeGenBase[] par4ArrayOfBiomeGenBase) {
+    public void replaceBlocksForBiome(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta,
+            final BiomeGenBase[] par4ArrayOfBiomeGenBase) {
         // generate the default stuff first
         super.replaceBlocksForBiome(chunkX, chunkZ, arrayOfIDs, arrayOfMeta, par4ArrayOfBiomeGenBase);
         // now do my stuff
@@ -89,8 +89,8 @@ public class SethChunkProvider extends AmunraChunkProvider {
                 int surfaceHeight = -1;
                 for (int curY = maxWaterHeight - 1; curY > 0; curY--) {
                     final int index = this.getIndex(curX, curY, curZ);
-                    Block curBlockId = arrayOfIDs[index];
-                    byte curMeta = arrayOfMeta[index];
+                    final Block curBlockId = arrayOfIDs[index];
+                    final byte curMeta = arrayOfMeta[index];
 
                     if (curBlockId == floorStoneBlock.getBlock() && curMeta == floorStoneBlock.getMetadata()) {
 
@@ -98,11 +98,9 @@ public class SethChunkProvider extends AmunraChunkProvider {
                             surfaceHeight = curY;
                             arrayOfIDs[index] = floorGrassBlock.getBlock();
                             arrayOfMeta[index] = floorGrassBlock.getMetadata();
-                        } else {
-                            if (surfaceHeight - curY < floorDirtWidth) {
-                                arrayOfIDs[index] = floorDirtBlock.getBlock();
-                                arrayOfMeta[index] = floorDirtBlock.getMetadata();
-                            }
+                        } else if (surfaceHeight - curY < floorDirtWidth) {
+                            arrayOfIDs[index] = floorDirtBlock.getBlock();
+                            arrayOfMeta[index] = floorDirtBlock.getMetadata();
                         }
                     }
                 }
@@ -176,22 +174,22 @@ public class SethChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void onChunkProvide(int cX, int cZ, Block[] blocks, byte[] metadata) {
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {
 
     }
 
     @Override
-    public void onPopulate(IChunkProvider provider, int cX, int cZ) {
+    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {
 
-        int numToGenerate = this.rand.nextInt(this.rand.nextInt(4) + 1);
+        final int numToGenerate = this.rand.nextInt(this.rand.nextInt(4) + 1);
 
-        int curChunkMinX = CoordHelper.chunkToMinBlock(cX);
-        int curChunkMinZ = CoordHelper.chunkToMinBlock(cZ);
+        final int curChunkMinX = CoordHelper.chunkToMinBlock(cX);
+        final int curChunkMinZ = CoordHelper.chunkToMinBlock(cZ);
 
         for (int i = 0; i < numToGenerate; ++i) {
-            int curX = curChunkMinX + this.rand.nextInt(16) + 8;
-            int curY = 35;// this.rand.nextInt(120) + 4;
-            int curZ = curChunkMinZ + this.rand.nextInt(16) + 8;
+            final int curX = curChunkMinX + this.rand.nextInt(16) + 8;
+            final int curY = 35;// this.rand.nextInt(120) + 4;
+            final int curZ = curChunkMinZ + this.rand.nextInt(16) + 8;
             crystalGen.generate(this.worldObj, this.rand, curX, curY, curZ);
         }
     }

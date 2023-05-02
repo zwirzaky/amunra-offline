@@ -5,9 +5,9 @@ import net.minecraftforge.fluids.Fluid;
 
 public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
 
-    private Fluid fluid;
+    private final Fluid fluid;
 
-    public MothershipFuelDisplayFluid(Fluid fluid) {
+    public MothershipFuelDisplayFluid(final Fluid fluid) {
         this.fluid = fluid;
     }
 
@@ -38,7 +38,7 @@ public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof MothershipFuelDisplayFluid)) {
             return false;
         }

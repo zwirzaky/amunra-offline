@@ -22,7 +22,7 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
         AmunRa.msBoosterRendererId = RenderingRegistry.getNextAvailableRenderId();
     }
 
-    public void renderBooster(ResourceLocation loc) {
+    public void renderBooster(final ResourceLocation loc) {
         final Tessellator tess = Tessellator.instance;
 
         GL11.glRotatef(270, 0, 1, 0);
@@ -41,25 +41,25 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
     }
 
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelId, final RenderBlocks renderer) {
         if (block instanceof BlockMothershipBoosterMeta) {
-            MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) ((BlockMothershipBoosterMeta) block)
+            final MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) ((BlockMothershipBoosterMeta) block)
                     .getSubBlock(metadata);
-            ResourceLocation texture = sb.getBoosterTexture();
+            final ResourceLocation texture = sb.getBoosterTexture();
             renderBooster(texture);
         }
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
-            RenderBlocks renderer) {
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId,
+            final RenderBlocks renderer) {
         // this happens in the tileentity
 
         return false;
     }
 
     @Override
-    public boolean shouldRender3DInInventory(int modelId) {
+    public boolean shouldRender3DInInventory(final int modelId) {
         return true;
     }
 

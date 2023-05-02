@@ -11,7 +11,7 @@ import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class EntityFXMothershipJetFire extends EntityFX {
 
-    public EntityFXMothershipJetFire(World world, Vector3 pos, Vector3 motion) {
+    public EntityFXMothershipJetFire(final World world, final Vector3 pos, final Vector3 motion) {
         super(world, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z);
 
         particleScale = 2.0F;
@@ -21,8 +21,8 @@ public class EntityFXMothershipJetFire extends EntityFX {
         this.motionX = motion.x + (double) ((float) (Math.random() * 2.0D - 1.0D) * 0.4F);
         this.motionY = motion.y + (double) ((float) (Math.random() * 2.0D - 1.0D) * 0.4F);
         this.motionZ = motion.z + (double) ((float) (Math.random() * 2.0D - 1.0D) * 0.4F);
-        float f = (float) (Math.random() + Math.random() + 1.0D) * 0.15F;
-        float f1 = MathHelper.sqrt_double(
+        final float f = (float) (Math.random() + Math.random() + 1.0D) * 0.15F;
+        final float f1 = MathHelper.sqrt_double(
                 this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) / 9.0F;
         this.motionX = this.motionX / (double) f1 * (double) f * 0.4000000059604645D;
         this.motionY = this.motionY / (double) f1 * (double) f * 0.4000000059604645D;
@@ -59,8 +59,8 @@ public class EntityFXMothershipJetFire extends EntityFX {
     }
 
     @Override
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6,
-            float par7) {
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6,
+            final float par7) {
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         float var8 = (this.particleAge + par2) / this.particleMaxAge * 32.0F;
@@ -80,12 +80,12 @@ public class EntityFXMothershipJetFire extends EntityFX {
     }
 
     @Override
-    public int getBrightnessForRender(float par1) {
+    public int getBrightnessForRender(final float par1) {
         return 15728880;
     }
 
     @Override
-    public float getBrightness(float par1) {
+    public float getBrightness(final float par1) {
         return 1.0F;
     }
 }

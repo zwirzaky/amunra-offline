@@ -27,8 +27,8 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
     protected final String sideTexture;
     public final float energyGeneration;
 
-    public BlockIsotopeGenerator(String name, String frontTexture, String outputTexture, String sideTexture,
-            float energyGeneration) {
+    public BlockIsotopeGenerator(final String name, final String frontTexture, final String outputTexture, final String sideTexture,
+            final float energyGeneration) {
         super(name, frontTexture);
 
         this.outputTexture = outputTexture;
@@ -41,13 +41,13 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
      * @param side
      * @return
      */
-    public static boolean isSideEnergyOutput(int side) {
+    public static boolean isSideEnergyOutput(final int side) {
         // wait, wat?
         return false;
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
         // this.blockIcon = reg.registerIcon(this.getTextureName());
         // this.iconFront = par1IconRegister.registerIcon(AmunRa.TEXTUREPREFIX + "machine_nuclear");
@@ -58,12 +58,12 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
-        int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
+    public IIcon getIcon(final int side, final int meta) {
+        final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
         // we have the front thingy at front.. but what is front?
         // east is the output
         // I think front is south
-        ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
+        final ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
         // ForgeDirection output = CoordHelper.rotateForgeDirection(ForgeDirection.EAST, realMeta);// also north and
         // west
 
@@ -81,8 +81,8 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
     }
 
     @Override
-    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
+            final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_ATOMBATTERY, world, x, y, z);
         return true;
         // return false;
@@ -97,17 +97,17 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
      * @return A instance of a class extending TileEntity
      */
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityIsotopeGenerator();
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 
     @Override
-    public String getShiftDescription(int meta) {
+    public String getShiftDescription(final int meta) {
         return GCCoreUtil.translate("tile.isotopeGenerator.description");
     }
 

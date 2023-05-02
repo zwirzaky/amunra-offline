@@ -38,22 +38,21 @@ public class SchematicPageShuttle implements ISchematicPage {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public GuiScreen getResultScreen(EntityPlayer player, int x, int y, int z) {
+    public GuiScreen getResultScreen(final EntityPlayer player, final int x, final int y, final int z) {
         return new GuiSchematicShuttle(player.inventory, x, y, z);
     }
 
     @Override
-    public Container getResultContainer(EntityPlayer player, int x, int y, int z) {
+    public Container getResultContainer(final EntityPlayer player, final int x, final int y, final int z) {
         return new ContainerSchematicShuttle(player.inventory, x, y, z);
     }
 
     @Override
-    public int compareTo(ISchematicPage o) {
+    public int compareTo(final ISchematicPage o) {
         if (this.getPageID() > o.getPageID()) {
             return 1;
-        } else {
-            return -1;
         }
+        return -1;
     }
 
 }

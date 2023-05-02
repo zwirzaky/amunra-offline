@@ -14,14 +14,14 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 public class NeperBiomeDecorator extends AmunraBiomeDecorator {
 
     protected WorldGenerator grassGen = new WorldGenTallGrass(Blocks.tallgrass, 1);
-    private int grassPerChunk = 10;
+    private final int grassPerChunk = 10;
 
     @Override
     protected List<WorldGenOre> getOreGenerators() {
-        List<WorldGenOre> list = super.getOreGenerators();
+        final List<WorldGenOre> list = super.getOreGenerators();
         
         if(AmunRa.config.generateOres) {
-            BlockMetaPair stone = new BlockMetaPair(Blocks.stone, (byte) 0);
+            final BlockMetaPair stone = new BlockMetaPair(Blocks.stone, (byte) 0);
             
             list.add(new WorldGenOre(new BlockMetaPair(Blocks.diamond_ore, (byte) 0), 4, stone, 8, 0, 12));
             list.add(new WorldGenOre(new BlockMetaPair(Blocks.emerald_ore, (byte) 0), 4, stone, 4, 8, 32));
@@ -39,9 +39,9 @@ public class NeperBiomeDecorator extends AmunraBiomeDecorator {
     protected void decorate() {
         super.decorate();
         for (int i = 0; i < this.grassPerChunk; ++i) {
-            int x = this.chunkX + this.mWorld.rand.nextInt(16) + 8;
-            int z = this.chunkZ + this.mWorld.rand.nextInt(16) + 8;
-            int y = mWorld.rand.nextInt(this.mWorld.getHeightValue(x, z) * 2);
+            final int x = this.chunkX + this.mWorld.rand.nextInt(16) + 8;
+            final int z = this.chunkZ + this.mWorld.rand.nextInt(16) + 8;
+            final int y = mWorld.rand.nextInt(this.mWorld.getHeightValue(x, z) * 2);
 
             grassGen.generate(this.mWorld, this.mWorld.rand, x, y, z);
         }

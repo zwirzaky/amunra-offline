@@ -61,11 +61,11 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
 
     protected static ArrayList<ResourceLocation> professionIcons = new ArrayList<ResourceLocation>();
 
-    public EntityRobotVillager(World par1World) {
+    public EntityRobotVillager(final World par1World) {
         this(par1World, -1);
     }
 
-    public EntityRobotVillager(World par1World, int profession) {
+    public EntityRobotVillager(final World par1World, final int profession) {
         super(par1World);
 
         this.randomTickDivider = 0;
@@ -132,7 +132,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
             if (this.villageObj == null) {
                 this.detachHome();
             } else {
-                ChunkCoordinates chunkcoordinates = this.villageObj.getCenter();
+                final ChunkCoordinates chunkcoordinates = this.villageObj.getCenter();
                 this.setHomeArea(
                         chunkcoordinates.posX,
                         chunkcoordinates.posY,
@@ -154,10 +154,11 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
                 if (this.needsInit) {
                     if (this.buyingList.size() > 1) {
                         @SuppressWarnings("unchecked")
+                        final
                         Iterator<MerchantRecipe> iterator = this.buyingList.iterator();
 
                         while (iterator.hasNext()) {
-                            MerchantRecipe merchantrecipe = iterator.next();
+                            final MerchantRecipe merchantrecipe = iterator.next();
 
                             if (merchantrecipe.isRecipeDisabled()) {
                                 merchantrecipe.func_82783_a(this.rand.nextInt(6) + this.rand.nextInt(6) + 2);
@@ -188,15 +189,15 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * that the villager wants to buy. (at most 1 of each wanted type is added)
      */
     @SuppressWarnings("unchecked")
-    private void addDefaultEquipmentAndRecipies(int p_70950_1_) {
+    private void addDefaultEquipmentAndRecipies(final int p_70950_1_) {
         // now do the recipes
         if (buyingList == null) {
             buyingList = new MerchantRecipeList();
         }
         buyingList.clear();
 
-        RobotVillagerProfession prof = RobotVillagerProfession.getProfession(this.getProfession());
-        MerchantRecipeList baseList = prof.getRecipeList();
+        final RobotVillagerProfession prof = RobotVillagerProfession.getProfession(this.getProfession());
+        final MerchantRecipeList baseList = prof.getRecipeList();
         switch (baseList.size()) {
             case 0:
                 return;
@@ -207,10 +208,10 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
             default:
                 // int numOffers = worldObj.rand.nextInt(baseList.size());
                 // for now have just 1 offer
-                int numOffers = worldObj.rand.nextInt(baseList.size() - 1) + 1;// ensure it's at least 1
-                HashMap<Integer, Boolean> uniqCache = new HashMap<Integer, Boolean>();
+                final int numOffers = worldObj.rand.nextInt(baseList.size() - 1) + 1;// ensure it's at least 1
+                final HashMap<Integer, Boolean> uniqCache = new HashMap<Integer, Boolean>();
                 for (int i = 0; i < numOffers; i++) {
-                    int randOffer = worldObj.rand.nextInt(baseList.size());
+                    final int randOffer = worldObj.rand.nextInt(baseList.size());
                     if (uniqCache.containsKey(randOffer)) {
                         continue;
                     }
@@ -234,29 +235,28 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
     @Override
-    public boolean interact(EntityPlayer p_70085_1_) {
-        ItemStack itemstack = p_70085_1_.inventory.getCurrentItem();
-        boolean flag = itemstack != null && itemstack.getItem() == Items.spawn_egg;
+    public boolean interact(final EntityPlayer p_70085_1_) {
+        final ItemStack itemstack = p_70085_1_.inventory.getCurrentItem();
+        final boolean flag = itemstack != null && itemstack.getItem() == Items.spawn_egg;
 
         if (this.getRecipes(p_70085_1_).size() == 0) {
             this.sayNo();
             return super.interact(p_70085_1_);
         }
 
-        if (!flag && this.isEntityAlive() && !this.isTrading() && !this.isChild() && !p_70085_1_.isSneaking()) {
-            if (!this.worldObj.isRemote) {
-                this.setCustomer(p_70085_1_);
-                p_70085_1_.displayGUIMerchant(this, this.getProfessionName());
-            }
-
-            return true;
-        } else {
+        if (flag || !this.isEntityAlive() || this.isTrading() || this.isChild() || p_70085_1_.isSneaking()) {
             return super.interact(p_70085_1_);
         }
+        if (!this.worldObj.isRemote) {
+            this.setCustomer(p_70085_1_);
+            p_70085_1_.displayGUIMerchant(this, this.getProfessionName());
+        }
+
+        return true;
     }
 
     public String getProfessionName() {
-        RobotVillagerProfession prof = RobotVillagerProfession.getProfession(this.getProfession());
+        final RobotVillagerProfession prof = RobotVillagerProfession.getProfession(this.getProfession());
         return StatCollector.translateToLocal("profession." + prof.getName() + ".name");
     }
 
@@ -267,7 +267,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("Profession", this.getProfession());
         par1NBTTagCompound.setInteger("Riches", this.wealth);
@@ -278,7 +278,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setProfession(par1NBTTagCompound.getInteger("Profession"));
         this.wealth = par1NBTTagCompound.getInteger("Riches");
@@ -330,7 +330,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         return AmunRa.TEXTUREPREFIX + "mob.robotvillager.death";
     }
 
-    public void setProfession(int par1) {
+    public void setProfession(final int par1) {
         this.dataWatcher.updateObject(16, Integer.valueOf(par1));
 
     }
@@ -343,11 +343,11 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         return this.isMating;
     }
 
-    public void setMating(boolean par1) {
+    public void setMating(final boolean par1) {
         this.isMating = par1;
     }
 
-    public void setPlaying(boolean par1) {
+    public void setPlaying(final boolean par1) {
         this.isPlaying = par1;
     }
 
@@ -356,7 +356,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void setRevengeTarget(EntityLivingBase par1EntityLiving) {
+    public void setRevengeTarget(final EntityLivingBase par1EntityLiving) {
         super.setRevengeTarget(par1EntityLiving);
 
         if (this.villageObj != null && par1EntityLiving != null) {
@@ -382,7 +382,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * Called when the mob's health reaches 0.
      */
     @Override
-    public void onDeath(DamageSource par1DamageSource) {
+    public void onDeath(final DamageSource par1DamageSource) {
         if (this.villageObj != null) {
             final Entity entity = par1DamageSource.getEntity();
 
@@ -405,7 +405,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void setCustomer(EntityPlayer par1EntityPlayer) {
+    public void setCustomer(final EntityPlayer par1EntityPlayer) {
         this.buyingPlayer = par1EntityPlayer;
     }
 
@@ -419,7 +419,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void useRecipe(MerchantRecipe par1MerchantRecipe) {
+    public void useRecipe(final MerchantRecipe par1MerchantRecipe) {
         par1MerchantRecipe.incrementToolUses();
 
         if (par1MerchantRecipe.getItemToBuy().getItem() == Items.emerald) {
@@ -429,20 +429,25 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1) {
-        if (par1 == 12) {
-            this.generateRandomParticles("heart");
-        } else if (par1 == 13) {
-            this.generateRandomParticles("angryVillager");
-        } else if (par1 == 14) {
-            this.generateRandomParticles("happyVillager");
-        } else {
-            super.handleHealthUpdate(par1);
+    public void handleHealthUpdate(final byte par1) {
+        switch (par1) {
+            case 12:
+                this.generateRandomParticles("heart");
+                break;
+            case 13:
+                this.generateRandomParticles("angryVillager");
+                break;
+            case 14:
+                this.generateRandomParticles("happyVillager");
+                break;
+            default:
+                super.handleHealthUpdate(par1);
+                break;
         }
     }
 
     @SideOnly(Side.CLIENT)
-    private void generateRandomParticles(String par1Str) {
+    private void generateRandomParticles(final String par1Str) {
         for (int i = 0; i < 5; ++i) {
             final double d0 = this.rand.nextGaussian() * 0.02D;
             final double d1 = this.rand.nextGaussian() * 0.02D;
@@ -462,12 +467,12 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         this.field_82190_bM = true;
     }
 
-    public EntityRobotVillager func_90012_b(EntityAgeable par1EntityAgeable) {
+    public EntityRobotVillager func_90012_b(final EntityAgeable par1EntityAgeable) {
         return new EntityRobotVillager(this.worldObj);
     }
 
     @Override
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable) {
+    public EntityAgeable createChild(final EntityAgeable par1EntityAgeable) {
         return this.func_90012_b(par1EntityAgeable);
     }
 
@@ -477,7 +482,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public MerchantRecipeList getRecipes(EntityPlayer p_70934_1_) {
+    public MerchantRecipeList getRecipes(final EntityPlayer p_70934_1_) {
         if (this.buyingList == null) {
             this.addDefaultEquipmentAndRecipies(1);
         }
@@ -486,7 +491,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void setRecipes(MerchantRecipeList p_70930_1_) {
+    public void setRecipes(final MerchantRecipeList p_70930_1_) {
         // TODO Auto-generated method stub
 
     }
@@ -503,7 +508,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * Seems to be for playing the yes and no sounds
      */
     @Override
-    public void func_110297_a_(ItemStack p_110297_1_) {
+    public void func_110297_a_(final ItemStack p_110297_1_) {
         if (!this.worldObj.isRemote && this.livingSoundTime > -this.getTalkInterval() + 20) {
             this.livingSoundTime = -this.getTalkInterval();
 

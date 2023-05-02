@@ -44,8 +44,8 @@ public class BlockARChest extends BlockContainer
 
     protected String shiftDescription = null;
 
-    public BlockARChest(Material material, String blockName, ResourceLocation smallChestTexture,
-            ResourceLocation bigChestTexture, String fallbackTexture) {
+    public BlockARChest(final Material material, final String blockName, final ResourceLocation smallChestTexture,
+            final ResourceLocation bigChestTexture, final String fallbackTexture) {
         super(material);
 
         this.setHardness(2.5F);
@@ -58,8 +58,8 @@ public class BlockARChest extends BlockContainer
         this.fallbackTexture = fallbackTexture;
     }
 
-    public BlockARChest(Material material, String blockName, ResourceLocation smallChestTexture,
-            String fallbackTexture) {
+    public BlockARChest(final Material material, final String blockName, final ResourceLocation smallChestTexture,
+            final String fallbackTexture) {
         super(material);
 
         this.setHardness(2.5F);
@@ -82,16 +82,16 @@ public class BlockARChest extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         this.blockIcon = par1IconRegister.registerIcon(fallbackTexture);
     }
 
-    public void setShiftDescription(String str) {
+    public void setShiftDescription(final String str) {
         shiftDescription = str;
     }
 
     @Override
-    public String getShiftDescription(int meta) {
+    public String getShiftDescription(final int meta) {
         if (shiftDescription != null) {
             return GCCoreUtil.translate(shiftDescription);
         }
@@ -99,12 +99,12 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public boolean showDescription(int meta) {
+    public boolean showDescription(final int meta) {
         return shiftDescription != null;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(final World world, final int meta) {
         return new TileEntityARChest();
     }
 
@@ -133,7 +133,7 @@ public class BlockARChest extends BlockContainer
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+    public void setBlockBoundsBasedOnState(final IBlockAccess world, final int x, final int y, final int z) {
         if (!this.canDoublechest) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
             return;
@@ -152,7 +152,7 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public void onBlockAdded(World world, int x, int y, int z) {
+    public void onBlockAdded(final World world, final int x, final int y, final int z) {
         super.onBlockAdded(world, x, y, z);
         if (!this.canDoublechest) {
             return;
@@ -172,7 +172,7 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase user, ItemStack stack) {
+    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase user, final ItemStack stack) {
         byte meta = 0;
         final int userRotation = MathHelper.floor_double(user.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
@@ -196,10 +196,10 @@ public class BlockARChest extends BlockContainer
             return;
         }
 
-        boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
-        boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
-        boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
-        boolean xPosSame = this.isSameBlock(world, x + 1, y, z);
+        final boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
+        final boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
+        final boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
+        final boolean xPosSame = this.isSameBlock(world, x + 1, y, z);
 
         if (!zNegSame && !zPosSame && !xNegSame && !xPosSame) {
             world.setBlockMetadataWithNotify(x, y, z, meta, 3);
@@ -226,20 +226,20 @@ public class BlockARChest extends BlockContainer
         }
     }
 
-    public void unifyAdjacentChests(World world, int x, int y, int z) {
+    public void unifyAdjacentChests(final World world, final int x, final int y, final int z) {
         if (!this.canDoublechest) {
             return;
         }
         if (!world.isRemote) {
-            boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
-            boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
-            boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
-            boolean xPosSame = this.isSameBlock(world, x + 1, y, z);
+            final boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
+            final boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
+            final boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
+            final boolean xPosSame = this.isSameBlock(world, x + 1, y, z);
 
-            Block nZNeg = world.getBlock(x, y, z - 1);
-            Block nZPos = world.getBlock(x, y, z + 1);
-            Block nXNeg = world.getBlock(x - 1, y, z);
-            Block nXPos = world.getBlock(x + 1, y, z);
+            final Block nZNeg = world.getBlock(x, y, z - 1);
+            final Block nZPos = world.getBlock(x, y, z + 1);
+            final Block nXNeg = world.getBlock(x - 1, y, z);
+            final Block nXPos = world.getBlock(x + 1, y, z);
             Block otherNeighbour1;
             Block otherNeighbour2;
             byte meta;
@@ -318,7 +318,7 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public boolean canPlaceBlockAt(World world, int x, int y, int z) {
+    public boolean canPlaceBlockAt(final World world, final int x, final int y, final int z) {
         if (!this.canDoublechest) {
             return super.canPlaceBlockAt(world, x, y, z);
         }
@@ -348,7 +348,7 @@ public class BlockARChest extends BlockContainer
     /**
      * Checks the neighbor blocks to see if there is a chest there. Args: world, x, y, z
      */
-    private boolean isThereANeighborChest(World world, int x, int y, int z) {
+    private boolean isThereANeighborChest(final World world, final int x, final int y, final int z) {
         if (!canDoublechest) {
             return false;
         }
@@ -375,7 +375,7 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
         super.onNeighborBlockChange(world, x, y, z, block);
 
         final TileEntityARChest tileEntity = (TileEntityARChest) world.getTileEntity(x, y, z);
@@ -385,13 +385,13 @@ public class BlockARChest extends BlockContainer
         }
     }
 
-    protected boolean isSameBlock(IBlockAccess world, int x, int y, int z) {
-        Block b = world.getBlock(x, y, z);
+    protected boolean isSameBlock(final IBlockAccess world, final int x, final int y, final int z) {
+        final Block b = world.getBlock(x, y, z);
         return b == this;
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block block, final int meta) {
         final TileEntityARChest tileEntity = (TileEntityARChest) world.getTileEntity(x, y, z);
 
         if (tileEntity != null) {
@@ -439,8 +439,8 @@ public class BlockARChest extends BlockContainer
      * int side, float xOffset, float yOffset, float zOffset
      */
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xOffset,
-            float yOffset, float zOffset) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player, final int side, final float xOffset,
+            final float yOffset, final float zOffset) {
         Object tileEntity = world.getTileEntity(x, y, z);
 
         if (tileEntity == null || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN)) {
@@ -499,19 +499,18 @@ public class BlockARChest extends BlockContainer
 
         if (world.isRemote) {
             return true;
-        } else {
-            player.displayGUIChest((IInventory) tileEntity);
-            return true;
         }
+        player.displayGUIChest((IInventory) tileEntity);
+        return true;
 
     }
 
-    public void setMass(float mass) {
+    public void setMass(final float mass) {
         this.mass = mass;
     }
 
     @Override
-    public float getMass(World w, int x, int y, int z, int meta) {
+    public float getMass(final World w, final int x, final int y, final int z, final int meta) {
         return mass;
     }
 }

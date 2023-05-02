@@ -11,12 +11,12 @@ import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
 
 public class BlockMachineMetaDummyRender extends BlockMachineMeta implements IPartialSealableBlock {
 
-    public BlockMachineMetaDummyRender(String name, Material material) {
+    public BlockMachineMetaDummyRender(final String name, final Material material) {
         super(name, material);
         // TODO Auto-generated constructor stub
     }
 
-    public BlockMachineMetaDummyRender(String name, Material material, int numSubBlocks) {
+    public BlockMachineMetaDummyRender(final String name, final Material material, final int numSubBlocks) {
         super(name, material, numSubBlocks);
         // TODO Auto-generated constructor stub
     }
@@ -48,7 +48,7 @@ public class BlockMachineMetaDummyRender extends BlockMachineMeta implements IPa
     }
 
     @Override
-    public boolean isSealed(World world, int x, int y, int z, ForgeDirection direction) {
+    public boolean isSealed(final World world, final int x, final int y, final int z, final ForgeDirection direction) {
         return true;
     }
 

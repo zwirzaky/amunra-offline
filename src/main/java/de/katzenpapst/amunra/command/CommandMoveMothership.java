@@ -24,12 +24,12 @@ public class CommandMoveMothership extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return "/" + this.getCommandName() + " <name> [<travel time>]";
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender, final String[] args) {
 
         long travelTime = 100;
 
@@ -41,8 +41,8 @@ public class CommandMoveMothership extends CommandBase {
             throw new WrongUsageException("Not enough arguments, usage: " + this.getCommandUsage(sender));
         }
 
-        Mothership mShip = (Mothership) ((MothershipWorldProvider) sender.getEntityWorld().provider).getCelestialBody();
-        String targetName = args[0];
+        final Mothership mShip = (Mothership) ((MothershipWorldProvider) sender.getEntityWorld().provider).getCelestialBody();
+        final String targetName = args[0];
 
         if (args.length >= 2) {
             travelTime = Integer.parseInt(args[1]);
@@ -52,22 +52,21 @@ public class CommandMoveMothership extends CommandBase {
 
         }
 
-        CelestialBody targetBody = Mothership.findBodyByString(targetName);
+        final CelestialBody targetBody = Mothership.findBodyByString(targetName);
         if (targetBody == null) {
             throw new WrongUsageException("Found no body for " + targetName);
         }
 
         // apparently this happens on the server side
-        if (mShip.getWorldProviderServer().startTransit(targetBody, true)) {
-            AmunRa.packetPipeline.sendToAll(
-                    new PacketSimpleAR(
-                            PacketSimpleAR.EnumSimplePacket.C_MOTHERSHIP_TRANSIT_STARTED,
-                            mShip.getID(),
-                            AstronomyHelper.getOrbitableBodyName(targetBody),
-                            travelTime));
-        } else {
+        if (!mShip.getWorldProviderServer().startTransit(targetBody, true)) {
             throw new WrongUsageException("Starting transit failed");
         }
+        AmunRa.packetPipeline.sendToAll(
+                new PacketSimpleAR(
+                        PacketSimpleAR.EnumSimplePacket.C_MOTHERSHIP_TRANSIT_STARTED,
+                        mShip.getID(),
+                        AstronomyHelper.getOrbitableBodyName(targetBody),
+                        travelTime));
 
     }
 
