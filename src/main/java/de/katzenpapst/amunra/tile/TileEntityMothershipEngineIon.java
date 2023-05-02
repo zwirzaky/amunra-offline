@@ -187,7 +187,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
 
     @Override
     public boolean canConnect(final ForgeDirection direction, final NetworkType type) {
-        if (direction == null || direction.equals(ForgeDirection.UNKNOWN) || type != NetworkType.POWER) {
+        if (direction == null || ForgeDirection.UNKNOWN.equals(direction) || type != NetworkType.POWER) {
             return false;
         }
 

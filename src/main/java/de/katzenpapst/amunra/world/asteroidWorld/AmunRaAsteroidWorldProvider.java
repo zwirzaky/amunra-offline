@@ -233,7 +233,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
 
         for (final AsteroidData test : this.asteroids) {
             // if this flag is set, then don't?
-            if ((test.sizeAndLandedFlag & 128) > 0) // wtf? It's 1 << 7, but why?
+            if ((test.sizeAndLandedFlag & 128) != 0) // wtf? It's 1 << 7, but why?
                 continue;
 
             final int dx = x - test.centre.x;
