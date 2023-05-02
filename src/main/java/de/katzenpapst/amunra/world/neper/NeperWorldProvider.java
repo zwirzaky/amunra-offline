@@ -43,14 +43,7 @@ public class NeperWorldProvider extends AmunraWorldProvider {
 
     @Override
     public Vector3 getFogColor() {
-        float f3 = 0.7529412F;
-        float f4 = 0.84705883F;
-        float f5 = 1.0F;
-        /*
-         * f3 *= f2 * 0.94F + 0.06F; f4 *= f2 * 0.94F + 0.06F; f5 *= f2 * 0.91F + 0.09F;
-         */
-        // return Vec3.createVectorHelper((double)f3, (double)f4, (double)f5);
-        return new Vector3(f3, f4, f5);
+        return new Vector3(0.7529412, 0.84705883, 1.0);
     }
 
     @Override

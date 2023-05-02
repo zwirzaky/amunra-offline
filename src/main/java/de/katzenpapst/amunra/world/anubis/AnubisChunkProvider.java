@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.world.anubis;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -109,10 +109,7 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
         // TODO fill in with caves and villages
-        ArrayList<MapGenBaseMeta> list = new ArrayList<MapGenBaseMeta>();
-        list.add(gVillage);
-        // list.add(pyramid);
-        return list;
+        return Arrays.asList(this.gVillage/*, this.pyramid*/);
     }
 
     @Override

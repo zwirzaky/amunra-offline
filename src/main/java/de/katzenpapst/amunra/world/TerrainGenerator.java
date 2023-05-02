@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 
 import de.katzenpapst.amunra.helper.CoordHelper;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.ChunkProviderSpace;
 import micdoodle8.mods.galacticraft.core.perlin.generator.Gradient;
 
 /**

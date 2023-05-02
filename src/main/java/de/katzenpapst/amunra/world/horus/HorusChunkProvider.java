@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.world.horus;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -61,10 +61,7 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
-        ArrayList<MapGenBaseMeta> list = new ArrayList<MapGenBaseMeta>();
-        list.add(pyramid);
-        list.add(volcanoGen);
-        return list;
+        return Arrays.asList(this.volcanoGen, this.pyramid);
     }
 
     @Override

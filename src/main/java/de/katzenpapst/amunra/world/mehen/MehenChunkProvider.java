@@ -1,15 +1,14 @@
 package de.katzenpapst.amunra.world.mehen;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.mob.entity.EntitySentry;
 import de.katzenpapst.amunra.world.asteroidWorld.AmunRaAsteroidsChunkProvider;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
 public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
 
@@ -18,12 +17,9 @@ public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
     }
 
     @Override
-            final List monsters = new ArrayList();
-
-            monsters.add(new SpawnListEntry(EntitySentry.class, 3000, 1, 3));
-            return monsters;
     public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, int x, int y, int z) {
         if (creatureType == EnumCreatureType.monster) {
+            return Arrays.asList(new SpawnListEntry(EntitySentry.class, 3000, 1, 3));
         } else {
             return null;
         }

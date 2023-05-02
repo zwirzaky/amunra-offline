@@ -16,10 +16,7 @@ public class SetSignText extends AbstractPopulator {
     public SetSignText(int x, int y, int z, String[] signText) {
         super(x, y, z);
 
-        for (int i = 0; i < signText.length; i++) {
-            if (i >= 4) {
-                break;
-            }
+        for (int i = 0; i < signText.length && i < 4; i++) {
             if (signText[i] != null) {
                 this.signText[i] = signText[i];
             }

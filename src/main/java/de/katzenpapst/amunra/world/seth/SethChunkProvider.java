@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.world.seth;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -127,9 +127,7 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
-        ArrayList<MapGenBaseMeta> list = new ArrayList<MapGenBaseMeta>();
-        list.add(volcanoGen);
-        return list;
+        return Arrays.asList(this.volcanoGen);
     }
 
     @Override

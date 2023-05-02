@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,10 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         public SubComponentData copy() {
             return new SubComponentData(this.clazz, this.probability, this.minAmount, this.maxAmount);
         }
+        
+        public float getProbability() {
+            return this.probability;
+        }
     }
 
     /**
@@ -57,11 +62,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * helper for generateSubComponents
      */
     private float getProbabilityMaximum(List<SubComponentData> subCompData) {
-        float sum = 0.0F;
-        for (SubComponentData entry : subCompData) {
-            sum += entry.probability;
-        }
-        return sum;
+        return subCompData.parallelStream().map(SubComponentData::getProbability).reduce(0.0f, Float::sum);
     }
 
     /**
