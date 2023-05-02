@@ -328,7 +328,7 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
 
         final ItemStack canister = this.containingItems[0];
 
-        if ((canister != null) && this.isItemFuel(canister)) {
+        if (canister != null && this.isItemFuel(canister)) {
             // attempt to drain it into the tank
             FluidStack liquid = FluidContainerRegistry.getFluidForFilledItem(canister);
             // int spaceForFluid = this.fuelTank.getCapacity() -
@@ -600,7 +600,8 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
             // double distSq = 0;
             if (player.posZ < minZ) {
                 return this.xCoord * this.xCoord + Math.pow(minZ - player.posZ, 2) <= 64.0D;
-            } else if (player.posZ > maxZ) {
+            }
+            if (player.posZ > maxZ) {
                 return this.xCoord * this.xCoord + Math.pow(player.posZ - maxZ, 2) <= 64.0D;
             } else {
                 // we are between the jet and the last booster on the z axis,
@@ -613,7 +614,8 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
         // double distSq = 0;
         if (player.posX < minX) {
             return this.zCoord * this.zCoord + Math.pow(minX - player.posX, 2) <= 64.0D;
-        } else if (player.posX > maxX) {
+        }
+        if (player.posX > maxX) {
             return this.zCoord * this.zCoord + Math.pow(player.posX - maxX, 2) <= 64.0D;
         } else {
             // we are between the jet and the last booster on the z axis,

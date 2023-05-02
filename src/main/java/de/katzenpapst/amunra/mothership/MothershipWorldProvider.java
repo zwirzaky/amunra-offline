@@ -353,7 +353,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         for (final Vector3int loc : this.engineLocations) {
             final TileEntity tile = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
 
-            if ((tile instanceof ITileMothershipEngine engine) && (engine.isEnabled() && engine.getDirection() == td.direction)) {
+            if (tile instanceof ITileMothershipEngine engine && engine.isEnabled() && engine.getDirection() == td.direction) {
                 // double curSpeed = engine.getSpeed(worldObj, loc.x, loc.y, loc.z, meta);
                 final double curThrust = engine.getThrust();
                 if (curThrust <= 0) {
@@ -380,7 +380,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         for (final Vector3int loc : this.engineLocations) {
             final TileEntity t = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
 
-            if ((t instanceof ITileMothershipEngine engine) && engine.isInUse()) {
+            if (t instanceof ITileMothershipEngine engine && engine.isInUse()) {
                 engine.endTransit();
             }
         }

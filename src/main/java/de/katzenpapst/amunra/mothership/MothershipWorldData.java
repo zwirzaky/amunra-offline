@@ -420,7 +420,7 @@ public class MothershipWorldData extends WorldSavedData {
             }
         }
         // if no changes, but still unsaved changes
-        if ((hasChanged || !hasChanged && this.numTicksWithoutSave > 0) && (this.numTicksWithoutSave >= 1200)) {
+        if ((hasChanged || !hasChanged && this.numTicksWithoutSave > 0) && this.numTicksWithoutSave >= 1200) {
             this.numTicksWithoutSave = 0;
             this.markDirty(); //
         }

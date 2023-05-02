@@ -3,7 +3,6 @@ package de.katzenpapst.amunra.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 import de.katzenpapst.amunra.tile.TileEntityHydroponics;

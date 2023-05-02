@@ -185,7 +185,8 @@ public class AstronomyHelper {
 
             return getClosestCommonParent(body1, ((Mothership) body2).getParent());
 
-        } else if (body1 instanceof Mothership && body2 instanceof Mothership) {
+        }
+        if (body1 instanceof Mothership && body2 instanceof Mothership) {
 
             return getClosestCommonParent(((Mothership) body1).getParent(), ((Mothership) body2).getParent());
 
@@ -201,7 +202,8 @@ public class AstronomyHelper {
 
             return getClosestCommonParent(body1, ((IChildBody) body2).getParentPlanet());
 
-        } else if (body1 instanceof IChildBody && body2 instanceof IChildBody) {
+        }
+        if (body1 instanceof IChildBody && body2 instanceof IChildBody) {
 
             return getClosestCommonParent(
                     ((IChildBody) body1).getParentPlanet(),
@@ -219,7 +221,8 @@ public class AstronomyHelper {
 
             return getClosestCommonParent(body1, ((Planet) body2).getParentSolarSystem().getMainStar());
 
-        } else if (body1 instanceof Planet && body2 instanceof Planet) {
+        }
+        if (body1 instanceof Planet && body2 instanceof Planet) {
 
             return getClosestCommonParent(
                     ((Planet) body1).getParentSolarSystem().getMainStar(),
@@ -246,7 +249,8 @@ public class AstronomyHelper {
         }
         if (body instanceof IChildBody) {
             return ((IChildBody) body).getParentPlanet();
-        } else if (body instanceof Mothership) {
+        }
+        if (body instanceof Mothership) {
             return ((Mothership) body).getParent();
         } else if (body instanceof Star) {
             return body;
@@ -417,12 +421,13 @@ public class AstronomyHelper {
         // check if one of the bodies is the parent
         if (body1.equals(commonParent)) {
             return getDistanceToParent(commonParent, body2);
-        } else if (body2.equals(commonParent)) {
+        }
+        if (body2.equals(commonParent)) {
             return getDistanceToParent(commonParent, body1);
         }
 
         // are the two siblings?
-        if ((body1 instanceof IChildBody && body2 instanceof IChildBody) && (commonParent instanceof Planet)) {
+        if (body1 instanceof IChildBody && body2 instanceof IChildBody && commonParent instanceof Planet) {
             return Math.abs(
                     body1.getRelativeDistanceFromCenter().unScaledDistance
                             - body2.getRelativeDistanceFromCenter().unScaledDistance)

@@ -147,7 +147,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
         // ARItems
         // GCItems
         // other stuff?
-        if ((this.fuel != fluid) && !FluidRegistry.getFluidName(fluid).equals(this.fuel.getName())) {
+        if (this.fuel != fluid && !FluidRegistry.getFluidName(fluid).equals(this.fuel.getName())) {
             return false;
         }
 

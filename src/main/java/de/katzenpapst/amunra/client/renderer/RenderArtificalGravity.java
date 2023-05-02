@@ -24,11 +24,7 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
     @Override
     public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z, final float ticks) {
 
-        if (!(te instanceof TileEntityGravitation entity)) {
-            return;
-        }
-
-        if (!entity.isBoxShown) {
+        if (!(te instanceof TileEntityGravitation entity) || !entity.isBoxShown) {
             return;
         }
         final int rotationMeta = entity.getRotationMeta();

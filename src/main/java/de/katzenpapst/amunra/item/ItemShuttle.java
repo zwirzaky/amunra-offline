@@ -100,11 +100,10 @@ public class ItemShuttle extends Item implements IHoldableItem {
 
         if (padFound) {
             // Check whether there is already a rocket on the pad
-            if (tile instanceof TileEntityLandingPad) {
-                if (((TileEntityLandingPad) tile).getDockedEntity() != null) return false;
-            } else {
+            if (!(tile instanceof TileEntityLandingPad)) {
                 return false;
             }
+            if (((TileEntityLandingPad) tile).getDockedEntity() != null) return false;
 
         } else {
             centerX = x + 0.5F;

@@ -46,7 +46,7 @@ public class PitRoom extends PyramidRoom {
 
                 }
 
-                if ((x > -size && x < size) && (z > -size && z < size)) {
+                if (x > -size && x < size && z > -size && z < size) {
                     placeBlockAbs(
                             arrayOfIDs,
                             arrayOfMeta,

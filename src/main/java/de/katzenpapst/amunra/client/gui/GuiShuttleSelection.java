@@ -109,7 +109,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
 
     protected boolean canCreateMothership(final CelestialBody atBody) {
         // important! check where the player started from
-        if ((this.numPlayersMotherships < 0) || (this.playerParent == null)) {
+        if (this.numPlayersMotherships < 0 || this.playerParent == null) {
             return false;
         }
 
@@ -308,7 +308,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     93,
                     12);
 
-            if ((this.mapMode != MapMode.VIEW) && this.buildMsBtnArea.isWithin(mousePosX, mousePosY)) {
+            if (this.mapMode != MapMode.VIEW && this.buildMsBtnArea.isWithin(mousePosX, mousePosY)) {
                 this.drawTexturedModalRect(
                         this.buildMsBtnArea.minX,
                         this.buildMsBtnArea.minY,
@@ -374,8 +374,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     @Override
     protected boolean teleportToSelectedBody() {
         this.possibleBodies = this.shuttlePossibleBodies;
-        if ((this.selectedBody != null) && (this.selectedBody.getReachable() && this.possibleBodies != null
-                && this.possibleBodies.contains(this.selectedBody))) {
+        if (this.selectedBody != null && this.selectedBody.getReachable() && this.possibleBodies != null
+                && this.possibleBodies.contains(this.selectedBody)) {
             try {
                 Integer dimensionID = null;
 
@@ -427,7 +427,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             if (this.exitBtnArea.isWithin(x, y)) {
                 this.cancelLaunch();
                 clickHandled = true;
-            } else if (this.buildMsBtnArea.isWithin(x, y) && (this.selectedBody != null)) {
+            } else if (this.buildMsBtnArea.isWithin(x, y) && this.selectedBody != null) {
                 final SpaceStationRecipe recipe = RecipeHelper.mothershipRecipe;
                 if (recipe != null && this.canCreateMothership(this.selectedBody)
                         && !this.createMothershipButtonDisabled) {

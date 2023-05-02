@@ -461,9 +461,8 @@ abstract public class BaseStructureComponent {
         }
         if (t > 1.0) {
             return d2;
-        } else {
-            return d1 + (d2 - d1) * t;
         }
+        return d1 + (d2 - d1) * t;
     }
 
 }

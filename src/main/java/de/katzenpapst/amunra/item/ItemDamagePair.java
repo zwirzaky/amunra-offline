@@ -71,15 +71,13 @@ public class ItemDamagePair {
             if (this.item instanceof ItemBlock) {
                 // compare blocks... *sigh*
                 return ((ItemBlock) this.item).field_150939_a == ((ItemBlock) item).field_150939_a;
-            } else {
-                return false;
             }
+            return false;
         }
         if (this.item instanceof ItemBlock) {
             return false;
-        } else {
-            return this.item == item;
         }
+        return this.item == item;
     }
 
 }

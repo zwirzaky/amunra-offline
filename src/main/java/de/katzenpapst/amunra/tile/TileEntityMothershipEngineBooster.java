@@ -115,12 +115,7 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
         if (!this.masterPresent) return;
 
         final TileEntity masterTile = this.worldObj.getTileEntity(this.masterX, this.masterY, this.masterZ);
-        if (masterTile == null || !(masterTile instanceof TileEntityMothershipEngineAbstract jetTile)) {
-            // apparently we just lost our master?
-            this.reset();
-            return;
-        }
-        if (!jetTile.isPartOfMultiBlock(this.xCoord, this.yCoord, this.zCoord)) {
+        if (masterTile == null || !(masterTile instanceof TileEntityMothershipEngineAbstract jetTile) || !jetTile.isPartOfMultiBlock(this.xCoord, this.yCoord, this.zCoord)) {
             this.reset();
             return;
         }
@@ -144,7 +139,8 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
         if (this.xCoord == this.masterX) {
             if (this.zCoord < this.masterZ) {
                 return new Vector3int(this.xCoord, this.yCoord, this.zCoord - 1);
-            } else if (this.zCoord > this.masterZ) {
+            }
+            if (this.zCoord > this.masterZ) {
                 return new Vector3int(this.xCoord, this.yCoord, this.zCoord + 1);
             } else {
                 return null;
@@ -153,7 +149,8 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
         if (this.zCoord == this.masterZ) {
             if (this.xCoord < this.masterX) {
                 return new Vector3int(this.xCoord - 1, this.yCoord, this.zCoord);
-            } else if (this.xCoord > this.masterX) {
+            }
+            if (this.xCoord > this.masterX) {
                 return new Vector3int(this.xCoord + 1, this.yCoord, this.zCoord);
             } else {
             }

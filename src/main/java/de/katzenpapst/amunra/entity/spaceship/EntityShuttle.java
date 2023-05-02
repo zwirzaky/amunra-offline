@@ -540,7 +540,7 @@ public class EntityShuttle extends EntityTieredRocket {
                 // enter landing mode
                 this.landing = true;
 
-                if (!this.worldObj.isRemote && (Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 10 != 0.0)) {
+                if (!this.worldObj.isRemote && Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 10 != 0.0) {
                     this.motionY -= Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 20;
                 }
             }
@@ -562,7 +562,7 @@ public class EntityShuttle extends EntityTieredRocket {
     protected void checkStandingPosition() {
         // hm
         // recheck this from time to time anyway
-        if (this.worldObj.isRemote || (this.doKnowOnWhatImStanding && this.ticksExisted % 40 != 0)) {
+        if (this.worldObj.isRemote || this.doKnowOnWhatImStanding && this.ticksExisted % 40 != 0) {
             return;
         }
 
@@ -639,7 +639,7 @@ public class EntityShuttle extends EntityTieredRocket {
 
     public void landEntity(final TileEntity tile) {
 
-        if ((tile instanceof IFuelDock dock) && this.isDockValid(dock)) {
+        if (tile instanceof IFuelDock dock && this.isDockValid(dock)) {
             if (!this.worldObj.isRemote) {
                 // Drop any existing rocket on the landing pad
                 if (dock.getDockedEntity() instanceof EntitySpaceshipBase && dock.getDockedEntity() != this) {
@@ -670,7 +670,7 @@ public class EntityShuttle extends EntityTieredRocket {
     @Override
     public void onReachAtmosphere() {
         // Not launch controlled
-        if ((this.riddenByEntity != null && !this.worldObj.isRemote) && (this.riddenByEntity instanceof EntityPlayerMP player)) {
+        if (this.riddenByEntity != null && !this.worldObj.isRemote && this.riddenByEntity instanceof EntityPlayerMP player) {
             this.onTeleport(player);
             final GCPlayerStats stats = this.setGCPlayerStats(player);
 

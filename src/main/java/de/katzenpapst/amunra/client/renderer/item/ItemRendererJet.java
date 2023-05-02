@@ -25,7 +25,7 @@ public class ItemRendererJet implements IItemRenderer {
     @Override
     public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
 
-        if ((item.getItem() != ARItems.jetItemMeta) || (item.getItemDamage() >= this.models.length) || (item.getItemDamage() >= this.textures.length)) {
+        if (item.getItem() != ARItems.jetItemMeta || item.getItemDamage() >= this.models.length || item.getItemDamage() >= this.textures.length) {
             return false;
         }
         return switch (type) {

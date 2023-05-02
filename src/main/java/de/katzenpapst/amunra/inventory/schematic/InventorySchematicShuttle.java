@@ -28,7 +28,7 @@ public class InventorySchematicShuttle implements IInventory {
     }
 
     public ItemStack getStackInRowAndColumn(final int x, final int y) {
-        if ((x < 0) || (x >= this.inventoryWidth)) {
+        if (x < 0 || x >= this.inventoryWidth) {
             return null;
         }
         final int stackNr = x + y * this.inventoryWidth;

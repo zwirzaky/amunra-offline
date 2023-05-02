@@ -115,7 +115,7 @@ public class EntityFXMothershipIonFlame extends EntityFX {
             for (Object element : var3) {
                 final Entity var5 = (Entity) element;
 
-                if ((var5 instanceof EntityLivingBase) && (!var5.isDead && !var5.isBurning() && !var5.equals(this.ridingEntity))) {
+                if (var5 instanceof EntityLivingBase && !var5.isDead && !var5.isBurning() && !var5.equals(this.ridingEntity)) {
                     // not just fire, do some more
                     // or maybe do this in the tile entity instead
                     /*

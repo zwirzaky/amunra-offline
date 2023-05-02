@@ -31,7 +31,7 @@ public class ItemRendererSpecial1 implements IItemRenderer {
     public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
 
         // I think this prevents this thing from doing other items
-        if ((item.getItemDamage() != ARBlocks.blockShuttleDock.getMetadata()) && (item.getItemDamage() != ARBlocks.blockHydro.getMetadata())) {
+        if (item.getItemDamage() != ARBlocks.blockShuttleDock.getMetadata() && item.getItemDamage() != ARBlocks.blockHydro.getMetadata()) {
             return false;
         }
         return switch (type) {

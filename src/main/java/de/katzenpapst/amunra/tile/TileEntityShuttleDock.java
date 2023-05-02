@@ -335,11 +335,9 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                     shuttle.setPad(null);
                     this.dockedEntity = null;
                     this.updateAvailabilityInWorldData();
-                } else {
-                    // from time to time, reposition?
-                    if (this.ticks % 40 == 0) {
-                        this.repositionEntity();
-                    }
+                } else // from time to time, reposition?
+                if (this.ticks % 40 == 0) {
+                    this.repositionEntity();
                 }
             }
 

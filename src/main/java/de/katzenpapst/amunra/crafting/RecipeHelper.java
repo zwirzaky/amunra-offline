@@ -754,7 +754,8 @@ public class RecipeHelper {
             ores.toArray(asArray);
 
             return asArray;
-        } else if (input instanceof ItemStack[]) {
+        }
+        if (input instanceof ItemStack[]) {
             return (ItemStack[]) input;
         }
         throw new RuntimeException("Bad input");
@@ -1120,8 +1121,7 @@ public class RecipeHelper {
     }
 
     public static Vector<INasaWorkbenchRecipe> getAllRecipesFor(final Item expectedOutput) {
-        final Vector<INasaWorkbenchRecipe> recipeArray = nasaWorkbenchRecipes.get(expectedOutput);
-        return recipeArray;
+        return nasaWorkbenchRecipes.get(expectedOutput);
     }
 
     public static INasaWorkbenchRecipe getMostCompleteRecipeFor(final Item expectedOutput) {

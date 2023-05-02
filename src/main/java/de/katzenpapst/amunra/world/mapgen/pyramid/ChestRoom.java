@@ -36,7 +36,7 @@ public class ChestRoom extends PyramidRoom {
         for (int x = centerX - 1; x <= centerX + 1; x++) {
             for (int z = centerZ - 1; z <= centerZ + 1; z++) {
                 for (int y = startY; y <= stopY; y++) {
-                    if ((y == startY || y == stopY) || (x != centerX && z != centerZ)) {
+                    if (y == startY || y == stopY || x != centerX && z != centerZ) {
                         placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, floorMat);
                     } else if (x == centerX && z == centerZ) {
                         if (y == startY + 1) {

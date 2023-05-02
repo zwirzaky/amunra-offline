@@ -468,7 +468,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                         mShip = TickHandlerServer.mothershipData.getByDimensionId(dim);
                         // check if the target is a mothership
                         // if the player is currently not on the target MS, check permissions
-                        if ((mShip != null) && (playerBase.dimension != dim && !mShip.isPlayerLandingPermitted(playerBase))) {
+                        if (mShip != null && playerBase.dimension != dim && !mShip.isPlayerLandingPermitted(playerBase)) {
                             AmunRa.packetPipeline.sendTo(
                                     new PacketSimpleAR(
                                             PacketSimpleAR.EnumSimplePacket.C_TELEPORT_SHUTTLE_PERMISSION_ERROR,

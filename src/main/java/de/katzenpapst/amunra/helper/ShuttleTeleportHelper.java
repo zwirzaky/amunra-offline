@@ -131,7 +131,7 @@ public class ShuttleTeleportHelper {
                                 player.theItemInWorldManager.getGameType()));
 
                 // I'm almost think this can be deleted
-                if ((worldNew.provider instanceof WorldProviderOrbit) && WorldUtil.registeredSpaceStations.containsKey(dimID))
+                if (worldNew.provider instanceof WorldProviderOrbit && WorldUtil.registeredSpaceStations.containsKey(dimID))
                 // TODO This has never been effective before due to the earlier bug - what does it actually do?
                 {
                     final NBTTagCompound var2 = new NBTTagCompound();
@@ -309,7 +309,7 @@ public class ShuttleTeleportHelper {
         final GCPlayerStats playerStats = GCPlayerStats.get(player);
 
         // failsafe! yes, this happened...
-        if ((world.provider instanceof IExitHeight) && (((IExitHeight) world.provider).getYCoordinateToTeleport() - 10 <= spawnPos.y)) {
+        if (world.provider instanceof IExitHeight && ((IExitHeight) world.provider).getYCoordinateToTeleport() - 10 <= spawnPos.y) {
             spawnPos.y = ((IExitHeight) world.provider).getYCoordinateToTeleport() - 10;
         }
 
@@ -458,7 +458,8 @@ public class ShuttleTeleportHelper {
         }
         if (body instanceof Moon) {
             return ((Moon) body).getParentPlanet();
-        } else if (body instanceof Satellite) {
+        }
+        if (body instanceof Satellite) {
             return ((Satellite) body).getParentPlanet();
         } else if (body instanceof Mothership) {
             final CelestialBody parent = ((Mothership) body).getParent();

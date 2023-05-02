@@ -127,34 +127,33 @@ public class GuiHelper {
 
         final int seconds = (int) hoursFraction;
 
-        if ((hours <= 24) || !formatDate) {
+        if (hours <= 24 || !formatDate) {
             return String.format("%02d:%02d:%02d", hours, minutes, seconds);
         }
         int days = hours / 24;
         hours -= days * 24.0D;
 
-        if (days > 9) {
-            if (days >= 30) {
-                int months = days / 30;
-                days -= months * 30.0D;
-                if (months >= 12) {
-                    final int years = months / 12;
-                    months -= years * 12.0D;
-                    if (years >= 10) {
-                        return String.format("> %dy", years);
-                    } else {
-                        return String.format("%dy %dm %dd", years, months, days);
-                    }
-                } else {
-
-                    return String.format("%dm %dd", months, days);
-                }
-            } else {
-                return String.format("%dd", days);
-            }
-        } else {
+        if (days <= 9) {
             return String.format("%dd %02d:%02d:%02d", days, hours, minutes, seconds);
 
+        }
+        if (days >= 30) {
+            int months = days / 30;
+            days -= months * 30.0D;
+            if (months >= 12) {
+                final int years = months / 12;
+                months -= years * 12.0D;
+                if (years >= 10) {
+                    return String.format("> %dy", years);
+                } else {
+                    return String.format("%dy %dm %dd", years, months, days);
+                }
+            } else {
+
+                return String.format("%dm %dd", months, days);
+            }
+        } else {
+            return String.format("%dd", days);
         }
     }
 

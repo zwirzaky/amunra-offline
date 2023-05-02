@@ -190,9 +190,8 @@ public class TerrainGenerator {
         }
         if (t > 1.0) {
             return d2;
-        } else {
-            return d1 + (d2 - d1) * t;
         }
+        return d1 + (d2 - d1) * t;
     }
 
     protected double clamp(final double x, final double min, final double max) {

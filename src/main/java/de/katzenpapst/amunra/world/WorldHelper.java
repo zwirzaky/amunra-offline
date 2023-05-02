@@ -70,12 +70,10 @@ public class WorldHelper {
                 } else {
                     setBlockIfFree(worldObj, x - 1, y, z, Blocks.fire, 0);
                 }
+            } else if (deltaZ < 0) {
+                setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
             } else {
-                if (deltaZ < 0) {
-                    setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
-                } else {
-                    setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
-                }
+                setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
             }
         } else if (deltaYabs > deltaZabs) {
             if (deltaY < 0) {
@@ -83,12 +81,10 @@ public class WorldHelper {
             } else {
                 setBlockIfFree(worldObj, x, y - 1, z, Blocks.fire, 0);
             }
+        } else if (deltaZ < 0) {
+            setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
         } else {
-            if (deltaZ < 0) {
-                setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
-            } else {
-                setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
-            }
+            setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
         }
     }
 

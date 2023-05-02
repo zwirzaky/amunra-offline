@@ -247,7 +247,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             final Planet planet = ((IChildBody) celestialBody).getParentPlanet();
 
             return planet.equals(ship.getParent());
-        } else if (celestialBody instanceof Mothership) {
+        }
+        if (celestialBody instanceof Mothership) {
             ((Mothership) celestialBody).getParent().equals(ship.getParent());
         }
 
@@ -275,7 +276,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
     protected CelestialBody getBodyToRenderMothershipsAround() {
 
-        if ((this.selectedBody instanceof Star) || (this.selectedBody instanceof Planet)) {
+        if (this.selectedBody instanceof Star || this.selectedBody instanceof Planet) {
             // ship's parent is the body and selectionCount != 1
             // AND
             // this.ticksSinceSelection > 35
@@ -357,7 +358,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             alpha = this.selectedBody instanceof IChildBody ? 1.0F
                     : Math.min(Math.max((this.ticksSinceSelection - 30) / 15.0F, 0.0F), 1.0F);
 
-            if ((this.lastSelectedBody instanceof Moon) && GalaxyRegistry.getMoonsForPlanet(((Moon) this.lastSelectedBody).getParentPlanet()).contains(moon)) {
+            if (this.lastSelectedBody instanceof Moon && GalaxyRegistry.getMoonsForPlanet(((Moon) this.lastSelectedBody).getParentPlanet()).contains(moon)) {
                 alpha = 1.0F;
             }
         }
@@ -417,7 +418,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             this._workaroundDrawMoonCircle((Moon) body, sin, cos);
         }
         GL11.glColor4f(0.6F, 0.2F, 0.2F, 0.8F);
-        if ((body != null) && TickHandlerServer.mothershipData.hasMothershipsInOrbit(body)) {
+        if (body != null && TickHandlerServer.mothershipData.hasMothershipsInOrbit(body)) {
 
             final float dist = TickHandlerServer.mothershipData.getMothershipOrbitDistanceFor(body);
             float scale = 3.0F * dist * (1.0F / 5.0F);

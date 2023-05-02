@@ -186,12 +186,10 @@ public class ContainerSchematicShuttle extends Container {
                 boolean found = false;
                 for (int i = 0; i < numSlotsAdded; i++) {
                     final Slot curSlot = this.inventorySlots.get(i);
-                    if ((curSlot instanceof SlotSpecific) && ((SlotSpecific) curSlot).isItemValid(stack)) {
-                        // attempt merge
-                        if (this.mergeSingleSlot(stack, curSlot)) {
-                            found = true;
-                            break;
-                        }
+                    // attempt merge
+                    if ((curSlot instanceof SlotSpecific && ((SlotSpecific) curSlot).isItemValid(stack)) && this.mergeSingleSlot(stack, curSlot)) {
+                        found = true;
+                        break;
                     }
                 }
                 if (!found) {

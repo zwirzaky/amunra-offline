@@ -205,7 +205,7 @@ public class Mothership extends CelestialBody {
      * @return
      */
     public boolean startTransit(final CelestialBody target, final long travelTime) {
-        if (!canBeOrbited(target) || this.isInTransit() || (travelTime > AmunRa.config.mothershipMaxTravelTime)) {
+        if (!canBeOrbited(target) || this.isInTransit() || travelTime > AmunRa.config.mothershipMaxTravelTime) {
             return false;
         }
 

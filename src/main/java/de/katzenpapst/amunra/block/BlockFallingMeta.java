@@ -90,11 +90,10 @@ public class BlockFallingMeta extends BlockBasicMeta {
         }
         if (block == Blocks.fire) {
             return true;
-        } else {
-            // TODO figure out how it works for forge fluids
-            final Material material = block.getMaterial();
-            return material == Material.water ? true : material == Material.lava;
         }
+        // TODO figure out how it works for forge fluids
+        final Material material = block.getMaterial();
+        return material == Material.water ? true : material == Material.lava;
     }
 
 }

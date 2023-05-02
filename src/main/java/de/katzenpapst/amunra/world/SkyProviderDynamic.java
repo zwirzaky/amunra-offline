@@ -1189,12 +1189,12 @@ public class SkyProviderDynamic extends IRenderHandler {
         boolean canBeBehindTheSun = false;
 
         // canBeBehindTheSun might be true
-        if ((body instanceof Planet) && (!body.equals(this.curBodyPlanet) && body.getRelativeDistanceFromCenter().unScaledDistance
-                > this.curBodyPlanet.getRelativeDistanceFromCenter().unScaledDistance)) {
+        if (body instanceof Planet && !body.equals(this.curBodyPlanet) && body.getRelativeDistanceFromCenter().unScaledDistance
+                > this.curBodyPlanet.getRelativeDistanceFromCenter().unScaledDistance) {
             canBeBehindTheSun = true;
         }
 
-        if (!canBeBehindTheSun || (phaseAngle < PI_HALF || phaseAngle > PI_DOUBLE - PI_HALF)) {
+        if (!canBeBehindTheSun || phaseAngle < PI_HALF || phaseAngle > PI_DOUBLE - PI_HALF) {
             // this means, body is behind the current body
             if (phaseAngle < Math.PI) {
                 // larger angle -> smaller offset
@@ -1204,16 +1204,14 @@ public class SkyProviderDynamic extends IRenderHandler {
                 stopOffset = overlayScale + (1 - (PI_DOUBLE - phaseAngle) / PI_HALF) * overlayScale;
             }
 
+        } else if (phaseAngle < Math.PI) {
+            // more phaseAngle -> largerStartOffset
+            startOffset = phaseAngle / Math.PI * overlayScale * 2;
+            // since stopOffset is substracted from the end coord, 0 is ok here
         } else {
-            if (phaseAngle < Math.PI) {
-                // more phaseAngle -> largerStartOffset
-                startOffset = phaseAngle / Math.PI * overlayScale * 2;
-                // since stopOffset is substracted from the end coord, 0 is ok here
-            } else {
-                // since start is added, 0 should work here
-                // more phaseAngle -> SMALLER stopOffset
-                stopOffset = (Math.PI * 2 - phaseAngle) / Math.PI * overlayScale * 2;
-            }
+            // since start is added, 0 should work here
+            // more phaseAngle -> SMALLER stopOffset
+            stopOffset = (Math.PI * 2 - phaseAngle) / Math.PI * overlayScale * 2;
         }
 
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

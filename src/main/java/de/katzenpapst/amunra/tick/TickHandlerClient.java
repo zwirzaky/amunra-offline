@@ -37,7 +37,7 @@ public class TickHandlerClient {
                     world.provider.setSkyRenderer(new SkyProviderDynamic((IGalacticraftWorldProvider) world.provider));
                 }
                 // ((AmunraWorldProvider)world.provider).hasBreathableAtmosphere()
-                if (!((AmunraWorldProvider) world.provider).hasClouds() && (world.provider.getCloudRenderer() == null)) {
+                if (!((AmunraWorldProvider) world.provider).hasClouds() && world.provider.getCloudRenderer() == null) {
                     world.provider.setCloudRenderer(new CloudRenderer()); // dummy cloud renderer
                 }
             } else if (world.provider instanceof MothershipWorldProvider) {
@@ -52,7 +52,7 @@ public class TickHandlerClient {
                  * if(!((AmunraWorldProvider) world.provider).hasClouds()) { if (world.provider.getCloudRenderer() ==
                  * null) { world.provider.setCloudRenderer(new CloudRenderer()); // dummy cloud renderer } }
                  */
-            } else if ((world.provider instanceof AmunRaAsteroidWorldProvider) && (world.provider.getSkyRenderer() == null
+            } else if (world.provider instanceof AmunRaAsteroidWorldProvider && (world.provider.getSkyRenderer() == null
                     || world.provider.getSkyRenderer() instanceof SkyProviderAsteroids)) {
                 world.provider.setSkyRenderer(new SkyProviderDynamic((IGalacticraftWorldProvider) world.provider));
             }

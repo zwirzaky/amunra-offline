@@ -50,31 +50,27 @@ public class CommandShuttleTeleport extends CommandBase {
                 playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getCommandSenderName(), true);
             }
 
-            if (playerBase != null) {
-                final MinecraftServer server = MinecraftServer.getServer();
-                final WorldServer worldserver = server
-                        .worldServerForDimension(server.worldServers[0].provider.dimensionId);
-                final ChunkCoordinates chunkcoordinates = worldserver.getSpawnPoint();
-                final GCPlayerStats stats = GCPlayerStats.get(playerBase);
-                stats.rocketStacks = new ItemStack[2];
-                stats.rocketType = IRocketType.EnumRocketType.DEFAULT.ordinal();
-                stats.rocketItem = GCItems.rocketTier1;
-                stats.fuelLevel = 1000;
-                stats.coordsTeleportedFromX = chunkcoordinates.posX;
-                stats.coordsTeleportedFromZ = chunkcoordinates.posZ;
-
-                try {
-                    EntityShuttle.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE, false);
-                    // WorldUtil.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE);
-                } catch (final Exception e) {
-                    AmunRa.LOGGER.error("Failed to open celestial selection", e);
-                    throw e;
-                }
-
-                // VersionUtil.notifyAdmins(sender, this, "commands.dimensionteleport", new Object[] {
-                // String.valueOf(EnumColor.GREY + "[" + playerBase.getCommandSenderName()), "]" });
-            } else {
+            if (playerBase == null) {
                 throw new Exception("Could not find player with name: " + args[0]);
+            }
+            final MinecraftServer server = MinecraftServer.getServer();
+            final WorldServer worldserver = server
+                    .worldServerForDimension(server.worldServers[0].provider.dimensionId);
+            final ChunkCoordinates chunkcoordinates = worldserver.getSpawnPoint();
+            final GCPlayerStats stats = GCPlayerStats.get(playerBase);
+            stats.rocketStacks = new ItemStack[2];
+            stats.rocketType = IRocketType.EnumRocketType.DEFAULT.ordinal();
+            stats.rocketItem = GCItems.rocketTier1;
+            stats.fuelLevel = 1000;
+            stats.coordsTeleportedFromX = chunkcoordinates.posX;
+            stats.coordsTeleportedFromZ = chunkcoordinates.posZ;
+
+            try {
+                EntityShuttle.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE, false);
+                // WorldUtil.toCelestialSelection(playerBase, stats, Integer.MAX_VALUE);
+            } catch (final Exception e) {
+                AmunRa.LOGGER.error("Failed to open celestial selection", e);
+                throw e;
             }
         } catch (final Exception e) {
             throw new CommandException(e.getMessage());

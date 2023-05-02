@@ -59,24 +59,23 @@ public class ItemSlabMulti extends ItemBlockMulti {
         if (this.isDoubleSlab) {
             return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
         }
-        if ((stack.stackSize == 0) || !player.canPlayerEdit(x, y, z, side, stack)) {
+        if (stack.stackSize == 0 || !player.canPlayerEdit(x, y, z, side, stack)) {
             return false;
+        }
+        final Block block = world.getBlock(x, y, z);
+        final int worldMeta = world.getBlockMetadata(x, y, z);
+        final int worldDistinctionMeta = worldMeta & 7;
+        final boolean isHighestBitSet = (worldMeta & 8) != 0; // I think the meaning is: isSlabOnTop
+
+        if ((isHighestBitSet ? side == 0 : side == 1) && block == this.singleSlab
+                && worldDistinctionMeta == stack.getItemDamage()) {
+            // we are rightclicking on a slab with which we can merge
+            this.combine(world, stack, x, y, z, worldDistinctionMeta);
+
+            return true;
         } else {
-            final Block block = world.getBlock(x, y, z);
-            final int worldMeta = world.getBlockMetadata(x, y, z);
-            final int worldDistinctionMeta = worldMeta & 7;
-            final boolean isHighestBitSet = (worldMeta & 8) != 0; // I think the meaning is: isSlabOnTop
-
-            if (((isHighestBitSet ? side == 0 : side == 1)) && block == this.singleSlab
-                    && worldDistinctionMeta == stack.getItemDamage()) {
-                // we are rightclicking on a slab with which we can merge
-                this.combine(world, stack, x, y, z, worldDistinctionMeta);
-
-                return true;
-            } else {
-                return this.tryCombiningWithSide(stack, player, world, x, y, z, side) ? true
-                        : super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
-            }
+            return this.tryCombiningWithSide(stack, player, world, x, y, z, side) ? true
+                    : super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
         }
     }
 
@@ -94,7 +93,7 @@ public class ItemSlabMulti extends ItemBlockMulti {
         int distinctionMeta = meta & 7;
         final boolean isUpperSlab = (meta & 8) != 0;
 
-        if (((isUpperSlab ? side == 0 : side == 1)) && block == this.singleSlab
+        if ((isUpperSlab ? side == 0 : side == 1) && block == this.singleSlab
                 && distinctionMeta == stack.getItemDamage()) {
             return true;
         }

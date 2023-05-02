@@ -100,7 +100,7 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0) && (y == yMin)) {
+                    (byte) 0) && y == yMin) {
                 // trigger the populator
                 this.parent.addPopulator(new TouchBlock(this.roomBB.minX, y, this.roomBB.minZ));
             }
@@ -114,7 +114,7 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0) && (y == yMin)) {
+                    (byte) 0) && y == yMin) {
                 // trigger the populator
                 this.parent.addPopulator(new TouchBlock(this.roomBB.maxX, y, this.roomBB.minZ));
             }
@@ -128,7 +128,7 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0) && (y == yMin)) {
+                    (byte) 0) && y == yMin) {
                 // trigger the populator
                 this.parent.addPopulator(new TouchBlock(this.roomBB.minX, y, this.roomBB.maxZ));
             }
@@ -142,7 +142,7 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0) && (y == yMin)) {
+                    (byte) 0) && y == yMin) {
                 // trigger the populator
                 this.parent.addPopulator(new TouchBlock(this.roomBB.maxX, y, this.roomBB.maxZ));
             }

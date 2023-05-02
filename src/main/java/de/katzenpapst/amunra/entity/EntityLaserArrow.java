@@ -164,12 +164,10 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
                 } else {
                     worldObj.setBlock(x - 1, y, z, Blocks.fire);
                 }
+            } else if (deltaZ < 0) {
+                worldObj.setBlock(x, y, z + 1, Blocks.fire);
             } else {
-                if (deltaZ < 0) {
-                    worldObj.setBlock(x, y, z + 1, Blocks.fire);
-                } else {
-                    worldObj.setBlock(x, y, z - 1, Blocks.fire);
-                }
+                worldObj.setBlock(x, y, z - 1, Blocks.fire);
             }
         } else if (deltaYabs > deltaZabs) {
             if (deltaY < 0) {
@@ -178,12 +176,10 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
                 // is there even fire from below?
                 worldObj.setBlock(x, y - 1, z, Blocks.fire);
             }
+        } else if (deltaZ < 0) {
+            worldObj.setBlock(x, y, z + 1, Blocks.fire);
         } else {
-            if (deltaZ < 0) {
-                worldObj.setBlock(x, y, z + 1, Blocks.fire);
-            } else {
-                worldObj.setBlock(x, y, z - 1, Blocks.fire);
-            }
+            worldObj.setBlock(x, y, z - 1, Blocks.fire);
         }
 
     }

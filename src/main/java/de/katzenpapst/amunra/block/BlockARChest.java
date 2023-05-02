@@ -353,19 +353,7 @@ public class BlockARChest extends BlockContainer
             return false;
         }
 
-        if (this.isSameBlock(world, x - 1, y, z)) {
-            return true;
-        }
-
-        if (this.isSameBlock(world, x + 1, y, z)) {
-            return true;
-        }
-
-        if (this.isSameBlock(world, x, y, z - 1)) {
-            return true;
-        }
-
-        if (this.isSameBlock(world, x, y, z + 1)) {
+        if (this.isSameBlock(world, x - 1, y, z) || this.isSameBlock(world, x + 1, y, z) || this.isSameBlock(world, x, y, z - 1) || this.isSameBlock(world, x, y, z + 1)) {
             return true;
         }
         return false;

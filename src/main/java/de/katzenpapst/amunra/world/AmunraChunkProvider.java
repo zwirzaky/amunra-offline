@@ -57,9 +57,8 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
         }
         if (t > 1.0) {
             return d2;
-        } else {
-            return d1 + (d2 - d1) * t;
         }
+        return d1 + (d2 - d1) * t;
     }
 
     protected int getIndex(final int x, final int y, final int z) {
