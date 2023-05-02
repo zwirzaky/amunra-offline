@@ -64,6 +64,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
         return !ConfigManagerCore.forceOverworldRespawn;
     }
 
+    @Override
     public boolean hasAtmosphere() {
         return this.getCelestialBody().atmosphere.size() > 0;
     }
