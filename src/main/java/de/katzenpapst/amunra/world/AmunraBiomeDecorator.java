@@ -18,7 +18,6 @@ public class AmunraBiomeDecorator extends BiomeDecoratorSpace {
     @Override
     protected void setCurrentWorld(World world) {
         mWorld = world;
-
         oreGenList = getOreGenerators();
     }
 
@@ -36,11 +35,9 @@ public class AmunraBiomeDecorator extends BiomeDecoratorSpace {
 
     @Override
     protected void decorate() {
-
         for (WorldGenOre oreGen : oreGenList) {
             this.generateOre(oreGen.amountPerChunk, oreGen, oreGen.minY, oreGen.maxY);
         }
-
     }
 
 }

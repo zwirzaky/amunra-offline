@@ -19,8 +19,6 @@ import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 /**
  * I'll do a subdivision now: StructureGenerator and Structure For each StructureGenerator there is a subclass of
  * BaseStructure which it generates
- *
- *
  */
 abstract public class StructureGenerator extends MapGenBaseMeta {
 
