@@ -3,7 +3,7 @@ package de.katzenpapst.amunra.world.maahes;
 import java.util.List;
 
 import net.minecraft.world.gen.feature.WorldGenerator;
-
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.AmunraBiomeDecorator;
 import de.katzenpapst.amunra.world.WorldGenOre;
@@ -21,10 +21,12 @@ public class MaahesBiomeDecorator extends AmunraBiomeDecorator {
     @Override
     protected List<WorldGenOre> getOreGenerators() {
         List<WorldGenOre> list = super.getOreGenerators();
-
-        list.add(new WorldGenOre(ARBlocks.oreAluBasalt, 8, ARBlocks.blockBasalt, 16, 23, 70));
-        list.add(new WorldGenOre(ARBlocks.oreGoldBasalt, 6, ARBlocks.blockBasalt, 8, 5, 30));
-        list.add(new WorldGenOre(ARBlocks.oreLapisBasalt, 12, ARBlocks.blockBasalt, 6, 2, 20));
+        
+        if(AmunRa.config.generateOres) {
+            list.add(new WorldGenOre(ARBlocks.oreAluBasalt, 8, ARBlocks.blockBasalt, 16, 23, 70));
+            list.add(new WorldGenOre(ARBlocks.oreGoldBasalt, 6, ARBlocks.blockBasalt, 8, 5, 30));
+            list.add(new WorldGenOre(ARBlocks.oreLapisBasalt, 12, ARBlocks.blockBasalt, 6, 2, 20));
+        }
 
         return list;
     }
