@@ -212,7 +212,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         if (!this.worldObj.isRemote) {
             final boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
 
-            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) this.explosionRadius, flag);
+            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius, flag);
 
             // why is this only in the if here?
             this.setDead();

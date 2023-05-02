@@ -88,74 +88,72 @@ public class TickHandlerServer {
                 final Object[] entityList = world.loadedEntityList.toArray();
 
                 for (final Object o : entityList) {
-                    if (o instanceof Entity e) {
-                        // failsafe?
-                        if (e.worldObj.provider instanceof MothershipWorldProvider) {
-                            if (e.posY < 0) {
-                                final CelestialBody parent = ((MothershipWorldProvider) e.worldObj.provider).getParent();
-                                if (parent == null) {
-                                    // jumped off mid-transit
+                    // failsafe?
+                    if ((o instanceof Entity e) && (e.worldObj.provider instanceof MothershipWorldProvider)) {
+                        if (e.posY < 0) {
+                            final CelestialBody parent = ((MothershipWorldProvider) e.worldObj.provider).getParent();
+                            if (parent == null) {
+                                // jumped off mid-transit
+                                if (e instanceof EntityLivingBase) {
+                                    ((EntityLivingBase) e).attackEntityFrom(DamageSourceAR.dsFallOffShip, 9001);
+                                } else {
+                                    e.worldObj.removeEntity(e);
+                                }
+                            } else {
+
+                                if (!parent.getReachable()
+                                        || parent.getTierRequirement() > AmunRa.config.mothershipMaxTier) {
+                                    // crash into
                                     if (e instanceof EntityLivingBase) {
-                                        ((EntityLivingBase) e).attackEntityFrom(DamageSourceAR.dsFallOffShip, 9001);
+                                        ((EntityLivingBase) e).attackEntityFrom(
+                                                DamageSourceAR.getDSCrashIntoPlanet(parent),
+                                                9001);
                                     } else {
                                         e.worldObj.removeEntity(e);
                                     }
                                 } else {
-
-                                    if (!parent.getReachable()
-                                            || parent.getTierRequirement() > AmunRa.config.mothershipMaxTier) {
-                                        // crash into
-                                        if (e instanceof EntityLivingBase) {
-                                            ((EntityLivingBase) e).attackEntityFrom(
-                                                    DamageSourceAR.getDSCrashIntoPlanet(parent),
-                                                    9001);
-                                        } else {
-                                            e.worldObj.removeEntity(e);
-                                        }
-                                    } else {
-                                        if (e instanceof EntityPlayerMP && e.ridingEntity instanceof EntityShuttle) {
-                                            this.sendPlayerInShuttleToPlanet(
-                                                    (EntityPlayerMP) e,
-                                                    (EntityShuttle) e.ridingEntity,
-                                                    world,
-                                                    parent.getDimensionID());
-                                        } else if (e instanceof EntityShuttle
-                                                && e.riddenByEntity instanceof EntityPlayerMP) {
-                                                    this.sendPlayerInShuttleToPlanet(
-                                                            (EntityPlayerMP) e.riddenByEntity,
-                                                            (EntityShuttle) e,
-                                                            world,
-                                                            parent.getDimensionID());
-                                                } else {
-                                                    // go there naked, as GC intended
-                                                    WorldUtil.transferEntityToDimension(
-                                                            e,
-                                                            parent.getDimensionID(),
-                                                            world,
-                                                            false,
-                                                            null);
-                                                }
-                                    }
+                                    if (e instanceof EntityPlayerMP && e.ridingEntity instanceof EntityShuttle) {
+                                        this.sendPlayerInShuttleToPlanet(
+                                                (EntityPlayerMP) e,
+                                                (EntityShuttle) e.ridingEntity,
+                                                world,
+                                                parent.getDimensionID());
+                                    } else if (e instanceof EntityShuttle
+                                            && e.riddenByEntity instanceof EntityPlayerMP) {
+                                                this.sendPlayerInShuttleToPlanet(
+                                                        (EntityPlayerMP) e.riddenByEntity,
+                                                        (EntityShuttle) e,
+                                                        world,
+                                                        parent.getDimensionID());
+                                            } else {
+                                                // go there naked, as GC intended
+                                                WorldUtil.transferEntityToDimension(
+                                                        e,
+                                                        parent.getDimensionID(),
+                                                        world,
+                                                        false,
+                                                        null);
+                                            }
                                 }
-                            } else if (e instanceof EntityAutoRocket rocket) {
-                                final MothershipWorldProvider msProvider = (MothershipWorldProvider) e.worldObj.provider;
-                                if (msProvider.isInTransit()) {
+                            }
+                        } else if (e instanceof EntityAutoRocket rocket) {
+                            final MothershipWorldProvider msProvider = (MothershipWorldProvider) e.worldObj.provider;
+                            if (msProvider.isInTransit()) {
 
-                                    if (rocket.launchPhase == EnumLaunchPhase.IGNITED.ordinal()) {
-                                        rocket.cancelLaunch();
-                                    } else if (rocket.launchPhase == EnumLaunchPhase.LAUNCHED.ordinal()) {
-                                        if (rocket instanceof EntityShuttle) {
-                                            ((EntityShuttle) rocket).setLanding();
-                                        } else {
-                                            rocket.dropShipAsItem();
-                                            rocket.setDead();
-                                        }
+                                if (rocket.launchPhase == EnumLaunchPhase.IGNITED.ordinal()) {
+                                    rocket.cancelLaunch();
+                                } else if (rocket.launchPhase == EnumLaunchPhase.LAUNCHED.ordinal()) {
+                                    if (rocket instanceof EntityShuttle) {
+                                        ((EntityShuttle) rocket).setLanding();
+                                    } else {
+                                        rocket.dropShipAsItem();
+                                        rocket.setDead();
                                     }
                                 }
                             }
+                        }
 
-                        } // if (e.worldObj.provider instanceof MothershipWorldProvider)
-                    } // if (o instanceof Entity)
+                    } // if (e.worldObj.provider instanceof MothershipWorldProvider) // if (o instanceof Entity)
                 } // for (final Object o : entityList)
             } // if (world.provider instanceof MothershipWorldProvider)
         } // (event.phase == Phase.START)

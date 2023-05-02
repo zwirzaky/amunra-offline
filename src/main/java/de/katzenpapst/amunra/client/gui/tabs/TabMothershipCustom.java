@@ -151,11 +151,9 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     @Override
     public void onTextChanged(final GuiElementTextBox textBox, final String newText) {
-        if (textBox.equals(this.nameField)) {
-            if (this.isValidName(newText) && !newText.equals(this.ship.getLocalizedName())) {
-                this.ship.setLocalizedName(newText);
-                ((GuiMothershipSettings) this.parent).sendMothershipSettingsPacket();
-            }
+        if (textBox.equals(this.nameField) && (this.isValidName(newText) && !newText.equals(this.ship.getLocalizedName()))) {
+            this.ship.setLocalizedName(newText);
+            ((GuiMothershipSettings) this.parent).sendMothershipSettingsPacket();
         }
     }
 
@@ -205,19 +203,15 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
         /*
          * if(btn.equals(resetButton)) { resetData(); return true; }
          */
-        if (btn.equals(this.texturesNext)) {
-            if (this.texButtonOffset + this.textureButtons.length < this.mothershipTextures.size()) {
-                this.texButtonOffset++;
-                this.updateTextureButtons();
-                return true;
-            }
+        if (btn.equals(this.texturesNext) && (this.texButtonOffset + this.textureButtons.length < this.mothershipTextures.size())) {
+            this.texButtonOffset++;
+            this.updateTextureButtons();
+            return true;
         }
-        if (btn.equals(this.texturesPrev)) {
-            if (this.texButtonOffset > 0) {
-                this.texButtonOffset--;
-                this.updateTextureButtons();
-                return true;
-            }
+        if (btn.equals(this.texturesPrev) && (this.texButtonOffset > 0)) {
+            this.texButtonOffset--;
+            this.updateTextureButtons();
+            return true;
         }
         for (final DynamicTexturedButton texButton : this.textureButtons) {
             if (btn.equals(texButton)) {

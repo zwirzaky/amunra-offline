@@ -38,8 +38,8 @@ public class SystemRenderEventHandler {
 
         final Vector3f mapPos = renderEvent.parentOffset;
 
-        final float xOffset = (float) mapPos.x;
-        final float yOffset = (float) mapPos.y;
+        final float xOffset = mapPos.x;
+        final float yOffset = mapPos.y;
 
         if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiCelestialSelection)
             GL11.glColor4f(0.7F, 0.0F, 0.0F, 0.5F);

@@ -109,9 +109,9 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
                 final double deltaX = target.posX - this.posX;
                 final double deltaZ = target.posZ - this.posZ;
                 final float planarDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
-                this.motionX = deltaX / (double) planarDistance * 0.5D * 0.800000011920929D
+                this.motionX = deltaX / planarDistance * 0.5D * 0.800000011920929D
                         + this.motionX * 0.20000000298023224D;
-                this.motionZ = deltaZ / (double) planarDistance * 0.5D * 0.800000011920929D
+                this.motionZ = deltaZ / planarDistance * 0.5D * 0.800000011920929D
                         + this.motionZ * 0.20000000298023224D;
                 this.motionY = 0.4000000059604645D;
             }

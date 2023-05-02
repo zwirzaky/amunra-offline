@@ -199,11 +199,11 @@ abstract public class AbstractTab {
     protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) {
         if (mouseButton == 0) {
             for (GuiButton element : this.buttonList) {
-                final GuiButton guibutton = (GuiButton) element;
+                final GuiButton guibutton = element;
 
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
                     final ActionPerformedEvent.Pre event = new ActionPerformedEvent.Pre(
-                            (GuiScreen) this.parent,
+                            this.parent,
                             guibutton,
                             this.buttonList);
                     if (MinecraftForge.EVENT_BUS.post(event)) break;
@@ -211,7 +211,7 @@ abstract public class AbstractTab {
                     event.button.func_146113_a(this.mc.getSoundHandler());
                     this.actionPerformed(event.button);
                     if (this.equals(this.mc.currentScreen)) MinecraftForge.EVENT_BUS.post(
-                            new ActionPerformedEvent.Post((GuiScreen) this.parent, event.button, this.buttonList));
+                            new ActionPerformedEvent.Post(this.parent, event.button, this.buttonList));
                 }
             }
         }

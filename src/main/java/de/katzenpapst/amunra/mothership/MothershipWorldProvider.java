@@ -286,26 +286,24 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         this.worldObj.rainingStrength = 0.0F;
         this.worldObj.thunderingStrength = 0.0F;
 
-        if (!this.worldObj.isRemote) {
-            if (!this.hasLoadedWorldData) {
-                // kinda hack
-                // updateParamsFromParent();
-                this.mothershipSaveFile = MothershipWorldProviderSaveFile.getSaveFile(this.worldObj);
-                this.readFromNBT(this.mothershipSaveFile.data);
+        if (!this.worldObj.isRemote && !this.hasLoadedWorldData) {
+            // kinda hack
+            // updateParamsFromParent();
+            this.mothershipSaveFile = MothershipWorldProviderSaveFile.getSaveFile(this.worldObj);
+            this.readFromNBT(this.mothershipSaveFile.data);
 
-                if (this.mustSendPacketToClients) {
-                    this.mustSendPacketToClients = false;
-                    // so apparently someone wanted to have the data before we read it
-                    // now just send it to everyone in the dimension
-                    // re-write the nbt for this, in case there hasn't been a save
-                    final NBTTagCompound newNbt = new NBTTagCompound();
-                    this.writeToNBT(newNbt);
-                    AmunRa.packetPipeline.sendToDimension(
-                            new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, newNbt),
-                            this.dimensionId);
-                }
-                this.hasLoadedWorldData = true;
+            if (this.mustSendPacketToClients) {
+                this.mustSendPacketToClients = false;
+                // so apparently someone wanted to have the data before we read it
+                // now just send it to everyone in the dimension
+                // re-write the nbt for this, in case there hasn't been a save
+                final NBTTagCompound newNbt = new NBTTagCompound();
+                this.writeToNBT(newNbt);
+                AmunRa.packetPipeline.sendToDimension(
+                        new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, newNbt),
+                        this.dimensionId);
             }
+            this.hasLoadedWorldData = true;
         }
 
     }
@@ -355,15 +353,13 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         for (final Vector3int loc : this.engineLocations) {
             final TileEntity tile = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
 
-            if (tile instanceof ITileMothershipEngine engine) {
-                if (engine.isEnabled() && engine.getDirection() == td.direction) {
-                    // double curSpeed = engine.getSpeed(worldObj, loc.x, loc.y, loc.z, meta);
-                    final double curThrust = engine.getThrust();
-                    if (curThrust <= 0) {
-                        continue;
-                    }
-                    engine.beginTransit(travelTime);
+            if ((tile instanceof ITileMothershipEngine engine) && (engine.isEnabled() && engine.getDirection() == td.direction)) {
+                // double curSpeed = engine.getSpeed(worldObj, loc.x, loc.y, loc.z, meta);
+                final double curThrust = engine.getThrust();
+                if (curThrust <= 0) {
+                    continue;
                 }
+                engine.beginTransit(travelTime);
             }
         }
 
@@ -384,10 +380,8 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         for (final Vector3int loc : this.engineLocations) {
             final TileEntity t = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
 
-            if (t instanceof ITileMothershipEngine engine) {
-                if (engine.isInUse()) {
-                    engine.endTransit();
-                }
+            if ((t instanceof ITileMothershipEngine engine) && engine.isInUse()) {
+                engine.endTransit();
             }
         }
         // other stuff
@@ -418,7 +412,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             this.dayLength = 24000L;
             if (parent.getReachable()) {
                 final WorldProvider p = WorldUtil.getProviderForDimensionServer(parent.getDimensionID());
-                if (p != null && p instanceof WorldProviderSpace) {
+                if (p instanceof WorldProviderSpace) {
                     // read stuff from the worldprovider
                     this.dayLength = ((WorldProviderSpace) p).getDayLength();
                 }

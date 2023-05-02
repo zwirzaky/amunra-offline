@@ -18,15 +18,15 @@ public class EntityFXMothershipJetFire extends EntityFX {
         // setRBGColorF(0x88, 0x00, 0x88);
 
         // this is needed because the vanilla code adds a y component
-        this.motionX = motion.x + (double) ((float) (Math.random() * 2.0D - 1.0D) * 0.4F);
-        this.motionY = motion.y + (double) ((float) (Math.random() * 2.0D - 1.0D) * 0.4F);
-        this.motionZ = motion.z + (double) ((float) (Math.random() * 2.0D - 1.0D) * 0.4F);
+        this.motionX = motion.x + (float) (Math.random() * 2.0D - 1.0D) * 0.4F;
+        this.motionY = motion.y + (float) (Math.random() * 2.0D - 1.0D) * 0.4F;
+        this.motionZ = motion.z + (float) (Math.random() * 2.0D - 1.0D) * 0.4F;
         final float f = (float) (Math.random() + Math.random() + 1.0D) * 0.15F;
         final float f1 = MathHelper.sqrt_double(
                 this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) / 9.0F;
-        this.motionX = this.motionX / (double) f1 * (double) f * 0.4000000059604645D;
-        this.motionY = this.motionY / (double) f1 * (double) f * 0.4000000059604645D;
-        this.motionZ = this.motionZ / (double) f1 * (double) f * 0.4000000059604645D;
+        this.motionX = this.motionX / f1 * f * 0.4000000059604645D;
+        this.motionY = this.motionY / f1 * f * 0.4000000059604645D;
+        this.motionZ = this.motionZ / f1 * f * 0.4000000059604645D;
 
         // stealing stuff from GC
         this.particleRed = 255F / 255F;

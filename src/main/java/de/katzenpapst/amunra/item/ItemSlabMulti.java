@@ -39,9 +39,9 @@ public class ItemSlabMulti extends ItemBlockMulti {
         if (world.checkNoEntityCollision(this.doubleSlab.getCollisionBoundingBoxFromPool(world, x, y, z))
                 && this.placeDoubleSlab(world, x, y, z, meta)) {
             world.playSoundEffect(
-                    (double) ((float) x + 0.5F),
-                    (double) ((float) y + 0.5F),
-                    (double) ((float) z + 0.5F),
+                    x + 0.5F,
+                    y + 0.5F,
+                    z + 0.5F,
                     this.doubleSlab.stepSound.func_150496_b(),
                     (this.doubleSlab.stepSound.getVolume() + 1.0F) / 2.0F,
                     this.doubleSlab.stepSound.getPitch() * 0.8F);

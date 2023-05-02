@@ -213,7 +213,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     public class BaseStructureMap extends HashMap<Long, BaseStructureStart> {
 
         private static final long serialVersionUID = -4123587272811107730L;
-    };
+    }
 
     protected BaseStructureMap structureMap = new BaseStructureMap();
 

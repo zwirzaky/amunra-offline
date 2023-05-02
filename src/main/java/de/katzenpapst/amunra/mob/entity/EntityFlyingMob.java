@@ -83,9 +83,9 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
             }
         }
         // otherwise, get a random point
-        this.waypointX = this.posX + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-        this.waypointY = this.posY + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-        this.waypointZ = this.posZ + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+        this.waypointX = this.posX + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
+        this.waypointY = this.posY + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
+        this.waypointZ = this.posZ + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
     }
 
     @Override
@@ -112,7 +112,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
         if (this.courseChangeCooldown-- <= 0) {
             this.courseChangeCooldown += this.rand.nextInt(5) + 2;
-            distanceSq = (double) MathHelper.sqrt_double(distanceSq);
+            distanceSq = MathHelper.sqrt_double(distanceSq);
 
             if (this.isCourseTraversable(this.waypointX, this.waypointY, this.waypointZ, distanceSq)) {
                 this.motionX += deltaX / distanceSq * 0.1D;
@@ -138,10 +138,10 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
         if (this.targetedEntity != null
                 && this.targetedEntity.getDistanceSqToEntity(this) < maxTargetDistance * maxTargetDistance) {
-            this.faceEntity(this.targetedEntity, 10.0F, (float) this.getVerticalFaceSpeed());
+            this.faceEntity(this.targetedEntity, 10.0F, this.getVerticalFaceSpeed());
             final double accelX = this.targetedEntity.posX - this.posX;
-            final double accelY = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F)
-                    - (this.posY + (double) (this.height / 2.0F));
+            final double accelY = this.targetedEntity.boundingBox.minY + this.targetedEntity.height / 2.0F
+                    - (this.posY + this.height / 2.0F);
             final double accelZ = this.targetedEntity.posZ - this.posZ;
             this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(accelX, accelZ)) * 180.0F / (float) Math.PI;
 
@@ -203,7 +203,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
         final double relDeltaZ = (this.waypointZ - this.posZ) / distance;
         final AxisAlignedBB axisalignedbb = this.boundingBox.copy();
 
-        for (int i = 1; (double) i < distance; ++i) {
+        for (int i = 1; i < distance; ++i) {
             axisalignedbb.offset(relDeltaX, relDeltaY, relDeltaZ);
 
             if (!this.worldObj.getCollidingBoundingBoxes(this, axisalignedbb).isEmpty()) {

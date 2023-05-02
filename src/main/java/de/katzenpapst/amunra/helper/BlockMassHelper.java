@@ -66,7 +66,7 @@ public class BlockMassHelper {
     public static float getMassForFluid(final Fluid fluid) {
         final int density = fluid.getDensity();
         // assume density to be in grams until I have a better idea
-        return (float) density / 1000.0F;
+        return density / 1000.0F;
     }
 
     public static float getMassFromHardnessAndMaterial(final float hardness, final Material material) {

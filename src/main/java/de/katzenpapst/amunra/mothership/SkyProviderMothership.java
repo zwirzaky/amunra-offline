@@ -251,21 +251,16 @@ public class SkyProviderMothership extends SkyProviderDynamic {
 
             final double theta = starLineRand.nextDouble() * Math.PI * 2;
 
-            double x1 = 0;
-            double y1 = 0;
-            double x2 = 0;
-            double y2 = 0;
-
             double zBase = MathHelper.getRandomDoubleInRange(starLineRand, 0, this.cylinderLength * 2);
 
             // motion offset
             zBase += curTime * this.starLineSpeed;
             zBase = zBase % (this.cylinderLength * 2) - this.cylinderLength;
 
-            x1 = Math.cos(theta - this.angleWidth) * this.skyBoxLength;
-            y1 = Math.sin(theta - this.angleWidth) * this.skyBoxLength;
-            x2 = Math.cos(theta + this.angleWidth) * this.skyBoxLength;
-            y2 = Math.sin(theta + this.angleWidth) * this.skyBoxLength;
+            double x1 = Math.cos(theta - this.angleWidth) * this.skyBoxLength;
+            double y1 = Math.sin(theta - this.angleWidth) * this.skyBoxLength;
+            double x2 = Math.cos(theta + this.angleWidth) * this.skyBoxLength;
+            double y2 = Math.sin(theta + this.angleWidth) * this.skyBoxLength;
             final double length = starLineRand.nextDouble() * 20.0D;
 
             // project the lines onto the cylinder's circles if necessary

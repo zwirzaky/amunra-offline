@@ -46,20 +46,18 @@ public class PitRoom extends PyramidRoom {
 
                 }
 
-                if (x > -size && x < size) {
-                    if (z > -size && z < size) {
-                        placeBlockAbs(
-                                arrayOfIDs,
-                                arrayOfMeta,
-                                this.roomBB.getCenterX() + x,
-                                this.floorLevel - 2,
-                                this.roomBB.getCenterZ() + z,
-                                chunkX,
-                                chunkZ,
-                                Blocks.lava,
-                                (byte) 0);
+                if ((x > -size && x < size) && (z > -size && z < size)) {
+                    placeBlockAbs(
+                            arrayOfIDs,
+                            arrayOfMeta,
+                            this.roomBB.getCenterX() + x,
+                            this.floorLevel - 2,
+                            this.roomBB.getCenterZ() + z,
+                            chunkX,
+                            chunkZ,
+                            Blocks.lava,
+                            (byte) 0);
 
-                    }
                 }
             }
         }

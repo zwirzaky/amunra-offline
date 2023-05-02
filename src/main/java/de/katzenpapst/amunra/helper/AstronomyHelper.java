@@ -409,8 +409,7 @@ public class AstronomyHelper {
             final SolarSystem sys2 = getSolarSystem(body2);
             final Vector3 pos1 = sys1.getMapPosition();
             final Vector3 pos2 = sys2.getMapPosition();
-            double result = 0;
-            result = pos1.distance(pos2) * systemDistanceFactor;
+            double result = pos1.distance(pos2) * systemDistanceFactor;
             result += getDistanceToParent(sys1.getMainStar(), body1);
             result += getDistanceToParent(sys2.getMainStar(), body2);
             return result;
@@ -422,14 +421,12 @@ public class AstronomyHelper {
             return getDistanceToParent(commonParent, body1);
         }
 
-        if (body1 instanceof IChildBody && body2 instanceof IChildBody) {
-            // are the two siblings?
-            if (commonParent instanceof Planet) {
-                return Math.abs(
-                        body1.getRelativeDistanceFromCenter().unScaledDistance
-                                - body2.getRelativeDistanceFromCenter().unScaledDistance)
-                        * moonDistanceFactor;
-            }
+        // are the two siblings?
+        if ((body1 instanceof IChildBody && body2 instanceof IChildBody) && (commonParent instanceof Planet)) {
+            return Math.abs(
+                    body1.getRelativeDistanceFromCenter().unScaledDistance
+                            - body2.getRelativeDistanceFromCenter().unScaledDistance)
+                    * moonDistanceFactor;
         }
 
         // here we either are different planets of the same system, or orbit them

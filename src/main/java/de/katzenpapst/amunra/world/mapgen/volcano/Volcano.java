@@ -67,7 +67,7 @@ public class Volcano extends BaseStructureStart {
     }
 
     protected double getHeightFromDistance(final double distance) {
-        return this.maxHeight * ((this.radius - distance) / (double) this.radius);
+        return this.maxHeight * ((this.radius - distance) / this.radius);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class Volcano extends BaseStructureStart {
 
                         if (distance > faloffRadius && lowestBlock < height && this.groundLevel > lowestBlock) {
                             // somewhat of a falloff at the edges
-                            final double faloffFactor = (distance - faloffRadius) / (double) this.falloffWidth;
+                            final double faloffFactor = (distance - faloffRadius) / this.falloffWidth;
                             height = (int) this.lerp(height, lowestBlock, faloffFactor);
 
                         }

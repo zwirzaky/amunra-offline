@@ -164,7 +164,7 @@ public class ContainerSchematicShuttle extends Container {
     public ItemStack transferStackInSlot(final EntityPlayer player, final int slotNr) {
         ItemStack resultStack = null;
 
-        final Slot slot = (Slot) this.inventorySlots.get(slotNr);
+        final Slot slot = this.inventorySlots.get(slotNr);
         final int containerInvSize = this.inventorySlots.size();
         final int numSlotsAdded = containerInvSize - 36;
 
@@ -185,14 +185,12 @@ public class ContainerSchematicShuttle extends Container {
                 // check if this works for any of my slots
                 boolean found = false;
                 for (int i = 0; i < numSlotsAdded; i++) {
-                    final Slot curSlot = (Slot) this.inventorySlots.get(i);
-                    if (curSlot instanceof SlotSpecific) {
-                        if (((SlotSpecific) curSlot).isItemValid(stack)) {
-                            // attempt merge
-                            if (this.mergeSingleSlot(stack, curSlot)) {
-                                found = true;
-                                break;
-                            }
+                    final Slot curSlot = this.inventorySlots.get(i);
+                    if ((curSlot instanceof SlotSpecific) && ((SlotSpecific) curSlot).isItemValid(stack)) {
+                        // attempt merge
+                        if (this.mergeSingleSlot(stack, curSlot)) {
+                            found = true;
+                            break;
                         }
                     }
                 }
@@ -246,7 +244,7 @@ public class ContainerSchematicShuttle extends Container {
             ItemStack slotStack;
 
             for (int k = startSlot; k < endSlotMaybe; k++) {
-                slot = (Slot) this.inventorySlots.get(k);
+                slot = this.inventorySlots.get(k);
                 slotStack = slot.getStack();
 
                 if (slotStack == null) {

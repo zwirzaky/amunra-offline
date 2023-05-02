@@ -11,7 +11,6 @@ public class ItemBaseBattery extends ItemElectricBase {
     final protected float capacity;
 
     public ItemBaseBattery(final String assetName, final float capacity) {
-        super();
         this.setUnlocalizedName(assetName);
         this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);
         this.capacity = capacity;

@@ -23,9 +23,9 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
 
     public interface IMothershipSettingsTab {
 
-        public void mothershipResponsePacketRecieved();
+        void mothershipResponsePacketRecieved();
 
-        public void mothershipOperationFailed(String message);
+        void mothershipOperationFailed(String message);
     }
 
     private static final ResourceLocation guiTexture = new ResourceLocation(

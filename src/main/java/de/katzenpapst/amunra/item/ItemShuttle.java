@@ -28,7 +28,6 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 public class ItemShuttle extends Item implements IHoldableItem {
 
     public ItemShuttle(final String assetName) {
-        super();
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);

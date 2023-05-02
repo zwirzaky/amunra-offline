@@ -64,10 +64,8 @@ public class SubBlockOreMultidrop extends SubBlockOre {
         for (final DroppedItem di : this.dropList) {
             if (di.probability < 1) {
                 final float effectiveProb = di.probability * fortune;
-                if (effectiveProb < 1) {
-                    if (this.rand.nextFloat() >= effectiveProb) {
-                        continue; // skip this
-                    }
+                if ((effectiveProb < 1) && (this.rand.nextFloat() >= effectiveProb)) {
+                    continue; // skip this
                 }
             }
             final float bonusDrop = Math.round(fortune * this.rand.nextInt(di.maxDrop - di.minDrop + 1) / 3.0F);

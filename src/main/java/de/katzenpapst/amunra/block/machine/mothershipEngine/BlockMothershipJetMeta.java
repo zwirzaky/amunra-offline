@@ -70,7 +70,7 @@ public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
     public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         final SubBlock sb = this.getSubBlock(meta);
-        if (sb != null && sb instanceof MothershipEngineJetBase) {
+        if (sb instanceof MothershipEngineJetBase) {
             return ((MothershipEngineJetBase) sb).getItem().getItemStack(1);
         }
 

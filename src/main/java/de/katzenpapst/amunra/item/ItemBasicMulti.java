@@ -36,7 +36,6 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     protected HashMap<String, Integer> nameDamageMapping = null;
 
     public ItemBasicMulti(final String name) {
-        super();
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         this.setUnlocalizedName(name);

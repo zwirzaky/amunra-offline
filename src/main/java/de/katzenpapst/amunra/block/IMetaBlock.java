@@ -12,7 +12,7 @@ public interface IMetaBlock {
      * @param sb
      * @return
      */
-    public BlockMetaPair addSubBlock(int meta, SubBlock sb);
+    BlockMetaPair addSubBlock(int meta, SubBlock sb);
     /*
      * public BlockMetaPair addSubBlock(int meta, SubBlock sb) { if(meta >= subBlocksArray.length || meta < 0) { throw
      * new IllegalArgumentException("Meta "+meta+" must be <= "+(subBlocksArray.length-1)+" && >= 0"); }
@@ -24,25 +24,25 @@ public interface IMetaBlock {
      * BlockMetaPair(this, (byte) meta); }
      */
 
-    public int getMetaByName(String name);
+    int getMetaByName(String name);
     /*
      * public int getMetaByName(String name) { Integer i = nameMetaMap.get(name); if(i == null) { throw new
      * IllegalArgumentException("Subblock "+name+" doesn't exist in "+blockNameFU); } return i; }
      */
 
-    public SubBlock getSubBlock(int meta);
+    SubBlock getSubBlock(int meta);
     /*
      * public SubBlock getSubBlock(int meta) { meta = getDistinctionMeta(meta); return subBlocksArray[meta]; }
      */
 
-    public String getUnlocalizedSubBlockName(int meta);
+    String getUnlocalizedSubBlockName(int meta);
     /*
      * public String getUnlocalizedSubBlockName(int meta) { if(prefixOwnBlockName) { return
      * this.blockNameFU+"."+this.getSubBlock(meta).getUnlocalizedName(); } return
      * this.getSubBlock(meta).getUnlocalizedName(); }
      */
 
-    public void register();
+    void register();
     /*
      * public void register() { GameRegistry.registerBlock(this, ItemBlockMulti.class, this.getUnlocalizedName());
      * for(int i=0;i<subBlocksArray.length;i++) { SubBlock sb = subBlocksArray[i]; if(sb != null) {
@@ -54,7 +54,7 @@ public interface IMetaBlock {
      * 
      * @return
      */
-    public int getNumPossibleSubBlocks();
+    int getNumPossibleSubBlocks();
 
     /**
      * This should take a metadata, and return only the part of it which is used for subblock distinction, aka, strip
@@ -63,7 +63,7 @@ public interface IMetaBlock {
      * @param meta
      * @return
      */
-    default public int getDistinctionMeta(final int meta) {
+    default int getDistinctionMeta(final int meta) {
         final int numSubBlocks = this.getNumPossibleSubBlocks();
         if (numSubBlocks < 4) {
             return meta & 1;
@@ -83,7 +83,7 @@ public interface IMetaBlock {
      * @param meta
      * @return
      */
-    default public int getRotationMeta(final int meta) {
+    default int getRotationMeta(final int meta) {
         return (meta & 12) >> 2;
     }
 
@@ -92,7 +92,7 @@ public interface IMetaBlock {
      * @param name
      * @return
      */
-    default public BlockMetaPair getBlockMetaPair(final String name) {
+    default BlockMetaPair getBlockMetaPair(final String name) {
         return new BlockMetaPair((Block) this, (byte) this.getMetaByName(name));
     }
 
@@ -103,7 +103,7 @@ public interface IMetaBlock {
      * @param rotationMeta
      * @return
      */
-    default public int addRotationMeta(final int baseMeta, final int rotationMeta) {
+    default int addRotationMeta(final int baseMeta, final int rotationMeta) {
         return baseMeta | rotationMeta << 2;
     }
 

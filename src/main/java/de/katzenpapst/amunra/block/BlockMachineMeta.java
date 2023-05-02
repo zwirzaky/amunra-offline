@@ -335,10 +335,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
         if (this.isUsableWrench(entityPlayer, entityPlayer.inventory.getCurrentItem(), x, y, z)) {
             this.damageWrench(entityPlayer, entityPlayer.inventory.getCurrentItem(), x, y, z);
 
-            if (entityPlayer.isSneaking()) {
-                if (this.onSneakUseWrench(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
-                    return true;
-                }
+            if (entityPlayer.isSneaking() && this.onSneakUseWrench(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
+                return true;
             }
 
             if (this.onUseWrench(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
@@ -348,10 +346,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
         // handle the other stuff in the subblock
         final SubBlockMachine sb = (SubBlockMachine) this.getSubBlock(meta);
 
-        if (entityPlayer.isSneaking()) {
-            if (sb.onSneakMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
-                return true;
-            }
+        if (entityPlayer.isSneaking() && sb.onSneakMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
+            return true;
         }
 
         return sb.onMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);

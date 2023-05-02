@@ -181,12 +181,10 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
     protected void onImpactEntity(final MovingObjectPosition mop) {
         if (this.doesFireDamage() && !(mop.entityHit instanceof EntityEnderman)) {
             // hm
-            if (OxygenUtil.noAtmosphericCombustion(mop.entityHit.worldObj.provider)) {
-                // usually, stuff doesn't burn here
-                if (!OxygenUtil.isAABBInBreathableAirBlock(mop.entityHit.worldObj, mop.entityHit.boundingBox, false)) {
-                    // and the entity isn't in any sealed area
-                    return;
-                }
+            // usually, stuff doesn't burn here
+            if (OxygenUtil.noAtmosphericCombustion(mop.entityHit.worldObj.provider) && !OxygenUtil.isAABBInBreathableAirBlock(mop.entityHit.worldObj, mop.entityHit.boundingBox, false)) {
+                // and the entity isn't in any sealed area
+                return;
             }
             mop.entityHit.setFire(2);
         }

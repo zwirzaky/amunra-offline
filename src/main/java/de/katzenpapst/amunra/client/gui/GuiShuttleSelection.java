@@ -308,20 +308,18 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     93,
                     12);
 
-            if (this.mapMode != MapMode.VIEW) {
-                if (this.buildMsBtnArea.isWithin(mousePosX, mousePosY)) {
-                    this.drawTexturedModalRect(
-                            this.buildMsBtnArea.minX,
-                            this.buildMsBtnArea.minY,
-                            this.buildMsBtnArea.getWidth(),
-                            this.buildMsBtnArea.getHeight(),
-                            0,
-                            174,
-                            93,
-                            12,
-                            false,
-                            false);
-                }
+            if ((this.mapMode != MapMode.VIEW) && this.buildMsBtnArea.isWithin(mousePosX, mousePosY)) {
+                this.drawTexturedModalRect(
+                        this.buildMsBtnArea.minX,
+                        this.buildMsBtnArea.minY,
+                        this.buildMsBtnArea.getWidth(),
+                        this.buildMsBtnArea.getHeight(),
+                        0,
+                        174,
+                        93,
+                        12,
+                        false,
+                        false);
             }
 
             this.drawTexturedModalRect(
@@ -376,45 +374,43 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     @Override
     protected boolean teleportToSelectedBody() {
         this.possibleBodies = this.shuttlePossibleBodies;
-        if (this.selectedBody != null) {
-            if (this.selectedBody.getReachable() && this.possibleBodies != null
-                    && this.possibleBodies.contains(this.selectedBody)) {
-                try {
-                    Integer dimensionID = null;
+        if ((this.selectedBody != null) && (this.selectedBody.getReachable() && this.possibleBodies != null
+                && this.possibleBodies.contains(this.selectedBody))) {
+            try {
+                Integer dimensionID = null;
 
-                    if (this.selectedBody instanceof Satellite) {
-                        if (this.spaceStationMap == null) {
-                            AmunRa.LOGGER.error("Please report as a BUG: spaceStationIDs was null.");
-                            return false;
-                        }
-                        final Satellite selectedSatellite = (Satellite) this.selectedBody;
-                        final Integer mapping = this.spaceStationMap.get(this.getSatelliteParentID(selectedSatellite))
-                                .get(this.selectedStationOwner).getStationDimensionID();
-                        // No need to check lowercase as selectedStationOwner is taken from keys.
-                        if (mapping == null) {
-                            AmunRa.LOGGER.error(
-                                    "Problem matching player name in space station check: {}",
-                                    this.selectedStationOwner);
-                            return false;
-                        }
-                        final int spacestationID = mapping;
-                        dimensionID = spacestationID;
-                    } else {
-                        dimensionID = this.selectedBody.getDimensionID();
+                if (this.selectedBody instanceof Satellite) {
+                    if (this.spaceStationMap == null) {
+                        AmunRa.LOGGER.error("Please report as a BUG: spaceStationIDs was null.");
+                        return false;
                     }
-                    /*
-                     * if (dimension.contains("$")) { this.mc.gameSettings.thirdPersonView = 0; } if(dimensionID ==
-                     * null) { return false; }
-                     */
-                    AmunRa.packetPipeline.sendToServer(
-                            new PacketSimpleAR(
-                                    PacketSimpleAR.EnumSimplePacket.S_TELEPORT_SHUTTLE,
-                                    new Object[] { dimensionID }));
-                    this.mc.displayGuiScreen(null);
-                    return true;
-                } catch (final Exception e) {
-                    AmunRa.LOGGER.warn("Failed to teleport to selected body", e);
+                    final Satellite selectedSatellite = (Satellite) this.selectedBody;
+                    final Integer mapping = this.spaceStationMap.get(this.getSatelliteParentID(selectedSatellite))
+                            .get(this.selectedStationOwner).getStationDimensionID();
+                    // No need to check lowercase as selectedStationOwner is taken from keys.
+                    if (mapping == null) {
+                        AmunRa.LOGGER.error(
+                                "Problem matching player name in space station check: {}",
+                                this.selectedStationOwner);
+                        return false;
+                    }
+                    final int spacestationID = mapping;
+                    dimensionID = spacestationID;
+                } else {
+                    dimensionID = this.selectedBody.getDimensionID();
                 }
+                /*
+                 * if (dimension.contains("$")) { this.mc.gameSettings.thirdPersonView = 0; } if(dimensionID ==
+                 * null) { return false; }
+                 */
+                AmunRa.packetPipeline.sendToServer(
+                        new PacketSimpleAR(
+                                PacketSimpleAR.EnumSimplePacket.S_TELEPORT_SHUTTLE,
+                                dimensionID));
+                this.mc.displayGuiScreen(null);
+                return true;
+            } catch (final Exception e) {
+                AmunRa.LOGGER.warn("Failed to teleport to selected body", e);
             }
         }
         return false;
@@ -431,20 +427,18 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             if (this.exitBtnArea.isWithin(x, y)) {
                 this.cancelLaunch();
                 clickHandled = true;
-            } else if (this.buildMsBtnArea.isWithin(x, y)) {
-                if (this.selectedBody != null) {
-                    final SpaceStationRecipe recipe = RecipeHelper.mothershipRecipe;
-                    if (recipe != null && this.canCreateMothership(this.selectedBody)
-                            && !this.createMothershipButtonDisabled) {
-                        if (recipe.matches(this.mc.thePlayer, false) || this.mc.thePlayer.capabilities.isCreativeMode) {
-                            this.createMothershipButtonDisabled = true;
-                            AmunRa.packetPipeline.sendToServer(
-                                    new PacketSimpleAR(
-                                            PacketSimpleAR.EnumSimplePacket.S_CREATE_MOTHERSHIP,
-                                            new Object[] { AstronomyHelper.getOrbitableBodyName(this.selectedBody) }));
-                        }
-                        clickHandled = true;
+            } else if (this.buildMsBtnArea.isWithin(x, y) && (this.selectedBody != null)) {
+                final SpaceStationRecipe recipe = RecipeHelper.mothershipRecipe;
+                if (recipe != null && this.canCreateMothership(this.selectedBody)
+                        && !this.createMothershipButtonDisabled) {
+                    if (recipe.matches(this.mc.thePlayer, false) || this.mc.thePlayer.capabilities.isCreativeMode) {
+                        this.createMothershipButtonDisabled = true;
+                        AmunRa.packetPipeline.sendToServer(
+                                new PacketSimpleAR(
+                                        PacketSimpleAR.EnumSimplePacket.S_CREATE_MOTHERSHIP,
+                                        AstronomyHelper.getOrbitableBodyName(this.selectedBody)));
                     }
+                    clickHandled = true;
                 }
             }
         }

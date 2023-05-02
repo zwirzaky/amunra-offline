@@ -158,7 +158,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     public void performDockOperationClient(final DockOperation op) {
         final int opInt = op.ordinal();
 
-        final Object[] payload = new Object[] { this.xCoord, this.yCoord, this.zCoord, opInt };
+        final Object[] payload = { this.xCoord, this.yCoord, this.zCoord, opInt };
         AmunRa.packetPipeline
                 .sendToServer(new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.S_DOCK_OPERATION, payload));
     }
@@ -402,9 +402,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     protected void checkTileAt(final HashSet<ILandingPadAttachable> connectedTiles, final int x, final int y, final int z) {
         final TileEntity tile = this.worldObj.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof ILandingPadAttachable
-                && ((ILandingPadAttachable) tile)
-                        .canAttachToLandingPad(this.worldObj, this.xCoord, this.yCoord, this.zCoord)) {
+        if (tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile)
+                .canAttachToLandingPad(this.worldObj, this.xCoord, this.yCoord, this.zCoord)) {
             connectedTiles.add((ILandingPadAttachable) tile);
         }
     }
@@ -446,7 +445,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     public boolean isBlockAttachable(final IBlockAccess world, final int x, final int y, final int z) {
         final TileEntity tile = world.getTileEntity(x, y, z);
         // maybe prevent launch controllers from working here?
-        if (tile != null && tile instanceof ILandingPadAttachable) {
+        if (tile instanceof ILandingPadAttachable) {
             return ((ILandingPadAttachable) tile).canAttachToLandingPad(world, this.xCoord, this.yCoord, this.zCoord);
         }
 

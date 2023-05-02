@@ -34,7 +34,6 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     protected SubBlock[] subBlocksArray = new SubBlock[4];
 
     public BlockLeafMeta(final Material mat, final boolean gfxMode) {
-        super();
         this.nameMetaMap = new HashMap<>();
         this.setLightOpacity(1);
     }

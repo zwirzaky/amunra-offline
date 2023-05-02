@@ -85,7 +85,7 @@ abstract public class ContainerWithPlayerInventory extends Container {
     public ItemStack transferStackInSlot(final EntityPlayer player, final int slotNr) {
         ItemStack resultStack = null;
 
-        final Slot slot = (Slot) this.inventorySlots.get(slotNr);
+        final Slot slot = this.inventorySlots.get(slotNr);
         final int containerInvSize = this.inventorySlots.size();
         final int numSlotsAdded = containerInvSize - 36;
 
@@ -106,21 +106,17 @@ abstract public class ContainerWithPlayerInventory extends Container {
                 // check if this works for any of my slots
                 boolean found = false;
                 for (int i = 0; i < numSlotsAdded; i++) {
-                    final Slot curSlot = (Slot) this.inventorySlots.get(i);
+                    final Slot curSlot = this.inventorySlots.get(i);
                     if (curSlot instanceof SlotSpecific) {
-                        if (((SlotSpecific) curSlot).isItemValid(stack)) {
-                            // attempt merge
-                            if (this.mergeSingleSlot(stack, curSlot)) {
-                                found = true;
-                                break;
-                            }
-                        }
-                    } else if (this.tileEntity.isItemValidForSlot(i, stack)) {
                         // attempt merge
-                        if (this.mergeSingleSlot(stack, curSlot)) {
+                        if (((SlotSpecific) curSlot).isItemValid(stack) && this.mergeSingleSlot(stack, curSlot)) {
                             found = true;
                             break;
                         }
+                    } else // attempt merge
+                    if (this.tileEntity.isItemValidForSlot(i, stack) && this.mergeSingleSlot(stack, curSlot)) {
+                        found = true;
+                        break;
                     }
                 }
                 if (!found) {

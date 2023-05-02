@@ -35,7 +35,6 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
         }
 
         public CachedRocketRecipe(final ArrayList<PositionedStack> pstack1, final PositionedStack pstack2) {
-            super();
             this.input = pstack1;
             this.output = pstack2;
         }

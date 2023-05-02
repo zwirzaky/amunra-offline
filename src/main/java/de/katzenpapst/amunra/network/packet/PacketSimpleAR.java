@@ -60,7 +60,7 @@ import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class PacketSimpleAR extends Packet implements IPacket {
 
-    public static enum EnumSimplePacket {
+    public enum EnumSimplePacket {
 
         // ===================== SERVER =====================
         /**
@@ -191,7 +191,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
         private Side targetSide;
         private Class<?>[] decodeAs;
 
-        private EnumSimplePacket(final Side targetSide, final Class<?>... decodeAs) {
+        EnumSimplePacket(final Side targetSide, final Class<?>... decodeAs) {
             this.targetSide = targetSide;
             this.decodeAs = decodeAs;
         }
@@ -467,16 +467,14 @@ public class PacketSimpleAR extends Packet implements IPacket {
                     if (playerBase.worldObj instanceof WorldServer) {
                         mShip = TickHandlerServer.mothershipData.getByDimensionId(dim);
                         // check if the target is a mothership
-                        if (mShip != null) {
-                            // if the player is currently not on the target MS, check permissions
-                            if (playerBase.dimension != dim && !mShip.isPlayerLandingPermitted(playerBase)) {
-                                AmunRa.packetPipeline.sendTo(
-                                        new PacketSimpleAR(
-                                                PacketSimpleAR.EnumSimplePacket.C_TELEPORT_SHUTTLE_PERMISSION_ERROR,
-                                                mShip.getOwner().getName()),
-                                        playerBase);
-                                return;
-                            }
+                        // if the player is currently not on the target MS, check permissions
+                        if ((mShip != null) && (playerBase.dimension != dim && !mShip.isPlayerLandingPermitted(playerBase))) {
+                            AmunRa.packetPipeline.sendTo(
+                                    new PacketSimpleAR(
+                                            PacketSimpleAR.EnumSimplePacket.C_TELEPORT_SHUTTLE_PERMISSION_ERROR,
+                                            mShip.getOwner().getName()),
+                                    playerBase);
+                            return;
                         }
 
                         world = (WorldServer) playerBase.worldObj;
@@ -497,7 +495,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 break;
             case S_CANCEL_SHUTTLE:
                 if (playerBase.worldObj instanceof WorldServer) {
-                    if (playerBase.ridingEntity != null && playerBase.ridingEntity instanceof EntityShuttleFake) {
+                    if (playerBase.ridingEntity instanceof EntityShuttleFake) {
                         // player is actually in the sky
                         world = (WorldServer) playerBase.worldObj;
                         ShuttleTeleportHelper.transferEntityToDimension(playerBase, world.provider.dimensionId, world);

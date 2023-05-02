@@ -153,10 +153,10 @@ public class ModelHydroponics {
         final ResourceLocation resourcelocation = Minecraft.getMinecraft().renderEngine.getResourceLocation(0);
         Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 
-        final double d3 = (double) iicon.getMinU();
-        final double d4 = (double) iicon.getMinV();
-        final double d5 = (double) iicon.getMaxU();
-        final double d6 = (double) iicon.getMaxV();
+        final double d3 = iicon.getMinU();
+        final double d4 = iicon.getMinV();
+        final double d5 = iicon.getMaxU();
+        final double d6 = iicon.getMaxV();
         double d7 = x + 0.5D - 0.25D;
         double d8 = x + 0.5D + 0.25D;
         double d9 = z + 0.5D - 0.5D;

@@ -78,8 +78,8 @@ public class ModelSentry extends ModelBase {
         this.body.rotateAngleY = rotationY / (180F / (float) Math.PI);
         this.body.rotateAngleX = rotationX / (180F / (float) Math.PI);
 
-        this.rightarm.rotateAngleY = (float) (0.2F * MathHelper.sin(somethingWhatever * 0.3F) + 0.4F);
-        this.leftarm.rotateAngleY = -(float) (0.2F * MathHelper.sin(somethingWhatever * 0.3F) + 0.4F);
+        this.rightarm.rotateAngleY = 0.2F * MathHelper.sin(somethingWhatever * 0.3F) + 0.4F;
+        this.leftarm.rotateAngleY = -(0.2F * MathHelper.sin(somethingWhatever * 0.3F) + 0.4F);
         this.toparm.rotateAngleX = (float) (0.2 * MathHelper.sin(somethingWhatever * 0.3F) + 0.4 + Math.PI / 2.0);
         this.bottomarm.rotateAngleX = -(float) (0.2 * MathHelper.sin(somethingWhatever * 0.3F) + 0.4 - Math.PI / 2.0);
 

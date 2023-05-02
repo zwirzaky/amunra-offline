@@ -33,10 +33,8 @@ public class RenderHydroponics extends TileEntitySpecialRenderer {
                 final TileEntity cur = connections[i];
                 final ForgeDirection direction = ForgeDirection.values()[i];
 
-                if (cur instanceof IOxygenReceiver) {
-                    if (((IOxygenReceiver) cur).getOxygenRequest(direction.getOpposite()) <= 0) {
-                        connections[i] = null;
-                    }
+                if ((cur instanceof IOxygenReceiver) && (((IOxygenReceiver) cur).getOxygenRequest(direction.getOpposite()) <= 0)) {
+                    connections[i] = null;
                 }
             }
 

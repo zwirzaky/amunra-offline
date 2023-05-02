@@ -38,7 +38,7 @@ public class GuiIonEngine extends GuiRocketEngine {
                 this);
 
         this.infoRegions.add(this.electricInfoRegion);
-    };
+    }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
@@ -62,7 +62,7 @@ public class GuiIonEngine extends GuiRocketEngine {
             this.drawTexturedModalRect(containerWidth + 114, containerHeight + 30, 176, 74, scale, 7);
             this.drawTexturedModalRect(containerWidth + 101, containerHeight + 29, 192, 64, 11, 10);
         }
-    };
+    }
 
     @Override
     protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {

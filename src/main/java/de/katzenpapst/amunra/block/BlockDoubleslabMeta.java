@@ -161,8 +161,8 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
                 this,
                 ItemSlabMulti.class,
                 this.getUnlocalizedName(),
-                (Block) this.slabMetablock,
-                (Block) this);
+                this.slabMetablock,
+                this);
 
         for (int i = 0; i < this.subBlocksArray.length; i++) {
             final SubBlock sb = this.subBlocksArray[i];

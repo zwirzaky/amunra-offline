@@ -87,7 +87,7 @@ public class SubBlockGrass extends SubBlock {
      */
     public boolean canLiveHere(final World world, final int x, final int y, final int z) {
         // this is the vanilla check
-        return !(world.getBlockLightValue(x, y + 1, z) < 4 && world.getBlockLightOpacity(x, y + 1, z) > 2);
+        return ((world.getBlockLightValue(x, y + 1, z) >= 4) || (world.getBlockLightOpacity(x, y + 1, z) <= 2));
     }
 
     /**

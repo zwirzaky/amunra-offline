@@ -100,14 +100,10 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
 
     private static final int ASTEROID_CHANCE = 800; // About 1 / n chance per XZ pair
 
-    private static final int ASTEROID_CORE_CHANCE = 2; // 1 / n chance per asteroid
     private static final int ASTEROID_SHELL_CHANCE = 2; // 1 / n chance per asteroid
 
     private static final int MIN_BLOCKS_PER_CHUNK = 50;
     private static final int MAX_BLOCKS_PER_CHUNK = 200;
-
-    private static final int RANDOM_BLOCK_FADE_SIZE = 32;
-    private static final int FADE_BLOCK_CHANCE = 5; // 1 / n chance of a block being in the fade zone
 
     private static final int NOISE_OFFSET_SIZE = 256;
 
@@ -115,14 +111,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     private static final float MAX_HOLLOW_SIZE = .8F;
     private static final int HOLLOW_CHANCE = 10; // 1 / n chance per asteroid
     private static final int MIN_RADIUS_FOR_HOLLOW = 15;
-    private static final float HOLLOW_LAVA_SIZE = .12F;
-
-    // Per chunk per asteroid
-    private static final int TREE_CHANCE = 2;
     private static final int TALL_GRASS_CHANCE = 2;
-    private static final int FLOWER_CHANCE = 2;
-    private static final int WATER_CHANCE = 2;
-    private static final int LAVA_CHANCE = 2;
     private static final int GLOWSTONE_CHANCE = 20;
 
     private final ArrayList<AsteroidData> largeAsteroids = new ArrayList<>();
@@ -383,12 +372,10 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
 
                     if (isHollow && distance <= hollowSize) {
                         distanceAbove += this.asteroidTurbulance.getNoise(xx, y + 1, zz);
-                        if (distanceAbove <= 1) {
-                            if (y - 1 == terrainYY) {
-                                final int index = indexBase | y + 1;
-                                blockArray[index] = this.light.getBlock();
-                                metaArray[index] = this.light.getMetadata();
-                            }
+                        if ((distanceAbove <= 1) && (y - 1 == terrainYY)) {
+                            final int index = indexBase | y + 1;
+                            blockArray[index] = this.light.getBlock();
+                            metaArray[index] = this.light.getMetadata();
                         }
                     }
 
@@ -456,13 +443,11 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                         if (distance <= 1) {
                             final int index = indexBase | y;
                             final int indexAbove = indexBase | y + 1;
-                            if (Blocks.air == blockArray[indexAbove]
+                            if ((Blocks.air == blockArray[indexAbove]
                                     && (blockArray[index] == this.asteroidStoneBlocks[0].getBlock()
-                                            || blockArray[index] == this.grass.getBlock())) {
-                                if (this.rand.nextInt(GLOWSTONE_CHANCE) == 0) {
-                                    blockArray[index] = this.light.getBlock();
-                                    metaArray[index] = this.light.getMetadata();
-                                }
+                                            || blockArray[index] == this.grass.getBlock())) && (this.rand.nextInt(GLOWSTONE_CHANCE) == 0)) {
+                                blockArray[index] = this.light.getBlock();
+                                metaArray[index] = this.light.getMetadata();
                             }
                         }
                     }
@@ -546,17 +531,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         // Light:"+timeString(time3, time4));
         // }
         return curChunk;
-    }
-
-    private int getIndex(final int x, final int y, final int z) {
-        return x * CHUNK_SIZE_Y * 16 | z * CHUNK_SIZE_Y | y;
-    }
-
-    private String timeString(final long time1, final long time2) {
-        final int ms100 = (int) ((time2 - time1) / 10000);
-        // int msdecimal = ms100 % 100;
-        final String msd = (ms100 < 10 ? "0" : "") + ms100;
-        return "" + ms100 / 100 + "." + msd + "ms";
     }
 
     private float randFromPoint(final int x, final int y, final int z) {
@@ -841,9 +815,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                                 && !(chunk.getBlock(x, y, z) instanceof BlockAir)) {
                             int count = 2;
 
-                            if (x > 1) {
-                                if (chunk.getBlock(x - 2, y, z) instanceof BlockAir) count += 2;
-                            }
+                            if ((x > 1) && (chunk.getBlock(x - 2, y, z) instanceof BlockAir)) count += 2;
                             if (x > 2) {
                                 if (chunk.getBlock(x - 3, y, z) instanceof BlockAir) count += 2;
                                 if (chunk.getBlock(x - 3, y + 1, z) instanceof BlockAir) count++;
@@ -981,10 +953,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         public int zMax;
         public int zSizeArray;
         public int asteroidSizeArray;
-        public int asteroidXArray;
         public int asteroidYArray;
-        public int asteroidZArray;
-
         public AsteroidData(final boolean hollow, final float[] sizeYArray2, final int xMin, final int zMin, final int xmax, final int zmax, final int zSize,
                 final int size, final int asteroidX, final int asteroidY, final int asteroidZ) {
             this.isHollow = hollow;
@@ -995,9 +964,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
             this.zMax = zmax;
             this.zSizeArray = zSize;
             this.asteroidSizeArray = size;
-            this.asteroidXArray = asteroidX;
             this.asteroidYArray = asteroidY;
-            this.asteroidZArray = asteroidZ;
         }
     }
 }

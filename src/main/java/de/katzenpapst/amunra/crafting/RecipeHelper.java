@@ -173,7 +173,7 @@ public class RecipeHelper {
          * initRaygunReloadingRecipes(new ItemStack[]{ raygun, cryogun }, new ItemStack[]{ battery, liBattery,
          * quBattery, enBattery, nuBattery });
          */
-        final ItemStack[] batteries = new ItemStack[] { battery, liBattery, quBattery, enBattery, nuBattery };
+        final ItemStack[] batteries = { battery, liBattery, quBattery, enBattery, nuBattery };
 
         // *** regular crafting ***
 
@@ -181,53 +181,45 @@ public class RecipeHelper {
         // lithium battery
         GameRegistry.addRecipe(
                 liBattery,
-                new Object[] { " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B',
-                        lithiumMeshStack });
+                " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B', lithiumMeshStack);
 
         // advanced battery
         GameRegistry.addRecipe(
                 enBattery,
-                new Object[] { " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B',
-                        Blocks.redstone_block });
+                " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B', Blocks.redstone_block);
 
         // nuclear battery
         GameRegistry.addRecipe(
                 nuBattery,
-                new Object[] { " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B',
-                        uranMeshStack });
+                " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B', uranMeshStack);
 
         // laser diode
         GameRegistry.addRecipe(
                 laserDiodeStack,
-                new Object[] { "XXX", "ABC", "XXX", 'X', compressedAluStack, // 8 = metadata for compressed alu
-                        'A', Blocks.glass_pane, 'B', ARItems.rubyGem.getItemStack(1), 'C', beamCore });
+                "XXX", "ABC", "XXX", 'X', compressedAluStack, 'A', Blocks.glass_pane, 'B', ARItems.rubyGem.getItemStack(1), 'C', beamCore);
 
         // cryo diode
         GameRegistry.addRecipe(
                 cryoDiodeStack,
-                new Object[] { "XXX", "ABC", "XXX", 'X', compressedAluStack, // 8 = metadata for compressed alu
-                        'A', Blocks.glass_pane, 'B', ARItems.coldCrystal.getItemStack(1), 'C', beamCore });
+                "XXX", "ABC", "XXX", 'X', compressedAluStack, 'A', Blocks.glass_pane, 'B', ARItems.coldCrystal.getItemStack(1), 'C', beamCore);
 
         // laser gun
         addRaygunRecipe(
                 raygun,
                 batteries,
-                new Object[] { "XYZ", " AZ", "  B", 'X', laserDiodeStack, 'Y', enderWaferStack, 'Z',
-                        compressedSteelStack, 'A', button, 'B', battery });
+                "XYZ", " AZ", "  B", 'X', laserDiodeStack, 'Y', enderWaferStack, 'Z', compressedSteelStack, 'A', button, 'B', battery);
 
         // cryo gun
         addRaygunRecipe(
                 cryogun,
                 batteries,
-                new Object[] { "XYZ", " AZ", "  B", 'X', cryoDiodeStack, 'Y', enderWaferStack, 'Z',
-                        compressedSteelStack, 'A', button, 'B', battery });
+                "XYZ", " AZ", "  B", 'X', cryoDiodeStack, 'Y', enderWaferStack, 'Z', compressedSteelStack, 'A', button, 'B', battery);
 
         // multitool
         addRaygunRecipe(
                 nanotool,
                 batteries,
-                new Object[] { "NCN", " H ", " B ", 'N', ARItems.naniteCluster.getItemStack(1), 'C',
-                        ARItems.naniteControl.getItemStack(1), 'H', compressedTitaniumStack, 'B', battery });
+                "NCN", " H ", " B ", 'N', ARItems.naniteCluster.getItemStack(1), 'C', ARItems.naniteControl.getItemStack(1), 'H', compressedTitaniumStack, 'B', battery);
 
         // my crafter
         GameRegistry.addRecipe(
@@ -337,22 +329,20 @@ public class RecipeHelper {
 
         GameRegistry.addRecipe(
                 ARBlocks.getItemStack(ARBlocks.blockBasaltBrick, 4),
-                new Object[] { "XX", "XX", 'X', ARBlocks.getItemStack(ARBlocks.blockBasalt, 1) });
+                "XX", "XX", 'X', ARBlocks.getItemStack(ARBlocks.blockBasalt, 1));
 
         GameRegistry.addRecipe(
                 ARBlocks.getItemStack(ARBlocks.blockObsidianBrick, 4),
-                new Object[] { "XX", "XX", 'X', Blocks.obsidian });
+                "XX", "XX", 'X', Blocks.obsidian);
 
         GameRegistry.addRecipe(
                 ARBlocks.getItemStack(ARBlocks.blockAluCrate, 32),
-                new Object[] { " X ", "X X", " X ", 'X', new ItemStack(GCItems.basicItem, 1, 8) // 8 = metadata for
-                                                                                                // compressed alu
-                });
+                " X ", "X X", " X ", 'X', new ItemStack(GCItems.basicItem, 1, 8));
 
         // uranium
         GameRegistry.addRecipe(
                 ARBlocks.getItemStack(ARBlocks.blockUraniumBlock, 1),
-                new Object[] { "XXX", "XXX", "XXX", 'X', ARItems.uraniumIngot.getItemStack(1) });
+                "XXX", "XXX", "XXX", 'X', ARItems.uraniumIngot.getItemStack(1));
 
         GameRegistry.addShapelessRecipe(
                 ARItems.uraniumIngot.getItemStack(9),
@@ -737,10 +727,6 @@ public class RecipeHelper {
     }
 
     protected static void addCircuitFabricatorRecipe(final ItemStack output, final Object... inputs) {
-        ItemStack[] crystal = null;
-        ItemStack[] silicon1 = null;
-        ItemStack[] silicon2 = null;
-        ItemStack[] redstone = null;
         ItemStack[] optional = null;
 
         if (inputs.length < 4) {
@@ -748,10 +734,10 @@ public class RecipeHelper {
             throw new RuntimeException("Not enough inputs for circuit fabricator");
         }
         // crystal
-        crystal = getStacksForInput(inputs[0]);
-        silicon1 = getStacksForInput(inputs[1]);
-        silicon2 = getStacksForInput(inputs[2]);
-        redstone = getStacksForInput(inputs[3]);
+        ItemStack[] crystal = getStacksForInput(inputs[0]);
+        ItemStack[] silicon1 = getStacksForInput(inputs[1]);
+        ItemStack[] silicon2 = getStacksForInput(inputs[2]);
+        ItemStack[] redstone = getStacksForInput(inputs[3]);
         if (inputs.length > 4) {
             optional = getStacksForInput(inputs[4]);
         }
@@ -959,7 +945,7 @@ public class RecipeHelper {
 
             // reloading recipes
 
-            GameRegistry.addShapelessRecipe(gun, new Object[] { gun, battery });
+            GameRegistry.addShapelessRecipe(gun, gun, battery);
         }
     }
 
@@ -1135,9 +1121,6 @@ public class RecipeHelper {
 
     public static Vector<INasaWorkbenchRecipe> getAllRecipesFor(final Item expectedOutput) {
         final Vector<INasaWorkbenchRecipe> recipeArray = nasaWorkbenchRecipes.get(expectedOutput);
-        if (recipeArray == null) {
-            return null;
-        }
         return recipeArray;
     }
 

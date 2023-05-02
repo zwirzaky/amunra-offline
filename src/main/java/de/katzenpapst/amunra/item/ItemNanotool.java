@@ -46,7 +46,7 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     protected float efficiencyOnProperMaterial = 6.0F;
 
-    protected String[] textures = new String[] { "nanotool", "nanotool-axe", "nanotool-hoe", "nanotool-pickaxe",
+    protected String[] textures = { "nanotool", "nanotool-axe", "nanotool-hoe", "nanotool-pickaxe",
             "nanotool-shears", "nanotool-shovel", "nanotool-wrench" };
 
     public enum Mode {
@@ -141,10 +141,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
     public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
         if (entityPlayer.isSneaking()) {
             // the wrench sometimes works when sneak-rightclicking
-            if (this.hasEnoughEnergyAndMode(itemStack, this.energyCostUseBig, Mode.WRENCH)) {
-                if (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-                    return super.onItemRightClick(itemStack, world, entityPlayer);
-                }
+            if (this.hasEnoughEnergyAndMode(itemStack, this.energyCostUseBig, Mode.WRENCH) && (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK)) {
+                return super.onItemRightClick(itemStack, world, entityPlayer);
             }
             // try switching
             if (this.hasEnoughEnergy(itemStack, this.energyCostSwitch)) {
@@ -451,9 +449,9 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
                     && (block == Blocks.grass || block == Blocks.dirt)) {
                 final Block block1 = Blocks.farmland;
                 world.playSoundEffect(
-                        (double) ((float) x + 0.5F),
-                        (double) ((float) y + 0.5F),
-                        (double) ((float) z + 0.5F),
+                        x + 0.5F,
+                        y + 0.5F,
+                        z + 0.5F,
                         block1.stepSound.getStepResourcePath(),
                         (block1.stepSound.getVolume() + 1.0F) / 2.0F,
                         block1.stepSound.getPitch() * 0.8F);
@@ -507,13 +505,11 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
     }
 
     private boolean attemptDismantle(final EntityPlayer entityPlayer, final Block block, final World world, final int x, final int y, final int z) {
-        if (InteroperabilityHelper.hasIDismantleable) {
-            if (block instanceof IDismantleable
-                    && ((IDismantleable) block).canDismantle(entityPlayer, world, x, y, z)) {
+        if (InteroperabilityHelper.hasIDismantleable && (block instanceof IDismantleable
+                && ((IDismantleable) block).canDismantle(entityPlayer, world, x, y, z))) {
 
-                ((IDismantleable) block).dismantleBlock(entityPlayer, world, x, y, z, false);
-                return true;
-            }
+            ((IDismantleable) block).dismantleBlock(entityPlayer, world, x, y, z, false);
+            return true;
         }
         return false;
     }
@@ -584,10 +580,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
     public boolean doesSneakBypassUse(final World world, final int x, final int y, final int z, final EntityPlayer player) {
         final ItemStack stack = player.inventory.getCurrentItem();
 
-        if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH)) {
-            if (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-                return true;
-            }
+        if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH) && (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK)) {
+            return true;
         }
 
         return false;

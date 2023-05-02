@@ -440,7 +440,7 @@ public class EntityShuttle extends EntityTieredRocket {
         if (this.worldObj.getChunkProvider().chunkExists(chunkx, chunkz)) {
 
             final TileEntity te = this.targetVec.getTileEntity(this.worldObj);
-            if (te != null && te instanceof IFuelDock) {
+            if (te instanceof IFuelDock) {
 
                 if (!(te instanceof TileEntityShuttleDock)) {
                     // just a regular dock. oh well
@@ -540,10 +540,8 @@ public class EntityShuttle extends EntityTieredRocket {
                 // enter landing mode
                 this.landing = true;
 
-                if (!this.worldObj.isRemote) {
-                    if (Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 10 != 0.0) {
-                        this.motionY -= Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 20;
-                    }
+                if (!this.worldObj.isRemote && (Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 10 != 0.0)) {
+                    this.motionY -= Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 20;
                 }
             }
         }
@@ -641,20 +639,18 @@ public class EntityShuttle extends EntityTieredRocket {
 
     public void landEntity(final TileEntity tile) {
 
-        if (tile instanceof IFuelDock dock) {
-            if (this.isDockValid(dock)) {
-                if (!this.worldObj.isRemote) {
-                    // Drop any existing rocket on the landing pad
-                    if (dock.getDockedEntity() instanceof EntitySpaceshipBase && dock.getDockedEntity() != this) {
-                        ((EntitySpaceshipBase) dock.getDockedEntity()).dropShipAsItem();
-                        ((EntitySpaceshipBase) dock.getDockedEntity()).setDead();
-                    }
-
-                    this.setPad(dock);
+        if ((tile instanceof IFuelDock dock) && this.isDockValid(dock)) {
+            if (!this.worldObj.isRemote) {
+                // Drop any existing rocket on the landing pad
+                if (dock.getDockedEntity() instanceof EntitySpaceshipBase && dock.getDockedEntity() != this) {
+                    ((EntitySpaceshipBase) dock.getDockedEntity()).dropShipAsItem();
+                    ((EntitySpaceshipBase) dock.getDockedEntity()).setDead();
                 }
 
-                this.onRocketLand(tile.xCoord, tile.yCoord, tile.zCoord);
+                this.setPad(dock);
             }
+
+            this.onRocketLand(tile.xCoord, tile.yCoord, tile.zCoord);
         }
     }
 
@@ -674,15 +670,13 @@ public class EntityShuttle extends EntityTieredRocket {
     @Override
     public void onReachAtmosphere() {
         // Not launch controlled
-        if (this.riddenByEntity != null && !this.worldObj.isRemote) {
-            if (this.riddenByEntity instanceof EntityPlayerMP player) {
-                this.onTeleport(player);
-                final GCPlayerStats stats = this.setGCPlayerStats(player);
+        if ((this.riddenByEntity != null && !this.worldObj.isRemote) && (this.riddenByEntity instanceof EntityPlayerMP player)) {
+            this.onTeleport(player);
+            final GCPlayerStats stats = this.setGCPlayerStats(player);
 
-                // this is the part which activates the celestial gui
-                toCelestialSelection(player, stats, this.getRocketTier());
+            // this is the part which activates the celestial gui
+            toCelestialSelection(player, stats, this.getRocketTier());
 
-            }
         }
 
         // Destroy any rocket which reached the top of the atmosphere and is not controlled by a Launch Controller
@@ -724,7 +718,7 @@ public class EntityShuttle extends EntityTieredRocket {
         AmunRa.packetPipeline.sendTo(
                 new PacketSimpleAR(
                         EnumSimplePacket.C_OPEN_SHUTTLE_GUI,
-                        new Object[] { player.getGameProfile().getName(), dimensionList }),
+                        player.getGameProfile().getName(), dimensionList),
                 player);
         // do not use this for the shuttle
         stats.usingPlanetSelectionGui = false;

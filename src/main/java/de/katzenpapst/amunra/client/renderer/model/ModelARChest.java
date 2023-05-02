@@ -21,10 +21,10 @@ public class ModelARChest {
 
         if (!isDouble) {
             chestModel = this.chestModel;
-            Minecraft.getMinecraft().renderEngine.bindTexture(((BlockARChest) chestBlock).getSmallTexture());
+            Minecraft.getMinecraft().renderEngine.bindTexture(chestBlock.getSmallTexture());
         } else {
             chestModel = this.largeChestModel;
-            Minecraft.getMinecraft().renderEngine.bindTexture(((BlockARChest) chestBlock).getLargeTexture());
+            Minecraft.getMinecraft().renderEngine.bindTexture(chestBlock.getLargeTexture());
         }
 
         GL11.glPushMatrix();

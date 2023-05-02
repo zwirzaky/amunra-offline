@@ -258,14 +258,12 @@ public class TileEntityHydroponics extends TileEntityOxygen
         // p=100% at 10 ticks
         // check every 20 -> p=100% at 20 ticks
         // p=0.1
-        if (this.ticks % 20 == 0) {
-            if (this.worldObj.rand.nextFloat() < 0.1F) {
-                this.plantGrowthStatus += 0.01F;
-                if (this.plantGrowthStatus > 1.0F) {
-                    this.plantGrowthStatus = 1.0F;
-                }
-                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        if ((this.ticks % 20 == 0) && (this.worldObj.rand.nextFloat() < 0.1F)) {
+            this.plantGrowthStatus += 0.01F;
+            if (this.plantGrowthStatus > 1.0F) {
+                this.plantGrowthStatus = 1.0F;
             }
+            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         }
     }
 

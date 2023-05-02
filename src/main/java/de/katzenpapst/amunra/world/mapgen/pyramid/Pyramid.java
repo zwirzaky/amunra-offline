@@ -590,8 +590,7 @@ public class Pyramid extends BaseStructureStart {
     }
 
     protected int coords2int(final int x, final int y, final int z) {
-        final int coords = ((x << 4) + z) * 256 + y;
-        return coords;
+        return ((x << 4) + z) * 256 + y;
     }
 
     public BlockMetaPair getWallMaterial() {

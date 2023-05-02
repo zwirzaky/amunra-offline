@@ -210,14 +210,7 @@ public class GuiHydroponics extends GuiContainerGC {
     }
 
     private String getStatus() {
-        final String returnValue = this.tile.getGUIstatus();
-        /*
-         * if (returnValue.equals(EnumColor.DARK_GREEN + GCCoreUtil.translate("gui.status.active.name")) &&
-         * this.tile.lastOxygenCollected <= 0.0F) { return EnumColor.DARK_RED +
-         * GCCoreUtil.translate("gui.status.missingleaves.name"); }
-         */
-
-        return returnValue;
+        return this.tile.getGUIstatus();
     }
 
     @Override

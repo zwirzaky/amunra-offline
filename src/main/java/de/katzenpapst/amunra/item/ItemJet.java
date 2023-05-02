@@ -117,7 +117,7 @@ public class ItemJet extends ItemBlockMulti {
         switch (side) {
             case 0:
             case 1:
-                blockRotation = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+                blockRotation = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
                 break;
             case 2:
                 blockRotation = 0;

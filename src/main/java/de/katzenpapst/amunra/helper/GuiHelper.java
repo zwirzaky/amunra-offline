@@ -36,7 +36,6 @@ public class GuiHelper {
             return String.format("%s%s", numberFormat.format(number), unit);
         }
         String suffix = "";
-        String result = "";
         final int numZeroes = (int) Math.floor(Math.log10(number));
         int numThousands = (int) Math.floor(numZeroes / 3);
         if (numThousands > 0) {
@@ -58,7 +57,7 @@ public class GuiHelper {
         }
 
         // String.format
-        result = numberFormat.format(number);
+        String result = numberFormat.format(number);
         if (!suffix.isEmpty()) {
             if (addSpace) {
                 return String.format("%s %s%s", result, suffix, unit);

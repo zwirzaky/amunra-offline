@@ -93,14 +93,10 @@ public class BlockGravitation extends SubBlockMachine {
                     double x2 = x + rand.nextFloat();
                     final double y2 = y + rand.nextFloat();
                     double z2 = z + rand.nextFloat();
-                    double mX = 0.0D;
-                    double mY = 0.0D;
-                    double mZ = 0.0D;
+                    double mX = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
+                    double mZ = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
                     final int dir = rand.nextInt(2) * 2 - 1;
-                    mX = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
-                    mY = (rand.nextFloat() - 0.5D) * 0.5D;
-                    mZ = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
-
+                    double mY = (rand.nextFloat() - 0.5D) * 0.5D;
                     final int var2 = par1World.getBlockMetadata(x, y, z);
 
                     if (var2 == 3 || var2 == 2) {

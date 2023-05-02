@@ -72,15 +72,13 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
 
     protected AxisAlignedBB getActualGravityBox() {
         AxisAlignedBB box = this.getRotatedAABB();// AxisAlignedBB.getBoundingBox(center.x - range, center.y - 0.5, center.z
-                                             // - range, center.x + range, center.y + range, center.z + range);
-        box = AxisAlignedBB.getBoundingBox(
+                                             return AxisAlignedBB.getBoundingBox(
                 this.xCoord + box.minX,
                 this.yCoord + box.minY,
                 this.zCoord + box.minZ,
                 this.xCoord + box.maxX + 1,
                 this.yCoord + box.maxY + 1,
                 this.zCoord + box.maxZ + 1);
-        return box;
     }
 
     public AxisAlignedBB getRotatedAABB() {

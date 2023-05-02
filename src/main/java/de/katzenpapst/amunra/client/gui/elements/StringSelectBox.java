@@ -245,7 +245,7 @@ public class StringSelectBox extends GuiButton {
 
     public interface ISelectBoxCallback {
 
-        public void onSelectionChanged(StringSelectBox box, int selection);
+        void onSelectionChanged(StringSelectBox box, int selection);
     }
 
 }

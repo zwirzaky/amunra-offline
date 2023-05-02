@@ -156,7 +156,7 @@ public class MothershipWorldData extends WorldSavedData {
         ship.writeToNBT(data);
 
         AmunRa.packetPipeline.sendToAll(
-                new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_NEW_MOTHERSHIP_CREATED, new Object[] { data }));
+                new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_NEW_MOTHERSHIP_CREATED, data));
         return ship;
     }
 
@@ -205,7 +205,7 @@ public class MothershipWorldData extends WorldSavedData {
         int result = 0;
 
         for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = (Mothership) pair.getValue();
+            final Mothership curM = pair.getValue();
 
             final CelestialBody curParent = curM.getParent();
             if (curParent != null && curParent.equals(parent)) {
@@ -218,7 +218,7 @@ public class MothershipWorldData extends WorldSavedData {
 
     public boolean hasMothershipsInOrbit(final CelestialBody parent) {
         for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = (Mothership) pair.getValue();
+            final Mothership curM = pair.getValue();
 
             if (curM.getParent() == parent) return true;
         }
@@ -235,7 +235,7 @@ public class MothershipWorldData extends WorldSavedData {
         final LinkedList<Mothership> result = new LinkedList<>();
 
         for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = (Mothership) pair.getValue();
+            final Mothership curM = pair.getValue();
 
             final CelestialBody curParent = curM.getParent();
             if (curParent != null && curParent.equals(parent)) {
@@ -256,7 +256,7 @@ public class MothershipWorldData extends WorldSavedData {
         int num = 0;
 
         for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = (Mothership) pair.getValue();
+            final Mothership curM = pair.getValue();
 
             if (curM.isPlayerOwner(player)) {
                 num++;
@@ -279,7 +279,7 @@ public class MothershipWorldData extends WorldSavedData {
         final HashMap<CelestialBody, Integer> result = new HashMap<>();
 
         for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = (Mothership) pair.getValue();
+            final Mothership curM = pair.getValue();
             final CelestialBody parent = curM.getParent();
             if (parent == null) continue;
 
@@ -304,7 +304,7 @@ public class MothershipWorldData extends WorldSavedData {
 
     public Mothership getByName(final String name) {
         for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = (Mothership) pair.getValue();
+            final Mothership curM = pair.getValue();
             if (curM.getName().equals(name)) {
                 return curM;
             }
@@ -419,18 +419,16 @@ public class MothershipWorldData extends WorldSavedData {
                         new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_MOTHERSHIP_TRANSIT_ENDED, m.getID()));
             }
         }
-        if (hasChanged || !hasChanged && this.numTicksWithoutSave > 0) {
-            // if no changes, but still unsaved changes
-            if (this.numTicksWithoutSave >= 1200) {
-                this.numTicksWithoutSave = 0;
-                this.markDirty(); //
-            }
-            /*
-             * if(hasChanged) { NBTTagCompound data = new NBTTagCompound ();
-             * TickHandlerServer.mothershipData.writeToNBT(data); AmunRa.packetPipeline.sendToAll(new
-             * PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_UPDATE_MOTHERSHIP_LIST, data)); }
-             */
+        // if no changes, but still unsaved changes
+        if ((hasChanged || !hasChanged && this.numTicksWithoutSave > 0) && (this.numTicksWithoutSave >= 1200)) {
+            this.numTicksWithoutSave = 0;
+            this.markDirty(); //
         }
+        /*
+         * if(hasChanged) { NBTTagCompound data = new NBTTagCompound ();
+         * TickHandlerServer.mothershipData.writeToNBT(data); AmunRa.packetPipeline.sendToAll(new
+         * PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_UPDATE_MOTHERSHIP_LIST, data)); }
+         */
     }
 
     /**

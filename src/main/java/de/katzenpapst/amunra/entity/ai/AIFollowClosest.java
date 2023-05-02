@@ -49,12 +49,12 @@ public class AIFollowClosest extends EntityAIBase {
 
         if (this.watchedClass == EntityPlayer.class) {
             this.closestEntity = this.theWatcher.worldObj
-                    .getClosestPlayerToEntity(this.theWatcher, (double) this.maxDistanceForPlayer);
+                    .getClosestPlayerToEntity(this.theWatcher, this.maxDistanceForPlayer);
         } else {
             this.closestEntity = this.theWatcher.worldObj.findNearestEntityWithinAABB(
                     this.watchedClass,
                     this.theWatcher.boundingBox
-                            .expand((double) this.maxDistanceForPlayer, 3.0D, (double) this.maxDistanceForPlayer),
+                            .expand(this.maxDistanceForPlayer, 3.0D, this.maxDistanceForPlayer),
                     this.theWatcher);
         }
 
@@ -70,7 +70,7 @@ public class AIFollowClosest extends EntityAIBase {
                 .isEntityAlive()
                         ? false
                         : this.theWatcher.getDistanceSqToEntity(this.closestEntity)
-                                > (double) (this.maxDistanceForPlayer * this.maxDistanceForPlayer) ? false
+                                > this.maxDistanceForPlayer * this.maxDistanceForPlayer ? false
                                         : this.lookTime > 0;
     }
 
@@ -97,10 +97,10 @@ public class AIFollowClosest extends EntityAIBase {
     public void updateTask() {
         this.theWatcher.getLookHelper().setLookPosition(
                 this.closestEntity.posX,
-                this.closestEntity.posY + (double) this.closestEntity.getEyeHeight(),
+                this.closestEntity.posY + this.closestEntity.getEyeHeight(),
                 this.closestEntity.posZ,
                 10.0F,
-                (float) this.theWatcher.getVerticalFaceSpeed());
+                this.theWatcher.getVerticalFaceSpeed());
         --this.lookTime;
     }
 

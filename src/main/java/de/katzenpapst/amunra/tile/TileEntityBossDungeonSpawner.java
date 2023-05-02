@@ -34,8 +34,6 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     protected AxisAlignedBB roomArea = null;
 
     public TileEntityBossDungeonSpawner() {
-        super();
-
         this.bossClass = EntityMummyBoss.class;
 
         // test
@@ -90,8 +88,8 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                 if (this.boss == null && !this.isBossDefeated && !this.spawned) {
                     // try spawning the boss
                     try {
-                        final Constructor<?> c = this.bossClass.getConstructor(new Class[] { World.class });
-                        this.boss = (IAmunRaBoss) c.newInstance(new Object[] { this.worldObj });
+                        final Constructor<?> c = this.bossClass.getConstructor(World.class);
+                        this.boss = (IAmunRaBoss) c.newInstance(this.worldObj);
                         ((Entity) this.boss).setPosition(this.xCoord + 0.5, this.yCoord + 1.0, this.zCoord + 0.5);
                         this.boss.setRoomArea(this.roomArea);
                         this.boss.setSpawner(this);

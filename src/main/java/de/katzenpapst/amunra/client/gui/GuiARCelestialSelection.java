@@ -357,10 +357,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             alpha = this.selectedBody instanceof IChildBody ? 1.0F
                     : Math.min(Math.max((this.ticksSinceSelection - 30) / 15.0F, 0.0F), 1.0F);
 
-            if (this.lastSelectedBody instanceof Moon) {
-                if (GalaxyRegistry.getMoonsForPlanet(((Moon) this.lastSelectedBody).getParentPlanet()).contains(moon)) {
-                    alpha = 1.0F;
-                }
+            if ((this.lastSelectedBody instanceof Moon) && GalaxyRegistry.getMoonsForPlanet(((Moon) this.lastSelectedBody).getParentPlanet()).contains(moon)) {
+                alpha = 1.0F;
             }
         }
 
@@ -419,35 +417,33 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             this._workaroundDrawMoonCircle((Moon) body, sin, cos);
         }
         GL11.glColor4f(0.6F, 0.2F, 0.2F, 0.8F);
-        if (body != null) {
-            if (TickHandlerServer.mothershipData.hasMothershipsInOrbit(body)) {
+        if ((body != null) && TickHandlerServer.mothershipData.hasMothershipsInOrbit(body)) {
 
-                final float dist = TickHandlerServer.mothershipData.getMothershipOrbitDistanceFor(body);
-                float scale = 3.0F * dist * (1.0F / 5.0F);
+            final float dist = TickHandlerServer.mothershipData.getMothershipOrbitDistanceFor(body);
+            float scale = 3.0F * dist * (1.0F / 5.0F);
 
-                if (body instanceof Star) {
-                    scale *= 3;
-                }
-
-                final Vector3f planetPos = this.getCelestialBodyPosition(body);
-                GL11.glTranslatef(planetPos.x, planetPos.y, 0);
-
-                float x = scale;
-                float y = 0;
-
-                GL11.glBegin(GL11.GL_LINE_LOOP);
-
-                float temp;
-                for (int i = 0; i < 90; i++) {
-                    GL11.glVertex2f(x, y);
-
-                    temp = x;
-                    x = cos * x - sin * y;
-                    y = sin * temp + cos * y;
-                }
-
-                GL11.glEnd();
+            if (body instanceof Star) {
+                scale *= 3;
             }
+
+            final Vector3f planetPos = this.getCelestialBodyPosition(body);
+            GL11.glTranslatef(planetPos.x, planetPos.y, 0);
+
+            float x = scale;
+            float y = 0;
+
+            GL11.glBegin(GL11.GL_LINE_LOOP);
+
+            float temp;
+            for (int i = 0; i < 90; i++) {
+                GL11.glVertex2f(x, y);
+
+                temp = x;
+                x = cos * x - sin * y;
+                y = sin * temp + cos * y;
+            }
+
+            GL11.glEnd();
         }
         // List<Mothership> msList = TickHandlerServer.mothershipData.getMothershipsForParent(renderShipsAround);
         GL11.glLineWidth(1);
@@ -470,14 +466,13 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         if (this.selectedBody != null) {
             final Matrix4f worldMatrix0 = new Matrix4f(worldMatrix);
 
-            CelestialBody renderShipsAround = null;
+            CelestialBody renderShipsAround = this.getBodyToRenderMothershipsAround();
 
             /*
              * render them if: - renderShipsAround == lastSelectedBody - renderShipsAround's parent == lastSelectedBody
              * - renderShipsAround == lastSelectedBody's parent
              */
 
-            renderShipsAround = this.getBodyToRenderMothershipsAround();
             if (renderShipsAround != null) {
 
                 // MothershipWorldData msData = TickHandlerServer.mothershipData;
@@ -599,11 +594,9 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         if (ship.isInTransit()) {
             // left
             // check if it even affects me
-            if (this.shuttlePossibleBodies.remove(ship)) {
-                // apparently it did. do more stuff
-                if (this.selectedBody.equals(ship)) {
-                    this.unselectCelestialBody();
-                }
+            // apparently it did. do more stuff
+            if (this.shuttlePossibleBodies.remove(ship) && this.selectedBody.equals(ship)) {
+                this.unselectCelestialBody();
             }
         } else // arrived
         // I think it SHOULD be in celestialBodyTicks already...

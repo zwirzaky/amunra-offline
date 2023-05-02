@@ -163,7 +163,7 @@ public class ShuttleDockHandler extends WorldSavedData {
                     // if (ws.getChunkProvider().chunkExists(chunkx, chunkz)) {
                     // seems like there is no real way to figure out if a chunk has actually been really, really, loaded
                     final TileEntity te = ws.getTileEntity(pos.x, pos.y, pos.z);
-                    if (te != null && te instanceof TileEntityShuttleDock) {
+                    if (te instanceof TileEntityShuttleDock) {
                         if (((TileEntityShuttleDock) te).isAvailable()) {
                             return pos;
                         }

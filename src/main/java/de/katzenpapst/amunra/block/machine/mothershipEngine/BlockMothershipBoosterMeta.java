@@ -62,7 +62,6 @@ public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
 
     @Override
     public void dropEntireInventory(final World world, final int x, final int y, final int z, final Block block, final int par6) {
-        return; // NOOP
     }
 
 }

@@ -100,11 +100,9 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0)) {
-                if (y == yMin) {
-                    // trigger the populator
-                    this.parent.addPopulator(new TouchBlock(this.roomBB.minX, y, this.roomBB.minZ));
-                }
+                    (byte) 0) && (y == yMin)) {
+                // trigger the populator
+                this.parent.addPopulator(new TouchBlock(this.roomBB.minX, y, this.roomBB.minZ));
             }
 
             if (placeBlockAbs(
@@ -116,11 +114,9 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0)) {
-                if (y == yMin) {
-                    // trigger the populator
-                    this.parent.addPopulator(new TouchBlock(this.roomBB.maxX, y, this.roomBB.minZ));
-                }
+                    (byte) 0) && (y == yMin)) {
+                // trigger the populator
+                this.parent.addPopulator(new TouchBlock(this.roomBB.maxX, y, this.roomBB.minZ));
             }
 
             if (placeBlockAbs(
@@ -132,11 +128,9 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0)) {
-                if (y == yMin) {
-                    // trigger the populator
-                    this.parent.addPopulator(new TouchBlock(this.roomBB.minX, y, this.roomBB.maxZ));
-                }
+                    (byte) 0) && (y == yMin)) {
+                // trigger the populator
+                this.parent.addPopulator(new TouchBlock(this.roomBB.minX, y, this.roomBB.maxZ));
             }
 
             if (placeBlockAbs(
@@ -148,11 +142,9 @@ public class PyramidRoom extends BaseStructureComponent {
                     chunkX,
                     chunkZ,
                     Blocks.glowstone,
-                    (byte) 0)) {
-                if (y == yMin) {
-                    // trigger the populator
-                    this.parent.addPopulator(new TouchBlock(this.roomBB.maxX, y, this.roomBB.maxZ));
-                }
+                    (byte) 0) && (y == yMin)) {
+                // trigger the populator
+                this.parent.addPopulator(new TouchBlock(this.roomBB.maxX, y, this.roomBB.maxZ));
             }
         }
 

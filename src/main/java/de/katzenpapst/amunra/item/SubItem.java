@@ -16,7 +16,6 @@ public class SubItem extends Item {
     protected String fuckYouName = null;// fuck you, private
 
     public SubItem(final String name, final String assetName) {
-        super();
         this.fuckYouName = name;
         this.setUnlocalizedName(name);
         this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);

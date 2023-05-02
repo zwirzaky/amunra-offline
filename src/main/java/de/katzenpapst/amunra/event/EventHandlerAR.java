@@ -49,7 +49,6 @@ public class EventHandlerAR {
 
         if (event.armorStack != null && event.armorStack.getItem() instanceof ItemThermalSuit) {
             event.setArmorAddResult(ThermalArmorEvent.ArmorAddResult.ADD);
-            return;
         }
 
     }

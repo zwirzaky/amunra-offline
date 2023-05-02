@@ -13,7 +13,7 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 public class ContainerHydroponics extends ContainerWithPlayerInventory {
 
     public ContainerHydroponics(final InventoryPlayer player, final TileEntityHydroponics tile) {
-        super((IInventory) tile);
+        super(tile);
 
         this.addSlotToContainer(new SlotSpecific(tile, 0, 32, 27, ItemElectricBase.class));
 

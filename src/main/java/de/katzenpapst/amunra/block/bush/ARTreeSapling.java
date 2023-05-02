@@ -111,11 +111,9 @@ public class ARTreeSapling extends AbstractSapling {
                                     halfWidth,
                                     halfHeight);
                             if (eFactor <= 1.0D) {
-                                if (eFactor > 0.90D) {
-                                    // randomly don't
-                                    if (rand.nextDouble() < 0.5D) {
-                                        continue;
-                                    }
+                                // randomly don't
+                                if ((eFactor > 0.90D) && (rand.nextDouble() < 0.5D)) {
+                                    continue;
                                 }
                                 // draw them
                                 final Block block1 = world.getBlock(curX, curY, curZ);

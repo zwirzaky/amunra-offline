@@ -311,14 +311,12 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         final int boxHeight = 65;
 
         final int bottomOffset = this.height - this.offsetY;
-        int totalOffset = 1;// offsetY+141;
-
         final float totalMass = this.provider.getTotalMass();
 
         final TransitData tData = this.provider.getTheoreticalTransitData();
 
         // draw the main texture
-        totalOffset = boxHeight + 1;
+        int totalOffset = boxHeight + 1;
         this.drawTexturedModalRect(
                 this.offsetX - boxWidth,
                 bottomOffset - totalOffset,
@@ -396,7 +394,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
     }
 
     protected void drawTargetBodyInfo(final int mousePosX, final int mousePosY) {
-        int offset = 0;
+        int offset = 17;
 
         GL11.glColor4f(0.0F, 0.6F, 1.0F, 1);
         this.mc.renderEngine.bindTexture(guiExtra);
@@ -434,8 +432,6 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                 false,
                 false);
 
-        // name of selected body
-        offset = 17;
         this.drawSplitString(
                 this.selectedBody.getLocalizedName(),
                 this.offsetX - 48,

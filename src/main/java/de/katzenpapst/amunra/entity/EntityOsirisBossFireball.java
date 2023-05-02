@@ -45,7 +45,7 @@ public class EntityOsirisBossFireball extends EntityFireball {
         this.setSize(1.0F, 1.0F);
         this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
         this.setPosition(x, y, z);
-        final double d6 = (double) MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
+        final double d6 = MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
         this.accelerationX = accelX / d6 * 0.1D;
         this.accelerationY = accelY / d6 * 0.1D;
         this.accelerationZ = accelZ / d6 * 0.1D;
@@ -62,7 +62,7 @@ public class EntityOsirisBossFireball extends EntityFireball {
         accelX += this.rand.nextGaussian() * 0.4D;
         accelY += this.rand.nextGaussian() * 0.4D;
         accelZ += this.rand.nextGaussian() * 0.4D;
-        final double d3 = (double) MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
+        final double d3 = MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
         this.accelerationX = accelX / d3 * 0.1D;
         this.accelerationY = accelY / d3 * 0.1D;
         this.accelerationZ = accelZ / d3 * 0.1D;

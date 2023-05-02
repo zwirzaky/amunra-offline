@@ -134,11 +134,9 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
 
         final int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, stack);
         // max level seems to be 5
-        final float relativeEff = (float) efficiency / 10.0F;
+        final float relativeEff = efficiency / 10.0F;
 
-        base = base * (1.0F - relativeEff);
-
-        return base;
+        return base * (1.0F - relativeEff);
     }
 
     protected void spawnProjectile(final ItemStack itemStack, final EntityPlayer entityPlayer, final World world) {

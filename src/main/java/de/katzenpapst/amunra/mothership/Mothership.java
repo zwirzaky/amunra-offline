@@ -397,8 +397,7 @@ public class Mothership extends CelestialBody {
             return body;
         }
 
-        body = GalaxyRegistry.getRegisteredMoons().get(bodyName);
-        return body;
+        return GalaxyRegistry.getRegisteredMoons().get(bodyName);
     }
 
     /**

@@ -83,7 +83,7 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
         }
 
         if (hitByPlayer && lootLevel >= 2) {
-            final double probability = ((double) lootLevel - 1.0) * 0.05;
+            final double probability = (lootLevel - 1.0) * 0.05;
             for (ItemDamagePair element : this.rareLoot) {
                 if (this.rand.nextDouble() < probability) {
                     this.entityDropItem(element.getItemStack(1), 0.0F);

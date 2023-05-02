@@ -131,18 +131,16 @@ public class ShuttleTeleportHelper {
                                 player.theItemInWorldManager.getGameType()));
 
                 // I'm almost think this can be deleted
-                if (worldNew.provider instanceof WorldProviderOrbit) {
-                    if (WorldUtil.registeredSpaceStations.containsKey(dimID))
-                    // TODO This has never been effective before due to the earlier bug - what does it actually do?
-                    {
-                        final NBTTagCompound var2 = new NBTTagCompound();
-                        SpaceStationWorldData.getStationData(worldNew, dimID, player).writeToNBT(var2);
-                        GalacticraftCore.packetPipeline.sendTo(
-                                new PacketSimple(
-                                        EnumSimplePacket.C_UPDATE_SPACESTATION_DATA,
-                                        new Object[] { dimID, var2 }),
-                                player);
-                    }
+                if ((worldNew.provider instanceof WorldProviderOrbit) && WorldUtil.registeredSpaceStations.containsKey(dimID))
+                // TODO This has never been effective before due to the earlier bug - what does it actually do?
+                {
+                    final NBTTagCompound var2 = new NBTTagCompound();
+                    SpaceStationWorldData.getStationData(worldNew, dimID, player).writeToNBT(var2);
+                    GalacticraftCore.packetPipeline.sendTo(
+                            new PacketSimple(
+                                    EnumSimplePacket.C_UPDATE_SPACESTATION_DATA,
+                                    new Object[] { dimID, var2 }),
+                            player);
                 }
 
                 worldOld.playerEntities.remove(player);
@@ -234,7 +232,7 @@ public class ShuttleTeleportHelper {
             }
         }
         final GCPlayerStats playerStats = GCPlayerStats.get(player);
-        final boolean usingShuttle = playerStats.rocketItem != null && playerStats.rocketItem instanceof ItemShuttle;
+        final boolean usingShuttle = playerStats.rocketItem instanceof ItemShuttle;
 
         if (spawnPos == null) {
             // this should now happen
@@ -311,10 +309,8 @@ public class ShuttleTeleportHelper {
         final GCPlayerStats playerStats = GCPlayerStats.get(player);
 
         // failsafe! yes, this happened...
-        if (world.provider instanceof IExitHeight) {
-            if (((IExitHeight) world.provider).getYCoordinateToTeleport() - 10 <= spawnPos.y) {
-                spawnPos.y = ((IExitHeight) world.provider).getYCoordinateToTeleport() - 10;
-            }
+        if ((world.provider instanceof IExitHeight) && (((IExitHeight) world.provider).getYCoordinateToTeleport() - 10 <= spawnPos.y)) {
+            spawnPos.y = ((IExitHeight) world.provider).getYCoordinateToTeleport() - 10;
         }
 
         // boolean landInDock = false;

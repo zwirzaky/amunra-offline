@@ -11,7 +11,7 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 public class ContainerShuttleDock extends ContainerWithPlayerInventory {
 
     public ContainerShuttleDock(final InventoryPlayer player, final TileEntityShuttleDock tile) {
-        super((IInventory) tile);
+        super(tile);
 
         this.addSlotToContainer(new SlotSpecific(tile, 0, 137, 59, ItemShuttle.class));
 

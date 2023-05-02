@@ -25,21 +25,21 @@ public class RenderBlockScale extends TileEntitySpecialRenderer {
         switch (rotation) {
             case 0:
                 GL11.glRotatef(180, 0, 1, 0);
-                GL11.glTranslatef((float) 0.0F, (float) 1.0F, (float) -1.01F);
+                GL11.glTranslatef(0.0F, 1.0F, -1.01F);
                 GL11.glRotatef(180, 0, 0, 1);
                 break;
             case 1:
-                GL11.glTranslatef((float) 1.0F, (float) 1.0F, (float) -0.01F);
+                GL11.glTranslatef(1.0F, 1.0F, -0.01F);
                 GL11.glRotatef(180, 0, 0, 1);
                 break;
             case 2:
                 GL11.glRotatef(-90, 0, 1, 0);
-                GL11.glTranslatef((float) 1.0F, (float) 1.0F, (float) -1.01F);
+                GL11.glTranslatef(1.0F, 1.0F, -1.01F);
                 GL11.glRotatef(180, 0, 0, 1);
                 break;
             case 3:
                 GL11.glRotatef(90, 0, 1, 0);
-                GL11.glTranslatef((float) -0.0F, (float) 1.0F, (float) -0.01F);
+                GL11.glTranslatef(-0.0F, 1.0F, -0.01F);
                 GL11.glRotatef(180, 0, 0, 1);
                 break;
         }
@@ -55,7 +55,7 @@ public class RenderBlockScale extends TileEntitySpecialRenderer {
         GL11.glScalef(0.020F, 0.020F, 0.020F);
         // I think now, translating by 1 means translating by 1 pixel
         // I also think the total width is 1/0,02 = 50
-        GL11.glTranslatef((float) (50 - width) / 2.0F, yOffset, 0);
+        GL11.glTranslatef((50 - width) / 2.0F, yOffset, 0);
         fr.drawString(toDisplay, 0, 0, 0);
 
         GL11.glPopMatrix();

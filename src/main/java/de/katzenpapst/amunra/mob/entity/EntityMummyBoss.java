@@ -142,7 +142,7 @@ public class EntityMummyBoss extends EntityMob
         final double d8 = 0.0D;
         final Vec3 vec3 = this.getLook(1.0F);
         entitylargefireball.posX = this.posX + vec3.xCoord * d8;
-        entitylargefireball.posY = this.posY + (double) (this.height / 2.0F) + 1.5D;
+        entitylargefireball.posY = this.posY + this.height / 2.0F + 1.5D;
         entitylargefireball.posZ = this.posZ + vec3.zCoord * d8;
         this.worldObj.spawnEntityInWorld(entitylargefireball);
     }

@@ -33,7 +33,6 @@ public class CraftingHandler {
         }
         if (event.crafting.getItem() instanceof ItemNanotool) {
             this.handleRaygunCrafting(event, ARItems.nanotool);
-            return;
         }
     }
 

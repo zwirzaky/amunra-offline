@@ -43,7 +43,7 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
         final char c0 = 61680;
         final int j = c0 % 65536;
         final int k = c0 / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j / 1.0F, (float) k / 1.0F);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j / 1.0F, k / 1.0F);
 
         GL11.glLineWidth(6.0F);
         GL11.glShadeModel(GL11.GL_FLAT);

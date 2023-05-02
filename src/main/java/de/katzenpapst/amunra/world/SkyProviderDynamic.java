@@ -343,7 +343,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         this.sunSize = 2 * this.worldProvider.getSolarSize();
         if (this.curBody instanceof Planet) {
             this.rType = RenderType.PLANET;
-            this.curBodyPlanet = (Planet) this.curBody;
+            this.curBodyPlanet = this.curBody;
             this.curSystem = ((Planet) this.curBody).getParentSolarSystem();
         } else if (this.curBody instanceof Moon) {
             this.rType = RenderType.MOON;
@@ -941,7 +941,7 @@ public class SkyProviderDynamic extends IRenderHandler {
             final double orbitFactor) {
 
         final double curYearLength = relOrbitTime * orbitFactor;
-        final long j = (long) (worldTime % (long) curYearLength);
+        final long j = worldTime % (long) curYearLength;
         final double orbitPos = (j + partialTicks) / curYearLength;// - 0.25F;
         return orbitPos * PI_DOUBLE + phaseShift;
     }
@@ -1057,7 +1057,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         double heightOffset = 0;
         double widthOffset = 0;
         final int gapSize = ringTexture.gapEnd - ringTexture.gapStart;
-        final double scalingFactor = 2.0D * scale / (double) gapSize;
+        final double scalingFactor = 2.0D * scale / gapSize;
         if (ringTexture.textureSize.x >= ringTexture.textureSize.y) {
             // failsafe
             if (ringTexture.textureSize.x <= gapSize) {
@@ -1070,9 +1070,9 @@ public class SkyProviderDynamic extends IRenderHandler {
             // y/x = h/w
             textureHeight = (double) ringTexture.textureSize.y / (double) ringTexture.textureSize.x * textureWidth;
 
-            final double startOffsetScaled = (double) ringTexture.gapStart * scalingFactor;
+            final double startOffsetScaled = ringTexture.gapStart * scalingFactor;
 
-            widthOffset = startOffsetScaled - (double) (textureWidth - 2.0D * scale) / 2.0D;
+            widthOffset = startOffsetScaled - (textureWidth - 2.0D * scale) / 2.0D;
 
         } else {
             // failsafe
@@ -1085,9 +1085,9 @@ public class SkyProviderDynamic extends IRenderHandler {
             // w = h * x/y
             textureWidth = (double) ringTexture.textureSize.x / (double) ringTexture.textureSize.y * textureHeight;
 
-            final double startOffsetScaled = (double) ringTexture.gapStart * scalingFactor;
+            final double startOffsetScaled = ringTexture.gapStart * scalingFactor;
 
-            heightOffset = startOffsetScaled - (double) (textureHeight - 2.0D * scale) / 2.0D;
+            heightOffset = startOffsetScaled - (textureHeight - 2.0D * scale) / 2.0D;
         }
 
         // float expectedOffset = (width-gapSize)/2;
@@ -1188,12 +1188,10 @@ public class SkyProviderDynamic extends IRenderHandler {
 
         boolean canBeBehindTheSun = false;
 
-        if (body instanceof Planet) {
-            // canBeBehindTheSun might be true
-            if (!body.equals(this.curBodyPlanet) && body.getRelativeDistanceFromCenter().unScaledDistance
-                    > this.curBodyPlanet.getRelativeDistanceFromCenter().unScaledDistance) {
-                canBeBehindTheSun = true;
-            }
+        // canBeBehindTheSun might be true
+        if ((body instanceof Planet) && (!body.equals(this.curBodyPlanet) && body.getRelativeDistanceFromCenter().unScaledDistance
+                > this.curBodyPlanet.getRelativeDistanceFromCenter().unScaledDistance)) {
+            canBeBehindTheSun = true;
         }
 
         if (!canBeBehindTheSun || (phaseAngle < PI_HALF || phaseAngle > PI_DOUBLE - PI_HALF)) {
