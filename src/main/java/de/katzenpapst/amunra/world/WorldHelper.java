@@ -23,15 +23,6 @@ public class WorldHelper {
 
     /**
      * Drop entity in world, copy over tag compound, too
-     * 
-     * @param world
-     * @param stack
-     * @param x
-     * @param y
-     * @param z
-     * @param motionX
-     * @param motionY
-     * @param motionZ
      */
     public static void dropItemInWorld(World world, ItemStack stack, double x, double y, double z, double motionX,
             double motionY, double motionZ) {
@@ -62,14 +53,6 @@ public class WorldHelper {
 
     /**
      * Attempts to ignite the block at the given position from the given direction
-     *
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @param fromX
-     * @param fromY
-     * @param fromZ
      */
     public static void setFireToBlock(World worldObj, int x, int y, int z, double fromX, double fromY, double fromZ) {
         double deltaX = x + 0.5 - fromX;
@@ -121,13 +104,6 @@ public class WorldHelper {
 
     /**
      * Returns true if the given block can be walked through. Will probably return false for fluids, too
-     *
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @param checkTop
-     * @return
      */
     public static boolean isSolid(World worldObj, int x, int y, int z, boolean checkTop) {
         Block b = worldObj.getBlock(x, y, z);
@@ -140,12 +116,6 @@ public class WorldHelper {
 
     /**
      * Returns true if the given block can be walked through
-     * 
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @return
      */
     public static boolean isSolid(World worldObj, int x, int y, int z) {
         return isSolid(worldObj, x, y, z, false);
@@ -153,12 +123,6 @@ public class WorldHelper {
 
     /**
      * Checks if given block is safe to place the player
-     * 
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @return
      */
     public static boolean isNonSolid(World worldObj, int x, int y, int z) {
         Block b = worldObj.getBlock(x, y, z);

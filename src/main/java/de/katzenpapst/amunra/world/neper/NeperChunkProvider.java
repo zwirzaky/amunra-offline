@@ -35,7 +35,6 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
-        // TODO Auto-generated method stub
         return new NeperBiomeDecorator();
     }
 
@@ -73,7 +72,6 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     public double getHeightModifier() {
-        // TODO Auto-generated method stub
         return 10;
     }
 
@@ -108,7 +106,6 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
-        // TODO fill in with caves and villages
         return new ArrayList<MapGenBaseMeta>();
     }
 

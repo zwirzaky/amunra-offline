@@ -89,16 +89,6 @@ public class TerrainGenerator {
 
     /**
      * "Light" constructor. The other 3 values are set to 4, 8, 8, since that's their values in ChunkProviderSpace
-     *
-     * @param rand
-     * @param stoneBlock
-     * @param airBlock
-     * @param heightMod
-     * @param smallFeatureMod
-     * @param mountainHeightMod
-     * @param valleyHeightMod
-     * @param seaLevel
-     * @param maxHeight
      */
     public TerrainGenerator(Random rand, BlockMetaPair stoneBlock, BlockMetaPair airBlock, float heightMod,
             float smallFeatureMod, double mountainHeightMod, double valleyHeightMod, double seaLevel, int maxHeight) {
@@ -120,16 +110,6 @@ public class TerrainGenerator {
     /**
      * Even "lighter" constructor. The other 4 values are set to 255, 4, 8, 8, since that's their values in
      * ChunkProviderSpace
-     *
-     * @param rand
-     * @param stoneBlock
-     * @param airBlock
-     * @param heightMod
-     * @param smallFeatureMod
-     * @param mountainHeightMod
-     * @param valleyHeightMod
-     * @param seaLevel
-     * @param maxHeight
      */
     public TerrainGenerator(Random rand, BlockMetaPair stoneBlock, BlockMetaPair airBlock, float heightMod,
             float smallFeatureMod, double mountainHeightMod, double valleyHeightMod, double seaLevel) {
@@ -149,13 +129,9 @@ public class TerrainGenerator {
     }
 
     /**
-     * Basically a clone of micdoodle8.mods.galacticraft.api.prefab.world.gen.ChunkProviderSpace.generateTerrain I just
+     * Basically a clone of {@link ChunkProviderSpace#generateTerrain(int, int, Block[], byte[])} I just
      * need it in a more configurable form
      *
-     * @param chunkX
-     * @param chunkZ
-     * @param idArray
-     * @param metaArray
      */
     public void generateTerrain(int chunkX, int chunkZ, Block[] idArray, byte[] metaArray) {
         noiseGenBase.setFrequency(0.015F);

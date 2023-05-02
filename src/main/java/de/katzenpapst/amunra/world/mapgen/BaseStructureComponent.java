@@ -259,10 +259,6 @@ abstract public class BaseStructureComponent {
      * For doors, in a sense, and furnaces
      *
      * 1 0-+-2 3
-     *
-     * @param unrotated
-     * @param coordMode
-     * @return
      */
     public static int rotateDoorlikeMetadata(int unrotated, int coordMode) {
         return rotateUniversalMetadata(unrotated, coordMode, 1, 3, 2, 0);
@@ -279,11 +275,6 @@ abstract public class BaseStructureComponent {
      * ground", and the interpretation is "torch FACING dir"
      *
      * 3 1-+-0 2
-     *
-     *
-     * @param unrotated
-     * @param coordMode
-     * @return
      */
     public static int rotateStairlikeMetadata(int unrotated, int coordMode) {
         return rotateUniversalMetadata(unrotated, coordMode, 3, 2, 0, 1);
@@ -291,14 +282,6 @@ abstract public class BaseStructureComponent {
 
     /**
      * Universal function for metadata rotation, based on what I found using trial&error with torches
-     *
-     * @param unrotated
-     * @param coordMode
-     * @param n
-     * @param s
-     * @param e
-     * @param w
-     * @return
      *
      *         n w-+-e s
      */
@@ -329,11 +312,6 @@ abstract public class BaseStructureComponent {
 
     /**
      * Rotates metadata for the 2 4-+-5 3 model, aka rotateStandardMetadata +2
-     *
-     * @param unrotated
-     * @param coordMode
-     * @param offset
-     * @return
      */
     public static int rotatePistonlikeMetadata(int unrotated, int coordMode) {
         return rotateStandardMetadata(unrotated - 2, coordMode) + 2;
@@ -342,10 +320,6 @@ abstract public class BaseStructureComponent {
     /**
      * Rotates the metadata which most things seem to use: 0 2-+-3 1 This should work for solar collectors and
      * trapdoors, but in a reversed non-intuitive way
-     *
-     * @param unrotated
-     * @param coordMode
-     * @return
      */
     public static int rotateStandardMetadata(int unrotated, int coordMode) {
         return rotateUniversalMetadata(unrotated, coordMode, 0, 1, 3, 2);
@@ -386,12 +360,6 @@ abstract public class BaseStructureComponent {
 
     /**
      * Get highest block in a column, chunk-relative coordinates
-     * 
-     * @param blocks
-     * @param metas
-     * @param relX
-     * @param relZ
-     * @return
      */
     public static int getHighestSolidBlock(Block[] blocks, byte[] metas, int relX, int relZ) {
 
@@ -411,14 +379,6 @@ abstract public class BaseStructureComponent {
 
     /**
      * Get specific block in a column, chunk-relative coordinates
-     * 
-     * @param blocks
-     * @param metas
-     * @param relX
-     * @param relZ
-     * @param block
-     * @param meta
-     * @return
      */
     public static int getHighestSpecificBlock(Block[] blocks, byte[] metas, int relX, int relZ, Block block,
             byte meta) {
@@ -435,15 +395,6 @@ abstract public class BaseStructureComponent {
 
     /**
      * Places a block into the arrays using coordinates relative to the current chunk
-     *
-     * @param blocks
-     * @param metas
-     * @param x
-     * @param y
-     * @param z
-     * @param id
-     * @param meta
-     * @return
      */
     public static boolean placeBlockRel(Block[] blocks, byte[] metas, int x, int y, int z, Block id, int meta) {
         if (x < 0 || x >= 16 || z < 0 || z >= 16) {
@@ -479,17 +430,6 @@ abstract public class BaseStructureComponent {
     /**
      * Places a block into the arrays using absolute coordinates+coordinates of the current chunk. If the coordinates
      * are not inside the given chunk, nothing happens. Block/meta version
-     *
-     * @param blocks
-     * @param metas
-     * @param x
-     * @param y
-     * @param z
-     * @param cx
-     * @param cz
-     * @param id
-     * @param meta
-     * @return
      */
     public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, int cx, int cz, Block id,
             int meta) {
@@ -499,16 +439,6 @@ abstract public class BaseStructureComponent {
     /**
      * Places a block into the arrays using absolute coordinates+coordinates of the current chunk. If the coordinates
      * are not inside the given chunk, nothing happens. BlockMetaPair version
-     *
-     * @param blocks
-     * @param metas
-     * @param x
-     * @param y
-     * @param z
-     * @param cx
-     * @param cz
-     * @param block
-     * @return
      */
     public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, int cx, int cz,
             BlockMetaPair block) {
@@ -518,14 +448,6 @@ abstract public class BaseStructureComponent {
     /**
      * Places a block into the arrays using absolute coordinates. Assumes the chunk the coordinates are in is to be
      * edited. BlockMetaPair version
-     *
-     * @param blocks
-     * @param metas
-     * @param x
-     * @param y
-     * @param z
-     * @param block
-     * @return
      */
     public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, BlockMetaPair block) {
         return placeBlockRel(blocks, metas, CoordHelper.abs2rel(x), y, CoordHelper.abs2rel(z), block);
@@ -534,15 +456,6 @@ abstract public class BaseStructureComponent {
     /**
      * Places a block into the arrays using absolute coordinates. Assumes the chunk the coordinates are in is to be
      * edited. Block/meta version
-     *
-     * @param blocks
-     * @param metas
-     * @param x
-     * @param y
-     * @param z
-     * @param id
-     * @param meta
-     * @return
      */
     public static boolean placeBlockAbs(Block[] blocks, byte[] metas, int x, int y, int z, Block id, int meta) {
         return placeBlockRel(blocks, metas, CoordHelper.abs2rel(x), y, CoordHelper.abs2rel(z), id, meta);
@@ -550,11 +463,6 @@ abstract public class BaseStructureComponent {
 
     /**
      * Converts coordinates to the index as required for the arrays
-     *
-     * @param x
-     * @param y
-     * @param z
-     * @return
      */
     public static int getIndex(int x, int y, int z) {
         return (x * 16 + z) * 256 + y;
@@ -562,11 +470,6 @@ abstract public class BaseStructureComponent {
 
     /**
      * lerp
-     *
-     * @param d1
-     * @param d2
-     * @param t
-     * @return
      */
     public double lerp(double d1, double d2, double t) {
         if (t < 0.0) {

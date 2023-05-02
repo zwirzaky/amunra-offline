@@ -50,11 +50,6 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
 
     /**
      * Because private...
-     * 
-     * @param d1
-     * @param d2
-     * @param t
-     * @return
      */
     protected double fuckYouLerp(double d1, double d2, double t) {
         if (t < 0.0) {

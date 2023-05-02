@@ -11,13 +11,6 @@ import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class NeperWorldProvider extends AmunraWorldProvider {
 
-    /**
-     * Determines the rate to spawn meteors in this planet. Lower means MORE meteors.
-     * <p/>
-     * Typical value would be about 7. Return 0 for no meteors.
-     *
-     * @return
-     */
     @Override
     public double getMeteorFrequency() {
         return 7;

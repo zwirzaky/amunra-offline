@@ -34,9 +34,6 @@ public class GridVillageStart extends BaseStructureStart {
 
     /**
      * Instantiates the thing, the coords in here should be the START point
-     * 
-     * @param chunkX
-     * @param chunkZ
      */
     public GridVillageStart(World world, int chunkX, int chunkZ, Random rand) {
 
@@ -52,12 +49,6 @@ public class GridVillageStart extends BaseStructureStart {
     /**
      * From what I understood, this is called first, then, after this is done, populateChunk is called and after that,
      * the chunk is done and won't be touched again
-     *
-     * @param chunkX
-     * @param chunkZ
-     * @param arrayOfIDs
-     * @param arrayOfMeta
-     * @return
      */
     @Override
     public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
@@ -337,13 +328,6 @@ public class GridVillageStart extends BaseStructureStart {
 
     /**
      * Places a block into the topmost solid block
-     *
-     * @param arrayOfIDs
-     * @param arrayOfMeta
-     * @param relX
-     * @param relZ
-     * @param block
-     * @param meta
      */
     protected void placeBlockOnGround(Block[] arrayOfIDs, byte[] arrayOfMeta, int relX, int relZ, Block block,
             int meta) {

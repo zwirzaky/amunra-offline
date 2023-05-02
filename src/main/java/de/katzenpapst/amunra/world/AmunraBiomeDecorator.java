@@ -24,8 +24,6 @@ public class AmunraBiomeDecorator extends BiomeDecoratorSpace {
 
     /**
      * Override and return a list of ore generators.
-     * 
-     * @return
      */
     protected List<WorldGenOre> getOreGenerators() {
         return new ArrayList<WorldGenOre>();

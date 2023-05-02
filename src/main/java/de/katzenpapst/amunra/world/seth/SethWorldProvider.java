@@ -59,9 +59,6 @@ public class SethWorldProvider extends AmunraWorldProvider {
         return new Vector3(0, 0, 0);
     }
 
-    /**
-     * Returns true if the given X,Z coordinate should show environmental fog.
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public boolean doesXZShowFog(int p_76568_1_, int p_76568_2_) {

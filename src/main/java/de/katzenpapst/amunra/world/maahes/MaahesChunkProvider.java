@@ -25,7 +25,6 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
-        // TODO Auto-generated method stub
         return new MaahesBiomeDecorator();
     }
 

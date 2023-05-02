@@ -41,7 +41,6 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
-        // TODO Auto-generated method stub
         return new AnubisBiomeDecorator();
     }
 

@@ -113,7 +113,6 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     @Override
     public double getValleyHeightModifier() {
-        // TODO Auto-generated method stub
         return 60;
     }
 

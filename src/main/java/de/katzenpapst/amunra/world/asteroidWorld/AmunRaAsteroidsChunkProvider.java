@@ -912,13 +912,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     @Override
     public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, int x, int y, int z) {
         return null;
-        /*
-         * if (par1EnumCreatureType == EnumCreatureType.monster) { final List monsters = new ArrayList();
-         * monsters.add(new SpawnListEntry(EntityEvolvedZombie.class, 3000, 1, 3)); monsters.add(new
-         * SpawnListEntry(EntityEvolvedSpider.class, 2000, 1, 2)); monsters.add(new
-         * SpawnListEntry(EntityEvolvedSkeleton.class, 1500, 1, 1)); monsters.add(new
-         * SpawnListEntry(EntityEvolvedCreeper.class, 2000, 1, 1)); return monsters; } else { return null; }
-         */
     }
 
     /**

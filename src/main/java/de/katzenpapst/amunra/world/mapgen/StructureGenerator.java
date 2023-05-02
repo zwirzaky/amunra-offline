@@ -48,9 +48,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * Clones an ArrayList of SubComponentData
      *
      * helper for generateSubComponents
-     *
-     * @param subCompData
-     * @return
      */
     private List<SubComponentData> cloneSubComponentList(List<SubComponentData> subCompData) {
         return subCompData.stream().map(SubComponentData::copy).collect(Collectors.toList());
@@ -60,9 +57,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * Calculates the sum of all SubComponentData's probability values
      *
      * helper for generateSubComponents
-     *
-     * @param subCompData
-     * @return
      */
     private float getProbabilityMaximum(List<SubComponentData> subCompData) {
         float sum = 0.0F;
@@ -76,9 +70,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * Just takes the "clazz" member of the entry and tries to create a new instance of it
      *
      * helper for generateSubComponents
-     *
-     * @param entry
-     * @return
      */
     private BaseStructureComponent generateComponent(SubComponentData entry) {
         try {
@@ -93,10 +84,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * Tries to find a sensible limit (aka total maximum of components) for the given list of SubComponentData
      *
      * helper for generateSubComponents
-     *
-     * @param subCompData
-     * @param rand
-     * @return
      */
     private int findComponentLimit(List<SubComponentData> subCompData, Random rand) {
         int minComponents = 0;
@@ -126,7 +113,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param subCompData ArrayList of SubComponentData
      * @param rand        the Random object to use
      * @param limit       the result will not have more entries than this. if 0, a random limit will be used
-     * @return
      */
     protected List<BaseStructureComponent> generateSubComponents(List<SubComponentData> subCompData, Random rand,
             int limit) {
@@ -195,10 +181,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
     /**
      * Generate one single component from the list. Min and max values from SubComponentData will be ignored
-     *
-     * @param subCompData
-     * @param rand
-     * @return
      */
     protected BaseStructureComponent generateOneComponent(List<SubComponentData> subCompData, Random rand) {
 
@@ -240,27 +222,16 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
     /**
      * Return some random long for a seed
-     * 
-     * @return
      */
     abstract protected long getSalt();
 
     /**
      * Return true if this structure (or any part of it) should be generated in this chunk
-     *
-     * @param chunkX
-     * @param chunkZ
-     * @param rand
-     * @return
      */
     abstract protected boolean canGenerateHere(int chunkX, int chunkZ, Random rand);
 
     /**
      * Create and maybe somehow init an instance of BaseStructure here
-     *
-     * @param xChunkCoord
-     * @param zChunkCoord
-     * @return
      */
     abstract protected BaseStructureStart createNewStructure(int xChunkCoord, int zChunkCoord);
 
@@ -313,11 +284,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     /**
      * Adds stuff like mobs or tileentities, which can't be added in the step where the block and meta arrays are being
      * filled
-     *
-     * @param chunkProvider
-     * @param world
-     * @param origXChunkCoord
-     * @param origZChunkCoord
      */
     public void populate(IChunkProvider chunkProvider, World world, int origXChunkCoord, int origZChunkCoord) {
         this.worldObj = world;
@@ -355,14 +321,6 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
     /**
      * Creates or gets an instance of BaseStructure, then makes it generate the current chunk
-     *
-     * @param world
-     * @param xChunkCoord
-     * @param zChunkCoord
-     * @param origXChunkCoord
-     * @param origZChunkCoord
-     * @param arrayOfIDs
-     * @param arrayOfMeta
      */
     protected void makeStructure(World world, int xChunkCoord, int zChunkCoord, int origXChunkCoord,
             int origZChunkCoord, Block[] arrayOfIDs, byte[] arrayOfMeta) {

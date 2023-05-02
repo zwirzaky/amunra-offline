@@ -10,10 +10,6 @@ public class TouchSolarPanel extends AbstractPopulator {
 
     /**
      * This is just here to make the solar panels generate their fakeblocks
-     * 
-     * @param x
-     * @param y
-     * @param z
      */
 
     public TouchSolarPanel(int x, int y, int z) {
