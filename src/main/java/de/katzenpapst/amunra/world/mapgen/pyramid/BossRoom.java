@@ -10,10 +10,6 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BossRoom extends PyramidRoom {
 
-    public BossRoom() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
     public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
 

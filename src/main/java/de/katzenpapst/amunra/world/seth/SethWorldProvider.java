@@ -13,10 +13,6 @@ import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class SethWorldProvider extends AmunraWorldProvider {
 
-    public SethWorldProvider() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
     public double getYCoordinateToTeleport() {
         return 800;
