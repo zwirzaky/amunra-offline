@@ -31,8 +31,8 @@ public class HorusChunkProvider extends AmunraChunkProvider {
     protected PyramidGenerator pyramid = new PyramidGenerator();
     private VolcanoGenerator volcanoGen;
 
-    public HorusChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public HorusChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
         pyramid.setFillMaterial(ARBlocks.blockBasaltBrick);
         pyramid.setFloorMaterial(ARBlocks.blockSmoothBasalt);
         pyramid.setWallMaterial(ARBlocks.blockObsidianBrick);

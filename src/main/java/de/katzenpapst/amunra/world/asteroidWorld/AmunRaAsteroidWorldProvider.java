@@ -84,12 +84,12 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public float getSunBrightness(float par1) {
         float factor = worldObj.getSunBrightnessBody(par1) + getAmunBrightnessFactor(par1);
         if (factor > 1.0F) {
             factor = 1.0F;
         }
         return factor;
+    public float getSunBrightness(float partialTicks) {
     }
 
     /**

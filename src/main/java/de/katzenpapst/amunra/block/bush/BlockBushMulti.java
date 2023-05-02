@@ -110,8 +110,8 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * cleared to be reused)
      */
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_,
-            int p_149668_4_) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y,
+            int z) {
         return null;
     }
 

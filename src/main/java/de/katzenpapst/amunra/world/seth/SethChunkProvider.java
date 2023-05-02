@@ -41,8 +41,8 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     protected CrystalFormation crystalGen;
 
-    public SethChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public SethChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
         rockBlock = new BlockMetaPair(Blocks.packed_ice, (byte) 0);
         grassBlock = new BlockMetaPair(Blocks.snow, (byte) 0);
         dirtBlock = new BlockMetaPair(Blocks.ice, (byte) 0);
@@ -190,7 +190,7 @@ public class SethChunkProvider extends AmunraChunkProvider {
         int curChunkMinX = CoordHelper.chunkToMinBlock(cX);
         int curChunkMinZ = CoordHelper.chunkToMinBlock(cZ);
 
-        for (int j1 = 0; j1 < numToGenerate; ++j1) {
+        for (int i = 0; i < numToGenerate; ++i) {
             int curX = curChunkMinX + this.rand.nextInt(16) + 8;
             int curY = 35;// this.rand.nextInt(120) + 4;
             int curZ = curChunkMinZ + this.rand.nextInt(16) + 8;

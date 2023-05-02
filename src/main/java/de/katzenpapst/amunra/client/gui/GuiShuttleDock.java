@@ -152,7 +152,7 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         final int xPos = (this.width - this.xSize) / 2;
         final int yPos = (this.height - this.ySize) / 2;
         this.mc.renderEngine.bindTexture(solarGuiTexture);

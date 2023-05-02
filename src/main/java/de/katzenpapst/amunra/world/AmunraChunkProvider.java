@@ -11,8 +11,8 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
     public static final int CHUNK_SIZE_Y = 256;
     public static final int CHUNK_SIZE_Z = 16;
 
-    public AmunraChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public AmunraChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
     }
 
     @Override

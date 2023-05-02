@@ -20,12 +20,12 @@ public class PodMeatBlock extends SubBlock {
     }
 
     @Override
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return Item.getItemFromBlock(ARBlocks.blockPodSapling.getBlock());
     }
 
     @Override
-    public int damageDropped(int p_149692_1_) {
+    public int damageDropped(int meta) {
         return ARBlocks.blockPodSapling.getMetadata();
     }
 
@@ -44,9 +44,9 @@ public class PodMeatBlock extends SubBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_,
-            int p_149646_5_) {
-        return super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, 1 - p_149646_5_);
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z,
+            int side) {
+        return super.shouldSideBeRendered(worldIn, x, y, z, 1 - side);
     }
 
     /**

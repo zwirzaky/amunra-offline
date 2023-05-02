@@ -90,13 +90,13 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
 
         Vector3 baseColor = getFogColor();
 
-        float f3 = baseColor.floatX();
-        float f4 = baseColor.floatY();
-        float f5 = baseColor.floatZ();
-        f3 *= dayFactor * 0.94F + 0.06F;
-        f4 *= dayFactor * 0.94F + 0.06F;
-        f5 *= dayFactor * 0.91F + 0.09F;
-        return Vec3.createVectorHelper(f3, f4, f5);
+        float r = baseColor.floatX();
+        float g = baseColor.floatY();
+        float b = baseColor.floatZ();
+        r *= dayFactor * 0.94F + 0.06F;
+        g *= dayFactor * 0.94F + 0.06F;
+        b *= dayFactor * 0.91F + 0.09F;
+        return Vec3.createVectorHelper(r, g, b);
     }
 
     @Override
@@ -171,9 +171,9 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public float getSunBrightness(float par1) {
+    public float getSunBrightness(float partialTicks) {
 
-        float factor = worldObj.getSunBrightnessBody(par1) + getAmunBrightnessFactor(par1);
+        float factor = worldObj.getSunBrightnessBody(partialTicks) + getAmunBrightnessFactor(partialTicks);
         if (factor > 1.0F) {
             factor = 1.0F;
         }
@@ -188,9 +188,9 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      * @return The current brightness factor
      */
     @Override
-    public float getSunBrightnessFactor(float par1) {
+    public float getSunBrightnessFactor(float partialTicks) {
         // I *think* that I could use this to make eclipses etc work
-        float factor = worldObj.getSunBrightnessFactor(par1) + getAmunBrightnessFactor(par1);
+        float factor = worldObj.getSunBrightnessFactor(partialTicks) + getAmunBrightnessFactor(partialTicks);
 
         if (factor > 1.0F) {
             factor = 1.0F;

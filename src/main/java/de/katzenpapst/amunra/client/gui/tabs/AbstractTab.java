@@ -73,7 +73,7 @@ abstract public class AbstractTab {
         RenderHelper.disableStandardItemLighting();
         // GL11.glDisable(GL11.GL_LIGHTING);
         // GL11.glDisable(GL11.GL_DEPTH_TEST);
-        // super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        // super.drawScreen(mouseX, mouseY, partialTicks);
 
         // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -143,11 +143,11 @@ abstract public class AbstractTab {
         }
     }
 
-    protected void mouseClickMove(int p_146273_1_, int p_146273_2_, int p_146273_3_, long p_146273_4_) {}
+    protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {}
 
-    protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_) {
-        if (this.selectedButton != null && p_146286_3_ == 0) {
-            this.selectedButton.mouseReleased(p_146286_1_, p_146286_2_);
+    protected void mouseMovedOrUp(int mouseX, int mouseY, int state) {
+        if (this.selectedButton != null && state == 0) {
+            this.selectedButton.mouseReleased(mouseX, mouseY);
             this.selectedButton = null;
         }
     }
@@ -160,10 +160,10 @@ abstract public class AbstractTab {
     /**
      * This function is what controls the hotbar shortcut check when you press a number key when hovering a stack.
      */
-    protected boolean checkHotbarKeys(int p_146983_1_) {
+    protected boolean checkHotbarKeys(int keyCode) {
         if (this.mc.thePlayer.inventory.getItemStack() == null && this.theSlot != null) {
             for (int j = 0; j < 9; ++j) {
-                if (p_146983_1_ == this.mc.gameSettings.keyBindsHotbar[j].getKeyCode()) {
+                if (keyCode == this.mc.gameSettings.keyBindsHotbar[j].getKeyCode()) {
                     this.handleMouseClick(this.theSlot, this.theSlot.slotNumber, j, 2);
                     return true;
                 }
@@ -173,10 +173,10 @@ abstract public class AbstractTab {
         return false;
     }
 
-    protected void handleMouseClick(Slot p_146984_1_, int p_146984_2_, int p_146984_3_, int p_146984_4_) {
+    protected void handleMouseClick(Slot slotIn, int slotId, int clickedButton, int clickType) {
         /*
-         * if (p_146984_1_ != null) { p_146984_2_ = p_146984_1_.slotNumber; }
-         * this.mc.playerController.windowClick(this.inventorySlots.windowId, p_146984_2_, p_146984_3_, p_146984_4_,
+         * if (slotIn != null) { slotId = slotIn.slotNumber; }
+         * this.mc.playerController.windowClick(this.inventorySlots.windowId, slotId, clickedButton, clickType,
          * this.mc.thePlayer);
          */
     }
@@ -196,12 +196,12 @@ abstract public class AbstractTab {
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_) {
-        if (p_73864_3_ == 0) {
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        if (mouseButton == 0) {
             for (int l = 0; l < this.buttonList.size(); ++l) {
                 GuiButton guibutton = (GuiButton) this.buttonList.get(l);
 
-                if (guibutton.mousePressed(this.mc, p_73864_1_, p_73864_2_)) {
+                if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
                     ActionPerformedEvent.Pre event = new ActionPerformedEvent.Pre(
                             (GuiScreen) this.parent,
                             guibutton,

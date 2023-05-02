@@ -135,7 +135,7 @@ public class GuiRocketEngine extends GuiContainerGC {
                 + GuiHelper.formatMetric(this.tileEngine.getThrust(), "N");
         this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 4210752);
         offsetY += 10;
-        // this.renderToolTip(p_146285_1_, p_146285_2_, p_146285_3_);
+        // this.renderToolTip(itemIn, x, y);
 
         tankInfo.tooltipStrings.clear();
         displayString = GCCoreUtil.translate("gui.message.mothership.fuel") + ": "

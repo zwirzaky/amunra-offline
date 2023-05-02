@@ -24,7 +24,7 @@ public class CommandMothershipForceArrive extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender p_71518_1_) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.getCommandName();
     }
 

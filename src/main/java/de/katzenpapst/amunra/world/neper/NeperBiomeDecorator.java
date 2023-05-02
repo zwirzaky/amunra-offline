@@ -38,12 +38,12 @@ public class NeperBiomeDecorator extends AmunraBiomeDecorator {
     @Override
     protected void decorate() {
         super.decorate();
-        for (int j = 0; j < this.grassPerChunk; ++j) {
-            int k = this.chunkX + this.mWorld.rand.nextInt(16) + 8;
-            int l = this.chunkZ + this.mWorld.rand.nextInt(16) + 8;
-            int i1 = mWorld.rand.nextInt(this.mWorld.getHeightValue(k, l) * 2);
+        for (int i = 0; i < this.grassPerChunk; ++i) {
+            int x = this.chunkX + this.mWorld.rand.nextInt(16) + 8;
+            int z = this.chunkZ + this.mWorld.rand.nextInt(16) + 8;
+            int y = mWorld.rand.nextInt(this.mWorld.getHeightValue(x, z) * 2);
 
-            grassGen.generate(this.mWorld, this.mWorld.rand, k, i1, l);
+            grassGen.generate(this.mWorld, this.mWorld.rand, x, y, z);
         }
     }
 

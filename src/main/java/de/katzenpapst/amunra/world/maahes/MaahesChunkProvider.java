@@ -19,8 +19,8 @@ import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 public class MaahesChunkProvider extends AmunraChunkProvider {
 
-    public MaahesChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public MaahesChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
     }
 
     @Override

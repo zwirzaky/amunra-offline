@@ -13,18 +13,17 @@ import de.katzenpapst.amunra.world.asteroidWorld.AmunRaAsteroidsChunkProvider;
 
 public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
 
-    public MehenChunkProvider(World par1World, long par2, boolean par4) {
-        super(par1World, par2, par4);
+    public MehenChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int i, int j, int k) {
-        if (par1EnumCreatureType == EnumCreatureType.monster) {
             final List monsters = new ArrayList();
 
             monsters.add(new SpawnListEntry(EntitySentry.class, 3000, 1, 3));
             return monsters;
+    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, int x, int y, int z) {
+        if (creatureType == EnumCreatureType.monster) {
         } else {
             return null;
         }

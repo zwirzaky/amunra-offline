@@ -36,25 +36,25 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public ItemStack getStackInSlot(int p_70301_1_) {
+    public ItemStack getStackInSlot(int slotIn) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_) {
+    public ItemStack decrStackSize(int index, int count) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_) {
+    public ItemStack getStackInSlotOnClosing(int index) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
+    public void setInventorySlotContents(int index, ItemStack stack) {
         // TODO Auto-generated method stub
 
     }
@@ -95,7 +95,7 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
         return false;
     }
 

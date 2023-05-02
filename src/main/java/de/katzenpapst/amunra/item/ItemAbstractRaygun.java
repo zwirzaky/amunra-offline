@@ -68,7 +68,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
      * returns the action that specifies what animation to play when the items is being used
      */
     @Override
-    public EnumAction getItemUseAction(ItemStack p_77661_1_) {
+    public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.bow;
     }
 

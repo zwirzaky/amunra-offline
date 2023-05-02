@@ -317,7 +317,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(guiTexture);
         final int xOffset = (this.width - this.xSize) / 2;

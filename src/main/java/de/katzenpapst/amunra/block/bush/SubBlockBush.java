@@ -42,20 +42,20 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
     }
 
     @Override
-    public boolean func_149851_a(World p_149851_1_, int p_149851_2_, int p_149851_3_, int p_149851_4_,
+    public boolean func_149851_a(World worldIn, int x, int y, int z,
             boolean isWorldRemote) {
         return false;
     }
 
     @Override
-    public boolean func_149852_a(World p_149852_1_, Random p_149852_2_, int p_149852_3_, int p_149852_4_,
-            int p_149852_5_) {
+    public boolean func_149852_a(World worldIn, Random random, int x, int y,
+            int z) {
         return false;
     }
 
     @Override
-    public void func_149853_b(World p_149853_1_, Random p_149853_2_, int p_149853_3_, int p_149853_4_,
-            int p_149853_5_) {
+    public void func_149853_b(World worldIn, Random random, int x, int y,
+            int z) {
 
     }
 

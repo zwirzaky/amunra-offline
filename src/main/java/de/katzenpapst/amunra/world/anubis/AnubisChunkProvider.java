@@ -30,8 +30,8 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
 
     // Pyramid testPyramid = new Pyramid();
 
-    public AnubisChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public AnubisChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
 
         gVillage.addComponentType(BoxHouseComponent.class, 0.9F, 2, 4);
         gVillage.addComponentType(SolarField.class, 0.7F, 2, 6);
@@ -117,10 +117,10 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void onChunkProvide(int arg0, int arg1, Block[] arg2, byte[] arg3) {}
+    public void onChunkProvide(int cX, int cZ, Block[] blocks, byte[] metadata) {}
 
     @Override
-    public void onPopulate(IChunkProvider arg0, int arg1, int arg2) {}
+    public void onPopulate(IChunkProvider provider, int cX, int cZ) {}
 
     @Override
     public boolean chunkExists(int x, int y) {

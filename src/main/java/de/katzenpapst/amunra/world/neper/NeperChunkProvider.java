@@ -29,8 +29,8 @@ public class NeperChunkProvider extends AmunraChunkProvider {
     protected final BlockMetaPair grassBlock = new BlockMetaPair(Blocks.grass, (byte) 0);
     protected final BlockMetaPair stoneBlock = new BlockMetaPair(Blocks.stone, (byte) 0);
 
-    public NeperChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public NeperChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
     }
 
     @Override
@@ -113,10 +113,10 @@ public class NeperChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void onChunkProvide(int arg0, int arg1, Block[] arg2, byte[] arg3) {}
+    public void onChunkProvide(int cX, int cZ, Block[] blocks, byte[] metadata) {}
 
     @Override
-    public void onPopulate(IChunkProvider arg0, int arg1, int arg2) {}
+    public void onPopulate(IChunkProvider provider, int cX, int cZ) {}
 
     @Override
     public boolean chunkExists(int x, int y) {

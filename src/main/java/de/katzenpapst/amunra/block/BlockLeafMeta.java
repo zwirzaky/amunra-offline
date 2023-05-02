@@ -50,7 +50,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public int getRenderColor(int p_149741_1_) {
+    public int getRenderColor(int meta) {
         return 16777215;
     }
 
@@ -60,7 +60,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_) {
+    public int colorMultiplier(IBlockAccess worldIn, int x, int y, int z) {
         return 16777215;
     }
     // net.minecraft.client.renderer.RenderGlobal.loadRenderers()

@@ -130,10 +130,10 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     private int largeAsteroidsLastChunkX;
     private int largeAsteroidsLastChunkZ;
 
-    public AmunRaAsteroidsChunkProvider(World par1World, long par2, boolean par4) {
-        super(par1World, par2, par4);
-        this.worldObj = par1World;
-        this.rand = new Random(par2);
+    public AmunRaAsteroidsChunkProvider(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
+        this.worldObj = world;
+        this.rand = new Random(seed);
 
         extraOreGen = new HashMap<BlockMetaPair, Integer>();
         asteroidStoneBlocks = new BlockMetaPair[] { new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 0),
@@ -909,9 +909,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         return "RandomLevelSource";
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int i, int j, int k) {
+    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, int x, int y, int z) {
         return null;
         /*
          * if (par1EnumCreatureType == EnumCreatureType.monster) { final List monsters = new ArrayList();
