@@ -594,7 +594,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                     // EntityPlayer otherPlayer = world.getPlayerEntityByName(name);
                     if (playerId != null) {
-                        if (playerId.equals(player)) {
+                        if (playerId.isSameUser(player)) {
                             AmunRa.packetPipeline.sendTo(
                                     new PacketSimpleAR(
                                             PacketSimpleAR.EnumSimplePacket.C_ADD_MOTHERSHIP_PLAYER_FAILED,

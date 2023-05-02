@@ -51,20 +51,13 @@ public class PlayerID {
         return ((PlayerID) other).userUUID.equals(userUUID);
     }
 
-    public boolean equals(EntityPlayer other) {
-        if (other == null) {
-            return false;
-        }
-        return new PlayerID(other).userUUID.equals(userUUID);
-    }
-
     @Override
     public int hashCode() {
         return userUUID.hashCode();
     }
 
     public boolean isSameUser(EntityPlayer player) {
-        return this.userUUID.equals(player.getUniqueID());
+        return player == null ? false : this.userUUID.equals(player.getUniqueID());
     }
 
 }
