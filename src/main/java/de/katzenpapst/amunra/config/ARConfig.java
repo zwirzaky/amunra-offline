@@ -269,8 +269,8 @@ public class ARConfig {
                 continue;
             }
             final String body = parts1[0];
-            final int gapStart = Integer.valueOf(parts1[1]);
-            final int gapEnd = Integer.valueOf(parts1[2]);
+            final int gapStart = Integer.parseInt(parts1[1]);
+            final int gapEnd = Integer.parseInt(parts1[2]);
             final String assetPrefix = parts1[3];
             final String textureName = parts1[4];
 

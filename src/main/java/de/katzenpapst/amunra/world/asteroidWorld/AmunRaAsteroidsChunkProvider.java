@@ -126,7 +126,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     private static final int GLOWSTONE_CHANCE = 20;
 
     private final ArrayList<AsteroidData> largeAsteroids = new ArrayList<>();
-    private int largeCount = 0;
     private static HashSet<BlockVec3> chunksDone = new HashSet<>();
     private int largeAsteroidsLastChunkX;
     private int largeAsteroidsLastChunkZ;
@@ -218,7 +217,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
 
     public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray, final boolean flagDataOnly) {
         this.largeAsteroids.clear();
-        this.largeCount = 0;
+        int largeCount = 0;
         final Random random = new Random();
         final int asteroidChance = ASTEROID_CHANCE;
         final int rangeY = MAX_ASTEROID_Y - MIN_ASTEROID_Y;
@@ -254,7 +253,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                                     idArray,
                                     metaArray,
                                     flagDataOnly);
-                            this.largeCount++;
+                            largeCount++;
                         }
                     }
                 }
@@ -972,7 +971,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         return false;
     }
 
-    private class AsteroidData {
+    private static class AsteroidData {
 
         public boolean isHollow;
         public float[] sizeYArray;
