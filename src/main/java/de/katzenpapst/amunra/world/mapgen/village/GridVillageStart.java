@@ -51,7 +51,8 @@ public class GridVillageStart extends BaseStructureStart {
      * the chunk is done and won't be touched again
      */
     @Override
-    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
         this.drawGrid(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
@@ -155,8 +156,8 @@ public class GridVillageStart extends BaseStructureStart {
         this.fillMaterial = fillMaterial;
     }
 
-    protected void drawStuffInGrid(final int chunkX, final int chunkZ, final int gridX, final int gridZ, final Block[] arrayOfIDs,
-            final byte[] arrayOfMeta) {
+    protected void drawStuffInGrid(final int chunkX, final int chunkZ, final int gridX, final int gridZ,
+            final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         // now how do I calculate the grid's position?
         // I think it's
         final int effectiveGridSize = this.gridSize + 3;
@@ -329,8 +330,8 @@ public class GridVillageStart extends BaseStructureStart {
     /**
      * Places a block into the topmost solid block
      */
-    protected void placeBlockOnGround(final Block[] arrayOfIDs, final byte[] arrayOfMeta, final int relX, final int relZ, final Block block,
-            final int meta) {
+    protected void placeBlockOnGround(final Block[] arrayOfIDs, final byte[] arrayOfMeta, final int relX,
+            final int relZ, final Block block, final int meta) {
         if (relX < 0 || relX >= 16 || relZ < 0 || relZ >= 16) {
             return;
         }
@@ -338,13 +339,15 @@ public class GridVillageStart extends BaseStructureStart {
         BaseStructureComponent.placeBlockRel(arrayOfIDs, arrayOfMeta, relX, y - 1, relZ, block, meta);
     }
 
-    protected void drawGridComponents(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    protected void drawGridComponents(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         // int effectiveGridSize = this.gridSize+3;
 
-        final StructureBoundingBox chunkBox = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox(chunkX*16,
-                                                                               // chunkZ*16, chunkX*16+15,
-                                                                               // chunkZ*16+15);
+        final StructureBoundingBox chunkBox = CoordHelper.getChunkBB(chunkX, chunkZ);// new
+                                                                                     // StructureBoundingBox(chunkX*16,
+        // chunkZ*16, chunkX*16+15,
+        // chunkZ*16+15);
 
         for (int gridX = 0; gridX < this.gridSideLength; gridX++) {
             for (int gridZ = 0; gridZ < this.gridSideLength; gridZ++) {

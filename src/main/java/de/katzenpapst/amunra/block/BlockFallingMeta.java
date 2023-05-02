@@ -28,7 +28,8 @@ public class BlockFallingMeta extends BlockBasicMeta {
      * their own) Args: x, y, z, neighbor Block
      */
     @Override
-    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block otherBlock) {
+    public void onNeighborBlockChange(final World world, final int x, final int y, final int z,
+            final Block otherBlock) {
         world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
     }
 

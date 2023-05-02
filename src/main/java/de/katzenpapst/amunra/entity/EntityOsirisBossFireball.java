@@ -39,8 +39,8 @@ public class EntityOsirisBossFireball extends EntityFireball {
         }
     }
 
-    public EntityOsirisBossFireball(final World world, final double x, final double y, final double z, final double accelX, final double accelY,
-            final double accelZ) {
+    public EntityOsirisBossFireball(final World world, final double x, final double y, final double z,
+            final double accelX, final double accelY, final double accelZ) {
         super(world);
         this.setSize(1.0F, 1.0F);
         this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
@@ -51,7 +51,8 @@ public class EntityOsirisBossFireball extends EntityFireball {
         this.accelerationZ = accelZ / d6 * 0.1D;
     }
 
-    public EntityOsirisBossFireball(final World world, final EntityLivingBase target, double accelX, double accelY, double accelZ) {
+    public EntityOsirisBossFireball(final World world, final EntityLivingBase target, double accelX, double accelY,
+            double accelZ) {
         super(world);
         this.shootingEntity = target;
         this.setSize(1.0F, 1.0F);

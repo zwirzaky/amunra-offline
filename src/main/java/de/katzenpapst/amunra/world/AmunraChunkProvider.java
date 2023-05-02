@@ -25,8 +25,8 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
      * I failed fixing this. I might do this as mapgen instead
      */
     @Override
-    public void makeCrater(final int craterX, final int craterZ, final int chunkX, final int chunkZ, final int size, final Block[] chunkArray,
-            final byte[] metaArray) {
+    public void makeCrater(final int craterX, final int craterZ, final int chunkX, final int chunkZ, final int size,
+            final Block[] chunkArray, final byte[] metaArray) {
         /*
          * final double centerFalloff = 0.01; final double borderFalloff = 0.02; final double centerHeightFactor = 0.5;
          * final double borderHeightFactor = 1; final double craterHeight = 9; final double borderStartLimit = 0.75;

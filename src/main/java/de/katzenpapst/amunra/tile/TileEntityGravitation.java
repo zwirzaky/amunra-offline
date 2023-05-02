@@ -71,8 +71,9 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     protected AxisAlignedBB getActualGravityBox() {
-        AxisAlignedBB box = this.getRotatedAABB();// AxisAlignedBB.getBoundingBox(center.x - range, center.y - 0.5, center.z
-                                             return AxisAlignedBB.getBoundingBox(
+        AxisAlignedBB box = this.getRotatedAABB();// AxisAlignedBB.getBoundingBox(center.x - range, center.y - 0.5,
+                                                  // center.z
+        return AxisAlignedBB.getBoundingBox(
                 this.xCoord + box.minX,
                 this.yCoord + box.minY,
                 this.zCoord + box.minZ,
@@ -241,10 +242,10 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
             }
             this.setGravityForce(grav);
         } else // backwards compatibility
-        if (nbt.hasKey("gravity")) {
-            final Vector3 grav = new Vector3(nbt.getCompoundTag("gravity"));
-            this.setGravityForce(grav.y);
-        }
+            if (nbt.hasKey("gravity")) {
+                final Vector3 grav = new Vector3(nbt.getCompoundTag("gravity"));
+                this.setGravityForce(grav.y);
+            }
         if (nbt.hasKey("aabb")) {
             final AxisAlignedBB box = NbtHelper.readAABB(nbt.getCompoundTag("aabb"));
             this.setGravityBox(box);

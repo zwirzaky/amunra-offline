@@ -11,7 +11,8 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 public class BossRoom extends PyramidRoom {
 
     @Override
-    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
         /*
@@ -41,8 +42,8 @@ public class BossRoom extends PyramidRoom {
         return true;
     }
 
-    protected void placeBossSpawner(final int x, final int y, final int z, final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta,
-            final BlockMetaPair spawner) {
+    protected void placeBossSpawner(final int x, final int y, final int z, final int chunkX, final int chunkZ,
+            final Block[] arrayOfIDs, final byte[] arrayOfMeta, final BlockMetaPair spawner) {
         if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, spawner)) {
             /*
              * List<Entity> entitiesWithin = this.worldObj.getEntitiesWithinAABB( EntityPlayer.class,

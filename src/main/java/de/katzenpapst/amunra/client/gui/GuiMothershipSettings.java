@@ -48,7 +48,8 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float ticksProbably, final int somethingX, final int somethingY) {
+    protected void drawGuiContainerBackgroundLayer(final float ticksProbably, final int somethingX,
+            final int somethingY) {
         GL11.glPushMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(guiTexture);
@@ -85,7 +86,8 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
         super.initGui();
 
         this.addTab(new TabMothershipCustom(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
-        this.addTab(new TabMothershipLanding(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
+        this.addTab(
+                new TabMothershipLanding(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
         this.addTab(new TabMothershipUsage(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
 
     }

@@ -109,7 +109,8 @@ public class ConnectionPacketAR {
         this.onFMLProxyPacketData(event.manager, pkt, ((NetHandlerPlayServer) event.handler).playerEntity);
     }
 
-    public void onFMLProxyPacketData(final NetworkManager manager, final FMLProxyPacket packet, final EntityPlayer player) {
+    public void onFMLProxyPacketData(final NetworkManager manager, final FMLProxyPacket packet,
+            final EntityPlayer player) {
         try {
             if (packet == null || packet.payload() == null)
                 throw new RuntimeException("Empty packet sent to Amunra channel");

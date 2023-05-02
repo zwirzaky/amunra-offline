@@ -84,7 +84,12 @@ public class Volcano extends BaseStructureStart {
 
         final int fallbackGround = this.getWorldGroundLevel();
         if (this.groundLevel == -1) {
-            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            this.groundLevel = getAverageGroundLevel(
+                    blocks,
+                    metas,
+                    this.getStructureBoundingBox(),
+                    chunkBB,
+                    fallbackGround);
             if (this.groundLevel == -1) {
                 this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }

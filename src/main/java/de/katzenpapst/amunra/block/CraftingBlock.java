@@ -54,8 +54,8 @@ public class CraftingBlock extends SubBlock {
      * @param hitX  , hitY, hitZ The position the player clicked on relative to the block.
      */
     @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
 
         // onBlockActivated
 

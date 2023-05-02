@@ -28,7 +28,8 @@ public class TabButton extends GuiButton {
 
     protected String extraInfo = null;
 
-    public TabButton(final int id, final int xPos, final int yPos, final String displayString, final ResourceLocation texture) {
+    public TabButton(final int id, final int xPos, final int yPos, final String displayString,
+            final ResourceLocation texture) {
         super(id, xPos, yPos, displayString);
 
         this.width = 30;
@@ -36,7 +37,8 @@ public class TabButton extends GuiButton {
         this.texture = texture;
     }
 
-    public TabButton(final int id, final int xPos, final int yPos, final String displayString, final String infoString, final ResourceLocation texture) {
+    public TabButton(final int id, final int xPos, final int yPos, final String displayString, final String infoString,
+            final ResourceLocation texture) {
         this(id, xPos, yPos, displayString, texture);
 
         this.extraInfo = infoString;

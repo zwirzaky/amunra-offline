@@ -43,8 +43,8 @@ abstract public class AbstractPermissionTab extends AbstractTab
     protected String error = "";
     protected float errorTime = 0;
 
-    public AbstractPermissionTab(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent, final Minecraft mc,
-            final int width, final int height, final int xSize, final int ySize) {
+    public AbstractPermissionTab(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent,
+            final Minecraft mc, final int width, final int height, final int xSize, final int ySize) {
         super(parent, mc, width, height, xSize, ySize);
         this.tile = tile;
 

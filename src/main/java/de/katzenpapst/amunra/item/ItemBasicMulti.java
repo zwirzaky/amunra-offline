@@ -162,7 +162,8 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4) {
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List,
+            final boolean par4) {
         final SubItem item = this.getSubItem(par1ItemStack.getItemDamage());
 
         item.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
@@ -175,7 +176,8 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     }
 
     @Override
-    public ItemStack onEaten(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer) {
+    public ItemStack onEaten(final ItemStack par1ItemStack, final World par2World,
+            final EntityPlayer par3EntityPlayer) {
         return this.getSubItem(par1ItemStack.getItemDamage()).onEaten(par1ItemStack, par2World, par3EntityPlayer);
     }
 
@@ -190,8 +192,10 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     }
 
     @Override
-    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer) {
-        return this.getSubItem(par1ItemStack.getItemDamage()).onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World,
+            final EntityPlayer par3EntityPlayer) {
+        return this.getSubItem(par1ItemStack.getItemDamage())
+                .onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
     }
 
     @Override

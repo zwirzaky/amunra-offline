@@ -197,7 +197,8 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
     /**
      * True if the ghast has an unobstructed line of travel to the waypoint.
      */
-    protected boolean isCourseTraversable(final double p_70790_1_, final double p_70790_3_, final double p_70790_5_, final double distance) {
+    protected boolean isCourseTraversable(final double p_70790_1_, final double p_70790_3_, final double p_70790_5_,
+            final double distance) {
         final double relDeltaX = (this.waypointX - this.posX) / distance;
         final double relDeltaY = (this.waypointY - this.posY) / distance;
         final double relDeltaZ = (this.waypointZ - this.posZ) / distance;

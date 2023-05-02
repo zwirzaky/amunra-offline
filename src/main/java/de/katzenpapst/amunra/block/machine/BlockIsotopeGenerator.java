@@ -27,8 +27,8 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
     protected final String sideTexture;
     public final float energyGeneration;
 
-    public BlockIsotopeGenerator(final String name, final String frontTexture, final String outputTexture, final String sideTexture,
-            final float energyGeneration) {
+    public BlockIsotopeGenerator(final String name, final String frontTexture, final String outputTexture,
+            final String sideTexture, final float energyGeneration) {
         super(name, frontTexture);
 
         this.outputTexture = outputTexture;
@@ -81,8 +81,8 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_ATOMBATTERY, world, x, y, z);
         return true;
         // return false;

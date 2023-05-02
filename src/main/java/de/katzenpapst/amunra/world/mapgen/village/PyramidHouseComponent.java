@@ -14,12 +14,18 @@ public class PyramidHouseComponent extends GridVillageComponent {
     public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] blocks, final byte[] metas) {
 
         // now, how to get the height?
-        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX << 4),
-                                                                              // (chunkX<< 4), (chunkX+1 << 4)-1,
-                                                                              // (chunkX+1 << 4)-1);
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX
+                                                                                    // << 4),
+        // (chunkX<< 4), (chunkX+1 << 4)-1,
+        // (chunkX+1 << 4)-1);
         final int fallbackGround = this.parent.getWorldGroundLevel();
         if (this.groundLevel == -1) {
-            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            this.groundLevel = getAverageGroundLevel(
+                    blocks,
+                    metas,
+                    this.getStructureBoundingBox(),
+                    chunkBB,
+                    fallbackGround);
             if (this.groundLevel == -1) {
                 this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }

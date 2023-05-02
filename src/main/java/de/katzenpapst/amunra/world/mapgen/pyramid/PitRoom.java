@@ -10,7 +10,8 @@ public class PitRoom extends PyramidRoom {
     protected int pitSize = 7;
 
     @Override
-    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 

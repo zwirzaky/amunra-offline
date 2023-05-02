@@ -17,7 +17,8 @@ public class TileEntityMothershipController extends TileEntityAdvanced {
 
     public SubBlockMachine getSubBlock() {
         if (this.subBlock == null) {
-            this.subBlock = (SubBlockMachine) ((BlockMachineMeta) this.getBlockType()).getSubBlock(this.getBlockMetadata());
+            this.subBlock = (SubBlockMachine) ((BlockMachineMeta) this.getBlockType())
+                    .getSubBlock(this.getBlockMetadata());
         }
         return this.subBlock;
     }

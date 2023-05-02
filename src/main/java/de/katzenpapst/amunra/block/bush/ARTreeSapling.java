@@ -34,8 +34,8 @@ public class ARTreeSapling extends AbstractSapling {
                         && metaToCheck == ARBlocks.blockVacuumGrass.getMetadata();
     }
 
-    protected boolean canGenerateHere(final World world, final Random rand, final int x, final int y, final int z, final int stemHeight,
-            final int halfCanopyWidth, final int canopyHeight) {
+    protected boolean canGenerateHere(final World world, final Random rand, final int x, final int y, final int z,
+            final int stemHeight, final int halfCanopyWidth, final int canopyHeight) {
         // check stem first
         for (int curY = y; curY <= y + stemHeight; ++curY) {
             if (!this.canReplaceBlock(world, x, curY, z)) {
@@ -68,7 +68,8 @@ public class ARTreeSapling extends AbstractSapling {
      * @return
      */
     @Override
-    public boolean generate(final World world, final Random rand, final int x, final int y, final int z, final boolean notify) {
+    public boolean generate(final World world, final Random rand, final int x, final int y, final int z,
+            final boolean notify) {
         final int curTreeHeight = rand.nextInt(3) + this.minStemHeight + this.canopyHeight;
 
         final int halfWidth = (int) Math.ceil((this.canopyWidth - 1) / 2);
@@ -88,9 +89,9 @@ public class ARTreeSapling extends AbstractSapling {
             final int meta2 = world.getBlockMetadata(x, y - 1, z);
 
             final boolean isSoil = this.canPlaceOn(new BlockMetaPair(block2, (byte) meta2), 0);// block2.canSustainPlant(world,
-                                                                                         // x, y - 1, z,
-                                                                                         // ForgeDirection.UP,
-                                                                                         // (IPlantable)this);
+            // x, y - 1, z,
+            // ForgeDirection.UP,
+            // (IPlantable)this);
             if (isSoil && y < 256 - curTreeHeight - 1) {
                 block2.onPlantGrow(world, x, y - 1, z, x, y, z);
 
@@ -165,7 +166,8 @@ public class ARTreeSapling extends AbstractSapling {
         return false;
     }
 
-    protected double getEllipsoidFactor(final float x, final float y, final float z, final float widthZX, final float height) {
+    protected double getEllipsoidFactor(final float x, final float y, final float z, final float widthZX,
+            final float height) {
         return Math.pow(x, 2) / (widthZX * widthZX) + Math.pow(y, 2) / (height * height)
                 + Math.pow(z, 2) / (widthZX * widthZX);
     }

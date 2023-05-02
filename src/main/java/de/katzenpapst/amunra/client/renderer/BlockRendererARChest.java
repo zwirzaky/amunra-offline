@@ -20,15 +20,16 @@ public class BlockRendererARChest implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata, final int modelId, final RenderBlocks renderer) {
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelId,
+            final RenderBlocks renderer) {
         // TODO Auto-generated method stub
         this.renderChest(block, metadata, modelId);
 
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId,
-            final RenderBlocks renderer) {
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block,
+            final int modelId, final RenderBlocks renderer) {
         // this happens in the tileentity
 
         return false;

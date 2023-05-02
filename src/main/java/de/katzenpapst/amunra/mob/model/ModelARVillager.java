@@ -111,8 +111,8 @@ public class ModelARVillager extends ModelVillager {
      * "far" arms and legs can swing at most.
      */
     @Override
-    public void setRotationAngles(final float limbSwingTime, final float limbSwingAmount, final float totalTimeMaybe, final float rotationY,
-            final float rotationX, final float someConstant, final Entity theEntity) {
+    public void setRotationAngles(final float limbSwingTime, final float limbSwingAmount, final float totalTimeMaybe,
+            final float rotationY, final float rotationX, final float someConstant, final Entity theEntity) {
         this.villagerHead.rotateAngleY = rotationY / (180F / (float) Math.PI);
         this.villagerHead.rotateAngleX = rotationX / (180F / (float) Math.PI);
         this.villagerArms.rotationPointY = 3.0F;
@@ -141,8 +141,8 @@ public class ModelARVillager extends ModelVillager {
     }
 
     @Override
-    public void render(final Entity curEntity, final float limbSwingTime, final float limbSwingAmplitude, final float totalTimeMaybe,
-            final float rotationY, final float rotationX, final float someConstant) {
+    public void render(final Entity curEntity, final float limbSwingTime, final float limbSwingAmplitude,
+            final float totalTimeMaybe, final float rotationY, final float rotationX, final float someConstant) {
         this.setRotationAngles(
                 limbSwingTime,
                 limbSwingAmplitude,

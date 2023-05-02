@@ -23,8 +23,8 @@ public class BlockHydroponics extends SubBlockMachine {
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_HYDROPONICS, world, x, y, z);
         return true;
         // return false;

@@ -38,13 +38,14 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
         this.init(name, texture, tool, harvestLevel, 1.5F, 10.0F);
     }
 
-    public SubBlock(final String name, final String texture, final String tool, final int harvestLevel, final float hardness, final float resistance) {
+    public SubBlock(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(Material.rock);
         this.init(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
-    protected void init(final String name, final String texture, final String harvestTool, final int havestLevel, final float hardness,
-            final float resistance) {
+    protected void init(final String name, final String texture, final String harvestTool, final int havestLevel,
+            final float hardness, final float resistance) {
         this.blockNameFU = name;
         this.setBlockName(name);
         this.setBlockTextureName(texture);
@@ -188,7 +189,8 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
     }
 
     @Override
-    public void breakBlock(final World world, final int x0, final int y0, final int z0, final Block var5, final int var6) {
+    public void breakBlock(final World world, final int x0, final int y0, final int z0, final Block var5,
+            final int var6) {
         // NOT calling super here, the metablock is doing that part
     }
 }

@@ -33,7 +33,8 @@ public class StringSelectBox extends GuiButton {
 
     public SmallFontRenderer font;
 
-    public StringSelectBox(final ISelectBoxCallback parent, final int id, final int xPos, final int yPos, final int width, final int height) {
+    public StringSelectBox(final ISelectBoxCallback parent, final int id, final int xPos, final int yPos,
+            final int width, final int height) {
         super(id, xPos, yPos, width, height, "");
 
         this.parent = parent;

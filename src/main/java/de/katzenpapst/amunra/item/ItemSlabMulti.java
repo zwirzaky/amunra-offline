@@ -35,7 +35,8 @@ public class ItemSlabMulti extends ItemBlockMulti {
         return world.setBlock(x, y, z, this.doubleSlab, meta, 3);
     }
 
-    protected void combine(final World world, final ItemStack stack, final int x, final int y, final int z, final int meta) {
+    protected void combine(final World world, final ItemStack stack, final int x, final int y, final int z,
+            final int meta) {
         if (world.checkNoEntityCollision(this.doubleSlab.getCollisionBoundingBoxFromPool(world, x, y, z))
                 && this.placeDoubleSlab(world, x, y, z, meta)) {
             world.playSoundEffect(
@@ -54,8 +55,8 @@ public class ItemSlabMulti extends ItemBlockMulti {
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
     @Override
-    public boolean onItemUse(final ItemStack stack, final EntityPlayer player, final World world, final int x, final int y, final int z, final int side,
-            final float hitX, final float hitY, final float hitZ) {
+    public boolean onItemUse(final ItemStack stack, final EntityPlayer player, final World world, final int x,
+            final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ) {
         if (this.isDoubleSlab) {
             return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
         }
@@ -84,7 +85,8 @@ public class ItemSlabMulti extends ItemBlockMulti {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean func_150936_a(final World world, int x, int y, int z, final int side, final EntityPlayer player, final ItemStack stack) {
+    public boolean func_150936_a(final World world, int x, int y, int z, final int side, final EntityPlayer player,
+            final ItemStack stack) {
         final int xNew = x;
         final int yNew = y;
         final int zNew = z;
@@ -125,8 +127,8 @@ public class ItemSlabMulti extends ItemBlockMulti {
                 : super.func_150936_a(world, xNew, yNew, zNew, side, player, stack);
     }
 
-    private boolean tryCombiningWithSide(final ItemStack stack, final EntityPlayer player, final World world, int x, int y, int z,
-            final int side) {
+    private boolean tryCombiningWithSide(final ItemStack stack, final EntityPlayer player, final World world, int x,
+            int y, int z, final int side) {
         switch (side) {
             case 0:
                 --y;

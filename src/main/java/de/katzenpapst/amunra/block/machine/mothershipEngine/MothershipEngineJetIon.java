@@ -35,8 +35,8 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // do the isRemote thing here, too?
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_ION_ENGINE, world, x, y, z);
         return true;
@@ -99,13 +99,14 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
      *
      */
     @Override
-    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ, final int meta) {
+    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX,
+            final float hitY, final float hitZ, final int meta) {
         return meta;
     }
 
     @Override
-    public boolean onUseWrench(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onUseWrench(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO rotate the tile entity
         return false;
     }

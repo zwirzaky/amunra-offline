@@ -26,8 +26,8 @@ public class ItemThermalSuit extends Item implements IItemThermal {
     protected IIcon[] icons = new IIcon[4];
     protected final String[] names = { "helmet", "chest", "legs", "boots" };
 
-    public ItemThermalSuit(final String name, final int thermalStrength, final String helmetIcon, final String chestIcon, final String legsIcon,
-            final String bootsIcon) {
+    public ItemThermalSuit(final String name, final int thermalStrength, final String helmetIcon,
+            final String chestIcon, final String legsIcon, final String bootsIcon) {
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         this.setUnlocalizedName(name);
@@ -114,7 +114,8 @@ public class ItemThermalSuit extends Item implements IItemThermal {
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4) {
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List,
+            final boolean par4) {
         par3List.add(GCCoreUtil.translateWithFormat("item.thermalSuit.thermalLevel.name", this.thermalStrength));
         /*
          * String info = getSubItem(par1ItemStack.getItemDamage()).getItemInfo(); if(info != null) {

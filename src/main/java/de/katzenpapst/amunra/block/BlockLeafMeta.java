@@ -207,7 +207,8 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z, final EntityPlayer player) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z, final EntityPlayer player) {
         final int meta = world.getBlockMetadata(x, y, z) & 3;
         if (this.getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
@@ -217,7 +218,8 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         return this.getPickBlock(target, world, x, y, z, null);
     }
 
@@ -233,7 +235,8 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(final IBlockAccess world, final int x, final int y, final int z, final int side) {
+    public boolean shouldSideBeRendered(final IBlockAccess world, final int x, final int y, final int z,
+            final int side) {
         // return true;
         final Block block = world.getBlock(x, y, z);
         if (!this.isOpaqueCube() && block == this) {
@@ -265,7 +268,8 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     }
 
     @Override
-    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ, final int meta) {
+    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX,
+            final float hitY, final float hitZ, final int meta) {
         return this.getSubBlock(meta).onBlockPlaced(w, x, y, z, side, hitX, hitY, hitZ, meta);
     }
 

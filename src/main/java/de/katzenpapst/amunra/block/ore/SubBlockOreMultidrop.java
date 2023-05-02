@@ -23,7 +23,8 @@ public class SubBlockOreMultidrop extends SubBlockOre {
         // the probability to be evaluated at all. fortune will be multiplied onto this
         public float probability = 1;
 
-        public DroppedItem(final Item item, final int meta, final int minDrop, final int maxDrop, final float probability) {
+        public DroppedItem(final Item item, final int meta, final int minDrop, final int maxDrop,
+                final float probability) {
             this.item = item;
             this.metadata = meta;
             this.minDrop = minDrop;
@@ -38,12 +39,14 @@ public class SubBlockOreMultidrop extends SubBlockOre {
         super(name, texture);
     }
 
-    public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop, final int maxDrop, final float probability) {
+    public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop,
+            final int maxDrop, final float probability) {
         this.dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, probability));
         return this;
     }
 
-    public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop, final int maxDrop) {
+    public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop,
+            final int maxDrop) {
         this.dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, 1));
         return this;
     }
@@ -53,13 +56,15 @@ public class SubBlockOreMultidrop extends SubBlockOre {
         return this;
     }
 
-    public SubBlockOreMultidrop addDroppedItem(final ItemDamagePair idp, final int minDrop, final int maxDrop, final float probability) {
+    public SubBlockOreMultidrop addDroppedItem(final ItemDamagePair idp, final int minDrop, final int maxDrop,
+            final float probability) {
         this.addDroppedItem(idp.getItem(), idp.getDamage(), minDrop, maxDrop, probability);
         return this;
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata, final int fortune) {
+    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata,
+            final int fortune) {
         final ArrayList<ItemStack> ret = new ArrayList<>();
         for (final DroppedItem di : this.dropList) {
             if (di.probability < 1) {

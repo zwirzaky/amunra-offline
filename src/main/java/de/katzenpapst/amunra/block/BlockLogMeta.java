@@ -60,7 +60,8 @@ public class BlockLogMeta extends BlockBasicMeta {
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         if (this.getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
@@ -73,8 +74,8 @@ public class BlockLogMeta extends BlockBasicMeta {
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
     @Override
-    public int onBlockPlaced(final World world, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ,
-            final int metadata) {
+    public int onBlockPlaced(final World world, final int x, final int y, final int z, final int side, final float hitX,
+            final float hitY, final float hitZ, final int metadata) {
         final int actualMeta = metadata & 3;
         byte rotationalMeta = 0;
 

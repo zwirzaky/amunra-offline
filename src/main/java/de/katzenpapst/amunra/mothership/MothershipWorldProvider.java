@@ -353,7 +353,8 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         for (final Vector3int loc : this.engineLocations) {
             final TileEntity tile = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
 
-            if (tile instanceof ITileMothershipEngine engine && engine.isEnabled() && engine.getDirection() == td.direction) {
+            if (tile instanceof ITileMothershipEngine engine && engine.isEnabled()
+                    && engine.getDirection() == td.direction) {
                 // double curSpeed = engine.getSpeed(worldObj, loc.x, loc.y, loc.z, meta);
                 final double curThrust = engine.getThrust();
                 if (curThrust <= 0) {
@@ -660,8 +661,9 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     protected void sendDataToClients() {
         final NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
-        AmunRa.packetPipeline
-                .sendToDimension(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, nbt), this.dimensionId);
+        AmunRa.packetPipeline.sendToDimension(
+                new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, nbt),
+                this.dimensionId);
     }
 
     /**
@@ -777,7 +779,8 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
         // AmunRa.packetPipeline.sendToDimension(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, dimensionId,
         // nbt), dimensionId);
-        AmunRa.packetPipeline.sendTo(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, nbt), player);
+        AmunRa.packetPipeline
+                .sendTo(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, nbt), player);
     }
 
     public void readFromNBT(final NBTTagCompound nbt) {
@@ -790,7 +793,10 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         this.engineLocations.clear();
         for (int i = 0; i < list.tagCount(); i++) {
             final NBTTagCompound posData = list.getCompoundTagAt(i);
-            final Vector3int pos = new Vector3int(posData.getInteger("x"), posData.getInteger("y"), posData.getInteger("z"));
+            final Vector3int pos = new Vector3int(
+                    posData.getInteger("x"),
+                    posData.getInteger("y"),
+                    posData.getInteger("z"));
             this.engineLocations.add(pos);
         }
 

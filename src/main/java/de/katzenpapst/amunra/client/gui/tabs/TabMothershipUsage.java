@@ -20,8 +20,8 @@ public class TabMothershipUsage extends AbstractPermissionTab {
             AmunRa.ASSETPREFIX,
             "textures/gui/usage-permission.png");
 
-    public TabMothershipUsage(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent, final Minecraft mc, final int width,
-            final int height, final int xSize, final int ySize) {
+    public TabMothershipUsage(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent,
+            final Minecraft mc, final int width, final int height, final int xSize, final int ySize) {
         super(tile, parent, mc, width, height, xSize, ySize);
     }
 

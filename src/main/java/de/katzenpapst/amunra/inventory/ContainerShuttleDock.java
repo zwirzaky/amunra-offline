@@ -2,6 +2,7 @@ package de.katzenpapst.amunra.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+
 import de.katzenpapst.amunra.item.ItemShuttle;
 import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
 import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;

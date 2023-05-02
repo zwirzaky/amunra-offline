@@ -58,7 +58,8 @@ public class ShuttleTeleportHelper {
 
     public ShuttleTeleportHelper() {}
 
-    public static Entity transferEntityToDimension(final Entity entity, final int dimensionID, final WorldServer world) {
+    public static Entity transferEntityToDimension(final Entity entity, final int dimensionID,
+            final WorldServer world) {
         // boolean transferInv = true;
         // EntityAutoRocket ridingRocket = null;
         if (!world.isRemote) {
@@ -89,7 +90,8 @@ public class ShuttleTeleportHelper {
         return null;
     }
 
-    private static Entity teleportEntity(final World worldNew, final Entity entity, final int dimID, final ITeleportType type) {
+    private static Entity teleportEntity(final World worldNew, final Entity entity, final int dimID,
+            final ITeleportType type) {
         if (entity.ridingEntity != null) {
             if (entity.ridingEntity instanceof EntitySpaceshipBase) entity.mountEntity(entity.ridingEntity);
             else if (entity.ridingEntity instanceof EntityCelestialFake) {
@@ -131,15 +133,14 @@ public class ShuttleTeleportHelper {
                                 player.theItemInWorldManager.getGameType()));
 
                 // I'm almost think this can be deleted
-                if (worldNew.provider instanceof WorldProviderOrbit && WorldUtil.registeredSpaceStations.containsKey(dimID))
+                if (worldNew.provider instanceof WorldProviderOrbit
+                        && WorldUtil.registeredSpaceStations.containsKey(dimID))
                 // TODO This has never been effective before due to the earlier bug - what does it actually do?
                 {
                     final NBTTagCompound var2 = new NBTTagCompound();
                     SpaceStationWorldData.getStationData(worldNew, dimID, player).writeToNBT(var2);
                     GalacticraftCore.packetPipeline.sendTo(
-                            new PacketSimple(
-                                    EnumSimplePacket.C_UPDATE_SPACESTATION_DATA,
-                                    new Object[] { dimID, var2 }),
+                            new PacketSimple(EnumSimplePacket.C_UPDATE_SPACESTATION_DATA, new Object[] { dimID, var2 }),
                             player);
                 }
 
@@ -305,11 +306,13 @@ public class ShuttleTeleportHelper {
         return entity;
     }
 
-    private static void landInShuttle(final World world, final EntityPlayerMP player, final ItemShuttle item, Vector3 spawnPos) {
+    private static void landInShuttle(final World world, final EntityPlayerMP player, final ItemShuttle item,
+            Vector3 spawnPos) {
         final GCPlayerStats playerStats = GCPlayerStats.get(player);
 
         // failsafe! yes, this happened...
-        if (world.provider instanceof IExitHeight && ((IExitHeight) world.provider).getYCoordinateToTeleport() - 10 <= spawnPos.y) {
+        if (world.provider instanceof IExitHeight
+                && ((IExitHeight) world.provider).getYCoordinateToTeleport() - 10 <= spawnPos.y) {
             spawnPos.y = ((IExitHeight) world.provider).getYCoordinateToTeleport() - 10;
         }
 
@@ -399,7 +402,8 @@ public class ShuttleTeleportHelper {
      * @param body
      * @return
      */
-    private static HashMap<String, Integer> getArrayOfChildren(final EntityPlayerMP playerBase, final CelestialBody body) {
+    private static HashMap<String, Integer> getArrayOfChildren(final EntityPlayerMP playerBase,
+            final CelestialBody body) {
         final HashMap<String, Integer> result = new HashMap<>();
 
         if (body.getReachable()) {

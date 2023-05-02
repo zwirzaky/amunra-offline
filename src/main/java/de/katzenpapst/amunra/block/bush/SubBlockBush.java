@@ -25,7 +25,8 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
         super(name, texture, tool, harvestLevel);
     }
 
-    public SubBlockBush(final String name, final String texture, final String tool, final int harvestLevel, final float hardness, final float resistance) {
+    public SubBlockBush(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
@@ -35,7 +36,8 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y, final int z, final int fortune) {
+    public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y,
+            final int z, final int fortune) {
         final ArrayList<ItemStack> result = new ArrayList<>();
         result.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z)));
         return result;
@@ -48,14 +50,12 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
     }
 
     @Override
-    public boolean func_149852_a(final World worldIn, final Random random, final int x, final int y,
-            final int z) {
+    public boolean func_149852_a(final World worldIn, final Random random, final int x, final int y, final int z) {
         return false;
     }
 
     @Override
-    public void func_149853_b(final World worldIn, final Random random, final int x, final int y,
-            final int z) {
+    public void func_149853_b(final World worldIn, final Random random, final int x, final int y, final int z) {
 
     }
 

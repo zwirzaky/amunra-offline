@@ -64,7 +64,8 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y, final int z, final int fortune) {
+    public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y,
+            final int z, final int fortune) {
 
         final int meta = world.getBlockMetadata(x, y, z);
         return ((SubBlockBush) this.getSubBlock(meta)).onSheared(item, world, x, y, z, fortune);
@@ -77,7 +78,8 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
      */
     @Override
-    public boolean func_149851_a(final World world, final int x, final int y, final int z, final boolean isWorldRemote) {
+    public boolean func_149851_a(final World world, final int x, final int y, final int z,
+            final boolean isWorldRemote) {
         final int meta = world.getBlockMetadata(x, y, z);
         return ((SubBlockBush) this.getSubBlock(meta)).func_149851_a(world, x, y, z, isWorldRemote);
     }
@@ -110,8 +112,7 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * cleared to be reused)
      */
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World worldIn, final int x, final int y,
-            final int z) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World worldIn, final int x, final int y, final int z) {
         return null;
     }
 

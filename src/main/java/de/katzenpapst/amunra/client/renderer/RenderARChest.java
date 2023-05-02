@@ -26,7 +26,8 @@ public class RenderARChest extends TileEntitySpecialRenderer {
         // TODO Auto-generated constructor stub
     }
 
-    public void renderARChestAt(final TileEntityARChest chest, final double x, final double par4, final double par6, final float par8) {
+    public void renderARChestAt(final TileEntityARChest chest, final double x, final double par4, final double par6,
+            final float par8) {
         int chestMetadata;
 
         final Block chestBlock = chest.getBlockType();
@@ -136,7 +137,8 @@ public class RenderARChest extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(final TileEntity tileEntity, final double x, final double y, final double z, final float ticks) {
+    public void renderTileEntityAt(final TileEntity tileEntity, final double x, final double y, final double z,
+            final float ticks) {
 
         this.renderARChestAt((TileEntityARChest) tileEntity, x, y, z, ticks);
 

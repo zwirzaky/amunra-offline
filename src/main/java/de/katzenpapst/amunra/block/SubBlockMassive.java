@@ -14,8 +14,8 @@ public class SubBlockMassive extends SubBlock implements IMassiveBlock {
         super(name, texture, tool, harvestLevel);
     }
 
-    public SubBlockMassive(final String name, final String texture, final String tool, final int harvestLevel, final float hardness,
-            final float resistance) {
+    public SubBlockMassive(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
 

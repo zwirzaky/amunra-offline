@@ -307,7 +307,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                     if (FMLClientHandler.instance().getClient().theWorld != null) {
                         if (!(FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection)) {
-                            final GuiShuttleSelection gui = new GuiShuttleSelection(MapMode.TRAVEL, possibleCelestialBodies);
+                            final GuiShuttleSelection gui = new GuiShuttleSelection(
+                                    MapMode.TRAVEL,
+                                    possibleCelestialBodies);
                             gui.spaceStationMap = spaceStationData;
                             FMLClientHandler.instance().getClient().displayGuiScreen(gui);
                         } else {
@@ -468,7 +470,8 @@ public class PacketSimpleAR extends Packet implements IPacket {
                         mShip = TickHandlerServer.mothershipData.getByDimensionId(dim);
                         // check if the target is a mothership
                         // if the player is currently not on the target MS, check permissions
-                        if (mShip != null && playerBase.dimension != dim && !mShip.isPlayerLandingPermitted(playerBase)) {
+                        if (mShip != null && playerBase.dimension != dim
+                                && !mShip.isPlayerLandingPermitted(playerBase)) {
                             AmunRa.packetPipeline.sendTo(
                                     new PacketSimpleAR(
                                             PacketSimpleAR.EnumSimplePacket.C_TELEPORT_SHUTTLE_PERMISSION_ERROR,

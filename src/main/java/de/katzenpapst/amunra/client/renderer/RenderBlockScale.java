@@ -15,7 +15,8 @@ public class RenderBlockScale extends TileEntitySpecialRenderer {
     public RenderBlockScale() {}
 
     @Override
-    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTickTime) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z,
+            final float partialTickTime) {
         if (!(entity instanceof TileEntityBlockScale scaleEntity)) {
             return;
         }

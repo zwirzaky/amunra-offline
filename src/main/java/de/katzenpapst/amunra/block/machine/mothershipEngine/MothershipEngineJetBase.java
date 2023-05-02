@@ -39,7 +39,8 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
      */
     abstract protected ItemDamagePair getItem();
 
-    protected TileEntityMothershipEngineAbstract getMyTileEntity(final World world, final int x, final int y, final int z) {
+    protected TileEntityMothershipEngineAbstract getMyTileEntity(final World world, final int x, final int y,
+            final int z) {
         final TileEntity t = world.getTileEntity(x, y, z);
         if (t == null || !(t instanceof TileEntityMothershipEngineAbstract)) {
             // TODO throw exception instead
@@ -49,7 +50,8 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    public void onBlockPlacedBy(final World w, final int x, final int y, final int z, final EntityLivingBase user, final ItemStack stack) {}
+    public void onBlockPlacedBy(final World w, final int x, final int y, final int z, final EntityLivingBase user,
+            final ItemStack stack) {}
 
     @Override
     public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
@@ -65,13 +67,14 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
      *
      */
     @Override
-    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ, final int meta) {
+    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX,
+            final float hitY, final float hitZ, final int meta) {
         return meta;
     }
 
     @Override
-    public boolean onUseWrench(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onUseWrench(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO rotate the tile entity
         return false;
     }
@@ -126,13 +129,15 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z, final boolean willHarvest) {
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z,
+            final boolean willHarvest) {
         return this.removedByPlayer(world, player, x, y, z);
     }
 
     @Override
     @Deprecated
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z) {
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y,
+            final int z) {
         if (this.canBeMoved(world, x, y, z)) {
             return super.removedByPlayer(world, player, x, y, z);
         }

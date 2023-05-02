@@ -230,10 +230,10 @@ public class TileEntityHydroponics extends TileEntityOxygen
                 // use it right away for actual generation?
 
                 final float generationRate = 0.3F * 10.0F * this.plantGrowthStatus * AmunRa.config.hydroponicsFactor; // should
-                                                                                                                // be 4x
-                                                                                                                // the
-                                                                                                                // regular
-                                                                                                                // amount
+                // be 4x
+                // the
+                // regular
+                // amount
                 this.lastOxygenCollected = generationRate / 10F;
 
                 this.storedOxygen = Math.max(Math.min(this.storedOxygen + generationRate, this.maxOxygen), 0);
@@ -244,7 +244,8 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     protected void growPlant() {
-        if (this.plantGrowthStatus == -1.0F || this.plantGrowthStatus == 1.0F || this.worldObj.getBlockLightValue(this.xCoord, this.yCoord + 1, this.zCoord) < 9) {
+        if (this.plantGrowthStatus == -1.0F || this.plantGrowthStatus == 1.0F
+                || this.worldObj.getBlockLightValue(this.xCoord, this.yCoord + 1, this.zCoord) < 9) {
             return;
         }
         // wiki says: 5 - 35 minecraft minutes for one crop stage
@@ -360,7 +361,9 @@ public class TileEntityHydroponics extends TileEntityOxygen
             case PLANT_SEED:
                 // I hope this works..
                 stack = this.containingItems[1];
-                if (this.plantGrowthStatus == -1.0F && stack != null && stack.stackSize > 0 && seeds.isSameItem(stack)) {
+                if (this.plantGrowthStatus == -1.0F && stack != null
+                        && stack.stackSize > 0
+                        && seeds.isSameItem(stack)) {
                     stack.stackSize--;
                     if (stack.stackSize <= 0) {
                         stack = null;

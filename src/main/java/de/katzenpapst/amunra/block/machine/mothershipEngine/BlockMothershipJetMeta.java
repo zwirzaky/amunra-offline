@@ -67,7 +67,8 @@ public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         final SubBlock sb = this.getSubBlock(meta);
         if (sb instanceof MothershipEngineJetBase) {
@@ -78,7 +79,8 @@ public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase entityLiving, final ItemStack itemStack) {
+    public void onBlockPlacedBy(final World world, final int x, final int y, final int z,
+            final EntityLivingBase entityLiving, final ItemStack itemStack) {
         final int metadata = world.getBlockMetadata(x, y, z);
 
         final SubBlock sb = this.getSubBlock(metadata);

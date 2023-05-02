@@ -47,7 +47,8 @@ public class DamageSourceAR {
     /**
      * returns EntityDamageSourceIndirect of an arrow
      */
-    public static DamageSource causeLaserDamage(final String langKey, final EntityBaseLaserArrow arrow, final Entity shooter) {
+    public static DamageSource causeLaserDamage(final String langKey, final EntityBaseLaserArrow arrow,
+            final Entity shooter) {
         return new EntityDamageSourceIndirect(langKey, arrow, shooter).setProjectile();
     }
 }

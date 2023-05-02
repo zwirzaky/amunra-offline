@@ -115,7 +115,8 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
         if (!this.masterPresent) return;
 
         final TileEntity masterTile = this.worldObj.getTileEntity(this.masterX, this.masterY, this.masterZ);
-        if (masterTile == null || !(masterTile instanceof TileEntityMothershipEngineAbstract jetTile) || !jetTile.isPartOfMultiBlock(this.xCoord, this.yCoord, this.zCoord)) {
+        if (masterTile == null || !(masterTile instanceof TileEntityMothershipEngineAbstract jetTile)
+                || !jetTile.isPartOfMultiBlock(this.xCoord, this.yCoord, this.zCoord)) {
             this.reset();
             return;
         }
@@ -152,8 +153,7 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
             }
             if (this.xCoord > this.masterX) {
                 return new Vector3int(this.xCoord + 1, this.yCoord, this.zCoord);
-            } else {
-            }
+            } else {}
         }
         return null;
     }
@@ -406,7 +406,8 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
 
     // Five methods for compatibility with basic electricity
     @Override
-    public float receiveElectricity(final ForgeDirection from, final float receive, final int tier, final boolean doReceive) {
+    public float receiveElectricity(final ForgeDirection from, final float receive, final int tier,
+            final boolean doReceive) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return 0F;

@@ -40,8 +40,8 @@ public class ItemShuttle extends Item implements IHoldableItem {
         return AmunRa.arTab;
     }
 
-    public EntityShuttle spawnRocketEntity(final ItemStack stack, final World world, final double centerX, final double centerY,
-            final double centerZ) {
+    public EntityShuttle spawnRocketEntity(final ItemStack stack, final World world, final double centerX,
+            final double centerY, final double centerZ) {
         final EntityShuttle spaceship = new EntityShuttle(world, centerX, centerY, centerZ, stack.getItemDamage());
 
         spaceship.setPosition(spaceship.posX, spaceship.posY + spaceship.getOnPadYOffset(), spaceship.posZ);
@@ -64,8 +64,8 @@ public class ItemShuttle extends Item implements IHoldableItem {
      * itemstack, player, world, x, y, z, side, hitX, hitY, hitZ
      */
     @Override
-    public boolean onItemUse(ItemStack itemStack, final EntityPlayer player, final World world, final int x, final int y, final int z, final int side,
-            final float hitX, final float hitY, final float hitZ) {
+    public boolean onItemUse(ItemStack itemStack, final EntityPlayer player, final World world, final int x,
+            final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ) {
         boolean padFound = false;
         TileEntity tile = null;
 

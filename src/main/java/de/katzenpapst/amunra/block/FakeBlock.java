@@ -78,8 +78,8 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public boolean onBlockActivated(final World par1World, final int x, final int y, final int z, final EntityPlayer par5EntityPlayer, final int par6,
-            final float par7, final float par8, final float par9) {
+    public boolean onBlockActivated(final World par1World, final int x, final int y, final int z,
+            final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9) {
         final TileEntityMulti tileEntity = (TileEntityMulti) par1World.getTileEntity(x, y, z);
         return tileEntity.onBlockActivated(par1World, x, y, z, par5EntityPlayer);
     }
@@ -105,7 +105,8 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z, final EntityPlayer player) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z, final EntityPlayer player) {
         final TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity instanceof TileEntityMulti) {
             final BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
@@ -129,7 +130,8 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         return this.getPickBlock(target, world, x, y, z, null);
     }
 
@@ -145,7 +147,8 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addHitEffects(final World worldObj, final MovingObjectPosition target, final EffectRenderer effectRenderer) {
+    public boolean addHitEffects(final World worldObj, final MovingObjectPosition target,
+            final EffectRenderer effectRenderer) {
         final TileEntity tileEntity = worldObj.getTileEntity(target.blockX, target.blockY, target.blockZ);
 
         if (tileEntity instanceof TileEntityMulti) {

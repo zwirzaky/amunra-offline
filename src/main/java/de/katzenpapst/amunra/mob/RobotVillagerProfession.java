@@ -74,7 +74,8 @@ public class RobotVillagerProfession {
     }
 
     @SuppressWarnings("unchecked")
-    public RobotVillagerProfession addRecipe(final Item singleInputItem, final int numEmeralds, final Item singleOutputItem) {
+    public RobotVillagerProfession addRecipe(final Item singleInputItem, final int numEmeralds,
+            final Item singleOutputItem) {
         this.merchantList.add(
                 new MerchantRecipe(
                         new ItemStack(singleInputItem, 1),

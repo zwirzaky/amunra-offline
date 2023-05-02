@@ -27,13 +27,15 @@ public class SubItemFood extends SubItem {
     // itemRegistry.addObject(367, "rotten_flesh", (new ItemFood(4, 0.1F, true)).setPotionEffect(Potion.hunger.id, 30,
     // 0, 0.8F).setUnlocalizedName("rottenFlesh").setTextureName("rotten_flesh"));
 
-    public SubItemFood(final String name, final String assetName, final int healAmount, final float saturationModifier) {
+    public SubItemFood(final String name, final String assetName, final int healAmount,
+            final float saturationModifier) {
         super(name, assetName);
         this.healAmount = healAmount;
         this.saturationModifier = saturationModifier;
     }
 
-    public SubItemFood(final String name, final String assetName, final String info, final int healAmount, final float saturationModifier) {
+    public SubItemFood(final String name, final String assetName, final String info, final int healAmount,
+            final float saturationModifier) {
         super(name, assetName, info);
         this.healAmount = healAmount;
         this.saturationModifier = saturationModifier;
@@ -95,7 +97,8 @@ public class SubItemFood extends SubItem {
      * sets a potion effect on the item. Args: int potionId, int duration (will be multiplied by 20), int amplifier,
      * float probability of effect happening
      */
-    public SubItemFood setPotionEffect(final int potionId, final int duration, final int amplifier, final float probability) {
+    public SubItemFood setPotionEffect(final int potionId, final int duration, final int amplifier,
+            final float probability) {
         this.potionId = potionId;
         this.potionDuration = duration;
         this.potionAmplifier = amplifier;

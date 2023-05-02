@@ -34,7 +34,8 @@ public class MothershipWorldGen extends WorldGenerator {
     }
 
     @Override
-    public boolean generate(final World world, final Random rand, final int centerX, final int centerY, final int centerZ) {
+    public boolean generate(final World world, final Random rand, final int centerX, final int centerY,
+            final int centerZ) {
         // for this, assume the coordinates we got are the center
         // make one big plane first
         int startX = centerX - 3;
@@ -54,7 +55,13 @@ public class MothershipWorldGen extends WorldGenerator {
 
         // place that one failsafe block
         // msIndestructible
-        world.setBlock(centerX, centerY, centerZ, this.msIndestructible.getBlock(), this.msIndestructible.getMetadata(), 3);
+        world.setBlock(
+                centerX,
+                centerY,
+                centerZ,
+                this.msIndestructible.getBlock(),
+                this.msIndestructible.getMetadata(),
+                3);
 
         startX = centerX - 3;
         stopX = centerX + 3;

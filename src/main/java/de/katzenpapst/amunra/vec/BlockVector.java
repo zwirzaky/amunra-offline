@@ -18,11 +18,14 @@ public class BlockVector extends Vector3int {
     }
 
     public BlockMetaPair getBlockMetaPair() {
-        return new BlockMetaPair(this.world.getBlock(this.x, this.y, this.z), (byte) this.world.getBlockMetadata(this.x, this.y, this.z));
+        return new BlockMetaPair(
+                this.world.getBlock(this.x, this.y, this.z),
+                (byte) this.world.getBlockMetadata(this.x, this.y, this.z));
     }
 
     public boolean isBlockMetaPair(final BlockMetaPair bmp) {
-        return this.world.getBlock(this.x, this.y, this.z) == bmp.getBlock() && this.world.getBlockMetadata(this.x, this.y, this.z) == bmp.getMetadata();
+        return this.world.getBlock(this.x, this.y, this.z) == bmp.getBlock()
+                && this.world.getBlockMetadata(this.x, this.y, this.z) == bmp.getMetadata();
     }
 
     @Override

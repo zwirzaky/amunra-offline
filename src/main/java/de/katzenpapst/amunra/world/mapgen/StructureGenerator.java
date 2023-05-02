@@ -30,8 +30,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         public int minAmount;
         public int maxAmount;
 
-        public SubComponentData(final Class<? extends BaseStructureComponent> clazz, final float probability, final int minAmount,
-                final int maxAmount) {
+        public SubComponentData(final Class<? extends BaseStructureComponent> clazz, final float probability,
+                final int minAmount, final int maxAmount) {
             this.clazz = clazz;
             this.probability = probability;
             this.minAmount = minAmount;
@@ -41,7 +41,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         public SubComponentData copy() {
             return new SubComponentData(this.clazz, this.probability, this.minAmount, this.maxAmount);
         }
-        
+
         public float getProbability() {
             return this.probability;
         }
@@ -113,8 +113,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param rand        the Random object to use
      * @param limit       the result will not have more entries than this. if 0, a random limit will be used
      */
-    protected List<BaseStructureComponent> generateSubComponents(final List<SubComponentData> subCompData, final Random rand,
-            int limit) {
+    protected List<BaseStructureComponent> generateSubComponents(final List<SubComponentData> subCompData,
+            final Random rand, int limit) {
         final List<BaseStructureComponent> compList = new ArrayList<>();
         final Map<String, Integer> typeAmountMapping = new HashMap<>();
 
@@ -247,8 +247,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param metas           metas array
      */
     @Override
-    public void generate(final IChunkProvider chunkProvider, final World world, final int origXChunkCoord, final int origZChunkCoord,
-            final Block[] blocks, final byte[] metadata) {
+    public void generate(final IChunkProvider chunkProvider, final World world, final int origXChunkCoord,
+            final int origZChunkCoord, final Block[] blocks, final byte[] metadata) {
         this.worldObj = world;
         this.chunkProvider = chunkProvider;
         // this.rand.setSeed(world.getSeed());
@@ -274,9 +274,16 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     }
 
     @Override
-    protected void recursiveGenerate(final World par1World, final int xChunkCoord, final int zChunkCoord, final int origXChunkCoord,
-            final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
-        this.makeStructure(par1World, xChunkCoord, zChunkCoord, origXChunkCoord, origZChunkCoord, arrayOfIDs, arrayOfMeta);
+    protected void recursiveGenerate(final World par1World, final int xChunkCoord, final int zChunkCoord,
+            final int origXChunkCoord, final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+        this.makeStructure(
+                par1World,
+                xChunkCoord,
+                zChunkCoord,
+                origXChunkCoord,
+                origZChunkCoord,
+                arrayOfIDs,
+                arrayOfMeta);
 
     }
 
@@ -284,7 +291,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * Adds stuff like mobs or tileentities, which can't be added in the step where the block and meta arrays are being
      * filled
      */
-    public void populate(final IChunkProvider chunkProvider, final World world, final int origXChunkCoord, final int origZChunkCoord) {
+    public void populate(final IChunkProvider chunkProvider, final World world, final int origXChunkCoord,
+            final int origZChunkCoord) {
         this.worldObj = world;
         this.chunkProvider = chunkProvider;
         // this.rand.setSeed(world.getSeed());
@@ -302,8 +310,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         }
     }
 
-    protected void recursivePopulate(final World world, final int xChunkCoord, final int zChunkCoord, final int origXChunkCoord,
-            final int origZChunkCoord) {
+    protected void recursivePopulate(final World world, final int xChunkCoord, final int zChunkCoord,
+            final int origXChunkCoord, final int origZChunkCoord) {
         final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
         if (this.structureMap.containsKey(key)) {
             final BaseStructureStart start = this.structureMap.get(key);
@@ -321,13 +329,13 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     /**
      * Creates or gets an instance of BaseStructure, then makes it generate the current chunk
      */
-    protected void makeStructure(final World world, final int xChunkCoord, final int zChunkCoord, final int origXChunkCoord,
-            final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    protected void makeStructure(final World world, final int xChunkCoord, final int zChunkCoord,
+            final int origXChunkCoord, final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
         BaseStructureStart start = null;
         if (!this.structureMap.containsKey(key)) {
             start = this.createNewStructure(xChunkCoord, zChunkCoord);// new GridVillageStart(xChunkCoord, zChunkCoord,
-                                                                 // this.rand);
+            // this.rand);
             this.structureMap.put(key, start);
         } else {
             start = this.structureMap.get(key);

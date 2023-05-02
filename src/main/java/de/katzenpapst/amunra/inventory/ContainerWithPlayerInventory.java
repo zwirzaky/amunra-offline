@@ -114,10 +114,10 @@ abstract public class ContainerWithPlayerInventory extends Container {
                             break;
                         }
                     } else // attempt merge
-                    if (this.tileEntity.isItemValidForSlot(i, stack) && this.mergeSingleSlot(stack, curSlot)) {
-                        found = true;
-                        break;
-                    }
+                        if (this.tileEntity.isItemValidForSlot(i, stack) && this.mergeSingleSlot(stack, curSlot)) {
+                            found = true;
+                            break;
+                        }
                 }
                 if (!found) {
 

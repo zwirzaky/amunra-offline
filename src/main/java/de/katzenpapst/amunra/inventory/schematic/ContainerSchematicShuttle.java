@@ -187,7 +187,8 @@ public class ContainerSchematicShuttle extends Container {
                 for (int i = 0; i < numSlotsAdded; i++) {
                     final Slot curSlot = this.inventorySlots.get(i);
                     // attempt merge
-                    if ((curSlot instanceof SlotSpecific && ((SlotSpecific) curSlot).isItemValid(stack)) && this.mergeSingleSlot(stack, curSlot)) {
+                    if ((curSlot instanceof SlotSpecific && ((SlotSpecific) curSlot).isItemValid(stack))
+                            && this.mergeSingleSlot(stack, curSlot)) {
                         found = true;
                         break;
                     }
@@ -235,7 +236,8 @@ public class ContainerSchematicShuttle extends Container {
      * }
      */
 
-    protected boolean mergeOneItem(final ItemStack stack, final int startSlot, final int endSlotMaybe, final boolean wtf) {
+    protected boolean mergeOneItem(final ItemStack stack, final int startSlot, final int endSlotMaybe,
+            final boolean wtf) {
         boolean flag1 = false;
         if (stack.stackSize > 0) {
             Slot slot;

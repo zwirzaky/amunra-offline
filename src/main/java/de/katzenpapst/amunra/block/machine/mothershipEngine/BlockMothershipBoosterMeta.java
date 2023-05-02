@@ -20,7 +20,8 @@ public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase entityLiving, final ItemStack itemStack) {
+    public void onBlockPlacedBy(final World world, final int x, final int y, final int z,
+            final EntityLivingBase entityLiving, final ItemStack itemStack) {
         final int metadata = world.getBlockMetadata(x, y, z);
         final SubBlock sb = this.getSubBlock(metadata);
         if (sb != null) {
@@ -29,8 +30,8 @@ public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public boolean onUseWrench(final World par1World, final int x, final int y, final int z, final EntityPlayer par5EntityPlayer, final int side,
-            final float hitX, final float hitY, final float hitZ) {
+    public boolean onUseWrench(final World par1World, final int x, final int y, final int z,
+            final EntityPlayer par5EntityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         return false;
     }
 
@@ -61,7 +62,7 @@ public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public void dropEntireInventory(final World world, final int x, final int y, final int z, final Block block, final int par6) {
-    }
+    public void dropEntireInventory(final World world, final int x, final int y, final int z, final Block block,
+            final int par6) {}
 
 }

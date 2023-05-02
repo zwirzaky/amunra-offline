@@ -126,7 +126,9 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
 
         // if(!curMothership.isInTransit()) {
         AmunRa.packetPipeline.sendToServer(
-                new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.S_MOTHERSHIP_UPDATE, this.world.provider.dimensionId));
+                new PacketSimpleAR(
+                        PacketSimpleAR.EnumSimplePacket.S_MOTHERSHIP_UPDATE,
+                        this.world.provider.dimensionId));
         // }
     }
 
@@ -382,7 +384,8 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         if (this.curMothership.isInTransit()) {
             totalOffset -= 10;
             // figure out our speed
-            final double distance = AstronomyHelper.getDistance(this.curMothership.getSource(), this.curMothership.getDestination());
+            final double distance = AstronomyHelper
+                    .getDistance(this.curMothership.getSource(), this.curMothership.getDestination());
             final double speed = distance / this.curMothership.getTotalTravelTime();
             this.smallFontRenderer.drawString(
                     GCCoreUtil.translate("gui.message.mothership.travelSpeed") + ": " + GuiHelper.formatSpeed(speed),
@@ -515,7 +518,8 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         }
     }
 
-    protected int drawFuelReqs(int offset, final int mousePosX, final int mousePosY, final MothershipFuelRequirements fuelReqs) {
+    protected int drawFuelReqs(int offset, final int mousePosX, final int mousePosY,
+            final MothershipFuelRequirements fuelReqs) {
 
         if (fuelReqs != null && !fuelReqs.isEmpty()) {
             // offset += 10;
@@ -603,8 +607,9 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
 
     protected void drawIcon(final int x, final int y, final MothershipFuelDisplay fuelType) {
 
-        final ResourceLocation resourcelocation = this.mc.renderEngine.getResourceLocation(fuelType.getSpriteNumber());// 0 is
-                                                                                                                 // correct
+        final ResourceLocation resourcelocation = this.mc.renderEngine.getResourceLocation(fuelType.getSpriteNumber());// 0
+                                                                                                                       // is
+        // correct
         this.mc.renderEngine.bindTexture(resourcelocation);
 
         GL11.glDisable(GL11.GL_LIGHTING); // Forge: Make sure that render states are reset, a renderEffect can derp them

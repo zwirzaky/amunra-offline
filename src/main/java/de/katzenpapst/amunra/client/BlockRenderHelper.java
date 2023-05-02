@@ -4,7 +4,8 @@ import net.minecraft.client.renderer.Tessellator;
 
 public class BlockRenderHelper {
 
-    public static void renderFaceZPos(final Tessellator tessellator, final double uMin, final double vMin, final double uMax, final double vMax) {
+    public static void renderFaceZPos(final Tessellator tessellator, final double uMin, final double vMin,
+            final double uMax, final double vMax) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.8F, 0.0F, 0.0F);
 
@@ -16,7 +17,8 @@ public class BlockRenderHelper {
         tessellator.draw();
     }
 
-    public static void renderFaceZNeg(final Tessellator tessellator, final double uMin, final double vMin, final double uMax, final double vMax) {
+    public static void renderFaceZNeg(final Tessellator tessellator, final double uMin, final double vMin,
+            final double uMax, final double vMax) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(-0.8F, 0.0F, 0.0F);
 
@@ -29,7 +31,8 @@ public class BlockRenderHelper {
 
     }
 
-    public static void renderFaceXNeg(final Tessellator tessellator, final double uMin, final double vMin, final double uMax, final double vMax) {
+    public static void renderFaceXNeg(final Tessellator tessellator, final double uMin, final double vMin,
+            final double uMax, final double vMax) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, 0.8F);
 
@@ -41,7 +44,8 @@ public class BlockRenderHelper {
         tessellator.draw();
     }
 
-    public static void renderFaceXPos(final Tessellator tessellator, final double uMin, final double vMin, final double uMax, final double vMax) {
+    public static void renderFaceXPos(final Tessellator tessellator, final double uMin, final double vMin,
+            final double uMax, final double vMax) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, -0.8F);
 
@@ -54,8 +58,8 @@ public class BlockRenderHelper {
 
     }
 
-    public static void renderFaceYNeg(final Tessellator tessellator, final double uMin, final double vMin, final double uMax, final double vMax,
-            final boolean rotate) {
+    public static void renderFaceYNeg(final Tessellator tessellator, final double uMin, final double vMin,
+            final double uMax, final double vMax, final boolean rotate) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, -0.8F, 0.0F);
 
@@ -76,8 +80,8 @@ public class BlockRenderHelper {
 
     }
 
-    public static void renderFaceYPos(final Tessellator tessellator, final double uMin, final double vMin, final double uMax, final double vMax,
-            final boolean rotate) {
+    public static void renderFaceYPos(final Tessellator tessellator, final double uMin, final double vMin,
+            final double uMax, final double vMax, final boolean rotate) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.8F, 0.0F);
 

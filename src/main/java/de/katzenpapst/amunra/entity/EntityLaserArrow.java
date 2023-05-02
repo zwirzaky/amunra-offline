@@ -30,7 +30,8 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
             AmunRa.ASSETPREFIX,
             "textures/entity/laserarrow.png");
 
-    public EntityLaserArrow(final World world, final EntityLivingBase shooter, final Vector3 startVec, final EntityLivingBase target) {
+    public EntityLaserArrow(final World world, final EntityLivingBase shooter, final Vector3 startVec,
+            final EntityLivingBase target) {
         super(world, shooter, startVec, target);
     }
 
@@ -39,7 +40,8 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
         // TODO Auto-generated constructor stub
     }
 
-    public EntityLaserArrow(final World world, final EntityLivingBase shooter, final double startX, final double startY, final double startZ) {
+    public EntityLaserArrow(final World world, final EntityLivingBase shooter, final double startX, final double startY,
+            final double startZ) {
         super(world, shooter, startX, startY, startZ);
     }
 
@@ -47,7 +49,8 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
         super(world, x, y, z);
     }
 
-    public EntityLaserArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target, final float randMod) {
+    public EntityLaserArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target,
+            final float randMod) {
         super(world, shootingEntity, target, randMod);
     }
 

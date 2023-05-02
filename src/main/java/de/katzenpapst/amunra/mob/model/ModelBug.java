@@ -166,7 +166,8 @@ public class ModelBug extends ModelBase {
     }
 
     @Override
-    public void render(final Entity entity, final float f, final float f1, final float f2, final float f3, final float f4, final float f5) {
+    public void render(final Entity entity, final float f, final float f1, final float f2, final float f3,
+            final float f4, final float f5) {
         super.render(entity, f, f1, f2, f3, f4, f5);
         this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         this.body.render(f5);
@@ -189,8 +190,8 @@ public class ModelBug extends ModelBase {
     @Override
     // public void setRotationAngles(float time, float walkSpeed, float appendageRotation, float rotationYaw, float
     // rotationPitch, float scale, Entity entity)
-    public void setRotationAngles(final float time, final float walkSpeed, final float appendageRotation, final float rotationYaw,
-            final float rotationPitch, final float cale, final Entity entity) {
+    public void setRotationAngles(final float time, final float walkSpeed, final float appendageRotation,
+            final float rotationYaw, final float rotationPitch, final float cale, final Entity entity) {
         this.head.rotateAngleY = rotationYaw / (180F / (float) Math.PI);
         this.head.rotateAngleX = rotationPitch / (180F / (float) Math.PI);
 

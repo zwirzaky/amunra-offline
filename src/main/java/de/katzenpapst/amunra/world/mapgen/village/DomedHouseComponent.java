@@ -18,12 +18,18 @@ public class DomedHouseComponent extends GridVillageComponent {
     public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] blocks, final byte[] metas) {
 
         // now, how to get the height?
-        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX << 4),
-                                                                              // (chunkX<< 4), (chunkX+1 << 4)-1,
-                                                                              // (chunkX+1 << 4)-1);
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX
+                                                                                    // << 4),
+        // (chunkX<< 4), (chunkX+1 << 4)-1,
+        // (chunkX+1 << 4)-1);
         final int fallbackGround = this.parent.getWorldGroundLevel();
         if (this.groundLevel == -1) {
-            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            this.groundLevel = getAverageGroundLevel(
+                    blocks,
+                    metas,
+                    this.getStructureBoundingBox(),
+                    chunkBB,
+                    fallbackGround);
             if (this.groundLevel == -1) {
                 this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }
@@ -100,7 +106,15 @@ public class DomedHouseComponent extends GridVillageComponent {
                                                 glassPane);
                                     } else {
                                         // wall
-                                        this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + y, z, wall);
+                                        this.placeBlockRel2BB(
+                                                blocks,
+                                                metas,
+                                                chunkX,
+                                                chunkZ,
+                                                x,
+                                                this.groundLevel + y,
+                                                z,
+                                                wall);
                                     }
                             // placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel+yWalls, z, wall);
                         } else {
@@ -134,7 +148,15 @@ public class DomedHouseComponent extends GridVillageComponent {
                                 + Math.pow(y + 1, 2)
                                 - 1;
                         if (houseRadiusSq + 1 >= roofRadiusSq && houseRadiusSq - 2 <= roofRadiusSq) {
-                            this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + y + wallHeight, z, wall);
+                            this.placeBlockRel2BB(
+                                    blocks,
+                                    metas,
+                                    chunkX,
+                                    chunkZ,
+                                    x,
+                                    this.groundLevel + y + wallHeight,
+                                    z,
+                                    wall);
                         } else if (x == startX + 1 && z == zCenter && y == 0) {
                             this.placeBlockRel2BB(
                                     blocks,
@@ -198,18 +220,35 @@ public class DomedHouseComponent extends GridVillageComponent {
                 }
 
             }
-            final int highestGroundBlock = this.getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, xCenter, startZ - 1);
+            final int highestGroundBlock = this
+                    .getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, xCenter, startZ - 1);
             // stuff before the door
             if (highestGroundBlock != -1) {
                 // groundLevel and groundLevel +1 should be free, and potentially place
                 // a block at groundLevel-1
                 if (highestGroundBlock >= this.groundLevel) {
                     this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, xCenter, this.groundLevel, startZ - 1, air);
-                    this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, xCenter, this.groundLevel + 1, startZ - 1, air);
+                    this.placeBlockRel2BB(
+                            blocks,
+                            metas,
+                            chunkX,
+                            chunkZ,
+                            xCenter,
+                            this.groundLevel + 1,
+                            startZ - 1,
+                            air);
                 }
                 // place the other stuff anyway...
                 this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, xCenter, this.groundLevel - 1, startZ - 1, path);
-                this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, xCenter, this.groundLevel - 2, startZ - 1, padding);
+                this.placeBlockRel2BB(
+                        blocks,
+                        metas,
+                        chunkX,
+                        chunkZ,
+                        xCenter,
+                        this.groundLevel - 2,
+                        startZ - 1,
+                        padding);
                 // int highestBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
 
             }

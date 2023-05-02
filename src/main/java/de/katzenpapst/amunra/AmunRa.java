@@ -177,24 +177,41 @@ public class AmunRa {
         FMLCommonHandler.instance().bus().register(new CraftingHandler());
         GameRegistry.registerFuelHandler(new FurnaceHandler());
 
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/0.png"));
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/1.png"));
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/2.png"));
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/3.png"));
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/4.png"));
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/5.png"));
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/6.png"));
-        this.possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/7.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/0.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/1.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/2.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/3.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/4.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/5.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/6.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/7.png"));
 
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/0.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/1.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/2.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/3.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/4.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/5.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/6.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/7.png"));
-        this.possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/8.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/0.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/1.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/2.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/3.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/4.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/5.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/6.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/7.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/8.png"));
 
         ConnectionPacketAR.bus = NetworkRegistry.INSTANCE.newEventDrivenChannel(ConnectionPacketAR.CHANNEL);
         ConnectionPacketAR.bus.register(new ConnectionPacketAR());
@@ -276,15 +293,15 @@ public class AmunRa {
         return this.nextID - 1;
     }
 
-    public void registerCreature(final Class<? extends Entity> entityClass, final String entityName, final int eggBgColor,
-            final int eggFgColor) {
+    public void registerCreature(final Class<? extends Entity> entityClass, final String entityName,
+            final int eggBgColor, final int eggFgColor) {
         final int newID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, newID, eggBgColor, eggFgColor);
         EntityRegistry.registerModEntity(entityClass, entityName, this.nextInternalID(), AmunRa.instance, 80, 3, true);
     }
 
-    public void registerNonMobEntity(final Class<? extends Entity> var0, final String var1, final int trackingDistance, final int updateFreq,
-            final boolean sendVel) {
+    public void registerNonMobEntity(final Class<? extends Entity> var0, final String var1, final int trackingDistance,
+            final int updateFreq, final boolean sendVel) {
         EntityRegistry.registerModEntity(
                 var0,
                 var1,
@@ -619,20 +636,22 @@ public class AmunRa {
         config.setStaticConfigValues();
     }
 
-    protected Planet createPlanet(final String name, final String texture, final double phaseShift, final double distance, final double orbitTime) {
+    protected Planet createPlanet(final String name, final String texture, final double phaseShift,
+            final double distance, final double orbitTime) {
         final Planet pl = new Planet(name);
         this.setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
         return pl;
     }
 
-    protected Moon createMoon(final String name, final String texture, final double phaseShift, final double distance, final double orbitTime) {
+    protected Moon createMoon(final String name, final String texture, final double phaseShift, final double distance,
+            final double orbitTime) {
         final Moon pl = new Moon(name);
         this.setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
         return pl;
     }
 
-    protected void setCelestialBodyStuff(final CelestialBody body, final String texture, final double phaseShift, final double distance,
-            final double orbitTime) {
+    protected void setCelestialBodyStuff(final CelestialBody body, final String texture, final double phaseShift,
+            final double distance, final double orbitTime) {
         body.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/" + texture))
                 .setPhaseShift((float) phaseShift)
                 .setRelativeDistanceFromCenter(new ScalableDistance((float) distance, (float) distance))

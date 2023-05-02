@@ -78,8 +78,8 @@ public class SethChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void replaceBlocksForBiome(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta,
-            final BiomeGenBase[] par4ArrayOfBiomeGenBase) {
+    public void replaceBlocksForBiome(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta, final BiomeGenBase[] par4ArrayOfBiomeGenBase) {
         // generate the default stuff first
         super.replaceBlocksForBiome(chunkX, chunkZ, arrayOfIDs, arrayOfMeta, par4ArrayOfBiomeGenBase);
         // now do my stuff
@@ -92,7 +92,8 @@ public class SethChunkProvider extends AmunraChunkProvider {
                     final Block curBlockId = arrayOfIDs[index];
                     final byte curMeta = arrayOfMeta[index];
 
-                    if (curBlockId == this.floorStoneBlock.getBlock() && curMeta == this.floorStoneBlock.getMetadata()) {
+                    if (curBlockId == this.floorStoneBlock.getBlock()
+                            && curMeta == this.floorStoneBlock.getMetadata()) {
 
                         if (surfaceHeight == -1) {
                             surfaceHeight = curY;

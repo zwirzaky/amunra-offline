@@ -85,7 +85,8 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
     @SideOnly(Side.CLIENT)
     @Override
     public float getSunBrightness(final float partialTicks) {
-        final float factor = this.worldObj.getSunBrightnessBody(partialTicks) + this.getAmunBrightnessFactor(partialTicks);
+        final float factor = this.worldObj.getSunBrightnessBody(partialTicks)
+                + this.getAmunBrightnessFactor(partialTicks);
         return factor > 1.0f ? 1.0f : factor;
     }
 
@@ -265,7 +266,8 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
      * @return
      */
     @Override
-    public ArrayList<BlockVec3> getClosestAsteroidsXZ(final int x, final int y, final int z, final int facing, final int count) {
+    public ArrayList<BlockVec3> getClosestAsteroidsXZ(final int x, final int y, final int z, final int facing,
+            final int count) {
         if (this.dataNotLoaded) {
             this.loadAsteroidSavedData();
         }

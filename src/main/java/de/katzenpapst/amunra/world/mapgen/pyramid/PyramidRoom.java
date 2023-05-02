@@ -34,7 +34,8 @@ public class PyramidRoom extends BaseStructureComponent {
     }
 
     @Override
-    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);
 
@@ -87,8 +88,8 @@ public class PyramidRoom extends BaseStructureComponent {
         return true;
     }
 
-    protected void drawCornerColumns(final int yMin, final int yMax, final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
-            final byte[] arrayOfMeta) {
+    protected void drawCornerColumns(final int yMin, final int yMax, final int chunkX, final int chunkZ,
+            final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
 
         for (int y = yMin; y <= yMax; y++) {
             if (placeBlockAbs(
@@ -150,8 +151,8 @@ public class PyramidRoom extends BaseStructureComponent {
 
     }
 
-    protected void makeEntrance(final Block[] arrayOfIDs, final byte[] arrayOfMeta, final StructureBoundingBox chunkBB, final int chunkX,
-            final int chunkZ, final BlockMetaPair floorMat) {
+    protected void makeEntrance(final Block[] arrayOfIDs, final byte[] arrayOfMeta, final StructureBoundingBox chunkBB,
+            final int chunkX, final int chunkZ, final BlockMetaPair floorMat) {
         final StructureBoundingBox entrBoxIntersect = intersectBoundingBoxes(this.entranceBB, chunkBB);
 
         if (entrBoxIntersect != null) {

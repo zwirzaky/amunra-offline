@@ -25,12 +25,13 @@ public class RenderARVillager extends RenderLiving {
         this.villagerModel = (ModelARVillager) this.mainModel;
     }
 
-    protected int shouldVillagerRenderPass(final EntityARVillager par1EntityVillager, final int par2, final float par3) {
+    protected int shouldVillagerRenderPass(final EntityARVillager par1EntityVillager, final int par2,
+            final float par3) {
         return -1;
     }
 
-    public void renderVillager(final EntityARVillager par1EntityVillager, final double par2, final double par4, final double par6, final float par8,
-            final float par9) {
+    public void renderVillager(final EntityARVillager par1EntityVillager, final double par2, final double par4,
+            final double par6, final float par8, final float par9) {
         super.doRender(par1EntityVillager, par2, par4, par6, par8, par9);
     }
 
@@ -52,7 +53,8 @@ public class RenderARVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9) {
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         this.renderVillager((EntityARVillager) par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
@@ -72,8 +74,8 @@ public class RenderARVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8,
-            final float par9) {
+    public void doRender(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4,
+            final double par6, final float par8, final float par9) {
         this.renderVillager((EntityARVillager) par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
 
@@ -83,7 +85,8 @@ public class RenderARVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9) {
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         this.renderVillager((EntityARVillager) par1Entity, par2, par4, par6, par8, par9);
     }
 }

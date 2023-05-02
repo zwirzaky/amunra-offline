@@ -59,7 +59,8 @@ public class ItemJet extends ItemBlockMulti {
         final int length = ((BlockMachineMeta) this.field_150939_a).getNumPossibleSubBlocks();
         this.icons = new IIcon[length];
         for (int i = 0; i < length; i++) {
-            final MothershipEngineJetBase sb = (MothershipEngineJetBase) ((BlockMachineMeta) this.field_150939_a).getSubBlock(i);
+            final MothershipEngineJetBase sb = (MothershipEngineJetBase) ((BlockMachineMeta) this.field_150939_a)
+                    .getSubBlock(i);
             if (sb != null) {
                 this.icons[i] = reg.registerIcon(sb.getItemIconName());
             }
@@ -101,8 +102,9 @@ public class ItemJet extends ItemBlockMulti {
      * @param side   The side the player (or machine) right-clicked on.
      */
     @Override
-    public boolean placeBlockAt(final ItemStack stack, final EntityPlayer player, final World world, final int x, final int y, final int z, final int side,
-            final float hitX, final float hitY, final float hitZ, int metadata) {
+    public boolean placeBlockAt(final ItemStack stack, final EntityPlayer player, final World world, final int x,
+            final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ,
+            int metadata) {
 
         /**
          * 0 -> +Y 1 -> -Y 2 -> -Z 3 -> +Z 4 -> -X 5 -> +X
@@ -152,8 +154,8 @@ public class ItemJet extends ItemBlockMulti {
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(final ItemStack stack, final EntityPlayer player, @SuppressWarnings("rawtypes") final List info,
-            final boolean advanced) {
+    public void addInformation(final ItemStack stack, final EntityPlayer player,
+            @SuppressWarnings("rawtypes") final List info, final boolean advanced) {
         if (this.field_150939_a instanceof IBlockShiftDesc
                 && ((IBlockShiftDesc) this.field_150939_a).showDescription(stack.getItemDamage())) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {

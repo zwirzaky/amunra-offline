@@ -39,7 +39,8 @@ public class RenderLaserArrow extends Render {
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
     @Override
-    public void doRender(final Entity entity, final double x, final double y, final double z, final float p_76986_8_, final float p_76986_9_) {
+    public void doRender(final Entity entity, final double x, final double y, final double z, final float p_76986_8_,
+            final float p_76986_9_) {
         this.bindEntityTexture(entity);
 
         /*

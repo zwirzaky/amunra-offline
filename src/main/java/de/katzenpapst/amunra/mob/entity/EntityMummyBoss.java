@@ -126,8 +126,8 @@ public class EntityMummyBoss extends EntityMob
 
         final double startX = target.posX - this.posX;
         final double startY = target.posY - this.posY - target.height - 1.5D;// target.boundingBox.minY +
-                                                                       // (double)(target.height / 2.0F) - (this.posY +
-                                                                       // (double)(this.height / 2.0F));
+        // (double)(target.height / 2.0F) - (this.posY +
+        // (double)(this.height / 2.0F));
         final double startZ = target.posZ - this.posZ;
 
         final EntityOsirisBossFireball entitylargefireball = new EntityOsirisBossFireball(
@@ -295,8 +295,8 @@ public class EntityMummyBoss extends EntityMob
         return this.getDrops(source, rand, lootLevel, 1, 1);
     }
 
-    protected List<ItemStack> getDrops(final List<ItemStack> source, final Random rand, final int lootLevel, final int minStacks,
-            final int maxStacks) {
+    protected List<ItemStack> getDrops(final List<ItemStack> source, final Random rand, final int lootLevel,
+            final int minStacks, final int maxStacks) {
         final List<ItemStack> result = new ArrayList<>();
         final int size = source.size();
         if (size == 0) {

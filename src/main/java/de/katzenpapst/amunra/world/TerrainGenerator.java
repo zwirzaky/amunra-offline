@@ -59,9 +59,10 @@ public class TerrainGenerator {
      * @param largeFeatureFilterMod Not sure, default = 8
      * @param smallFeatureFilterMod Not sure, default = 8
      */
-    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock, final float heightMod,
-            final float smallFeatureMod, final double mountainHeightMod, final double valleyHeightMod, final double seaLevel, final int maxHeight,
-            final float mainFeatureFilterMod, final float largeFeatureFilterMod, final float smallFeatureFilterMod) {
+    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock,
+            final float heightMod, final float smallFeatureMod, final double mountainHeightMod,
+            final double valleyHeightMod, final double seaLevel, final int maxHeight, final float mainFeatureFilterMod,
+            final float largeFeatureFilterMod, final float smallFeatureFilterMod) {
         this.rand = rand;
 
         this.stoneBlock = stoneBlock;
@@ -91,8 +92,9 @@ public class TerrainGenerator {
     /**
      * "Light" constructor. The other 3 values are set to 4, 8, 8, since that's their values in ChunkProviderSpace
      */
-    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock, final float heightMod,
-            final float smallFeatureMod, final double mountainHeightMod, final double valleyHeightMod, final double seaLevel, final int maxHeight) {
+    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock,
+            final float heightMod, final float smallFeatureMod, final double mountainHeightMod,
+            final double valleyHeightMod, final double seaLevel, final int maxHeight) {
         this(
                 rand,
                 stoneBlock,
@@ -112,8 +114,9 @@ public class TerrainGenerator {
      * Even "lighter" constructor. The other 4 values are set to 255, 4, 8, 8, since that's their values in
      * ChunkProviderSpace
      */
-    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock, final float heightMod,
-            final float smallFeatureMod, final double mountainHeightMod, final double valleyHeightMod, final double seaLevel) {
+    public TerrainGenerator(final Random rand, final BlockMetaPair stoneBlock, final BlockMetaPair airBlock,
+            final float heightMod, final float smallFeatureMod, final double mountainHeightMod,
+            final double valleyHeightMod, final double seaLevel) {
         this(
                 rand,
                 stoneBlock,
@@ -130,8 +133,8 @@ public class TerrainGenerator {
     }
 
     /**
-     * Basically a clone of {@link ChunkProviderSpace#generateTerrain(int, int, Block[], byte[])} I just
-     * need it in a more configurable form
+     * Basically a clone of {@link ChunkProviderSpace#generateTerrain(int, int, Block[], byte[])} I just need it in a
+     * more configurable form
      *
      */
     public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray) {
@@ -146,7 +149,8 @@ public class TerrainGenerator {
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 // magic
-                final double baseHeight = this.noiseGenBase.getNoise(chunkX * 16 + x, chunkZ * 16 + z) * this.heightModifier;
+                final double baseHeight = this.noiseGenBase.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
+                        * this.heightModifier;
                 final double smallHillHeight = this.noiseGenSmallHill.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
                         * this.smallFeatureHeightModifier;
                 double mountainHeight = Math.abs(this.noiseGenMountain.getNoise(chunkX * 16 + x, chunkZ * 16 + z));

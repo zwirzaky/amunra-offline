@@ -20,13 +20,14 @@ public class SlotSchematicShuttle extends Slot {
     // protected final ItemStack validItem;
     protected final ItemDamagePair[] validItem;
 
-    public SlotSchematicShuttle(final IInventory craftMatrix, final int slotIndex, final int xDisplay, final int yDisplay,
-            final Vector3int sparkPosition, final EntityPlayer player) {
+    public SlotSchematicShuttle(final IInventory craftMatrix, final int slotIndex, final int xDisplay,
+            final int yDisplay, final Vector3int sparkPosition, final EntityPlayer player) {
         this(craftMatrix, slotIndex, xDisplay, yDisplay, sparkPosition, player, new ItemDamagePair[] {});
     }
 
-    public SlotSchematicShuttle(final IInventory craftMatrix, final int slotIndex, final int xDisplay, final int yDisplay,
-            final Vector3int sparkPosition, final EntityPlayer player, final ItemDamagePair... validItems) {
+    public SlotSchematicShuttle(final IInventory craftMatrix, final int slotIndex, final int xDisplay,
+            final int yDisplay, final Vector3int sparkPosition, final EntityPlayer player,
+            final ItemDamagePair... validItems) {
         super(craftMatrix, slotIndex, xDisplay, yDisplay);
         // this.index = slotIndex;
         // these coords are only for sparks, I think

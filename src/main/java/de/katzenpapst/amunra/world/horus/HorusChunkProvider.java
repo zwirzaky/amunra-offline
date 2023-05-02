@@ -41,7 +41,12 @@ public class HorusChunkProvider extends AmunraChunkProvider {
         this.pyramid.addComponentType(PyramidRoom.class, 0.5F);
         this.pyramid.addMainRoomType(BossRoom.class, 1.0F);
 
-        this.volcanoGen = new VolcanoGenerator(new BlockMetaPair(Blocks.lava, (byte) 0), this.stoneBlock, this.stoneBlock, 15, true);
+        this.volcanoGen = new VolcanoGenerator(
+                new BlockMetaPair(Blocks.lava, (byte) 0),
+                this.stoneBlock,
+                this.stoneBlock,
+                15,
+                true);
     }
 
     @Override

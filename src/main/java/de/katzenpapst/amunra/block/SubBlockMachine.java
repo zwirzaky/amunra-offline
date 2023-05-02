@@ -18,8 +18,8 @@ public class SubBlockMachine extends SubBlock implements ItemBlockDesc.IBlockShi
         // TODO Auto-generated constructor stub
     }
 
-    public SubBlockMachine(final String name, final String texture, final String tool, final int harvestLevel, final float hardness,
-            final float resistance) {
+    public SubBlockMachine(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }
@@ -39,25 +39,25 @@ public class SubBlockMachine extends SubBlock implements ItemBlockDesc.IBlockShi
      *
      * @return True if something happens
      */
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         return false;
     }
 
-    public boolean onSneakUseWrench(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onSneakUseWrench(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO Auto-generated method stub
         return false;
     }
 
-    public boolean onUseWrench(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onUseWrench(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO Auto-generated method stub
         return false;
     }
 
-    public boolean onSneakMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side,
-            final float hitX, final float hitY, final float hitZ) {
+    public boolean onSneakMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO Auto-generated method stub
         return false;
     }

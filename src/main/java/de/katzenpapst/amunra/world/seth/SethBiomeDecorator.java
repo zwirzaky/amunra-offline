@@ -3,6 +3,7 @@ package de.katzenpapst.amunra.world.seth;
 import java.util.List;
 
 import net.minecraft.init.Blocks;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.AmunraBiomeDecorator;
@@ -19,8 +20,8 @@ public class SethBiomeDecorator extends AmunraBiomeDecorator {
 
         list.add(new WorldGenOre(new BlockMetaPair(Blocks.stone, (byte) 0), 12, packedIce, 8, 60, 120));
         list.add(new WorldGenOre(new BlockMetaPair(Blocks.clay, (byte) 0), 8, packedIce, 4, 60, 70));
-        
-        if(AmunRa.config.generateOres) {
+
+        if (AmunRa.config.generateOres) {
             final BlockMetaPair floorStoneBlock = new BlockMetaPair(Blocks.hardened_clay, (byte) 0);
 
             list.add(new WorldGenOre(ARBlocks.oreAluHardClay, 8, floorStoneBlock, 10, 2, 60));

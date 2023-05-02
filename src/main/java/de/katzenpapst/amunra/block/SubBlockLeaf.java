@@ -26,7 +26,8 @@ public class SubBlockLeaf extends SubBlock {
         // TODO Auto-generated constructor stub
     }
 
-    public SubBlockLeaf(final String name, final String texture, final String tool, final int harvestLevel, final float hardness, final float resistance) {
+    public SubBlockLeaf(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }

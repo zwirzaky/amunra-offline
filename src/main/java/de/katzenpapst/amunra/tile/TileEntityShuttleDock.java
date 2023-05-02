@@ -98,7 +98,9 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                     return; // doesn't work
                 }
                 stack = this.getStackInSlot(0);
-                if (stack == null || stack.stackSize == 0 || !(stack.getItem() instanceof ItemShuttle) || this.isObstructed()) {
+                if (stack == null || stack.stackSize == 0
+                        || !(stack.getItem() instanceof ItemShuttle)
+                        || this.isObstructed()) {
                     return;
                 }
                 shuttleItem = (ItemShuttle) stack.getItem();
@@ -336,9 +338,9 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                     this.dockedEntity = null;
                     this.updateAvailabilityInWorldData();
                 } else // from time to time, reposition?
-                if (this.ticks % 40 == 0) {
-                    this.repositionEntity();
-                }
+                    if (this.ticks % 40 == 0) {
+                        this.repositionEntity();
+                    }
             }
 
             if (this.dockedEntity == null) {
@@ -397,7 +399,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         return new RemovalResult(EnumCargoLoadingState.NOTARGET, null);
     }
 
-    protected void checkTileAt(final HashSet<ILandingPadAttachable> connectedTiles, final int x, final int y, final int z) {
+    protected void checkTileAt(final HashSet<ILandingPadAttachable> connectedTiles, final int x, final int y,
+            final int z) {
         final TileEntity tile = this.worldObj.getTileEntity(x, y, z);
 
         if (tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile)
@@ -494,15 +497,45 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
         switch (this.getRotationMeta()) {
             case 0:
-                return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord - 1, this.xCoord + 1, this.yCoord + 2, this.zCoord + 1);
+                return AxisAlignedBB.getBoundingBox(
+                        this.xCoord,
+                        this.yCoord,
+                        this.zCoord - 1,
+                        this.xCoord + 1,
+                        this.yCoord + 2,
+                        this.zCoord + 1);
             case 1:
-                return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 2, this.zCoord + 2);
+                return AxisAlignedBB.getBoundingBox(
+                        this.xCoord,
+                        this.yCoord,
+                        this.zCoord,
+                        this.xCoord + 1,
+                        this.yCoord + 2,
+                        this.zCoord + 2);
             case 2:
-                return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 2, this.zCoord + 1);
+                return AxisAlignedBB.getBoundingBox(
+                        this.xCoord - 1,
+                        this.yCoord,
+                        this.zCoord,
+                        this.xCoord + 1,
+                        this.yCoord + 2,
+                        this.zCoord + 1);
             case 3:
-                return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 2, this.yCoord + 2, this.zCoord + 1);
+                return AxisAlignedBB.getBoundingBox(
+                        this.xCoord,
+                        this.yCoord,
+                        this.zCoord,
+                        this.xCoord + 2,
+                        this.yCoord + 2,
+                        this.zCoord + 1);
         }
-        return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 2, this.zCoord + 1);
+        return AxisAlignedBB.getBoundingBox(
+                this.xCoord,
+                this.yCoord,
+                this.zCoord,
+                this.xCoord + 1,
+                this.yCoord + 2,
+                this.zCoord + 1);
     }
 
     @Override
@@ -522,7 +555,13 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
     @Override
     public boolean onActivated(final EntityPlayer entityPlayer) {
-        entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_SHUTTLE_DOCK, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        entityPlayer.openGui(
+                AmunRa.instance,
+                GuiIds.GUI_SHUTTLE_DOCK,
+                this.worldObj,
+                this.xCoord,
+                this.yCoord,
+                this.zCoord);
         return true;
     }
 
@@ -535,8 +574,11 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         if (placedPosition.y + 1 > buildHeight) return;
 
         final BlockVec3 vecStrut = new BlockVec3(placedPosition.x, placedPosition.y + 1, placedPosition.z);
-        ARBlocks.metaBlockFake
-                .makeFakeBlock(this.worldObj, vecStrut, new BlockVec3(this.xCoord, this.yCoord, this.zCoord), ARBlocks.fakeBlockSealable);
+        ARBlocks.metaBlockFake.makeFakeBlock(
+                this.worldObj,
+                vecStrut,
+                new BlockVec3(this.xCoord, this.yCoord, this.zCoord),
+                ARBlocks.fakeBlockSealable);
     }
 
     @Override
@@ -636,7 +678,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         return slotNr == 0 && item.getItem() instanceof ItemShuttle;
     }
 
-    protected boolean areBlocksWithin(final int minX, final int minY, final int minZ, final int maxX, final int maxY, final int maxZ) {
+    protected boolean areBlocksWithin(final int minX, final int minY, final int minZ, final int maxX, final int maxY,
+            final int maxZ) {
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
@@ -691,8 +734,9 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     public boolean isAvailable() {
-        if (this.dockedEntity != null || this.hasShuttleDocked) { // the former isn't that reliable, since dockedEntity won't
-                                                             // be set until it has been rediscovered in the update
+        if (this.dockedEntity != null || this.hasShuttleDocked) { // the former isn't that reliable, since dockedEntity
+                                                                  // won't
+            // be set until it has been rediscovered in the update
             return false;
         }
         return !this.isObstructed();

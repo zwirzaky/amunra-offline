@@ -34,7 +34,8 @@ public class SubItemToggle extends SubItem {
         this.inactiveAssetName = inactiveAssetName;
     }
 
-    public SubItemToggle(final String name, final String assetName, final String inactiveAssetName, final String info, final boolean defaultState) {
+    public SubItemToggle(final String name, final String assetName, final String inactiveAssetName, final String info,
+            final boolean defaultState) {
         super(name, assetName, info);
         this.inactiveAssetName = inactiveAssetName;
         this.defaultState = defaultState;
@@ -117,7 +118,8 @@ public class SubItemToggle extends SubItem {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list, final boolean par4) {
+    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list,
+            final boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
         if (this.getState(itemStack)) {

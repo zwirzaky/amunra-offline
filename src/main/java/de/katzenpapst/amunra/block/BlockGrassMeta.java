@@ -31,7 +31,8 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
      */
     @Override
-    public boolean func_149851_a(final World world, final int x, final int y, final int z, final boolean isWorldRemote) {
+    public boolean func_149851_a(final World world, final int x, final int y, final int z,
+            final boolean isWorldRemote) {
         return true;
     }
 

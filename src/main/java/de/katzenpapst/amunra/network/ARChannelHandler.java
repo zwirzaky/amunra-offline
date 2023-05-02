@@ -43,8 +43,10 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
     }
 
     public void sendToAll(final IPacket message) {
-        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALL);
-        this.channels.get(Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
+                .set(FMLOutboundHandler.OutboundTarget.ALL);
+        this.channels.get(Side.SERVER).writeAndFlush(message)
+                .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 
     /**
@@ -58,7 +60,8 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
-        this.channels.get(Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        this.channels.get(Side.SERVER).writeAndFlush(message)
+                .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 
     /**
@@ -72,7 +75,8 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
-        this.channels.get(Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        this.channels.get(Side.SERVER).writeAndFlush(message)
+                .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 
     /**
@@ -86,7 +90,8 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.DIMENSION);
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(dimensionId);
-        this.channels.get(Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        this.channels.get(Side.SERVER).writeAndFlush(message)
+                .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 
     /**
@@ -97,6 +102,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
     public void sendToServer(final IPacket message) {
         this.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-        this.channels.get(Side.CLIENT).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        this.channels.get(Side.CLIENT).writeAndFlush(message)
+                .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 }

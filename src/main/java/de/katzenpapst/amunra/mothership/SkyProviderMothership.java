@@ -91,7 +91,8 @@ public class SkyProviderMothership extends SkyProviderDynamic {
      */
 
     @Override
-    protected void renderSystem(final float partialTicks, final WorldClient world, final Tessellator tess, final Minecraft mc) {
+    protected void renderSystem(final float partialTicks, final WorldClient world, final Tessellator tess,
+            final Minecraft mc) {
         super.renderSystem(partialTicks, world, tess, mc);
 
         // now do the planet we are orbiting
@@ -138,7 +139,8 @@ public class SkyProviderMothership extends SkyProviderDynamic {
             this.curWorldTime = -1;
 
             if (((MothershipWorldProvider) this.worldProvider).getTheoreticalTransitData() != null) {
-                this.jetDirection = ((MothershipWorldProvider) this.worldProvider).getTheoreticalTransitData().direction;
+                this.jetDirection = ((MothershipWorldProvider) this.worldProvider)
+                        .getTheoreticalTransitData().direction;
             } else {
                 this.jetDirection = -1;
             }
@@ -234,7 +236,8 @@ public class SkyProviderMothership extends SkyProviderDynamic {
                 // means we haven't got this from the worldprovider yet
                 // keep bothering it until it gets the packet
                 if (((MothershipWorldProvider) this.worldProvider).getTheoreticalTransitData() != null) {
-                    this.jetDirection = ((MothershipWorldProvider) this.worldProvider).getTheoreticalTransitData().direction;
+                    this.jetDirection = ((MothershipWorldProvider) this.worldProvider)
+                            .getTheoreticalTransitData().direction;
                 }
                 return;
 

@@ -181,45 +181,123 @@ public class RecipeHelper {
         // lithium battery
         GameRegistry.addRecipe(
                 liBattery,
-                " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B', lithiumMeshStack);
+                " X ",
+                "XBX",
+                "XAX",
+                'X',
+                compressedAluStack,
+                'A',
+                enderWaferStack,
+                'B',
+                lithiumMeshStack);
 
         // advanced battery
         GameRegistry.addRecipe(
                 enBattery,
-                " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B', Blocks.redstone_block);
+                " X ",
+                "XBX",
+                "XAX",
+                'X',
+                compressedAluStack,
+                'A',
+                enderWaferStack,
+                'B',
+                Blocks.redstone_block);
 
         // nuclear battery
         GameRegistry.addRecipe(
                 nuBattery,
-                " X ", "XBX", "XAX", 'X', compressedAluStack, 'A', enderWaferStack, 'B', uranMeshStack);
+                " X ",
+                "XBX",
+                "XAX",
+                'X',
+                compressedAluStack,
+                'A',
+                enderWaferStack,
+                'B',
+                uranMeshStack);
 
         // laser diode
         GameRegistry.addRecipe(
                 laserDiodeStack,
-                "XXX", "ABC", "XXX", 'X', compressedAluStack, 'A', Blocks.glass_pane, 'B', ARItems.rubyGem.getItemStack(1), 'C', beamCore);
+                "XXX",
+                "ABC",
+                "XXX",
+                'X',
+                compressedAluStack,
+                'A',
+                Blocks.glass_pane,
+                'B',
+                ARItems.rubyGem.getItemStack(1),
+                'C',
+                beamCore);
 
         // cryo diode
         GameRegistry.addRecipe(
                 cryoDiodeStack,
-                "XXX", "ABC", "XXX", 'X', compressedAluStack, 'A', Blocks.glass_pane, 'B', ARItems.coldCrystal.getItemStack(1), 'C', beamCore);
+                "XXX",
+                "ABC",
+                "XXX",
+                'X',
+                compressedAluStack,
+                'A',
+                Blocks.glass_pane,
+                'B',
+                ARItems.coldCrystal.getItemStack(1),
+                'C',
+                beamCore);
 
         // laser gun
         addRaygunRecipe(
                 raygun,
                 batteries,
-                "XYZ", " AZ", "  B", 'X', laserDiodeStack, 'Y', enderWaferStack, 'Z', compressedSteelStack, 'A', button, 'B', battery);
+                "XYZ",
+                " AZ",
+                "  B",
+                'X',
+                laserDiodeStack,
+                'Y',
+                enderWaferStack,
+                'Z',
+                compressedSteelStack,
+                'A',
+                button,
+                'B',
+                battery);
 
         // cryo gun
         addRaygunRecipe(
                 cryogun,
                 batteries,
-                "XYZ", " AZ", "  B", 'X', cryoDiodeStack, 'Y', enderWaferStack, 'Z', compressedSteelStack, 'A', button, 'B', battery);
+                "XYZ",
+                " AZ",
+                "  B",
+                'X',
+                cryoDiodeStack,
+                'Y',
+                enderWaferStack,
+                'Z',
+                compressedSteelStack,
+                'A',
+                button,
+                'B',
+                battery);
 
         // multitool
         addRaygunRecipe(
                 nanotool,
                 batteries,
-                "NCN", " H ", " B ", 'N', ARItems.naniteCluster.getItemStack(1), 'C', ARItems.naniteControl.getItemStack(1), 'H', compressedTitaniumStack, 'B', battery);
+                "NCN",
+                " H ",
+                " B ",
+                'N',
+                ARItems.naniteCluster.getItemStack(1),
+                'C',
+                ARItems.naniteControl.getItemStack(1),
+                'H',
+                compressedTitaniumStack,
+                'B',
+                battery);
 
         // my crafter
         GameRegistry.addRecipe(
@@ -329,20 +407,29 @@ public class RecipeHelper {
 
         GameRegistry.addRecipe(
                 ARBlocks.getItemStack(ARBlocks.blockBasaltBrick, 4),
-                "XX", "XX", 'X', ARBlocks.getItemStack(ARBlocks.blockBasalt, 1));
+                "XX",
+                "XX",
+                'X',
+                ARBlocks.getItemStack(ARBlocks.blockBasalt, 1));
 
-        GameRegistry.addRecipe(
-                ARBlocks.getItemStack(ARBlocks.blockObsidianBrick, 4),
-                "XX", "XX", 'X', Blocks.obsidian);
+        GameRegistry.addRecipe(ARBlocks.getItemStack(ARBlocks.blockObsidianBrick, 4), "XX", "XX", 'X', Blocks.obsidian);
 
         GameRegistry.addRecipe(
                 ARBlocks.getItemStack(ARBlocks.blockAluCrate, 32),
-                " X ", "X X", " X ", 'X', new ItemStack(GCItems.basicItem, 1, 8));
+                " X ",
+                "X X",
+                " X ",
+                'X',
+                new ItemStack(GCItems.basicItem, 1, 8));
 
         // uranium
         GameRegistry.addRecipe(
                 ARBlocks.getItemStack(ARBlocks.blockUraniumBlock, 1),
-                "XXX", "XXX", "XXX", 'X', ARItems.uraniumIngot.getItemStack(1));
+                "XXX",
+                "XXX",
+                "XXX",
+                'X',
+                ARItems.uraniumIngot.getItemStack(1));
 
         GameRegistry.addShapelessRecipe(
                 ARItems.uraniumIngot.getItemStack(9),
@@ -761,8 +848,9 @@ public class RecipeHelper {
         throw new RuntimeException("Bad input");
     }
 
-    protected static void addCircuitFabricatorRecipe(final ItemStack output, final ItemStack[] crystal, final ItemStack[] silicon1,
-            final ItemStack[] silicon2, final ItemStack[] redstone, final ItemStack[] optional) {
+    protected static void addCircuitFabricatorRecipe(final ItemStack output, final ItemStack[] crystal,
+            final ItemStack[] silicon1, final ItemStack[] silicon2, final ItemStack[] redstone,
+            final ItemStack[] optional) {
         // NEI can understand arrays of ItemStack, I can give it there as is
         final CircuitFabricatorRecipe cfr = new CircuitFabricatorRecipe(
                 output,
@@ -789,13 +877,7 @@ public class RecipeHelper {
                                         element5);
                             }
                         } else {
-                            addCircuitFabricatorRecipeInternal(
-                                    output,
-                                    element,
-                                    element2,
-                                    element3,
-                                    element4,
-                                    null);
+                            addCircuitFabricatorRecipeInternal(output, element, element2, element3, element4, null);
                         }
                     }
                 }
@@ -810,8 +892,8 @@ public class RecipeHelper {
          */
     }
 
-    protected static void addCircuitFabricatorRecipeInternal(final ItemStack output, final ItemStack crystal, final ItemStack silicon1,
-            final ItemStack silicon2, final ItemStack redstone, final ItemStack optional) {
+    protected static void addCircuitFabricatorRecipeInternal(final ItemStack output, final ItemStack crystal,
+            final ItemStack silicon1, final ItemStack silicon2, final ItemStack redstone, final ItemStack optional) {
         if (optional != null) {
 
             CircuitFabricatorRecipes
@@ -960,7 +1042,8 @@ public class RecipeHelper {
      * @param chestSlot2
      * @param chestSlot3
      */
-    public static void addRocketRecipeWithChestPermutations(final Item rocket, final HashMap<Integer, ItemStack> input) {
+    public static void addRocketRecipeWithChestPermutations(final Item rocket,
+            final HashMap<Integer, ItemStack> input) {
         final int chestSlot1 = 19;
         final int chestSlot2 = 20;
         final int chestSlot3 = 21;
@@ -1077,8 +1160,8 @@ public class RecipeHelper {
     }
 
     public static void addRocketRecipeWithChestPermutations(final ItemStack output,
-            final HashMap<Integer, ItemStack> incompleteInput, final int chestSlot1, final int chestSlot2, final int chestSlot3,
-            final RocketRecipeHelper rrh) {
+            final HashMap<Integer, ItemStack> incompleteInput, final int chestSlot1, final int chestSlot2,
+            final int chestSlot3, final RocketRecipeHelper rrh) {
 
         final ArrayList<ItemStack> chest1 = rrh.getStacks(0);
         final ArrayList<ItemStack> chest2 = rrh.getStacks(1);
@@ -1136,7 +1219,8 @@ public class RecipeHelper {
      * gets an arraylist of the recipe. if there are multiple possibilities for the same slot, it will contain multiple
      * itemstacks
      */
-    public static HashMap<Integer, HashSet<ItemDamagePair>> getNasaWorkbenchRecipeForContainer(final Item expectedOutput) {
+    public static HashMap<Integer, HashSet<ItemDamagePair>> getNasaWorkbenchRecipeForContainer(
+            final Item expectedOutput) {
 
         final HashMap<Integer, HashSet<ItemDamagePair>> result = new HashMap<>();
 

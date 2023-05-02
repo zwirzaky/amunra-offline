@@ -378,24 +378,22 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
             // }
         }
         /*
-         * if (this.containingItems[0].getItem() instanceof ItemCanisterGeneric) { if
-         * (this.containingItems[0].getItem() == GCItems.fuelCanister) { int originalDamage =
-         * this.containingItems[0].getItemDamage(); int used = this.fuelTank.fill(new
-         * FluidStack(GalacticraftCore.fluidFuel, ItemCanisterGeneric.EMPTY - originalDamage), true); if
-         * (originalDamage + used == ItemCanisterGeneric.EMPTY) this.containingItems[0] = new
+         * if (this.containingItems[0].getItem() instanceof ItemCanisterGeneric) { if (this.containingItems[0].getItem()
+         * == GCItems.fuelCanister) { int originalDamage = this.containingItems[0].getItemDamage(); int used =
+         * this.fuelTank.fill(new FluidStack(GalacticraftCore.fluidFuel, ItemCanisterGeneric.EMPTY - originalDamage),
+         * true); if (originalDamage + used == ItemCanisterGeneric.EMPTY) this.containingItems[0] = new
          * ItemStack(GCItems.oilCanister, 1, ItemCanisterGeneric.EMPTY); else this.containingItems[0] = new
          * ItemStack(GCItems.fuelCanister, 1, originalDamage + used); } } else { final FluidStack liquid =
-         * FluidContainerRegistry.getFluidForFilledItem(this.containingItems[0]); if (liquid != null) { boolean
-         * isFuel = FluidUtil.testFuel(FluidRegistry.getFluidName(liquid)); if (isFuel) { if
-         * (this.fuelTank.getFluid() == null || this.fuelTank.getFluid().amount + liquid.amount <=
-         * this.fuelTank.getCapacity()) { this.fuelTank.fill(new FluidStack(GalacticraftCore.fluidFuel,
-         * liquid.amount), true); if (FluidContainerRegistry.isBucket(this.containingItems[0]) &&
+         * FluidContainerRegistry.getFluidForFilledItem(this.containingItems[0]); if (liquid != null) { boolean isFuel =
+         * FluidUtil.testFuel(FluidRegistry.getFluidName(liquid)); if (isFuel) { if (this.fuelTank.getFluid() == null ||
+         * this.fuelTank.getFluid().amount + liquid.amount <= this.fuelTank.getCapacity()) { this.fuelTank.fill(new
+         * FluidStack(GalacticraftCore.fluidFuel, liquid.amount), true); if
+         * (FluidContainerRegistry.isBucket(this.containingItems[0]) &&
          * FluidContainerRegistry.isFilledContainer(this.containingItems[0])) { final int amount =
          * this.containingItems[0].stackSize; if (amount > 1) { this.fuelTank.fill(new
          * FluidStack(GalacticraftCore.fluidFuel, (amount - 1) * FluidContainerRegistry.BUCKET_VOLUME), true); }
-         * this.containingItems[0] = new ItemStack(Items.bucket, amount); } else {
-         * this.containingItems[0].stackSize--; if (this.containingItems[0].stackSize == 0) {
-         * this.containingItems[0] = null; } } } } } }
+         * this.containingItems[0] = new ItemStack(Items.bucket, amount); } else { this.containingItems[0].stackSize--;
+         * if (this.containingItems[0].stackSize == 0) { this.containingItems[0] = null; } } } } } }
          */
     }
 
@@ -705,16 +703,24 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
         switch (this.getRotationMeta()) {
             case 0:
                 // rotation = 180.0F;// -> Z
-                return this.xCoord == x && this.yCoord == y && this.zCoord + this.numBoosters >= z && this.zCoord + 1 <= z;
+                return this.xCoord == x && this.yCoord == y
+                        && this.zCoord + this.numBoosters >= z
+                        && this.zCoord + 1 <= z;
             case 1:
                 // rotation = 90.0F;// -> -X
-                return this.zCoord == z && this.yCoord == y && this.xCoord - this.numBoosters <= x && this.xCoord - 1 >= x;
+                return this.zCoord == z && this.yCoord == y
+                        && this.xCoord - this.numBoosters <= x
+                        && this.xCoord - 1 >= x;
             case 2:
                 // rotation = 0;// -> -Z
-                return this.xCoord == x && this.yCoord == y && this.zCoord - this.numBoosters <= z && this.zCoord - 1 >= z;
+                return this.xCoord == x && this.yCoord == y
+                        && this.zCoord - this.numBoosters <= z
+                        && this.zCoord - 1 >= z;
             case 3:
                 // rotation = 270.0F;// -> X
-                return this.zCoord == z && this.yCoord == y && this.xCoord + this.numBoosters >= x && this.xCoord + 1 <= x;
+                return this.zCoord == z && this.yCoord == y
+                        && this.xCoord + this.numBoosters >= x
+                        && this.xCoord + 1 <= x;
         }
         return false;
     }

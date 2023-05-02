@@ -44,7 +44,8 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getServerGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z) {
+    public Object getServerGuiElement(final int ID, final EntityPlayer player, final World world, final int x,
+            final int y, final int z) {
 
         if (FMLCommonHandler.instance().getEffectiveSide() != Side.SERVER) {
             return null;
@@ -76,7 +77,8 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     // @SideOnly(Side.CLIENT)
-    public Object getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z) {
+    public Object getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x,
+            final int y, final int z) {
         if (FMLCommonHandler.instance().getEffectiveSide() != Side.CLIENT) {
             return null;
         }

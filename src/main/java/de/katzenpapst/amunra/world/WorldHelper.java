@@ -17,15 +17,16 @@ public class WorldHelper {
         return new BlockMetaPair(world.getBlock(x, y, z), (byte) world.getBlockMetadata(x, y, z));
     }
 
-    public static boolean isBlockMetaPair(final World world, final int x, final int y, final int z, final BlockMetaPair bmp) {
+    public static boolean isBlockMetaPair(final World world, final int x, final int y, final int z,
+            final BlockMetaPair bmp) {
         return world.getBlock(x, y, z) == bmp.getBlock() && world.getBlockMetadata(x, y, z) == bmp.getMetadata();
     }
 
     /**
      * Drop entity in world, copy over tag compound, too
      */
-    public static void dropItemInWorld(final World world, final ItemStack stack, final double x, final double y, final double z, final double motionX,
-            final double motionY, final double motionZ) {
+    public static void dropItemInWorld(final World world, final ItemStack stack, final double x, final double y,
+            final double z, final double motionX, final double motionY, final double motionZ) {
         final EntityItem itemEntity = new EntityItem(
                 world,
                 x,
@@ -43,7 +44,8 @@ public class WorldHelper {
         world.spawnEntityInWorld(itemEntity);
     }
 
-    public static void dropItemInWorld(final World world, final ItemStack stack, final double x, final double y, final double z) {
+    public static void dropItemInWorld(final World world, final ItemStack stack, final double x, final double y,
+            final double z) {
         dropItemInWorld(world, stack, x, y, z, 0, 0, 0);
     }
 
@@ -54,7 +56,8 @@ public class WorldHelper {
     /**
      * Attempts to ignite the block at the given position from the given direction
      */
-    public static void setFireToBlock(final World worldObj, final int x, final int y, final int z, final double fromX, final double fromY, final double fromZ) {
+    public static void setFireToBlock(final World worldObj, final int x, final int y, final int z, final double fromX,
+            final double fromY, final double fromZ) {
         final double deltaX = x + 0.5 - fromX;
         final double deltaY = y + 0.5 - fromY;
         final double deltaZ = z + 0.5 - fromZ;
@@ -88,7 +91,8 @@ public class WorldHelper {
         }
     }
 
-    public static void setBlockIfFree(final World worldObj, final int x, final int y, final int z, final Block block, final int meta) {
+    public static void setBlockIfFree(final World worldObj, final int x, final int y, final int z, final Block block,
+            final int meta) {
         final Block old = worldObj.getBlock(x, y, z);
         if (old == Blocks.air) {
             // System.out.println("setting "+x+"/"+y+"/"+z+" on fire");
@@ -123,12 +127,12 @@ public class WorldHelper {
 
         // so apparently block.getBlocksMovement does the opposite of what one might expect...
 
-        return b.isAir(worldObj, x, y, z) || b.getBlocksMovement(worldObj, x, y, z) && !b.getMaterial().isLiquid()
-                && !b.getMaterial().isSolid();
+        return b.isAir(worldObj, x, y, z)
+                || b.getBlocksMovement(worldObj, x, y, z) && !b.getMaterial().isLiquid() && !b.getMaterial().isSolid();
     }
 
-    public static Vector3int getHighestNonEmptyBlock(final World world, final int minX, final int maxX, final int minY, final int maxY, final int minZ,
-            final int maxZ) {
+    public static Vector3int getHighestNonEmptyBlock(final World world, final int minX, final int maxX, final int minY,
+            final int maxY, final int minZ, final int maxZ) {
 
         for (int y = maxY; y >= minY; y--) {
             for (int x = minX; x <= maxX; x++) {

@@ -102,7 +102,8 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
     }
 
     @Override
-    public void onUpdate(final ItemStack stack, final World world, final Entity entity, final int stackNumber, final boolean isBeingHeld) {
+    public void onUpdate(final ItemStack stack, final World world, final Entity entity, final int stackNumber,
+            final boolean isBeingHeld) {
         final ItemStack battery = this.getUsedBattery(stack, true);
         battery.getItem().onUpdate(battery, world, entity, stackNumber, isBeingHeld);
         // do I write the battery back in?
@@ -114,7 +115,8 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list, final boolean par4) {
+    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list,
+            final boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
         final Item batItem = this.getUsedBatteryID(itemStack);

@@ -60,7 +60,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
 
     @Override
     public float getMass(final World w, final int x, final int y, final int z, final int meta) {
-        final float parentMass = BlockMassHelper.getBlockMass(w, this.sourceBlock.getBlock(), this.sourceBlock.getMetadata(), x, y, z);
+        final float parentMass = BlockMassHelper
+                .getBlockMass(w, this.sourceBlock.getBlock(), this.sourceBlock.getMetadata(), x, y, z);
         // 4/6 = 2/3, because stairs
         return parentMass * 2.0F / 3.0F;
     }
@@ -128,9 +129,10 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * @return The amount of the explosion absorbed.
      */
     @Override
-    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y, final int z, final double explosionX,
-            final double explosionY, final double explosionZ) {
-        return this.getSourceBlock().getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
+    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y,
+            final int z, final double explosionX, final double explosionY, final double explosionZ) {
+        return this.getSourceBlock()
+                .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     /// block-dependent functions
@@ -181,7 +183,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Can add to the passed in vector for a movement vector to be applied to the entity. Args: x, y, z, entity, vec3d
      */
     @Override
-    public void velocityToAddToEntity(final World world, final int x, final int y, final int z, final Entity ent, final Vec3 vec) {
+    public void velocityToAddToEntity(final World world, final int x, final int y, final int z, final Entity ent,
+            final Vec3 vec) {
         this.getSourceBlock().velocityToAddToEntity(world, x, y, z, ent, vec);
     }
 
@@ -258,7 +261,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
     }
 
     @Override
-    public void breakBlock(final World world, final int x, final int y, final int z, final Block block, final int meta) {
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block block,
+            final int meta) {
         this.getSourceBlock().breakBlock(world, x, y, z, block, meta);
     }
 
@@ -286,8 +290,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * 
      */
     @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player, final int side, final float xOffset,
-            final float yOffset, final float zOffset) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player,
+            final int side, final float xOffset, final float yOffset, final float zOffset) {
         return this.getSourceBlock().onBlockActivated(world, x, y, z, player, 0, 0.0F, 0.0F, 0.0F);
     }
 
@@ -295,7 +299,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
      * Called upon the block being destroyed by an explosion
      */
     @Override
-    public void onBlockDestroyedByExplosion(final World world, final int x, final int y, final int z, final Explosion kaboom) {
+    public void onBlockDestroyedByExplosion(final World world, final int x, final int y, final int z,
+            final Explosion kaboom) {
         this.getSourceBlock().onBlockDestroyedByExplosion(world, x, y, z, kaboom);
     }
 

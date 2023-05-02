@@ -18,12 +18,18 @@ public class BoxHouseComponent extends GridVillageComponent {
     public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] blocks, final byte[] metas) {
 
         // now, how to get the height?
-        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX << 4),
-                                                                              // (chunkX<< 4), (chunkX+1 << 4)-1,
-                                                                              // (chunkX+1 << 4)-1);
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX
+                                                                                    // << 4),
+        // (chunkX<< 4), (chunkX+1 << 4)-1,
+        // (chunkX+1 << 4)-1);
         final int fallbackGround = this.parent.getWorldGroundLevel();
         if (this.groundLevel == -1) {
-            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            this.groundLevel = getAverageGroundLevel(
+                    blocks,
+                    metas,
+                    this.getStructureBoundingBox(),
+                    chunkBB,
+                    fallbackGround);
             if (this.groundLevel == -1) {
                 this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }
@@ -151,11 +157,20 @@ public class BoxHouseComponent extends GridVillageComponent {
                     }
                 }
                 // finally, roof
-                this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + this.houseHeight - 1, z, mat);
+                this.placeBlockRel2BB(
+                        blocks,
+                        metas,
+                        chunkX,
+                        chunkZ,
+                        x,
+                        this.groundLevel + this.houseHeight - 1,
+                        z,
+                        mat);
 
             }
         }
-        final int highestGroundBlock = this.getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, xCenter, startZ - 1);
+        final int highestGroundBlock = this
+                .getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, xCenter, startZ - 1);
         // stuff before the door
         if (highestGroundBlock != -1) {
             // groundLevel and groundLevel +1 should be free, and potentially place
@@ -184,8 +199,8 @@ public class BoxHouseComponent extends GridVillageComponent {
         this.parent.spawnLater(villager, xOffset, y, zOffset);
     }
 
-    private boolean shouldGenerateWindowHere(final int x, final int y, final int z, final int doorPos, final int startX, final int stopX, final int startZ,
-            final int stopZ) {
+    private boolean shouldGenerateWindowHere(final int x, final int y, final int z, final int doorPos, final int startX,
+            final int stopX, final int startZ, final int stopZ) {
         if (y > this.houseHeight - 3 || y < 1) {
             return false;
         }

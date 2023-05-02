@@ -63,7 +63,8 @@ public class ModelRobotVillager extends ModelVillager {
 
     }
 
-    private ModelRenderer generateArm(final float scaleOrSo, final float par2, final int textureX, final int textureY, final boolean mirror) {
+    private ModelRenderer generateArm(final float scaleOrSo, final float par2, final int textureX, final int textureY,
+            final boolean mirror) {
 
         float factor = 1.0F;
         if (mirror) {
@@ -115,8 +116,8 @@ public class ModelRobotVillager extends ModelVillager {
      * "far" arms and legs can swing at most.
      */
     @Override
-    public void setRotationAngles(final float time, final float walkSpeed, final float appendageRotation, final float rotationYaw,
-            final float rotationPitch, final float scale, final Entity p_78087_7_) {
+    public void setRotationAngles(final float time, final float walkSpeed, final float appendageRotation,
+            final float rotationYaw, final float rotationPitch, final float scale, final Entity p_78087_7_) {
         this.villagerHead.rotateAngleY = rotationYaw / (180F / (float) Math.PI);
         this.villagerHead.rotateAngleX = rotationPitch / (180F / (float) Math.PI);
         /*
@@ -133,8 +134,8 @@ public class ModelRobotVillager extends ModelVillager {
      * Sets the models various rotation angles then renders the model.
      */
     @Override
-    public void render(final Entity curEntity, final float timeOrSo, final float p_78088_3_, final float p_78088_4_, final float p_78088_5_,
-            final float p_78088_6_, final float p_78088_7_) {
+    public void render(final Entity curEntity, final float timeOrSo, final float p_78088_3_, final float p_78088_4_,
+            final float p_78088_5_, final float p_78088_6_, final float p_78088_7_) {
         this.setRotationAngles(timeOrSo, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, curEntity);
 
         // animateVisor(timeOrSo);

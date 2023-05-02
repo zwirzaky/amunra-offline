@@ -21,8 +21,8 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
         this.texture = texture;
     }
 
-    protected void renderMSBooster(final TileEntityMothershipEngineBooster entity, final double x, final double y, final double z,
-            final float partialTickTime) {
+    protected void renderMSBooster(final TileEntityMothershipEngineBooster entity, final double x, final double y,
+            final double z, final float partialTickTime) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
 
@@ -158,7 +158,8 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTickTime) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z,
+            final float partialTickTime) {
         this.renderMSBooster((TileEntityMothershipEngineBooster) entity, x, y, z, partialTickTime);
     }
 

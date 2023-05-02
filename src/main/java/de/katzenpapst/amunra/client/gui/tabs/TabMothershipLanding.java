@@ -20,8 +20,8 @@ public class TabMothershipLanding extends AbstractPermissionTab {
             AmunRa.ASSETPREFIX,
             "textures/gui/landing-permission.png");
 
-    public TabMothershipLanding(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent, final Minecraft mc,
-            final int width, final int height, final int xSize, final int ySize) {
+    public TabMothershipLanding(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent,
+            final Minecraft mc, final int width, final int height, final int xSize, final int ySize) {
         super(tile, parent, mc, width, height, xSize, ySize);
     }
 

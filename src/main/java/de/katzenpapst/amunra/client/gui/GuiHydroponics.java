@@ -141,7 +141,8 @@ public class GuiHydroponics extends GuiContainerGC {
         } else if (growStatus < 1.0F) {
             this.button.displayString = GCCoreUtil.translate("tile.hydroponics.fertilize");
             final ItemStack stack = this.tile.getStackInSlot(1);
-            this.button.enabled = stack != null && stack.stackSize > 0 && TileEntityHydroponics.bonemeal.isSameItem(stack);
+            this.button.enabled = stack != null && stack.stackSize > 0
+                    && TileEntityHydroponics.bonemeal.isSameItem(stack);
         } else {
             this.button.displayString = GCCoreUtil.translate("tile.hydroponics.harvest");
             this.button.enabled = true;

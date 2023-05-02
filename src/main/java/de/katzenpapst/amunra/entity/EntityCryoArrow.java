@@ -37,7 +37,8 @@ public class EntityCryoArrow extends EntityBaseLaserArrow {
         return regularDamage;
     }
 
-    public EntityCryoArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target, final float randMod) {
+    public EntityCryoArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target,
+            final float randMod) {
         super(world, shootingEntity, target, randMod);
     }
 

@@ -12,7 +12,8 @@ public class InitBossSpawner extends AbstractPopulator {
 
     protected Class<? extends IAmunRaBoss> entityClass;
 
-    public InitBossSpawner(final int x, final int y, final int z, final AxisAlignedBB aabb, final Class<? extends IAmunRaBoss> entityClass) {
+    public InitBossSpawner(final int x, final int y, final int z, final AxisAlignedBB aabb,
+            final Class<? extends IAmunRaBoss> entityClass) {
         super(x, y, z);
         this.aabb = aabb;
         this.entityClass = entityClass;

@@ -31,8 +31,8 @@ public class RenderShuttle extends Render {
         return this.rocketTexture;
     }
 
-    public void renderSpaceship(final EntitySpaceshipBase entity, final double par2, final double par4, final double par6, final float par8,
-            final float par9) {
+    public void renderSpaceship(final EntitySpaceshipBase entity, final double par2, final double par4,
+            final double par6, final float par8, final float par9) {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPushMatrix();
         final float var24 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * par9 + 180;
@@ -75,7 +75,8 @@ public class RenderShuttle extends Render {
     }
 
     @Override
-    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9) {
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         this.renderSpaceship((EntitySpaceshipBase) par1Entity, par2, par4, par6, par8, par9);
     }
 

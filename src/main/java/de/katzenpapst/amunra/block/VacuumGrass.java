@@ -16,7 +16,8 @@ public class VacuumGrass extends SubBlockGrass {
     @SideOnly(Side.CLIENT)
     protected IIcon blockIconBottom;
 
-    public VacuumGrass(final String name, final String textureTop, final String textureSide, final String textureBottom) {
+    public VacuumGrass(final String name, final String textureTop, final String textureSide,
+            final String textureBottom) {
         super(name, textureTop, textureSide, textureBottom);
     }
 

@@ -83,8 +83,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y, final int z, final double explosionX,
-            final double explosionY, final double explosionZ) {
+    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y,
+            final int z, final double explosionX, final double explosionY, final double explosionZ) {
         final int metadata = world.getBlockMetadata(x, y, z);
 
         return this.getSubBlock(metadata)
@@ -109,8 +109,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         return ((SubBlockMachine) this.getSubBlock(world.getBlockMetadata(x, y, z)))
                 .onMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
     }
@@ -162,7 +162,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z, final EntityPlayer player) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z, final EntityPlayer player) {
         final int meta = world.getBlockMetadata(x, y, z);
         if (this.getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
@@ -172,7 +173,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         return this.getPickBlock(target, world, x, y, z, null);
     }
 
@@ -205,8 +207,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public boolean onUseWrench(final World par1World, final int x, final int y, final int z, final EntityPlayer par5EntityPlayer, final int side,
-            final float hitX, final float hitY, final float hitZ) {
+    public boolean onUseWrench(final World par1World, final int x, final int y, final int z,
+            final EntityPlayer par5EntityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         final int metadata = par1World.getBlockMetadata(x, y, z);
         if (!this.getSubBlock(metadata).canBeMoved(par1World, x, y, z)) {
             return false;
@@ -242,7 +244,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase entityLiving, final ItemStack itemStack) {
+    public void onBlockPlacedBy(final World world, final int x, final int y, final int z,
+            final EntityLivingBase entityLiving, final ItemStack itemStack) {
         final int metadata = world.getBlockMetadata(x, y, z);
 
         final int dist = this.getDistinctionMeta(metadata);
@@ -322,8 +325,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         final int meta = world.getBlockMetadata(x, y, z);
 
         // do the wrench stuff, too
@@ -335,14 +338,17 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
         if (this.isUsableWrench(entityPlayer, entityPlayer.inventory.getCurrentItem(), x, y, z)) {
             this.damageWrench(entityPlayer, entityPlayer.inventory.getCurrentItem(), x, y, z);
 
-            if ((entityPlayer.isSneaking() && this.onSneakUseWrench(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) || this.onUseWrench(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
+            if ((entityPlayer.isSneaking()
+                    && this.onSneakUseWrench(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ))
+                    || this.onUseWrench(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
                 return true;
             }
         }
         // handle the other stuff in the subblock
         final SubBlockMachine sb = (SubBlockMachine) this.getSubBlock(meta);
 
-        if (entityPlayer.isSneaking() && sb.onSneakMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
+        if (entityPlayer.isSneaking()
+                && sb.onSneakMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
             return true;
         }
 
@@ -356,7 +362,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public void breakBlock(final World world, final int x, final int y, final int z, final Block block, final int metadata) {
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block block,
+            final int metadata) {
         this.getSubBlock(metadata).breakBlock(world, x, y, z, block, metadata);
         super.breakBlock(world, x, y, z, block, metadata);
     }
@@ -383,7 +390,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
     @Override
-    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ, final int meta) {
+    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX,
+            final float hitY, final float hitZ, final int meta) {
         return this.getSubBlock(meta).onBlockPlaced(w, x, y, z, side, hitX, hitY, hitZ, meta);
     }
 
@@ -393,14 +401,16 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z, final boolean willHarvest) {
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z,
+            final boolean willHarvest) {
         final int meta = world.getBlockMetadata(x, y, z);
         return this.getSubBlock(meta).removedByPlayer(world, player, x, y, z, willHarvest);
     }
 
     @Override
     @Deprecated
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z) {
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y,
+            final int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         this.getSubBlock(meta).removedByPlayer(world, player, x, y, z);
         return false;
@@ -412,7 +422,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public boolean canReplace(final World world, final int x, final int y, final int z, final int probablySide, final ItemStack stack) {
+    public boolean canReplace(final World world, final int x, final int y, final int z, final int probablySide,
+            final ItemStack stack) {
         if (stack != null) {
             return this.getSubBlock(stack.getItemDamage()).canReplace(world, x, y, z, probablySide, stack);
         }

@@ -18,7 +18,8 @@ public class DynamicTexturedButton extends GuiButton {
         this.texture = initialTexture;
     }
 
-    public DynamicTexturedButton(final int id, final int x, final int y, final int width, final int height, final ResourceLocation initialTexture) {
+    public DynamicTexturedButton(final int id, final int x, final int y, final int width, final int height,
+            final ResourceLocation initialTexture) {
         super(id, x, y, width, height, "");
         this.texture = initialTexture;
     }

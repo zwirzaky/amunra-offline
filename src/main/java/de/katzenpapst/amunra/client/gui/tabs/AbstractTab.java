@@ -51,14 +51,16 @@ abstract public class AbstractTab {
 
     protected GuiContainerGC parent;
 
-    public AbstractTab(final GuiContainerGC parent, final Minecraft mc, final int width, final int height, final int xSize, final int ySize) {
+    public AbstractTab(final GuiContainerGC parent, final Minecraft mc, final int width, final int height,
+            final int xSize, final int ySize) {
         this.setWorldAndResolution(mc, width, height, xSize, ySize);
         this.parent = parent;
     }
 
     abstract public void initGui();
 
-    public void setWorldAndResolution(final Minecraft mc, final int width, final int height, final int xSize, final int ySize) {
+    public void setWorldAndResolution(final Minecraft mc, final int width, final int height, final int xSize,
+            final int ySize) {
         this.mc = mc;
         this.fontRendererObj = mc.fontRenderer;
         this.width = width;
@@ -142,7 +144,8 @@ abstract public class AbstractTab {
         }
     }
 
-    protected void mouseClickMove(final int mouseX, final int mouseY, final int clickedMouseButton, final long timeSinceLastClick) {}
+    protected void mouseClickMove(final int mouseX, final int mouseY, final int clickedMouseButton,
+            final long timeSinceLastClick) {}
 
     protected void mouseMovedOrUp(final int mouseX, final int mouseY, final int state) {
         if (this.selectedButton != null && state == 0) {
@@ -209,8 +212,8 @@ abstract public class AbstractTab {
                     this.selectedButton = event.button;
                     event.button.func_146113_a(this.mc.getSoundHandler());
                     this.actionPerformed(event.button);
-                    if (this.equals(this.mc.currentScreen)) MinecraftForge.EVENT_BUS.post(
-                            new ActionPerformedEvent.Post(this.parent, event.button, this.buttonList));
+                    if (this.equals(this.mc.currentScreen)) MinecraftForge.EVENT_BUS
+                            .post(new ActionPerformedEvent.Post(this.parent, event.button, this.buttonList));
                 }
             }
         }

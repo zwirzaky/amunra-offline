@@ -109,7 +109,7 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
         // TODO fill in with caves and villages
-        return Arrays.asList(this.gVillage/*, this.pyramid*/);
+        return Arrays.asList(this.gVillage/* , this.pyramid */);
     }
 
     @Override

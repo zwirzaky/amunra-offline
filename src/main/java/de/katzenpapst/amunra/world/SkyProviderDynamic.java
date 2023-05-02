@@ -51,7 +51,8 @@ public class SkyProviderDynamic extends IRenderHandler {
         // the body to render
         public CelestialBody body;
 
-        public BodyRenderTask(final CelestialBody body, final double angle, final double zIndex, final double scale, final double phaseAngle) {
+        public BodyRenderTask(final CelestialBody body, final double angle, final double zIndex, final double scale,
+                final double phaseAngle) {
             this.body = body;
             this.angle = fixAngle(angle);
             this.zIndex = zIndex;
@@ -597,8 +598,8 @@ public class SkyProviderDynamic extends IRenderHandler {
      * @param distanceToParent    distance to the parent
      * @return
      */
-    protected BodyRenderTask renderSiblingBody(final CelestialBody body, final double curBodyOrbitalAngle, final long curWorldTime,
-            final float partialTicks, final double timeFactor, final double distanceToParent) {
+    protected BodyRenderTask renderSiblingBody(final CelestialBody body, final double curBodyOrbitalAngle,
+            final long curWorldTime, final float partialTicks, final double timeFactor, final double distanceToParent) {
         final float dist = body.getRelativeDistanceFromCenter().unScaledDistance;
 
         // orbital angle of the planet
@@ -613,8 +614,9 @@ public class SkyProviderDynamic extends IRenderHandler {
         final double innerAngle = fixAngle(curOrbitalAngle - curBodyOrbitalAngle);// Math.PI-curOrbitalAngle;
 
         // distance between curBody<-->planet, also needed for scaling
-        final double distanceToPlanet = this.getDistanceToBody(innerAngle, distanceToParent, dist); // = sqrt( r1² + r2² - 2*r1*r2
-                                                                                         // - cos(innerAngle) )
+        final double distanceToPlanet = this.getDistanceToBody(innerAngle, distanceToParent, dist); // = sqrt( r1² + r2²
+                                                                                                    // - 2*r1*r2
+        // - cos(innerAngle) )
 
         final double projectedAngle = this.projectAngle(innerAngle, dist, distanceToPlanet, distanceToParent);
 
@@ -678,11 +680,13 @@ public class SkyProviderDynamic extends IRenderHandler {
      * @param curWorldTime
      * @param partialTicks
      */
-    protected void renderSiblingPlanets(final double curBodyOrbitalAngle, final long curWorldTime, final float partialTicks) {
+    protected void renderSiblingPlanets(final double curBodyOrbitalAngle, final long curWorldTime,
+            final float partialTicks) {
         for (final Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
             // oh well I hope this doesn't kill the performance
 
-            if (planet.getParentSolarSystem() != this.curSystem || planet.equals(this.curBodyPlanet) || AmunRa.config.bodiesNoRender.contains(planet.getName())) {
+            if (planet.getParentSolarSystem() != this.curSystem || planet.equals(this.curBodyPlanet)
+                    || AmunRa.config.bodiesNoRender.contains(planet.getName())) {
                 continue;
             }
 
@@ -704,7 +708,8 @@ public class SkyProviderDynamic extends IRenderHandler {
         double curOrbitalAngle;
         for (final Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
             // oh well I hope this doesn't kill the performance
-            if (planet.getParentSolarSystem() != this.curSystem || planet.equals(this.curBodyPlanet) || AmunRa.config.bodiesNoRender.contains(planet.getName())) {
+            if (planet.getParentSolarSystem() != this.curSystem || planet.equals(this.curBodyPlanet)
+                    || AmunRa.config.bodiesNoRender.contains(planet.getName())) {
                 continue;
             }
 
@@ -759,7 +764,8 @@ public class SkyProviderDynamic extends IRenderHandler {
                 moonSize = 0.6;
             }
 
-            final double distance = moonSize / moon.getRelativeDistanceFromCenter().unScaledDistance * this.childMoonFactor;
+            final double distance = moonSize / moon.getRelativeDistanceFromCenter().unScaledDistance
+                    * this.childMoonFactor;
             this.nearBodiesToRender
                     .add(new BodyRenderTask(moon, curOrbitalAngle, zIndex, distance, Math.PI - curOrbitalAngle));
         }
@@ -785,7 +791,8 @@ public class SkyProviderDynamic extends IRenderHandler {
 
         final double mainBodyOrbitalAngle = Math.PI - curOrbitalAngle;
         final double zIndex = (float) (20 / distanceToParent);
-        final double distance = (float) (this.curBodyPlanet.getRelativeSize() / distanceToParent) * this.parentPlanetFactor;
+        final double distance = (float) (this.curBodyPlanet.getRelativeSize() / distanceToParent)
+                * this.parentPlanetFactor;
         // my parent
         this.nearBodiesToRender
                 .add(new BodyRenderTask(this.curBodyPlanet, mainBodyOrbitalAngle, zIndex, distance, curOrbitalAngle));
@@ -796,7 +803,8 @@ public class SkyProviderDynamic extends IRenderHandler {
 
         final double zIndex = (float) (20 / distanceToParent);
         // double mainBodyOrbitalAngle = Math.PI-curOrbitalAngle;
-        final double distance = (float) (this.curBodyPlanet.getRelativeSize() / distanceToParent) * this.parentPlanetFactor;
+        final double distance = (float) (this.curBodyPlanet.getRelativeSize() / distanceToParent)
+                * this.parentPlanetFactor;
 
         final BodyRenderTask task = new BodyRenderTask(
                 bodyToRender,
@@ -875,7 +883,8 @@ public class SkyProviderDynamic extends IRenderHandler {
         return curOrbitalAngle;
     }
 
-    protected void renderSystem(final float partialTicks, final WorldClient world, final Tessellator tess, final Minecraft mc) {
+    protected void renderSystem(final float partialTicks, final WorldClient world, final Tessellator tess,
+            final Minecraft mc) {
         // assume we are at the position of the sun
 
         this.farBodiesToRender.clear();
@@ -937,8 +946,8 @@ public class SkyProviderDynamic extends IRenderHandler {
         GL11.glPopMatrix();
     }
 
-    protected double getOrbitalAngle(final double relOrbitTime, final double phaseShift, final long worldTime, final double partialTicks,
-            final double orbitFactor) {
+    protected double getOrbitalAngle(final double relOrbitTime, final double phaseShift, final long worldTime,
+            final double partialTicks, final double orbitFactor) {
 
         final double curYearLength = relOrbitTime * orbitFactor;
         final long j = worldTime % (long) curYearLength;
@@ -946,7 +955,8 @@ public class SkyProviderDynamic extends IRenderHandler {
         return orbitPos * PI_DOUBLE + phaseShift;
     }
 
-    private double getDistanceToBody(final double innerAngle, final double bodyDistance, final double otherBodyDistance) {
+    private double getDistanceToBody(final double innerAngle, final double bodyDistance,
+            final double otherBodyDistance) {
         return Math.sqrt(
                 Math.pow(otherBodyDistance, 2) + Math.pow(bodyDistance, 2)
                         - 2 * otherBodyDistance * bodyDistance * Math.cos(innerAngle));
@@ -961,8 +971,8 @@ public class SkyProviderDynamic extends IRenderHandler {
      * @param distFromThisToOtherBody
      * @return
      */
-    private double projectAngle(final double innerAngle, final double otherBodyDistance, final double distFromThisToOtherBody,
-            final double curBodyDistance) {
+    private double projectAngle(final double innerAngle, final double otherBodyDistance,
+            final double distFromThisToOtherBody, final double curBodyDistance) {
         // omg now do dark mathemagic
 
         final double sinBeta = Math.sin(innerAngle);
@@ -991,8 +1001,8 @@ public class SkyProviderDynamic extends IRenderHandler {
         return Math.PI - angleAroundCurBody;
     }
 
-    protected void renderSunAura(final Tessellator tessellator1, final Vector3 color, final double size, final double brightness,
-            double zIndex) {
+    protected void renderSunAura(final Tessellator tessellator1, final Vector3 color, final double size,
+            final double brightness, double zIndex) {
         GL11.glPushMatrix();
         // Vector3f basecolor = new Vector3f(0.94890916F, 0.72191525F, 0.6698182F);
         GL11.glShadeModel(GL11.GL_SMOOTH);
@@ -1035,8 +1045,8 @@ public class SkyProviderDynamic extends IRenderHandler {
         GL11.glPopMatrix();
     }
 
-    protected void renderRing(final Tessellator tessellator1, final RingsRenderInfo ringTexture, final double angle, double zIndex,
-            final double scale, final double phaseAngle) {
+    protected void renderRing(final Tessellator tessellator1, final RingsRenderInfo ringTexture, final double angle,
+            double zIndex, final double scale, final double phaseAngle) {
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(ringTexture.textureLocation);
 
         zIndex += 0.1;
@@ -1107,8 +1117,8 @@ public class SkyProviderDynamic extends IRenderHandler {
 
     }
 
-    protected void renderPlanetByAngle(final Tessellator tessellator1, final CelestialBody body, final double angle, final double zIndex,
-            final double scale, final double phaseAngle) {
+    protected void renderPlanetByAngle(final Tessellator tessellator1, final CelestialBody body, final double angle,
+            final double zIndex, final double scale, final double phaseAngle) {
 
         // at a scale of 0.15, the body is about 2x2 pixels
         // so this is rather generous, I think
@@ -1177,8 +1187,8 @@ public class SkyProviderDynamic extends IRenderHandler {
 
     }
 
-    private void drawPhaseOverlay(final double phaseAngle, final CelestialBody body, final double overlayScale, final Tessellator tessellator1,
-            final double zIndex) {
+    private void drawPhaseOverlay(final double phaseAngle, final CelestialBody body, final double overlayScale,
+            final Tessellator tessellator1, final double zIndex) {
         double startOffset = 0;
         double stopOffset = 0;
 
@@ -1189,8 +1199,9 @@ public class SkyProviderDynamic extends IRenderHandler {
         boolean canBeBehindTheSun = false;
 
         // canBeBehindTheSun might be true
-        if (body instanceof Planet && !body.equals(this.curBodyPlanet) && body.getRelativeDistanceFromCenter().unScaledDistance
-                > this.curBodyPlanet.getRelativeDistanceFromCenter().unScaledDistance) {
+        if (body instanceof Planet && !body.equals(this.curBodyPlanet)
+                && body.getRelativeDistanceFromCenter().unScaledDistance
+                        > this.curBodyPlanet.getRelativeDistanceFromCenter().unScaledDistance) {
             canBeBehindTheSun = true;
         }
 

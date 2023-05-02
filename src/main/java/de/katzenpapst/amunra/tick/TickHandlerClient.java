@@ -54,8 +54,9 @@ public class TickHandlerClient {
                  */
             } else if (world.provider instanceof AmunRaAsteroidWorldProvider && (world.provider.getSkyRenderer() == null
                     || world.provider.getSkyRenderer() instanceof SkyProviderAsteroids)) {
-                world.provider.setSkyRenderer(new SkyProviderDynamic((IGalacticraftWorldProvider) world.provider));
-            }
+                        world.provider
+                                .setSkyRenderer(new SkyProviderDynamic((IGalacticraftWorldProvider) world.provider));
+                    }
 
             if (world.isRemote && TickHandlerServer.mothershipData != null) {
                 TickHandlerServer.mothershipData.tickAllMothershipsClient();

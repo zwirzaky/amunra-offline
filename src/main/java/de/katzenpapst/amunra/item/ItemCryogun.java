@@ -17,7 +17,8 @@ public class ItemCryogun extends ItemAbstractRaygun {
     }
 
     @Override
-    protected EntityBaseLaserArrow createProjectile(final ItemStack itemStack, final EntityPlayer entityPlayer, final World world) {
+    protected EntityBaseLaserArrow createProjectile(final ItemStack itemStack, final EntityPlayer entityPlayer,
+            final World world) {
         return new EntityCryoArrow(world, entityPlayer);
     }
 

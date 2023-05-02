@@ -21,7 +21,8 @@ public class RenderHydroponics extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z, final float partialTicks) {
+    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z,
+            final float partialTicks) {
         if (te instanceof TileEntityHydroponics tile) {
             GL11.glPushMatrix();
             GL11.glTranslatef((float) x, (float) y, (float) z);
@@ -33,7 +34,8 @@ public class RenderHydroponics extends TileEntitySpecialRenderer {
                 final TileEntity cur = connections[i];
                 final ForgeDirection direction = ForgeDirection.values()[i];
 
-                if (cur instanceof IOxygenReceiver && ((IOxygenReceiver) cur).getOxygenRequest(direction.getOpposite()) <= 0) {
+                if (cur instanceof IOxygenReceiver
+                        && ((IOxygenReceiver) cur).getOxygenRequest(direction.getOpposite()) <= 0) {
                     connections[i] = null;
                 }
             }

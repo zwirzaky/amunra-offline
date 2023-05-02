@@ -18,7 +18,8 @@ public class PodSapling extends AbstractSapling {
         super(name, texture);
     }
 
-    protected boolean canGenerateHere(final World world, final Random rand, final int x, final int y, final int z, final int height, final double outerRadius) {
+    protected boolean canGenerateHere(final World world, final Random rand, final int x, final int y, final int z,
+            final int height, final double outerRadius) {
         for (int curY = -1; curY < height + 3; curY++) {
             for (int curX = (int) -outerRadius; curX <= +outerRadius; curX++) {
                 for (int curZ = (int) -outerRadius; curZ <= +outerRadius; curZ++) {
@@ -39,7 +40,8 @@ public class PodSapling extends AbstractSapling {
     }
 
     @Override
-    public boolean generate(final World world, final Random rand, final int x, final int y, final int z, final boolean notify) {
+    public boolean generate(final World world, final Random rand, final int x, final int y, final int z,
+            final boolean notify) {
         final double heightHalf = Math.ceil(this.height / 2) + rand.nextInt(3);
         final double centerOffset = 3 + rand.nextInt(2);
 

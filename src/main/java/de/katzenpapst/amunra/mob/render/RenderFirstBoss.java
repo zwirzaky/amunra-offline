@@ -28,7 +28,8 @@ public class RenderFirstBoss extends RenderBiped {
     }
 
     @Override
-    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9) {
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         BossStatus.setBossStatus((IBossDisplayData) par1EntityLiving, false);
 
         super.doRender(par1EntityLiving, par2, par4, par6, par8, par9);

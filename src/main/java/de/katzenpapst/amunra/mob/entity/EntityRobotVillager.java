@@ -154,8 +154,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
                 if (this.needsInit) {
                     if (this.buyingList.size() > 1) {
                         @SuppressWarnings("unchecked")
-                        final
-                        Iterator<MerchantRecipe> iterator = this.buyingList.iterator();
+                        final Iterator<MerchantRecipe> iterator = this.buyingList.iterator();
 
                         while (iterator.hasNext()) {
                             final MerchantRecipe merchantrecipe = iterator.next();

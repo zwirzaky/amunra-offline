@@ -23,7 +23,8 @@ public class SubBlockGrass extends SubBlock {
     protected String textureSide;
     protected String textureBottom;
 
-    public SubBlockGrass(final String name, final String textureTop, final String textureSide, final String textureBottom) {
+    public SubBlockGrass(final String name, final String textureTop, final String textureSide,
+            final String textureBottom) {
         // super(name, textureTop);
         super(name, textureTop, "shovel", 1, 0.5F, 2.5F);
         this.textureSide = textureSide;

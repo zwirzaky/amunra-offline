@@ -17,8 +17,8 @@ public class AIFollowClosest extends EntityAIBase {
     private final Class<? extends Entity> watchedClass;
     protected float minDistance;
 
-    public AIFollowClosest(final EntityLiving user, final Class<? extends Entity> classToFollow, final float maxDistance,
-            final float minDistance) {
+    public AIFollowClosest(final EntityLiving user, final Class<? extends Entity> classToFollow,
+            final float maxDistance, final float minDistance) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;
         this.maxDistanceForPlayer = maxDistance;
@@ -26,8 +26,8 @@ public class AIFollowClosest extends EntityAIBase {
         this.setMutexBits(2);
     }
 
-    public AIFollowClosest(final EntityLiving user, final Class<? extends Entity> classToFollow, final float maxDistance,
-            final float minDistance, final float probability) {
+    public AIFollowClosest(final EntityLiving user, final Class<? extends Entity> classToFollow,
+            final float maxDistance, final float minDistance, final float probability) {
         this.theWatcher = user;
         this.watchedClass = classToFollow;
         this.maxDistanceForPlayer = maxDistance;
@@ -53,8 +53,7 @@ public class AIFollowClosest extends EntityAIBase {
         } else {
             this.closestEntity = this.theWatcher.worldObj.findNearestEntityWithinAABB(
                     this.watchedClass,
-                    this.theWatcher.boundingBox
-                            .expand(this.maxDistanceForPlayer, 3.0D, this.maxDistanceForPlayer),
+                    this.theWatcher.boundingBox.expand(this.maxDistanceForPlayer, 3.0D, this.maxDistanceForPlayer),
                     this.theWatcher);
         }
 
@@ -66,12 +65,9 @@ public class AIFollowClosest extends EntityAIBase {
      */
     @Override
     public boolean continueExecuting() {
-        return !this.closestEntity
-                .isEntityAlive()
-                        ? false
-                        : this.theWatcher.getDistanceSqToEntity(this.closestEntity)
-                                > this.maxDistanceForPlayer * this.maxDistanceForPlayer ? false
-                                        : this.lookTime > 0;
+        return !this.closestEntity.isEntityAlive() ? false
+                : this.theWatcher.getDistanceSqToEntity(this.closestEntity)
+                        > this.maxDistanceForPlayer * this.maxDistanceForPlayer ? false : this.lookTime > 0;
     }
 
     /**

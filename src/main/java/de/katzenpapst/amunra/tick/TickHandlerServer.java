@@ -101,38 +101,38 @@ public class TickHandlerServer {
                                 }
                             } else if (!parent.getReachable()
                                     || parent.getTierRequirement() > AmunRa.config.mothershipMaxTier) {
-                                // crash into
-                                if (e instanceof EntityLivingBase) {
-                                    ((EntityLivingBase) e).attackEntityFrom(
-                                            DamageSourceAR.getDSCrashIntoPlanet(parent),
-                                            9001);
-                                } else {
-                                    e.worldObj.removeEntity(e);
-                                }
-                            } else {
-                                if (e instanceof EntityPlayerMP && e.ridingEntity instanceof EntityShuttle) {
-                                    this.sendPlayerInShuttleToPlanet(
-                                            (EntityPlayerMP) e,
-                                            (EntityShuttle) e.ridingEntity,
-                                            world,
-                                            parent.getDimensionID());
-                                } else if (e instanceof EntityShuttle
-                                        && e.riddenByEntity instanceof EntityPlayerMP) {
+                                        // crash into
+                                        if (e instanceof EntityLivingBase) {
+                                            ((EntityLivingBase) e).attackEntityFrom(
+                                                    DamageSourceAR.getDSCrashIntoPlanet(parent),
+                                                    9001);
+                                        } else {
+                                            e.worldObj.removeEntity(e);
+                                        }
+                                    } else {
+                                        if (e instanceof EntityPlayerMP && e.ridingEntity instanceof EntityShuttle) {
                                             this.sendPlayerInShuttleToPlanet(
-                                                    (EntityPlayerMP) e.riddenByEntity,
-                                                    (EntityShuttle) e,
+                                                    (EntityPlayerMP) e,
+                                                    (EntityShuttle) e.ridingEntity,
                                                     world,
                                                     parent.getDimensionID());
-                                        } else {
-                                            // go there naked, as GC intended
-                                            WorldUtil.transferEntityToDimension(
-                                                    e,
-                                                    parent.getDimensionID(),
-                                                    world,
-                                                    false,
-                                                    null);
-                                        }
-                            }
+                                        } else if (e instanceof EntityShuttle
+                                                && e.riddenByEntity instanceof EntityPlayerMP) {
+                                                    this.sendPlayerInShuttleToPlanet(
+                                                            (EntityPlayerMP) e.riddenByEntity,
+                                                            (EntityShuttle) e,
+                                                            world,
+                                                            parent.getDimensionID());
+                                                } else {
+                                                    // go there naked, as GC intended
+                                                    WorldUtil.transferEntityToDimension(
+                                                            e,
+                                                            parent.getDimensionID(),
+                                                            world,
+                                                            false,
+                                                            null);
+                                                }
+                                    }
                         } else if (e instanceof EntityAutoRocket rocket) {
                             final MothershipWorldProvider msProvider = (MothershipWorldProvider) e.worldObj.provider;
                             if (msProvider.isInTransit()) {
@@ -176,8 +176,8 @@ public class TickHandlerServer {
         // event.
     }
 
-    protected void sendPlayerInShuttleToPlanet(final EntityPlayerMP player, final EntityShuttle shuttle, final World world,
-            final int dimensionID) {
+    protected void sendPlayerInShuttleToPlanet(final EntityPlayerMP player, final EntityShuttle shuttle,
+            final World world, final int dimensionID) {
         if (world.isRemote) {
             return;
         }

@@ -101,13 +101,13 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                     }
                 }
             } else // check if we have a boss and the player walked out
-            if (this.boss != null && !this.isBossDefeated && this.spawned) {
-                // despawn boss
+                if (this.boss != null && !this.isBossDefeated && this.spawned) {
+                    // despawn boss
 
-                this.boss.despawnBoss();
-                this.boss = null;
-                this.spawned = false;
-            }
+                    this.boss.despawnBoss();
+                    this.boss = null;
+                    this.spawned = false;
+                }
 
             if (!isBossInRoom && this.spawned && this.boss != null) {
                 // do something?

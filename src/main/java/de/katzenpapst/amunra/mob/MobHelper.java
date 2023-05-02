@@ -8,7 +8,8 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class MobHelper {
 
-    public static boolean canAnimalSpawnHere(final World world, final EntityCreature ent, final BlockMetaPair blockToSpawnOn) {
+    public static boolean canAnimalSpawnHere(final World world, final EntityCreature ent,
+            final BlockMetaPair blockToSpawnOn) {
 
         final int i = MathHelper.floor_double(ent.posX);
         final int j = MathHelper.floor_double(ent.boundingBox.minY);

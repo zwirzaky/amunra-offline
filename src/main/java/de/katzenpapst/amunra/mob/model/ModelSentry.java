@@ -73,8 +73,8 @@ public class ModelSentry extends ModelBase {
      * "far" arms and legs can swing at most.
      */
     @Override
-    public void setRotationAngles(final float limbSwingTime, final float linbSwingAmount, final float somethingWhatever, final float rotationY,
-            final float rotationX, final float p_78087_6_, final Entity p_78087_7_) {
+    public void setRotationAngles(final float limbSwingTime, final float linbSwingAmount, final float somethingWhatever,
+            final float rotationY, final float rotationX, final float p_78087_6_, final Entity p_78087_7_) {
         this.body.rotateAngleY = rotationY / (180F / (float) Math.PI);
         this.body.rotateAngleX = rotationX / (180F / (float) Math.PI);
 
@@ -89,8 +89,8 @@ public class ModelSentry extends ModelBase {
      * Sets the models various rotation angles then renders the model.
      */
     @Override
-    public void render(final Entity entity, final float limbSwingTime, final float limbSwingAmplitude, final float totalTimeMaybe,
-            final float rotationY, final float rotationX, final float someConstant) {
+    public void render(final Entity entity, final float limbSwingTime, final float limbSwingAmplitude,
+            final float totalTimeMaybe, final float rotationY, final float rotationX, final float someConstant) {
         this.setRotationAngles(
                 limbSwingTime,
                 limbSwingAmplitude,

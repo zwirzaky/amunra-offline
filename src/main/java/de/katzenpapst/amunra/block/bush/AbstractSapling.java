@@ -77,7 +77,8 @@ abstract public class AbstractSapling extends SubBlockBush {
      * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
      */
     @Override
-    public boolean func_149851_a(final World world, final int x, final int y, final int z, final boolean isWorldRemote) {
+    public boolean func_149851_a(final World world, final int x, final int y, final int z,
+            final boolean isWorldRemote) {
         return true;
     }
 
@@ -97,8 +98,7 @@ abstract public class AbstractSapling extends SubBlockBush {
      *
      */
     @Override
-    public void func_149853_b(final World worldIn, final Random random, final int x, final int y,
-            final int z) {
+    public void func_149853_b(final World worldIn, final Random random, final int x, final int y, final int z) {
         this.prepareGrowTree(worldIn, x, y, z, random);
     }
 
@@ -121,8 +121,8 @@ abstract public class AbstractSapling extends SubBlockBush {
                 || this.isBlockReplaceable(block);
     }
 
-    protected void setBlockAndNotifyAdequately(final World world, final int x, final int y, final int z, final Block block, final int meta,
-            final boolean notify) {
+    protected void setBlockAndNotifyAdequately(final World world, final int x, final int y, final int z,
+            final Block block, final int meta, final boolean notify) {
         if (notify) {
             world.setBlock(x, y, z, block, meta, 3);
         } else {

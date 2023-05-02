@@ -19,7 +19,8 @@ public class RenderShuttleDock extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTicks) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z,
+            final float partialTicks) {
 
         if (!(entity instanceof TileEntityShuttleDock dock)) {
             return;

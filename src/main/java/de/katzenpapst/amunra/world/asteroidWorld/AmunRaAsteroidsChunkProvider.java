@@ -199,12 +199,13 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         this.addBlockToHandler(this.shellHandler, this.denseIce, 1, .15);
     }
 
-    protected void addBlockToHandler(final SpecialAsteroidBlockHandler handler, final BlockMetaPair b, final int probability,
-            final double thickness) {
+    protected void addBlockToHandler(final SpecialAsteroidBlockHandler handler, final BlockMetaPair b,
+            final int probability, final double thickness) {
         handler.addBlock(new SpecialAsteroidBlock(b.getBlock(), b.getMetadata(), probability, thickness));
     }
 
-    public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray, final boolean flagDataOnly) {
+    public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray,
+            final boolean flagDataOnly) {
         this.largeAsteroids.clear();
         int largeCount = 0;
         final Random random = new Random();
@@ -250,8 +251,9 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         }
     }
 
-    private void generateAsteroid(final Random rand, final int asteroidX, final int asteroidY, final int asteroidZ, final int chunkX, final int chunkZ,
-            final int size, final Block[] blockArray, final byte[] metaArray, final boolean flagDataOnly) {
+    private void generateAsteroid(final Random rand, final int asteroidX, final int asteroidY, final int asteroidZ,
+            final int chunkX, final int chunkZ, final int size, final Block[] blockArray, final byte[] metaArray,
+            final boolean flagDataOnly) {
         final SpecialAsteroidBlock core = this.coreHandler.getBlock(rand, size);
 
         SpecialAsteroidBlock shell = null;
@@ -445,7 +447,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                             final int indexAbove = indexBase | y + 1;
                             if (Blocks.air == blockArray[indexAbove]
                                     && (blockArray[index] == this.asteroidStoneBlocks[0].getBlock()
-                                            || blockArray[index] == this.grass.getBlock()) && this.rand.nextInt(GLOWSTONE_CHANCE) == 0) {
+                                            || blockArray[index] == this.grass.getBlock())
+                                    && this.rand.nextInt(GLOWSTONE_CHANCE) == 0) {
                                 blockArray[index] = this.light.getBlock();
                                 metaArray[index] = this.light.getMetadata();
                             }
@@ -489,8 +492,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         return (int) (asteroidY - asteroidSize / 4 + yMod * 1.5F);
     }
 
-    private final int getTerrainHeightAt(final int x, final int z, final float[] yModArray, final int xMin, final int zMin, final int zSize, final int asteroidY,
-            final int asteroidSize) {
+    private final int getTerrainHeightAt(final int x, final int z, final float[] yModArray, final int xMin,
+            final int zMin, final int zSize, final int asteroidY, final int asteroidSize) {
         final int index = (x - xMin) * zSize - zMin;
         if (index < yModArray.length && index >= 0) {
             final float yMod = yModArray[index];
@@ -569,7 +572,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
      * @param isAir     if true, counts air blocks, if false, counts the NOT airblocks
      * @return
      */
-    protected int getCountInNegXDirection(final IChunkProvider world, final int x, final int y, final int z, final int maxLength, final boolean isAir) {
+    protected int getCountInNegXDirection(final IChunkProvider world, final int x, final int y, final int z,
+            final int maxLength, final boolean isAir) {
         int count = 0;
 
         for (int i = 0; i < maxLength; i++) {
@@ -600,8 +604,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         // 50:50 chance to include small blocks each chunk
         if (this.rand.nextBoolean()) {
             final double density = this.asteroidDensity.getNoise(chunkX * 16, chunkZ * 16) * 0.54;
-            final double numOfBlocks = this.clamp(this.randFromPoint(chunkX, chunkZ), .4, 1) * MAX_BLOCKS_PER_CHUNK * density
-                    + MIN_BLOCKS_PER_CHUNK;
+            final double numOfBlocks = this.clamp(this.randFromPoint(chunkX, chunkZ), .4, 1) * MAX_BLOCKS_PER_CHUNK
+                    * density + MIN_BLOCKS_PER_CHUNK;
             final int y0 = this.rand.nextInt(2);
             Block block;
             int meta;
@@ -881,7 +885,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     @Override
-    public List<SpawnListEntry> getPossibleCreatures(final EnumCreatureType creatureType, final int x, final int y, final int z) {
+    public List<SpawnListEntry> getPossibleCreatures(final EnumCreatureType creatureType, final int x, final int y,
+            final int z) {
         return null;
     }
 
@@ -933,8 +938,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     private boolean isLargeAsteroidAt0(final int x0, final int z0) {
         for (int x = x0; x < x0 + CHUNK_SIZE_X; x += 2) {
             for (int z = z0; z < z0 + CHUNK_SIZE_Z; z += 2) {
-                if (Math.abs(this.randFromPoint(x, z))
-                        < (this.asteroidDensity.getNoise(x, z) + .4) / ASTEROID_CHANCE) {
+                if (Math.abs(this.randFromPoint(x, z)) < (this.asteroidDensity.getNoise(x, z) + .4) / ASTEROID_CHANCE) {
                     return true;
                 }
             }
@@ -954,8 +958,10 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         public int zSizeArray;
         public int asteroidSizeArray;
         public int asteroidYArray;
-        public AsteroidData(final boolean hollow, final float[] sizeYArray2, final int xMin, final int zMin, final int xmax, final int zmax, final int zSize,
-                final int size, final int asteroidX, final int asteroidY, final int asteroidZ) {
+
+        public AsteroidData(final boolean hollow, final float[] sizeYArray2, final int xMin, final int zMin,
+                final int xmax, final int zmax, final int zSize, final int size, final int asteroidX,
+                final int asteroidY, final int asteroidZ) {
             this.isHollow = hollow;
             this.sizeYArray = sizeYArray2.clone();
             this.xMinArray = xMin;

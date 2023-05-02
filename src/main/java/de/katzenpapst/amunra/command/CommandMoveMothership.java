@@ -41,7 +41,8 @@ public class CommandMoveMothership extends CommandBase {
             throw new WrongUsageException("Not enough arguments, usage: " + this.getCommandUsage(sender));
         }
 
-        final Mothership mShip = (Mothership) ((MothershipWorldProvider) sender.getEntityWorld().provider).getCelestialBody();
+        final Mothership mShip = (Mothership) ((MothershipWorldProvider) sender.getEntityWorld().provider)
+                .getCelestialBody();
         final String targetName = args[0];
 
         if (args.length >= 2) {

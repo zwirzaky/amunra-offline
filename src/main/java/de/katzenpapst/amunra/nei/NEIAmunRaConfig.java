@@ -130,7 +130,8 @@ public class NEIAmunRaConfig implements IConfigureNEI {
      *                 PositionedStack(output, 147, 91)); }
      */
 
-    public void registerCircuitFabricatorRecipe(final HashMap<Integer, PositionedStack> input, final PositionedStack output) {
+    public void registerCircuitFabricatorRecipe(final HashMap<Integer, PositionedStack> input,
+            final PositionedStack output) {
         circuitFabricatorRecipes.put(input, output);
     }
 

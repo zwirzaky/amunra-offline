@@ -46,7 +46,8 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
      */
 
     @Override
-    public void onPlayerStoppedUsing(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer, final int itemInUseCount) {
+    public void onPlayerStoppedUsing(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer,
+            final int itemInUseCount) {
         if (!this.chargeMode) {
             return;
         }
@@ -81,7 +82,8 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
          * ArrowNockEvent event = new ArrowNockEvent(entityPlayer, itemStack); MinecraftForge.EVENT_BUS.post(event); if
          * (event.isCanceled()) { return event.result; }
          */
-        if (entityPlayer.capabilities.isCreativeMode || this.getElectricityStored(itemStack) >= this.getEnergyPerShot()) {
+        if (entityPlayer.capabilities.isCreativeMode
+                || this.getElectricityStored(itemStack) >= this.getEnergyPerShot()) {
 
             entityPlayer.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
             if (!this.chargeMode) {
@@ -166,7 +168,8 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
     }
 
     @Override
-    public IIcon getIcon(final ItemStack stack, final int renderPass, final EntityPlayer player, final ItemStack usingItem, final int useRemaining) {
+    public IIcon getIcon(final ItemStack stack, final int renderPass, final EntityPlayer player,
+            final ItemStack usingItem, final int useRemaining) {
         return super.getIcon(stack, renderPass, player, usingItem, useRemaining);
 
         /*

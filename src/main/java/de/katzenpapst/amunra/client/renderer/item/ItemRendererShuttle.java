@@ -36,8 +36,8 @@ public class ItemRendererShuttle implements IItemRenderer {
         this.modelSpaceship = model;
     }
 
-    protected void renderSpaceship(final ItemRenderType type, final RenderBlocks render, final ItemStack item, final float translateX,
-            final float translateY, final float translateZ) {
+    protected void renderSpaceship(final ItemRenderType type, final RenderBlocks render, final ItemStack item,
+            final float translateX, final float translateY, final float translateZ) {
         GL11.glPushMatrix();
 
         this.transform(item, type);
@@ -173,7 +173,8 @@ public class ItemRendererShuttle implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item, final ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item,
+            final ItemRendererHelper helper) {
         return true;
     }
 

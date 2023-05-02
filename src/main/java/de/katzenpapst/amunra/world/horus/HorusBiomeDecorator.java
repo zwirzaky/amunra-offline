@@ -3,6 +3,7 @@ package de.katzenpapst.amunra.world.horus;
 import java.util.List;
 
 import net.minecraft.init.Blocks;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.AmunraBiomeDecorator;
@@ -14,8 +15,8 @@ public class HorusBiomeDecorator extends AmunraBiomeDecorator {
     @Override
     protected List<WorldGenOre> getOreGenerators() {
         final List<WorldGenOre> list = super.getOreGenerators();
-        
-        if(AmunRa.config.generateOres) {
+
+        if (AmunRa.config.generateOres) {
             final BlockMetaPair obsidian = new BlockMetaPair(Blocks.obsidian, (byte) 0);
 
             list.add(new WorldGenOre(ARBlocks.oreDiamondObsid, 8, obsidian, 8, 2, 45));

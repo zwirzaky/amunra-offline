@@ -54,8 +54,7 @@ public class CommandShuttleTeleport extends CommandBase {
                 throw new Exception("Could not find player with name: " + args[0]);
             }
             final MinecraftServer server = MinecraftServer.getServer();
-            final WorldServer worldserver = server
-                    .worldServerForDimension(server.worldServers[0].provider.dimensionId);
+            final WorldServer worldserver = server.worldServerForDimension(server.worldServers[0].provider.dimensionId);
             final ChunkCoordinates chunkcoordinates = worldserver.getSpawnPoint();
             final GCPlayerStats stats = GCPlayerStats.get(playerBase);
             stats.rocketStacks = new ItemStack[2];

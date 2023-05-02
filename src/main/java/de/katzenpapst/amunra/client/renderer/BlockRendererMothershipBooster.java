@@ -41,7 +41,8 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
     }
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata, final int modelId, final RenderBlocks renderer) {
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelId,
+            final RenderBlocks renderer) {
         if (block instanceof BlockMothershipBoosterMeta) {
             final MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) ((BlockMothershipBoosterMeta) block)
                     .getSubBlock(metadata);
@@ -51,8 +52,8 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId,
-            final RenderBlocks renderer) {
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block,
+            final int modelId, final RenderBlocks renderer) {
         // this happens in the tileentity
 
         return false;

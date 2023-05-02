@@ -84,7 +84,7 @@ public class ARConfig {
             "appleapachia:8:20:extendedplanets:textures/gui/celestialbodies/appleapachiaRings.png" };
 
     private final String[] defaultAsteroidBelts = { "okblekbelt", "saturnrings" };
-    
+
     public boolean generateOres = false;
 
     // public boolean mothershipUserRestriction = true;
@@ -130,8 +130,12 @@ public class ARConfig {
                 Float.MIN_VALUE,
                 Float.MAX_VALUE,
                 "Multiplier for the oxygen production of the hydroponics unit");
-        
-        this.generateOres = config.getBoolean("generateOres", "general", this.generateOres, "If ores should be generated on planets/moons");
+
+        this.generateOres = config.getBoolean(
+                "generateOres",
+                "general",
+                this.generateOres,
+                "If ores should be generated on planets/moons");
 
         // motherships
         this.maxNumMotherships = config.getInt(
@@ -279,7 +283,8 @@ public class ARConfig {
                 continue;
             }
 
-            this.ringMap.put(body, new RingsRenderInfo(new ResourceLocation(assetPrefix, textureName), gapStart, gapEnd));
+            this.ringMap
+                    .put(body, new RingsRenderInfo(new ResourceLocation(assetPrefix, textureName), gapStart, gapEnd));
         }
         //
 

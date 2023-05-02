@@ -31,8 +31,8 @@ public class GridVillageGenerator extends StructureGenerator {
         this.addComponentType(clazz, probability, 0, 0);
     }
 
-    public void addComponentType(final Class<? extends GridVillageComponent> clazz, final float probability, final int minAmount,
-            final int maxAmount) {
+    public void addComponentType(final Class<? extends GridVillageComponent> clazz, final float probability,
+            final int minAmount, final int maxAmount) {
         this.components.add(new SubComponentData(clazz, probability, minAmount, maxAmount));
     }
 

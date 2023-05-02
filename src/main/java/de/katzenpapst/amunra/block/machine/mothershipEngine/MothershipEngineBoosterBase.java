@@ -28,15 +28,15 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
         this.activeTextureName = activeTexture;
     }
 
-    public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture, final String tool,
-            final int harvestLevel) {
+    public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture,
+            final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
         this.activeTextureName = activeTexture;
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         final TileEntity leTile = world.getTileEntity(x, y, z);
         if (leTile == null || !(leTile instanceof TileEntityMothershipEngineBooster tile)) {
             return false;
@@ -67,8 +67,8 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
         return true;
     }
 
-    public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture, final String tool, final int harvestLevel,
-            final float hardness, final float resistance) {
+    public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture,
+            final String tool, final int harvestLevel, final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         this.activeTextureName = activeTexture;
     }
@@ -167,13 +167,15 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
     }
 
     @Override
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z, final boolean willHarvest) {
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z,
+            final boolean willHarvest) {
         return this.removedByPlayer(world, player, x, y, z);
     }
 
     @Override
     @Deprecated
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z) {
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y,
+            final int z) {
         if (this.canBeMoved(world, x, y, z)) {
             return super.removedByPlayer(world, player, x, y, z);
         }

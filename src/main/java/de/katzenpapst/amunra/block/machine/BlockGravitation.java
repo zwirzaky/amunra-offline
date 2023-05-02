@@ -31,8 +31,8 @@ public class BlockGravitation extends SubBlockMachine {
     private IIcon sideIcon = null;
     private IIcon activeIcon = null;
 
-    public BlockGravitation(final String name, final String frontInactiveTexture, final String activeTexture, final String sideTexture,
-            final String backTexture) {
+    public BlockGravitation(final String name, final String frontInactiveTexture, final String activeTexture,
+            final String sideTexture, final String backTexture) {
         super(name, frontInactiveTexture);
 
         this.backTexture = backTexture;
@@ -76,8 +76,8 @@ public class BlockGravitation extends SubBlockMachine {
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_GRAVITY, world, x, y, z);
         return true;
     }

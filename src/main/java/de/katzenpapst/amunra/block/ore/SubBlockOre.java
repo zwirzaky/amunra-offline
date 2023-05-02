@@ -49,7 +49,8 @@ public class SubBlockOre extends SubBlockDropItem {
         this.isValuable = true;
     }
 
-    public SubBlockOre(final String name, final String texture, final String tool, final int harvestLevel, final float hardness, final float resistance) {
+    public SubBlockOre(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         this.isValuable = true;
     }

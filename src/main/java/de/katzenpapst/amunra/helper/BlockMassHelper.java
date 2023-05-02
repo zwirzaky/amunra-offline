@@ -18,7 +18,8 @@ public class BlockMassHelper {
 
     private static HashMap<BlockMetaPairHashable, Float> blockMassMap = new HashMap<>();
 
-    public static float getBlockMass(final World world, final Block block, final int meta, final int x, final int y, final int z) {
+    public static float getBlockMass(final World world, final Block block, final int meta, final int x, final int y,
+            final int z) {
         // first, the mass
         if (block.isAir(world, x, y, z)) {
             return 0.0F;
@@ -37,7 +38,8 @@ public class BlockMassHelper {
         return guessedMass;
     }
 
-    public static float guessBlockMass(final World world, final Block block, final int meta, final int x, final int y, final int z) {
+    public static float guessBlockMass(final World world, final Block block, final int meta, final int x, final int y,
+            final int z) {
 
         if (block instanceof IFluidBlock) {
             return getMassForFluid(((IFluidBlock) block).getFluid());

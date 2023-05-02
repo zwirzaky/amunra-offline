@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.AmunraBiomeDecorator;
@@ -19,10 +20,10 @@ public class NeperBiomeDecorator extends AmunraBiomeDecorator {
     @Override
     protected List<WorldGenOre> getOreGenerators() {
         final List<WorldGenOre> list = super.getOreGenerators();
-        
-        if(AmunRa.config.generateOres) {
+
+        if (AmunRa.config.generateOres) {
             final BlockMetaPair stone = new BlockMetaPair(Blocks.stone, (byte) 0);
-            
+
             list.add(new WorldGenOre(new BlockMetaPair(Blocks.diamond_ore, (byte) 0), 4, stone, 8, 0, 12));
             list.add(new WorldGenOre(new BlockMetaPair(Blocks.emerald_ore, (byte) 0), 4, stone, 4, 8, 32));
             list.add(new WorldGenOre(new BlockMetaPair(Blocks.iron_ore, (byte) 0), 8, stone, 16, 2, 70));

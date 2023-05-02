@@ -71,8 +71,12 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         GL11.glColor4f(0.0F, 1.0F, 0.1F, 1);
         this.mc.renderEngine.bindTexture(GuiCelestialSelection.guiMain0);
 
-        final int exitWidth = this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 74;
-        final int exitHeight = this.height - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 11;
+        final int exitWidth = this.width - GuiCelestialSelection.BORDER_WIDTH
+                - GuiCelestialSelection.BORDER_EDGE_WIDTH
+                - 74;
+        final int exitHeight = this.height - GuiCelestialSelection.BORDER_WIDTH
+                - GuiCelestialSelection.BORDER_EDGE_WIDTH
+                - 11;
 
         this.exitBtnArea.setPositionSize(exitWidth, exitHeight, 74, 11);
 
@@ -118,11 +122,10 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                 && Mothership.canBeOrbited(atBody);
     }
 
-    protected void drawItemForRecipe(final ItemStack item, final int amount, final int requiredAmount, final int xPos, final int yPos, final int mousePosX,
-            final int mousePosY) {
+    protected void drawItemForRecipe(final ItemStack item, final int amount, final int requiredAmount, final int xPos,
+            final int yPos, final int mousePosX, final int mousePosY) {
         RenderHelper.enableGUIStandardItemLighting();
-        GuiScreen.itemRender
-                .renderItemAndEffectIntoGUI(this.fontRendererObj, this.mc.renderEngine, item, xPos, yPos);
+        GuiScreen.itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, this.mc.renderEngine, item, xPos, yPos);
         RenderHelper.disableStandardItemLighting();
         GL11.glEnable(GL11.GL_BLEND);
 
@@ -274,8 +277,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                 } // if itemstack
                 else if (next instanceof ArrayList) {
                     @SuppressWarnings("unchecked")
-                    final
-                    ArrayList<ItemStack> items = (ArrayList<ItemStack>) next;
+                    final ArrayList<ItemStack> items = (ArrayList<ItemStack>) next;
 
                     int amount = 0;
 
@@ -374,7 +376,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     @Override
     protected boolean teleportToSelectedBody() {
         this.possibleBodies = this.shuttlePossibleBodies;
-        if (this.selectedBody != null && this.selectedBody.getReachable() && this.possibleBodies != null
+        if (this.selectedBody != null && this.selectedBody.getReachable()
+                && this.possibleBodies != null
                 && this.possibleBodies.contains(this.selectedBody)) {
             try {
                 Integer dimensionID = null;
@@ -400,13 +403,11 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     dimensionID = this.selectedBody.getDimensionID();
                 }
                 /*
-                 * if (dimension.contains("$")) { this.mc.gameSettings.thirdPersonView = 0; } if(dimensionID ==
-                 * null) { return false; }
+                 * if (dimension.contains("$")) { this.mc.gameSettings.thirdPersonView = 0; } if(dimensionID == null) {
+                 * return false; }
                  */
                 AmunRa.packetPipeline.sendToServer(
-                        new PacketSimpleAR(
-                                PacketSimpleAR.EnumSimplePacket.S_TELEPORT_SHUTTLE,
-                                dimensionID));
+                        new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.S_TELEPORT_SHUTTLE, dimensionID));
                 this.mc.displayGuiScreen(null);
                 return true;
             } catch (final Exception e) {

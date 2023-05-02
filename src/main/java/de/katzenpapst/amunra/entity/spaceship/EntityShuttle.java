@@ -129,8 +129,8 @@ public class EntityShuttle extends EntityTieredRocket {
         super.getNetworkedData(list);
     }
 
-    public EntityShuttle(final World par1World, final double par2, final double par4, final double par6, final boolean reversed, final int rocketType,
-            final ItemStack[] inv) {
+    public EntityShuttle(final World par1World, final double par2, final double par4, final double par6,
+            final boolean reversed, final int rocketType, final ItemStack[] inv) {
         this(par1World, par2, par4, par6, rocketType);
         this.cargoItems = inv;
     }
@@ -228,7 +228,8 @@ public class EntityShuttle extends EntityTieredRocket {
         return 0.0D;
     }
 
-    private void makeFlame(final double x2, final double y2, final double z2, final Vector3 motionVec, final boolean getLaunched) {
+    private void makeFlame(final double x2, final double y2, final double z2, final Vector3 motionVec,
+            final boolean getLaunched) {
         if (getLaunched) {
             GalacticraftCore.proxy.spawnParticle(
                     "launchFlameLaunched",
@@ -570,7 +571,8 @@ public class EntityShuttle extends EntityTieredRocket {
             this.doKnowOnWhatImStanding = true;
         } else {
             if (this.dockPosition != null) {
-                final TileEntity tile = this.worldObj.getTileEntity(this.dockPosition.x, this.dockPosition.y, this.dockPosition.z);
+                final TileEntity tile = this.worldObj
+                        .getTileEntity(this.dockPosition.x, this.dockPosition.y, this.dockPosition.z);
                 if (tile != null) {
                     if (tile instanceof IFuelDock) {
                         this.setPad((IFuelDock) tile);
@@ -670,7 +672,8 @@ public class EntityShuttle extends EntityTieredRocket {
     @Override
     public void onReachAtmosphere() {
         // Not launch controlled
-        if (this.riddenByEntity != null && !this.worldObj.isRemote && this.riddenByEntity instanceof EntityPlayerMP player) {
+        if (this.riddenByEntity != null && !this.worldObj.isRemote
+                && this.riddenByEntity instanceof EntityPlayerMP player) {
             this.onTeleport(player);
             final GCPlayerStats stats = this.setGCPlayerStats(player);
 
@@ -718,14 +721,20 @@ public class EntityShuttle extends EntityTieredRocket {
         AmunRa.packetPipeline.sendTo(
                 new PacketSimpleAR(
                         EnumSimplePacket.C_OPEN_SHUTTLE_GUI,
-                        player.getGameProfile().getName(), dimensionList),
+                        player.getGameProfile().getName(),
+                        dimensionList),
                 player);
         // do not use this for the shuttle
         stats.usingPlanetSelectionGui = false;
         stats.savedPlanetList = new String(dimensionList);
 
         if (useFakeEntity) {
-            final Entity fakeEntity = new EntityShuttleFake(player.worldObj, player.posX, player.posY, player.posZ, 0.0F);
+            final Entity fakeEntity = new EntityShuttleFake(
+                    player.worldObj,
+                    player.posX,
+                    player.posY,
+                    player.posZ,
+                    0.0F);
             player.worldObj.spawnEntityInWorld(fakeEntity);
             player.mountEntity(fakeEntity);
         }

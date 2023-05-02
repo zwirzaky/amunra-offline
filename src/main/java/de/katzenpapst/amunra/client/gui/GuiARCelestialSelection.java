@@ -84,7 +84,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         this.updatePlayerParent();
     }
 
-    protected boolean isMouseWithin(final int mouseX, final int mouseY, final int rectX, final int rectY, final int rectW, final int rectH) {
+    protected boolean isMouseWithin(final int mouseX, final int mouseY, final int rectX, final int rectY,
+            final int rectW, final int rectH) {
         return mouseX >= rectX && mouseX <= rectX + rectW && mouseY >= rectY && mouseY <= rectY + rectH;
     }
 
@@ -123,8 +124,11 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         final int btnWidth = 93;
         final int btnHeight = 12;
 
-        this.messageButtonBox
-                .setPositionSize((this.width - btnWidth) / 2, (this.height - btnHeight) / 2 + btnOffset, btnWidth, btnHeight);
+        this.messageButtonBox.setPositionSize(
+                (this.width - btnWidth) / 2,
+                (this.height - btnHeight) / 2 + btnOffset,
+                btnWidth,
+                btnHeight);
 
         GL11.glColor4f(0.0F, 1.0F, 0.0F, 1);
         this.drawTexturedModalRect(
@@ -265,7 +269,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                 if ((ms == this.selectedBody || ms.getParent() == this.selectedBody && this.selectionCount != 1)
                         && (this.ticksSinceSelection > 35 || this.selectedBody == ms
                                 || this.lastSelectedBody instanceof Mothership
-                                        && ((Mothership) this.lastSelectedBody).getParent().equals(ms)) || this.isSiblingOf(this.selectedBody, ms)) {
+                                        && ((Mothership) this.lastSelectedBody).getParent().equals(ms))
+                        || this.isSiblingOf(this.selectedBody, ms)) {
                     result.add(ms);
                 }
             }
@@ -358,7 +363,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             alpha = this.selectedBody instanceof IChildBody ? 1.0F
                     : Math.min(Math.max((this.ticksSinceSelection - 30) / 15.0F, 0.0F), 1.0F);
 
-            if (this.lastSelectedBody instanceof Moon && GalaxyRegistry.getMoonsForPlanet(((Moon) this.lastSelectedBody).getParentPlanet()).contains(moon)) {
+            if (this.lastSelectedBody instanceof Moon && GalaxyRegistry
+                    .getMoonsForPlanet(((Moon) this.lastSelectedBody).getParentPlanet()).contains(moon)) {
                 alpha = 1.0F;
             }
         }
@@ -477,7 +483,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             if (renderShipsAround != null) {
 
                 // MothershipWorldData msData = TickHandlerServer.mothershipData;
-                final List<Mothership> msList = TickHandlerServer.mothershipData.getMothershipsForParent(renderShipsAround);
+                final List<Mothership> msList = TickHandlerServer.mothershipData
+                        .getMothershipsForParent(renderShipsAround);
                 // int numShips = msList.size();
 
                 // if selectionCount > 0 && this.selectedBody instanceof mothership, also render the moon
@@ -503,7 +510,10 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                     fb.flip();
                     GL11.glMultMatrix(fb);
 
-                    final CelestialBodyRenderEvent.Pre preEvent = new CelestialBodyRenderEvent.Pre(ms, ms.getBodyIcon(), 8);
+                    final CelestialBodyRenderEvent.Pre preEvent = new CelestialBodyRenderEvent.Pre(
+                            ms,
+                            ms.getBodyIcon(),
+                            8);
                     MinecraftForge.EVENT_BUS.post(preEvent);
 
                     GL11.glColor4f(1, 1, 1, 1);
@@ -600,10 +610,10 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                 this.unselectCelestialBody();
             }
         } else // arrived
-        // I think it SHOULD be in celestialBodyTicks already...
-        if (!this.shuttlePossibleBodies.contains(ship)) {
-            this.shuttlePossibleBodies.add(ship);
-        }
+               // I think it SHOULD be in celestialBodyTicks already...
+            if (!this.shuttlePossibleBodies.contains(ship)) {
+                this.shuttlePossibleBodies.add(ship);
+            }
     }
 
     @Override

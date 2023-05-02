@@ -70,7 +70,8 @@ public class TileEntityBlockScale extends TileEntity {
         final Block b = this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord);
         final int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord + 1, this.zCoord);
 
-        if (this.lastFoundBlock != null && this.lastFoundBlock.getBlock() == b && this.lastFoundBlock.getMetadata() == meta) {
+        if (this.lastFoundBlock != null && this.lastFoundBlock.getBlock() == b
+                && this.lastFoundBlock.getMetadata() == meta) {
             // nothing changed
             return;
         }
@@ -78,7 +79,8 @@ public class TileEntityBlockScale extends TileEntity {
         this.lastFoundBlock = new BlockMetaPair(b, (byte) meta);
 
         // mass
-        this.massToDisplay = BlockMassHelper.getBlockMass(this.worldObj, b, meta, this.xCoord, this.yCoord + 1, this.zCoord);
+        this.massToDisplay = BlockMassHelper
+                .getBlockMass(this.worldObj, b, meta, this.xCoord, this.yCoord + 1, this.zCoord);
         this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         // this.markDirty();
     }

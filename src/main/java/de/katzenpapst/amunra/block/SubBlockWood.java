@@ -16,13 +16,14 @@ public class SubBlockWood extends SubBlock {
         this.textureTop = textureTop;
     }
 
-    public SubBlockWood(final String name, final String textureSide, final String textureTop, final String tool, final int harvestLevel) {
+    public SubBlockWood(final String name, final String textureSide, final String textureTop, final String tool,
+            final int harvestLevel) {
         super(name, textureSide, tool, harvestLevel);
         this.textureTop = textureTop;
     }
 
-    public SubBlockWood(final String name, final String textureSide, final String textureTop, final String tool, final int harvestLevel,
-            final float hardness, final float resistance) {
+    public SubBlockWood(final String name, final String textureSide, final String textureTop, final String tool,
+            final int harvestLevel, final float hardness, final float resistance) {
         super(name, textureSide, tool, harvestLevel, hardness, resistance);
         this.textureTop = textureTop;
     }

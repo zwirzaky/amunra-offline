@@ -20,7 +20,8 @@ public class BlockRendererMultiOre implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata, final int modelId, final RenderBlocks renderer) {
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelId,
+            final RenderBlocks renderer) {
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 
         // draw the background
@@ -35,8 +36,8 @@ public class BlockRendererMultiOre implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId,
-            final RenderBlocks renderer) {
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block,
+            final int modelId, final RenderBlocks renderer) {
         final int meta = world.getBlockMetadata(x, y, z);
         final SubBlock sb = ((BlockOreMulti) block).getSubBlock(meta);
 

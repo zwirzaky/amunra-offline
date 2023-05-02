@@ -17,11 +17,17 @@ public class SolarField extends GridVillageComponent {
     public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] blocks, final byte[] metas) {
 
         // now, how to get the height?
-        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox(chunkX*16,
-                                                                              // chunkZ*16, chunkX*16+15, chunkZ*16+15);
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new
+                                                                                    // StructureBoundingBox(chunkX*16,
+        // chunkZ*16, chunkX*16+15, chunkZ*16+15);
         final int fallbackGround = this.parent.getWorldGroundLevel();
         if (this.groundLevel == -1) {
-            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            this.groundLevel = getAverageGroundLevel(
+                    blocks,
+                    metas,
+                    this.getStructureBoundingBox(),
+                    chunkBB,
+                    fallbackGround);
             if (this.groundLevel == -1) {
                 this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }
@@ -137,13 +143,15 @@ public class SolarField extends GridVillageComponent {
 
     }
 
-    private void placeSolarPanel(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z, final int meta) {
+    private void placeSolarPanel(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ,
+            final int x, final int y, final int z, final int meta) {
         int rotationMetadata = rotateStandardMetadata(meta, this.coordMode);
         if (AmunRa.config.villageAdvancedMachines) {
             rotationMetadata = rotationMetadata | BlockSolar.ADVANCED_METADATA;
         }
         if (this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, GCBlocks.solarPanel, rotationMetadata)) {
-            this.parent.addPopulator(new TouchSolarPanel(this.getXWithOffset(x, z), this.groundLevel, this.getZWithOffset(x, z)));
+            this.parent.addPopulator(
+                    new TouchSolarPanel(this.getXWithOffset(x, z), this.groundLevel, this.getZWithOffset(x, z)));
         }
     }
 

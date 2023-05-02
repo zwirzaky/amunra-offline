@@ -34,7 +34,8 @@ public class ItemBlockMulti extends ItemBlockDesc {
 
     @Override
     public String getUnlocalizedName(final ItemStack itemstack) {
-        final String subBlockName = ((IMetaBlock) this.field_150939_a).getUnlocalizedSubBlockName(itemstack.getItemDamage());
+        final String subBlockName = ((IMetaBlock) this.field_150939_a)
+                .getUnlocalizedSubBlockName(itemstack.getItemDamage());
         return "tile." + subBlockName;
     }
 

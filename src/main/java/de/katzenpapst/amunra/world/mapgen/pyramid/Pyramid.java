@@ -86,7 +86,11 @@ public class Pyramid extends BaseStructureStart {
                 1,
                 3,
                 5);
-        final WeightedRandomChestContent diamond = new WeightedRandomChestContent(new ItemStack(Items.diamond, 0), 1, 3, 5);
+        final WeightedRandomChestContent diamond = new WeightedRandomChestContent(
+                new ItemStack(Items.diamond, 0),
+                1,
+                3,
+                5);
 
         final WeightedRandomChestContent lithium = new WeightedRandomChestContent(
                 ARItems.lithiumGem.getItemStack(1),
@@ -98,7 +102,11 @@ public class Pyramid extends BaseStructureStart {
                 1,
                 3,
                 5);
-        final WeightedRandomChestContent ruby = new WeightedRandomChestContent(ARItems.rubyGem.getItemStack(1), 1, 3, 5);
+        final WeightedRandomChestContent ruby = new WeightedRandomChestContent(
+                ARItems.rubyGem.getItemStack(1),
+                1,
+                3,
+                5);
 
         // try to add some GC stuff
         final WeightedRandomChestContent deshPick = new WeightedRandomChestContent(
@@ -122,7 +130,11 @@ public class Pyramid extends BaseStructureStart {
                 1,
                 1,
                 2);
-        final WeightedRandomChestContent pearl = new WeightedRandomChestContent(new ItemStack(Items.ender_pearl), 1, 1, 2);
+        final WeightedRandomChestContent pearl = new WeightedRandomChestContent(
+                new ItemStack(Items.ender_pearl),
+                1,
+                1,
+                2);
 
         final ChestGenHooks basicLoot = ChestGenHooks.getInfo(LOOT_CATEGORY_BASIC);
         basicLoot.setMin(5);
@@ -147,7 +159,11 @@ public class Pyramid extends BaseStructureStart {
         super(world, chunkX, chunkZ, rand);
         final int startX = CoordHelper.chunkToMinBlock(chunkX);
         final int startZ = CoordHelper.chunkToMinBlock(chunkZ);
-        final StructureBoundingBox bb = new StructureBoundingBox(startX - 56, startZ - 56, startX + 56 - 1, startZ + 56 - 1);
+        final StructureBoundingBox bb = new StructureBoundingBox(
+                startX - 56,
+                startZ - 56,
+                startX + 56 - 1,
+                startZ + 56 - 1);
         this.setStructureBoundingBox(bb);
         // initRooms();
         initLoot();
@@ -229,9 +245,10 @@ public class Pyramid extends BaseStructureStart {
         super.generateChunk(chunkX, chunkZ, blocks, metas);
 
         // now generate the actual pyramid
-        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX << 4),
-                                                                              // (chunkX<< 4), (chunkX+1 << 4)-1,
-                                                                              // (chunkX+1 << 4)-1);
+        final StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox((chunkX
+                                                                                    // << 4),
+        // (chunkX<< 4), (chunkX+1 << 4)-1,
+        // (chunkX+1 << 4)-1);
         final StructureBoundingBox myBB = this.getStructureBoundingBox();
 
         if (!chunkBB.intersectsWith(myBB)) {
@@ -240,7 +257,12 @@ public class Pyramid extends BaseStructureStart {
 
         final int fallbackGround = this.getWorldGroundLevel();
         if (this.groundLevel == -1) {
-            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            this.groundLevel = getAverageGroundLevel(
+                    blocks,
+                    metas,
+                    this.getStructureBoundingBox(),
+                    chunkBB,
+                    fallbackGround);
             if (this.groundLevel == -1) {
                 this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }
@@ -283,10 +305,26 @@ public class Pyramid extends BaseStructureStart {
                     if (x >= startX + y && x <= stopX - y && z >= startZ + y && z <= stopZ - y) {
                         if (z == startZ + y || z == stopZ - y || x == startX + y || x == stopX - y) {
                             // wall
-                            this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + y + 1, z, this.wallMaterial);
+                            this.placeBlockRel2BB(
+                                    blocks,
+                                    metas,
+                                    chunkX,
+                                    chunkZ,
+                                    x,
+                                    this.groundLevel + y + 1,
+                                    z,
+                                    this.wallMaterial);
                         } else {
                             // inner
-                            this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + y + 1, z, this.fillMaterial);
+                            this.placeBlockRel2BB(
+                                    blocks,
+                                    metas,
+                                    chunkX,
+                                    chunkZ,
+                                    x,
+                                    this.groundLevel + y + 1,
+                                    z,
+                                    this.fillMaterial);
                         }
                     }
                     if (y >= 5 && y <= 13) {
@@ -323,8 +361,10 @@ public class Pyramid extends BaseStructureStart {
                             // cut in the tunnel
                             if (x >= xCenter - 1 && x <= xCenter + 1
                                     && z >= startZ + 6
-                                    && y >= 5 && y <= 6 + this.tunnelHeight
-                                    && z >= startZ + 5 && z <= startZ + 5 + this.innerRingOffset - this.tunnelWidth
+                                    && y >= 5
+                                    && y <= 6 + this.tunnelHeight
+                                    && z >= startZ + 5
+                                    && z <= startZ + 5 + this.innerRingOffset - this.tunnelWidth
 
                             ) {
                                 if (y == 5) {
@@ -355,8 +395,10 @@ public class Pyramid extends BaseStructureStart {
                         // inner ring
                         // check if we are fully within the range of the inner tunnel first and in the right height
                         if (y >= 5 && y <= 6 + this.tunnelHeight
-                                && x >= startX + this.innerRingOffset && x <= stopX - this.innerRingOffset
-                                && z >= startZ + this.innerRingOffset && z <= stopZ - this.innerRingOffset) {
+                                && x >= startX + this.innerRingOffset
+                                && x <= stopX - this.innerRingOffset
+                                && z >= startZ + this.innerRingOffset
+                                && z <= stopZ - this.innerRingOffset) {
 
                             final boolean xMinEdge = x >= startX + this.innerRingOffset
                                     && x < startX + this.innerRingOffset + this.tunnelWidth;

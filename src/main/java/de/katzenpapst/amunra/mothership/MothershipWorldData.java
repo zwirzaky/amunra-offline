@@ -155,8 +155,8 @@ public class MothershipWorldData extends WorldSavedData {
         final NBTTagCompound data = new NBTTagCompound();
         ship.writeToNBT(data);
 
-        AmunRa.packetPipeline.sendToAll(
-                new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_NEW_MOTHERSHIP_CREATED, data));
+        AmunRa.packetPipeline
+                .sendToAll(new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_NEW_MOTHERSHIP_CREATED, data));
         return ship;
     }
 
@@ -322,7 +322,8 @@ public class MothershipWorldData extends WorldSavedData {
         this.mothershipsByDimension.clear();
 
         for (int i = 0; i < tagList.tagCount(); i++) {
-            final NBTTagCompound nbt2 = tagList.getCompoundTagAt(i); // I think I have to unregister them on player logout.
+            final NBTTagCompound nbt2 = tagList.getCompoundTagAt(i); // I think I have to unregister them on player
+                                                                     // logout.
             final Mothership m = Mothership.createFromNBT(nbt2);
             if (this.highestId < m.getID()) {
                 this.highestId = m.getID();

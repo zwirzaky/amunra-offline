@@ -29,12 +29,13 @@ public class RenderRobotVillager extends RenderLiving {
         this.villagerModel = (ModelRobotVillager) this.mainModel;
     }
 
-    protected int shouldVillagerRenderPass(final EntityRobotVillager par1EntityVillager, final int par2, final float par3) {
+    protected int shouldVillagerRenderPass(final EntityRobotVillager par1EntityVillager, final int par2,
+            final float par3) {
         return -1;
     }
 
-    public void renderVillager(final EntityRobotVillager par1EntityVillager, final double par2, final double par4, final double par6,
-            final float par8, final float par9) {
+    public void renderVillager(final EntityRobotVillager par1EntityVillager, final double par2, final double par4,
+            final double par6, final float par8, final float par9) {
         super.doRender(par1EntityVillager, par2, par4, par6, par8, par9);
     }
 
@@ -102,7 +103,8 @@ public class RenderRobotVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9) {
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         this.renderVillager((EntityRobotVillager) par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
@@ -122,8 +124,8 @@ public class RenderRobotVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8,
-            final float par9) {
+    public void doRender(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4,
+            final double par6, final float par8, final float par9) {
         this.renderVillager((EntityRobotVillager) par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
 
@@ -133,7 +135,8 @@ public class RenderRobotVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9) {
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         this.renderVillager((EntityRobotVillager) par1Entity, par2, par4, par6, par8, par9);
     }
 }

@@ -24,7 +24,8 @@ public class BlockScale extends SubBlockMachine {
     protected final String bottomTexture;
     protected final String frontTexture;
 
-    public BlockScale(final String name, final String sideTexture, final String topTexture, final String frontTexture, final String bottomTexture) {
+    public BlockScale(final String name, final String sideTexture, final String topTexture, final String frontTexture,
+            final String bottomTexture) {
         super(name, sideTexture);
         this.topTexture = topTexture;
         this.bottomTexture = bottomTexture;

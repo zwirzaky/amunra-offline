@@ -17,8 +17,8 @@ public class MethaneTallGrass extends SubBlockBush {
         // TODO Auto-generated constructor stub
     }
 
-    public MethaneTallGrass(final String name, final String texture, final String tool, final int harvestLevel, final float hardness,
-            final float resistance) {
+    public MethaneTallGrass(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }

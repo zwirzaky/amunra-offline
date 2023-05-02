@@ -150,8 +150,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y, final int z, final double explosionX,
-            final double explosionY, final double explosionZ) {
+    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y,
+            final int z, final double explosionX, final double explosionY, final double explosionZ) {
         final int metadata = world.getBlockMetadata(x, y, z);
 
         return this.getSubBlock(metadata)
@@ -233,7 +233,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z, final EntityPlayer player) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z, final EntityPlayer player) {
         final int meta = world.getBlockMetadata(x, y, z);
         if (this.getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
@@ -243,7 +244,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         return this.getPickBlock(target, world, x, y, z, null);
     }
 
@@ -255,8 +257,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         final int meta = world.getBlockMetadata(x, y, z);
         return this.getSubBlock(meta).onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
     }
@@ -293,8 +295,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public boolean canSustainPlant(final IBlockAccess world, final int x, final int y, final int z, final ForgeDirection direction,
-            final IPlantable plantable) {
+    public boolean canSustainPlant(final IBlockAccess world, final int x, final int y, final int z,
+            final ForgeDirection direction, final IPlantable plantable) {
         final Block block = plantable.getPlant(world, x, y + 1, z);
         final int blockMeta = plantable.getPlantMetadata(world, x, y + 1, z);
         // EnumPlantType plantType = plantable.getPlantType(world, x, y + 1, z);
@@ -324,7 +326,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
      * @return A ArrayList containing all items this block drops
      */
     @Override
-    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata, final int fortune) {
+    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata,
+            final int fortune) {
         final SubBlock sb = this.getSubBlock(metadata);
         if (sb.dropsSelf()) {
             return super.getDrops(world, x, y, z, metadata, fortune);
@@ -342,7 +345,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ, final int meta) {
+    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX,
+            final float hitY, final float hitZ, final int meta) {
         return this.getSubBlock(meta).onBlockPlaced(w, x, y, z, side, hitX, hitY, hitZ, meta);
     }
 
@@ -400,7 +404,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public boolean canSilkHarvest(final World world, final EntityPlayer player, final int x, final int y, final int z, final int metadata) {
+    public boolean canSilkHarvest(final World world, final EntityPlayer player, final int x, final int y, final int z,
+            final int metadata) {
         return this.getSubBlock(metadata).canSilkHarvest(world, player, x, y, z, metadata);
     }
 

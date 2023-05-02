@@ -20,8 +20,8 @@ public class WorldGenOre extends WorldGenMinableMeta {
      * @param minY           min height to generate
      * @param maxY           max dito
      */
-    public WorldGenOre(final BlockMetaPair minableBlock, final int numberOfBlocks, final BlockMetaPair fillerBlock, final int amountPerChunk,
-            final int minY, final int maxY) {
+    public WorldGenOre(final BlockMetaPair minableBlock, final int numberOfBlocks, final BlockMetaPair fillerBlock,
+            final int amountPerChunk, final int minY, final int maxY) {
         super(
                 minableBlock.getBlock(),
                 numberOfBlocks,

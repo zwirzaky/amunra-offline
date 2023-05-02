@@ -26,8 +26,8 @@ public class BlockShuttleDock extends SubBlockMachine {
         // TODO Auto-generated constructor stub
     }
 
-    public BlockShuttleDock(final String name, final String texture, final String tool, final int harvestLevel, final float hardness,
-            final float resistance) {
+    public BlockShuttleDock(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }
@@ -43,7 +43,8 @@ public class BlockShuttleDock extends SubBlockMachine {
     }
 
     @Override
-    public void breakBlock(final World world, final int x0, final int y0, final int z0, final Block var5, final int var6) {
+    public void breakBlock(final World world, final int x0, final int y0, final int z0, final Block var5,
+            final int var6) {
         final TileEntity te = world.getTileEntity(x0, y0, z0);
         if (te instanceof TileEntityShuttleDock) {
             ((TileEntityShuttleDock) te).onDestroy(te);
@@ -51,7 +52,8 @@ public class BlockShuttleDock extends SubBlockMachine {
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase entityLiving, final ItemStack itemStack) {
+    public void onBlockPlacedBy(final World world, final int x, final int y, final int z,
+            final EntityLivingBase entityLiving, final ItemStack itemStack) {
         final TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof TileEntityShuttleDock) {
             ((TileEntityShuttleDock) te).onCreate(new BlockVec3(x, y, z));
@@ -75,8 +77,8 @@ public class BlockShuttleDock extends SubBlockMachine {
     }
 
     @Override
-    public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
-            final float hitY, final float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         final TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof TileEntityShuttleDock) {
             ((TileEntityShuttleDock) te).onActivated(entityPlayer);

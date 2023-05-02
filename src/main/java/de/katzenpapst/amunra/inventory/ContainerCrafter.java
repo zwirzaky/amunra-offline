@@ -33,10 +33,7 @@ public class ContainerCrafter extends ContainerWorkbench {
         final int meta = player.worldObj.getBlockMetadata(this.posXFU, this.posYFU, this.posZFU);
 
         if (ARBlocks.blockWorkbench.getBlock() == b && ARBlocks.blockWorkbench.getMetadata() == meta) {
-            return player.getDistanceSq(
-                    this.posXFU + 0.5D,
-                    this.posYFU + 0.5D,
-                    this.posZFU + 0.5D) <= 64.0D;
+            return player.getDistanceSq(this.posXFU + 0.5D, this.posYFU + 0.5D, this.posZFU + 0.5D) <= 64.0D;
         }
 
         // not the block, check for item

@@ -44,8 +44,8 @@ public class AstronomyHelper {
      * @param world
      * @return
      */
-    public static AngleDistance projectBodyToSky(final CelestialBody curBody, final CelestialBody otherBody, final float partialTicks,
-            final long worldTime) {
+    public static AngleDistance projectBodyToSky(final CelestialBody curBody, final CelestialBody otherBody,
+            final float partialTicks, final long worldTime) {
         // long curWorldTime = world.getWorldTime();
 
         final double curBodyDist = curBody.getRelativeDistanceFromCenter().unScaledDistance;
@@ -90,8 +90,8 @@ public class AstronomyHelper {
      * @param orbitFactor  theoretically this should be one overworld year
      * @return
      */
-    public static double getOrbitalAngle(final double relOrbitTime, final double phaseShift, final long worldTime, final double partialTicks,
-            final double orbitFactor) {
+    public static double getOrbitalAngle(final double relOrbitTime, final double phaseShift, final long worldTime,
+            final double partialTicks, final double orbitFactor) {
 
         final double curYearLength = relOrbitTime * orbitFactor;
         final int j = (int) (worldTime % (long) curYearLength);
@@ -108,7 +108,8 @@ public class AstronomyHelper {
      * @param body2distance
      * @return
      */
-    public static double getDistanceBetweenBodies(final double innerAngle, final double body1distance, final double body2distance) {
+    public static double getDistanceBetweenBodies(final double innerAngle, final double body1distance,
+            final double body2distance) {
         return Math.sqrt(
                 Math.pow(body2distance, 2) + Math.pow(body1distance, 2)
                         - 2 * body2distance * body1distance * Math.cos(innerAngle));

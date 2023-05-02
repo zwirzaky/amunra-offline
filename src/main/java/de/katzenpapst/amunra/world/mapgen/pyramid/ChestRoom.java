@@ -16,7 +16,8 @@ public class ChestRoom extends PyramidRoom {
     protected BlockMetaPair spawner = new BlockMetaPair(Blocks.mob_spawner, (byte) 0);
 
     @Override
-    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
@@ -28,8 +29,8 @@ public class ChestRoom extends PyramidRoom {
         return true;
     }
 
-    protected void generateBoxWithChest(final int centerX, final int centerZ, final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
-            final byte[] arrayOfMeta) {
+    protected void generateBoxWithChest(final int centerX, final int centerZ, final int chunkX, final int chunkZ,
+            final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         final int startY = this.floorLevel;
         final int stopY = this.roomBB.maxY;
         final BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
@@ -73,15 +74,15 @@ public class ChestRoom extends PyramidRoom {
         }
     }
 
-    protected void placeChest(final String lootCat, final int x, final int y, final int z, final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
-            final byte[] arrayOfMeta) {
+    protected void placeChest(final String lootCat, final int x, final int y, final int z, final int chunkX,
+            final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, this.chest)) {
             this.parent.addPopulator(new FillChest(x, y, z, this.chest, lootCat));
         }
     }
 
-    protected void placeSpawner(final String entityName, final int x, final int y, final int z, final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
-            final byte[] arrayOfMeta) {
+    protected void placeSpawner(final String entityName, final int x, final int y, final int z, final int chunkX,
+            final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, this.spawner)) {
             this.parent.addPopulator(new SetSpawnerEntity(x, y, z, entityName));
         }

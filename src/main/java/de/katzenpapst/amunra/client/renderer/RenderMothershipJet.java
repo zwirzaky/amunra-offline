@@ -23,8 +23,8 @@ public class RenderMothershipJet extends TileEntitySpecialRenderer {
         this.texture = texture;
     }
 
-    public void renderMothershipEngine(final TileEntityMothershipEngineAbstract chamber, final double par2, final double par4,
-            final double par6, final float par8) {
+    public void renderMothershipEngine(final TileEntityMothershipEngineAbstract chamber, final double par2,
+            final double par4, final double par6, final float par8) {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPushMatrix();
         // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -71,7 +71,8 @@ public class RenderMothershipJet extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTickTime) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z,
+            final float partialTickTime) {
         this.renderMothershipEngine((TileEntityMothershipEngineAbstract) entity, x, y, z, partialTickTime);
         // micdoodle8.mods.galacticraft.planets.mars.client.render.tile.TileEntityCryogenicChamberRenderer
     }

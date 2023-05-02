@@ -145,7 +145,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z, final EntityPlayer player) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z, final EntityPlayer player) {
         final int meta = world.getBlockMetadata(x, y, z);
         if (this.getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
@@ -155,14 +156,16 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         return this.getPickBlock(target, world, x, y, z, null);
     }
 
     @Override
     public void register() {
         // doubleslabMetablock
-        GameRegistry.registerBlock(this, ItemSlabMulti.class, this.getUnlocalizedName(), this, this.doubleslabMetablock);
+        GameRegistry
+                .registerBlock(this, ItemSlabMulti.class, this.getUnlocalizedName(), this, this.doubleslabMetablock);
 
         for (int i = 0; i < this.subBlocksArray.length; i++) {
             final SubBlock sb = this.subBlocksArray[i];
@@ -181,8 +184,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     }
 
     @Override
-    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y, final int z, final double explosionX,
-            final double explosionY, final double explosionZ) {
+    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y,
+            final int z, final double explosionX, final double explosionY, final double explosionZ) {
         final int metadata = world.getBlockMetadata(x, y, z);
 
         return this.getSubBlock(metadata)

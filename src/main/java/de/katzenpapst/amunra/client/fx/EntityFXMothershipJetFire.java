@@ -59,8 +59,8 @@ public class EntityFXMothershipJetFire extends EntityFX {
     }
 
     @Override
-    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6,
-            final float par7) {
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4,
+            final float par5, final float par6, final float par7) {
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         float var8 = (this.particleAge + par2) / this.particleMaxAge * 32.0F;

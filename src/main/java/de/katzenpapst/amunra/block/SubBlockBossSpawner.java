@@ -51,12 +51,14 @@ public class SubBlockBossSpawner extends SubBlock {
     }
 
     @Override
-    public boolean canSilkHarvest(final World world, final EntityPlayer player, final int x, final int y, final int z, final int metadata) {
+    public boolean canSilkHarvest(final World world, final EntityPlayer player, final int x, final int y, final int z,
+            final int metadata) {
         return false;
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         return null;
     }
 

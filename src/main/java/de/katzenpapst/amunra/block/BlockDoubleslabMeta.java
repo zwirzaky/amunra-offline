@@ -35,13 +35,15 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         // int meta = world.getBlockMetadata(x, y, z);
         return this.slabMetablock.getPickBlock(target, world, x, y, z);
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata, final int fortune) {
+    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata,
+            final int fortune) {
         final ArrayList<ItemStack> ret = new ArrayList<>();
 
         final int count = this.quantityDropped(metadata, fortune, world.rand);
@@ -156,12 +158,7 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
                 this.addSubBlock(i, sb);
             }
         }
-        GameRegistry.registerBlock(
-                this,
-                ItemSlabMulti.class,
-                this.getUnlocalizedName(),
-                this.slabMetablock,
-                this);
+        GameRegistry.registerBlock(this, ItemSlabMulti.class, this.getUnlocalizedName(), this.slabMetablock, this);
 
         for (int i = 0; i < this.subBlocksArray.length; i++) {
             final SubBlock sb = this.subBlocksArray[i];

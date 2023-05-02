@@ -67,7 +67,8 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         this.yOffset = 0.0F;
     }
 
-    public EntityBaseLaserArrow(final World world, final EntityLivingBase shooter, final double startX, final double startY, final double startZ) {
+    public EntityBaseLaserArrow(final World world, final EntityLivingBase shooter, final double startX,
+            final double startY, final double startZ) {
         super(world);
         this.shootingEntity = shooter;
         this.setSize(1.0F, 1.0F);
@@ -77,7 +78,8 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         this.motionX = this.motionY = this.motionZ = 0.0D;
     }
 
-    public EntityBaseLaserArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target, final float randMod) {
+    public EntityBaseLaserArrow(final World world, final EntityLivingBase shootingEntity, final EntityLivingBase target,
+            final float randMod) {
         super(world);
         this.renderDistanceWeight = 10.0D;
         this.shootingEntity = shootingEntity;
@@ -93,9 +95,11 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         final double planarDistance = MathHelper.sqrt_double(xNew * xNew + zNew * zNew);
 
         if (planarDistance >= 1.0E-7D) {
-            final float xzAngle = (float) (Math.atan2(zNew, xNew) * 180.0D / Math.PI) - 90.0F; // rotational angle in the
-                                                                                         // xz-plane?
-            final float yAngle = (float) -(Math.atan2(yNew, planarDistance) * 180.0D / Math.PI); // rotational angle to the y?
+            final float xzAngle = (float) (Math.atan2(zNew, xNew) * 180.0D / Math.PI) - 90.0F; // rotational angle in
+                                                                                               // the
+            // xz-plane?
+            final float yAngle = (float) -(Math.atan2(yNew, planarDistance) * 180.0D / Math.PI); // rotational angle to
+                                                                                                 // the y?
             final double scaledX = xNew / planarDistance;
             final double scaledY = zNew / planarDistance;
             this.setLocationAndAngles(
@@ -110,7 +114,8 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         }
     }
 
-    public EntityBaseLaserArrow(final World world, final EntityLivingBase shooter, final Vector3 startVec, final EntityLivingBase target) {
+    public EntityBaseLaserArrow(final World world, final EntityLivingBase shooter, final Vector3 startVec,
+            final EntityLivingBase target) {
         super(world);
         this.posX = startVec.x;
         this.posY = startVec.y;
@@ -182,7 +187,8 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         if (this.doesFireDamage() && !(mop.entityHit instanceof EntityEnderman)) {
             // hm
             // usually, stuff doesn't burn here
-            if (OxygenUtil.noAtmosphericCombustion(mop.entityHit.worldObj.provider) && !OxygenUtil.isAABBInBreathableAirBlock(mop.entityHit.worldObj, mop.entityHit.boundingBox, false)) {
+            if (OxygenUtil.noAtmosphericCombustion(mop.entityHit.worldObj.provider) && !OxygenUtil
+                    .isAABBInBreathableAirBlock(mop.entityHit.worldObj, mop.entityHit.boundingBox, false)) {
                 // and the entity isn't in any sealed area
                 return;
             }
@@ -191,7 +197,8 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
     }
 
     @Override
-    public void setThrowableHeading(double headingX, double headingY, double headingZ, final float speed, final float randMod) {
+    public void setThrowableHeading(double headingX, double headingY, double headingZ, final float speed,
+            final float randMod) {
         final float f2 = MathHelper.sqrt_double(headingX * headingX + headingY * headingY + headingZ * headingZ);
         headingX /= f2;
         headingY /= f2;

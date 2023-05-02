@@ -12,7 +12,8 @@ public class UnderwaterGrass extends SubBlockGrass {
 
     private final BlockMetaPair dirtVersion;
 
-    public UnderwaterGrass(final String name, final String textureTop, final String textureSide, final String textureBottom) {
+    public UnderwaterGrass(final String name, final String textureTop, final String textureSide,
+            final String textureBottom) {
         super(name, textureTop, textureSide, textureBottom);
 
         this.dirtVersion = new BlockMetaPair(Blocks.clay, (byte) 0);

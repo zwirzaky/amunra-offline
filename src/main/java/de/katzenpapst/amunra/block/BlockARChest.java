@@ -172,7 +172,8 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase user, final ItemStack stack) {
+    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase user,
+            final ItemStack stack) {
         byte meta = 0;
         final int userRotation = MathHelper.floor_double(user.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
@@ -353,7 +354,9 @@ public class BlockARChest extends BlockContainer
             return false;
         }
 
-        if (this.isSameBlock(world, x - 1, y, z) || this.isSameBlock(world, x + 1, y, z) || this.isSameBlock(world, x, y, z - 1) || this.isSameBlock(world, x, y, z + 1)) {
+        if (this.isSameBlock(world, x - 1, y, z) || this.isSameBlock(world, x + 1, y, z)
+                || this.isSameBlock(world, x, y, z - 1)
+                || this.isSameBlock(world, x, y, z + 1)) {
             return true;
         }
         return false;
@@ -376,7 +379,8 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public void breakBlock(final World world, final int x, final int y, final int z, final Block block, final int meta) {
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block block,
+            final int meta) {
         final TileEntityARChest tileEntity = (TileEntityARChest) world.getTileEntity(x, y, z);
 
         if (tileEntity != null) {
@@ -424,11 +428,12 @@ public class BlockARChest extends BlockContainer
      * int side, float xOffset, float yOffset, float zOffset
      */
     @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player, final int side, final float xOffset,
-            final float yOffset, final float zOffset) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player,
+            final int side, final float xOffset, final float yOffset, final float zOffset) {
         Object tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity == null || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN) || TileEntityARChest.isOcelotBlockingChest(world, x, y, z)) {
+        if (tileEntity == null || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN)
+                || TileEntityARChest.isOcelotBlockingChest(world, x, y, z)) {
             return true;
         }
         if (this.canDoublechest) {

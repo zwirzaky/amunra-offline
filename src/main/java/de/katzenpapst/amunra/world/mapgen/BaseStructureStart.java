@@ -81,7 +81,8 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
      * This should be overridden, but then called before anything else happens
      */
     @Override
-    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
         this.preparePopulatorListForChunk(chunkX, chunkZ);
 
         return true;
