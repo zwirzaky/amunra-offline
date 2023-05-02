@@ -43,7 +43,7 @@ public class GridVillageStart extends BaseStructureStart {
 
         AmunRa.LOGGER.debug("Generating the Village at x={}, z={}", startBlockX, startBlockZ);
 
-        componentsByGrid = new HashMap<Integer, GridVillageComponent>();
+        componentsByGrid = new HashMap<>();
     }
 
     /**

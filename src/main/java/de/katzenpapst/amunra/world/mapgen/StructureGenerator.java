@@ -115,7 +115,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     protected List<BaseStructureComponent> generateSubComponents(List<SubComponentData> subCompData, Random rand,
             int limit) {
         List<BaseStructureComponent> compList = new ArrayList<>();
-        HashMap<String, Integer> typeAmountMapping = new HashMap<String, Integer>();
+        Map<String, Integer> typeAmountMapping = new HashMap<>();
 
         if (limit <= 0) {
             limit = findComponentLimit(subCompData, rand);

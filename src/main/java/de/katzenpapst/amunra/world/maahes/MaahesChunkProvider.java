@@ -108,7 +108,7 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
         // TODO fill in with caves and villages
-        return new ArrayList<MapGenBaseMeta>();
+        return new ArrayList<>();
     }
 
     @Override

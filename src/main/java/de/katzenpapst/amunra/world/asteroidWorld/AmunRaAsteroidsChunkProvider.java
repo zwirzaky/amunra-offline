@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
@@ -124,9 +125,9 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     private static final int LAVA_CHANCE = 2;
     private static final int GLOWSTONE_CHANCE = 20;
 
-    private ArrayList<AsteroidData> largeAsteroids = new ArrayList<AsteroidData>();
+    private ArrayList<AsteroidData> largeAsteroids = new ArrayList<>();
     private int largeCount = 0;
-    private static HashSet<BlockVec3> chunksDone = new HashSet<BlockVec3>();
+    private static HashSet<BlockVec3> chunksDone = new HashSet<>();
     private int largeAsteroidsLastChunkX;
     private int largeAsteroidsLastChunkZ;
 
@@ -135,7 +136,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         this.worldObj = world;
         this.rand = new Random(seed);
 
-        extraOreGen = new HashMap<BlockMetaPair, Integer>();
+        extraOreGen = new HashMap<>();
         asteroidStoneBlocks = new BlockMetaPair[] { new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 0),
                 new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 1),
                 new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 2) };

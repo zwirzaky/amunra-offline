@@ -106,7 +106,7 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
-        return new ArrayList<MapGenBaseMeta>();
+        return new ArrayList<>();
     }
 
     @Override

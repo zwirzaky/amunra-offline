@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class SetSignText extends AbstractPopulator {
 
-    private String[] signText = new String[] { "", "", "", "" };
+    private String[] signText = { "", "", "", "" };
 
     public SetSignText(int x, int y, int z, String text) {
         this(x, y, z, text.split("\n", 4));

@@ -11,8 +11,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.common.util.Constants.NBT;
 
-import com.google.common.collect.Maps;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import de.katzenpapst.amunra.tick.TickHandlerServer;
 import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
@@ -23,7 +21,7 @@ public class ShuttleDockHandler extends WorldSavedData {
     public static final String saveDataID = "ShuttleDock";
 
     // map: dimensionID => (map: position => isAvailable)
-    private static Map<Integer, Map<Vector3int, Boolean>> tileMap = Maps.newHashMap();
+    private static Map<Integer, Map<Vector3int, Boolean>> tileMap = new HashMap<>();
 
     public ShuttleDockHandler(String id) {
         super(id);
@@ -45,7 +43,7 @@ public class ShuttleDockHandler extends WorldSavedData {
             int dimID = dimensionNbt.getInteger("DimID");
             NBTTagList posList = dimensionNbt.getTagList("PosList", NBT.TAG_COMPOUND);
 
-            HashMap<Vector3int, Boolean> curList = new HashMap<Vector3int, Boolean>();
+            Map<Vector3int, Boolean> curList = new HashMap<>();
 
             for (int j = 0; j < posList.tagCount(); j++) {
                 NBTTagCompound posTag = posList.getCompoundTagAt(j);
@@ -118,7 +116,7 @@ public class ShuttleDockHandler extends WorldSavedData {
             Vector3int pos = new Vector3int(dock.xCoord, dock.yCoord, dock.zCoord);
 
             if (!tileMap.containsKey(dimID)) {
-                Map<Vector3int, Boolean> set = new HashMap<Vector3int, Boolean>();// pos
+                Map<Vector3int, Boolean> set = new HashMap<>();// pos
                 set.put(pos, isAvailable);
                 tileMap.put(dimID, set);
             } else {
