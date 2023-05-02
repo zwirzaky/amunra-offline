@@ -198,8 +198,8 @@ abstract public class AbstractTab {
      */
     protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) {
         if (mouseButton == 0) {
-            for (int l = 0; l < this.buttonList.size(); ++l) {
-                final GuiButton guibutton = (GuiButton) this.buttonList.get(l);
+            for (GuiButton element : this.buttonList) {
+                final GuiButton guibutton = (GuiButton) element;
 
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
                     final ActionPerformedEvent.Pre event = new ActionPerformedEvent.Pre(

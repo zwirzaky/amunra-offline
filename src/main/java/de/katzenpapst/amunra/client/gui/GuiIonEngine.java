@@ -49,7 +49,7 @@ public class GuiIonEngine extends GuiRocketEngine {
         // this.drawTexturedModalRect(containerWidth, containerHeight, 0, 0, this.xSize, this.ySize);
         int scale;
 
-        final List<String> electricityDesc = new ArrayList<String>();
+        final List<String> electricityDesc = new ArrayList<>();
         electricityDesc.add(GCCoreUtil.translate("gui.energyStorage.desc.0"));
         EnergyDisplayHelper.getEnergyDisplayTooltip(
                 this.tileEngine.getEnergyStoredGC(),

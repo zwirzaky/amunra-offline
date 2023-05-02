@@ -1,10 +1,9 @@
 package de.katzenpapst.amunra.mothership;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,9 +42,9 @@ public class MothershipWorldData extends WorldSavedData {
 
     public MothershipWorldData(final String id) {
         super(id);
-        mothershipIdList = new HashMap<Integer, Mothership>();
-        mothershipsByDimension = new HashMap<Integer, Mothership>();
-        orbitDistances = new HashMap<CelestialBody, Float>();
+        mothershipIdList = new HashMap<>();
+        mothershipsByDimension = new HashMap<>();
+        orbitDistances = new HashMap<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -205,9 +204,7 @@ public class MothershipWorldData extends WorldSavedData {
     public int getNumMothershipsForParent(final CelestialBody parent) {
         int result = 0;
 
-        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<Integer, Mothership> pair = it.next();
+        for (Entry<Integer, Mothership> pair : mothershipIdList.entrySet()) {
             final Mothership curM = (Mothership) pair.getValue();
 
             final CelestialBody curParent = curM.getParent();
@@ -220,9 +217,7 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public boolean hasMothershipsInOrbit(final CelestialBody parent) {
-        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<Integer, Mothership> pair = it.next();
+        for (Entry<Integer, Mothership> pair : mothershipIdList.entrySet()) {
             final Mothership curM = (Mothership) pair.getValue();
 
             if (curM.getParent() == parent) return true;
@@ -237,11 +232,9 @@ public class MothershipWorldData extends WorldSavedData {
      * @return
      */
     public List<Mothership> getMothershipsForParent(final CelestialBody parent) {
-        final LinkedList<Mothership> result = new LinkedList<Mothership>();
+        final LinkedList<Mothership> result = new LinkedList<>();
 
-        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<Integer, Mothership> pair = it.next();
+        for (Entry<Integer, Mothership> pair : mothershipIdList.entrySet()) {
             final Mothership curM = (Mothership) pair.getValue();
 
             final CelestialBody curParent = curM.getParent();
@@ -262,9 +255,7 @@ public class MothershipWorldData extends WorldSavedData {
     public int getNumMothershipsForPlayer(final PlayerID player) {
         int num = 0;
 
-        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<Integer, Mothership> pair = it.next();
+        for (Entry<Integer, Mothership> pair : mothershipIdList.entrySet()) {
             final Mothership curM = (Mothership) pair.getValue();
 
             if (curM.isPlayerOwner(player)) {
@@ -285,11 +276,9 @@ public class MothershipWorldData extends WorldSavedData {
      * @return a map where the key is the celestial body and the value is the number of motherships around it
      */
     public HashMap<CelestialBody, Integer> getBodiesWithShips() {
-        final HashMap<CelestialBody, Integer> result = new HashMap<CelestialBody, Integer>();
+        final HashMap<CelestialBody, Integer> result = new HashMap<>();
 
-        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<Integer, Mothership> pair = it.next();
+        for (Entry<Integer, Mothership> pair : mothershipIdList.entrySet()) {
             final Mothership curM = (Mothership) pair.getValue();
             final CelestialBody parent = curM.getParent();
             if (parent == null) continue;
@@ -314,9 +303,7 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public Mothership getByName(final String name) {
-        final Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<Integer, Mothership> pair = it.next();
+        for (Entry<Integer, Mothership> pair : mothershipIdList.entrySet()) {
             final Mothership curM = (Mothership) pair.getValue();
             if (curM.getName().equals(name)) {
                 return curM;

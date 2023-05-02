@@ -163,18 +163,13 @@ public class ItemRendererShuttle implements IItemRenderer {
 
     @Override
     public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
-        switch (type) {
-            case ENTITY:
-                return true;
-            case EQUIPPED:
-                return true;
-            case EQUIPPED_FIRST_PERSON:
-                return true;
-            case INVENTORY:
-                return true;
-            default:
-                return false;
-        }
+        return switch (type) {
+            case ENTITY -> true;
+            case EQUIPPED -> true;
+            case EQUIPPED_FIRST_PERSON -> true;
+            case INVENTORY -> true;
+            default -> false;
+        };
     }
 
     @Override

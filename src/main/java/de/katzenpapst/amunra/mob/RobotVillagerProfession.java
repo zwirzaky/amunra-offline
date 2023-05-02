@@ -16,7 +16,7 @@ public class RobotVillagerProfession {
     protected String name;
     protected MerchantRecipeList merchantList;
 
-    protected static ArrayList<RobotVillagerProfession> professionRegistry = new ArrayList<RobotVillagerProfession>();
+    protected static ArrayList<RobotVillagerProfession> professionRegistry = new ArrayList<>();
 
     public static int addProfession(final RobotVillagerProfession prof) {
         professionRegistry.add(prof);

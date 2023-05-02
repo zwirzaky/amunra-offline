@@ -44,7 +44,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
             return ((IFuelDock) main).getConnectedTiles();
         }
 
-        return new HashSet<ILandingPadAttachable>();
+        return new HashSet<>();
     }
 
     @Override

@@ -101,8 +101,8 @@ public class SkyProviderDynamic extends IRenderHandler {
     public static final float MOON_AXIS_ANGLE_ASTEROID = 10.0F;
     public static final float MOON_AXIS_ANGLE_DEFAULT = 10.0F;
 
-    protected ArrayList<BodyRenderTask> farBodiesToRender = new ArrayList<BodyRenderTask>();
-    protected ArrayList<BodyRenderTask> nearBodiesToRender = new ArrayList<BodyRenderTask>();
+    protected ArrayList<BodyRenderTask> farBodiesToRender = new ArrayList<>();
+    protected ArrayList<BodyRenderTask> nearBodiesToRender = new ArrayList<>();
 
     // angle of the system in the sky
     private static float planetAxisAngle = -19.0F;

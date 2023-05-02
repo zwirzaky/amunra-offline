@@ -54,7 +54,7 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
         subBlocksArray = new SubBlock[numSubBlocks];
         blockNameFU = name;
         // subBlocks = new ArrayList<SubBlock>(initialCapacity);
-        nameMetaMap = new HashMap<String, Integer>();
+        nameMetaMap = new HashMap<>();
         setBlockName(name);
     }
 

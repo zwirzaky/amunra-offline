@@ -59,7 +59,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * For now I'll just keep the professions in here
      */
 
-    protected static ArrayList<ResourceLocation> professionIcons = new ArrayList<ResourceLocation>();
+    protected static ArrayList<ResourceLocation> professionIcons = new ArrayList<>();
 
     public EntityRobotVillager(final World par1World) {
         this(par1World, -1);
@@ -209,7 +209,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
                 // int numOffers = worldObj.rand.nextInt(baseList.size());
                 // for now have just 1 offer
                 final int numOffers = worldObj.rand.nextInt(baseList.size() - 1) + 1;// ensure it's at least 1
-                final HashMap<Integer, Boolean> uniqCache = new HashMap<Integer, Boolean>();
+                final HashMap<Integer, Boolean> uniqCache = new HashMap<>();
                 for (int i = 0; i < numOffers; i++) {
                     final int randOffer = worldObj.rand.nextInt(baseList.size());
                     if (uniqCache.containsKey(randOffer)) {

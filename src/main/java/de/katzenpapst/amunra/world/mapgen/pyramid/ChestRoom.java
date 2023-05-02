@@ -88,18 +88,13 @@ public class ChestRoom extends PyramidRoom {
     }
 
     private static String getMob(final Random rand) {
-        switch (rand.nextInt(6)) {
-            case 0:
-                return "EvolvedSpider";
-            case 1:
-                return "EvolvedZombie";
-            case 2:
-                return "EvolvedCreeper";
-            case 3:
-                return "EvolvedSkeleton";
-            default:
-                return "EvolvedCreeper";
-        }
+        return switch (rand.nextInt(6)) {
+            case 0 -> "EvolvedSpider";
+            case 1 -> "EvolvedZombie";
+            case 2 -> "EvolvedCreeper";
+            case 3 -> "EvolvedSkeleton";
+            default -> "EvolvedCreeper";
+        };
     }
 
 }

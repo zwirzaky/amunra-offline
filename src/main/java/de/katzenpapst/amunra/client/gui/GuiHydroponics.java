@@ -93,7 +93,7 @@ public class GuiHydroponics extends GuiContainerGC {
     @Override
     public void initGui() {
         super.initGui();
-        final List<String> batterySlotDesc = new ArrayList<String>();
+        final List<String> batterySlotDesc = new ArrayList<>();
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.0"));
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.1"));
         this.infoRegions.add(
@@ -242,7 +242,7 @@ public class GuiHydroponics extends GuiContainerGC {
                 this.drawTexturedModalRect(var5 + 100, var6 + 24, 187, 0, 10, 10);
             }
 
-            final List<String> oxygenDesc = new ArrayList<String>();
+            final List<String> oxygenDesc = new ArrayList<>();
             oxygenDesc.add(GCCoreUtil.translate("gui.oxygenStorage.desc.0"));
             oxygenDesc.add(
                     EnumColor.YELLOW + GCCoreUtil.translate("gui.oxygenStorage.desc.1")
@@ -251,7 +251,7 @@ public class GuiHydroponics extends GuiContainerGC {
                                     + (int) Math.floor(this.tile.maxOxygen)));
             this.oxygenInfoRegion.tooltipStrings = oxygenDesc;
 
-            final List<String> electricityDesc = new ArrayList<String>();
+            final List<String> electricityDesc = new ArrayList<>();
             electricityDesc.add(GCCoreUtil.translate("gui.energyStorage.desc.0"));
             EnergyDisplayHelper.getEnergyDisplayTooltip(
                     this.tile.getEnergyStoredGC(),

@@ -157,8 +157,8 @@ public class ModelARVillager extends ModelVillager {
         // this.leftVillagerLeg.render(someConstant);
         this.villagerArms.render(someConstant);
 
-        for (int i = 0; i < tailBoxes.length; i++) {
-            tailBoxes[i].render(someConstant);
+        for (ModelRenderer element : tailBoxes) {
+            element.render(someConstant);
         }
 
     }

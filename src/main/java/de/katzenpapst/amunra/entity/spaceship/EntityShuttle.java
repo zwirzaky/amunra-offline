@@ -149,11 +149,11 @@ public class EntityShuttle extends EntityTieredRocket {
         cargoItems = new ItemStack[this.getSizeInventory()];
         int curIndex = 0;
 
-        for (int i = 0; i < newCargo.length; i++) {
-            if (newCargo[i] == null) {
+        for (ItemStack element : newCargo) {
+            if (element == null) {
                 continue;
             }
-            cargoItems[curIndex] = newCargo[i].copy();
+            cargoItems[curIndex] = element.copy();
             curIndex++;
         }
         this.markDirty();
@@ -641,9 +641,7 @@ public class EntityShuttle extends EntityTieredRocket {
 
     public void landEntity(final TileEntity tile) {
 
-        if (tile instanceof IFuelDock) {
-            final IFuelDock dock = (IFuelDock) tile;
-
+        if (tile instanceof IFuelDock dock) {
             if (this.isDockValid(dock)) {
                 if (!this.worldObj.isRemote) {
                     // Drop any existing rocket on the landing pad
@@ -677,9 +675,7 @@ public class EntityShuttle extends EntityTieredRocket {
     public void onReachAtmosphere() {
         // Not launch controlled
         if (this.riddenByEntity != null && !this.worldObj.isRemote) {
-            if (this.riddenByEntity instanceof EntityPlayerMP) {
-                final EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
-
+            if (this.riddenByEntity instanceof EntityPlayerMP player) {
                 this.onTeleport(player);
                 final GCPlayerStats stats = this.setGCPlayerStats(player);
 
@@ -750,7 +746,7 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     public List<ItemStack> getCargoContents() {
-        final ArrayList<ItemStack> droppedItemList = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> droppedItemList = new ArrayList<>();
         if (this.cargoItems != null) {
             for (final ItemStack item : this.cargoItems) {
                 if (item != null) {

@@ -36,7 +36,7 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
         // I think the first parameter is true for doubleslabs...
         super(false, material);
         setBlockName(name);
-        nameMetaMap = new HashMap<String, Integer>();
+        nameMetaMap = new HashMap<>();
     }
 
     @Override

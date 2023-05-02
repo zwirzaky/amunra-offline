@@ -91,7 +91,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         this.provider = (MothershipWorldProvider) world.provider;
         this.curMothership = (Mothership) provider.getCelestialBody();
         // this.travelTimeCache = new HashMap<CelestialBody, Double>();
-        this.transitDataCache = new HashMap<CelestialBody, MothershipWorldProvider.TransitDataWithDuration>();
+        this.transitDataCache = new HashMap<>();
         // this.travelTimeCache = new HashMap<CelestialBody, Long>();
     }
 

@@ -28,11 +28,9 @@ public class MothershipEngineBoosterIon extends MothershipEngineBoosterBase {
     public boolean onMachineActivated(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer, final int side, final float hitX,
             final float hitY, final float hitZ) {
         final TileEntity leTile = world.getTileEntity(x, y, z);
-        if (leTile == null || !(leTile instanceof TileEntityMothershipEngineBooster)) {
+        if (leTile == null || !(leTile instanceof TileEntityMothershipEngineBooster tile)) {
             return false;
         }
-        final TileEntityMothershipEngineBooster tile = (TileEntityMothershipEngineBooster) leTile;
-
         if (tile.hasMaster()) {
             final Vector3int pos = tile.getMasterPosition();
 

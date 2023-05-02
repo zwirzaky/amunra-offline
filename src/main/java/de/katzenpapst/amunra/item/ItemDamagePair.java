@@ -40,11 +40,9 @@ public class ItemDamagePair {
 
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof ItemDamagePair)) {
+        if (!(other instanceof ItemDamagePair otherCast)) {
             return false;
         }
-        final ItemDamagePair otherCast = (ItemDamagePair) other;
-
         return isSameItem(otherCast.getItem(), otherCast.getDamage());
     }
 

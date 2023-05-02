@@ -43,8 +43,8 @@ public class Mothership extends CelestialBody {
 
     // protected List<PlayerID> playerList = new ArrayList<PlayerID>();
 
-    protected Set<PlayerID> playerSetLanding = new HashSet<PlayerID>();
-    protected Set<PlayerID> playerSetUsage = new HashSet<PlayerID>();
+    protected Set<PlayerID> playerSetLanding = new HashSet<>();
+    protected Set<PlayerID> playerSetUsage = new HashSet<>();
 
     protected PermissionMode permModeLanding = PermissionMode.NONE;
     protected PermissionMode permModeUsage = PermissionMode.NONE;
@@ -493,7 +493,7 @@ public class Mothership extends CelestialBody {
         }
 
         NBTTagList list = data.getTagList("playerList", Constants.NBT.TAG_COMPOUND);
-        playerSetLanding = new HashSet<PlayerID>();
+        playerSetLanding = new HashSet<>();
         // playerList.clear();
         for (int i = 0; i < list.tagCount(); i++) {
             final NBTTagCompound playerData = list.getCompoundTagAt(i);
@@ -507,7 +507,7 @@ public class Mothership extends CelestialBody {
         }
 
         list = data.getTagList("playerListUse", Constants.NBT.TAG_COMPOUND);
-        playerSetUsage = new HashSet<PlayerID>();
+        playerSetUsage = new HashSet<>();
         for (int i = 0; i < list.tagCount(); i++) {
             final NBTTagCompound playerData = list.getCompoundTagAt(i);
             final PlayerID pd = new PlayerID(playerData);
@@ -606,16 +606,12 @@ public class Mothership extends CelestialBody {
     protected boolean isPlayerPermitted(final EntityPlayer player, final PermissionMode mode) {
         final PlayerID playerId = new PlayerID(player);
 
-        switch (this.permModeLanding) {
-            case ALL:
-                return true;
-            case BLACKLIST:
-                return this.isPlayerOwner(playerId) || !this.playerSetLanding.contains(playerId);
-            case WHITELIST:
-                return this.isPlayerOwner(playerId) || this.playerSetLanding.contains(playerId);
-            case NONE:
-            default:
-                return this.isPlayerOwner(playerId);
-        }
+        return switch (this.permModeLanding) {
+            case ALL -> true;
+            case BLACKLIST -> this.isPlayerOwner(playerId) || !this.playerSetLanding.contains(playerId);
+            case WHITELIST -> this.isPlayerOwner(playerId) || this.playerSetLanding.contains(playerId);
+            case NONE -> this.isPlayerOwner(playerId);
+            default -> this.isPlayerOwner(playerId);
+        };
     }
 }

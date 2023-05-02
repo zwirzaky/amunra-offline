@@ -34,7 +34,7 @@ import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
 public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBlockShiftDesc, IMetaBlock {
 
     protected SubBlockMachine[] subBlocksArray;
-    protected HashMap<String, Integer> nameMetaMap = new HashMap<String, Integer>();
+    protected HashMap<String, Integer> nameMetaMap = new HashMap<>();
     protected String blockNameFU;
 
     public BlockMachineMeta(final String name, final Material material) {

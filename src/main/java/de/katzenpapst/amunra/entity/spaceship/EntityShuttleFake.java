@@ -43,11 +43,7 @@ public class EntityShuttleFake extends EntityCelestialFake {
         // stuff
         if (!this.worldObj.isRemote) {
             if (ticks % 40 == 0) {
-                if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayerMP) {
-                    // System.out.println("would send");
-                    // try packet spam
-                    final EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
-
+                if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayerMP player) {
                     if (ticks % 160 == 0 || cachedDimList == null) {
                         // System.out.println("would update&send");
                         cachedDimList = getDimList(player);

@@ -255,7 +255,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
     }
 
     protected List<Mothership> getMothershipListToRender() {
-        final LinkedList<Mothership> result = new LinkedList<Mothership>();
+        final LinkedList<Mothership> result = new LinkedList<>();
 
         if (this.selectedBody != null) {
             final MothershipWorldData msData = TickHandlerServer.mothershipData;

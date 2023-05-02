@@ -41,7 +41,7 @@ public class ItemTricorder extends SubItem {
         float thermalLevel = 0;
         double solarLevel = 1;
         int dayLength = -1;
-        final List<String> atmospheres = new ArrayList<String>();
+        final List<String> atmospheres = new ArrayList<>();
         // do stuff
         if (world.provider instanceof IGalacticraftWorldProvider) {
             gravity = ((IGalacticraftWorldProvider) world.provider).getGravity();

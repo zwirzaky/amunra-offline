@@ -36,9 +36,9 @@ abstract public class AbstractPermissionTab extends AbstractTab
     protected GuiButton rmBtn;
 
     // protected Set<PlayerID> playerIdList = new HashSet<PlayerID>();
-    protected List<PlayerID> playerIdList = new ArrayList<PlayerID>();
+    protected List<PlayerID> playerIdList = new ArrayList<>();
 
-    protected Map<Mothership.PermissionMode, String> permissionModeMap = new HashMap<Mothership.PermissionMode, String>();
+    protected Map<Mothership.PermissionMode, String> permissionModeMap = new HashMap<>();
 
     protected String error = "";
     protected float errorTime = 0;

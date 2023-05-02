@@ -62,9 +62,9 @@ public class ARConfig {
     public int numAsteroids = 600;
 
     // bodies to render as suns
-    public HashMap<String, Vector3> sunColorMap = new HashMap<String, Vector3>();
+    public HashMap<String, Vector3> sunColorMap = new HashMap<>();
 
-    public HashMap<String, RingsRenderInfo> ringMap = new HashMap<String, RingsRenderInfo>();
+    public HashMap<String, RingsRenderInfo> ringMap = new HashMap<>();
 
     // ** IDs **
     public int schematicIdShuttle = 11;
@@ -400,7 +400,7 @@ public class ARConfig {
     private HashSet<String> configGetStringHashSet(final Configuration config, final String name, final String category,
             final String[] defaultValues, final String comment) {
         final String[] data = config.getStringList(name, category, defaultValues, comment);
-        final HashSet<String> result = new HashSet<String>();
+        final HashSet<String> result = new HashSet<>();
         Collections.addAll(result, data);
         return result;
     }

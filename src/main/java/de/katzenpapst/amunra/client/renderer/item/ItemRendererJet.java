@@ -28,15 +28,10 @@ public class ItemRendererJet implements IItemRenderer {
         if ((item.getItem() != ARItems.jetItemMeta) || (item.getItemDamage() >= models.length) || (item.getItemDamage() >= textures.length)) {
             return false;
         }
-        switch (type) {
-            case ENTITY:
-            case EQUIPPED:
-            case EQUIPPED_FIRST_PERSON:
-            case INVENTORY:
-                return true;
-            default:
-                return false;
-        }
+        return switch (type) {
+            case ENTITY, EQUIPPED, EQUIPPED_FIRST_PERSON, INVENTORY -> true;
+            default -> false;
+        };
     }
 
     @Override

@@ -19,7 +19,7 @@ public class StringSelectBox extends GuiButton {
             AmunRa.ASSETPREFIX,
             "textures/gui/gui-extra.png");
 
-    protected List<String> strings = new ArrayList<String>();
+    protected List<String> strings = new ArrayList<>();
 
     protected int selectedStringIndex = -1;
 

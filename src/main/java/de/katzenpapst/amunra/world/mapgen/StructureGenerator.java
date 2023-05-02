@@ -304,7 +304,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
     protected void recursivePopulate(final World world, final int xChunkCoord, final int zChunkCoord, final int origXChunkCoord,
             final int origZChunkCoord) {
-        final Long key = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord));
+        final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
         if (structureMap.containsKey(key)) {
             final BaseStructureStart start = structureMap.get(key);
             start.populateChunk(world, origXChunkCoord, origZChunkCoord);
@@ -323,7 +323,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      */
     protected void makeStructure(final World world, final int xChunkCoord, final int zChunkCoord, final int origXChunkCoord,
             final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
-        final Long key = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord));
+        final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
         BaseStructureStart start = null;
         if (!structureMap.containsKey(key)) {
             start = createNewStructure(xChunkCoord, zChunkCoord);// new GridVillageStart(xChunkCoord, zChunkCoord,

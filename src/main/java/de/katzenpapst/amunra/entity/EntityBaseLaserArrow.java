@@ -326,9 +326,7 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
             }
 
             if (movingobjectposition != null && movingobjectposition.entityHit != null
-                    && movingobjectposition.entityHit instanceof EntityPlayer) {
-                final EntityPlayer entityplayer = (EntityPlayer) movingobjectposition.entityHit;
-
+                    && movingobjectposition.entityHit instanceof EntityPlayer entityplayer) {
                 if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer
                         && !((EntityPlayer) this.shootingEntity).canAttackPlayer(entityplayer)) {
                     movingobjectposition = null;
@@ -355,9 +353,7 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
                     }
 
                     if (movingobjectposition.entityHit.attackEntityFrom(damagesource, dmgValue)) {
-                        if (movingobjectposition.entityHit instanceof EntityLivingBase) {
-                            final EntityLivingBase entitylivingbase = (EntityLivingBase) movingobjectposition.entityHit;
-
+                        if (movingobjectposition.entityHit instanceof EntityLivingBase entitylivingbase) {
                             if (this.knockbackStrength > 0) {
                                 f3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
 

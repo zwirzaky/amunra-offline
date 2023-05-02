@@ -43,7 +43,7 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
 
     @Override
     public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata, final int fortune) {
-        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> ret = new ArrayList<>();
 
         final int count = quantityDropped(metadata, fortune, world.rand);
         for (int i = 0; i < count; i++) {

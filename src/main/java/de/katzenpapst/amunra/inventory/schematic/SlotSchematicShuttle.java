@@ -40,8 +40,8 @@ public class SlotSchematicShuttle extends Slot {
         if (this.player instanceof EntityPlayerMP) {
             // final Object[] toSend = { this.x, this.y, this.z };
 
-            for (int playerNumber = 0; playerNumber < this.player.worldObj.playerEntities.size(); ++playerNumber) {
-                final EntityPlayerMP curPlayer = (EntityPlayerMP) this.player.worldObj.playerEntities.get(playerNumber);
+            for (EntityPlayer element : this.player.worldObj.playerEntities) {
+                final EntityPlayerMP curPlayer = (EntityPlayerMP) element;
 
                 if (curPlayer.dimension == this.player.worldObj.provider.dimensionId) {
                     final double distX = this.pos.x - curPlayer.posX;

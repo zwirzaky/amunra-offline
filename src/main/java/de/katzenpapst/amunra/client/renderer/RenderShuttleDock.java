@@ -21,11 +21,9 @@ public class RenderShuttleDock extends TileEntitySpecialRenderer {
     @Override
     public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTicks) {
 
-        if (!(entity instanceof TileEntityShuttleDock)) {
+        if (!(entity instanceof TileEntityShuttleDock dock)) {
             return;
         }
-        final TileEntityShuttleDock dock = (TileEntityShuttleDock) entity;
-
         // render the stuff
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);

@@ -42,9 +42,9 @@ public class RecipeHelper {
 
     public static SpaceStationRecipe mothershipRecipe;
 
-    protected static HashMap<Item, Vector<INasaWorkbenchRecipe>> nasaWorkbenchRecipes = new HashMap<Item, Vector<INasaWorkbenchRecipe>>();
+    protected static HashMap<Item, Vector<INasaWorkbenchRecipe>> nasaWorkbenchRecipes = new HashMap<>();
 
-    protected static ArrayList<CircuitFabricatorRecipe> circuitFabricatorRecipes = new ArrayList<CircuitFabricatorRecipe>();
+    protected static ArrayList<CircuitFabricatorRecipe> circuitFabricatorRecipes = new ArrayList<>();
 
     public RecipeHelper() {}
 
@@ -85,7 +85,7 @@ public class RecipeHelper {
                 ARBlocks.getItemStack(ARBlocks.blockPodBark, 1));
 
         // *** mothership ***
-        final HashMap<Object, Integer> inputMap = new HashMap<Object, Integer>();
+        final HashMap<Object, Integer> inputMap = new HashMap<>();
         inputMap.put(compressedTinStack, 64);
         inputMap.put(compressedAluStack, 16);
         inputMap.put(ARBlocks.getItemStack(ARBlocks.blockMothershipController, 1), 1);
@@ -93,7 +93,7 @@ public class RecipeHelper {
         mothershipRecipe = new SpaceStationRecipe(inputMap);
 
         // *** circuit fabricator recipes ***
-        final ArrayList<ItemStack> silicons = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> silicons = new ArrayList<>();
         silicons.add(new ItemStack(GCItems.basicItem, 1, 2));
         silicons.addAll(OreDictionary.getOres(ConfigManagerCore.otherModsSilicon));
         // add the silicon of GC, apparently it's not in the same oredict
@@ -690,8 +690,8 @@ public class RecipeHelper {
     }
 
     public static void verifyNasaWorkbenchCrafting() {
-        final HashMap<Integer, ISchematicPage> pagesByPageID = new HashMap<Integer, ISchematicPage>();
-        final HashMap<Integer, ISchematicPage> pagesByGuiID = new HashMap<Integer, ISchematicPage>();
+        final HashMap<Integer, ISchematicPage> pagesByPageID = new HashMap<>();
+        final HashMap<Integer, ISchematicPage> pagesByGuiID = new HashMap<>();
 
         // boolean fail = false;
 
@@ -786,28 +786,28 @@ public class RecipeHelper {
                 optional);
         circuitFabricatorRecipes.add(cfr);
         // oh my
-        for (int a = 0; a < crystal.length; a++) {
-            for (int b = 0; b < silicon1.length; b++) {
-                for (int c = 0; c < silicon2.length; c++) {
-                    for (int d = 0; d < redstone.length; d++) {
+        for (ItemStack element : crystal) {
+            for (ItemStack element2 : silicon1) {
+                for (ItemStack element3 : silicon2) {
+                    for (ItemStack element4 : redstone) {
                         // optional can be empty
                         if (optional.length > 0) {
-                            for (int e = 0; e < optional.length; e++) {
+                            for (ItemStack element5 : optional) {
                                 addCircuitFabricatorRecipeInternal(
                                         output,
-                                        crystal[a],
-                                        silicon1[b],
-                                        silicon2[c],
-                                        redstone[d],
-                                        optional[e]);
+                                        element,
+                                        element2,
+                                        element3,
+                                        element4,
+                                        element5);
                             }
                         } else {
                             addCircuitFabricatorRecipeInternal(
                                     output,
-                                    crystal[a],
-                                    silicon1[b],
-                                    silicon2[c],
-                                    redstone[d],
+                                    element,
+                                    element2,
+                                    element3,
+                                    element4,
                                     null);
                         }
                     }
@@ -841,7 +841,7 @@ public class RecipeHelper {
         final ItemStack lightPlate = ARItems.lightPlating.getItemStack(1);
         final ItemStack shuttleLeg = ARItems.shuttleLegs.getItemStack(1);
         // Schematic
-        final HashMap<Integer, ItemStack> input = new HashMap<Integer, ItemStack>();
+        final HashMap<Integer, ItemStack> input = new HashMap<>();
         // top row, single slot
         input.put(1, ARItems.noseCone.getItemStack(1));
         // body
@@ -1098,7 +1098,7 @@ public class RecipeHelper {
         final ArrayList<ItemStack> chest3 = rrh.getStacks(2);
         HashMap<Integer, ItemStack> input;
         for (int i = 0; i < chest1.size(); i++) {
-            input = new HashMap<Integer, ItemStack>(incompleteInput);
+            input = new HashMap<>(incompleteInput);
             input.put(chestSlot1, chest1.get(i));
             input.put(chestSlot2, chest2.get(i));
             input.put(chestSlot3, chest3.get(i));
@@ -1114,7 +1114,7 @@ public class RecipeHelper {
         final Item item = recipe.getRecipeOutput().getItem();
         Vector<INasaWorkbenchRecipe> recipeArray = nasaWorkbenchRecipes.get(item);
         if (recipeArray == null) {
-            recipeArray = new Vector<INasaWorkbenchRecipe>();
+            recipeArray = new Vector<>();
             nasaWorkbenchRecipes.put(item, recipeArray);
         }
         recipeArray.addElement(recipe);
@@ -1155,7 +1155,7 @@ public class RecipeHelper {
      */
     public static HashMap<Integer, HashSet<ItemDamagePair>> getNasaWorkbenchRecipeForContainer(final Item expectedOutput) {
 
-        final HashMap<Integer, HashSet<ItemDamagePair>> result = new HashMap<Integer, HashSet<ItemDamagePair>>();
+        final HashMap<Integer, HashSet<ItemDamagePair>> result = new HashMap<>();
 
         // ArrayList<HashSet<ItemDamagePair>> result = new ArrayList<HashSet<ItemDamagePair>>();
         final Vector<INasaWorkbenchRecipe> recipeArray = nasaWorkbenchRecipes.get(expectedOutput);

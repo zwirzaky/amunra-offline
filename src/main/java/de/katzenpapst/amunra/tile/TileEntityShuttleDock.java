@@ -411,7 +411,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
     @Override
     public HashSet<ILandingPadAttachable> getConnectedTiles() {
-        final HashSet<ILandingPadAttachable> connectedTiles = new HashSet<ILandingPadAttachable>();
+        final HashSet<ILandingPadAttachable> connectedTiles = new HashSet<>();
 
         // check the blocks in a doorframe form around me
         // below

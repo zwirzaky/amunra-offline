@@ -171,24 +171,16 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
     }
 
     public Mode getNextMode(final Mode fromMode) {
-        switch (fromMode) {
-            case WORKBENCH:
-                return Mode.PICKAXE;
-            case PICKAXE:
-                return Mode.SHOVEL;
-            case SHOVEL:
-                return Mode.AXE;
-            case AXE:
-                return Mode.HOE;
-            case HOE:
-                return Mode.SHEARS;
-            case SHEARS:
-                return Mode.WRENCH;
-            case WRENCH:
-                return Mode.WORKBENCH;
-            default:
-                return Mode.PICKAXE;
-        }
+        return switch (fromMode) {
+            case WORKBENCH -> Mode.PICKAXE;
+            case PICKAXE -> Mode.SHOVEL;
+            case SHOVEL -> Mode.AXE;
+            case AXE -> Mode.HOE;
+            case HOE -> Mode.SHEARS;
+            case SHEARS -> Mode.WRENCH;
+            case WRENCH -> Mode.WORKBENCH;
+            default -> Mode.PICKAXE;
+        };
 
     }
 
@@ -278,50 +270,34 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     protected boolean isEffectiveAgainst(final Mode m, final Block b) {
 
-        switch (m) {
-            case AXE:
-                return b.getMaterial() == Material.wood || b.getMaterial() == Material.plants
-                        || b.getMaterial() == Material.vine;
-            case PICKAXE:
-                return b.getMaterial() == Material.iron || b.getMaterial() == Material.anvil
-                        || b.getMaterial() == Material.rock;
-            case SHEARS:
-                return b.getMaterial() == Material.leaves || b.getMaterial() == Material.cloth
-                        || b.getMaterial() == Material.carpet
-                        || b == Blocks.web
-                        || b == Blocks.redstone_wire
-                        || b == Blocks.tripwire;
-            case SHOVEL:
-                return b.getMaterial() == Material.clay || b.getMaterial() == Material.ground
-                        || b.getMaterial() == Material.clay;
-
-            case WRENCH:
-            case WORKBENCH:
-            case HOE:
-            default:
-                return false;
-        }
+        return switch (m) {
+            case AXE -> b.getMaterial() == Material.wood || b.getMaterial() == Material.plants
+                                    || b.getMaterial() == Material.vine;
+            case PICKAXE -> b.getMaterial() == Material.iron || b.getMaterial() == Material.anvil
+                                    || b.getMaterial() == Material.rock;
+            case SHEARS -> b.getMaterial() == Material.leaves || b.getMaterial() == Material.cloth
+                                    || b.getMaterial() == Material.carpet
+                                    || b == Blocks.web
+                                    || b == Blocks.redstone_wire
+                                    || b == Blocks.tripwire;
+            case SHOVEL -> b.getMaterial() == Material.clay || b.getMaterial() == Material.ground
+                                    || b.getMaterial() == Material.clay;
+            case WRENCH, WORKBENCH, HOE -> false;
+            default -> false;
+        };
     }
 
     protected String getTypeString(final Mode m) {
-        switch (m) {
-            case AXE:
-                return "item.nanotool.mode.axe";
-            case HOE:
-                return "item.nanotool.mode.hoe";
-            case PICKAXE:
-                return "item.nanotool.mode.pickaxe";
-            case SHEARS:
-                return "item.nanotool.mode.shears";
-            case SHOVEL:
-                return "item.nanotool.mode.shovel";
-            case WORKBENCH:
-                return "item.nanotool.mode.workbench";
-            case WRENCH:
-                return "item.nanotool.mode.wrench";
-            default:
-                return "";
-        }
+        return switch (m) {
+            case AXE -> "item.nanotool.mode.axe";
+            case HOE -> "item.nanotool.mode.hoe";
+            case PICKAXE -> "item.nanotool.mode.pickaxe";
+            case SHEARS -> "item.nanotool.mode.shears";
+            case SHOVEL -> "item.nanotool.mode.shovel";
+            case WORKBENCH -> "item.nanotool.mode.workbench";
+            case WRENCH -> "item.nanotool.mode.wrench";
+            default -> "";
+        };
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

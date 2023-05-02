@@ -127,8 +127,8 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     protected MothershipWorldProviderSaveFile mothershipSaveFile;
 
-    protected HashSet<Vector2int> checkedChunks = new HashSet<Vector2int>();
-    protected HashSet<Vector3int> engineLocations = new HashSet<Vector3int>();
+    protected HashSet<Vector2int> checkedChunks = new HashSet<>();
+    protected HashSet<Vector3int> engineLocations = new HashSet<>();
 
     protected boolean needParentParamUpdate = false;
 
@@ -355,8 +355,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         for (final Vector3int loc : this.engineLocations) {
             final TileEntity tile = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
 
-            if (tile instanceof ITileMothershipEngine) {
-                final ITileMothershipEngine engine = (ITileMothershipEngine) tile;
+            if (tile instanceof ITileMothershipEngine engine) {
                 if (engine.isEnabled() && engine.getDirection() == td.direction) {
                     // double curSpeed = engine.getSpeed(worldObj, loc.x, loc.y, loc.z, meta);
                     final double curThrust = engine.getThrust();
@@ -385,8 +384,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         for (final Vector3int loc : this.engineLocations) {
             final TileEntity t = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
 
-            if (t instanceof ITileMothershipEngine) {
-                final ITileMothershipEngine engine = (ITileMothershipEngine) t;
+            if (t instanceof ITileMothershipEngine engine) {
                 if (engine.isInUse()) {
                     engine.endTransit();
                 }
@@ -472,8 +470,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
         for (final Vector3int loc : engineLocations) {
             final TileEntity tile = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
-            if (tile instanceof ITileMothershipEngine) {
-                final ITileMothershipEngine engine = (ITileMothershipEngine) tile;
+            if (tile instanceof ITileMothershipEngine engine) {
                 if (!engine.isEnabled()) {
                     continue;
                 }
@@ -542,7 +539,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         final MothershipFuelRequirements fuelReqs = new MothershipFuelRequirements();
         TransitData newData = null;
         while (!success) {
-            final HashSet<Vector3int> nextEngineLocations = new HashSet<Vector3int>();
+            final HashSet<Vector3int> nextEngineLocations = new HashSet<>();
             success = true;
             newData = new TransitData();
             newData.direction = generalData.direction;
@@ -551,9 +548,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             for (final Vector3int loc : curEngineLocations) {
 
                 final TileEntity tile = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
-                if (tile instanceof ITileMothershipEngine) {
-                    final ITileMothershipEngine engine = (ITileMothershipEngine) tile;
-
+                if (tile instanceof ITileMothershipEngine engine) {
                     if (engine.getDirection() != generalData.direction || !engine.isEnabled()) {
                         continue;
                     }
@@ -614,14 +609,10 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         isAsyncUpdateRunning = true;
 
         final MothershipWorldProvider self = this;
-        final Runnable r = new Runnable() {
-
-            @Override
-            public void run() {
-                self.updateMothership(true);
-                self.isAsyncUpdateRunning = false;
-                self.asyncMothershipUpdateFinished();
-            }
+        final Runnable r = () -> {
+            self.updateMothership(true);
+            self.isAsyncUpdateRunning = false;
+            self.asyncMothershipUpdateFinished();
         };
         final Thread t = new Thread(r);
         t.start();

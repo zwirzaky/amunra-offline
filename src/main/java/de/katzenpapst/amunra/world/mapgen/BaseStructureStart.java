@@ -59,7 +59,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
     }
 
     protected void preparePopulatorListForChunk(final int chunkX, final int chunkZ) {
-        final Long key = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
+        final Long key = ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
 
         if (populatorsByChunk.containsKey(key)) {
             // this is bad, this shouldn't happen
@@ -89,7 +89,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
 
     public void populateChunk(final World world, final int chunkX, final int chunkZ) {
 
-        final Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
+        final Long chunkKey = ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
         if (!populatorsByChunk.containsKey(chunkKey)) {
             AmunRa.LOGGER.warn("No populator list for chunk {}/{}", chunkX, chunkZ);
             return;
@@ -116,7 +116,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
         // p_72938_1_ >> 4, p_72938_2_ >>
         // 16
 
-        final Long chunkKey = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ));
+        final Long chunkKey = ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
         if (!populatorsByChunk.containsKey(chunkKey)) {
             AmunRa.LOGGER.error(
                     "Cannot add populator for {}/{}, offender: {}. Probably it's the wrong chunk",

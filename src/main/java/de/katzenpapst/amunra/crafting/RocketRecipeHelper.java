@@ -15,7 +15,7 @@ public class RocketRecipeHelper {
 
     public RocketRecipeHelper() {
         for (int i = 0; i < stacks.length; i++) {
-            stacks[i] = new ArrayList<ItemStack>();
+            stacks[i] = new ArrayList<>();
         }
     }
 

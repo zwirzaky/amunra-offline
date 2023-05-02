@@ -115,12 +115,11 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
         if (!masterPresent) return;
 
         final TileEntity masterTile = worldObj.getTileEntity(masterX, masterY, masterZ);
-        if (masterTile == null || !(masterTile instanceof TileEntityMothershipEngineAbstract)) {
+        if (masterTile == null || !(masterTile instanceof TileEntityMothershipEngineAbstract jetTile)) {
             // apparently we just lost our master?
             this.reset();
             return;
         }
-        final TileEntityMothershipEngineAbstract jetTile = (TileEntityMothershipEngineAbstract) masterTile;
         if (!jetTile.isPartOfMultiBlock(xCoord, yCoord, zCoord)) {
             this.reset();
             return;

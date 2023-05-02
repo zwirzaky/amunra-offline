@@ -149,7 +149,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     @Override
     public void initGui() {
         super.initGui();
-        final List<String> batterySlotDesc = new ArrayList<String>();
+        final List<String> batterySlotDesc = new ArrayList<>();
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.0"));
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.1"));
         this.infoRegions.add(
@@ -336,7 +336,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
             final int scale = this.tile.getScaledElecticalLevel(54);
             this.drawTexturedModalRect(xOffset + 99, yOffset + 119 + 22, 176, 0, Math.min(scale, 54), 7);
 
-            final List<String> electricityDesc = new ArrayList<String>();
+            final List<String> electricityDesc = new ArrayList<>();
             electricityDesc.add(GCCoreUtil.translate("gui.energyStorage.desc.0"));
             EnergyDisplayHelper.getEnergyDisplayTooltip(
                     this.tile.getEnergyStoredGC(),

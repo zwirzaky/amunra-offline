@@ -24,8 +24,8 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
     public GuiContainerTabbed(final Container container) {
         super(container);
 
-        tabList = new ArrayList<AbstractTab>();
-        tabButtons = new ArrayList<TabButton>();
+        tabList = new ArrayList<>();
+        tabButtons = new ArrayList<>();
     }
 
     @Override

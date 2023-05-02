@@ -73,17 +73,12 @@ abstract public class BaseStructureComponent {
     }
 
     protected int translateZ(final int x, final int z) {
-        switch (this.coordMode) {
-            case 0:
-                return z;
-            case 1:
-            case 3:
-                return this.structBB.minZ + x - this.structBB.minX;
-            case 2:
-                return this.structBB.maxZ - (z - this.structBB.minZ);
-            default:
-                return z;
-        }
+        return switch (this.coordMode) {
+            case 0 -> z;
+            case 1, 3 -> this.structBB.minZ + x - this.structBB.minX;
+            case 2 -> this.structBB.maxZ - (z - this.structBB.minZ);
+            default -> z;
+        };
     }
 
     protected int getHighestSolidBlockInBB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int z) {
@@ -212,31 +207,21 @@ abstract public class BaseStructureComponent {
     }
 
     protected int getXWithOffset(final int x, final int z) {
-        switch (this.coordMode) {
-            case 0:
-            case 2:
-                return this.structBB.minX + x;
-            case 1:
-                return this.structBB.maxX - z;
-            case 3:
-                return this.structBB.minX + z;
-            default:
-                return x;
-        }
+        return switch (this.coordMode) {
+            case 0, 2 -> this.structBB.minX + x;
+            case 1 -> this.structBB.maxX - z;
+            case 3 -> this.structBB.minX + z;
+            default -> x;
+        };
     }
 
     protected int getZWithOffset(final int x, final int z) {
-        switch (this.coordMode) {
-            case 0:
-                return this.structBB.minZ + z;
-            case 1:
-            case 3:
-                return this.structBB.minZ + x;
-            case 2:
-                return this.structBB.maxZ - z;
-            default:
-                return z;
-        }
+        return switch (this.coordMode) {
+            case 0 -> this.structBB.minZ + z;
+            case 1, 3 -> this.structBB.minZ + x;
+            case 2 -> this.structBB.maxZ - z;
+            default -> z;
+        };
     }
 
     protected void placeStandingSign(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z,

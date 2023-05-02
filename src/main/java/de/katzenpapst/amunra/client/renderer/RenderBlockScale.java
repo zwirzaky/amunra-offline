@@ -16,10 +16,9 @@ public class RenderBlockScale extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTickTime) {
-        if (!(entity instanceof TileEntityBlockScale)) {
+        if (!(entity instanceof TileEntityBlockScale scaleEntity)) {
             return;
         }
-        final TileEntityBlockScale scaleEntity = (TileEntityBlockScale) entity;
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
         final int rotation = scaleEntity.getRotationMeta();

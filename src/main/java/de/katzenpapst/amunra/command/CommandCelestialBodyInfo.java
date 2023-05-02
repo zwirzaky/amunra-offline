@@ -41,7 +41,7 @@ public class CommandCelestialBodyInfo extends CommandBase {
             throw new WrongUsageException("Not enough arguments, usage: " + this.getCommandUsage(sender));
         }
 
-        final List<CelestialBody> foundBodies = new ArrayList<CelestialBody>();
+        final List<CelestialBody> foundBodies = new ArrayList<>();
 
         final String name = args[0].toLowerCase();
         final List<CelestialBody> celestialBodyList = Lists.newArrayList();

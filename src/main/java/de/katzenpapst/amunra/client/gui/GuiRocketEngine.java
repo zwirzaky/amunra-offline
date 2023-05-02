@@ -84,7 +84,7 @@ public class GuiRocketEngine extends GuiContainerGC {
                         20,
                         GCCoreUtil.translate("gui.button.enable.name")));
 
-        final List<String> fuelTankDesc = new ArrayList<String>();
+        final List<String> fuelTankDesc = new ArrayList<>();
         fuelTankDesc.add("");
         tankInfo = new GuiElementInfoRegion(
                 (this.width - this.xSize) / 2 + 7,

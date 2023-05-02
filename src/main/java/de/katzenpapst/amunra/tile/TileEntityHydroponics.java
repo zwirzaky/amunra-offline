@@ -101,15 +101,11 @@ public class TileEntityHydroponics extends TileEntityOxygen
     @Override
     public boolean isItemValidForSlot(final int slotNr, final ItemStack stack) {
 
-        switch (slotNr) {
-            case 0: // battery
-                return ItemElectricBase.isElectricItem(stack.getItem());
-            case 1: // seeds or bonemeal
-                return seeds.isSameItem(stack) || bonemeal.isSameItem(stack); // stack.getItem() == Items.wheat_seeds;
-            // return stack.getItem() instanceof IPlantable;
-            default:
-                return false;
-        }
+        return switch (slotNr) {
+            case 0 -> ItemElectricBase.isElectricItem(stack.getItem()); // battery
+            case 1 -> seeds.isSameItem(stack) || bonemeal.isSameItem(stack); // seeds or bonemeal
+            default -> false;
+        };
 
     }
 

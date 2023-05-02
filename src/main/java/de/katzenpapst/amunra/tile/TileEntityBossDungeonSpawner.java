@@ -43,7 +43,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     }
 
     public List<Class<? extends EntityLiving>> getDisabledCreatures() {
-        final List<Class<? extends EntityLiving>> list = new ArrayList<Class<? extends EntityLiving>>();
+        final List<Class<? extends EntityLiving>> list = new ArrayList<>();
         list.add(EntityEvolvedSkeleton.class);
         list.add(EntityEvolvedZombie.class);
         list.add(EntityEvolvedSpider.class);

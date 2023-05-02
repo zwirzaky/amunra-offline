@@ -22,10 +22,9 @@ public class BlockMetaPairHashable extends BlockMetaPair {
 
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof BlockMetaPair)) {
+        if (!(other instanceof BlockMetaPair otherReal)) {
             return false;
         }
-        final BlockMetaPair otherReal = (BlockMetaPair) other;
         return otherReal.getBlock() == getBlock() && otherReal.getMetadata() == getMetadata();
     }
 

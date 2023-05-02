@@ -38,14 +38,11 @@ public class CraftingBlock extends SubBlock {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(final int side, final int meta) {
-        switch (side) {
-            case 0:
-                return blockIconBottom;
-            case 1:
-                return blockIcon;
-            default:
-                return blockIconSide;
-        }
+        return switch (side) {
+            case 0 -> blockIconBottom;
+            case 1 -> blockIcon;
+            default -> blockIconSide;
+        };
     }
 
     /**

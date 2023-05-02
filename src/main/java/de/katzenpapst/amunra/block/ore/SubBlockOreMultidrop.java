@@ -32,7 +32,7 @@ public class SubBlockOreMultidrop extends SubBlockOre {
         }
     }
 
-    protected ArrayList<DroppedItem> dropList = new ArrayList<DroppedItem>();
+    protected ArrayList<DroppedItem> dropList = new ArrayList<>();
 
     public SubBlockOreMultidrop(final String name, final String texture) {
         super(name, texture);
@@ -60,7 +60,7 @@ public class SubBlockOreMultidrop extends SubBlockOre {
 
     @Override
     public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata, final int fortune) {
-        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> ret = new ArrayList<>();
         for (final DroppedItem di : dropList) {
             if (di.probability < 1) {
                 final float effectiveProb = di.probability * fortune;

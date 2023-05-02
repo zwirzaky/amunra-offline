@@ -22,9 +22,7 @@ public class RenderHydroponics extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z, final float partialTicks) {
-        if (te instanceof TileEntityHydroponics) {
-            final TileEntityHydroponics tile = (TileEntityHydroponics) te;
-
+        if (te instanceof TileEntityHydroponics tile) {
             GL11.glPushMatrix();
             GL11.glTranslatef((float) x, (float) y, (float) z);
 

@@ -40,8 +40,8 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         this.setUnlocalizedName(name);
-        subItems = new ArrayList<SubItem>();
-        nameDamageMapping = new HashMap<String, Integer>();
+        subItems = new ArrayList<>();
+        nameDamageMapping = new HashMap<>();
     }
 
     public ItemStack getItemStack(final String name, final int count) {
@@ -84,7 +84,7 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
         if (!nameDamageMapping.containsKey(name)) {
             return -1;
         }
-        return nameDamageMapping.get(name).intValue();
+        return nameDamageMapping.get(name);
     }
 
     public void register() {

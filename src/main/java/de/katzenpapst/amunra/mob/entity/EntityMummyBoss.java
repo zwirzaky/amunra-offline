@@ -297,7 +297,7 @@ public class EntityMummyBoss extends EntityMob
 
     protected List<ItemStack> getDrops(final List<ItemStack> source, final Random rand, final int lootLevel, final int minStacks,
             final int maxStacks) {
-        final List<ItemStack> result = new ArrayList<ItemStack>();
+        final List<ItemStack> result = new ArrayList<>();
         final int size = source.size();
         if (size == 0) {
             return result;

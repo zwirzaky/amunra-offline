@@ -404,7 +404,7 @@ public class ShuttleTeleportHelper {
      * @return
      */
     private static HashMap<String, Integer> getArrayOfChildren(final EntityPlayerMP playerBase, final CelestialBody body) {
-        final HashMap<String, Integer> result = new HashMap<String, Integer>();
+        final HashMap<String, Integer> result = new HashMap<>();
 
         if (body.getReachable()) {
             final int planetId = body.getDimensionID();
@@ -559,7 +559,7 @@ public class ShuttleTeleportHelper {
              * playerBase.dimension); // TEMP! CelestialBody parent = ((Satellite)playerBody).getParentPlanet();
              * map.putAll(getArrayOfChildren(playerBase, parent)); return map;
              */
-            return new HashMap<String, Integer>();
+            return new HashMap<>();
         }
 
         //

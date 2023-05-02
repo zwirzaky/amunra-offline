@@ -76,17 +76,17 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
     @Override
     protected void dropFewItems(final boolean hitByPlayer, final int lootLevel) {
 
-        for (int i = 0; i < commonLoot.length; i++) {
+        for (ItemDamagePair element : commonLoot) {
             final int numItems = this.rand.nextInt(2) + this.rand.nextInt(1 + lootLevel);
 
-            this.entityDropItem(commonLoot[i].getItemStack(numItems), 0.0F);
+            this.entityDropItem(element.getItemStack(numItems), 0.0F);
         }
 
         if (hitByPlayer && lootLevel >= 2) {
             final double probability = ((double) lootLevel - 1.0) * 0.05;
-            for (int i = 0; i < rareLoot.length; i++) {
+            for (ItemDamagePair element : rareLoot) {
                 if (this.rand.nextDouble() < probability) {
-                    this.entityDropItem(rareLoot[i].getItemStack(1), 0.0F);
+                    this.entityDropItem(element.getItemStack(1), 0.0F);
                     return; // drop only one of these
                 }
             }

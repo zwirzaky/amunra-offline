@@ -23,8 +23,8 @@ import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
 
 public class NEIAmunRaConfig implements IConfigureNEI {
 
-    private static HashMap<HashMap<Integer, PositionedStack>, PositionedStack> circuitFabricatorRecipes = new HashMap<HashMap<Integer, PositionedStack>, PositionedStack>();
-    private static HashMap<ArrayList<PositionedStack>, PositionedStack> shuttleRecipes = new HashMap<ArrayList<PositionedStack>, PositionedStack>();
+    private static HashMap<HashMap<Integer, PositionedStack>, PositionedStack> circuitFabricatorRecipes = new HashMap<>();
+    private static HashMap<ArrayList<PositionedStack>, PositionedStack> shuttleRecipes = new HashMap<>();
 
     public NEIAmunRaConfig() {
 
@@ -69,7 +69,7 @@ public class NEIAmunRaConfig implements IConfigureNEI {
         final int offsetY = 0;
 
         for (final INasaWorkbenchRecipe recipe : data) {
-            final ArrayList<PositionedStack> input1 = new ArrayList<PositionedStack>();
+            final ArrayList<PositionedStack> input1 = new ArrayList<>();
 
             for (int i = 0; i < recipe.getRecipeSize(); i++) {
                 final int[] coords = slotData[i];
@@ -93,7 +93,7 @@ public class NEIAmunRaConfig implements IConfigureNEI {
         final ArrayList<CircuitFabricatorRecipe> recipes = RecipeHelper.getCircuitFabricatorRecipes();
         for (final CircuitFabricatorRecipe recipe : recipes) {
             // add it
-            final HashMap<Integer, PositionedStack> input1 = new HashMap<Integer, PositionedStack>();
+            final HashMap<Integer, PositionedStack> input1 = new HashMap<>();
             // slot 0 = gem
             input1.put(0, new PositionedStack(recipe.getCrystal(), 10, 22));
 

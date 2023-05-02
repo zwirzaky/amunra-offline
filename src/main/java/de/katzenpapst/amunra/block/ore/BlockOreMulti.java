@@ -81,8 +81,7 @@ public class BlockOreMulti extends BlockBasicMeta {
                         mbHarvestTool == null ? sb.getHarvestTool(0) : mbHarvestTool,
                         Math.max(sb.getHarvestLevel(0), this.getMultiblockHarvestLevel()),
                         i);
-                if (sb instanceof SubBlockOre) {
-                    final SubBlockOre sbOre = (SubBlockOre) sb;
+                if (sb instanceof SubBlockOre sbOre) {
                     for (final String name : sbOre.getOredictNames()) {
                         OreDictionary.registerOre(name, new ItemStack(this, 1, i));
                     }

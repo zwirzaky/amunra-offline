@@ -287,8 +287,8 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
         final List<?> list = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, exhaustBB);
 
         if (list != null) {
-            for (int i = 0; i < list.size(); ++i) {
-                final Entity entity = (Entity) list.get(i);
+            for (Object element : list) {
+                final Entity entity = (Entity) element;
 
                 if (entity instanceof EntityLivingBase) {
                     entity.setFire(5);

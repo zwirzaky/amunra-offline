@@ -153,8 +153,8 @@ public class AmunRa {
 
     public static final ARConfig config = new ARConfig();
 
-    protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<ResourceLocation>();
-    protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<ResourceLocation>();
+    protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<>();
+    protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<>();
 
     @SidedProxy(
             clientSide = "de.katzenpapst.amunra.proxy.ClientProxy",

@@ -87,7 +87,7 @@ public class GuiHandler implements IGuiHandler {
             case GuiIds.GUI_ATOMBATTERY:
                 return new GuiAtomBattery(player.inventory, (TileEntityIsotopeGenerator) tile);
             case GuiIds.GUI_MOTHERSHIPCONTROLLER:
-                final List<CelestialBody> possibleCelestialBodies = new ArrayList<CelestialBody>();
+                final List<CelestialBody> possibleCelestialBodies = new ArrayList<>();
                 return new GuiMothershipSelection(
                         possibleCelestialBodies,
                         (TileEntityMothershipController) tile,

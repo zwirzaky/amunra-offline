@@ -88,8 +88,7 @@ public class TickHandlerServer {
                 final Object[] entityList = world.loadedEntityList.toArray();
 
                 for (final Object o : entityList) {
-                    if (o instanceof Entity) {
-                        final Entity e = (Entity) o;
+                    if (o instanceof Entity e) {
                         // failsafe?
                         if (e.worldObj.provider instanceof MothershipWorldProvider) {
                             if (e.posY < 0) {
@@ -138,9 +137,7 @@ public class TickHandlerServer {
                                                 }
                                     }
                                 }
-                            } else if (e instanceof EntityAutoRocket) {
-                                final EntityAutoRocket rocket = (EntityAutoRocket) e;
-
+                            } else if (e instanceof EntityAutoRocket rocket) {
                                 final MothershipWorldProvider msProvider = (MothershipWorldProvider) e.worldObj.provider;
                                 if (msProvider.isInTransit()) {
 

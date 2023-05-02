@@ -55,11 +55,9 @@ public class BoxInt2D {
 
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof BoxInt2D)) {
+        if (!(other instanceof BoxInt2D realOther)) {
             return false;
         }
-
-        final BoxInt2D realOther = (BoxInt2D) other;
 
         return this.minX == realOther.minX && this.minY == realOther.minY
                 && this.maxX == realOther.maxX

@@ -36,7 +36,7 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
 
     @Override
     public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y, final int z, final int fortune) {
-        final ArrayList<ItemStack> result = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> result = new ArrayList<>();
         result.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z)));
         return result;
     }

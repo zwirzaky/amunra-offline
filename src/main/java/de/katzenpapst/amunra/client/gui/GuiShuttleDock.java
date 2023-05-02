@@ -71,7 +71,7 @@ public class GuiShuttleDock extends GuiContainerGC {
                 this.height,
                 this);
 
-        final List<String> descrStrings = new ArrayList<String>();
+        final List<String> descrStrings = new ArrayList<>();
         descrStrings.add("foobar");
 
         this.shuttleInfoRegion.tooltipStrings = descrStrings;

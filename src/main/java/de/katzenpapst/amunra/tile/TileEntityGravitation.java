@@ -303,12 +303,10 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     @Override
     public boolean isItemValidForSlot(final int slotNr, final ItemStack stack) {
 
-        switch (slotNr) {
-            case 0: // battery
-                return ItemElectricBase.isElectricItem(stack.getItem());
-            default:
-                return false;
-        }
+        return switch (slotNr) {
+            case 0 -> ItemElectricBase.isElectricItem(stack.getItem()); // battery
+            default -> false;
+        };
 
     }
 

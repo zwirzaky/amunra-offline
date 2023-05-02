@@ -315,8 +315,7 @@ public class AstronomyHelper {
      * @return
      */
     public static String getDebugBodyName(final CelestialBody body) {
-        if (body instanceof Mothership) {
-            final Mothership ms = (Mothership) body;
+        if (body instanceof Mothership ms) {
             return "Mothership #" + ms.getID() + ", \"" + ms.getLocalizedName() + "\", DIM ID " + ms.getDimensionID();
         }
         if (body instanceof Satellite) {

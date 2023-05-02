@@ -180,27 +180,17 @@ public class GuiHelper {
     }
 
     public static String getGasNameUntranslated(final IAtmosphericGas gas) {
-        switch (gas) {
-            case ARGON:
-                return "gas.argon.name";
-            case CO2:
-                return "gas.carbondioxide.name";
-            case HELIUM:
-                return "gas.helium.name";
-            case HYDROGEN:
-                return "gas.hydrogen.name";
-            case METHANE:
-                return "gas.methane.name";
-            case NITROGEN:
-                return "gas.nitrogen.name";
-            case OXYGEN:
-                return "gas.oxygen.name";
-            case WATER:
-                return "tile.water.name";
-            default:
-                return "item.baseItem.tricorder.message.unknownGas";
-
-        }
+        return switch (gas) {
+            case ARGON -> "gas.argon.name";
+            case CO2 -> "gas.carbondioxide.name";
+            case HELIUM -> "gas.helium.name";
+            case HYDROGEN -> "gas.hydrogen.name";
+            case METHANE -> "gas.methane.name";
+            case NITROGEN -> "gas.nitrogen.name";
+            case OXYGEN -> "gas.oxygen.name";
+            case WATER -> "tile.water.name";
+            default -> "item.baseItem.tricorder.message.unknownGas";
+        };
     }
 
     /**

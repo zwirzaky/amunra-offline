@@ -34,15 +34,10 @@ public class ItemRendererSpecial1 implements IItemRenderer {
         if ((item.getItemDamage() != ARBlocks.blockShuttleDock.getMetadata()) && (item.getItemDamage() != ARBlocks.blockHydro.getMetadata())) {
             return false;
         }
-        switch (type) {
-            case ENTITY:
-            case EQUIPPED:
-            case EQUIPPED_FIRST_PERSON:
-            case INVENTORY:
-                return true;
-            default:
-                return false;
-        }
+        return switch (type) {
+            case ENTITY, EQUIPPED, EQUIPPED_FIRST_PERSON, INVENTORY -> true;
+            default -> false;
+        };
     }
 
     @Override
