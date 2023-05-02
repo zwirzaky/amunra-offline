@@ -63,18 +63,15 @@ public class InventorySchematicShuttle implements IInventory {
         if (this.stackList[slot].stackSize <= amount) {
             var3 = this.stackList[slot];
             this.stackList[slot] = null;
-            this.eventHandler.onCraftMatrixChanged(this);
-            return var3;
         } else {
             var3 = this.stackList[slot].splitStack(amount);
 
             if (this.stackList[slot].stackSize == 0) {
                 this.stackList[slot] = null;
             }
-
-            this.eventHandler.onCraftMatrixChanged(this);
-            return var3;
         }
+        this.eventHandler.onCraftMatrixChanged(this);
+        return var3;
     }
 
     @Override

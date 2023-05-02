@@ -558,16 +558,14 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
         if (this.containingItems[slotNr].stackSize <= par2) {
             var3 = this.containingItems[slotNr];
             this.containingItems[slotNr] = null;
-            return var3;
         } else {
             var3 = this.containingItems[slotNr].splitStack(par2);
 
             if (this.containingItems[slotNr].stackSize == 0) {
                 this.containingItems[slotNr] = null;
             }
-
-            return var3;
         }
+        return var3;
     }
 
     @Override

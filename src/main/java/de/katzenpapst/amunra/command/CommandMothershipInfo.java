@@ -65,11 +65,10 @@ public class CommandMothershipInfo extends CommandBase {
                 sb.append(", ");
                 if (ship.isInTransit()) {
                     sb.append("in transit to ");
-                    sb.append(ship.getDestination().getName());
                 } else {
                     sb.append("orbiting ");
-                    sb.append(ship.getDestination().getName());
                 }
+                sb.append(ship.getDestination().getName());
                 sender.addChatMessage(new ChatComponentText(sb.toString()));
             }
         }

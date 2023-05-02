@@ -157,7 +157,6 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
             } else if (this.xCoord > this.masterX) {
                 return new Vector3int(xCoord + 1, yCoord, zCoord);
             } else {
-                return null;
             }
         }
         return null;

@@ -107,11 +107,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     }
 
     protected boolean canCreateMothership(final CelestialBody atBody) {
-        if (numPlayersMotherships < 0) {
-            return false;
-        }
         // important! check where the player started from
-        if (playerParent == null) {
+        if ((numPlayersMotherships < 0) || (playerParent == null)) {
             return false;
         }
 

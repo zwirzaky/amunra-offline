@@ -682,10 +682,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         for (final Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
             // oh well I hope this doesn't kill the performance
 
-            if (planet.getParentSolarSystem() != curSystem || planet.equals(curBodyPlanet)) {
-                continue;
-            }
-            if (AmunRa.config.bodiesNoRender.contains(planet.getName())) {
+            if (planet.getParentSolarSystem() != curSystem || planet.equals(curBodyPlanet) || AmunRa.config.bodiesNoRender.contains(planet.getName())) {
                 continue;
             }
 
@@ -707,10 +704,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         double curOrbitalAngle;
         for (final Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
             // oh well I hope this doesn't kill the performance
-            if (planet.getParentSolarSystem() != curSystem || planet.equals(curBodyPlanet)) {
-                continue;
-            }
-            if (AmunRa.config.bodiesNoRender.contains(planet.getName())) {
+            if (planet.getParentSolarSystem() != curSystem || planet.equals(curBodyPlanet) || AmunRa.config.bodiesNoRender.contains(planet.getName())) {
                 continue;
             }
 
@@ -1202,36 +1196,26 @@ public class SkyProviderDynamic extends IRenderHandler {
             }
         }
 
-        if (canBeBehindTheSun) {
-            if (phaseAngle < PI_HALF || phaseAngle > PI_DOUBLE - PI_HALF) {
-                // this means, body is behind the current body
-                if (phaseAngle < Math.PI) {
-                    // larger angle -> smaller offset
-                    startOffset = overlayScale + (1 - phaseAngle / PI_HALF) * overlayScale;
-                } else {
-                    // smaller ange -> larger offset
-                    stopOffset = overlayScale + (1 - (PI_DOUBLE - phaseAngle) / PI_HALF) * overlayScale;
-                }
-
+        if (!canBeBehindTheSun || (phaseAngle < PI_HALF || phaseAngle > PI_DOUBLE - PI_HALF)) {
+            // this means, body is behind the current body
+            if (phaseAngle < Math.PI) {
+                // larger angle -> smaller offset
+                startOffset = overlayScale + (1 - phaseAngle / PI_HALF) * overlayScale;
             } else {
-                if (phaseAngle < Math.PI) {
-                    // more phaseAngle -> largerStartOffset
-                    startOffset = phaseAngle / Math.PI * overlayScale * 2;
-                    // since stopOffset is substracted from the end coord, 0 is ok here
-                } else {
-                    // since start is added, 0 should work here
-                    // more phaseAngle -> SMALLER stopOffset
-                    stopOffset = (Math.PI * 2 - phaseAngle) / Math.PI * overlayScale * 2;
-                }
+                // smaller ange -> larger offset
+                stopOffset = overlayScale + (1 - (PI_DOUBLE - phaseAngle) / PI_HALF) * overlayScale;
             }
-        } else if (phaseAngle < Math.PI) {
-            // waning
-            // larger angle -> smaller offset
-            startOffset = overlayScale + (1 - phaseAngle / PI_HALF) * overlayScale;
+
         } else {
-            // waxing
-            // smaller ange -> larger offset
-            stopOffset = overlayScale + (1 - (PI_DOUBLE - phaseAngle) / PI_HALF) * overlayScale;
+            if (phaseAngle < Math.PI) {
+                // more phaseAngle -> largerStartOffset
+                startOffset = phaseAngle / Math.PI * overlayScale * 2;
+                // since stopOffset is substracted from the end coord, 0 is ok here
+            } else {
+                // since start is added, 0 should work here
+                // more phaseAngle -> SMALLER stopOffset
+                stopOffset = (Math.PI * 2 - phaseAngle) / Math.PI * overlayScale * 2;
+            }
         }
 
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

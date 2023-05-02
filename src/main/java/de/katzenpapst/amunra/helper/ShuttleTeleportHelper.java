@@ -104,8 +104,8 @@ public class ShuttleTeleportHelper {
         Vector3 spawnPos = null;
         final int oldDimID = entity.worldObj.provider.dimensionId;
 
-        if (dimChange) {
-            if (entity instanceof EntityPlayerMP) {
+        if (entity instanceof EntityPlayerMP) {
+            if (dimChange) {
                 player = (EntityPlayerMP) entity;
                 final World worldOld = player.worldObj;
 
@@ -202,37 +202,36 @@ public class ShuttleTeleportHelper {
 
                 player.playerNetServerHandler.sendPacket(
                         new S1FPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
+            } else {
+                player = (EntityPlayerMP) entity;
+                player.closeScreen();
+                final GCPlayerStats stats = GCPlayerStats.get(player);
+                stats.usingPlanetSelectionGui = false;
+
+                if (worldNew.provider instanceof WorldProviderOrbit) GalacticraftCore.packetPipeline
+                        .sendTo(new PacketSimple(EnumSimplePacket.C_RESET_THIRD_PERSON, new Object[] {}), player);
+                worldNew.updateEntityWithOptionalForce(entity, false);
+
+                spawnPos = type.getPlayerSpawnLocation((WorldServer) entity.worldObj, (EntityPlayerMP) entity);
+                player.playerNetServerHandler.setPlayerLocation(
+                        spawnPos.x,
+                        spawnPos.y,
+                        spawnPos.z,
+                        entity.rotationYaw,
+                        entity.rotationPitch);
+                entity.setLocationAndAngles(
+                        spawnPos.x,
+                        spawnPos.y,
+                        spawnPos.z,
+                        entity.rotationYaw,
+                        entity.rotationPitch);
+                worldNew.updateEntityWithOptionalForce(entity, false);
+
+                AmunRa.LOGGER.info(
+                        "Server attempting to transfer player {} within same dimension {}",
+                        player.getGameProfile().getName(),
+                        worldNew.provider.dimensionId);
             }
-        } else // Same dimension player transfer
-        if (entity instanceof EntityPlayerMP) {
-            player = (EntityPlayerMP) entity;
-            player.closeScreen();
-            final GCPlayerStats stats = GCPlayerStats.get(player);
-            stats.usingPlanetSelectionGui = false;
-
-            if (worldNew.provider instanceof WorldProviderOrbit) GalacticraftCore.packetPipeline
-                    .sendTo(new PacketSimple(EnumSimplePacket.C_RESET_THIRD_PERSON, new Object[] {}), player);
-            worldNew.updateEntityWithOptionalForce(entity, false);
-
-            spawnPos = type.getPlayerSpawnLocation((WorldServer) entity.worldObj, (EntityPlayerMP) entity);
-            player.playerNetServerHandler.setPlayerLocation(
-                    spawnPos.x,
-                    spawnPos.y,
-                    spawnPos.z,
-                    entity.rotationYaw,
-                    entity.rotationPitch);
-            entity.setLocationAndAngles(
-                    spawnPos.x,
-                    spawnPos.y,
-                    spawnPos.z,
-                    entity.rotationYaw,
-                    entity.rotationPitch);
-            worldNew.updateEntityWithOptionalForce(entity, false);
-
-            AmunRa.LOGGER.info(
-                    "Server attempting to transfer player {} within same dimension {}",
-                    player.getGameProfile().getName(),
-                    worldNew.provider.dimensionId);
         }
         final GCPlayerStats playerStats = GCPlayerStats.get(player);
         final boolean usingShuttle = playerStats.rocketItem != null && playerStats.rocketItem instanceof ItemShuttle;

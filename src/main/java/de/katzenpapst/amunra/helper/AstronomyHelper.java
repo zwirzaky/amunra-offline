@@ -552,7 +552,6 @@ public class AstronomyHelper {
             // x = v*t => t = x/v
             final double tRemaining = halfDistanceRemaining / maxSpeed;
             time = tEnd + tRemaining;
-            return (long) (2 * time);
         }
         // we don't reach tEnd
 

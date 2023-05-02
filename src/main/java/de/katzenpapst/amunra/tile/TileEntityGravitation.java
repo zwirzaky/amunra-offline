@@ -211,16 +211,14 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
         if (this.containingItems[slotNr].stackSize <= amount) {
             newStack = this.containingItems[slotNr];
             this.containingItems[slotNr] = null;
-            return newStack;
         } else {
             newStack = this.containingItems[slotNr].splitStack(amount);
 
             if (this.containingItems[slotNr].stackSize == 0) {
                 this.containingItems[slotNr] = null;
             }
-
-            return newStack;
         }
+        return newStack;
     }
 
     @Override

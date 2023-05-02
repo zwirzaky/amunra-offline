@@ -275,13 +275,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
     protected CelestialBody getBodyToRenderMothershipsAround() {
 
-        if (this.selectedBody instanceof Star) {
-            if (selectionCount != 1 && this.ticksSinceSelection > 35) {
-                return this.selectedBody;
-            }
-            return null;
-        }
-        if (this.selectedBody instanceof Planet) {
+        if ((this.selectedBody instanceof Star) || (this.selectedBody instanceof Planet)) {
             // ship's parent is the body and selectionCount != 1
             // AND
             // this.ticksSinceSelection > 35
@@ -294,9 +288,6 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             if (selectionCount != 1 && this.ticksSinceSelection > 35) {
                 return this.selectedBody;
             }
-            return null;
-            // renderShipsAround = ((IChildBody)this.selectedBody).getParentPlanet();
-            // I almost think never TODO find out
         } else if (this.selectedBody instanceof Mothership) {
             return ((Mothership) this.selectedBody).getParent();
         }

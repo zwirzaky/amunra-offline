@@ -349,10 +349,7 @@ public class BlockARChest extends BlockContainer
      * Checks the neighbor blocks to see if there is a chest there. Args: world, x, y, z
      */
     private boolean isThereANeighborChest(final World world, final int x, final int y, final int z) {
-        if (!canDoublechest) {
-            return false;
-        }
-        if (!isSameBlock(world, x, y, z)) {
+        if (!canDoublechest || !isSameBlock(world, x, y, z)) {
             return false;
         }
 
@@ -443,11 +440,7 @@ public class BlockARChest extends BlockContainer
             final float yOffset, final float zOffset) {
         Object tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity == null || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN)) {
-            return true;
-        }
-
-        if (TileEntityARChest.isOcelotBlockingChest(world, x, y, z)) {
+        if (tileEntity == null || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN) || TileEntityARChest.isOcelotBlockingChest(world, x, y, z)) {
             return true;
         }
         if (this.canDoublechest) {

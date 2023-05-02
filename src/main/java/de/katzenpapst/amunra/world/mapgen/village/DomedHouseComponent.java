@@ -85,7 +85,7 @@ public class DomedHouseComponent extends GridVillageComponent {
                                 // door
                                 placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel + y, z, air);
 
-                            } else if ((x == startX && z == zCenter || x == stopX && z == zCenter ||
+                            } else if ((((x == startX || x == stopX) && z == zCenter) ||
                             // (z == startZ && x == xCenter) ||
                                     z == stopZ && x == xCenter) && y == 1) {
                                         // windows

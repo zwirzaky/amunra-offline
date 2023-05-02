@@ -205,16 +205,14 @@ public class TileEntityHydroponics extends TileEntityOxygen
         if (this.containingItems[slotNr].stackSize <= amount) {
             newStack = this.containingItems[slotNr];
             this.containingItems[slotNr] = null;
-            return newStack;
         } else {
             newStack = this.containingItems[slotNr].splitStack(amount);
 
             if (this.containingItems[slotNr].stackSize == 0) {
                 this.containingItems[slotNr] = null;
             }
-
-            return newStack;
         }
+        return newStack;
     }
 
     @Override
@@ -250,10 +248,7 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     protected void growPlant() {
-        if (this.plantGrowthStatus == -1.0F || this.plantGrowthStatus == 1.0F) {
-            return; // no seed or grown
-        }
-        if (worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord) < 9) {
+        if (this.plantGrowthStatus == -1.0F || this.plantGrowthStatus == 1.0F || (worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord) < 9)) {
             return;
         }
         // wiki says: 5 - 35 minecraft minutes for one crop stage

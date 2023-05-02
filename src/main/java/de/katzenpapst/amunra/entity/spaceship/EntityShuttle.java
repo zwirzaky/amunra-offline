@@ -563,12 +563,8 @@ public class EntityShuttle extends EntityTieredRocket {
 
     protected void checkStandingPosition() {
         // hm
-        if (this.worldObj.isRemote) {
-            return;
-        }
-
         // recheck this from time to time anyway
-        if (doKnowOnWhatImStanding && this.ticksExisted % 40 != 0) {
+        if (this.worldObj.isRemote || (doKnowOnWhatImStanding && this.ticksExisted % 40 != 0)) {
             return;
         }
 

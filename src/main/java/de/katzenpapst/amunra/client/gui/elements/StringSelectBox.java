@@ -238,7 +238,6 @@ public class StringSelectBox extends GuiButton {
         if (lineClicked < strings.size()) {
             final int newIndex = lineClicked + scrollOffset;
             this.setSelection(newIndex);
-            return true;
         }
 
         return true;

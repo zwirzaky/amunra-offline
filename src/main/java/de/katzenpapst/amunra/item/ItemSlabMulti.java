@@ -59,9 +59,7 @@ public class ItemSlabMulti extends ItemBlockMulti {
         if (this.isDoubleSlab) {
             return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
         }
-        if (stack.stackSize == 0) {
-            return false;
-        } else if (!player.canPlayerEdit(x, y, z, side, stack)) {
+        if ((stack.stackSize == 0) || !player.canPlayerEdit(x, y, z, side, stack)) {
             return false;
         } else {
             final Block block = world.getBlock(x, y, z);
@@ -69,7 +67,7 @@ public class ItemSlabMulti extends ItemBlockMulti {
             final int worldDistinctionMeta = worldMeta & 7;
             final boolean isHighestBitSet = (worldMeta & 8) != 0; // I think the meaning is: isSlabOnTop
 
-            if ((side == 1 && !isHighestBitSet || side == 0 && isHighestBitSet) && block == this.singleSlab
+            if (((isHighestBitSet ? side == 0 : side == 1)) && block == this.singleSlab
                     && worldDistinctionMeta == stack.getItemDamage()) {
                 // we are rightclicking on a slab with which we can merge
                 this.combine(world, stack, x, y, z, worldDistinctionMeta);
@@ -96,7 +94,7 @@ public class ItemSlabMulti extends ItemBlockMulti {
         int distinctionMeta = meta & 7;
         final boolean isUpperSlab = (meta & 8) != 0;
 
-        if ((side == 1 && !isUpperSlab || side == 0 && isUpperSlab) && block == this.singleSlab
+        if (((isUpperSlab ? side == 0 : side == 1)) && block == this.singleSlab
                 && distinctionMeta == stack.getItemDamage()) {
             return true;
         }

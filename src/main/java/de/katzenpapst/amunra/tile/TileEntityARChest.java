@@ -102,18 +102,15 @@ public class TileEntityARChest extends TileEntity implements IInventory {
         if (this.chestContents[slotNr].stackSize <= nrOfItems) {
             itemstack = this.chestContents[slotNr];
             this.chestContents[slotNr] = null;
-            this.markDirty();
-            return itemstack;
         } else {
             itemstack = this.chestContents[slotNr].splitStack(nrOfItems);
 
             if (this.chestContents[slotNr].stackSize == 0) {
                 this.chestContents[slotNr] = null;
             }
-
-            this.markDirty();
-            return itemstack;
         }
+        this.markDirty();
+        return itemstack;
     }
 
     /**

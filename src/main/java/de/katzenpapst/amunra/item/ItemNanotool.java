@@ -483,13 +483,12 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
                         block1.stepSound.getPitch() * 0.8F);
 
                 if (world.isRemote) {
-                    return true;
                 } else {
                     world.setBlock(x, y, z, block1);
                     // stack.damageItem(1, player);
                     this.consumePower(stack, player, energyCostUseSmall);
-                    return true;
                 }
+                return true;
             } else {
                 return false;
             }

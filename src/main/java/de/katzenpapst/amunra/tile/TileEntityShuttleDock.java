@@ -98,10 +98,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                     return; // doesn't work
                 }
                 stack = this.getStackInSlot(0);
-                if (stack == null || stack.stackSize == 0 || !(stack.getItem() instanceof ItemShuttle)) {
-                    return;
-                }
-                if (this.isObstructed()) {
+                if (stack == null || stack.stackSize == 0 || !(stack.getItem() instanceof ItemShuttle) || this.isObstructed()) {
                     return;
                 }
                 shuttleItem = (ItemShuttle) stack.getItem();
@@ -585,16 +582,14 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         if (this.containingItems[slotNr].stackSize <= quantity) {
             resultStack = this.containingItems[slotNr];
             this.containingItems[slotNr] = null;
-            return resultStack;
         } else {
             resultStack = this.containingItems[slotNr].splitStack(quantity);
 
             if (this.containingItems[slotNr].stackSize == 0) {
                 this.containingItems[slotNr] = null;
             }
-
-            return resultStack;
         }
+        return resultStack;
     }
 
     @Override

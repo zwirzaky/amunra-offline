@@ -47,10 +47,7 @@ public class ARTreeSapling extends AbstractSapling {
 
             for (int curX = x - halfCanopyWidth; curX <= x + halfCanopyWidth; ++curX) {
                 for (int curZ = z - halfCanopyWidth; curZ <= z + halfCanopyWidth; ++curZ) {
-                    if ((curY < 0) || (curY >= 256)) {
-                        return false;
-                    }
-                    if (!this.canReplaceBlock(world, curX, curY, curZ)) {
+                    if ((curY < 0) || (curY >= 256) || !this.canReplaceBlock(world, curX, curY, curZ)) {
                         return false;
                     }
                 }
@@ -165,7 +162,6 @@ public class ARTreeSapling extends AbstractSapling {
 
                 return true;
             }
-            return false;
 
         }
         return false;
