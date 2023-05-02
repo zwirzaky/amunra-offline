@@ -104,8 +104,8 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
         // this works only for planets...
         CelestialBody body = this.getCelestialBody();
 
-        if (body instanceof Moon) {
-            return 1.0F / ((Moon) body).getParentPlanet().getRelativeDistanceFromCenter().unScaledDistance;
+        if (body instanceof Moon moon) {
+            return 1.0F / moon.getParentPlanet().getRelativeDistanceFromCenter().unScaledDistance;
         }
         return 1.0F / body.getRelativeDistanceFromCenter().unScaledDistance;
     }

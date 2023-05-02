@@ -1,6 +1,5 @@
 package de.katzenpapst.amunra.world.mapgen.populator;
 
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -21,15 +20,11 @@ public class InitBossSpawner extends AbstractPopulator {
 
     @Override
     public boolean populate(World world) {
-
-        TileEntity t = world.getTileEntity(x, y, z);
-
-        if (t instanceof ITileDungeonSpawner) {
-            ((ITileDungeonSpawner) t).setRoomArea(aabb);
-            ((ITileDungeonSpawner) t).setBossClass(entityClass);
+        if (world.getTileEntity(x, y, z) instanceof ITileDungeonSpawner tileDungeonSpawner) {
+            tileDungeonSpawner.setRoomArea(aabb);
+            tileDungeonSpawner.setBossClass(entityClass);
             return true;
         }
-
         return false;
     }
 
