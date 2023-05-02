@@ -27,7 +27,7 @@ public class SubBlockRock extends SubBlock {
     }
 
     public SubBlockRock setBlockToDrop(final BlockMetaPair block) {
-        blockToDrop = block;
+        this.blockToDrop = block;
         return this;
     }
 
@@ -38,12 +38,12 @@ public class SubBlockRock extends SubBlock {
 
     @Override
     public Item getItemDropped(final int meta, final Random random, final int fortune) {
-        return Item.getItemFromBlock(blockToDrop.getBlock());
+        return Item.getItemFromBlock(this.blockToDrop.getBlock());
     }
 
     @Override
     public int damageDropped(final int meta) {
-        return blockToDrop.getMetadata();
+        return this.blockToDrop.getMetadata();
     }
 
 }

@@ -28,12 +28,12 @@ public class GridVillageGenerator extends StructureGenerator {
                                                                           // p_151538_3_)
 
     public void addComponentType(final Class<? extends GridVillageComponent> clazz, final float probability) {
-        addComponentType(clazz, probability, 0, 0);
+        this.addComponentType(clazz, probability, 0, 0);
     }
 
     public void addComponentType(final Class<? extends GridVillageComponent> clazz, final float probability, final int minAmount,
             final int maxAmount) {
-        components.add(new SubComponentData(clazz, probability, minAmount, maxAmount));
+        this.components.add(new SubComponentData(clazz, probability, minAmount, maxAmount));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class GridVillageGenerator extends StructureGenerator {
         final Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
         final GridVillageStart start = new GridVillageStart(this.worldObj, xChunkCoord, zChunkCoord, rand4structure);
-        final List<BaseStructureComponent> compList = generateSubComponents(components, rand4structure, 0);
+        final List<BaseStructureComponent> compList = this.generateSubComponents(this.components, rand4structure, 0);
         /*
          * ArrayList compList = new ArrayList(); // now prepare the actual component list for(SubComponentData entry:
          * components) { try { // generate the minimum amount GridVillageComponent cmp = null; int nrGenerated = 0;

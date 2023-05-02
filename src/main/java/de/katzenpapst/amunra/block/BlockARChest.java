@@ -73,34 +73,34 @@ public class BlockARChest extends BlockContainer
     }
 
     public ResourceLocation getSmallTexture() {
-        return smallChestTexture;
+        return this.smallChestTexture;
     }
 
     public ResourceLocation getLargeTexture() {
-        return bigChestTexture;
+        return this.bigChestTexture;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        this.blockIcon = par1IconRegister.registerIcon(fallbackTexture);
+        this.blockIcon = par1IconRegister.registerIcon(this.fallbackTexture);
     }
 
     public void setShiftDescription(final String str) {
-        shiftDescription = str;
+        this.shiftDescription = str;
     }
 
     @Override
     public String getShiftDescription(final int meta) {
-        if (shiftDescription != null) {
-            return GCCoreUtil.translate(shiftDescription);
+        if (this.shiftDescription != null) {
+            return GCCoreUtil.translate(this.shiftDescription);
         }
         return null;
     }
 
     @Override
     public boolean showDescription(final int meta) {
-        return shiftDescription != null;
+        return this.shiftDescription != null;
     }
 
     @Override
@@ -138,13 +138,13 @@ public class BlockARChest extends BlockContainer
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
             return;
         }
-        if (isSameBlock(world, x, y, z - 1)) {
+        if (this.isSameBlock(world, x, y, z - 1)) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0F, 0.9375F, 0.875F, 0.9375F);
-        } else if (isSameBlock(world, x, y, z + 1)) {
+        } else if (this.isSameBlock(world, x, y, z + 1)) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 1.0F);
-        } else if (isSameBlock(world, x - 1, y, z)) {
+        } else if (this.isSameBlock(world, x - 1, y, z)) {
             this.setBlockBounds(0.0F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-        } else if (isSameBlock(world, x + 1, y, z)) {
+        } else if (this.isSameBlock(world, x + 1, y, z)) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F, 0.875F, 0.9375F);
         } else {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
@@ -324,19 +324,19 @@ public class BlockARChest extends BlockContainer
         }
         int numSameNeighbours = 0;
 
-        if (isSameBlock(world, x - 1, y, z)) {
+        if (this.isSameBlock(world, x - 1, y, z)) {
             ++numSameNeighbours;
         }
 
-        if (isSameBlock(world, x + 1, y, z)) {
+        if (this.isSameBlock(world, x + 1, y, z)) {
             ++numSameNeighbours;
         }
 
-        if (isSameBlock(world, x, y, z - 1)) {
+        if (this.isSameBlock(world, x, y, z - 1)) {
             ++numSameNeighbours;
         }
 
-        if (isSameBlock(world, x, y, z + 1)) {
+        if (this.isSameBlock(world, x, y, z + 1)) {
             ++numSameNeighbours;
         }
 
@@ -349,23 +349,23 @@ public class BlockARChest extends BlockContainer
      * Checks the neighbor blocks to see if there is a chest there. Args: world, x, y, z
      */
     private boolean isThereANeighborChest(final World world, final int x, final int y, final int z) {
-        if (!canDoublechest || !isSameBlock(world, x, y, z)) {
+        if (!this.canDoublechest || !this.isSameBlock(world, x, y, z)) {
             return false;
         }
 
-        if (isSameBlock(world, x - 1, y, z)) {
+        if (this.isSameBlock(world, x - 1, y, z)) {
             return true;
         }
 
-        if (isSameBlock(world, x + 1, y, z)) {
+        if (this.isSameBlock(world, x + 1, y, z)) {
             return true;
         }
 
-        if (isSameBlock(world, x, y, z - 1)) {
+        if (this.isSameBlock(world, x, y, z - 1)) {
             return true;
         }
 
-        if (isSameBlock(world, x, y, z + 1)) {
+        if (this.isSameBlock(world, x, y, z + 1)) {
             return true;
         }
         return false;
@@ -461,28 +461,28 @@ public class BlockARChest extends BlockContainer
                 return true;
             }
 
-            if (isSameBlock(world, x - 1, y, z)) {
+            if (this.isSameBlock(world, x - 1, y, z)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
                         (TileEntityARChest) world.getTileEntity(x - 1, y, z),
                         (IInventory) tileEntity);
             }
 
-            if (isSameBlock(world, x + 1, y, z)) {
+            if (this.isSameBlock(world, x + 1, y, z)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
                         (IInventory) tileEntity,
                         (TileEntityARChest) world.getTileEntity(x + 1, y, z));
             }
 
-            if (isSameBlock(world, x, y, z - 1)) {
+            if (this.isSameBlock(world, x, y, z - 1)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
                         (TileEntityARChest) world.getTileEntity(x, y, z - 1),
                         (IInventory) tileEntity);
             }
 
-            if (isSameBlock(world, x, y, z + 1)) {
+            if (this.isSameBlock(world, x, y, z + 1)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
                         (IInventory) tileEntity,
@@ -504,6 +504,6 @@ public class BlockARChest extends BlockContainer
 
     @Override
     public float getMass(final World w, final int x, final int y, final int z, final int meta) {
-        return mass;
+        return this.mass;
     }
 }

@@ -39,7 +39,7 @@ public class TabButton extends GuiButton {
     public TabButton(final int id, final int xPos, final int yPos, final String displayString, final String infoString, final ResourceLocation texture) {
         this(id, xPos, yPos, displayString, texture);
 
-        extraInfo = infoString;
+        this.extraInfo = infoString;
     }
 
     /**
@@ -69,8 +69,8 @@ public class TabButton extends GuiButton {
 
             //
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(texture);
-            drawFullSizedTexturedRect(xPosition + 7, yPosition + 5, 18, 18);
+            mc.getTextureManager().bindTexture(this.texture);
+            this.drawFullSizedTexturedRect(this.xPosition + 7, this.yPosition + 5, 18, 18);
 
             // this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition
             // + (this.height - 8) / 2, l);
@@ -95,10 +95,10 @@ public class TabButton extends GuiButton {
      */
     @Override
     public int getHoverState(final boolean isMouseOver) {
-        if (isActive) {
+        if (this.isActive) {
             return 0;
         }
-        if (!enabled) {
+        if (!this.enabled) {
             return 2;
         }
         return 1;
@@ -121,7 +121,7 @@ public class TabButton extends GuiButton {
 
         if (this.displayString != null && !this.displayString.isEmpty() && withinRegion) {
             final FontRenderer fontRenderer = FMLClientHandler.instance().getClient().fontRenderer;
-            int stringWidth = FMLClientHandler.instance().getClient().fontRenderer.getStringWidth(displayString);
+            int stringWidth = FMLClientHandler.instance().getClient().fontRenderer.getStringWidth(this.displayString);
 
             final int tooltipX = mouseX + 12;
             final int tooltipY = mouseY - 12;
@@ -129,7 +129,7 @@ public class TabButton extends GuiButton {
 
             if (this.extraInfo != null) {
                 stringWidth = Math.max(stringWidth, 150);
-                extraStrings = fontRenderer.listFormattedStringToWidth(extraInfo, stringWidth);
+                extraStrings = fontRenderer.listFormattedStringToWidth(this.extraInfo, stringWidth);
                 stringHeight += extraStrings.size() * 10;
             }
 
@@ -202,7 +202,7 @@ public class TabButton extends GuiButton {
                     j2,
                     j2);
 
-            fontRenderer.drawStringWithShadow(displayString, tooltipX, tooltipY, -1);
+            fontRenderer.drawStringWithShadow(this.displayString, tooltipX, tooltipY, -1);
 
             // EnumColor.RED
 

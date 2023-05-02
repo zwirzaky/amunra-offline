@@ -9,16 +9,16 @@ public class SpawnEntity extends AbstractPopulator {
 
     public SpawnEntity(final int x, final int y, final int z, final Entity ent) {
         super(x, y, z);
-        entity = ent;
+        this.entity = ent;
     }
 
     @Override
     public boolean populate(final World world) {
-        if (entity == null) return false;
+        if (this.entity == null) return false;
 
         // otherwise try to spawn it now
-        entity.setLocationAndAngles(this.x + 0.5D, this.y, this.z + 0.5D, 0.0F, 0.0F);
-        return world.spawnEntityInWorld(entity);
+        this.entity.setLocationAndAngles(this.x + 0.5D, this.y, this.z + 0.5D, 0.0F, 0.0F);
+        return world.spawnEntityInWorld(this.entity);
     }
 
 }

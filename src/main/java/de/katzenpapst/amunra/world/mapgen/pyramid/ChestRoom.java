@@ -41,7 +41,7 @@ public class ChestRoom extends PyramidRoom {
                     } else if (x == centerX && z == centerZ) {
                         if (y == startY + 1) {
                             // chest
-                            placeChest(
+                            this.placeChest(
                                     Pyramid.LOOT_CATEGORY_BASIC,
                                     x,
                                     y,
@@ -51,7 +51,7 @@ public class ChestRoom extends PyramidRoom {
                                     arrayOfIDs,
                                     arrayOfMeta);
                         } else if (y == startY + 2) {
-                            placeSpawner(
+                            this.placeSpawner(
                                     getMob(this.parent.getWorld().rand),
                                     x,
                                     y,
@@ -75,14 +75,14 @@ public class ChestRoom extends PyramidRoom {
 
     protected void placeChest(final String lootCat, final int x, final int y, final int z, final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
             final byte[] arrayOfMeta) {
-        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, chest)) {
-            this.parent.addPopulator(new FillChest(x, y, z, chest, lootCat));
+        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, this.chest)) {
+            this.parent.addPopulator(new FillChest(x, y, z, this.chest, lootCat));
         }
     }
 
     protected void placeSpawner(final String entityName, final int x, final int y, final int z, final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
             final byte[] arrayOfMeta) {
-        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, spawner)) {
+        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, this.spawner)) {
             this.parent.addPopulator(new SetSpawnerEntity(x, y, z, entityName));
         }
     }

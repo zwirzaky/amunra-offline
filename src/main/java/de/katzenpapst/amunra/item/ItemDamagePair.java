@@ -20,22 +20,22 @@ public class ItemDamagePair {
     }
 
     public Item getItem() {
-        return item;
+        return this.item;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public Item getSubItem() {
-        if (!(item instanceof ItemBasicMulti)) {
-            return item;
+        if (!(this.item instanceof ItemBasicMulti)) {
+            return this.item;
         }
-        return ((ItemBasicMulti) item).getSubItem(damage);
+        return ((ItemBasicMulti) this.item).getSubItem(this.damage);
     }
 
     public ItemStack getItemStack(final int numItems) {
-        return new ItemStack(item, numItems, damage);
+        return new ItemStack(this.item, numItems, this.damage);
     }
 
     @Override
@@ -43,22 +43,22 @@ public class ItemDamagePair {
         if (!(other instanceof ItemDamagePair otherCast)) {
             return false;
         }
-        return isSameItem(otherCast.getItem(), otherCast.getDamage());
+        return this.isSameItem(otherCast.getItem(), otherCast.getDamage());
     }
 
     @Override
     public int hashCode() {
-        if (item instanceof ItemBlock) {
-            return ((ItemBlock) this.item).field_150939_a.hashCode() ^ ~damage;
+        if (this.item instanceof ItemBlock) {
+            return ((ItemBlock) this.item).field_150939_a.hashCode() ^ ~this.damage;
         }
-        return item.hashCode() ^ ~damage;
+        return this.item.hashCode() ^ ~this.damage;
     }
 
     public boolean isSameItem(final ItemStack stack) {
         if (stack == null) {
             return false;
         }
-        return isSameItem(stack.getItem(), stack.getItemDamage());
+        return this.isSameItem(stack.getItem(), stack.getItemDamage());
     }
 
     public boolean isSameItem(final Item item, final int damage) {

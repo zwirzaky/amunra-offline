@@ -34,13 +34,13 @@ public class RobotVillagerProfession {
     public RobotVillagerProfession(final ResourceLocation icon, final String name, final MerchantRecipeList list) {
         this.icon = icon;
         this.name = name;
-        merchantList = list;
+        this.merchantList = list;
     }
 
     public RobotVillagerProfession(final ResourceLocation icon, final String name) {
         this.icon = icon;
         this.name = name;
-        merchantList = new MerchantRecipeList();
+        this.merchantList = new MerchantRecipeList();
     }
 
     public ResourceLocation getIcon() {
@@ -52,30 +52,30 @@ public class RobotVillagerProfession {
     }
 
     public MerchantRecipeList getRecipeList() {
-        return merchantList;
+        return this.merchantList;
     }
 
     @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(final MerchantRecipe recipe) {
-        merchantList.add(recipe);
+        this.merchantList.add(recipe);
         return this;
     }
 
     @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(final ItemStack input1, final ItemStack input2, final ItemStack output) {
-        merchantList.add(new MerchantRecipe(input1, input2, output));
+        this.merchantList.add(new MerchantRecipe(input1, input2, output));
         return this;
     }
 
     @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(final ItemStack input, final ItemStack output) {
-        merchantList.add(new MerchantRecipe(input, output));
+        this.merchantList.add(new MerchantRecipe(input, output));
         return this;
     }
 
     @SuppressWarnings("unchecked")
     public RobotVillagerProfession addRecipe(final Item singleInputItem, final int numEmeralds, final Item singleOutputItem) {
-        merchantList.add(
+        this.merchantList.add(
                 new MerchantRecipe(
                         new ItemStack(singleInputItem, 1),
                         new ItemStack(Items.emerald, numEmeralds),

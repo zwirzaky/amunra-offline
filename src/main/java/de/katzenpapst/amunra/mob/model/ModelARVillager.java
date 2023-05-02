@@ -53,28 +53,28 @@ public class ModelARVillager extends ModelVillager {
 
         final float antennaOffset = -6.0F;
 
-        antenna1 = new ModelRenderer(this).setTextureSize(textureX, textureY);
-        antenna1.setRotationPoint(0.5F, antennaOffset + par2, 0.0F); // +1
-        antenna1.setTextureOffset(54, 6).addBox(4.0F, -0.5F, -0.5F, 4, 1, 1, scaleOrSo + 0.5F);
+        this.antenna1 = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        this.antenna1.setRotationPoint(0.5F, antennaOffset + par2, 0.0F); // +1
+        this.antenna1.setTextureOffset(54, 6).addBox(4.0F, -0.5F, -0.5F, 4, 1, 1, scaleOrSo + 0.5F);
 
         final ModelRenderer antennaTip1 = new ModelRenderer(this).setTextureSize(textureX, textureY);
         antennaTip1.setRotationPoint(8.0F, 0.0F, 0.0F);
         antennaTip1.setTextureOffset(56, 8).addBox(0.0F, -1.5F, -1.5F, 1, 3, 3, scaleOrSo + 0.5F);
         antennaTip1.rotateAngleX = (float) Math.PI / 4;
-        antenna1.addChild(antennaTip1);
-        antenna1.rotateAngleZ = (float) -Math.PI / 4;
+        this.antenna1.addChild(antennaTip1);
+        this.antenna1.rotateAngleZ = (float) -Math.PI / 4;
 
-        antenna2 = new ModelRenderer(this).setTextureSize(textureX, textureY);
-        antenna2.setRotationPoint(-0.5F, antennaOffset + par2, 0.0F); // -1
-        antenna2.setTextureOffset(54, 6).addBox(4.0F, -0.5F, -0.5F, 4, 1, 1, scaleOrSo + 0.5F);
+        this.antenna2 = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        this.antenna2.setRotationPoint(-0.5F, antennaOffset + par2, 0.0F); // -1
+        this.antenna2.setTextureOffset(54, 6).addBox(4.0F, -0.5F, -0.5F, 4, 1, 1, scaleOrSo + 0.5F);
 
         final ModelRenderer antennaTip2 = new ModelRenderer(this).setTextureSize(textureX, textureY);
         antennaTip2.setRotationPoint(8.0F, 0.0F, 0.0F);
         antennaTip2.setTextureOffset(56, 8).addBox(0.0F, -1.5F, -1.5F, 1, 3, 3, scaleOrSo + 0.5F);
         antennaTip2.rotateAngleX = (float) Math.PI / 4;
-        antenna2.addChild(antennaTip2);
-        antenna2.rotateAngleY = (float) Math.PI;
-        antenna2.rotateAngleZ = (float) Math.PI / 4;
+        this.antenna2.addChild(antennaTip2);
+        this.antenna2.rotateAngleY = (float) Math.PI;
+        this.antenna2.rotateAngleZ = (float) Math.PI / 4;
 
         // OMG
         // tailBoxes[0] = new ModelRenderer(this).setTextureSize(textureX, textureY);
@@ -82,26 +82,26 @@ public class ModelARVillager extends ModelVillager {
 
         // try to do a tail
         // float curOffset = 0;
-        for (int i = 0; i < tailBoxes.length; i++) {
-            tailBoxes[i] = new ModelRenderer(this).setTextureSize(textureX, textureY);
+        for (int i = 0; i < this.tailBoxes.length; i++) {
+            this.tailBoxes[i] = new ModelRenderer(this).setTextureSize(textureX, textureY);
             final int[] curData = tailBoxPositions[i];
             final int curSize = tailBoxSizes[i];
             final float halfSize = curSize / 2.0F;
             final float curPos = offsets[i];
-            tailBoxes[i].setRotationPoint(0.0F, 12.0F + par2, curPos - 2);
+            this.tailBoxes[i].setRotationPoint(0.0F, 12.0F + par2, curPos - 2);
             /*
              * if(i < tailBoxes.length-1) { curOffset += (tailBoxSizes[i+1] * 2); } if(i > 0) { curOffset +=
              * (tailBoxSizes[i-1]); }
              */
             // curOffset += (tailBoxSizes[i]);
-            tailBoxes[i].setTextureOffset(curData[0], curData[1])
+            this.tailBoxes[i].setTextureOffset(curData[0], curData[1])
                     .addBox(-halfSize, -curSize + 12.0F, curPos, curSize, curSize, curSize);
             // curOffset += (2 + curSize);
             // tailBoxes[i].s
         }
 
-        villagerHead.addChild(antenna1);
-        villagerHead.addChild(antenna2);
+        this.villagerHead.addChild(this.antenna1);
+        this.villagerHead.addChild(this.antenna2);
 
     }
 
@@ -128,14 +128,14 @@ public class ModelARVillager extends ModelVillager {
         this.rightVillagerLeg.rotateAngleY = 0.0F;
         this.leftVillagerLeg.rotateAngleY = 0.0F;
 
-        for (int i = 0; i < tailBoxes.length; i++) {
+        for (int i = 0; i < this.tailBoxes.length; i++) {
             // float val = MathHelper.sin(totalTimeMaybe * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI *
             // 0.2F * (float)Math.abs(i - 2);
             // float val = MathHelper.cos(limbSwingTime * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
             // float val2 = this.leftVillagerLeg.rotateAngleX = MathHelper.cos(limbSwingTime * 0.6662F + (float)Math.PI)
             // * 1.4F * limbSwingAmount * 0.5F;
             final float curPos = offsets[i];
-            tailBoxes[i].rotationPointZ = curPos * test * 2 + 5 * test - 2;
+            this.tailBoxes[i].rotationPointZ = curPos * test * 2 + 5 * test - 2;
         }
 
     }
@@ -157,7 +157,7 @@ public class ModelARVillager extends ModelVillager {
         // this.leftVillagerLeg.render(someConstant);
         this.villagerArms.render(someConstant);
 
-        for (ModelRenderer element : tailBoxes) {
+        for (ModelRenderer element : this.tailBoxes) {
             element.render(someConstant);
         }
 

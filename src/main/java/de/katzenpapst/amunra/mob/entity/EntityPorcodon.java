@@ -50,7 +50,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
 
-        dropItem = ARItems.baseItem.getItemStack("porcodonMeat", 1);
+        this.dropItem = ARItems.baseItem.getItemStack("porcodonMeat", 1);
 
     }
 
@@ -169,11 +169,11 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         final boolean hasOxygen = isInSealedArea || atmosphere.contains(IAtmosphericGas.OXYGEN);
 
         // add stuff if oxygen exists
-        if (hasOxygen && !isIgnited) {
-            ignite();
+        if (hasOxygen && !this.isIgnited) {
+            this.ignite();
         }
-        if (!hasOxygen && isIgnited) {
-            unIgnite();
+        if (!hasOxygen && this.isIgnited) {
+            this.unIgnite();
         }
 
         return atmosphere.contains(IAtmosphericGas.METHANE);
@@ -196,7 +196,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      */
     @Override
     public void onUpdate() {
-        if (this.isEntityAlive() && isIgnited) {
+        if (this.isEntityAlive() && this.isIgnited) {
             this.timeSinceIgnited++;
 
             if (this.timeSinceIgnited >= this.fuseTime) {

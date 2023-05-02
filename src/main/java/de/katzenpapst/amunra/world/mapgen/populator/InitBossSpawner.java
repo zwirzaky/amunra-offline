@@ -20,9 +20,9 @@ public class InitBossSpawner extends AbstractPopulator {
 
     @Override
     public boolean populate(final World world) {
-        if (world.getTileEntity(x, y, z) instanceof final ITileDungeonSpawner tileDungeonSpawner) {
-            tileDungeonSpawner.setRoomArea(aabb);
-            tileDungeonSpawner.setBossClass(entityClass);
+        if (world.getTileEntity(this.x, this.y, this.z) instanceof final ITileDungeonSpawner tileDungeonSpawner) {
+            tileDungeonSpawner.setRoomArea(this.aabb);
+            tileDungeonSpawner.setBossClass(this.entityClass);
             return true;
         }
         return false;

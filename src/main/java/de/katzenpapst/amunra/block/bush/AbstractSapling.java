@@ -59,7 +59,7 @@ abstract public class AbstractSapling extends SubBlockBush {
 
         // self-removal before tree generation
         world.setBlock(x, y, z, block, 0, 4);
-        if (!generate(world, rand, x, y, z, true)) {
+        if (!this.generate(world, rand, x, y, z, true)) {
             // return self on failure
             world.setBlock(x, y, z, (Block) this.parent, meta, 4);
         }
@@ -118,7 +118,7 @@ abstract public class AbstractSapling extends SubBlockBush {
         // int meta = world.getBlockMetadata(x, y, z);
         return block.isAir(world, x, y, z) || block.isLeaves(world, x, y, z)
                 || block.isWood(world, x, y, z)
-                || isBlockReplaceable(block);
+                || this.isBlockReplaceable(block);
     }
 
     protected void setBlockAndNotifyAdequately(final World world, final int x, final int y, final int z, final Block block, final int meta,

@@ -18,7 +18,7 @@ abstract public class BaseStructureComponent {
     protected StructureBoundingBox structBB;
 
     public int getGroundLevel() {
-        return groundLevel;
+        return this.groundLevel;
     }
 
     public void setStructureBoundingBox(final StructureBoundingBox structBB) {
@@ -82,9 +82,9 @@ abstract public class BaseStructureComponent {
     }
 
     protected int getHighestSolidBlockInBB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int z) {
-        final int xOffset = getXWithOffset(x, z);
+        final int xOffset = this.getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        final int zOffset = getZWithOffset(x, z);
+        final int zOffset = this.getZWithOffset(x, z);
 
         final int relX = CoordHelper.abs2rel(xOffset, chunkX);
         final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
@@ -167,9 +167,9 @@ abstract public class BaseStructureComponent {
 
     protected boolean placeBlockRel2BB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z,
             final BlockMetaPair block) {
-        final int xOffset = getXWithOffset(x, z);
+        final int xOffset = this.getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        final int zOffset = getZWithOffset(x, z);
+        final int zOffset = this.getZWithOffset(x, z);
 
         final int relX = CoordHelper.abs2rel(xOffset, chunkX);
         final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
@@ -180,9 +180,9 @@ abstract public class BaseStructureComponent {
     }
 
     protected BlockMetaPair getBlockRel2BB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z) {
-        final int xOffset = getXWithOffset(x, z);
+        final int xOffset = this.getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        final int zOffset = getZWithOffset(x, z);
+        final int zOffset = this.getZWithOffset(x, z);
 
         final int relX = CoordHelper.abs2rel(xOffset, chunkX);
         final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
@@ -194,9 +194,9 @@ abstract public class BaseStructureComponent {
 
     protected boolean placeBlockRel2BB(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z,
             final Block block, final int meta) {
-        final int xOffset = getXWithOffset(x, z);
+        final int xOffset = this.getXWithOffset(x, z);
         // y = getYWithOffset(y);
-        final int zOffset = getZWithOffset(x, z);
+        final int zOffset = this.getZWithOffset(x, z);
 
         final int relX = CoordHelper.abs2rel(xOffset, chunkX);
         final int relZ = CoordHelper.abs2rel(zOffset, chunkZ);
@@ -227,10 +227,10 @@ abstract public class BaseStructureComponent {
     protected void placeStandingSign(final Block[] blocks, final byte[] metas, final int chunkX, final int chunkZ, final int x, final int y, final int z,
             final String text) {
 
-        if (placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, Blocks.standing_sign, (byte) 0)) {
-            final int xOffset = getXWithOffset(x, z);
+        if (this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, Blocks.standing_sign, (byte) 0)) {
+            final int xOffset = this.getXWithOffset(x, z);
             // y = getYWithOffset(y);
-            final int zOffset = getZWithOffset(x, z);
+            final int zOffset = this.getZWithOffset(x, z);
             final SetSignText sst = new SetSignText(xOffset, y, zOffset, text);
             this.parent.addPopulator(sst);
         }

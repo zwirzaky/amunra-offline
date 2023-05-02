@@ -70,7 +70,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
 
         this.randomTickDivider = 0;
         this.isMating = false;
-        needsInit = true;
+        this.needsInit = true;
         this.isPlaying = false;
         this.villageObj = null;
         this.setSize(0.6F, 2.35F);
@@ -89,7 +89,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         // buyingList = new MerchantRecipeList();
 
         if (profession != -1) {
-            setProfession(profession);
+            this.setProfession(profession);
         }
     }
 
@@ -191,10 +191,10 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     @SuppressWarnings("unchecked")
     private void addDefaultEquipmentAndRecipies(final int p_70950_1_) {
         // now do the recipes
-        if (buyingList == null) {
-            buyingList = new MerchantRecipeList();
+        if (this.buyingList == null) {
+            this.buyingList = new MerchantRecipeList();
         }
-        buyingList.clear();
+        this.buyingList.clear();
 
         final RobotVillagerProfession prof = RobotVillagerProfession.getProfession(this.getProfession());
         final MerchantRecipeList baseList = prof.getRecipeList();
@@ -203,20 +203,20 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
                 return;
             case 1:
 
-                buyingList.add(baseList.get(0));
+                this.buyingList.add(baseList.get(0));
                 break;
             default:
                 // int numOffers = worldObj.rand.nextInt(baseList.size());
                 // for now have just 1 offer
-                final int numOffers = worldObj.rand.nextInt(baseList.size() - 1) + 1;// ensure it's at least 1
+                final int numOffers = this.worldObj.rand.nextInt(baseList.size() - 1) + 1;// ensure it's at least 1
                 final HashMap<Integer, Boolean> uniqCache = new HashMap<>();
                 for (int i = 0; i < numOffers; i++) {
-                    final int randOffer = worldObj.rand.nextInt(baseList.size());
+                    final int randOffer = this.worldObj.rand.nextInt(baseList.size());
                     if (uniqCache.containsKey(randOffer)) {
                         continue;
                     }
                     uniqCache.put(randOffer, true);
-                    buyingList.add(baseList.get(randOffer));
+                    this.buyingList.add(baseList.get(randOffer));
                 }
 
         }
@@ -300,7 +300,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     @Override
     public IEntityLivingData onSpawnWithEgg(IEntityLivingData p_110161_1_) {
         p_110161_1_ = super.onSpawnWithEgg(p_110161_1_);
-        this.setProfession(RobotVillagerProfession.getRandomProfession(worldObj.rand));
+        this.setProfession(RobotVillagerProfession.getRandomProfession(this.worldObj.rand));
         // VillagerRegistry.applyRandomTrade(this, worldObj.rand);
         return p_110161_1_;
     }
@@ -514,9 +514,9 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
 
             if (p_110297_1_ != null) {
                 // return
-                sayYes();
+                this.sayYes();
             } else {
-                sayNo();
+                this.sayNo();
             }
         }
 

@@ -54,12 +54,12 @@ public class VolcanoGenerator extends StructureGenerator {
     @Override
     protected BaseStructureStart createNewStructure(final int xChunkCoord, final int zChunkCoord) {
         final Random rand = new Random(this.worldObj.getSeed() ^ xChunkCoord ^ zChunkCoord ^ this.getSalt());
-        final Volcano v = new Volcano(worldObj, xChunkCoord, zChunkCoord, rand);
-        v.setFluid(fluid);
-        v.setMaxDepth(maxDepth);
-        v.setMountainMaterial(mountainMaterial);
-        v.setShaftMaterial(shaftMaterial);
-        v.setHasMagmaChamber(createMagmaChamber);
+        final Volcano v = new Volcano(this.worldObj, xChunkCoord, zChunkCoord, rand);
+        v.setFluid(this.fluid);
+        v.setMaxDepth(this.maxDepth);
+        v.setMountainMaterial(this.mountainMaterial);
+        v.setShaftMaterial(this.shaftMaterial);
+        v.setHasMagmaChamber(this.createMagmaChamber);
         return v;
     }
 

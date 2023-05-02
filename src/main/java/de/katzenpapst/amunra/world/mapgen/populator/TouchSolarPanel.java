@@ -17,9 +17,9 @@ public class TouchSolarPanel extends AbstractPopulator {
 
     @Override
     public boolean populate(final World world) {
-        final TileEntity tile = world.getTileEntity(x, y, z);
+        final TileEntity tile = world.getTileEntity(this.x, this.y, this.z);
         if (tile != null && tile instanceof final TileEntitySolar tileSolar) {
-            tileSolar.onCreate(new BlockVec3(x, y, z));
+            tileSolar.onCreate(new BlockVec3(this.x, this.y, this.z));
             return true;
         }
         return false;

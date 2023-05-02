@@ -58,8 +58,8 @@ public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
     public void register() {
         GameRegistry.registerBlock(this, null, this.getUnlocalizedName());
 
-        for (int i = 0; i < subBlocksArray.length; i++) {
-            final SubBlock sb = subBlocksArray[i];
+        for (int i = 0; i < this.subBlocksArray.length; i++) {
+            final SubBlock sb = this.subBlocksArray[i];
             if (sb != null) {
                 this.setHarvestLevel(sb.getHarvestTool(0), sb.getHarvestLevel(0), i);
             }
@@ -69,7 +69,7 @@ public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
     @Override
     public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
         final int meta = world.getBlockMetadata(x, y, z);
-        final SubBlock sb = getSubBlock(meta);
+        final SubBlock sb = this.getSubBlock(meta);
         if (sb != null && sb instanceof MothershipEngineJetBase) {
             return ((MothershipEngineJetBase) sb).getItem().getItemStack(1);
         }

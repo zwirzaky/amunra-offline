@@ -89,9 +89,9 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         this.ySize = 231;
         this.tile = tile;
 
-        tempGravityStrength = tile.getGravityForce() * 100.0;
-        tempIsInverted = tempGravityStrength > 0;
-        tempGravityStrength = Math.abs(tempGravityStrength);
+        this.tempGravityStrength = tile.getGravityForce() * 100.0;
+        this.tempIsInverted = this.tempGravityStrength > 0;
+        this.tempGravityStrength = Math.abs(this.tempGravityStrength);
 
     }
 
@@ -100,11 +100,11 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     }
 
     protected void sendDataToServer() {
-        final BlockVec3 pos = new BlockVec3(tile);
-        final BlockVec3 min = new BlockVec3((int) tempBox.minX, (int) tempBox.minY, (int) tempBox.minZ);
-        final BlockVec3 max = new BlockVec3((int) tempBox.maxX, (int) tempBox.maxY, (int) tempBox.maxZ);
+        final BlockVec3 pos = new BlockVec3(this.tile);
+        final BlockVec3 min = new BlockVec3((int) this.tempBox.minX, (int) this.tempBox.minY, (int) this.tempBox.minZ);
+        final BlockVec3 max = new BlockVec3((int) this.tempBox.maxX, (int) this.tempBox.maxY, (int) this.tempBox.maxZ);
         double actualStrength = this.tempGravityStrength / 100;
-        if (!tempIsInverted) {
+        if (!this.tempIsInverted) {
             actualStrength *= -1;
         }
         AmunRa.packetPipeline.sendToServer(
@@ -114,24 +114,24 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                         min,
                         max,
                         actualStrength));
-        tile.setGravityBox(cloneAABB(tempBox));
+        this.tile.setGravityBox(this.cloneAABB(this.tempBox));
 
-        tile.setGravityForce(actualStrength);
+        this.tile.setGravityForce(actualStrength);
     }
 
     protected void resetDataFromTile() {
-        tempBox = cloneAABB(tile.getGravityBox());
-        topValueField.text = Integer.toString((int) tempBox.maxY);
-        backValueField.text = Integer.toString((int) tempBox.maxZ);
-        rightValueField.text = Integer.toString((int) tempBox.maxX);
+        this.tempBox = this.cloneAABB(this.tile.getGravityBox());
+        this.topValueField.text = Integer.toString((int) this.tempBox.maxY);
+        this.backValueField.text = Integer.toString((int) this.tempBox.maxZ);
+        this.rightValueField.text = Integer.toString((int) this.tempBox.maxX);
 
-        bottomValueField.text = Integer.toString((int) tempBox.minY * -1);
-        frontValueField.text = Integer.toString((int) tempBox.minZ * -1);
-        leftValueField.text = Integer.toString((int) tempBox.minX * -1);
+        this.bottomValueField.text = Integer.toString((int) this.tempBox.minY * -1);
+        this.frontValueField.text = Integer.toString((int) this.tempBox.minZ * -1);
+        this.leftValueField.text = Integer.toString((int) this.tempBox.minX * -1);
 
-        tempGravityStrength = tile.getGravityForce() * 100.0;
-        tempIsInverted = tempGravityStrength > 0;
-        tempGravityStrength = Math.abs(tempGravityStrength);
+        this.tempGravityStrength = this.tile.getGravityForce() * 100.0;
+        this.tempIsInverted = this.tempGravityStrength > 0;
+        this.tempGravityStrength = Math.abs(this.tempGravityStrength);
     }
 
     @Override
@@ -175,8 +175,8 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         // int inputOffset = 28;
         final int offsetX1 = 10;
         final int offsetX2 = 50;
-        topValueField = new GuiElementTextBox(
-                FIELD_TOP,
+        this.topValueField = new GuiElementTextBox(
+                this.FIELD_TOP,
                 this,
                 offsetX1 + guiX + 32,
                 guiY + 28 - 4,
@@ -186,8 +186,8 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 true,
                 2,
                 true);
-        leftValueField = new GuiElementTextBox(
-                FIELD_LEFT,
+        this.leftValueField = new GuiElementTextBox(
+                this.FIELD_LEFT,
                 this,
                 offsetX1 + guiX + 2,
                 guiY + 44,
@@ -197,8 +197,8 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 true,
                 2,
                 true);
-        frontValueField = new GuiElementTextBox(
-                FIELD_FRONT,
+        this.frontValueField = new GuiElementTextBox(
+                this.FIELD_FRONT,
                 this,
                 offsetX2 + guiX + 62 - 40,
                 guiY + 28 + 16,
@@ -209,8 +209,8 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 2,
                 true);
 
-        backValueField = new GuiElementTextBox(
-                FIELD_BACK,
+        this.backValueField = new GuiElementTextBox(
+                this.FIELD_BACK,
                 this,
                 offsetX1 + guiX + 2,
                 guiY + 64,
@@ -220,8 +220,8 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 true,
                 2,
                 true);
-        rightValueField = new GuiElementTextBox(
-                FIELD_RIGHT,
+        this.rightValueField = new GuiElementTextBox(
+                this.FIELD_RIGHT,
                 this,
                 offsetX2 + guiX + 22,
                 guiY + 48 + 16,
@@ -231,8 +231,8 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 true,
                 2,
                 true);
-        bottomValueField = new GuiElementTextBox(
-                FIELD_BOTTOM,
+        this.bottomValueField = new GuiElementTextBox(
+                this.FIELD_BOTTOM,
                 this,
                 offsetX1 + guiX + 32,
                 guiY + 68 + 16,
@@ -243,13 +243,13 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 2,
                 true);
 
-        this.addInputField(leftValueField);
-        this.addInputField(backValueField);
-        this.addInputField(bottomValueField);
+        this.addInputField(this.leftValueField);
+        this.addInputField(this.backValueField);
+        this.addInputField(this.bottomValueField);
 
-        this.addInputField(rightValueField);
-        this.addInputField(frontValueField);
-        this.addInputField(topValueField);
+        this.addInputField(this.rightValueField);
+        this.addInputField(this.frontValueField);
+        this.addInputField(this.topValueField);
 
         // buttons
         final int yOffsetBtns = -10 + 3;
@@ -257,28 +257,28 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         // GCCoreUtil.translate("gui.message.mothership.apply"));
         // resetButton = new GuiButton(BTN_RESET, guiX + 110, guiY + 70+yOffsetBtns, 50, 20,
         // GCCoreUtil.translate("gui.message.mothership.reset"));
-        disableButton = new GuiButton(
-                BTN_ENABLE,
+        this.disableButton = new GuiButton(
+                this.BTN_ENABLE,
                 guiX + 110,
                 guiY + 90 + yOffsetBtns,
                 50,
                 20,
                 GCCoreUtil.translate("gui.button.disable.name"));
 
-        checkboxVisualGuide = new GuiElementCheckbox(
-                CHECKBOX_VISUAL,
+        this.checkboxVisualGuide = new GuiElementCheckbox(
+                this.CHECKBOX_VISUAL,
                 this,
                 guiX + 80,
                 guiY + 24,
                 GCCoreUtil.translate("gui.checkbox.show_visual_guide"));
 
         // this.buttonList.add(applyButton);
-        this.buttonList.add(disableButton);
+        this.buttonList.add(this.disableButton);
         // this.buttonList.add(resetButton);
-        this.buttonList.add(checkboxVisualGuide);
+        this.buttonList.add(this.checkboxVisualGuide);
 
         this.strengthField = new GuiElementTextBox(
-                FIELD_STRENGTH,
+                this.FIELD_STRENGTH,
                 this,
                 guiX + 60,
                 guiY + 110,
@@ -290,13 +290,13 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 true);
         this.addInputField(this.strengthField);
 
-        checkboxInvert = new GuiElementCheckbox(
-                CHECKBOX_INVERT,
+        this.checkboxInvert = new GuiElementCheckbox(
+                this.CHECKBOX_INVERT,
                 this,
                 guiX + 100,
                 guiY + 112,
                 GCCoreUtil.translate("gui.checkbox.invert_force"));
-        this.buttonList.add(checkboxInvert);
+        this.buttonList.add(this.checkboxInvert);
     }
 
     protected void addInputField(final GuiElementTextBox box) {
@@ -325,11 +325,11 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         this.drawTexturedModalRect(xOffset, yOffset + 5, 0, 0, this.xSize, this.ySize);
 
         if (this.tile != null) {
-            if (tile.getDisabled(0)) {
+            if (this.tile.getDisabled(0)) {
 
-                disableButton.displayString = GCCoreUtil.translate("gui.button.enable.name");
+                this.disableButton.displayString = GCCoreUtil.translate("gui.button.enable.name");
             } else {
-                disableButton.displayString = GCCoreUtil.translate("gui.button.disable.name");
+                this.disableButton.displayString = GCCoreUtil.translate("gui.button.disable.name");
 
             }
 
@@ -345,7 +345,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
             electricityDesc.add(
                     EnumChatFormatting.AQUA + GCCoreUtil.translate("gui.message.energy_usage")
                             + ": "
-                            + EnergyDisplayHelper.getEnergyDisplayS(tile.storage.getMaxExtract())
+                            + EnergyDisplayHelper.getEnergyDisplayS(this.tile.storage.getMaxExtract())
                             + "/t");
             // electricityDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.energyStorage.desc.1") + ((int)
             // Math.floor(this.collector.getEnergyStoredGC()) + " / " + (int)
@@ -393,26 +393,26 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
 
         switch (textBox.id) {
             case FIELD_TOP:
-                tempBox.maxY = (int) newValue;
+                this.tempBox.maxY = (int) newValue;
                 break;
             case FIELD_BACK:
-                tempBox.maxZ = (int) newValue;
+                this.tempBox.maxZ = (int) newValue;
                 break;
             case FIELD_RIGHT:
-                tempBox.maxX = (int) newValue;
+                this.tempBox.maxX = (int) newValue;
                 break;
 
             case FIELD_BOTTOM:
-                tempBox.minY = (int) newValue * -1;
+                this.tempBox.minY = (int) newValue * -1;
                 break;
             case FIELD_FRONT:
-                tempBox.minZ = (int) newValue * -1;
+                this.tempBox.minZ = (int) newValue * -1;
                 break;
             case FIELD_LEFT:
-                tempBox.minX = (int) newValue * -1;
+                this.tempBox.minX = (int) newValue * -1;
                 break;
             case FIELD_STRENGTH:
-                tempGravityStrength = Math.abs(newValue);
+                this.tempGravityStrength = Math.abs(newValue);
                 break;
             default:
                 return;
@@ -422,24 +422,24 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
 
     @Override
     public String getInitialText(final GuiElementTextBox textBox) {
-        tempBox = tile.getGravityBox();
+        this.tempBox = this.tile.getGravityBox();
 
         switch (textBox.id) {
             case FIELD_TOP:
-                return Integer.toString((int) tempBox.maxY);
+                return Integer.toString((int) this.tempBox.maxY);
             case FIELD_BACK:
-                return Integer.toString((int) tempBox.maxZ);
+                return Integer.toString((int) this.tempBox.maxZ);
             case FIELD_RIGHT:
-                return Integer.toString((int) tempBox.maxX);
+                return Integer.toString((int) this.tempBox.maxX);
 
             case FIELD_BOTTOM:
-                return Integer.toString((int) tempBox.minY * -1);
+                return Integer.toString((int) this.tempBox.minY * -1);
             case FIELD_FRONT:
-                return Integer.toString((int) tempBox.minZ * -1);
+                return Integer.toString((int) this.tempBox.minZ * -1);
             case FIELD_LEFT:
-                return Integer.toString((int) tempBox.minX * -1);
+                return Integer.toString((int) this.tempBox.minX * -1);
             case FIELD_STRENGTH:
-                return Integer.toString((int) Math.abs(tempGravityStrength));
+                return Integer.toString((int) Math.abs(this.tempGravityStrength));
         }
         return Integer.toString(textBox.id);
 
@@ -449,7 +449,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     protected void keyTyped(final char keyChar, final int keyID) {
         if (keyID != Keyboard.KEY_ESCAPE /* && keyID != this.mc.gameSettings.keyBindInventory.getKeyCode() */) {
             // do the fields
-            for (final GuiElementTextBox box : inputFieldList) {
+            for (final GuiElementTextBox box : this.inputFieldList) {
                 if (box.keyTyped(keyChar, keyID)) {
                     return;
                 }
@@ -478,7 +478,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 this.sendDataToServer();
                 break;
             case CHECKBOX_INVERT:
-                tempIsInverted = newSelected;
+                this.tempIsInverted = newSelected;
                 this.sendDataToServer();
                 break;
         }
@@ -495,7 +495,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
             case CHECKBOX_VISUAL:
                 return this.tile.isBoxShown;
             case CHECKBOX_INVERT:
-                return tempIsInverted;
+                return this.tempIsInverted;
         }
         return false;
     }

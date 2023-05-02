@@ -28,7 +28,7 @@ public class BlockLogMeta extends BlockBasicMeta {
 
     @Override
     public SubBlock getSubBlock(final int meta) {
-        return subBlocksArray[meta & 3]; // use only the first 2 bits, the rest is rotation
+        return this.subBlocksArray[meta & 3]; // use only the first 2 bits, the rest is rotation
     }
 
     @SideOnly(Side.CLIENT)
@@ -38,7 +38,7 @@ public class BlockLogMeta extends BlockBasicMeta {
         // Face 5 (Eastern Face)*/
         final int rotationMeta = (meta & 12) >> 2;
 
-        return getSubBlock(meta).getIcon(side, rotationMeta);
+        return this.getSubBlock(meta).getIcon(side, rotationMeta);
     }
 
     @Override
@@ -62,8 +62,8 @@ public class BlockLogMeta extends BlockBasicMeta {
     @Override
     public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z) {
         final int meta = world.getBlockMetadata(x, y, z);
-        if (getSubBlock(meta) != null) {
-            return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
+        if (this.getSubBlock(meta) != null) {
+            return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
         }
 
         return super.getPickBlock(target, world, x, y, z);

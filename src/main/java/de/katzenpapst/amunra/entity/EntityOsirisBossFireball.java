@@ -23,7 +23,7 @@ public class EntityOsirisBossFireball extends EntityFireball {
         if (!this.worldObj.isRemote) {
             if (movingObjectPosition.entityHit != null && !(movingObjectPosition.entityHit instanceof EntityCreeper)) {
                 movingObjectPosition.entityHit
-                        .attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), damage);
+                        .attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), this.damage);
                 // ConfigManagerCore.hardMode ? 12.0F : 6.0F
             }
 
@@ -75,7 +75,7 @@ public class EntityOsirisBossFireball extends EntityFireball {
     public void writeEntityToNBT(final NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
 
-        nbt.setFloat("damage", damage);
+        nbt.setFloat("damage", this.damage);
     }
 
     /**

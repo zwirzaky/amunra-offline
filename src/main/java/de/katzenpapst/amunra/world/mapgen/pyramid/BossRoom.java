@@ -28,7 +28,7 @@ public class BossRoom extends PyramidRoom {
          * Blocks.ladder, (byte) 2); }
          */
         // for now, just this
-        placeBossSpawner(
+        this.placeBossSpawner(
                 this.roomBB.getCenterX(),
                 this.floorLevel + 2,
                 this.roomBB.getCenterZ(),
@@ -52,12 +52,12 @@ public class BossRoom extends PyramidRoom {
              */
 
             final AxisAlignedBB areaBB = AxisAlignedBB.getBoundingBox(
-                    roomBB.minX,
-                    roomBB.minY,
-                    roomBB.minZ,
-                    roomBB.maxX + 1,
-                    roomBB.maxY + 1,
-                    roomBB.maxZ + 1);
+                    this.roomBB.minX,
+                    this.roomBB.minY,
+                    this.roomBB.minZ,
+                    this.roomBB.maxX + 1,
+                    this.roomBB.maxY + 1,
+                    this.roomBB.maxZ + 1);
             this.parent.addPopulator(new InitBossSpawner(x, y, z, areaBB, EntityMummyBoss.class));
         }
     }

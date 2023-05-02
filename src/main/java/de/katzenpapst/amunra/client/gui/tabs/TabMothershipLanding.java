@@ -28,15 +28,15 @@ public class TabMothershipLanding extends AbstractPermissionTab {
     @Override
     public void resetData() {
         final Mothership.PermissionMode pm = this.tile.getMothership().getLandingPermissionMode();
-        modeDropdown.selectedOption = pm.ordinal();
-        playerIdList.clear();
+        this.modeDropdown.selectedOption = pm.ordinal();
+        this.playerIdList.clear();
 
         final Mothership m = this.tile.getMothership();
 
-        playerIdList.addAll(m.getPlayerListLanding());
-        selectBox.clear();
-        for (final PlayerID pid : playerIdList) {
-            selectBox.addString(pid.getName());
+        this.playerIdList.addAll(m.getPlayerListLanding());
+        this.selectBox.clear();
+        for (final PlayerID pid : this.playerIdList) {
+            this.selectBox.addString(pid.getName());
         }
     }
 
@@ -52,9 +52,9 @@ public class TabMothershipLanding extends AbstractPermissionTab {
 
     @Override
     public void onSelectionChanged(final GuiElementDropdown dropdown, final int selection) {
-        if (dropdown == modeDropdown) {
+        if (dropdown == this.modeDropdown) {
             final PermissionMode mode = PermissionMode.values()[selection];
-            tile.getMothership().setLandingPermissionMode(mode);
+            this.tile.getMothership().setLandingPermissionMode(mode);
             this.applyData();
         }
 
@@ -71,14 +71,14 @@ public class TabMothershipLanding extends AbstractPermissionTab {
                 new PacketSimpleAR(
                         EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER,
                         this.tile.getMothership().getID(),
-                        textBoxUsername.text,
+                        this.textBoxUsername.text,
                         0));
     }
 
     @Override
     protected void removeUsernameFromList(final int position) {
-        playerIdList.remove(position);
-        tile.getMothership().setPlayerListLanding(playerIdList);
+        this.playerIdList.remove(position);
+        this.tile.getMothership().setPlayerListLanding(this.playerIdList);
     }
 
     @Override

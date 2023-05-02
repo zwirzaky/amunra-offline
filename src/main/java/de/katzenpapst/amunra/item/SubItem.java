@@ -17,23 +17,23 @@ public class SubItem extends Item {
 
     public SubItem(final String name, final String assetName) {
         super();
-        fuckYouName = name;
+        this.fuckYouName = name;
         this.setUnlocalizedName(name);
         this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);
     }
 
     public SubItem(final String name, final String assetName, final String info) {
         this(name, assetName);
-        itemInfo = info;
+        this.itemInfo = info;
     }
 
     @Override
     public String getUnlocalizedName() {
-        return fuckYouName;
+        return this.fuckYouName;
     }
 
     public String getItemInfo() {
-        return itemInfo;
+        return this.itemInfo;
     }
 
     @Override

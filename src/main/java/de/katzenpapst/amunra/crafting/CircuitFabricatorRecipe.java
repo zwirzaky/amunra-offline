@@ -33,40 +33,40 @@ public class CircuitFabricatorRecipe {
     }
 
     public Object getCrystal() {
-        if (crystal.length == 1) {
-            return crystal[0];
+        if (this.crystal.length == 1) {
+            return this.crystal[0];
         }
-        return crystal;
+        return this.crystal;
     }
 
     public Object getSilicon1() {
-        if (silicon1.length == 1) {
-            return silicon1[0];
+        if (this.silicon1.length == 1) {
+            return this.silicon1[0];
         }
-        return silicon1;
+        return this.silicon1;
     }
 
     public Object getSilicon2() {
-        if (silicon2.length == 1) {
-            return silicon2[0];
+        if (this.silicon2.length == 1) {
+            return this.silicon2[0];
         }
-        return silicon2;
+        return this.silicon2;
     }
 
     public Object getRedstone() {
-        if (redstone.length == 1) {
-            return redstone[0];
+        if (this.redstone.length == 1) {
+            return this.redstone[0];
         }
-        return redstone;
+        return this.redstone;
     }
 
     public Object getOptional() {
-        if (optional == null || optional.length == 0) {
+        if (this.optional == null || this.optional.length == 0) {
             return null;
         }
-        if (optional.length == 1) {
-            return optional[0];
+        if (this.optional.length == 1) {
+            return this.optional[0];
         }
-        return optional;
+        return this.optional;
     }
 }

@@ -113,7 +113,7 @@ public class ItemShuttle extends Item implements IHoldableItem {
             centerZ = z + 0.5F;
 
         }
-        spawnRocketEntity(itemStack, world, centerX, centerY, centerZ);
+        this.spawnRocketEntity(itemStack, world, centerX, centerY, centerZ);
         if (!player.capabilities.isCreativeMode) {
             itemStack.stackSize--;
 

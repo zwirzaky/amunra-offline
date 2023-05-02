@@ -33,9 +33,9 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
     public AnubisChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
 
-        gVillage.addComponentType(BoxHouseComponent.class, 0.9F, 2, 4);
-        gVillage.addComponentType(SolarField.class, 0.7F, 2, 6);
-        gVillage.addComponentType(DomedHouseComponent.class, 0.7F, 2, 4);
+        this.gVillage.addComponentType(BoxHouseComponent.class, 0.9F, 2, 4);
+        this.gVillage.addComponentType(SolarField.class, 0.7F, 2, 6);
+        this.gVillage.addComponentType(DomedHouseComponent.class, 0.7F, 2, 4);
         // gVillage.addComponentType(PyramidHouseComponent.class, 0.7F, 2, 4);
     }
 
@@ -127,7 +127,7 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
     public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
         super.populate(par1IChunkProvider, chunkX, chunkZ);
 
-        this.gVillage.populate(this, worldObj, chunkX, chunkZ);
+        this.gVillage.populate(this, this.worldObj, chunkX, chunkZ);
         // this.pyramid.populate(this, worldObj, chunkX, chunkZ);
 
         // this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);

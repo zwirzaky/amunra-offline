@@ -42,11 +42,11 @@ public class SubBlockDropItem extends SubBlock {
 
     @Override
     public boolean dropsSelf() {
-        return droppedItems == null;
+        return this.droppedItems == null;
     }
 
     public SubBlockDropItem setDroppedItem(final ItemDamagePair item) {
-        droppedItems = item;
+        this.droppedItems = item;
         return this;
     }
 
@@ -58,9 +58,9 @@ public class SubBlockDropItem extends SubBlock {
             j = 0;
         }
 
-        int result = (int) (this.quantityDropped(random) * (j + 1) * bonusDropMultiplier);
-        if (result < baseDropRateMin) {
-            result = baseDropRateMin;
+        int result = (int) (this.quantityDropped(random) * (j + 1) * this.bonusDropMultiplier);
+        if (result < this.baseDropRateMin) {
+            result = this.baseDropRateMin;
         }
         return result;
 
@@ -73,58 +73,58 @@ public class SubBlockDropItem extends SubBlock {
      */
     @Override
     public int quantityDropped(final Random rand) {
-        return baseDropRateMin;
+        return this.baseDropRateMin;
     }
 
     @Override
     public int damageDropped(final int meta) {
-        return droppedItems != null ? droppedItems.getDamage() : super.damageDropped(meta);
+        return this.droppedItems != null ? this.droppedItems.getDamage() : super.damageDropped(meta);
     }
 
     @Override
     public Item getItemDropped(final int meta, final Random random, final int fortune) {
-        return droppedItems != null ? droppedItems.getItem() : super.getItemDropped(meta, random, fortune);
+        return this.droppedItems != null ? this.droppedItems.getItem() : super.getItemDropped(meta, random, fortune);
     }
 
     public SubBlockDropItem setDroppedItem(final Item item) {
-        droppedItems = new ItemDamagePair(item, 0);
+        this.droppedItems = new ItemDamagePair(item, 0);
         return this;
     }
 
     public SubBlockDropItem setMinDropRate(final int val) {
-        baseDropRateMin = val;
+        this.baseDropRateMin = val;
         return this;
     }
 
     public SubBlockDropItem setBonusMultiplier(final float val) {
-        bonusDropMultiplier = val;
+        this.bonusDropMultiplier = val;
         return this;
     }
 
     public SubBlockDropItem setXpDrop(final int dropMin, final int dropMax) {
-        xpDropMin = dropMin;
-        xpDropMax = dropMax;
+        this.xpDropMin = dropMin;
+        this.xpDropMax = dropMax;
         return this;
     }
 
     @Override
     public int getExpDrop(final IBlockAccess world, final int metadata, final int fortune) {
-        if (!dropsSelf()) {
-            if (xpDropMin <= xpDropMax) {
-                return xpDropMin;
+        if (!this.dropsSelf()) {
+            if (this.xpDropMin <= this.xpDropMax) {
+                return this.xpDropMin;
             }
-            MathHelper.getRandomIntegerInRange(rand, xpDropMin, xpDropMax);
+            MathHelper.getRandomIntegerInRange(this.rand, this.xpDropMin, this.xpDropMax);
         }
         return 0;
     }
 
     @Override
     public boolean isValueable(final int metadata) {
-        return isValuable;
+        return this.isValuable;
     }
 
     public SubBlockDropItem setIsValueable(final boolean set) {
-        isValuable = set;
+        this.isValuable = set;
         return this;
     }
 }

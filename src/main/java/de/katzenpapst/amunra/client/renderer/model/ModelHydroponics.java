@@ -20,7 +20,7 @@ public class ModelHydroponics {
     public void render(final Tessellator tess, final float growthStatus, final boolean connectNorth, final boolean connectSouth,
             final boolean connectWest, final boolean connectEast) {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
 
         // block render stuff
         BlockRenderHelper.renderFaceYNeg(tess, 0, 0, 0.25, 0.5, false);
@@ -32,7 +32,7 @@ public class ModelHydroponics {
 
         if (connectWest) {
             BlockRenderHelper.renderFaceXNeg(tess, 0.75, 0, 1.0, 0.5);
-            renderConnector(tess);
+            this.renderConnector(tess);
         } else {
             BlockRenderHelper.renderFaceXNeg(tess, 0.25, 0, 0.5, 0.5);
         }
@@ -43,7 +43,7 @@ public class ModelHydroponics {
             GL11.glRotatef(180.0F, 0, 1.0F, 0);
             GL11.glTranslatef(-1.0F, 0.0F, -1.0F);
 
-            renderConnector(tess);
+            this.renderConnector(tess);
             GL11.glPopMatrix();
         } else {
             BlockRenderHelper.renderFaceXPos(tess, 0.25, 0, 0.5, 0.5);
@@ -55,7 +55,7 @@ public class ModelHydroponics {
             GL11.glRotatef(270.0F, 0, 1.0F, 0);
             GL11.glTranslatef(0.0F, 0.0F, -1.0F);
 
-            renderConnector(tess);
+            this.renderConnector(tess);
             GL11.glPopMatrix();
         } else {
             BlockRenderHelper.renderFaceZNeg(tess, 0.25, 0, 0.5, 0.5);
@@ -67,7 +67,7 @@ public class ModelHydroponics {
             GL11.glRotatef(90.0F, 0, 1.0F, 0);
             GL11.glTranslatef(-1.0F, 0.0F, 0.0F);
 
-            renderConnector(tess);
+            this.renderConnector(tess);
             GL11.glPopMatrix();
         } else {
             BlockRenderHelper.renderFaceZPos(tess, 0.25, 0, 0.5, 0.5);
@@ -97,7 +97,7 @@ public class ModelHydroponics {
 
             final int wheatState = (int) (growthStatus * 7);
 
-            renderWheat(wheatState, 0.5 / factor - 0.5, 1.0 / factor, 0.5 / factor - 0.5);
+            this.renderWheat(wheatState, 0.5 / factor - 0.5, 1.0 / factor, 0.5 / factor - 0.5);
         }
         GL11.glPopMatrix();
 

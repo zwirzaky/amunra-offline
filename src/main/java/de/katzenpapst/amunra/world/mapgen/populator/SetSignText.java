@@ -26,14 +26,14 @@ public class SetSignText extends AbstractPopulator {
 
     @Override
     public boolean populate(final World world) {
-        final Block curBlock = world.getBlock(x, y, z);
+        final Block curBlock = world.getBlock(this.x, this.y, this.z);
         if (curBlock == Blocks.standing_sign || curBlock == Blocks.wall_sign) {
-            final TileEntitySign sign = (TileEntitySign) world.getTileEntity(x, y, z);
+            final TileEntitySign sign = (TileEntitySign) world.getTileEntity(this.x, this.y, this.z);
 
             if (sign != null) {
                 sign.signText = this.signText;
                 sign.markDirty();
-                world.markBlockForUpdate(x, y, z);
+                world.markBlockForUpdate(this.x, this.y, this.z);
                 return true;
             }
         }

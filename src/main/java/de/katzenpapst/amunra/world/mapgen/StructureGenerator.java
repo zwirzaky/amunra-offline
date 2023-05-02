@@ -119,7 +119,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         final Map<String, Integer> typeAmountMapping = new HashMap<>();
 
         if (limit <= 0) {
-            limit = findComponentLimit(subCompData, rand);
+            limit = this.findComponentLimit(subCompData, rand);
         }
 
         final List<SubComponentData> curComponents = this.cloneSubComponentList(subCompData);
@@ -150,7 +150,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
                 // or if it's in the current rand's range
                         curValue <= curRandom && curRandom <= entry.probability + curValue) {
                     // pick this
-                    final BaseStructureComponent cmp = generateComponent(entry);
+                    final BaseStructureComponent cmp = this.generateComponent(entry);
                     if (cmp != null) {
                         compList.add(cmp);
                     }
@@ -259,7 +259,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
                 <= origXChunkCoord + this.range; ++xChunkCoord) {
             for (int zChunkCoord = origZChunkCoord - this.range; zChunkCoord
                     <= origZChunkCoord + this.range; ++zChunkCoord) {
-                if (this.canGenerateHere(xChunkCoord, zChunkCoord, rand)) {
+                if (this.canGenerateHere(xChunkCoord, zChunkCoord, this.rand)) {
                     this.recursiveGenerate(
                             world,
                             xChunkCoord,
@@ -276,7 +276,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     @Override
     protected void recursiveGenerate(final World par1World, final int xChunkCoord, final int zChunkCoord, final int origXChunkCoord,
             final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
-        makeStructure(par1World, xChunkCoord, zChunkCoord, origXChunkCoord, origZChunkCoord, arrayOfIDs, arrayOfMeta);
+        this.makeStructure(par1World, xChunkCoord, zChunkCoord, origXChunkCoord, origZChunkCoord, arrayOfIDs, arrayOfMeta);
 
     }
 
@@ -295,7 +295,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
                 <= origXChunkCoord + this.range; ++xChunkCoord) {
             for (int zChunkCoord = origZChunkCoord - this.range; zChunkCoord
                     <= origZChunkCoord + this.range; ++zChunkCoord) {
-                if (this.canGenerateHere(xChunkCoord, zChunkCoord, rand)) {
+                if (this.canGenerateHere(xChunkCoord, zChunkCoord, this.rand)) {
                     this.recursivePopulate(world, xChunkCoord, zChunkCoord, origXChunkCoord, origZChunkCoord);
                 }
             }
@@ -305,8 +305,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     protected void recursivePopulate(final World world, final int xChunkCoord, final int zChunkCoord, final int origXChunkCoord,
             final int origZChunkCoord) {
         final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
-        if (structureMap.containsKey(key)) {
-            final BaseStructureStart start = structureMap.get(key);
+        if (this.structureMap.containsKey(key)) {
+            final BaseStructureStart start = this.structureMap.get(key);
             start.populateChunk(world, origXChunkCoord, origZChunkCoord);
         } else {
             AmunRa.LOGGER.warn(
@@ -325,12 +325,12 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
             final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
         BaseStructureStart start = null;
-        if (!structureMap.containsKey(key)) {
-            start = createNewStructure(xChunkCoord, zChunkCoord);// new GridVillageStart(xChunkCoord, zChunkCoord,
+        if (!this.structureMap.containsKey(key)) {
+            start = this.createNewStructure(xChunkCoord, zChunkCoord);// new GridVillageStart(xChunkCoord, zChunkCoord,
                                                                  // this.rand);
-            structureMap.put(key, start);
+            this.structureMap.put(key, start);
         } else {
-            start = structureMap.get(key);
+            start = this.structureMap.get(key);
         }
         start.generateChunk(origXChunkCoord, origZChunkCoord, arrayOfIDs, arrayOfMeta);
 

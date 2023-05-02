@@ -24,7 +24,7 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
             return theItem.getTagCompound().getFloat("maxEnergy");
         }
 
-        final ItemStack bat = getUsedBattery(theItem, false);
+        final ItemStack bat = this.getUsedBattery(theItem, false);
         final float maxEnergy = ((ItemElectricBase) bat.getItem()).getMaxElectricityStored(bat);
         theItem.getTagCompound().setFloat("maxEnergy", maxEnergy);
         return maxEnergy;
@@ -117,7 +117,7 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
     public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list, final boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
-        final Item batItem = getUsedBatteryID(itemStack);
+        final Item batItem = this.getUsedBatteryID(itemStack);
         //
         final String s = StatCollector.translateToLocal("item.battery-using-item.powerlevel") + ": "
                 + StatCollector.translateToLocal(batItem.getUnlocalizedName() + ".name");

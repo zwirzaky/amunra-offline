@@ -22,8 +22,8 @@ public class TileEntityBlockScale extends TileEntity {
     }
 
     public int getRotationMeta() {
-        final Block b = worldObj.getBlock(xCoord, yCoord, zCoord);
-        final int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        final Block b = this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
+        final int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
         if (b instanceof IMetaBlock) {
             return ((IMetaBlock) b).getRotationMeta(meta);
         }
@@ -39,7 +39,7 @@ public class TileEntityBlockScale extends TileEntity {
 
     @Override
     public void onDataPacket(final NetworkManager netManager, final S35PacketUpdateTileEntity packet) {
-        readFromNBT(packet.func_148857_g());
+        this.readFromNBT(packet.func_148857_g());
     }
 
     @Override
@@ -61,30 +61,30 @@ public class TileEntityBlockScale extends TileEntity {
         }
         this.ticks++;
 
-        if (ticks % 80 == 0) {
-            doUpdate();
+        if (this.ticks % 80 == 0) {
+            this.doUpdate();
         }
     }
 
     public void doUpdate() {
-        final Block b = this.worldObj.getBlock(xCoord, yCoord + 1, zCoord);
-        final int meta = this.worldObj.getBlockMetadata(xCoord, yCoord + 1, zCoord);
+        final Block b = this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord);
+        final int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord + 1, this.zCoord);
 
-        if (lastFoundBlock != null && lastFoundBlock.getBlock() == b && lastFoundBlock.getMetadata() == meta) {
+        if (this.lastFoundBlock != null && this.lastFoundBlock.getBlock() == b && this.lastFoundBlock.getMetadata() == meta) {
             // nothing changed
             return;
         }
 
-        lastFoundBlock = new BlockMetaPair(b, (byte) meta);
+        this.lastFoundBlock = new BlockMetaPair(b, (byte) meta);
 
         // mass
-        massToDisplay = BlockMassHelper.getBlockMass(worldObj, b, meta, xCoord, yCoord + 1, zCoord);
-        this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        this.massToDisplay = BlockMassHelper.getBlockMass(this.worldObj, b, meta, this.xCoord, this.yCoord + 1, this.zCoord);
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         // this.markDirty();
     }
 
     public float getCurrentMass() {
-        return massToDisplay;
+        return this.massToDisplay;
     }
 
 }

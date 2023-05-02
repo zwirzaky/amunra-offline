@@ -23,7 +23,7 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     public MothershipChunkProvider(final World par1World, final long par2, final boolean par4) {
         super(par1World, par2, par4);
         this.rand = new Random(par2);
-        worldObjNonPrivate = par1World;
+        this.worldObjNonPrivate = par1World;
     }
 
     @Override

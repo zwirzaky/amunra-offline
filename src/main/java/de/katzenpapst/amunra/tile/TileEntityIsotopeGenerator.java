@@ -63,22 +63,22 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
 
         this.storage.setMaxExtract(MAX_GENERATE_WATTS);
         this.storage.setMaxReceive(MAX_GENERATE_WATTS);
-        this.storage.setCapacity(energyCapacity);
+        this.storage.setCapacity(this.energyCapacity);
         this.initialised = true;
     }
 
     public SubBlockMachine getSubBlock() {
-        if (subBlock == null) {
-            subBlock = (SubBlockMachine) ((BlockMachineMeta) this.getBlockType()).getSubBlock(this.getBlockMetadata());
+        if (this.subBlock == null) {
+            this.subBlock = (SubBlockMachine) ((BlockMachineMeta) this.getBlockType()).getSubBlock(this.getBlockMetadata());
         }
-        return subBlock;
+        return this.subBlock;
     }
 
     @Override
     public void updateEntity() {
 
         if (!this.initialised) {
-            init();
+            this.init();
         }
 
         // this seems to be the important line
@@ -91,13 +91,13 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
             this.recharge(this.containingItems[0]);
             if (this.getDisabled(0)) {
                 this.generateWatts = 0;
-                generationBoost = -1;
+                this.generationBoost = -1;
             } else {
-                if (generationBoost == -1 || this.ticks % 20 == 0) {
-                    generationBoost = getEnvironmentalEnergyBoost();
+                if (this.generationBoost == -1 || this.ticks % 20 == 0) {
+                    this.generationBoost = this.getEnvironmentalEnergyBoost();
                 }
 
-                this.generateWatts = Math.min(energyGeneration * generationBoost, MAX_GENERATE_WATTS);
+                this.generateWatts = Math.min(this.energyGeneration * this.generationBoost, MAX_GENERATE_WATTS);
 
             }
 
@@ -112,8 +112,8 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     public float getEnvironmentalEnergyBoost() {
         float thermalLevel = 0.0F;
 
-        if (worldObj.provider instanceof IGalacticraftWorldProvider) {
-            thermalLevel = ((IGalacticraftWorldProvider) worldObj.provider).getThermalLevelModifier();
+        if (this.worldObj.provider instanceof IGalacticraftWorldProvider) {
+            thermalLevel = ((IGalacticraftWorldProvider) this.worldObj.provider).getThermalLevelModifier();
         }
 
         // e^(0.25*-x)
@@ -173,7 +173,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     @Override
     public EnumSet<ForgeDirection> getElectricalOutputDirections() {
         // int metadata = this.getBlockMetadata() & 3;
-        final int metadata = getRotationMeta(this.getBlockMetadata());
+        final int metadata = this.getRotationMeta(this.getBlockMetadata());
 
         return EnumSet.of(
                 CoordHelper.rotateForgeDirection(ForgeDirection.EAST, metadata),
@@ -188,7 +188,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
 
     @Override
     public ForgeDirection getElectricalOutputDirectionMain() {
-        final int metadata = getRotationMeta(this.getBlockMetadata());
+        final int metadata = this.getRotationMeta(this.getBlockMetadata());
 
         return CoordHelper.rotateForgeDirection(ForgeDirection.EAST, metadata);
     }
@@ -199,7 +199,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
             return false;
         }
 
-        return getElectricalOutputDirections().contains(direction);
+        return this.getElectricalOutputDirections().contains(direction);
         // return true;// just allow power cables to connect from anywhere //direction ==
         // this.getElectricalOutputDirectionMain();
     }
@@ -275,7 +275,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
 
     @Override
     public String getInventoryName() {
-        return GCCoreUtil.translate("tile." + getSubBlock().getUnlocalizedName() + ".name");
+        return GCCoreUtil.translate("tile." + this.getSubBlock().getUnlocalizedName() + ".name");
     }
 
     @Override

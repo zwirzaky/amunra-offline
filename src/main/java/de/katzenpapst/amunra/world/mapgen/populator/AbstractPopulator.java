@@ -20,22 +20,22 @@ abstract public class AbstractPopulator {
     }
 
     public boolean isInChunk(final int chunkX, final int chunkZ) {
-        return CoordHelper.getChunkBB(chunkX, chunkZ).isVecInside(x, y, z);
+        return CoordHelper.getChunkBB(chunkX, chunkZ).isVecInside(this.x, this.y, this.z);
     }
 
     public BlockVec3 getBlockVec3() {
-        return new BlockVec3(x, y, z);
+        return new BlockVec3(this.x, this.y, this.z);
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public int getZ() {
-        return z;
+        return this.z;
     }
 }

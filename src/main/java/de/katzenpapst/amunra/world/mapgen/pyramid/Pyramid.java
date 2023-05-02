@@ -197,7 +197,7 @@ public class Pyramid extends BaseStructureStart {
     }
 
     public void setMainRoom(final PyramidRoom room) {
-        final int innerRoomTotalOffset = innerRingOffset + tunnelWidth + mainRoomOffset;
+        final int innerRoomTotalOffset = this.innerRingOffset + this.tunnelWidth + this.mainRoomOffset;
 
         final StructureBoundingBox innerRoomBB = new StructureBoundingBox(
                 this.structBB.minX + innerRoomTotalOffset,
@@ -219,9 +219,9 @@ public class Pyramid extends BaseStructureStart {
         mainEntranceBB.minZ = innerRoomBB.maxZ + 1;
         mainEntranceBB.maxZ = innerRoomBB.maxZ + 4;
 
-        centralRoom = room;
-        centralRoom.setBoundingBoxes(mainEntranceBB, innerRoomBB);
-        centralRoom.setParent(this);
+        this.centralRoom = room;
+        this.centralRoom.setBoundingBoxes(mainEntranceBB, innerRoomBB);
+        this.centralRoom.setParent(this);
     }
 
     @Override
@@ -239,10 +239,10 @@ public class Pyramid extends BaseStructureStart {
         }
 
         final int fallbackGround = this.getWorldGroundLevel();
-        if (groundLevel == -1) {
-            groundLevel = getAverageGroundLevel(blocks, metas, getStructureBoundingBox(), chunkBB, fallbackGround);
-            if (groundLevel == -1) {
-                groundLevel = fallbackGround; // but this shouldn't even happen...
+        if (this.groundLevel == -1) {
+            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            if (this.groundLevel == -1) {
+                this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }
         }
 
@@ -263,18 +263,18 @@ public class Pyramid extends BaseStructureStart {
         for (int x = startX; x <= stopX; x++) {
             for (int z = startZ; z <= stopZ; z++) {
 
-                final int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
+                final int highestGroundBlock = this.getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
                 if (highestGroundBlock == -1) {
                     continue; // that should mean that we aren't in the right chunk
                 }
 
                 // now fill
-                for (int y = highestGroundBlock - 1; y < groundLevel; y++) {
+                for (int y = highestGroundBlock - 1; y < this.groundLevel; y++) {
                     // padding
-                    placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, fillMaterial);
+                    this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, this.fillMaterial);
                 }
                 // floor
-                placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel, z, floorMaterial);
+                this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel, z, this.floorMaterial);
 
                 for (int y = 0; y <= radius; y++) {
 
@@ -283,10 +283,10 @@ public class Pyramid extends BaseStructureStart {
                     if (x >= startX + y && x <= stopX - y && z >= startZ + y && z <= stopZ - y) {
                         if (z == startZ + y || z == stopZ - y || x == startX + y || x == stopX - y) {
                             // wall
-                            placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel + y + 1, z, wallMaterial);
+                            this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + y + 1, z, this.wallMaterial);
                         } else {
                             // inner
-                            placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel + y + 1, z, fillMaterial);
+                            this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + y + 1, z, this.fillMaterial);
                         }
                     }
                     if (y >= 5 && y <= 13) {
@@ -297,54 +297,54 @@ public class Pyramid extends BaseStructureStart {
                                 // surrounding box
                                 if (x == xCenter - 4 || x == xCenter + 4 || y == 13) {
                                     if (z == startZ + 5 || y == 13) {
-                                        placeBlockRel2BB(
+                                        this.placeBlockRel2BB(
                                                 blocks,
                                                 metas,
                                                 chunkX,
                                                 chunkZ,
                                                 x,
-                                                groundLevel + y + 1,
+                                                this.groundLevel + y + 1,
                                                 z,
-                                                fillMaterial);
+                                                this.fillMaterial);
                                     }
                                 } else if (z > startZ + 5) {
-                                    placeBlockRel2BB(
+                                    this.placeBlockRel2BB(
                                             blocks,
                                             metas,
                                             chunkX,
                                             chunkZ,
                                             x,
-                                            groundLevel + y + 1,
+                                            this.groundLevel + y + 1,
                                             z,
-                                            fillMaterial);
+                                            this.fillMaterial);
                                 }
                             }
 
                             // cut in the tunnel
                             if (x >= xCenter - 1 && x <= xCenter + 1
                                     && z >= startZ + 6
-                                    && y >= 5 && y <= 6 + tunnelHeight
-                                    && z >= startZ + 5 && z <= startZ + 5 + innerRingOffset - tunnelWidth
+                                    && y >= 5 && y <= 6 + this.tunnelHeight
+                                    && z >= startZ + 5 && z <= startZ + 5 + this.innerRingOffset - this.tunnelWidth
 
                             ) {
                                 if (y == 5) {
-                                    placeBlockRel2BB(
+                                    this.placeBlockRel2BB(
                                             blocks,
                                             metas,
                                             chunkX,
                                             chunkZ,
                                             x,
-                                            groundLevel + y + 1,
+                                            this.groundLevel + y + 1,
                                             z,
-                                            floorMaterial);
+                                            this.floorMaterial);
                                 } else {
-                                    placeBlockRel2BB(
+                                    this.placeBlockRel2BB(
                                             blocks,
                                             metas,
                                             chunkX,
                                             chunkZ,
                                             x,
-                                            groundLevel + y + 1,
+                                            this.groundLevel + y + 1,
                                             z,
                                             Blocks.air,
                                             0);
@@ -354,38 +354,38 @@ public class Pyramid extends BaseStructureStart {
 
                         // inner ring
                         // check if we are fully within the range of the inner tunnel first and in the right height
-                        if (y >= 5 && y <= 6 + tunnelHeight
-                                && x >= startX + innerRingOffset && x <= stopX - innerRingOffset
-                                && z >= startZ + innerRingOffset && z <= stopZ - innerRingOffset) {
+                        if (y >= 5 && y <= 6 + this.tunnelHeight
+                                && x >= startX + this.innerRingOffset && x <= stopX - this.innerRingOffset
+                                && z >= startZ + this.innerRingOffset && z <= stopZ - this.innerRingOffset) {
 
-                            final boolean xMinEdge = x >= startX + innerRingOffset
-                                    && x < startX + innerRingOffset + tunnelWidth;
-                            final boolean xMaxEdge = x <= stopX - innerRingOffset
-                                    && x > stopX - innerRingOffset - tunnelWidth;
-                            final boolean zMinEdge = z >= startZ + innerRingOffset
-                                    && z < startZ + innerRingOffset + tunnelWidth;
-                            final boolean zMaxEdge = z <= stopZ - innerRingOffset
-                                    && z > stopZ - innerRingOffset - tunnelWidth;
+                            final boolean xMinEdge = x >= startX + this.innerRingOffset
+                                    && x < startX + this.innerRingOffset + this.tunnelWidth;
+                            final boolean xMaxEdge = x <= stopX - this.innerRingOffset
+                                    && x > stopX - this.innerRingOffset - this.tunnelWidth;
+                            final boolean zMinEdge = z >= startZ + this.innerRingOffset
+                                    && z < startZ + this.innerRingOffset + this.tunnelWidth;
+                            final boolean zMaxEdge = z <= stopZ - this.innerRingOffset
+                                    && z > stopZ - this.innerRingOffset - this.tunnelWidth;
                             if (xMinEdge || xMaxEdge || zMinEdge || zMaxEdge) {
                                 // inner ring tunnel
                                 if (y == 5) {
-                                    placeBlockRel2BB(
+                                    this.placeBlockRel2BB(
                                             blocks,
                                             metas,
                                             chunkX,
                                             chunkZ,
                                             x,
-                                            groundLevel + y + 1,
+                                            this.groundLevel + y + 1,
                                             z,
-                                            floorMaterial);
+                                            this.floorMaterial);
                                 } else {
-                                    placeBlockRel2BB(
+                                    this.placeBlockRel2BB(
                                             blocks,
                                             metas,
                                             chunkX,
                                             chunkZ,
                                             x,
-                                            groundLevel + y + 1,
+                                            this.groundLevel + y + 1,
                                             z,
                                             Blocks.air,
                                             0);
@@ -397,7 +397,7 @@ public class Pyramid extends BaseStructureStart {
             }
         }
 
-        generateSmallRooms(chunkBB, blocks, metas);
+        this.generateSmallRooms(chunkBB, blocks, metas);
 
         return true;
     }
@@ -577,14 +577,14 @@ public class Pyramid extends BaseStructureStart {
         final int chunkX = CoordHelper.blockToChunk(chunkBB.minX);
         final int chunkZ = CoordHelper.blockToChunk(chunkBB.minZ);
 
-        for (final PyramidRoom r : roomList) {
+        for (final PyramidRoom r : this.roomList) {
             if (r != null && r.getStructureBoundingBox().intersectsWith(chunkBB)) {
                 r.generateChunk(chunkX, chunkZ, blocks, metas);
             }
         }
 
-        if (centralRoom.getStructureBoundingBox().intersectsWith(chunkBB)) {
-            centralRoom.generateChunk(chunkX, chunkZ, blocks, metas);
+        if (this.centralRoom.getStructureBoundingBox().intersectsWith(chunkBB)) {
+            this.centralRoom.generateChunk(chunkX, chunkZ, blocks, metas);
         }
 
     }
@@ -595,7 +595,7 @@ public class Pyramid extends BaseStructureStart {
     }
 
     public BlockMetaPair getWallMaterial() {
-        return wallMaterial;
+        return this.wallMaterial;
     }
 
     public void setWallMaterial(final BlockMetaPair wallMaterial) {
@@ -603,7 +603,7 @@ public class Pyramid extends BaseStructureStart {
     }
 
     public BlockMetaPair getFloorMaterial() {
-        return floorMaterial;
+        return this.floorMaterial;
     }
 
     public void setFloorMaterial(final BlockMetaPair floorMaterial) {
@@ -611,7 +611,7 @@ public class Pyramid extends BaseStructureStart {
     }
 
     public BlockMetaPair getFillMaterial() {
-        return fillMaterial;
+        return this.fillMaterial;
     }
 
     public void setFillMaterial(final BlockMetaPair fillMaterial) {

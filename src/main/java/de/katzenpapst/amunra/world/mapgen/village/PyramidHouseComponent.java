@@ -18,10 +18,10 @@ public class PyramidHouseComponent extends GridVillageComponent {
                                                                               // (chunkX<< 4), (chunkX+1 << 4)-1,
                                                                               // (chunkX+1 << 4)-1);
         final int fallbackGround = this.parent.getWorldGroundLevel();
-        if (groundLevel == -1) {
-            groundLevel = getAverageGroundLevel(blocks, metas, getStructureBoundingBox(), chunkBB, fallbackGround);
-            if (groundLevel == -1) {
-                groundLevel = fallbackGround; // but this shouldn't even happen...
+        if (this.groundLevel == -1) {
+            this.groundLevel = getAverageGroundLevel(blocks, metas, this.getStructureBoundingBox(), chunkBB, fallbackGround);
+            if (this.groundLevel == -1) {
+                this.groundLevel = fallbackGround; // but this shouldn't even happen...
             }
         }
 
@@ -47,27 +47,27 @@ public class PyramidHouseComponent extends GridVillageComponent {
         for (int x = startX; x <= stopX; x++) {
             for (int z = startZ; z <= stopZ; z++) {
 
-                final int highestGroundBlock = getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
+                final int highestGroundBlock = this.getHighestSolidBlockInBB(blocks, metas, chunkX, chunkZ, x, z);
                 if (highestGroundBlock == -1) {
                     continue; // that should mean that we aren't in the right chunk
                 }
 
                 // now fill
-                for (int y = highestGroundBlock - 1; y < groundLevel; y++) {
+                for (int y = highestGroundBlock - 1; y < this.groundLevel; y++) {
                     // padding
-                    placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, padding);
+                    this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, y, z, padding);
                 }
                 // floor
-                placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel - 1, z, floor);
+                this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel - 1, z, floor);
 
                 if (startX == x || startZ == z || stopX == x || stopZ == z) {
-                    placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel, z, wall);
+                    this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel, z, wall);
                 }
 
                 for (int y = 0; y <= radius; y++) {
                     if (x >= startX + y && x <= stopX - y && (z == startZ + y || z == stopZ - y)
                             || (x == startX + y || x == stopX - y) && z >= startZ + y && z <= stopZ - y) {
-                        placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, groundLevel + y + 1, z, wall);
+                        this.placeBlockRel2BB(blocks, metas, chunkX, chunkZ, x, this.groundLevel + y + 1, z, wall);
                     }
                     /*
                      * if((x >= startX+y && x <= stopX-y) && (z >= startZ+y && z <= stopZ-y)) { placeBlockRel2BB(blocks,

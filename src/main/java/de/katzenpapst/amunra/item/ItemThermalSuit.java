@@ -33,10 +33,10 @@ public class ItemThermalSuit extends Item implements IItemThermal {
         this.setUnlocalizedName(name);
 
         this.thermalStrength = thermalStrength;
-        iconStrings[0] = AmunRa.TEXTUREPREFIX + helmetIcon;
-        iconStrings[1] = AmunRa.TEXTUREPREFIX + chestIcon;
-        iconStrings[2] = AmunRa.TEXTUREPREFIX + legsIcon;
-        iconStrings[3] = AmunRa.TEXTUREPREFIX + bootsIcon;
+        this.iconStrings[0] = AmunRa.TEXTUREPREFIX + helmetIcon;
+        this.iconStrings[1] = AmunRa.TEXTUREPREFIX + chestIcon;
+        this.iconStrings[2] = AmunRa.TEXTUREPREFIX + legsIcon;
+        this.iconStrings[3] = AmunRa.TEXTUREPREFIX + bootsIcon;
     }
 
     public ItemDamagePair getHelmet() {
@@ -57,7 +57,7 @@ public class ItemThermalSuit extends Item implements IItemThermal {
 
     @Override
     public int getThermalStrength() {
-        return thermalStrength;
+        return this.thermalStrength;
     }
 
     @Override
@@ -84,18 +84,18 @@ public class ItemThermalSuit extends Item implements IItemThermal {
     @SideOnly(Side.CLIENT)
     public void registerIcons(final IIconRegister iconRegister) {
         for (int i = 0; i < 4; i++) {
-            icons[i] = iconRegister.registerIcon(iconStrings[i]);
+            this.icons[i] = iconRegister.registerIcon(this.iconStrings[i]);
         }
     }
 
     @Override
     public String getUnlocalizedName(final ItemStack itemStack) {
-        return this.getUnlocalizedName() + "." + names[itemStack.getItemDamage()];
+        return this.getUnlocalizedName() + "." + this.names[itemStack.getItemDamage()];
     }
 
     @Override
     public IIcon getIconFromDamage(final int damage) {
-        return icons[damage];
+        return this.icons[damage];
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -115,7 +115,7 @@ public class ItemThermalSuit extends Item implements IItemThermal {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
     public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4) {
-        par3List.add(GCCoreUtil.translateWithFormat("item.thermalSuit.thermalLevel.name", thermalStrength));
+        par3List.add(GCCoreUtil.translateWithFormat("item.thermalSuit.thermalLevel.name", this.thermalStrength));
         /*
          * String info = getSubItem(par1ItemStack.getItemDamage()).getItemInfo(); if(info != null) {
          * par3List.add(GCCoreUtil.translate(info)); }

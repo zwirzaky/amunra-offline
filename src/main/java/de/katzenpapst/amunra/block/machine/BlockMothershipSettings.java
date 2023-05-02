@@ -29,7 +29,7 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
     @Override
     public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
-        iconFront = par1IconRegister.registerIcon(frontTexture);
+        this.iconFront = par1IconRegister.registerIcon(this.frontTexture);
         // this.blockIcon = iconFront;
     }
 

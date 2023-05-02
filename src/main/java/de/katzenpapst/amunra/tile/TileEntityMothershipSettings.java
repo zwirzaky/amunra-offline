@@ -78,7 +78,7 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     @Override
     public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
         // hm, test
-        if (!isOnMothership()) {
+        if (!this.isOnMothership()) {
             return false;
         }
 
@@ -104,10 +104,10 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     public Mothership getMothership() {
-        if (!isOnMothership()) {
+        if (!this.isOnMothership()) {
             return null;
         }
-        return (Mothership) ((MothershipWorldProvider) worldObj.provider).getCelestialBody();
+        return (Mothership) ((MothershipWorldProvider) this.worldObj.provider).getCelestialBody();
     }
 
 }

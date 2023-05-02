@@ -14,34 +14,34 @@ public class RocketRecipeHelper {
      */
 
     public RocketRecipeHelper() {
-        for (int i = 0; i < stacks.length; i++) {
-            stacks[i] = new ArrayList<>();
+        for (int i = 0; i < this.stacks.length; i++) {
+            this.stacks[i] = new ArrayList<>();
         }
     }
 
     public RocketRecipeHelper(final ItemStack one) {
         this();
-        addSame(one);
+        this.addSame(one);
     }
 
     public RocketRecipeHelper(final ItemStack one, final ItemStack otherTwo) {
         this();
-        addPermutation1And2(one, otherTwo);
+        this.addPermutation1And2(one, otherTwo);
     }
 
     public RocketRecipeHelper(final ItemStack stack1, final ItemStack stack2, final ItemStack stack3) {
         this();
-        addPermutation3different(stack1, stack2, stack3);
+        this.addPermutation3different(stack1, stack2, stack3);
     }
 
     public ItemStack[] getStackArray(final int i) {
         final ItemStack[] result = new ItemStack[i];
-        stacks[i].toArray(result);
+        this.stacks[i].toArray(result);
         return result;
     }
 
     public ArrayList<ItemStack> getStacks(final int i) {
-        return stacks[i];
+        return this.stacks[i];
     }
 
     /**
@@ -51,17 +51,17 @@ public class RocketRecipeHelper {
      * @param otherTwo
      */
     public void addPermutation1And2(final ItemStack one, final ItemStack otherTwo) {
-        stacks[0].add(one);
-        stacks[1].add(otherTwo);
-        stacks[2].add(otherTwo);
+        this.stacks[0].add(one);
+        this.stacks[1].add(otherTwo);
+        this.stacks[2].add(otherTwo);
 
-        stacks[0].add(otherTwo);
-        stacks[1].add(one);
-        stacks[2].add(otherTwo);
+        this.stacks[0].add(otherTwo);
+        this.stacks[1].add(one);
+        this.stacks[2].add(otherTwo);
 
-        stacks[0].add(otherTwo);
-        stacks[1].add(otherTwo);
-        stacks[2].add(one);
+        this.stacks[0].add(otherTwo);
+        this.stacks[1].add(otherTwo);
+        this.stacks[2].add(one);
     }
 
     /**
@@ -72,29 +72,29 @@ public class RocketRecipeHelper {
      * @param stack3
      */
     public void addPermutation3different(final ItemStack stack1, final ItemStack stack2, final ItemStack stack3) {
-        stacks[0].add(stack1);
-        stacks[1].add(stack2);
-        stacks[2].add(stack3);
+        this.stacks[0].add(stack1);
+        this.stacks[1].add(stack2);
+        this.stacks[2].add(stack3);
 
-        stacks[0].add(stack1);
-        stacks[1].add(stack3);
-        stacks[2].add(stack2);
+        this.stacks[0].add(stack1);
+        this.stacks[1].add(stack3);
+        this.stacks[2].add(stack2);
 
-        stacks[0].add(stack2);
-        stacks[1].add(stack1);
-        stacks[2].add(stack3);
+        this.stacks[0].add(stack2);
+        this.stacks[1].add(stack1);
+        this.stacks[2].add(stack3);
 
-        stacks[0].add(stack2);
-        stacks[1].add(stack3);
-        stacks[2].add(stack1);
+        this.stacks[0].add(stack2);
+        this.stacks[1].add(stack3);
+        this.stacks[2].add(stack1);
 
-        stacks[0].add(stack3);
-        stacks[1].add(stack1);
-        stacks[2].add(stack2);
+        this.stacks[0].add(stack3);
+        this.stacks[1].add(stack1);
+        this.stacks[2].add(stack2);
 
-        stacks[0].add(stack3);
-        stacks[1].add(stack2);
-        stacks[2].add(stack1);
+        this.stacks[0].add(stack3);
+        this.stacks[1].add(stack2);
+        this.stacks[2].add(stack1);
     }
 
     /**
@@ -103,9 +103,9 @@ public class RocketRecipeHelper {
      * @param stack
      */
     public void addSame(final ItemStack stack) {
-        stacks[0].add(stack);
-        stacks[1].add(stack);
-        stacks[2].add(stack);
+        this.stacks[0].add(stack);
+        this.stacks[1].add(stack);
+        this.stacks[2].add(stack);
     }
 
 }

@@ -34,7 +34,7 @@ public class ItemBlockMulti extends ItemBlockDesc {
 
     @Override
     public String getUnlocalizedName(final ItemStack itemstack) {
-        final String subBlockName = ((IMetaBlock) field_150939_a).getUnlocalizedSubBlockName(itemstack.getItemDamage());
+        final String subBlockName = ((IMetaBlock) this.field_150939_a).getUnlocalizedSubBlockName(itemstack.getItemDamage());
         return "tile." + subBlockName;
     }
 
@@ -51,6 +51,6 @@ public class ItemBlockMulti extends ItemBlockDesc {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(final int damage) {
-        return ((IMetaBlock) field_150939_a).getSubBlock(damage).getIcon(1, 0);
+        return ((IMetaBlock) this.field_150939_a).getSubBlock(damage).getIcon(1, 0);
     }
 }

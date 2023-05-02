@@ -25,7 +25,7 @@ public class ItemRendererJet implements IItemRenderer {
     @Override
     public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
 
-        if ((item.getItem() != ARItems.jetItemMeta) || (item.getItemDamage() >= models.length) || (item.getItemDamage() >= textures.length)) {
+        if ((item.getItem() != ARItems.jetItemMeta) || (item.getItemDamage() >= this.models.length) || (item.getItemDamage() >= this.textures.length)) {
             return false;
         }
         return switch (type) {
@@ -42,8 +42,8 @@ public class ItemRendererJet implements IItemRenderer {
     protected void renderJet(final ItemRenderType type, final RenderBlocks render, final ItemStack item, final float translateX,
             final float translateY, final float translateZ) {
         // TODO get a better idea how to do this
-        final ResourceLocation texture = textures[item.getItemDamage()];
-        final IModelCustom model = models[item.getItemDamage()];
+        final ResourceLocation texture = this.textures[item.getItemDamage()];
+        final IModelCustom model = this.models[item.getItemDamage()];
 
         switch (type) {
             case ENTITY:

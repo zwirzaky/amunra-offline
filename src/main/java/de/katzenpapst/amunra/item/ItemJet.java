@@ -56,12 +56,12 @@ public class ItemJet extends ItemBlockMulti {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(final IIconRegister reg) {
-        final int length = ((BlockMachineMeta) field_150939_a).getNumPossibleSubBlocks();
-        icons = new IIcon[length];
+        final int length = ((BlockMachineMeta) this.field_150939_a).getNumPossibleSubBlocks();
+        this.icons = new IIcon[length];
         for (int i = 0; i < length; i++) {
-            final MothershipEngineJetBase sb = (MothershipEngineJetBase) ((BlockMachineMeta) field_150939_a).getSubBlock(i);
+            final MothershipEngineJetBase sb = (MothershipEngineJetBase) ((BlockMachineMeta) this.field_150939_a).getSubBlock(i);
             if (sb != null) {
-                icons[i] = reg.registerIcon(sb.getItemIconName());
+                this.icons[i] = reg.registerIcon(sb.getItemIconName());
             }
         }
         // this.itemIcon = reg.registerIcon(this.getIconString());
@@ -84,7 +84,7 @@ public class ItemJet extends ItemBlockMulti {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(final int dmg) {
-        return icons[dmg];
+        return this.icons[dmg];
         // return ((BlockMachineMeta)field_150939_a).getSubBlock(dmg).getIcon(1, 0);
     }
 
@@ -137,13 +137,13 @@ public class ItemJet extends ItemBlockMulti {
 
         // metadata = BlockMachineMeta.addRotationMeta(blockMeta, blockRotation);
 
-        if (!world.setBlock(x, y, z, field_150939_a, metadata, 3)) {
+        if (!world.setBlock(x, y, z, this.field_150939_a, metadata, 3)) {
             return false;
         }
 
-        if (world.getBlock(x, y, z) == field_150939_a) {
-            field_150939_a.onBlockPlacedBy(world, x, y, z, player, stack);
-            field_150939_a.onPostBlockPlaced(world, x, y, z, metadata);
+        if (world.getBlock(x, y, z) == this.field_150939_a) {
+            this.field_150939_a.onBlockPlacedBy(world, x, y, z, player, stack);
+            this.field_150939_a.onPostBlockPlaced(world, x, y, z, metadata);
         }
 
         return true;

@@ -39,29 +39,29 @@ public class SubBlockOreMultidrop extends SubBlockOre {
     }
 
     public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop, final int maxDrop, final float probability) {
-        dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, probability));
+        this.dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, probability));
         return this;
     }
 
     public SubBlockOreMultidrop addDroppedItem(final Item item, final int metadata, final int minDrop, final int maxDrop) {
-        dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, 1));
+        this.dropList.add(new DroppedItem(item, metadata, minDrop, maxDrop, 1));
         return this;
     }
 
     public SubBlockOreMultidrop addDroppedItem(final ItemDamagePair idp, final int minDrop, final int maxDrop) {
-        addDroppedItem(idp.getItem(), idp.getDamage(), minDrop, maxDrop);
+        this.addDroppedItem(idp.getItem(), idp.getDamage(), minDrop, maxDrop);
         return this;
     }
 
     public SubBlockOreMultidrop addDroppedItem(final ItemDamagePair idp, final int minDrop, final int maxDrop, final float probability) {
-        addDroppedItem(idp.getItem(), idp.getDamage(), minDrop, maxDrop, probability);
+        this.addDroppedItem(idp.getItem(), idp.getDamage(), minDrop, maxDrop, probability);
         return this;
     }
 
     @Override
     public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata, final int fortune) {
         final ArrayList<ItemStack> ret = new ArrayList<>();
-        for (final DroppedItem di : dropList) {
+        for (final DroppedItem di : this.dropList) {
             if (di.probability < 1) {
                 final float effectiveProb = di.probability * fortune;
                 if (effectiveProb < 1) {
@@ -81,7 +81,7 @@ public class SubBlockOreMultidrop extends SubBlockOre {
 
     @Override
     public boolean dropsSelf() {
-        return dropList.size() == 0;
+        return this.dropList.size() == 0;
     }
 
 }

@@ -67,7 +67,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
     protected void findWaypoint() {
         if (this.targetedEntity != null) {
             // attempt to move closer to the target
-            final Vector3 targetVec = new Vector3(targetedEntity);
+            final Vector3 targetVec = new Vector3(this.targetedEntity);
             Vector3 myPos = new Vector3(this);
             final Vector3 thisToTarget = myPos.difference(targetVec);
             // I don't get around sqrt'ing here
@@ -107,7 +107,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
         if (distanceSq < 1.0D || distanceSq > 3600.0D) {
             // find next waypoint?
-            findWaypoint();
+            this.findWaypoint();
         }
 
         if (this.courseChangeCooldown-- <= 0) {
@@ -127,7 +127,7 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
         if (this.targetedEntity == null || this.aggroCooldown-- <= 0) {
             // target locked?
-            this.targetedEntity = this.worldObj.getClosestVulnerablePlayerToEntity(this, getVisionDistance());
+            this.targetedEntity = this.worldObj.getClosestVulnerablePlayerToEntity(this, this.getVisionDistance());
 
             if (this.targetedEntity != null) {
                 this.aggroCooldown = 20;
@@ -162,11 +162,11 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
                     // another one. WTF is this?
                     // this.worldObj.playSoundAtEntity(this, AmunRa.TEXTUREPREFIX + "mob.sentryblock.fire",
                     // getSoundVolume(), 1.0F);
-                    this.worldObj.playSoundAtEntity(this, getFiringSound(), getSoundVolume(), 1.0F);
+                    this.worldObj.playSoundAtEntity(this, this.getFiringSound(), this.getSoundVolume(), 1.0F);
                     // this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1008, (int)this.posX, (int)this.posY,
                     // (int)this.posZ, 0);
                     // this seems to be an actual attack
-                    performAttack(targetedEntity, accelX, accelY, accelZ);
+                    this.performAttack(this.targetedEntity, accelX, accelY, accelZ);
 
                     // actual attack end
                     this.attackCounter = -40;

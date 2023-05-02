@@ -27,7 +27,7 @@ public class GuiIonEngine extends GuiRocketEngine {
     @Override
     public void initGui() {
         super.initGui();
-        electricInfoRegion = new GuiElementInfoRegion(
+        this.electricInfoRegion = new GuiElementInfoRegion(
                 (this.width - this.xSize) / 2 + 113,
                 (this.height - this.ySize) / 2 + 29,
                 56,

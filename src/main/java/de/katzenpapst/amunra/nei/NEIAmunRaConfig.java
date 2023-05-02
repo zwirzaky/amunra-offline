@@ -50,10 +50,10 @@ public class NEIAmunRaConfig implements IConfigureNEI {
         // ItemStack(Items.paper), ARItems.lithiumMesh.getItemStack(1));
 
         // now do the circfab
-        initCircuitFabricatorRecipes();
+        this.initCircuitFabricatorRecipes();
 
         // so at this point I would add the rocket recipe?
-        initShuttleRecipes();
+        this.initShuttleRecipes();
 
         API.registerRecipeHandler(new ARCircuitFab());
         API.registerUsageHandler(new ARCircuitFab());

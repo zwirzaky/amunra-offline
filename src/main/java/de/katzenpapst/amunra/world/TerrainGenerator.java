@@ -135,35 +135,35 @@ public class TerrainGenerator {
      *
      */
     public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray) {
-        noiseGenBase.setFrequency(0.015F);
-        noiseGenSmallHill.setFrequency(0.01F);
-        noiseGenMountain.setFrequency(0.01F);
-        noiseGenValley.setFrequency(0.01F);
-        noiseGenFeature.setFrequency(0.01F);
-        noiseGenLargeFilter.setFrequency(0.001F);
-        noiseGenSmallFilter.setFrequency(0.005F);
+        this.noiseGenBase.setFrequency(0.015F);
+        this.noiseGenSmallHill.setFrequency(0.01F);
+        this.noiseGenMountain.setFrequency(0.01F);
+        this.noiseGenValley.setFrequency(0.01F);
+        this.noiseGenFeature.setFrequency(0.01F);
+        this.noiseGenLargeFilter.setFrequency(0.001F);
+        this.noiseGenSmallFilter.setFrequency(0.005F);
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 // magic
-                final double baseHeight = noiseGenBase.getNoise(chunkX * 16 + x, chunkZ * 16 + z) * heightModifier;
-                final double smallHillHeight = noiseGenSmallHill.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
-                        * smallFeatureHeightModifier;
-                double mountainHeight = Math.abs(noiseGenMountain.getNoise(chunkX * 16 + x, chunkZ * 16 + z));
-                double valleyHeight = Math.abs(noiseGenValley.getNoise(chunkX * 16 + x, chunkZ * 16 + z));
-                final double featureFilter = noiseGenFeature.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
-                        * mainFeatureFilterMod;
-                final double largeFilter = noiseGenLargeFilter.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
-                        * largeFeatureFilterMod;
-                final double smallFilter = noiseGenSmallFilter.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
-                        * smallFeatureFilterMod - 0.5;
+                final double baseHeight = this.noiseGenBase.getNoise(chunkX * 16 + x, chunkZ * 16 + z) * this.heightModifier;
+                final double smallHillHeight = this.noiseGenSmallHill.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
+                        * this.smallFeatureHeightModifier;
+                double mountainHeight = Math.abs(this.noiseGenMountain.getNoise(chunkX * 16 + x, chunkZ * 16 + z));
+                double valleyHeight = Math.abs(this.noiseGenValley.getNoise(chunkX * 16 + x, chunkZ * 16 + z));
+                final double featureFilter = this.noiseGenFeature.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
+                        * this.mainFeatureFilterMod;
+                final double largeFilter = this.noiseGenLargeFilter.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
+                        * this.largeFeatureFilterMod;
+                final double smallFilter = this.noiseGenSmallFilter.getNoise(chunkX * 16 + x, chunkZ * 16 + z)
+                        * this.smallFeatureFilterMod - 0.5;
                 mountainHeight = this.lerp(
                         smallHillHeight,
-                        mountainHeight * mountainHeightMod,
+                        mountainHeight * this.mountainHeightMod,
                         this.fade(this.clamp(mountainHeight * 2, 0, 1)));
                 valleyHeight = this.lerp(
                         smallHillHeight,
-                        valleyHeight * valleyHeightMod - valleyHeightMod + 9,
+                        valleyHeight * this.valleyHeightMod - this.valleyHeightMod + 9,
                         this.fade(this.clamp((valleyHeight + 2) * 4, 0, 1)));
 
                 double yDev = this.lerp(valleyHeight, mountainHeight, this.fade(largeFilter));
@@ -172,12 +172,12 @@ public class TerrainGenerator {
 
                 for (int y = 0; y <= this.maxHeight; y++) {
                     final int index = CoordHelper.getIndex(x, y, z);
-                    if (y < seaLevel + yDev) {
-                        idArray[index] = stoneBlock.getBlock();
-                        metaArray[index] = stoneBlock.getMetadata();
+                    if (y < this.seaLevel + yDev) {
+                        idArray[index] = this.stoneBlock.getBlock();
+                        metaArray[index] = this.stoneBlock.getMetadata();
                     } else {
-                        idArray[index] = airBlock.getBlock();
-                        metaArray[index] = airBlock.getMetadata();
+                        idArray[index] = this.airBlock.getBlock();
+                        metaArray[index] = this.airBlock.getMetadata();
                     }
                 }
             }

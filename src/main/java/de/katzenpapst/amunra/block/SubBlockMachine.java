@@ -26,7 +26,7 @@ public class SubBlockMachine extends SubBlock implements ItemBlockDesc.IBlockShi
 
     @Override
     public String getShiftDescription(final int meta) {
-        return GCCoreUtil.translate("tile." + blockNameFU + ".description");
+        return GCCoreUtil.translate("tile." + this.blockNameFU + ".description");
     }
 
     @Override

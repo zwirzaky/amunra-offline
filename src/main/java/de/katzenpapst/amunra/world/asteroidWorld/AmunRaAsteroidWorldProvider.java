@@ -56,7 +56,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
 
     @Override
     public float getFallDamageModifier() {
-        return getRelativeGravity();
+        return this.getRelativeGravity();
     }
 
     @Override
@@ -66,7 +66,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
 
     @Override
     public double getFuelUsageMultiplier() {
-        return getRelativeGravity();
+        return this.getRelativeGravity();
     }
 
     @Override
@@ -85,7 +85,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
     @SideOnly(Side.CLIENT)
     @Override
     public float getSunBrightness(final float partialTicks) {
-        final float factor = worldObj.getSunBrightnessBody(partialTicks) + getAmunBrightnessFactor(partialTicks);
+        final float factor = this.worldObj.getSunBrightnessBody(partialTicks) + this.getAmunBrightnessFactor(partialTicks);
         return factor > 1.0f ? 1.0f : factor;
     }
 
@@ -167,11 +167,11 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
     abstract public String getSaveDataID();
 
     protected void loadAsteroidSavedData() {
-        this.datafile = (AsteroidSaveData) this.worldObj.loadItemData(AsteroidSaveData.class, getSaveDataID());
+        this.datafile = (AsteroidSaveData) this.worldObj.loadItemData(AsteroidSaveData.class, this.getSaveDataID());
 
         if (this.datafile == null) {
-            this.datafile = new AsteroidSaveData(getSaveDataID());
-            this.worldObj.setItemData(getSaveDataID(), this.datafile);
+            this.datafile = new AsteroidSaveData(this.getSaveDataID());
+            this.worldObj.setItemData(this.getSaveDataID(), this.datafile);
             this.writeToNBT(this.datafile.datacompound);
         } else {
             this.readFromNBT(this.datafile.datacompound);
@@ -181,8 +181,8 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
     }
 
     protected void ensureDataLoaded() {
-        if (dataNotLoaded) {
-            loadAsteroidSavedData();
+        if (this.dataNotLoaded) {
+            this.loadAsteroidSavedData();
         }
     }
 
@@ -221,7 +221,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
 
     @Override
     public BlockVec3 getClosestAsteroidXZ(final int x, final int y, final int z) {
-        ensureDataLoaded();
+        this.ensureDataLoaded();
 
         if (this.asteroids.size() == 0) {
             return null;
@@ -338,8 +338,8 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
     @Override
     public double getSolarEnergyMultiplier() {
         if (this.solarMultiplier < 0D) {
-            solarMultiplier = AstronomyHelper
-                    .getSolarEnergyMultiplier(getCelestialBody(), !getCelestialBody().atmosphere.isEmpty());
+            this.solarMultiplier = AstronomyHelper
+                    .getSolarEnergyMultiplier(this.getCelestialBody(), !this.getCelestialBody().atmosphere.isEmpty());
         }
         return this.solarMultiplier;
     }

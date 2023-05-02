@@ -27,7 +27,7 @@ public class ContainerHydroponics extends ContainerWithPlayerInventory {
         secondarySlot.setMetadataSensitive();
         this.addSlotToContainer(secondarySlot);
 
-        initPlayerInventorySlots(player, 5);
+        this.initPlayerInventorySlots(player, 5);
     }
 
     @Override

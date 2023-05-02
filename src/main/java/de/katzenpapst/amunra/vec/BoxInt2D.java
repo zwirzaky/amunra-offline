@@ -12,7 +12,7 @@ public class BoxInt2D {
     }
 
     public BoxInt2D(final int minX, final int minY, final int maxX, final int maxY) {
-        setValues(minX, minY, maxX, maxY);
+        this.setValues(minX, minY, maxX, maxY);
     }
 
     public void setPositionSize(final int x, final int y, final int width, final int height) {
@@ -50,7 +50,7 @@ public class BoxInt2D {
     }
 
     public boolean isWithin(final int x, final int y) {
-        return x >= minX && x <= maxX && y >= minY && y <= maxY;
+        return x >= this.minX && x <= this.maxX && y >= this.minY && y <= this.maxY;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class BoxInt2D {
 
     @Override
     public int hashCode() {
-        return minX << 24 ^ minY << 16 ^ maxX << 8 ^ maxY;
+        return this.minX << 24 ^ this.minY << 16 ^ this.maxX << 8 ^ this.maxY;
     }
 
 }

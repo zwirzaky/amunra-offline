@@ -28,15 +28,15 @@ public class TabMothershipUsage extends AbstractPermissionTab {
     @Override
     public void resetData() {
         final Mothership.PermissionMode pm = this.tile.getMothership().getUsagePermissionMode();
-        modeDropdown.selectedOption = pm.ordinal();
-        playerIdList.clear();
+        this.modeDropdown.selectedOption = pm.ordinal();
+        this.playerIdList.clear();
 
         final Mothership m = this.tile.getMothership();
 
-        playerIdList.addAll(m.getPlayerListUsage());
-        selectBox.clear();
-        for (final PlayerID pid : playerIdList) {
-            selectBox.addString(pid.getName());
+        this.playerIdList.addAll(m.getPlayerListUsage());
+        this.selectBox.clear();
+        for (final PlayerID pid : this.playerIdList) {
+            this.selectBox.addString(pid.getName());
         }
     }
 
@@ -52,9 +52,9 @@ public class TabMothershipUsage extends AbstractPermissionTab {
 
     @Override
     public void onSelectionChanged(final GuiElementDropdown dropdown, final int selection) {
-        if (dropdown == modeDropdown) {
+        if (dropdown == this.modeDropdown) {
             final PermissionMode mode = PermissionMode.values()[selection];
-            tile.getMothership().setUsagePermissionMode(mode);
+            this.tile.getMothership().setUsagePermissionMode(mode);
             this.applyData();
         }
     }
@@ -70,14 +70,14 @@ public class TabMothershipUsage extends AbstractPermissionTab {
                 new PacketSimpleAR(
                         EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER,
                         this.tile.getMothership().getID(),
-                        textBoxUsername.text,
+                        this.textBoxUsername.text,
                         1));
     }
 
     @Override
     protected void removeUsernameFromList(final int position) {
-        playerIdList.remove(position);
-        tile.getMothership().setPlayerListUsage(playerIdList);
+        this.playerIdList.remove(position);
+        this.tile.getMothership().setPlayerListUsage(this.playerIdList);
     }
 
     @Override

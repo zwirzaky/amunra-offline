@@ -39,25 +39,25 @@ public class Vector3int {
     public NBTTagCompound toNBT() {
         final NBTTagCompound nbt = new NBTTagCompound();
 
-        nbt.setInteger("x", x);
-        nbt.setInteger("y", y);
-        nbt.setInteger("z", z);
+        nbt.setInteger("x", this.x);
+        nbt.setInteger("y", this.y);
+        nbt.setInteger("z", this.z);
 
         return nbt;
     }
 
     public BlockVec3 toBlockVec3() {
-        return new BlockVec3(x, y, z);
+        return new BlockVec3(this.x, this.y, this.z);
     }
 
     public Vector3 toVector3() {
-        return new Vector3(x, y, z);
+        return new Vector3(this.x, this.y, this.z);
     }
 
     @Override
     public int hashCode() {
         // now, what do I do for 3 values?
-        return x << 20 ^ y << 10 ^ z;
+        return this.x << 20 ^ this.y << 10 ^ this.z;
     }
 
     @Override
@@ -65,12 +65,12 @@ public class Vector3int {
         if (!(other instanceof Vector3int)) {
             return false;
         }
-        return x == ((Vector3int) other).x && y == ((Vector3int) other).y && z == ((Vector3int) other).z;
+        return this.x == ((Vector3int) other).x && this.y == ((Vector3int) other).y && this.z == ((Vector3int) other).z;
     }
 
     @Override
     public String toString() {
-        return "[" + x + "/" + y + "/" + z + "]";
+        return "[" + this.x + "/" + this.y + "/" + this.z + "]";
     }
 
 }

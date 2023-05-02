@@ -49,11 +49,11 @@ public class CrystalFormation extends WorldGenerator {
         if (y < 0 || y > 255) {
             return false;
         }
-        if (airBlock == null) {
+        if (this.airBlock == null) {
             return world.isAirBlock(x, y, z);
         }
 
-        return WorldHelper.isBlockMetaPair(world, x, y, z, airBlock);
+        return WorldHelper.isBlockMetaPair(world, x, y, z, this.airBlock);
     }
 
     protected boolean isSolidBlock(final World world, final int x, final int y, final int z, final boolean down) {
@@ -65,7 +65,7 @@ public class CrystalFormation extends WorldGenerator {
 
     protected int getLowestBlock(final World world, final int x, final int y, final int z) {
         for (int curY = y; curY >= 0; curY--) {
-            if (!canPlaceHere(world, x, curY, z)) {
+            if (!this.canPlaceHere(world, x, curY, z)) {
                 return curY;
             }
         }
@@ -74,7 +74,7 @@ public class CrystalFormation extends WorldGenerator {
 
     protected int getHighestBlock(final World world, final int x, final int y, final int z) {
         for (int curY = y; curY <= 255; curY++) {
-            if (!canPlaceHere(world, x, curY, z)) {
+            if (!this.canPlaceHere(world, x, curY, z)) {
                 return curY;
             }
         }
@@ -89,21 +89,21 @@ public class CrystalFormation extends WorldGenerator {
             return false;
         }
         // find lowest and highest block from here
-        final int lowestY = getLowestBlock(world, x, y, z);
-        final int highestY = getHighestBlock(world, x, y, z);
+        final int lowestY = this.getLowestBlock(world, x, y, z);
+        final int highestY = this.getHighestBlock(world, x, y, z);
         int actualY = 0;
 
-        if (lowestY < 0 && highestY >= 0 && allowDownward) {
+        if (lowestY < 0 && highestY >= 0 && this.allowDownward) {
             downwards = true;
-        } else if (lowestY >= 0 && highestY < 0 && allowUpward) {
+        } else if (lowestY >= 0 && highestY < 0 && this.allowUpward) {
             downwards = false;
         } else if (lowestY >= 0 && highestY >= 0) {
             // both seem to be set
-            if (allowDownward && allowUpward) {
+            if (this.allowDownward && this.allowUpward) {
                 downwards = rand.nextBoolean();
-            } else if (allowDownward) {
+            } else if (this.allowDownward) {
                 downwards = true;
-            } else if (allowUpward) {
+            } else if (this.allowUpward) {
                 downwards = false;
             } else {
                 return false;
@@ -118,11 +118,11 @@ public class CrystalFormation extends WorldGenerator {
             actualY = lowestY + 1; // start one above the highest
         }
 
-        if (!canPlaceHere(world, x, actualY, z)) {
+        if (!this.canPlaceHere(world, x, actualY, z)) {
             return false;
         }
 
-        world.setBlock(x, actualY, z, material.getBlock(), material.getMetadata(), 2);
+        world.setBlock(x, actualY, z, this.material.getBlock(), this.material.getMetadata(), 2);
 
         for (int l = 0; l < 1500; ++l) {
             final int curX = x + rand.nextInt(8) - rand.nextInt(8);

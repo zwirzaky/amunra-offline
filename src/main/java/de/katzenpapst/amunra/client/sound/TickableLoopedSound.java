@@ -21,8 +21,8 @@ public class TickableLoopedSound extends MovingSound {
 
     @Override
     public void update() {
-        if (tile == null || tile.isInvalid()
-                || tile instanceof ISoundableTile && ((ISoundableTile) tile).isDonePlaying()) {
+        if (this.tile == null || this.tile.isInvalid()
+                || this.tile instanceof ISoundableTile && ((ISoundableTile) this.tile).isDonePlaying()) {
             this.donePlaying = true;
         }
     }

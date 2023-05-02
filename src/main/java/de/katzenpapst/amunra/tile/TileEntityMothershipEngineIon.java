@@ -37,8 +37,8 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
         this.fuel = AsteroidsModule.fluidLiquidNitrogen;
         // AsteroidsItems.canisterLN2
 
-        fuelType = new MothershipFuelDisplayFluid(this.fuel);
-        fuelTypeEnergy = MothershipFuelDisplayEnergy.getInstance();
+        this.fuelType = new MothershipFuelDisplayFluid(this.fuel);
+        this.fuelTypeEnergy = MothershipFuelDisplayEnergy.getInstance();
 
         // AsteroidsModule
     }
@@ -53,8 +53,8 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     @Override
     protected void spawnParticles() {
 
-        final Vector3 particleStart = getExhaustPosition(1.8);
-        final Vector3 particleDirection = getExhaustDirection().scale(5);
+        final Vector3 particleStart = this.getExhaustPosition(1.8);
+        final Vector3 particleDirection = this.getExhaustDirection().scale(5);
 
         AmunRa.proxy
                 .spawnParticles(ParticleType.PT_MOTHERSHIP_ION_FLAME, this.worldObj, particleStart, particleDirection);
@@ -79,8 +79,8 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
 
         final MothershipFuelRequirements reqs = this.getFuelRequirements(duration);
 
-        final int energyReq = reqs.get(fuelTypeEnergy);
-        final int fuelReq = reqs.get(fuelType);
+        final int energyReq = reqs.get(this.fuelTypeEnergy);
+        final int fuelReq = reqs.get(this.fuelType);
 
         this.storage.extractEnergyGCnoMax(energyReq, false);
         this.fuelTank.drain(fuelReq, true);
@@ -100,7 +100,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
         switch (slotID) {
             case 0:
                 final FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
-                if (containedFluid != null && containedFluid.getFluid() == fuel) {
+                if (containedFluid != null && containedFluid.getFluid() == this.fuel) {
                     return true;
                 }
                 break;
@@ -146,9 +146,9 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
 
         // ARItems
         // GCItems
-        if (fuel != fluid) {
+        if (this.fuel != fluid) {
             // other stuff?
-            if (!FluidRegistry.getFluidName(fluid).equals(fuel.getName())) {
+            if (!FluidRegistry.getFluidName(fluid).equals(this.fuel.getName())) {
                 return false;
             }
         }
@@ -159,7 +159,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     @Override
     protected boolean isItemFuel(final ItemStack itemstack) {
         final FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
-        if (containedFluid != null && containedFluid.getFluid() == fuel) {
+        if (containedFluid != null && containedFluid.getFluid() == this.fuel) {
             return true;
         }
         return false;
@@ -173,7 +173,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     @Override
     public ForgeDirection getElectricInputDirection() {
 
-        final int metadata = getRotationMeta(this.getBlockMetadata());
+        final int metadata = this.getRotationMeta(this.getBlockMetadata());
 
         return CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, metadata);
 
@@ -226,7 +226,7 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     protected void createMultiblockInternal(final boolean notifyClient) {
         super.createMultiblockInternal(notifyClient);
 
-        this.storage.setCapacity(getEnergyCapacity());
+        this.storage.setCapacity(this.getEnergyCapacity());
 
     }
 
@@ -238,21 +238,21 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
 
         final MothershipFuelRequirements result = new MothershipFuelRequirements();
 
-        result.add(fuelType, totalFuelNeed);
+        result.add(this.fuelType, totalFuelNeed);
 
-        result.add(fuelTypeEnergy, (int) totalEnergyNeed);
+        result.add(this.fuelTypeEnergy, (int) totalEnergyNeed);
 
         return result;
     }
 
     @Override
     public boolean canRunForDuration(final long duration) {
-        final MothershipFuelRequirements reqs = getFuelRequirements(duration);
+        final MothershipFuelRequirements reqs = this.getFuelRequirements(duration);
 
-        final int fuelNeeded = reqs.get(fuelType);
-        final int powerNeeded = reqs.get(fuelTypeEnergy);
+        final int fuelNeeded = reqs.get(this.fuelType);
+        final int powerNeeded = reqs.get(this.fuelTypeEnergy);
 
-        return this.storage.getEnergyStoredGC() >= powerNeeded && fuelTank.getFluidAmount() > fuelNeeded;
+        return this.storage.getEnergyStoredGC() >= powerNeeded && this.fuelTank.getFluidAmount() > fuelNeeded;
     }
 
 }

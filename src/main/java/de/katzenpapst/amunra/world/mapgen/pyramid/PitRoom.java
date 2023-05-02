@@ -14,7 +14,7 @@ public class PitRoom extends PyramidRoom {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
-        final int size = (pitSize - 1) / 2;
+        final int size = (this.pitSize - 1) / 2;
 
         final BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
 

@@ -14,17 +14,17 @@ public class MothershipWorldProviderSaveFile extends WorldSavedData {
     public MothershipWorldProviderSaveFile(final String p_i2141_1_) {
         super(p_i2141_1_);
 
-        data = new NBTTagCompound();
+        this.data = new NBTTagCompound();
     }
 
     @Override
     public void readFromNBT(final NBTTagCompound nbt) {
-        data = nbt.getCompoundTag("data");
+        this.data = nbt.getCompoundTag("data");
     }
 
     @Override
     public void writeToNBT(final NBTTagCompound nbt) {
-        nbt.setTag("data", data);
+        nbt.setTag("data", this.data);
     }
 
     public static MothershipWorldProviderSaveFile getSaveFile(final World world) {

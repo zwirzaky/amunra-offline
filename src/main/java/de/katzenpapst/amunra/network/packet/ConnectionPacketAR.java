@@ -99,14 +99,14 @@ public class ConnectionPacketAR {
     public void onPacketData(final FMLNetworkEvent.ClientCustomPacketEvent event) {
         final FMLProxyPacket pkt = event.packet;
 
-        onFMLProxyPacketData(event.manager, pkt, Minecraft.getMinecraft().thePlayer);
+        this.onFMLProxyPacketData(event.manager, pkt, Minecraft.getMinecraft().thePlayer);
     }
 
     @SubscribeEvent
     public void onPacketData(final FMLNetworkEvent.ServerCustomPacketEvent event) {
         final FMLProxyPacket pkt = event.packet;
 
-        onFMLProxyPacketData(event.manager, pkt, ((NetHandlerPlayServer) event.handler).playerEntity);
+        this.onFMLProxyPacketData(event.manager, pkt, ((NetHandlerPlayServer) event.handler).playerEntity);
     }
 
     public void onFMLProxyPacketData(final NetworkManager manager, final FMLProxyPacket packet, final EntityPlayer player) {

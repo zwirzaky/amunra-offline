@@ -26,11 +26,11 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
         this.isImmuneToFire = true;
         this.experienceValue = 3;
 
-        commonLoot = new ItemDamagePair[] { new ItemDamagePair(GCItems.basicItem, 8), // compressed alu
+        this.commonLoot = new ItemDamagePair[] { new ItemDamagePair(GCItems.basicItem, 8), // compressed alu
                 new ItemDamagePair(GCItems.basicItem, 13) // basic wafer
         };
 
-        rareLoot = new ItemDamagePair[] { ARItems.laserDiode, new ItemDamagePair(GCItems.basicItem, 19)// freqModule
+        this.rareLoot = new ItemDamagePair[] { ARItems.laserDiode, new ItemDamagePair(GCItems.basicItem, 19)// freqModule
         };
     }
 
@@ -46,7 +46,7 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
          */
 
         final EntityLaserArrow attack = new EntityLaserArrow(
-                worldObj,
+                this.worldObj,
                 (EntityLivingBase) this,
                 new Vector3(this),
                 (EntityLivingBase) target);// new EntityLaserArrow(this.worldObj, (EntityLivingBase)this,
@@ -76,7 +76,7 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
     @Override
     protected void dropFewItems(final boolean hitByPlayer, final int lootLevel) {
 
-        for (ItemDamagePair element : commonLoot) {
+        for (ItemDamagePair element : this.commonLoot) {
             final int numItems = this.rand.nextInt(2) + this.rand.nextInt(1 + lootLevel);
 
             this.entityDropItem(element.getItemStack(numItems), 0.0F);
@@ -84,7 +84,7 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
 
         if (hitByPlayer && lootLevel >= 2) {
             final double probability = ((double) lootLevel - 1.0) * 0.05;
-            for (ItemDamagePair element : rareLoot) {
+            for (ItemDamagePair element : this.rareLoot) {
                 if (this.rand.nextDouble() < probability) {
                     this.entityDropItem(element.getItemStack(1), 0.0F);
                     return; // drop only one of these

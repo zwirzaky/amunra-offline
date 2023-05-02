@@ -41,7 +41,7 @@ public class ModelRobotVillager extends ModelVillager {
         this.villagerBody.setTextureOffset(16, 20).addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, scaleOrSo + 0.003F);
         this.villagerBody.setTextureOffset(0, 38).addBox(-4.0F, 0.0F, -3.0F, 8, 18, 6, scaleOrSo + 0.5F + 0.004F);
 
-        this.villagerBody.addChild(villagerNose);
+        this.villagerBody.addChild(this.villagerNose);
 
         /*
          * this.villagerArms = new ModelRenderer(this).setTextureSize(textureX, textureY);
@@ -58,8 +58,8 @@ public class ModelRobotVillager extends ModelVillager {
         this.leftVillagerLeg.setRotationPoint(2.0F, 12.0F + par2, 0.0F);
         this.leftVillagerLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, scaleOrSo + 0.0002F);
 
-        rightArm = generateArm(scaleOrSo, par2, textureX, textureY, false);
-        leftArm = generateArm(scaleOrSo, par2, textureX, textureY, true);
+        this.rightArm = this.generateArm(scaleOrSo, par2, textureX, textureY, false);
+        this.leftArm = this.generateArm(scaleOrSo, par2, textureX, textureY, true);
 
     }
 
@@ -144,8 +144,8 @@ public class ModelRobotVillager extends ModelVillager {
         this.leftVillagerLeg.render(p_78088_7_);
         // this.villagerArms.render(p_78088_7_);
 
-        rightArm.render(p_78088_7_);
-        leftArm.render(p_78088_7_);
+        this.rightArm.render(p_78088_7_);
+        this.leftArm.render(p_78088_7_);
 
     }
 

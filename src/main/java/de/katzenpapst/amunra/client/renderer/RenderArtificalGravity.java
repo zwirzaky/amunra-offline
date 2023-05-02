@@ -115,28 +115,28 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
         GL11.glEnd();
 
         // right
-        setColorForRotation(Side.RIGHT, rotationMeta);
+        this.setColorForRotation(Side.RIGHT, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(box.maxX, 0.5, 0.5);
         GL11.glEnd();
 
         // left
-        setColorForRotation(Side.LEFT, rotationMeta);
+        this.setColorForRotation(Side.LEFT, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(box.minX, 0.5, 0.5);
         GL11.glEnd();
 
         // front
-        setColorForRotation(Side.FRONT, rotationMeta);
+        this.setColorForRotation(Side.FRONT, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(0.5, 0.5, box.minZ);
         GL11.glEnd();
 
         // back
-        setColorForRotation(Side.BACK, rotationMeta);
+        this.setColorForRotation(Side.BACK, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(0.5, 0.5, box.maxZ);

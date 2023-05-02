@@ -56,7 +56,7 @@ public class RenderMothershipJet extends TileEntitySpecialRenderer {
 
         // if(chamber.isInUse()) {
         // this.bindTexture(textureActive);
-        this.bindTexture(texture);
+        this.bindTexture(this.texture);
         /*
          * } else { }
          */

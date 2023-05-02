@@ -27,18 +27,18 @@ public class PlayerID {
     }
 
     public UUID getUUID() {
-        return userUUID;
+        return this.userUUID;
     }
 
     public String getName() {
-        return userName;
+        return this.userName;
     }
 
     public NBTTagCompound getNbt() {
         final NBTTagCompound nbt = new NBTTagCompound();
 
-        nbt.setString("uuid", userUUID.toString());
-        nbt.setString("name", userName);
+        nbt.setString("uuid", this.userUUID.toString());
+        nbt.setString("name", this.userName);
 
         return nbt;
     }
@@ -48,12 +48,12 @@ public class PlayerID {
         if (!(other instanceof PlayerID)) {
             return false;
         }
-        return ((PlayerID) other).userUUID.equals(userUUID);
+        return ((PlayerID) other).userUUID.equals(this.userUUID);
     }
 
     @Override
     public int hashCode() {
-        return userUUID.hashCode();
+        return this.userUUID.hashCode();
     }
 
     public boolean isSameUser(final EntityPlayer player) {

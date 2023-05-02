@@ -25,13 +25,13 @@ public class BlockMetaPairHashable extends BlockMetaPair {
         if (!(other instanceof BlockMetaPair otherReal)) {
             return false;
         }
-        return otherReal.getBlock() == getBlock() && otherReal.getMetadata() == getMetadata();
+        return otherReal.getBlock() == this.getBlock() && otherReal.getMetadata() == this.getMetadata();
     }
 
     @Override
     public int hashCode() {
         // the block's hash code, and the meta in the first 4 bits
-        return this.getBlock().hashCode() ^ getMetadata() << 28;
+        return this.getBlock().hashCode() ^ this.getMetadata() << 28;
     }
 
 }

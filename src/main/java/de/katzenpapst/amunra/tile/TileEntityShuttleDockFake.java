@@ -21,7 +21,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
     @Override
     public EnumCargoLoadingState addCargo(final ItemStack stack, final boolean doAdd) {
 
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof ICargoEntity) {
             return ((ICargoEntity) main).addCargo(stack, doAdd);
         }
@@ -30,7 +30,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
 
     @Override
     public RemovalResult removeCargo(final boolean doRemove) {
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof ICargoEntity) {
             return ((ICargoEntity) main).removeCargo(doRemove);
         }
@@ -39,7 +39,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
 
     @Override
     public HashSet<ILandingPadAttachable> getConnectedTiles() {
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof IFuelDock) {
             return ((IFuelDock) main).getConnectedTiles();
         }
@@ -49,7 +49,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
 
     @Override
     public boolean isBlockAttachable(final IBlockAccess world, final int x, final int y, final int z) {
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof IFuelDock) {
             return ((IFuelDock) main).isBlockAttachable(world, x, y, z);
         }
@@ -58,7 +58,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
 
     @Override
     public IDockable getDockedEntity() {
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof IFuelDock) {
             return ((IFuelDock) main).getDockedEntity();
         }
@@ -67,7 +67,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
 
     @Override
     public void dockEntity(final IDockable entity) {
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof IFuelDock) {
             ((IFuelDock) main).dockEntity(entity);
         }
@@ -75,7 +75,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
 
     @Override
     public int addFuel(final FluidStack fluid, final boolean doDrain) {
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof IFuelable) {
             return ((IFuelable) main).addFuel(fluid, doDrain);
         }
@@ -84,7 +84,7 @@ public class TileEntityShuttleDockFake extends TileEntityMulti implements IFuela
 
     @Override
     public FluidStack removeFuel(final int amount) {
-        final TileEntity main = getMainBlockTile();
+        final TileEntity main = this.getMainBlockTile();
         if (main instanceof IFuelable) {
             return ((IFuelable) main).removeFuel(amount);
         }

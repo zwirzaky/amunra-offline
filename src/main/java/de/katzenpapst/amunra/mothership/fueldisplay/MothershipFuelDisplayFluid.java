@@ -13,18 +13,18 @@ public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
 
     @Override
     public IIcon getIcon() {
-        return fluid.getIcon();
+        return this.fluid.getIcon();
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public String getDisplayName() {
-        return fluid.getLocalizedName();
+        return this.fluid.getLocalizedName();
     }
 
     @Override
     public int getSpriteNumber() {
-        return fluid.getSpriteNumber();
+        return this.fluid.getSpriteNumber();
     }
 
     @Override
@@ -42,12 +42,12 @@ public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
         if (!(other instanceof MothershipFuelDisplayFluid)) {
             return false;
         }
-        return fluid == ((MothershipFuelDisplayFluid) other).fluid;
+        return this.fluid == ((MothershipFuelDisplayFluid) other).fluid;
     }
 
     @Override
     public int hashCode() {
-        return fluid.hashCode() + 89465;
+        return this.fluid.hashCode() + 89465;
     }
 
 }

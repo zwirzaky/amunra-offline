@@ -246,7 +246,7 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      */
     public void checkForAdjacentChests() {
         // Block b = this.getBlockType();
-        if (!canDoublechest()) {
+        if (!this.canDoublechest()) {
             return;
         }
         if (!this.adjacentChestChecked) {
@@ -299,12 +299,12 @@ public class TileEntityARChest extends TileEntity implements IInventory {
     }
 
     private boolean isSameChestType(final int x, final int y, final int z) {
-        if (chestType == null) {
-            chestType = new BlockMetaPair(this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord), (byte) 0);
+        if (this.chestType == null) {
+            this.chestType = new BlockMetaPair(this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord), (byte) 0);
         }
         final Block block = this.worldObj.getBlock(x, y, z);
 
-        return block != null && block == chestType.getBlock();
+        return block != null && block == this.chestType.getBlock();
     }
 
     /**

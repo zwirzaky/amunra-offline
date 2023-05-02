@@ -38,9 +38,9 @@ public class MaahesBiomeDecorator extends AmunraBiomeDecorator {
         for (int j = 0; j < this.grassPerChunk; ++j) {
             final int k = this.chunkX + this.mWorld.rand.nextInt(16) + 8;
             final int l = this.chunkZ + this.mWorld.rand.nextInt(16) + 8;
-            final int i1 = mWorld.rand.nextInt(this.mWorld.getHeightValue(k, l) * 2);
+            final int i1 = this.mWorld.rand.nextInt(this.mWorld.getHeightValue(k, l) * 2);
 
-            grassGen.generate(this.mWorld, this.mWorld.rand, k, i1, l);
+            this.grassGen.generate(this.mWorld, this.mWorld.rand, k, i1, l);
         }
         // doGen = TerrainGen.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z, TREE);
         final int numTrees = Math.round(this.mWorld.rand.nextInt(75) / 100.0F);
@@ -49,7 +49,7 @@ public class MaahesBiomeDecorator extends AmunraBiomeDecorator {
             final int l = this.chunkZ + this.mWorld.rand.nextInt(16) + 8;
             final int i1 = this.mWorld.getHeightValue(k, l);
 
-            treeGen.generate(this.mWorld, this.mWorld.rand, k, i1, l);
+            this.treeGen.generate(this.mWorld, this.mWorld.rand, k, i1, l);
         }
 
         final int numPods = Math.round(this.mWorld.rand.nextInt(65) / 100.0F);
@@ -58,7 +58,7 @@ public class MaahesBiomeDecorator extends AmunraBiomeDecorator {
             final int l = this.chunkZ + this.mWorld.rand.nextInt(16) + 8;
             final int i1 = this.mWorld.getHeightValue(k, l);
 
-            podGen.generate(this.mWorld, this.mWorld.rand, k, i1, l);
+            this.podGen.generate(this.mWorld, this.mWorld.rand, k, i1, l);
         }
     }
 

@@ -21,7 +21,7 @@ public class SubBlockMassive extends SubBlock implements IMassiveBlock {
 
     @Override
     public float getMass(final World w, final int x, final int y, final int z, final int meta) {
-        return mass;
+        return this.mass;
     }
 
     public SubBlockMassive setMass(final float mass) {

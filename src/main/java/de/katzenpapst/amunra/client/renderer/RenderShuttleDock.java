@@ -15,7 +15,7 @@ public class RenderShuttleDock extends TileEntitySpecialRenderer {
     private final ModelShuttleDock model;
 
     public RenderShuttleDock() {
-        model = new ModelShuttleDock();
+        this.model = new ModelShuttleDock();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class RenderShuttleDock extends TileEntitySpecialRenderer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        model.render(tessellator, dock.hasShuttle());
+        this.model.render(tessellator, dock.hasShuttle());
 
         /*
          * Block block = dock.getWorldObj().getBlock(dock.xCoord, dock.yCoord, dock.zCoord);

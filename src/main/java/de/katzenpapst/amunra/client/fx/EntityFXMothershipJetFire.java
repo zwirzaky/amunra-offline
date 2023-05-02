@@ -14,7 +14,7 @@ public class EntityFXMothershipJetFire extends EntityFX {
     public EntityFXMothershipJetFire(final World world, final Vector3 pos, final Vector3 motion) {
         super(world, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z);
 
-        particleScale = 2.0F;
+        this.particleScale = 2.0F;
         // setRBGColorF(0x88, 0x00, 0x88);
 
         // this is needed because the vanilla code adds a y component
@@ -33,7 +33,7 @@ public class EntityFXMothershipJetFire extends EntityFX {
         this.particleGreen = 120F / 255F + this.rand.nextFloat() / 3;
         this.particleBlue = 55F / 255F;
 
-        this.particleMaxAge = (int) (Math.ceil(particleMaxAge) * 2.0F);
+        this.particleMaxAge = (int) (Math.ceil(this.particleMaxAge) * 2.0F);
 
         this.noClip = true; // for now
     }

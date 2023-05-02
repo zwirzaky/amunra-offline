@@ -31,7 +31,7 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     @Override
     public String getItemIconName() {
-        return iconTexture;
+        return this.iconTexture;
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     @Override
     public int damageDropped(final int meta) {
-        return getItem().getDamage();
+        return this.getItem().getDamage();
     }
 
     @Override
@@ -127,7 +127,7 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     @Override
     public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z, final boolean willHarvest) {
-        return removedByPlayer(world, player, x, y, z);
+        return this.removedByPlayer(world, player, x, y, z);
     }
 
     @Override

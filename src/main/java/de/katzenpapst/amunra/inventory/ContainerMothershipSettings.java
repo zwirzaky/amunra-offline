@@ -10,7 +10,7 @@ public class ContainerMothershipSettings extends ContainerWithPlayerInventory {
     public ContainerMothershipSettings(final InventoryPlayer par1InventoryPlayer, final TileEntityMothershipSettings tile) {
         super(tile);
 
-        initPlayerInventorySlots(par1InventoryPlayer);
+        this.initPlayerInventorySlots(par1InventoryPlayer);
     }
 
     @Override

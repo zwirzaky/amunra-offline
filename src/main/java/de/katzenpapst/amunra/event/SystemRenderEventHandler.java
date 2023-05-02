@@ -29,7 +29,7 @@ public class SystemRenderEventHandler {
         // sky: D:\Code\Galacticraft\src\main\java\micdoodle8\mods\galacticraft\planets\mars\client\SkyProviderMars.java
         if (renderEvent.celestialBody.equals(AmunRa.instance.asteroidBeltMehen)
                 || renderEvent.celestialBody.equals(AmunRa.instance.moonBaalRings)) {
-            drawAsteroidRings(renderEvent, renderEvent.celestialBody);
+            this.drawAsteroidRings(renderEvent, renderEvent.celestialBody);
         }
     }
 

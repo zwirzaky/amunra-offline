@@ -29,9 +29,9 @@ public class CraftingBlock extends SubBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        blockIcon = par1IconRegister.registerIcon(getTextureName());
-        blockIconSide = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine_side");
-        blockIconBottom = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine");
+        this.blockIcon = par1IconRegister.registerIcon(this.getTextureName());
+        this.blockIconSide = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine_side");
+        this.blockIconBottom = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine");
 
     }
 
@@ -39,9 +39,9 @@ public class CraftingBlock extends SubBlock {
     @Override
     public IIcon getIcon(final int side, final int meta) {
         return switch (side) {
-            case 0 -> blockIconBottom;
-            case 1 -> blockIcon;
-            default -> blockIconSide;
+            case 0 -> this.blockIconBottom;
+            case 1 -> this.blockIcon;
+            default -> this.blockIconSide;
         };
     }
 

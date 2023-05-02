@@ -21,7 +21,7 @@ public class ARTreeSapling extends AbstractSapling {
 
     @Override
     public boolean canPlaceOn(final BlockMetaPair blockToCheck, final int meta) {
-        return canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
+        return this.canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ARTreeSapling extends AbstractSapling {
         if (y >= 1 && y + curTreeHeight + 1 <= 256) {
             Block block;
 
-            if (!canGenerateHere(world, rand, x, y, z, stemHeight, halfWidth, canopyHeight)) {
+            if (!this.canGenerateHere(world, rand, x, y, z, stemHeight, halfWidth, this.canopyHeight)) {
                 return false;
             }
 
@@ -104,9 +104,9 @@ public class ARTreeSapling extends AbstractSapling {
                             // check the ellipsoid stuff
                             // if(Math.pow((curX-x)/halfWidth,2) + Math.pow((curY1-y-canopyCenter)/halfHeight, 2) +
                             // Math.pow((curZ-z)/halfWidth, 2) <= 1) {
-                            final double eFactor = getEllipsoidFactor(
+                            final double eFactor = this.getEllipsoidFactor(
                                     curX - x,
-                                    curY - y - canopyCenter,
+                                    curY - y - this.canopyCenter,
                                     curZ - z,
                                     halfWidth,
                                     halfHeight);
@@ -121,7 +121,7 @@ public class ARTreeSapling extends AbstractSapling {
                                 final Block block1 = world.getBlock(curX, curY, curZ);
 
                                 if (block1.isAir(world, curX, curY, curZ) || block1.isLeaves(world, curX, curY, curZ)
-                                        || isBlockReplaceable(block1)) {
+                                        || this.isBlockReplaceable(block1)) {
                                     this.setBlockAndNotifyAdequately(
                                             world,
                                             curX,
@@ -147,7 +147,7 @@ public class ARTreeSapling extends AbstractSapling {
                     block = world.getBlock(x, y + curY, z);
 
                     if (block.isAir(world, x, y + curY, z) || block.isLeaves(world, x, y + curY, z)
-                            || isBlockReplaceable(block)) {
+                            || this.isBlockReplaceable(block)) {
                         this.setBlockAndNotifyAdequately(
                                 world,
                                 x,

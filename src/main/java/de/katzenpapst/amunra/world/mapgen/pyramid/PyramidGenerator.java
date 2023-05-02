@@ -43,31 +43,31 @@ public class PyramidGenerator extends StructureGenerator {
     }
 
     public void addComponentType(final Class<? extends PyramidRoom> clazz, final float probability) {
-        addComponentType(clazz, probability, 0, 0);
+        this.addComponentType(clazz, probability, 0, 0);
     }
 
     public void addComponentType(final Class<? extends PyramidRoom> clazz, final float probability, final int minAmount, final int maxAmount) {
-        components.add(new SubComponentData(clazz, probability, minAmount, maxAmount));
+        this.components.add(new SubComponentData(clazz, probability, minAmount, maxAmount));
     }
 
     public void addMainRoomType(final Class<? extends PyramidRoom> clazz, final float probability) {
-        potentialMainRooms.add(new SubComponentData(clazz, probability, 0, 0));
+        this.potentialMainRooms.add(new SubComponentData(clazz, probability, 0, 0));
     }
 
     @Override
     protected BaseStructureStart createNewStructure(final int xChunkCoord, final int zChunkCoord) {
         final Pyramid p = new Pyramid(this.worldObj, xChunkCoord, zChunkCoord, this.rand);
-        p.setFillMaterial(fillMaterial);
-        p.setFloorMaterial(floorMaterial);
-        p.setWallMaterial(wallMaterial);
+        p.setFillMaterial(this.fillMaterial);
+        p.setFloorMaterial(this.floorMaterial);
+        p.setWallMaterial(this.wallMaterial);
 
         final Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
-        final List<BaseStructureComponent> compList = generateSubComponents(components, rand4structure, 12);
+        final List<BaseStructureComponent> compList = this.generateSubComponents(this.components, rand4structure, 12);
 
         p.setSmallRooms(compList);
 
-        p.setMainRoom((PyramidRoom) this.generateOneComponent(potentialMainRooms, rand4structure));
+        p.setMainRoom((PyramidRoom) this.generateOneComponent(this.potentialMainRooms, rand4structure));
         // p.setMainRoom(new PyramidRoom());
 
         return p;
@@ -84,7 +84,7 @@ public class PyramidGenerator extends StructureGenerator {
     }
 
     public BlockMetaPair getWallMaterial() {
-        return wallMaterial;
+        return this.wallMaterial;
     }
 
     public void setWallMaterial(final BlockMetaPair wallMaterial) {
@@ -92,7 +92,7 @@ public class PyramidGenerator extends StructureGenerator {
     }
 
     public BlockMetaPair getFloorMaterial() {
-        return floorMaterial;
+        return this.floorMaterial;
     }
 
     public void setFloorMaterial(final BlockMetaPair floorMaterial) {
@@ -100,7 +100,7 @@ public class PyramidGenerator extends StructureGenerator {
     }
 
     public BlockMetaPair getFillMaterial() {
-        return fillMaterial;
+        return this.fillMaterial;
     }
 
     public void setFillMaterial(final BlockMetaPair fillMaterial) {

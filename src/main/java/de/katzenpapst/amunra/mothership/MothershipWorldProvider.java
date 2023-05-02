@@ -77,7 +77,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         }
 
         public boolean isEmpty() {
-            return thrust <= 0;
+            return this.thrust <= 0;
         }
 
         public void readFromNBT(final NBTTagCompound nbt) {
@@ -99,7 +99,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
         @Override
         public boolean isEmpty() {
-            return duration <= 0 || super.isEmpty();
+            return this.duration <= 0 || super.isEmpty();
         }
     }
 
@@ -147,11 +147,11 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     public MothershipWorldProvider() {}
 
     public float getTotalMass() {
-        return totalMass;
+        return this.totalMass;
     }
 
     public long getNumBlocks() {
-        return totalNumBlocks;
+        return this.totalNumBlocks;
     }
 
     public TransitData getTheoreticalTransitData() {
@@ -182,12 +182,12 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         if (this.mothershipObj.isInTransit()) {
             return 0.0F; // dunno
         }
-        if (AstronomyHelper.isStar(mothershipObj.getParent())) {
+        if (AstronomyHelper.isStar(this.mothershipObj.getParent())) {
             return 1.0F; // always
         }
         // somewhat of a hack
-        if (AstronomyHelper.getSolarSystem(mothershipObj.getParent()).equals(AmunRa.instance.systemAmunRa)) {
-            float factor = worldObj.getSunBrightnessFactor(par1) + getAmunBrightnessFactor(par1);
+        if (AstronomyHelper.getSolarSystem(this.mothershipObj.getParent()).equals(AmunRa.instance.systemAmunRa)) {
+            float factor = this.worldObj.getSunBrightnessFactor(par1) + this.getAmunBrightnessFactor(par1);
 
             if (factor > 1.0F) {
                 factor = 1.0F;
@@ -195,7 +195,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
             return factor;
         }
-        return worldObj.getSunBrightnessBody(par1);
+        return this.worldObj.getSunBrightnessBody(par1);
     }
 
     protected float getAmunBrightnessFactor(final float partialTicks) {
@@ -227,12 +227,12 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     public CelestialBody getCelestialBody() {
-        return mothershipObj;
+        return this.mothershipObj;
     }
 
     @Override
     public long getDayLength() {
-        return dayLength;
+        return this.dayLength;
     }
 
     @Override
@@ -242,7 +242,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     public float calculateCelestialAngle(final long worldTime, final float partialTicks) {
-        if (getDayLength() == 0) {
+        if (this.getDayLength() == 0) {
             return 0.0F;
         }
         return super.calculateCelestialAngle(worldTime, partialTicks);
@@ -255,7 +255,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     public boolean isDaytime() {
-        if (!this.mothershipObj.isInTransit() && mothershipObj.getParent() instanceof Star) {
+        if (!this.mothershipObj.isInTransit() && this.mothershipObj.getParent() instanceof Star) {
             return true;
         }
 
@@ -274,7 +274,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     public void updateWeather() {
         // I purposefully do not call super.updateWeather here, for now
 
-        if (ticksSinceLastUpdate <= MIN_TICKS_BETWEEN_UPDATES) {
+        if (this.ticksSinceLastUpdate <= MIN_TICKS_BETWEEN_UPDATES) {
             // no point in counting them afterwards, I only need to know if it's larger than the constant
             this.ticksSinceLastUpdate++;
         }
@@ -287,24 +287,24 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         this.worldObj.thunderingStrength = 0.0F;
 
         if (!this.worldObj.isRemote) {
-            if (!hasLoadedWorldData) {
+            if (!this.hasLoadedWorldData) {
                 // kinda hack
                 // updateParamsFromParent();
-                this.mothershipSaveFile = MothershipWorldProviderSaveFile.getSaveFile(worldObj);
+                this.mothershipSaveFile = MothershipWorldProviderSaveFile.getSaveFile(this.worldObj);
                 this.readFromNBT(this.mothershipSaveFile.data);
 
-                if (mustSendPacketToClients) {
-                    mustSendPacketToClients = false;
+                if (this.mustSendPacketToClients) {
+                    this.mustSendPacketToClients = false;
                     // so apparently someone wanted to have the data before we read it
                     // now just send it to everyone in the dimension
                     // re-write the nbt for this, in case there hasn't been a save
                     final NBTTagCompound newNbt = new NBTTagCompound();
                     this.writeToNBT(newNbt);
                     AmunRa.packetPipeline.sendToDimension(
-                            new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, dimensionId, newNbt),
-                            dimensionId);
+                            new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, newNbt),
+                            this.dimensionId);
                 }
-                hasLoadedWorldData = true;
+                this.hasLoadedWorldData = true;
             }
         }
 
@@ -328,7 +328,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             if (!this.mothershipObj.startTransit(target, 100)) {
                 return false;
             }
-            applyTransitParams();
+            this.applyTransitParams();
             return true;
         }
         // first, do the check
@@ -349,7 +349,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             return false;
         }
 
-        applyTransitParams();
+        this.applyTransitParams();
         // okay, seems like we can continue
         // we will need all engines
         for (final Vector3int loc : this.engineLocations) {
@@ -391,42 +391,42 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             }
         }
         // other stuff
-        updateParamsFromParent(true);
+        this.updateParamsFromParent(true);
     }
 
     protected void applyTransitParams() {
-        dayLength = 0;
-        thermalLevel = 0;
-        solarLevel = 0;
+        this.dayLength = 0;
+        this.thermalLevel = 0;
+        this.solarLevel = 0;
 
-        saveData(true);
+        this.saveData(true);
     }
 
     protected void updateParamsFromParent(final boolean save) {
-        if (mothershipObj.isInTransit()) {
+        if (this.mothershipObj.isInTransit()) {
             return;
         }
-        final CelestialBody parent = mothershipObj.getParent();
+        final CelestialBody parent = this.mothershipObj.getParent();
         if (AstronomyHelper.isStar(parent)) {
-            dayLength = 0;
-            thermalLevel = AstronomyHelper.maxTemperature;
-            solarLevel = AstronomyHelper.maxSolarLevel;
+            this.dayLength = 0;
+            this.thermalLevel = AstronomyHelper.maxTemperature;
+            this.solarLevel = AstronomyHelper.maxSolarLevel;
         } else {
 
-            thermalLevel = AstronomyHelper.getThermalLevel(parent);
-            solarLevel = AstronomyHelper.getSolarEnergyMultiplier(parent, false);
-            dayLength = 24000L;
+            this.thermalLevel = AstronomyHelper.getThermalLevel(parent);
+            this.solarLevel = AstronomyHelper.getSolarEnergyMultiplier(parent, false);
+            this.dayLength = 24000L;
             if (parent.getReachable()) {
                 final WorldProvider p = WorldUtil.getProviderForDimensionServer(parent.getDimensionID());
                 if (p != null && p instanceof WorldProviderSpace) {
                     // read stuff from the worldprovider
-                    dayLength = ((WorldProviderSpace) p).getDayLength();
+                    this.dayLength = ((WorldProviderSpace) p).getDayLength();
                 }
             }
         }
 
         if (save) {
-            saveData(true);
+            this.saveData(true);
         }
     }
 
@@ -446,12 +446,12 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     public double getSolarEnergyMultiplier() {
-        return solarLevel;
+        return this.solarLevel;
     }
 
     @Override
     public float getThermalLevelModifier() {
-        return thermalLevel;
+        return this.thermalLevel;
     }
 
     @Override
@@ -468,7 +468,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
         final TransitData[] tDatas = new TransitData[4];
 
-        for (final Vector3int loc : engineLocations) {
+        for (final Vector3int loc : this.engineLocations) {
             final TileEntity tile = this.worldObj.getTileEntity(loc.x, loc.y, loc.z);
             if (tile instanceof ITileMothershipEngine engine) {
                 if (!engine.isEnabled()) {
@@ -512,13 +512,13 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     }
 
     public MothershipFuelRequirements getPotentialFuelReqs(final CelestialBody target) {
-        final TransitDataWithDuration data = getTransitDataTo(target, true);
+        final TransitDataWithDuration data = this.getTransitDataTo(target, true);
 
         return data.fuelReqData;
     }
 
     public TransitDataWithDuration getTransitDataTo(final CelestialBody target) {
-        return getTransitDataTo(target, false);
+        return this.getTransitDataTo(target, false);
     }
 
     /**
@@ -528,13 +528,13 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      * @return
      */
     public TransitDataWithDuration getTransitDataTo(final CelestialBody target, final boolean potentialData) {
-        TransitData generalData = calcTheoreticalTransitData();
+        TransitData generalData = this.calcTheoreticalTransitData();
         final double distance = this.mothershipObj.getTravelDistanceTo(target);
-        long travelTime = AstronomyHelper.getTravelTimeAU(totalMass, generalData.thrust, distance);
+        long travelTime = AstronomyHelper.getTravelTimeAU(this.totalMass, generalData.thrust, distance);
 
         // now check if all engines in the set can burn for that long
         @SuppressWarnings("unchecked")
-        HashSet<Vector3int> curEngineLocations = (HashSet<Vector3int>) engineLocations.clone();
+        HashSet<Vector3int> curEngineLocations = (HashSet<Vector3int>) this.engineLocations.clone();
         boolean success = false;
         final MothershipFuelRequirements fuelReqs = new MothershipFuelRequirements();
         TransitData newData = null;
@@ -572,7 +572,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             if (!success) {
                 // prepare stuff for next iteration
                 curEngineLocations = nextEngineLocations;
-                travelTime = AstronomyHelper.getTravelTimeAU(totalMass, newData.thrust, distance);
+                travelTime = AstronomyHelper.getTravelTimeAU(this.totalMass, newData.thrust, distance);
                 generalData = newData;
             }
         }
@@ -591,12 +591,12 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      * Send my data to the client. Just sends it if it's considered fresh enough, recalcs it if it's too old
      */
     public void asyncSendMothershipDataToClient() {
-        if (ticksSinceLastUpdate <= MIN_TICKS_BETWEEN_UPDATES) {
+        if (this.ticksSinceLastUpdate <= MIN_TICKS_BETWEEN_UPDATES) {
             // just send the players what we have
-            sendDataToClients();
+            this.sendDataToClients();
         } else {
             // do that
-            asyncMothershipUpdate();
+            this.asyncMothershipUpdate();
         }
     }
 
@@ -605,8 +605,8 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      */
     public void asyncMothershipUpdate() {
         // I hope this works...
-        if (isAsyncUpdateRunning) return;
-        isAsyncUpdateRunning = true;
+        if (this.isAsyncUpdateRunning) return;
+        this.isAsyncUpdateRunning = true;
 
         final MothershipWorldProvider self = this;
         final Runnable r = () -> {
@@ -631,32 +631,32 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         // I have absolutely no idea whenever I can trust this...
 
         // worldObj.getChunkProvider().getLoadedChunkCount()
-        checkedChunks.clear();
-        engineLocations.clear();
-        totalMass = 0;
-        totalNumBlocks = 0;
+        this.checkedChunks.clear();
+        this.engineLocations.clear();
+        this.totalMass = 0;
+        this.totalNumBlocks = 0;
 
-        potentialTransitData = new TransitData();
-        processChunk(0, 0);
+        this.potentialTransitData = new TransitData();
+        this.processChunk(0, 0);
 
         // also recalc transit data
-        potentialTransitData = calcTheoreticalTransitData();
+        this.potentialTransitData = this.calcTheoreticalTransitData();
 
         // save
-        saveData(notifyClients);
+        this.saveData(notifyClients);
     }
 
     protected void saveData(final boolean notifyClients) {
-        if (mothershipSaveFile == null) {
-            mothershipSaveFile = MothershipWorldProviderSaveFile.getSaveFile(worldObj);
+        if (this.mothershipSaveFile == null) {
+            this.mothershipSaveFile = MothershipWorldProviderSaveFile.getSaveFile(this.worldObj);
         }
 
-        this.writeToNBT(mothershipSaveFile.data);
-        mothershipSaveFile.markDirty();
-        ticksSinceLastUpdate = 0;
+        this.writeToNBT(this.mothershipSaveFile.data);
+        this.mothershipSaveFile.markDirty();
+        this.ticksSinceLastUpdate = 0;
 
         if (notifyClients) {
-            sendDataToClients();
+            this.sendDataToClients();
         }
     }
 
@@ -667,7 +667,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         final NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
         AmunRa.packetPipeline
-                .sendToDimension(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, dimensionId, nbt), dimensionId);
+                .sendToDimension(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, nbt), this.dimensionId);
     }
 
     /**
@@ -679,15 +679,15 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      */
     protected void processChunk(final int x, final int z) {
         final Vector2int curCoords = new Vector2int(x, z);
-        if (checkedChunks.contains(curCoords)) {
+        if (this.checkedChunks.contains(curCoords)) {
             return;
         }
-        checkedChunks.add(curCoords);
-        if (!worldObj.getChunkProvider().chunkExists(x, z)) {
+        this.checkedChunks.add(curCoords);
+        if (!this.worldObj.getChunkProvider().chunkExists(x, z)) {
             return;
         }
         // actually process the chunk here
-        final Chunk c = worldObj.getChunkFromChunkCoords(x, z);
+        final Chunk c = this.worldObj.getChunkFromChunkCoords(x, z);
         final ExtendedBlockStorage[] storage = c.getBlockStorageArray();
         int minY = 256;
         int maxY = -1;
@@ -717,7 +717,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
                         if (b != Blocks.air) {
                             meta = c.getBlockMetadata(blockX, blockY, blockZ);
                             // figure out it's... stuff
-                            processBlock(
+                            this.processBlock(
                                     b,
                                     meta,
                                     CoordHelper.rel2abs(blockX, x),
@@ -730,10 +730,10 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         }
 
         // recursion steps for the neighbours
-        processChunk(x + 1, z);
-        processChunk(x - 1, z);
-        processChunk(x, z + 1);
-        processChunk(x, z - 1);
+        this.processChunk(x + 1, z);
+        this.processChunk(x - 1, z);
+        this.processChunk(x, z + 1);
+        this.processChunk(x, z - 1);
     }
 
     /**
@@ -759,7 +759,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             final SubBlock actualBlock = ((IMetaBlock) block).getSubBlock(meta);
             if (actualBlock instanceof MothershipEngineJetBase) {
                 // just save their positions
-                engineLocations.add(new Vector3int(x, y, z));
+                this.engineLocations.add(new Vector3int(x, y, z));
             }
         }
     }
@@ -774,8 +774,8 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      */
     public void sendPacketsToClient(final EntityPlayerMP player) {
         // so apparently, this can happen even before the worldprovider itself has readFromNbt...
-        if (!haveReadFromNBT) {
-            mustSendPacketToClients = true;
+        if (!this.haveReadFromNBT) {
+            this.mustSendPacketToClients = true;
             return;
         }
         final NBTTagCompound nbt = new NBTTagCompound();
@@ -783,7 +783,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
         // AmunRa.packetPipeline.sendToDimension(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, dimensionId,
         // nbt), dimensionId);
-        AmunRa.packetPipeline.sendTo(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, dimensionId, nbt), player);
+        AmunRa.packetPipeline.sendTo(new PacketSimpleAR(EnumSimplePacket.C_MOTHERSHIP_DATA, this.dimensionId, nbt), player);
     }
 
     public void readFromNBT(final NBTTagCompound nbt) {
@@ -811,10 +811,10 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
             this.solarLevel = nbt.getDouble("solarLevel");
             this.thermalLevel = nbt.getFloat("thermalLevel");
         } else if (!this.worldObj.isRemote) {
-            updateParamsFromParent(false);
+            this.updateParamsFromParent(false);
         }
 
-        haveReadFromNBT = true;
+        this.haveReadFromNBT = true;
     }
 
     @Override
@@ -822,7 +822,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         super.resetRainAndThunder();
         // this is a hack again. I *think* that resetRainAndThunder is only ever called from wakeAllPlayers
 
-        mothershipObj.forceArrival();
+        this.mothershipObj.forceArrival();
     }
 
     public void writeToNBT(final NBTTagCompound nbt) {
@@ -842,15 +842,15 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         nbt.setTag("engineLocations", list);
 
         final NBTTagCompound tData = new NBTTagCompound();
-        if (potentialTransitData == null) {
-            potentialTransitData = calcTheoreticalTransitData();
+        if (this.potentialTransitData == null) {
+            this.potentialTransitData = this.calcTheoreticalTransitData();
         }
         this.potentialTransitData.writeToNBT(tData);
         nbt.setTag("transitData", tData);
 
-        nbt.setFloat("thermalLevel", thermalLevel);
-        nbt.setDouble("solarLevel", solarLevel);
-        nbt.setLong("dayLength", dayLength);
+        nbt.setFloat("thermalLevel", this.thermalLevel);
+        nbt.setDouble("solarLevel", this.solarLevel);
+        nbt.setLong("dayLength", this.dayLength);
     }
 
     @Override
@@ -866,7 +866,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     public ChunkCoordinates getRandomizedSpawnPoint() {
-        return getSpawnPoint();
+        return this.getSpawnPoint();
     }
 
     @Override
@@ -882,15 +882,15 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      * @return
      */
     public boolean isPlayerOwner(final EntityPlayer player) {
-        return mothershipObj.isPlayerOwner(player);
+        return this.mothershipObj.isPlayerOwner(player);
     }
 
     public boolean isPlayerLandingPermitted(final EntityPlayer player) {
-        return mothershipObj.isPlayerLandingPermitted(player);
+        return this.mothershipObj.isPlayerLandingPermitted(player);
     }
 
     public boolean isPlayerUsagePermitted(final EntityPlayer player) {
-        return mothershipObj.isPlayerUsagePermitted(player);
+        return this.mothershipObj.isPlayerUsagePermitted(player);
     }
 
     @Override

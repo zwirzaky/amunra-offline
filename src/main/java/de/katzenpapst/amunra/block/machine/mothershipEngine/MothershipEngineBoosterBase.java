@@ -25,13 +25,13 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
 
     public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture) {
         super(name, texture);
-        activeTextureName = activeTexture;
+        this.activeTextureName = activeTexture;
     }
 
     public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture, final String tool,
             final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
-        activeTextureName = activeTexture;
+        this.activeTextureName = activeTexture;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
     public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture, final String tool, final int harvestLevel,
             final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
-        activeTextureName = activeTexture;
+        this.activeTextureName = activeTexture;
     }
 
     // TileEntityMothershipEngineBooster.java
@@ -95,7 +95,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
         if (side <= 1) {
             return this.blockIcon;
         }
-        return activeBlockIcon;
+        return this.activeBlockIcon;
     }
 
     @Override
@@ -168,7 +168,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
 
     @Override
     public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z, final boolean willHarvest) {
-        return removedByPlayer(world, player, x, y, z);
+        return this.removedByPlayer(world, player, x, y, z);
     }
 
     @Override

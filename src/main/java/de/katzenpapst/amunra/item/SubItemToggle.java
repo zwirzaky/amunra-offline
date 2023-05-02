@@ -43,7 +43,7 @@ public class SubItemToggle extends SubItem {
     public boolean getState(final ItemStack stack) {
         final NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null || !nbt.hasKey("toggleState")) {
-            return defaultState;
+            return this.defaultState;
         }
 
         return nbt.getBoolean("toggleState");
@@ -64,7 +64,7 @@ public class SubItemToggle extends SubItem {
         if (nbt == null || !nbt.hasKey("toggleState")) {
             nbt = new NBTTagCompound();
             stack.setTagCompound(nbt);
-            nbt.setBoolean("toggleState", !defaultState);
+            nbt.setBoolean("toggleState", !this.defaultState);
         } else {
             nbt.setBoolean("toggleState", !nbt.getBoolean("toggleState"));
         }
@@ -74,7 +74,7 @@ public class SubItemToggle extends SubItem {
     @SideOnly(Side.CLIENT)
     public void registerIcons(final IIconRegister registerer) {
         super.registerIcons(registerer);
-        inactItemIcon = registerer.registerIcon(AmunRa.TEXTUREPREFIX + inactiveAssetName);
+        this.inactItemIcon = registerer.registerIcon(AmunRa.TEXTUREPREFIX + this.inactiveAssetName);
     }
 
     /**

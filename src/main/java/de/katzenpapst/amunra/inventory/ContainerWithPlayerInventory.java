@@ -14,11 +14,11 @@ abstract public class ContainerWithPlayerInventory extends Container {
     protected IInventory tileEntity;
 
     public ContainerWithPlayerInventory(final IInventory tile) {
-        tileEntity = tile;
+        this.tileEntity = tile;
     }
 
     protected void initPlayerInventorySlots(final InventoryPlayer player) {
-        initPlayerInventorySlots(player, 0);
+        this.initPlayerInventorySlots(player, 0);
     }
 
     protected void initPlayerInventorySlots(final InventoryPlayer player, final int yOffset) {
@@ -110,14 +110,14 @@ abstract public class ContainerWithPlayerInventory extends Container {
                     if (curSlot instanceof SlotSpecific) {
                         if (((SlotSpecific) curSlot).isItemValid(stack)) {
                             // attempt merge
-                            if (mergeSingleSlot(stack, curSlot)) {
+                            if (this.mergeSingleSlot(stack, curSlot)) {
                                 found = true;
                                 break;
                             }
                         }
-                    } else if (tileEntity.isItemValidForSlot(i, stack)) {
+                    } else if (this.tileEntity.isItemValidForSlot(i, stack)) {
                         // attempt merge
-                        if (mergeSingleSlot(stack, curSlot)) {
+                        if (this.mergeSingleSlot(stack, curSlot)) {
                             found = true;
                             break;
                         }

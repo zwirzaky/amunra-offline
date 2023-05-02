@@ -36,7 +36,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     public TileEntityBossDungeonSpawner() {
         super();
 
-        bossClass = EntityMummyBoss.class;
+        this.bossClass = EntityMummyBoss.class;
 
         // test
         // this.setRoom(new Vector3(), size);
@@ -72,12 +72,12 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
             for (final Entity ent : entitiesInRoom) {
                 if (ent instanceof EntityPlayer) {
                     numPlayers++;
-                } else if (bossClass.isInstance(ent)) {
+                } else if (this.bossClass.isInstance(ent)) {
                     final IAmunRaBoss curBoss = (IAmunRaBoss) ent;
                     if (this.boss == null && curBoss.getSpawner() == this) {
                         this.boss = curBoss;
                         isBossInRoom = true;
-                    } else if (boss != null && boss.equals(curBoss)) {
+                    } else if (this.boss != null && this.boss.equals(curBoss)) {
                         isBossInRoom = true;
                     }
                 } else if (this.getDisabledCreatures().contains(ent.getClass())) {
@@ -93,7 +93,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                         final Constructor<?> c = this.bossClass.getConstructor(new Class[] { World.class });
                         this.boss = (IAmunRaBoss) c.newInstance(new Object[] { this.worldObj });
                         ((Entity) this.boss).setPosition(this.xCoord + 0.5, this.yCoord + 1.0, this.zCoord + 0.5);
-                        this.boss.setRoomArea(roomArea);
+                        this.boss.setRoomArea(this.roomArea);
                         this.boss.setSpawner(this);
                         this.spawned = true;
                         isBossInRoom = true;
@@ -140,7 +140,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         }
 
         if (nbt.hasKey("roomArea")) {
-            roomArea = NbtHelper.readAABB(nbt.getCompoundTag("roomArea"));
+            this.roomArea = NbtHelper.readAABB(nbt.getCompoundTag("roomArea"));
         }
         /*
          * if(nbt.hasKey("spawnedBoss")) { Entity ent = this.worldObj.getEntityByID(nbt.getInteger("spawnedBoss"));
@@ -153,11 +153,11 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
-        nbt.setBoolean("spawned", spawned);
-        nbt.setBoolean("defeated", isBossDefeated);
+        nbt.setBoolean("spawned", this.spawned);
+        nbt.setBoolean("defeated", this.isBossDefeated);
 
-        if (roomArea != null) {
-            nbt.setTag("roomArea", NbtHelper.getAsNBT(roomArea));
+        if (this.roomArea != null) {
+            nbt.setTag("roomArea", NbtHelper.getAsNBT(this.roomArea));
         }
 
         /*
@@ -177,7 +177,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
 
     @Override
     public Vector3int getBlockPosition() {
-        return new Vector3int(xCoord, yCoord, zCoord);
+        return new Vector3int(this.xCoord, this.yCoord, this.zCoord);
     }
 
     @Override
@@ -197,12 +197,12 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
 
     @Override
     public AxisAlignedBB getRoomArea() {
-        return roomArea;
+        return this.roomArea;
     }
 
     @Override
     public void setRoomArea(final AxisAlignedBB aabb) {
-        roomArea = aabb.copy();
+        this.roomArea = aabb.copy();
     }
 
     @Override
@@ -216,7 +216,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
 
     @Override
     public void setBossClass(final Class<? extends IAmunRaBoss> theClass) {
-        bossClass = theClass;
+        this.bossClass = theClass;
     }
 
 }

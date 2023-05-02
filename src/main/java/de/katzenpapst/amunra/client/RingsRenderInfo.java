@@ -20,7 +20,7 @@ public class RingsRenderInfo {
     }
 
     public void setTextureSize(final int x, final int y) {
-        textureSize = new Vector2int(x, y);
+        this.textureSize = new Vector2int(x, y);
     }
 
 }

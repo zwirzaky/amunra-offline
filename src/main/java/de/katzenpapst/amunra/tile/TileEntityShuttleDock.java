@@ -60,7 +60,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     public TileEntityShuttleDock() {
-        containingItems = new ItemStack[1]; // one item
+        this.containingItems = new ItemStack[1]; // one item
     }
 
     protected void dropItemsAtExit(final List<ItemStack> cargo) {
@@ -75,7 +75,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         if (op >= DockOperation.values().length) {
             return;
         }
-        performDockOperation(DockOperation.values()[op], player);
+        this.performDockOperation(DockOperation.values()[op], player);
     }
 
     /**
@@ -85,10 +85,10 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
      * @param player
      */
     public void performDockOperation(final DockOperation op, final EntityPlayerMP player) {
-        if (actionCooldown > 0) {
+        if (this.actionCooldown > 0) {
             return;
         }
-        actionCooldown = 20;
+        this.actionCooldown = 20;
         ItemShuttle shuttleItem;
         EntityShuttle shuttleEntity;
         ItemStack stack;
@@ -103,7 +103,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                 }
                 shuttleItem = (ItemShuttle) stack.getItem();
                 final Vector3 pos = this.getShuttlePosition();
-                shuttleEntity = shuttleItem.spawnRocketEntity(stack, worldObj, pos.x, pos.y, pos.z);
+                shuttleEntity = shuttleItem.spawnRocketEntity(stack, this.worldObj, pos.x, pos.y, pos.z);
                 // shuttleEntity.setPad(this);
                 this.dockEntity(shuttleEntity);
                 stack.stackSize--;
@@ -121,12 +121,12 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                 if (stack != null) {
                     return;
                 }
-                shuttleEntity = (EntityShuttle) dockedEntity;
+                shuttleEntity = (EntityShuttle) this.dockedEntity;
                 // if(shuttleEntity.addCargo(stack, doAdd))
                 stack = shuttleEntity.getItemRepresentation();
 
                 final List<ItemStack> cargo = shuttleEntity.getCargoContents();
-                dropItemsAtExit(cargo);
+                this.dropItemsAtExit(cargo);
 
                 this.setInventorySlotContents(0, stack);
                 shuttleEntity.setDead();
@@ -138,7 +138,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                 if (this.dockedEntity == null) {
                     return;
                 }
-                shuttleEntity = (EntityShuttle) dockedEntity;
+                shuttleEntity = (EntityShuttle) this.dockedEntity;
                 if (shuttleEntity.riddenByEntity != null) {
                     return;
                 }
@@ -150,9 +150,9 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                 return;
 
         }
-        updateAvailabilityInWorldData();
+        this.updateAvailabilityInWorldData();
         this.markDirty();
-        this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 
     public void performDockOperationClient(final DockOperation op) {
@@ -167,21 +167,21 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.containingItems = this.readStandardItemsFromNBT(nbt);
-        hasShuttleDocked = nbt.getBoolean("hasShuttle");
-        actionCooldown = nbt.getInteger("actionCooldown");
+        this.hasShuttleDocked = nbt.getBoolean("hasShuttle");
+        this.actionCooldown = nbt.getInteger("actionCooldown");
     }
 
     @Override
     public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         this.writeStandardItemsToNBT(nbt);
-        nbt.setBoolean("hasShuttle", hasShuttleDocked);
-        nbt.setInteger("actionCooldown", actionCooldown);
+        nbt.setBoolean("hasShuttle", this.hasShuttleDocked);
+        nbt.setInteger("actionCooldown", this.actionCooldown);
     }
 
     public ItemStack[] readStandardItemsFromNBT(final NBTTagCompound nbt) {
         final NBTTagList itemTag = nbt.getTagList("Items", 10);
-        final int length = containingItems.length;
+        final int length = this.containingItems.length;
         final ItemStack[] result = new ItemStack[length];
 
         for (int i = 0; i < itemTag.tagCount(); ++i) {
@@ -201,13 +201,13 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
     public void writeStandardItemsToNBT(final NBTTagCompound nbt) {
         final NBTTagList list = new NBTTagList();
-        final int length = containingItems.length;
+        final int length = this.containingItems.length;
 
         for (int i = 0; i < length; ++i) {
-            if (containingItems[i] != null) {
+            if (this.containingItems[i] != null) {
                 final NBTTagCompound stackNbt = new NBTTagCompound();
                 stackNbt.setByte("Slot", (byte) i);
-                containingItems[i].writeToNBT(stackNbt);
+                this.containingItems[i].writeToNBT(stackNbt);
                 list.appendTag(stackNbt);
             }
         }
@@ -218,27 +218,27 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     @Override
     public Packet getDescriptionPacket() {
         final NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
+        this.writeToNBT(nbt);
 
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
         // return new Packet132TileEntityDat(this.xCoord, this.yCoord, this.zCoord, 1, var1);
     }
 
     @Override
     public void onDataPacket(final NetworkManager net, final S35PacketUpdateTileEntity packet) {
-        readFromNBT(packet.func_148857_g());
+        this.readFromNBT(packet.func_148857_g());
     }
 
     public Vector3 getShuttlePosition() {
         switch (this.getRotationMeta()) {
             case 0:
-                return new Vector3(xCoord + 0.5, yCoord, zCoord - 1.5D);
+                return new Vector3(this.xCoord + 0.5, this.yCoord, this.zCoord - 1.5D);
             case 2:
-                return new Vector3(xCoord - 1.5D, yCoord, zCoord + 0.5D);
+                return new Vector3(this.xCoord - 1.5D, this.yCoord, this.zCoord + 0.5D);
             case 1:
-                return new Vector3(xCoord + 0.5, yCoord, zCoord + 2.5D);
+                return new Vector3(this.xCoord + 0.5, this.yCoord, this.zCoord + 2.5D);
             case 3:
-                return new Vector3(xCoord + 2.5D, yCoord, zCoord + 0.5D);
+                return new Vector3(this.xCoord + 2.5D, this.yCoord, this.zCoord + 0.5D);
         }
         return null;
     }
@@ -260,19 +260,19 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     public Vector3 getExitPosition() {
         switch (this.getRotationMeta()) {
             case 0: // -> +Z (the side which is towards the player)
-                return new Vector3(xCoord + 0.5, yCoord, zCoord + 1.5D);
+                return new Vector3(this.xCoord + 0.5, this.yCoord, this.zCoord + 1.5D);
             case 2: // -> -Z
-                return new Vector3(xCoord + 1.5D, yCoord, zCoord + 0.5D);
+                return new Vector3(this.xCoord + 1.5D, this.yCoord, this.zCoord + 0.5D);
             case 1: // -> -X
-                return new Vector3(xCoord + 0.5, yCoord, zCoord - 0.5D);
+                return new Vector3(this.xCoord + 0.5, this.yCoord, this.zCoord - 0.5D);
             case 3: // -> +X
-                return new Vector3(xCoord - 0.5D, yCoord, zCoord + 0.5D);
+                return new Vector3(this.xCoord - 0.5D, this.yCoord, this.zCoord + 0.5D);
         }
         return null;
     }
 
     protected void repositionEntity() {
-        final Vector3 pos = getShuttlePosition();
+        final Vector3 pos = this.getShuttlePosition();
 
         ((Entity) this.dockedEntity).setPosition(pos.x, pos.y, pos.z);
     }
@@ -307,7 +307,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
             }
         }
         if (docked) {
-            updateAvailabilityInWorldData();
+            this.updateAvailabilityInWorldData();
         }
     }
 
@@ -321,8 +321,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     public void updateEntity() {
         super.updateEntity();
         if (!this.worldObj.isRemote) {
-            if (actionCooldown > 0) {
-                actionCooldown--;
+            if (this.actionCooldown > 0) {
+                this.actionCooldown--;
             }
             if (this.dockedEntity != null) {
 
@@ -334,33 +334,33 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
                     // undock
                     shuttle.setPad(null);
                     this.dockedEntity = null;
-                    updateAvailabilityInWorldData();
+                    this.updateAvailabilityInWorldData();
                 } else {
                     // from time to time, reposition?
                     if (this.ticks % 40 == 0) {
-                        repositionEntity();
+                        this.repositionEntity();
                     }
                 }
             }
 
-            if (dockedEntity == null) {
+            if (this.dockedEntity == null) {
                 // attempt to redock something
                 this.dockNearbyShuttle();
             }
 
             // update status
-            if (dockedEntity == null && hasShuttleDocked) {
-                hasShuttleDocked = false;
+            if (this.dockedEntity == null && this.hasShuttleDocked) {
+                this.hasShuttleDocked = false;
                 this.markDirty();
-                this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-            } else if (dockedEntity != null && !hasShuttleDocked) {
-                hasShuttleDocked = true;
-                this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+            } else if (this.dockedEntity != null && !this.hasShuttleDocked) {
+                this.hasShuttleDocked = true;
+                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             }
 
             // from time to time, update the dockdata
             if (this.ticks % 35 == 0) {
-                updateAvailabilityInWorldData();
+                this.updateAvailabilityInWorldData();
             }
         }
     }
@@ -415,26 +415,26 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
         // check the blocks in a doorframe form around me
         // below
-        checkTileAt(connectedTiles, xCoord, yCoord - 1, zCoord);
+        this.checkTileAt(connectedTiles, this.xCoord, this.yCoord - 1, this.zCoord);
 
         // above
-        checkTileAt(connectedTiles, xCoord, yCoord + 2, zCoord);
+        this.checkTileAt(connectedTiles, this.xCoord, this.yCoord + 2, this.zCoord);
 
         // sides
         switch (this.getRotationMeta()) {
             case 0: // -> +Z (the side which is towards the player)
             case 2: // -> -Z
-                checkTileAt(connectedTiles, xCoord - 1, yCoord, zCoord);
-                checkTileAt(connectedTiles, xCoord + 1, yCoord, zCoord);
-                checkTileAt(connectedTiles, xCoord - 1, yCoord + 1, zCoord);
-                checkTileAt(connectedTiles, xCoord + 1, yCoord + 1, zCoord);
+                this.checkTileAt(connectedTiles, this.xCoord - 1, this.yCoord, this.zCoord);
+                this.checkTileAt(connectedTiles, this.xCoord + 1, this.yCoord, this.zCoord);
+                this.checkTileAt(connectedTiles, this.xCoord - 1, this.yCoord + 1, this.zCoord);
+                this.checkTileAt(connectedTiles, this.xCoord + 1, this.yCoord + 1, this.zCoord);
                 break;
             case 1: // -> -X
             case 3: // -> +X
-                checkTileAt(connectedTiles, xCoord, yCoord, zCoord - 1);
-                checkTileAt(connectedTiles, xCoord, yCoord, zCoord + 1);
-                checkTileAt(connectedTiles, xCoord, yCoord + 1, zCoord - 1);
-                checkTileAt(connectedTiles, xCoord, yCoord + 1, zCoord + 1);
+                this.checkTileAt(connectedTiles, this.xCoord, this.yCoord, this.zCoord - 1);
+                this.checkTileAt(connectedTiles, this.xCoord, this.yCoord, this.zCoord + 1);
+                this.checkTileAt(connectedTiles, this.xCoord, this.yCoord + 1, this.zCoord - 1);
+                this.checkTileAt(connectedTiles, this.xCoord, this.yCoord + 1, this.zCoord + 1);
                 break;
         }
         // maybe do the edges, too?
@@ -466,11 +466,11 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         if (entity instanceof EntityShuttle) {
             this.dockedEntity = entity;
             ((EntityShuttle) entity).setPad(this);
-            repositionEntity();
+            this.repositionEntity();
         } else if (entity == null) {
             this.dockedEntity = null;
         }
-        updateAvailabilityInWorldData();
+        this.updateAvailabilityInWorldData();
     }
 
     @Override
@@ -497,15 +497,15 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
         switch (this.getRotationMeta()) {
             case 0:
-                return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord - 1, xCoord + 1, yCoord + 2, zCoord + 1);
+                return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord - 1, this.xCoord + 1, this.yCoord + 2, this.zCoord + 1);
             case 1:
-                return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 2, zCoord + 2);
+                return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 2, this.zCoord + 2);
             case 2:
-                return AxisAlignedBB.getBoundingBox(xCoord - 1, yCoord, zCoord, xCoord + 1, yCoord + 2, zCoord + 1);
+                return AxisAlignedBB.getBoundingBox(this.xCoord - 1, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 2, this.zCoord + 1);
             case 3:
-                return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 2, yCoord + 2, zCoord + 1);
+                return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 2, this.yCoord + 2, this.zCoord + 1);
         }
-        return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 2, zCoord + 1);
+        return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord + 1, this.yCoord + 2, this.zCoord + 1);
     }
 
     @Override
@@ -525,7 +525,7 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
     @Override
     public boolean onActivated(final EntityPlayer entityPlayer) {
-        entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_SHUTTLE_DOCK, this.worldObj, xCoord, yCoord, zCoord);
+        entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_SHUTTLE_DOCK, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         return true;
     }
 
@@ -539,16 +539,16 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
         final BlockVec3 vecStrut = new BlockVec3(placedPosition.x, placedPosition.y + 1, placedPosition.z);
         ARBlocks.metaBlockFake
-                .makeFakeBlock(worldObj, vecStrut, new BlockVec3(xCoord, yCoord, zCoord), ARBlocks.fakeBlockSealable);
+                .makeFakeBlock(this.worldObj, vecStrut, new BlockVec3(this.xCoord, this.yCoord, this.zCoord), ARBlocks.fakeBlockSealable);
     }
 
     @Override
     public void onDestroy(final TileEntity callingBlock) {
         ShuttleDockHandler.removeDock(this);
 
-        final Block b = this.worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+        final Block b = this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord);
         if (b == ARBlocks.metaBlockFake) {
-            this.worldObj.setBlockToAir(xCoord, yCoord + 1, zCoord);
+            this.worldObj.setBlockToAir(this.xCoord, this.yCoord + 1, this.zCoord);
         }
         if (callingBlock != this) {
             // someone else called this, drop my actual block, too
@@ -564,12 +564,12 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
     @Override
     public int getSizeInventory() {
-        return containingItems.length;
+        return this.containingItems.length;
     }
 
     @Override
     public ItemStack getStackInSlot(final int slot) {
-        return containingItems[slot];
+        return this.containingItems[slot];
     }
 
     @Override
@@ -653,8 +653,8 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
     }
 
     public boolean isObstructed() {
-        final int minY = yCoord - 2;
-        final int maxY = yCoord + 3;
+        final int minY = this.yCoord - 2;
+        final int maxY = this.yCoord + 3;
         int minX;
         int maxX;
         int minZ;
@@ -663,41 +663,41 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
 
         switch (this.getRotationMeta()) {
             case 0:
-                minX = xCoord - 1;
-                maxX = xCoord + 1;
-                minZ = zCoord - 3;
-                maxZ = zCoord - 1;
+                minX = this.xCoord - 1;
+                maxX = this.xCoord + 1;
+                minZ = this.zCoord - 3;
+                maxZ = this.zCoord - 1;
                 break;
             case 2:
-                minX = xCoord - 3;
-                maxX = xCoord - 1;
-                minZ = zCoord - 1;
-                maxZ = zCoord + 1;
+                minX = this.xCoord - 3;
+                maxX = this.xCoord - 1;
+                minZ = this.zCoord - 1;
+                maxZ = this.zCoord + 1;
                 break;
             case 1:
-                minX = xCoord - 1;
-                maxX = xCoord + 1;
-                minZ = zCoord + 1;
-                maxZ = zCoord + 3;
+                minX = this.xCoord - 1;
+                maxX = this.xCoord + 1;
+                minZ = this.zCoord + 1;
+                maxZ = this.zCoord + 3;
                 break;
             case 3:
-                minX = xCoord + 1;
-                maxX = xCoord + 3;
-                minZ = zCoord - 1;
-                maxZ = zCoord + 1;
+                minX = this.xCoord + 1;
+                maxX = this.xCoord + 3;
+                minZ = this.zCoord - 1;
+                maxZ = this.zCoord + 1;
                 break;
             default:
                 return false;
         }
 
-        return areBlocksWithin(minX, minY, minZ, maxX, maxY, maxZ);
+        return this.areBlocksWithin(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
     public boolean isAvailable() {
-        if (this.dockedEntity != null || hasShuttleDocked) { // the former isn't that reliable, since dockedEntity won't
+        if (this.dockedEntity != null || this.hasShuttleDocked) { // the former isn't that reliable, since dockedEntity won't
                                                              // be set until it has been rediscovered in the update
             return false;
         }
-        return !isObstructed();
+        return !this.isObstructed();
     }
 }

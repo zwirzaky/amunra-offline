@@ -60,30 +60,30 @@ public class GuiHydroponics extends GuiContainerGC {
     protected void actionPerformed(final GuiButton par1GuiButton) {
         if (par1GuiButton.id == 0) {
             // do the stuff
-            final float growthStatus = tile.getPlantGrowthStatus();
+            final float growthStatus = this.tile.getPlantGrowthStatus();
             if (growthStatus < 0) {
                 AmunRa.packetPipeline.sendToServer(
                         new PacketSimpleAR(
                                 PacketSimpleAR.EnumSimplePacket.S_HYDROPONICS_OPERATION,
-                                tile.xCoord,
-                                tile.yCoord,
-                                tile.zCoord,
+                                this.tile.xCoord,
+                                this.tile.yCoord,
+                                this.tile.zCoord,
                                 TileEntityHydroponics.OperationType.PLANT_SEED.ordinal()));
             } else if (growthStatus < 1.0F) {
                 AmunRa.packetPipeline.sendToServer(
                         new PacketSimpleAR(
                                 PacketSimpleAR.EnumSimplePacket.S_HYDROPONICS_OPERATION,
-                                tile.xCoord,
-                                tile.yCoord,
-                                tile.zCoord,
+                                this.tile.xCoord,
+                                this.tile.yCoord,
+                                this.tile.zCoord,
                                 TileEntityHydroponics.OperationType.FERTILIZE.ordinal()));
             } else if (growthStatus == 1) {
                 AmunRa.packetPipeline.sendToServer(
                         new PacketSimpleAR(
                                 PacketSimpleAR.EnumSimplePacket.S_HYDROPONICS_OPERATION,
-                                tile.xCoord,
-                                tile.yCoord,
-                                tile.zCoord,
+                                this.tile.xCoord,
+                                this.tile.yCoord,
+                                this.tile.zCoord,
                                 TileEntityHydroponics.OperationType.HARVEST.ordinal()));
             }
         }
@@ -117,9 +117,9 @@ public class GuiHydroponics extends GuiContainerGC {
         this.electricInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.electricInfoRegion);
 
-        final float growStatus = tile.getPlantGrowthStatus();
+        final float growStatus = this.tile.getPlantGrowthStatus();
 
-        button = new GuiButton(
+        this.button = new GuiButton(
                 0,
                 (this.width - this.xSize) / 2 + 82,
                 (this.height - this.ySize) / 2 + 88,
@@ -127,30 +127,30 @@ public class GuiHydroponics extends GuiContainerGC {
                 20,
                 GCCoreUtil.translate("tile.hydroponics.plant"));
 
-        updateTheButton(growStatus);
+        this.updateTheButton(growStatus);
 
-        this.buttonList.add(button);
+        this.buttonList.add(this.button);
     }
 
     private void updateTheButton(final float growStatus) {
         // tile.hydroponics.fertilize
         if (growStatus < 0) {
-            button.displayString = GCCoreUtil.translate("tile.hydroponics.plant");
-            final ItemStack stack = tile.getStackInSlot(1);
-            button.enabled = stack != null && stack.stackSize > 0 && TileEntityHydroponics.seeds.isSameItem(stack);
+            this.button.displayString = GCCoreUtil.translate("tile.hydroponics.plant");
+            final ItemStack stack = this.tile.getStackInSlot(1);
+            this.button.enabled = stack != null && stack.stackSize > 0 && TileEntityHydroponics.seeds.isSameItem(stack);
         } else if (growStatus < 1.0F) {
-            button.displayString = GCCoreUtil.translate("tile.hydroponics.fertilize");
-            final ItemStack stack = tile.getStackInSlot(1);
-            button.enabled = stack != null && stack.stackSize > 0 && TileEntityHydroponics.bonemeal.isSameItem(stack);
+            this.button.displayString = GCCoreUtil.translate("tile.hydroponics.fertilize");
+            final ItemStack stack = this.tile.getStackInSlot(1);
+            this.button.enabled = stack != null && stack.stackSize > 0 && TileEntityHydroponics.bonemeal.isSameItem(stack);
         } else {
-            button.displayString = GCCoreUtil.translate("tile.hydroponics.harvest");
-            button.enabled = true;
+            this.button.displayString = GCCoreUtil.translate("tile.hydroponics.harvest");
+            this.button.enabled = true;
         }
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
-        final float growStatus = tile.getPlantGrowthStatus();
+        final float growStatus = this.tile.getPlantGrowthStatus();
         this.fontRendererObj.drawString(this.tile.getInventoryName(), 8, 10, 4210752);
         GCCoreUtil.drawStringRightAligned(
                 GCCoreUtil.translate("gui.message.out.name") + ":",
@@ -165,7 +165,7 @@ public class GuiHydroponics extends GuiContainerGC {
                 4210752,
                 this.fontRendererObj);
 
-        final String plantStatus = getPlantStatus(growStatus);
+        final String plantStatus = this.getPlantStatus(growStatus);
         if (growStatus < 0) {
             GCCoreUtil.drawStringCentered(
                     GCCoreUtil.translate("gui.message.status.name") + ": " + plantStatus,
@@ -194,7 +194,7 @@ public class GuiHydroponics extends GuiContainerGC {
             GCCoreUtil.drawStringCentered(status, this.xSize / 2, 70, 4210752, this.fontRendererObj);
         }
 
-        updateTheButton(growStatus);
+        this.updateTheButton(growStatus);
 
         this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 90 + 2, 4210752);
     }
@@ -204,7 +204,7 @@ public class GuiHydroponics extends GuiContainerGC {
             return EnumColor.DARK_RED + GCCoreUtil.translate("tile.hydroponics.noplant");
         }
         if (growStatus < 1.0F) {
-            return EnumColor.YELLOW.getCode() + Math.floor(tile.getPlantGrowthStatus() * 100) + "%";
+            return EnumColor.YELLOW.getCode() + Math.floor(this.tile.getPlantGrowthStatus() * 100) + "%";
         }
         return EnumColor.DARK_GREEN + "100%";
     }

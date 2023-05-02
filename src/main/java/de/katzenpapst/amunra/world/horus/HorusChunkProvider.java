@@ -33,15 +33,15 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     public HorusChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
-        pyramid.setFillMaterial(ARBlocks.blockBasaltBrick);
-        pyramid.setFloorMaterial(ARBlocks.blockSmoothBasalt);
-        pyramid.setWallMaterial(ARBlocks.blockObsidianBrick);
-        pyramid.addComponentType(ChestRoom.class, 0.25F);
-        pyramid.addComponentType(PitRoom.class, 0.25F);
-        pyramid.addComponentType(PyramidRoom.class, 0.5F);
-        pyramid.addMainRoomType(BossRoom.class, 1.0F);
+        this.pyramid.setFillMaterial(ARBlocks.blockBasaltBrick);
+        this.pyramid.setFloorMaterial(ARBlocks.blockSmoothBasalt);
+        this.pyramid.setWallMaterial(ARBlocks.blockObsidianBrick);
+        this.pyramid.addComponentType(ChestRoom.class, 0.25F);
+        this.pyramid.addComponentType(PitRoom.class, 0.25F);
+        this.pyramid.addComponentType(PyramidRoom.class, 0.5F);
+        this.pyramid.addMainRoomType(BossRoom.class, 1.0F);
 
-        volcanoGen = new VolcanoGenerator(new BlockMetaPair(Blocks.lava, (byte) 0), stoneBlock, stoneBlock, 15, true);
+        this.volcanoGen = new VolcanoGenerator(new BlockMetaPair(Blocks.lava, (byte) 0), this.stoneBlock, this.stoneBlock, 15, true);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BlockMetaPair getStoneBlock() {
-        return stoneBlock;
+        return this.stoneBlock;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class HorusChunkProvider extends AmunraChunkProvider {
     public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
         super.populate(par1IChunkProvider, chunkX, chunkZ);
 
-        this.pyramid.populate(this, worldObj, chunkX, chunkZ);
+        this.pyramid.populate(this, this.worldObj, chunkX, chunkZ);
         // this.pyramid.populate(this, worldObj, chunkX, chunkZ);
 
         // this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);

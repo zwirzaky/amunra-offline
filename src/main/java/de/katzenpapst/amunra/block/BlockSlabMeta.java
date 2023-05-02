@@ -35,8 +35,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     public BlockSlabMeta(final String name, final Material material) {
         // I think the first parameter is true for doubleslabs...
         super(false, material);
-        setBlockName(name);
-        nameMetaMap = new HashMap<>();
+        this.setBlockName(name);
+        this.nameMetaMap = new HashMap<>();
     }
 
     @Override
@@ -50,32 +50,32 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
-        if (meta >= subBlocksArray.length || meta < 0) {
+        if (meta >= this.subBlocksArray.length || meta < 0) {
             throw new IllegalArgumentException(
-                    "Meta " + meta + " must be <= " + (subBlocksArray.length - 1) + " && >= 0");
+                    "Meta " + meta + " must be <= " + (this.subBlocksArray.length - 1) + " && >= 0");
         }
 
-        if (subBlocksArray[meta] != null) {
+        if (this.subBlocksArray[meta] != null) {
             throw new IllegalArgumentException("Meta " + meta + " is already in use");
         }
 
-        if (nameMetaMap.get(sb.getUnlocalizedName()) != null) {
+        if (this.nameMetaMap.get(sb.getUnlocalizedName()) != null) {
             throw new IllegalArgumentException("Name " + sb.getUnlocalizedName() + " is already in use");
         }
         // sb.setParent(this);
-        nameMetaMap.put(sb.getUnlocalizedName(), meta);
-        subBlocksArray[meta] = sb;
+        this.nameMetaMap.put(sb.getUnlocalizedName(), meta);
+        this.subBlocksArray[meta] = sb;
         return new BlockMetaPair(this, (byte) meta);
     }
 
     public BlockMetaPair addSubBlock(final int meta, final BlockMetaPair basedOn) {
 
-        return addSubBlock(meta, ((IMetaBlock) basedOn.getBlock()).getSubBlock(basedOn.getMetadata()));
+        return this.addSubBlock(meta, ((IMetaBlock) basedOn.getBlock()).getSubBlock(basedOn.getMetadata()));
     }
 
     @Override
     public int getMetaByName(final String name) {
-        final Integer i = nameMetaMap.get(name);
+        final Integer i = this.nameMetaMap.get(name);
         if (i == null) {
             throw new IllegalArgumentException("Subblock " + name + " doesn't exist");
         }
@@ -85,22 +85,22 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     @Override
     public SubBlock getSubBlock(final int meta) {
 
-        return subBlocksArray[getDistinctionMeta(meta)];
+        return this.subBlocksArray[this.getDistinctionMeta(meta)];
     }
 
     public SubBlock[] getAllSubBlocks() {
-        return subBlocksArray;
+        return this.subBlocksArray;
     }
 
     @Override
     public IIcon getIcon(final int side, final int meta) {
-        return getSubBlock(meta).getIcon(side, 0);
+        return this.getSubBlock(meta).getIcon(side, 0);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        for (final SubBlock sb : subBlocksArray) {
+        for (final SubBlock sb : this.subBlocksArray) {
             if (sb != null) {
                 sb.registerBlockIcons(par1IconRegister);
             }
@@ -138,7 +138,7 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     @Override
     public void getSubBlocks(final Item par1, final CreativeTabs par2CreativeTabs, final List par3List) {
         for (int i = 0; i < this.subBlocksArray.length; i++) {
-            if (subBlocksArray[i] != null) {
+            if (this.subBlocksArray[i] != null) {
                 par3List.add(new ItemStack(par1, 1, i));
             }
         }
@@ -147,8 +147,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     @Override
     public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z, final EntityPlayer player) {
         final int meta = world.getBlockMetadata(x, y, z);
-        if (getSubBlock(meta) != null) {
-            return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
+        if (this.getSubBlock(meta) != null) {
+            return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
         }
 
         return super.getPickBlock(target, world, x, y, z, player);
@@ -162,10 +162,10 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     @Override
     public void register() {
         // doubleslabMetablock
-        GameRegistry.registerBlock(this, ItemSlabMulti.class, this.getUnlocalizedName(), this, doubleslabMetablock);
+        GameRegistry.registerBlock(this, ItemSlabMulti.class, this.getUnlocalizedName(), this, this.doubleslabMetablock);
 
-        for (int i = 0; i < subBlocksArray.length; i++) {
-            final SubBlock sb = subBlocksArray[i];
+        for (int i = 0; i < this.subBlocksArray.length; i++) {
+            final SubBlock sb = this.subBlocksArray[i];
             if (sb != null) {
 
                 this.setHarvestLevel(sb.getHarvestTool(0), sb.getHarvestLevel(0), i);
@@ -185,7 +185,7 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
             final double explosionY, final double explosionZ) {
         final int metadata = world.getBlockMetadata(x, y, z);
 
-        return getSubBlock(metadata)
+        return this.getSubBlock(metadata)
                 .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
@@ -193,12 +193,12 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     public float getBlockHardness(final World world, final int x, final int y, final int z) {
         final int meta = world.getBlockMetadata(x, y, z);
 
-        return getSubBlock(meta).getBlockHardness(world, x, y, z);
+        return this.getSubBlock(meta).getBlockHardness(world, x, y, z);
     }
 
     @Override
     public int getNumPossibleSubBlocks() {
-        return subBlocksArray.length;
+        return this.subBlocksArray.length;
     }
 
     @Override

@@ -47,52 +47,52 @@ public class StringSelectBox extends GuiButton {
                 false);
 
         // find out how many lines we can have
-        maxLines = height / textSize;
+        this.maxLines = height / this.textSize;
     }
 
     public void clear() {
-        strings.clear();
-        clearSelection();
+        this.strings.clear();
+        this.clearSelection();
     }
 
     public void addString(final String str) {
-        strings.add(str);
+        this.strings.add(str);
 
         //
     }
 
     public void setSelection(final int selection) {
-        if (selection >= 0 && selection < strings.size() && this.selectedStringIndex != selection) {
+        if (selection >= 0 && selection < this.strings.size() && this.selectedStringIndex != selection) {
             this.selectedStringIndex = selection;
-            parent.onSelectionChanged(this, selectedStringIndex);
+            this.parent.onSelectionChanged(this, this.selectedStringIndex);
         }
     }
 
     public void clearSelection() {
-        if (selectedStringIndex != -1) {
-            selectedStringIndex = -1;
-            parent.onSelectionChanged(this, selectedStringIndex);
+        if (this.selectedStringIndex != -1) {
+            this.selectedStringIndex = -1;
+            this.parent.onSelectionChanged(this, this.selectedStringIndex);
         }
     }
 
     public boolean hasSelection() {
-        return selectedStringIndex != -1;
+        return this.selectedStringIndex != -1;
     }
 
     public int getSelectedStringIndex() {
-        return selectedStringIndex;
+        return this.selectedStringIndex;
     }
 
     public String getSelectedString() {
-        if (selectedStringIndex >= 0) {
-            return strings.get(selectedStringIndex);
+        if (this.selectedStringIndex >= 0) {
+            return this.strings.get(this.selectedStringIndex);
         }
         return null;
     }
 
     public void deleteStringAt(final int index) {
-        strings.remove(index);
-        clearSelection();
+        this.strings.remove(index);
+        this.clearSelection();
     }
 
     /**
@@ -124,26 +124,26 @@ public class StringSelectBox extends GuiButton {
             final int colorGreen = 0xFF00FF00;
             // selectedStringIndex = 1;
             final int colorSelection = 0x99008AFF;
-            final int displayLines = Math.min(strings.size(), maxLines);
+            final int displayLines = Math.min(this.strings.size(), this.maxLines);
             for (int i = 0; i < displayLines; i++) {
-                final int curYoffset = i * textSize;
-                final int actualIndex = i + scrollOffset;
+                final int curYoffset = i * this.textSize;
+                final int actualIndex = i + this.scrollOffset;
 
                 final int colorText = colorGreen;
 
-                if (actualIndex == selectedStringIndex) {
+                if (actualIndex == this.selectedStringIndex) {
                     this.drawGradientRect(
                             this.xPosition + 1,
                             curYoffset + this.yPosition + 1,
                             this.xPosition + this.width - 1,
-                            curYoffset + this.yPosition + 1 + textSize,
+                            curYoffset + this.yPosition + 1 + this.textSize,
                             colorSelection,
                             colorSelection);
                     // colorText = 0xFF555555;
                 }
 
-                font.drawStringWithShadow(
-                        strings.get(actualIndex),
+                this.font.drawStringWithShadow(
+                        this.strings.get(actualIndex),
                         this.xPosition + 2,
                         curYoffset + this.yPosition,
                         colorText);
@@ -151,11 +151,11 @@ public class StringSelectBox extends GuiButton {
                 // this.xPosition+2, curYoffset+this.yPosition+2, colorGreen);
             }
 
-            if (maxLines < strings.size()) {
+            if (this.maxLines < this.strings.size()) {
                 // draw arrows
                 mc.getTextureManager().bindTexture(textures);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                if (scrollOffset == 0) {
+                if (this.scrollOffset == 0) {
                     this.drawTexturedModalRect(
                             this.xPosition + this.width - 1 - 8,
                             this.yPosition + 1,
@@ -166,7 +166,7 @@ public class StringSelectBox extends GuiButton {
                 } else {
                     this.drawTexturedModalRect(this.xPosition + this.width - 1 - 8, this.yPosition + 1, 8, 84, 8, 8);
                 }
-                if (scrollOffset >= strings.size() - maxLines) {
+                if (this.scrollOffset >= this.strings.size() - this.maxLines) {
                     this.drawTexturedModalRect(
                             this.xPosition + this.width - 1 - 8,
                             this.yPosition + this.height - 1 - 8,
@@ -199,7 +199,7 @@ public class StringSelectBox extends GuiButton {
         }
         // otherwise do stuff
         // first, try the arrows
-        if (maxLines < strings.size()) {
+        if (this.maxLines < this.strings.size()) {
             final int btnMaxX = this.xPosition + this.width - 1;
             final int btnMinX = this.xPosition + this.width - 1 - 8;
 
@@ -210,8 +210,8 @@ public class StringSelectBox extends GuiButton {
 
                 if (btnTopMinY <= mouseY && mouseY <= btnTopMaxY) {
                     // top button
-                    if (scrollOffset > 0) {
-                        scrollOffset--;
+                    if (this.scrollOffset > 0) {
+                        this.scrollOffset--;
                     }
                     return true;
                 }
@@ -220,8 +220,8 @@ public class StringSelectBox extends GuiButton {
                 btnTopMaxY = this.yPosition + this.height - 1;
                 if (btnTopMinY <= mouseY && mouseY <= btnTopMaxY) {
                     // bottom button
-                    if (scrollOffset < strings.size() - maxLines) {
-                        scrollOffset++;
+                    if (this.scrollOffset < this.strings.size() - this.maxLines) {
+                        this.scrollOffset++;
                     }
                     return true;
                 }
@@ -234,9 +234,9 @@ public class StringSelectBox extends GuiButton {
 
         // are we changing selection?
         final int relativeY = mouseY - this.yPosition;
-        final int lineClicked = relativeY / textSize;
-        if (lineClicked < strings.size()) {
-            final int newIndex = lineClicked + scrollOffset;
+        final int lineClicked = relativeY / this.textSize;
+        if (lineClicked < this.strings.size()) {
+            final int newIndex = lineClicked + this.scrollOffset;
             this.setSelection(newIndex);
         }
 

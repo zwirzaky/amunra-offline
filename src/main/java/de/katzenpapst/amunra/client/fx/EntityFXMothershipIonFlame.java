@@ -21,7 +21,7 @@ public class EntityFXMothershipIonFlame extends EntityFX {
         super(world, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z);
 
         // setParticleTextureIndex(82); // same as happy villager
-        particleScale = 2.0F;
+        this.particleScale = 2.0F;
         // setRBGColorF(0x88, 0x00, 0x88);
 
         // this is needed because the vanilla code adds a y component
@@ -40,7 +40,7 @@ public class EntityFXMothershipIonFlame extends EntityFX {
         this.particleGreen = 255F / 255F;// + ;
         this.particleBlue = 255F / 255F;
 
-        this.particleMaxAge = (int) (Math.ceil(particleMaxAge) * 2.0F);
+        this.particleMaxAge = (int) (Math.ceil(this.particleMaxAge) * 2.0F);
 
         this.noClip = true; // for now
     }

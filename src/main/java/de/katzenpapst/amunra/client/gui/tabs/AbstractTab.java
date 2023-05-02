@@ -53,7 +53,7 @@ abstract public class AbstractTab {
     protected GuiContainerGC parent;
 
     public AbstractTab(final GuiContainerGC parent, final Minecraft mc, final int width, final int height, final int xSize, final int ySize) {
-        setWorldAndResolution(mc, width, height, xSize, ySize);
+        this.setWorldAndResolution(mc, width, height, xSize, ySize);
         this.parent = parent;
     }
 
@@ -78,15 +78,15 @@ abstract public class AbstractTab {
         // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
-        for (final GuiButton box : buttonList) {
-            box.drawButton(mc, mouseX, mouseY);
+        for (final GuiButton box : this.buttonList) {
+            box.drawButton(this.mc, mouseX, mouseY);
         }
 
-        for (final GuiLabel box : labelList) {
-            box.func_146159_a(mc, mouseX, mouseY);
+        for (final GuiLabel box : this.labelList) {
+            box.func_146159_a(this.mc, mouseX, mouseY);
         }
 
-        drawExtraScreenElements(mouseX, mouseY, ticks);
+        this.drawExtraScreenElements(mouseX, mouseY, ticks);
         /*
          * for(GuiElementTextBox box: textBoxList) { box.drawButton(mc, mouseX, mouseY); }
          */
@@ -98,16 +98,16 @@ abstract public class AbstractTab {
     }
 
     public void addButton(final GuiButton btn) {
-        buttonList.add(btn);
+        this.buttonList.add(btn);
     }
 
     public void addLabel(final GuiLabel label) {
-        labelList.add(label);
+        this.labelList.add(label);
     }
 
     public void addTextBox(final GuiElementTextBox box) {
-        textBoxList.add(box);
-        buttonList.add(box);
+        this.textBoxList.add(box);
+        this.buttonList.add(box);
     }
 
     public boolean actionPerformed(final GuiButton btn) {
@@ -184,7 +184,7 @@ abstract public class AbstractTab {
     public boolean keyTyped(final char keyChar, final int keyID) {
         if (keyID != Keyboard.KEY_ESCAPE /* && keyID != this.mc.gameSettings.keyBindInventory.getKeyCode() */) {
             // do the fields
-            for (final GuiElementTextBox box : textBoxList) {
+            for (final GuiElementTextBox box : this.textBoxList) {
                 if (box.keyTyped(keyChar, keyID)) {
                     return true;
                 }

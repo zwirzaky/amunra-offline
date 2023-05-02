@@ -48,16 +48,16 @@ abstract public class AbstractPermissionTab extends AbstractTab
         super(parent, mc, width, height, xSize, ySize);
         this.tile = tile;
 
-        permissionModeMap.put(
+        this.permissionModeMap.put(
                 Mothership.PermissionMode.ALL,
                 GCCoreUtil.translate("tile.mothershipSettings.permission.allowAll"));
-        permissionModeMap.put(
+        this.permissionModeMap.put(
                 Mothership.PermissionMode.NONE,
                 GCCoreUtil.translate("tile.mothershipSettings.permission.allowNone"));
-        permissionModeMap.put(
+        this.permissionModeMap.put(
                 Mothership.PermissionMode.WHITELIST,
                 GCCoreUtil.translate("tile.mothershipSettings.permission.whitelist"));
-        permissionModeMap.put(
+        this.permissionModeMap.put(
                 Mothership.PermissionMode.BLACKLIST,
                 GCCoreUtil.translate("tile.mothershipSettings.permission.blacklist"));
     }
@@ -68,21 +68,21 @@ abstract public class AbstractPermissionTab extends AbstractTab
 
     @Override
     public boolean actionPerformed(final GuiButton btn) {
-        if (btn == addBtn) {
+        if (btn == this.addBtn) {
             //
             // AmunRa.packetPipeline.sendToServer(new PacketSimpleAR(EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER,
             // this.tile.getMothership().getID(), textBoxUsername.text));
-            addUsername(this.tile.getMothership(), textBoxUsername.text);
-            textBoxUsername.text = "";
-            addBtn.enabled = false;
+            this.addUsername(this.tile.getMothership(), this.textBoxUsername.text);
+            this.textBoxUsername.text = "";
+            this.addBtn.enabled = false;
             return true;
         }
-        if (btn == rmBtn) {
-            final int selection = selectBox.getSelectedStringIndex();
+        if (btn == this.rmBtn) {
+            final int selection = this.selectBox.getSelectedStringIndex();
             if (selection != -1) {
-                removeUsernameFromList(selection);
-                selectBox.clearSelection();
-                applyData();
+                this.removeUsernameFromList(selection);
+                this.selectBox.clearSelection();
+                this.applyData();
             }
             return true;
         }
@@ -93,7 +93,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
 
     @Override
     public void mothershipResponsePacketRecieved() {
-        resetData();
+        this.resetData();
     }
 
     protected String[] getDropdownOptions() {
@@ -101,7 +101,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
         final String[] result = new String[num];
 
         for (int i = 0; i < num; i++) {
-            result[i] = permissionModeMap.get(Mothership.PermissionMode.values()[i]);
+            result[i] = this.permissionModeMap.get(Mothership.PermissionMode.values()[i]);
         }
 
         return result;
@@ -118,42 +118,42 @@ abstract public class AbstractPermissionTab extends AbstractTab
         final int guiX = (this.width - this.xSize) / 2;
         final int guiY = (this.height - this.ySize) / 2;
 
-        modeDropdown = new GuiElementDropdown(1, this, guiX + 90, guiY + 14, getDropdownOptions());
+        this.modeDropdown = new GuiElementDropdown(1, this, guiX + 90, guiY + 14, this.getDropdownOptions());
 
-        textBoxUsername = new GuiElementTextBox(2, this, guiX + 5, guiY + 30, 95, 20, "", false, 50, false);
+        this.textBoxUsername = new GuiElementTextBox(2, this, guiX + 5, guiY + 30, 95, 20, "", false, 50, false);
 
-        selectBox = new StringSelectBox(this, 3, guiX + 5, guiY + 50, 95, 50);
+        this.selectBox = new StringSelectBox(this, 3, guiX + 5, guiY + 50, 95, 50);
 
-        addBtn = new GuiButton(
+        this.addBtn = new GuiButton(
                 4,
                 guiX + 100,
                 guiY + 30,
                 70,
                 20,
                 GCCoreUtil.translate("tile.mothershipSettings.permission.addUser"));
-        rmBtn = new GuiButton(
+        this.rmBtn = new GuiButton(
                 5,
                 guiX + 100,
                 guiY + 50,
                 70,
                 20,
                 GCCoreUtil.translate("tile.mothershipSettings.permission.removeUser"));
-        rmBtn.enabled = false;
-        addBtn.enabled = false;
+        this.rmBtn.enabled = false;
+        this.addBtn.enabled = false;
 
         /* this.addButton(applyButton); */
-        this.addButton(modeDropdown);
-        this.addButton(selectBox);
-        this.addButton(addBtn);
-        this.addButton(rmBtn);
-        this.addTextBox(textBoxUsername);
+        this.addButton(this.modeDropdown);
+        this.addButton(this.selectBox);
+        this.addButton(this.addBtn);
+        this.addButton(this.rmBtn);
+        this.addTextBox(this.textBoxUsername);
 
-        resetData();
+        this.resetData();
     }
 
     @Override
     public void onTabActivated() {
-        resetData();
+        this.resetData();
     }
 
     @Override
@@ -169,9 +169,9 @@ abstract public class AbstractPermissionTab extends AbstractTab
                 guiY + 16,
                 4210752);
 
-        if (errorTime > 0) {
-            this.fontRendererObj.drawSplitString(error, guiX + 102, guiY + 80, 70, 4210752);
-            errorTime -= ticks;
+        if (this.errorTime > 0) {
+            this.fontRendererObj.drawSplitString(this.error, guiX + 102, guiY + 80, 70, 4210752);
+            this.errorTime -= ticks;
         }
         // this.fontRendererObj.drawString("fooo", guiX+102, guiY+80, 4210752);
 
@@ -201,7 +201,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
 
     @Override
     public void onTextChanged(final GuiElementTextBox textBox, final String newText) {
-        addBtn.enabled = newText != null && !newText.isEmpty();
+        this.addBtn.enabled = newText != null && !newText.isEmpty();
 
     }
 
@@ -223,13 +223,13 @@ abstract public class AbstractPermissionTab extends AbstractTab
     // STRINGSELECTBOX SHIT
     @Override
     public void onSelectionChanged(final StringSelectBox box, final int selection) {
-        rmBtn.enabled = box.hasSelection();
+        this.rmBtn.enabled = box.hasSelection();
     }
 
     @Override
     public void mothershipOperationFailed(final String message) {
-        error = message;
-        errorTime = 60.0F;
+        this.error = message;
+        this.errorTime = 60.0F;
     }
 
 }

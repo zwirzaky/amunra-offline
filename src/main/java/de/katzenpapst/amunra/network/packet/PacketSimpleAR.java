@@ -590,7 +590,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 if (playerBase.worldObj instanceof WorldServer) {
                     world = (WorldServer) playerBase.worldObj;
 
-                    final PlayerID playerId = getPlayerIdByName(world, name);
+                    final PlayerID playerId = this.getPlayerIdByName(world, name);
 
                     // EntityPlayer otherPlayer = world.getPlayerEntityByName(name);
                     if (playerId != null) {

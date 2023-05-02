@@ -44,11 +44,11 @@ public class EntityCryoArrow extends EntityBaseLaserArrow {
     @Override
     protected void onPassThrough(final int x, final int y, final int z) {
 
-        final Block b = worldObj.getBlock(x, y, z);
+        final Block b = this.worldObj.getBlock(x, y, z);
 
         if (b == Blocks.water) {
             this.worldObj.setBlock(x, y, z, Blocks.ice);
-            inWater = false;
+            this.inWater = false;
         }
         if (b == Blocks.lava) {
             this.playSound("random.fizz", 0.7F, 1.6F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);

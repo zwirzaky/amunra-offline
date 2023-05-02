@@ -22,7 +22,7 @@ public class BlockRendererARChest implements ISimpleBlockRenderingHandler {
     @Override
     public void renderInventoryBlock(final Block block, final int metadata, final int modelId, final RenderBlocks renderer) {
         // TODO Auto-generated method stub
-        renderChest(block, metadata, modelId);
+        this.renderChest(block, metadata, modelId);
 
     }
 
@@ -46,7 +46,7 @@ public class BlockRendererARChest implements ISimpleBlockRenderingHandler {
 
     public void renderChest(final Block par1Block, final int par2, final float par3) {
         if (par1Block instanceof BlockARChest) {
-            chestModel.render((BlockARChest) par1Block, false, 0, -0.1F, 0);
+            this.chestModel.render((BlockARChest) par1Block, false, 0, -0.1F, 0);
         }
     }
 }

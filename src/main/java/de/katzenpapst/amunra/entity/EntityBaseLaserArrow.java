@@ -106,7 +106,7 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
                     yAngle);
             this.yOffset = 0.0F;
             final float wtf = (float) planarDistance * 0.2F;
-            this.setThrowableHeading(xNew, yNew + wtf, zNew, getSpeed(), randMod);
+            this.setThrowableHeading(xNew, yNew + wtf, zNew, this.getSpeed(), randMod);
         }
     }
 
@@ -132,7 +132,7 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         final Vector3 thisToTarget = targetPos.difference(startVec);
         // setThrowableHeading normalizes the vector already
         this.yOffset = 0.0F;
-        this.setThrowableHeading(thisToTarget.x, thisToTarget.y, thisToTarget.z, getSpeed(), 0.0F);
+        this.setThrowableHeading(thisToTarget.x, thisToTarget.y, thisToTarget.z, this.getSpeed(), 0.0F);
         // do I still need setLocationAndAngles now?
         // meh
         this.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
@@ -164,7 +164,7 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI)
                 * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI);
         this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI);
-        this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, getSpeed() * 1.5F, 1.0F);
+        this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.getSpeed() * 1.5F, 1.0F);
     }
 
     abstract protected float getSpeed();
@@ -250,14 +250,14 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (ticksInAir >= expirationTime) {
+        if (this.ticksInAir >= this.expirationTime) {
             this.setDead();
             return;
         }
 
         // try this
         if (!this.worldObj.isRemote) {
-            onPassThrough((int) posX, (int) posY, (int) posZ);
+            this.onPassThrough((int) this.posX, (int) this.posY, (int) this.posZ);
         }
 
         final Block block = this.worldObj.getBlock(this.xTile, this.yTile, this.zTile);
@@ -335,14 +335,14 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
 
             float f2;
             float f3;
-            final double damage = getDamage();
+            final double damage = this.getDamage();
 
             if (movingobjectposition != null) {
                 if (movingobjectposition.entityHit != null) {
                     // this seems to be some sort of bonus damage
                     f2 = MathHelper.sqrt_double(
                             this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-                    final int dmgValue = getEntityDependentDamage(
+                    final int dmgValue = this.getEntityDependentDamage(
                             movingobjectposition.entityHit,
                             MathHelper.ceiling_double_int(f2 * damage));
 

@@ -28,13 +28,13 @@ public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
     protected void initBlockTypes() {
         super.initBlockTypes();
 
-        addBlockToHandler(coreHandler, ARBlocks.oreDiamondAsteroid, 1, .1);
-        addBlockToHandler(coreHandler, ARBlocks.oreRubyAsteroid, 1, .1);
-        addBlockToHandler(coreHandler, ARBlocks.oreEmeraldAsteroid, 1, .1);
-        addBlockToHandler(coreHandler, ARBlocks.oreCopperAsteroid, 15, .2);
-        addBlockToHandler(coreHandler, ARBlocks.oreLeadAsteroid, 8, .2);
-        addBlockToHandler(coreHandler, ARBlocks.oreUraniumAsteroid, 4, .05);
-        addBlockToHandler(coreHandler, ARBlocks.blockDarkmatter, 1, .05);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreDiamondAsteroid, 1, .1);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreRubyAsteroid, 1, .1);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreEmeraldAsteroid, 1, .1);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreCopperAsteroid, 15, .2);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreLeadAsteroid, 8, .2);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreUraniumAsteroid, 4, .05);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.blockDarkmatter, 1, .05);
     }
 
     @Override

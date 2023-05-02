@@ -43,9 +43,9 @@ public class BlockGravitation extends SubBlockMachine {
     @Override
     public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
-        backIcon = par1IconRegister.registerIcon(backTexture);
-        sideIcon = par1IconRegister.registerIcon(sideTexture);
-        activeIcon = par1IconRegister.registerIcon(activeTexture);
+        this.backIcon = par1IconRegister.registerIcon(this.backTexture);
+        this.sideIcon = par1IconRegister.registerIcon(this.sideTexture);
+        this.activeIcon = par1IconRegister.registerIcon(this.activeTexture);
     }
 
     @Override

@@ -51,8 +51,8 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
         super.registerBlockIcons(par1IconRegister);
         // this.blockIcon = reg.registerIcon(this.getTextureName());
         // this.iconFront = par1IconRegister.registerIcon(AmunRa.TEXTUREPREFIX + "machine_nuclear");
-        iconBlank = par1IconRegister.registerIcon(sideTexture);
-        iconOutput = par1IconRegister.registerIcon(outputTexture);
+        this.iconBlank = par1IconRegister.registerIcon(this.sideTexture);
+        this.iconOutput = par1IconRegister.registerIcon(this.outputTexture);
         // this.blockIcon = iconFront;
     }
 

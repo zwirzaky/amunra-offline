@@ -42,8 +42,8 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
         this.ySize = 201;
         this.xSize = 176;
         this.tile = tile;
-        mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
-        ship = tile.getMothership();
+        this.mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
+        this.ship = tile.getMothership();
 
     }
 
@@ -75,18 +75,18 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
 
     public void sendMothershipSettingsPacket() {
         final NBTTagCompound nbt = new NBTTagCompound();
-        ship.writeSettingsToNBT(nbt);
+        this.ship.writeSettingsToNBT(nbt);
         AmunRa.packetPipeline
-                .sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, ship.getID(), nbt));
+                .sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, this.ship.getID(), nbt));
     }
 
     @Override
     public void initGui() {
         super.initGui();
 
-        this.addTab(new TabMothershipCustom(tile, this, mc, width, height, xSize, ySize));
-        this.addTab(new TabMothershipLanding(tile, this, mc, width, height, xSize, ySize));
-        this.addTab(new TabMothershipUsage(tile, this, mc, width, height, xSize, ySize));
+        this.addTab(new TabMothershipCustom(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
+        this.addTab(new TabMothershipLanding(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
+        this.addTab(new TabMothershipUsage(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
 
     }
 

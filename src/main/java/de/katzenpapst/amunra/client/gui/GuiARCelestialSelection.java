@@ -62,7 +62,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
     public GuiARCelestialSelection(final MapMode mapMode, final List<CelestialBody> possibleBodies) {
         super(mapMode, possibleBodies);
-        shuttlePossibleBodies = possibleBodies;
+        this.shuttlePossibleBodies = possibleBodies;
     }
 
     public void setPossibleBodies(final List<CelestialBody> possibleBodies) {
@@ -80,8 +80,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             this.celestialBodyTicks.put(ms, 0);
         }
 
-        updateNumPlayerMotherships();
-        updatePlayerParent();
+        this.updateNumPlayerMotherships();
+        this.updatePlayerParent();
     }
 
     protected boolean isMouseWithin(final int mouseX, final int mouseY, final int rectX, final int rectY, final int rectW, final int rectH) {
@@ -92,7 +92,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
     public void drawButtons(final int mousePosX, final int mousePosY) {
         super.drawButtons(mousePosX, mousePosY);
         if (this.isMessageShown) {
-            drawMessageBox();
+            this.drawMessageBox();
         }
     }
 
@@ -107,8 +107,8 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         final int boxWidth = 179;
         final int boxHeight = 67;
         this.drawTexturedModalRect(
-                (width - boxWidth) / 2,
-                (height - boxHeight) / 2,
+                (this.width - boxWidth) / 2,
+                (this.height - boxHeight) / 2,
                 boxWidth,
                 boxHeight,
                 0,
@@ -123,33 +123,33 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         final int btnWidth = 93;
         final int btnHeight = 12;
 
-        messageButtonBox
-                .setPositionSize((width - btnWidth) / 2, (height - btnHeight) / 2 + btnOffset, btnWidth, btnHeight);
+        this.messageButtonBox
+                .setPositionSize((this.width - btnWidth) / 2, (this.height - btnHeight) / 2 + btnOffset, btnWidth, btnHeight);
 
         GL11.glColor4f(0.0F, 1.0F, 0.0F, 1);
         this.drawTexturedModalRect(
-                messageButtonBox.minX,
-                messageButtonBox.minY,
-                messageButtonBox.getWidth(),
-                messageButtonBox.getHeight(),
+                this.messageButtonBox.minX,
+                this.messageButtonBox.minY,
+                this.messageButtonBox.getWidth(),
+                this.messageButtonBox.getHeight(),
                 0,
                 202, // u/v position
                 93,
                 12, // u/v size
                 true,
                 false);
-        String str = messageCaption;
+        String str = this.messageCaption;
         this.fontRendererObj.drawString(
                 str,
-                (width - fontRendererObj.getStringWidth(str)) / 2,
-                (height - boxHeight) / 2 + 3,
+                (this.width - this.fontRendererObj.getStringWidth(str)) / 2,
+                (this.height - boxHeight) / 2 + 3,
                 ColorUtil.to32BitColor(255, 255, 255, 255));
 
         str = GCCoreUtil.translate("gui.message.mothership.okay");
         this.fontRendererObj.drawString(
                 str,
-                (width - fontRendererObj.getStringWidth(str)) / 2,
-                (height - btnHeight) / 2 + 2 + btnOffset,
+                (this.width - this.fontRendererObj.getStringWidth(str)) / 2,
+                (this.height - btnHeight) / 2 + 2 + btnOffset,
                 ColorUtil.to32BitColor(255, 255, 255, 255));
 
         // this.drawSplitString(GCCoreUtil.translate("gui.message.clickAgain.0.name"), width -
@@ -157,9 +157,9 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         // GuiCelestialSelection.BORDER_WIDTH + GuiCelestialSelection.BORDER_EDGE_WIDTH + 1 - 38 + sliderPos, 79,
         // ColorUtil.to32BitColor(255, 150, 150, 150), false, false);
         this.fontRendererObj.drawSplitString(
-                messageText,
-                (width - boxWidth) / 2 + 4,
-                (height - boxHeight) / 2 + 14,
+                this.messageText,
+                (this.width - boxWidth) / 2 + 4,
+                (this.height - boxHeight) / 2 + 14,
                 boxWidth - 8,
                 ColorUtil.to32BitColor(255, 255, 255, 255));
 
@@ -264,7 +264,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                 if ((ms == this.selectedBody || ms.getParent() == this.selectedBody && this.selectionCount != 1)
                         && (this.ticksSinceSelection > 35 || this.selectedBody == ms
                                 || this.lastSelectedBody instanceof Mothership
-                                        && ((Mothership) this.lastSelectedBody).getParent().equals(ms)) || isSiblingOf(this.selectedBody, ms)) {
+                                        && ((Mothership) this.lastSelectedBody).getParent().equals(ms)) || this.isSiblingOf(this.selectedBody, ms)) {
                     result.add(ms);
                 }
             }
@@ -279,13 +279,13 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             // ship's parent is the body and selectionCount != 1
             // AND
             // this.ticksSinceSelection > 35
-            if (selectionCount != 1 && this.ticksSinceSelection > 35) {
+            if (this.selectionCount != 1 && this.ticksSinceSelection > 35) {
                 return this.selectedBody;
             }
             return null;
         }
         if (this.selectedBody instanceof IChildBody) {
-            if (selectionCount != 1 && this.ticksSinceSelection > 35) {
+            if (this.selectionCount != 1 && this.ticksSinceSelection > 35) {
                 return this.selectedBody;
             }
         } else if (this.selectedBody instanceof Mothership) {
@@ -414,7 +414,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         final float cos = (float) Math.cos(theta);
         final float sin = (float) Math.sin(theta);
 
-        final CelestialBody body = getBodyToRenderMothershipsAround();
+        final CelestialBody body = this.getBodyToRenderMothershipsAround();
         if (body instanceof Moon && this.selectionCount >= 1) { // TODO add condition to figure out if stuff
             this._workaroundDrawMoonCircle((Moon) body, sin, cos);
         }
@@ -477,7 +477,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
              * - renderShipsAround == lastSelectedBody's parent
              */
 
-            renderShipsAround = getBodyToRenderMothershipsAround();
+            renderShipsAround = this.getBodyToRenderMothershipsAround();
             if (renderShipsAround != null) {
 
                 // MothershipWorldData msData = TickHandlerServer.mothershipData;
@@ -488,7 +488,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                 // use it on matrix0?
                 if (this.selectionCount > 0 && renderShipsAround instanceof Moon
                         && this.selectedBody instanceof Mothership) {
-                    _workaroundDrawMoon(worldMatrix0, (Moon) renderShipsAround, fb, result);
+                    this._workaroundDrawMoon(worldMatrix0, (Moon) renderShipsAround, fb, result);
                 }
 
                 for (final Mothership ms : msList) {
@@ -581,7 +581,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             this.celestialBodyTicks.put(ms, 0);
         }
 
-        updateNumPlayerMotherships();
+        this.updateNumPlayerMotherships();
     }
 
     public void mothershipCreationFailed() {
@@ -591,7 +591,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
     public void newMothershipCreated(final Mothership ship) {
         this.celestialBodyTicks.put(ship, 0);
         this.shuttlePossibleBodies.add(ship);
-        updateNumPlayerMotherships();
+        this.updateNumPlayerMotherships();
     }
 
     public void mothershipPositionChanged(final Mothership ship) {
@@ -599,7 +599,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
         if (ship.isInTransit()) {
             // left
             // check if it even affects me
-            if (shuttlePossibleBodies.remove(ship)) {
+            if (this.shuttlePossibleBodies.remove(ship)) {
                 // apparently it did. do more stuff
                 if (this.selectedBody.equals(ship)) {
                     this.unselectCelestialBody();
@@ -654,7 +654,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
     protected void updateNumPlayerMotherships() {
 
-        numPlayersMotherships = TickHandlerServer.mothershipData.getNumMothershipsForPlayer(this.mc.thePlayer);
+        this.numPlayersMotherships = TickHandlerServer.mothershipData.getNumMothershipsForPlayer(this.mc.thePlayer);
         // numPlayersMotherships
     }
 
@@ -699,14 +699,14 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
     }
 
     public void selectAndZoomNextTick(final CelestialBody target) {
-        nextSelectedBody = target;
+        this.nextSelectedBody = target;
     }
 
     @Override
     protected void mouseClicked(final int x, final int y, final int button) {
         if (this.isMessageShown) {
-            if (messageButtonBox.isWithin(x, y)) {
-                hideMessage();
+            if (this.messageButtonBox.isWithin(x, y)) {
+                this.hideMessage();
             }
             return;
         }
@@ -735,21 +735,21 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
     @Override
     public void updateScreen() {
-        if (nextSelectedBody != null) {
-            this.selectAndZoom(nextSelectedBody);
-            nextSelectedBody = null;
+        if (this.nextSelectedBody != null) {
+            this.selectAndZoom(this.nextSelectedBody);
+            this.nextSelectedBody = null;
         }
         super.updateScreen();
     }
 
     public void showMessageBox(final String caption, final String text) {
-        isMessageShown = true;
-        messageCaption = caption;
-        messageText = text;
+        this.isMessageShown = true;
+        this.messageCaption = caption;
+        this.messageText = text;
     }
 
     public void hideMessage() {
-        isMessageShown = false;
+        this.isMessageShown = false;
     }
 
 }

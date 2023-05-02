@@ -20,17 +20,17 @@ public class ContainerCrafter extends ContainerWorkbench {
 
     public ContainerCrafter(final InventoryPlayer playerInv, final World world, final int x, final int y, final int z) {
         super(playerInv, world, x, y, z);
-        worldFU = world;
-        posXFU = x;
-        posYFU = y;
-        posZFU = z;
+        this.worldFU = world;
+        this.posXFU = x;
+        this.posYFU = y;
+        this.posZFU = z;
     }
 
     @Override
     public boolean canInteractWith(final EntityPlayer player) {
         // either using a crafting block, or a crafting tool
-        final Block b = player.worldObj.getBlock(posXFU, posYFU, posZFU);
-        final int meta = player.worldObj.getBlockMetadata(posXFU, posYFU, posZFU);
+        final Block b = player.worldObj.getBlock(this.posXFU, this.posYFU, this.posZFU);
+        final int meta = player.worldObj.getBlockMetadata(this.posXFU, this.posYFU, this.posZFU);
 
         if (ARBlocks.blockWorkbench.getBlock() == b && ARBlocks.blockWorkbench.getMetadata() == meta) {
             return player.getDistanceSq(

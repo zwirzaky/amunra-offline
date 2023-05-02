@@ -73,7 +73,7 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     @Override
     public void drawBackground(final int recipe) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.changeTexture(this.getGuiTexture());
 
         GuiDraw.drawTexturedModalRect(0, 4, 4, 4, 168, 130);
     }

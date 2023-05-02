@@ -15,12 +15,12 @@ public class DynamicTexturedButton extends GuiButton {
 
     public DynamicTexturedButton(final int id, final int x, final int y, final ResourceLocation initialTexture) {
         super(id, x, y, "");
-        texture = initialTexture;
+        this.texture = initialTexture;
     }
 
     public DynamicTexturedButton(final int id, final int x, final int y, final int width, final int height, final ResourceLocation initialTexture) {
         super(id, x, y, width, height, "");
-        texture = initialTexture;
+        this.texture = initialTexture;
     }
 
     public void setTexture(final ResourceLocation texture) {
@@ -28,7 +28,7 @@ public class DynamicTexturedButton extends GuiButton {
     }
 
     public ResourceLocation getTexture() {
-        return texture;
+        return this.texture;
     }
 
     public void setSelected(final boolean set) {
@@ -36,7 +36,7 @@ public class DynamicTexturedButton extends GuiButton {
     }
 
     public boolean getSelected() {
-        return isSelected;
+        return this.isSelected;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class DynamicTexturedButton extends GuiButton {
             // FontRenderer fontrenderer = mc.fontRenderer;
             mc.getTextureManager().bindTexture(buttonTextures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            if (isSelected) {
+            if (this.isSelected) {
                 GL11.glColor4f(1.0F, 0.5F, 0.5F, 1.0F);
             }
             this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition
@@ -65,12 +65,12 @@ public class DynamicTexturedButton extends GuiButton {
                     this.height);
             this.mouseDragged(mc, mouseX, mouseY);
 
-            if (texture != null) {
+            if (this.texture != null) {
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                mc.getTextureManager().bindTexture(texture);
+                mc.getTextureManager().bindTexture(this.texture);
                 // this.drawTexturedModalRect(xPosition, yPosition, 0, 0, width, height);
 
-                drawFullSizedTexturedRect(xPosition + 2, yPosition + 2, width - 4, height - 4);
+                this.drawFullSizedTexturedRect(this.xPosition + 2, this.yPosition + 2, this.width - 4, this.height - 4);
                 // this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2,
                 // this.yPosition + (this.height - 8) / 2, l);
             }

@@ -24,22 +24,22 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
     public GuiContainerTabbed(final Container container) {
         super(container);
 
-        tabList = new ArrayList<>();
-        tabButtons = new ArrayList<>();
+        this.tabList = new ArrayList<>();
+        this.tabButtons = new ArrayList<>();
     }
 
     @Override
     public void initGui() {
-        tabList.clear();
-        tabButtons.clear();
+        this.tabList.clear();
+        this.tabButtons.clear();
         super.initGui();
     }
 
     public int addTab(final AbstractTab tab) {
-        if (tabList.add(tab)) {
+        if (this.tabList.add(tab)) {
             tab.initGui();
 
-            final int newIndex = tabList.size() - 1;
+            final int newIndex = this.tabList.size() - 1;
 
             final int guiX = (this.width - this.xSize) / 2;
             final int guiY = (this.height - this.ySize) / 2;
@@ -55,7 +55,7 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
             this.buttonList.add(test);
             this.tabButtons.add(test);
 
-            setActiveTab(0);
+            this.setActiveTab(0);
 
             return newIndex;
         }
@@ -63,12 +63,12 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
     }
 
     public AbstractTab getTab(final int index) {
-        return tabList.get(index);
+        return this.tabList.get(index);
     }
 
     public void setActiveTab(final int newIndex) {
-        if (newIndex >= 0 && newIndex < tabList.size() && newIndex != activeTab) {
-            activeTab = newIndex;
+        if (newIndex >= 0 && newIndex < this.tabList.size() && newIndex != this.activeTab) {
+            this.activeTab = newIndex;
             final int btnIndex = TAB_BTN_OFFSET + newIndex;
             this.getActiveTab().onTabActivated();
             for (final TabButton btn : this.tabButtons) {
@@ -82,20 +82,20 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
     }
 
     public int getActiveTabIndex() {
-        return activeTab;
+        return this.activeTab;
     }
 
     public AbstractTab getActiveTab() {
-        return tabList.get(activeTab);
+        return this.tabList.get(this.activeTab);
     }
 
     @Override
     public void drawScreen(final int mouseX, final int mouseY, final float ticks) {
         super.drawScreen(mouseX, mouseY, ticks);
         // getActiveTab().
-        getActiveTab().drawScreen(mouseX, mouseY, ticks);
+        this.getActiveTab().drawScreen(mouseX, mouseY, ticks);
 
-        for (final TabButton tb : tabButtons) {
+        for (final TabButton tb : this.tabButtons) {
             tb.drawTooltip(mouseX, mouseY);
         }
     }
@@ -111,7 +111,7 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
             this.setActiveTab(index);
         }
         // TODO handle my own stuff first
-        getActiveTab().actionPerformed(btn);
+        this.getActiveTab().actionPerformed(btn);
     }
 
     /**
@@ -119,14 +119,14 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
      */
     @Override
     protected void keyTyped(final char keyChar, final int keyId) {
-        if (!getActiveTab().keyTyped(keyChar, keyId)) {
+        if (!this.getActiveTab().keyTyped(keyChar, keyId)) {
             super.keyTyped(keyChar, keyId);
         }
     }
 
     @Override
     public void handleMouseInput() {
-        getActiveTab().handleMouseInput();
+        this.getActiveTab().handleMouseInput();
         super.handleMouseInput();
     }
 
@@ -137,6 +137,6 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
     @Override
     public void setWorldAndResolution(final Minecraft mc, final int x, final int y) {
         super.setWorldAndResolution(mc, x, y);
-        getActiveTab().setWorldAndResolution(mc, x, y, this.xSize, this.ySize);
+        this.getActiveTab().setWorldAndResolution(mc, x, y, this.xSize, this.ySize);
     }
 }

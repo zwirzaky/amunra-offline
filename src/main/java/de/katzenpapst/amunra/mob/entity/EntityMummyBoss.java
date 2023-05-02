@@ -117,7 +117,7 @@ public class EntityMummyBoss extends EntityMob
     public void attackEntityWithRangedAttack(final EntityLivingBase targetIthink, final float unknown) {
 
         if (!this.isDead) {
-            performAttack(targetIthink);
+            this.performAttack(targetIthink);
         }
 
     }
@@ -201,7 +201,7 @@ public class EntityMummyBoss extends EntityMob
 
         // boolean hitBy
         if (entity instanceof EntityPlayer) {
-            attackedWithLootLevel = EnchantmentHelper.getLootingModifier((EntityLivingBase) entity);
+            this.attackedWithLootLevel = EnchantmentHelper.getLootingModifier((EntityLivingBase) entity);
         }
     }
 
@@ -264,7 +264,7 @@ public class EntityMummyBoss extends EntityMob
             }
 
             // generate loot here
-            dropLoot(true, attackedWithLootLevel);
+            this.dropLoot(true, this.attackedWithLootLevel);
 
             super.setDead();
 
@@ -280,11 +280,11 @@ public class EntityMummyBoss extends EntityMob
     }
 
     protected void dropLoot(final boolean hitByPlayer, final int lootLevel) {
-        final List<ItemStack> result = getDrops(guaranteedLoot, getRNG(), 0);
+        final List<ItemStack> result = this.getDrops(guaranteedLoot, this.getRNG(), 0);
 
         final int lootModifier = (lootLevel + 1) / 2;
 
-        result.addAll(getDrops(extraLoot, getRNG(), lootLevel, lootModifier, 5 + lootModifier));
+        result.addAll(this.getDrops(extraLoot, this.getRNG(), lootLevel, lootModifier, 5 + lootModifier));
 
         for (final ItemStack stack : result) {
             this.entityDropItem(stack, 1);
@@ -292,7 +292,7 @@ public class EntityMummyBoss extends EntityMob
     }
 
     protected List<ItemStack> getDrops(final List<ItemStack> source, final Random rand, final int lootLevel) {
-        return getDrops(source, rand, lootLevel, 1, 1);
+        return this.getDrops(source, rand, lootLevel, 1, 1);
     }
 
     protected List<ItemStack> getDrops(final List<ItemStack> source, final Random rand, final int lootLevel, final int minStacks,
@@ -338,25 +338,25 @@ public class EntityMummyBoss extends EntityMob
     public void writeEntityToNBT(final NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
 
-        if (spawnerPos != null) {
-            nbt.setTag("spawnerPosition", spawnerPos.toNBT());
+        if (this.spawnerPos != null) {
+            nbt.setTag("spawnerPosition", this.spawnerPos.toNBT());
         }
 
-        if (roomArea != null) {
-            nbt.setTag("roomArea", NbtHelper.getAsNBT(roomArea));
+        if (this.roomArea != null) {
+            nbt.setTag("roomArea", NbtHelper.getAsNBT(this.roomArea));
         }
 
-        nbt.setInteger("atkLootLevel", attackedWithLootLevel);
+        nbt.setInteger("atkLootLevel", this.attackedWithLootLevel);
     }
 
     @Override
     public void readEntityFromNBT(final NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
 
-        attackedWithLootLevel = nbt.getInteger("atkLootLevel");
+        this.attackedWithLootLevel = nbt.getInteger("atkLootLevel");
 
         if (nbt.hasKey("spawnerPosition")) {
-            spawnerPos = new Vector3int(nbt.getCompoundTag("spawnerPosition"));
+            this.spawnerPos = new Vector3int(nbt.getCompoundTag("spawnerPosition"));
         }
 
         if (nbt.hasKey("roomArea")) {
@@ -367,18 +367,18 @@ public class EntityMummyBoss extends EntityMob
     @Override
     public void setSpawner(final ITileDungeonSpawner spawner) {
         this.spawner = spawner;
-        spawnerPos = spawner.getBlockPosition();
+        this.spawnerPos = spawner.getBlockPosition();
     }
 
     @Override
     public ITileDungeonSpawner getSpawner() {
-        if (spawner == null && spawnerPos != null) {
-            final TileEntity te = this.worldObj.getTileEntity(spawnerPos.x, spawnerPos.y, spawnerPos.z);
+        if (this.spawner == null && this.spawnerPos != null) {
+            final TileEntity te = this.worldObj.getTileEntity(this.spawnerPos.x, this.spawnerPos.y, this.spawnerPos.z);
             if (te instanceof ITileDungeonSpawner) {
                 this.spawner = (ITileDungeonSpawner) te;
             }
         }
-        return spawner;
+        return this.spawner;
     }
 
     @Override

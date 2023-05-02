@@ -15,7 +15,7 @@ public class ContainerArtificalGravity extends ContainerWithPlayerInventory {
 
         this.addSlotToContainer(new SlotSpecific(tile, 0, 152, 132, ItemElectricBase.class));
 
-        initPlayerInventorySlots(playerInv, 35);
+        this.initPlayerInventorySlots(playerInv, 35);
     }
 
     @Override

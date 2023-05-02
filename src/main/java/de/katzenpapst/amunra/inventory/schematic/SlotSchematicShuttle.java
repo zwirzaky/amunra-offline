@@ -66,7 +66,7 @@ public class SlotSchematicShuttle extends Slot {
             return true; // all are valid
         }
 
-        for (final ItemDamagePair item : validItem) {
+        for (final ItemDamagePair item : this.validItem) {
             if (item.isSameItem(par1ItemStack)) {
                 return true;
             }

@@ -81,16 +81,16 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
          * ArrowNockEvent event = new ArrowNockEvent(entityPlayer, itemStack); MinecraftForge.EVENT_BUS.post(event); if
          * (event.isCanceled()) { return event.result; }
          */
-        if (entityPlayer.capabilities.isCreativeMode || getElectricityStored(itemStack) >= getEnergyPerShot()) {
+        if (entityPlayer.capabilities.isCreativeMode || this.getElectricityStored(itemStack) >= this.getEnergyPerShot()) {
 
             entityPlayer.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
             if (!this.chargeMode) {
-                fire(itemStack, entityPlayer, world);
+                this.fire(itemStack, entityPlayer, world);
             }
         } else if (!world.isRemote) {
             world.playSoundAtEntity(
                     entityPlayer,
-                    getEmptySound(),
+                    this.getEmptySound(),
                     1.0F,
                     1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + 0.5F);
 
@@ -120,11 +120,11 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
         if (!world.isRemote) {
             world.playSoundAtEntity(
                     entityPlayer,
-                    getFiringSound(),
+                    this.getFiringSound(),
                     1.0F,
                     1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + 0.5F);
             // LaserArrow entityarrow = new LaserArrow(world, entityPlayer);
-            spawnProjectile(itemStack, entityPlayer, world);
+            this.spawnProjectile(itemStack, entityPlayer, world);
         }
         return true;
     }
@@ -142,7 +142,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
     }
 
     protected void spawnProjectile(final ItemStack itemStack, final EntityPlayer entityPlayer, final World world) {
-        final EntityBaseLaserArrow ent = createProjectile(itemStack, entityPlayer, world);
+        final EntityBaseLaserArrow ent = this.createProjectile(itemStack, entityPlayer, world);
 
         // enchantment stuff
 

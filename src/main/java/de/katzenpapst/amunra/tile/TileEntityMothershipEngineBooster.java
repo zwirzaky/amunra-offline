@@ -66,40 +66,40 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     }
 
     public void reset() {
-        masterPresent = false;
+        this.masterPresent = false;
         this.markDirty();
         this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 
     public void setMaster(final int x, final int y, final int z) {
-        masterX = x;
-        masterY = y;
-        masterZ = z;
-        masterPresent = true;
+        this.masterX = x;
+        this.masterY = y;
+        this.masterZ = z;
+        this.masterPresent = true;
     }
 
     public int getMasterX() {
-        return masterX;
+        return this.masterX;
     }
 
     public int getMasterY() {
-        return masterY;
+        return this.masterY;
     }
 
     public int getMasterZ() {
-        return masterZ;
+        return this.masterZ;
     }
 
     public void clearMaster() {
-        masterPresent = false;
+        this.masterPresent = false;
     }
 
     public boolean isMaster(final int x, final int y, final int z) {
-        return masterPresent && x == masterX && y == masterY && z == masterZ;
+        return this.masterPresent && x == this.masterX && y == this.masterY && z == this.masterZ;
     }
 
     public Vector3int getMasterPosition() {
-        return new Vector3int(masterX, masterY, masterZ);
+        return new Vector3int(this.masterX, this.masterY, this.masterZ);
     }
 
     public boolean hasMaster() {
@@ -112,15 +112,15 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
      * Reset and update the master, if I have any
      */
     public void updateMaster(final boolean rightNow) {
-        if (!masterPresent) return;
+        if (!this.masterPresent) return;
 
-        final TileEntity masterTile = worldObj.getTileEntity(masterX, masterY, masterZ);
+        final TileEntity masterTile = this.worldObj.getTileEntity(this.masterX, this.masterY, this.masterZ);
         if (masterTile == null || !(masterTile instanceof TileEntityMothershipEngineAbstract jetTile)) {
             // apparently we just lost our master?
             this.reset();
             return;
         }
-        if (!jetTile.isPartOfMultiBlock(xCoord, yCoord, zCoord)) {
+        if (!jetTile.isPartOfMultiBlock(this.xCoord, this.yCoord, this.zCoord)) {
             this.reset();
             return;
         }
@@ -138,23 +138,23 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
      * @return
      */
     public Vector3int getPossibleNextBooster() {
-        if (!hasMaster()) {
+        if (!this.hasMaster()) {
             return null;
         }
         if (this.xCoord == this.masterX) {
             if (this.zCoord < this.masterZ) {
-                return new Vector3int(xCoord, yCoord, zCoord - 1);
+                return new Vector3int(this.xCoord, this.yCoord, this.zCoord - 1);
             } else if (this.zCoord > this.masterZ) {
-                return new Vector3int(xCoord, yCoord, zCoord + 1);
+                return new Vector3int(this.xCoord, this.yCoord, this.zCoord + 1);
             } else {
                 return null;
             }
         }
         if (this.zCoord == this.masterZ) {
             if (this.xCoord < this.masterX) {
-                return new Vector3int(xCoord - 1, yCoord, zCoord);
+                return new Vector3int(this.xCoord - 1, this.yCoord, this.zCoord);
             } else if (this.xCoord > this.masterX) {
-                return new Vector3int(xCoord + 1, yCoord, zCoord);
+                return new Vector3int(this.xCoord + 1, this.yCoord, this.zCoord);
             } else {
             }
         }
@@ -164,26 +164,26 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     @Override
     public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        masterPresent = nbt.getBoolean("hasMaster");
-        masterX = nbt.getInteger("masterX");
-        masterY = nbt.getInteger("masterY");
-        masterZ = nbt.getInteger("masterZ");
+        this.masterPresent = nbt.getBoolean("hasMaster");
+        this.masterX = nbt.getInteger("masterX");
+        this.masterY = nbt.getInteger("masterY");
+        this.masterZ = nbt.getInteger("masterZ");
     }
 
     @Override
     public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setBoolean("hasMaster", masterPresent);
-        nbt.setInteger("masterX", masterX);
-        nbt.setInteger("masterY", masterY);
-        nbt.setInteger("masterZ", masterZ);
+        nbt.setBoolean("hasMaster", this.masterPresent);
+        nbt.setInteger("masterX", this.masterX);
+        nbt.setInteger("masterY", this.masterY);
+        nbt.setInteger("masterZ", this.masterZ);
     }
 
     public TileEntityMothershipEngineAbstract getMasterTile() {
         if (!this.masterPresent) {
             return null;
         }
-        final TileEntity tile = this.worldObj.getTileEntity(masterX, masterY, masterZ);
+        final TileEntity tile = this.worldObj.getTileEntity(this.masterX, this.masterY, this.masterZ);
         if (tile == null || !(tile instanceof TileEntityMothershipEngineAbstract)) {
             // oops
             this.masterPresent = false;
@@ -367,15 +367,15 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     @Override
     public Packet getDescriptionPacket() {
         final NBTTagCompound var1 = new NBTTagCompound();
-        writeToNBT(var1);
+        this.writeToNBT(var1);
 
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, var1);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, var1);
         // return new Packet132TileEntityDat(this.xCoord, this.yCoord, this.zCoord, 1, var1);
     }
 
     @Override
     public void onDataPacket(final NetworkManager net, final S35PacketUpdateTileEntity packet) {
-        readFromNBT(packet.func_148857_g());
+        this.readFromNBT(packet.func_148857_g());
     }
 
     public ResourceLocation getBlockIconFromSide(final int side) {

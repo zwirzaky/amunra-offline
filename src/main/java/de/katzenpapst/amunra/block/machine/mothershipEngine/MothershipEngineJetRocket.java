@@ -37,10 +37,10 @@ public class MothershipEngineJetRocket extends MothershipEngineJetBase {
 
     @Override
     protected ItemDamagePair getItem() {
-        if (item == null) {
-            item = ARItems.jetItem;
+        if (this.item == null) {
+            this.item = ARItems.jetItem;
         }
-        return item;
+        return this.item;
     }
 
 }

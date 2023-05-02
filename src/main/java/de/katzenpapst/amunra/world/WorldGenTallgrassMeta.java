@@ -20,7 +20,7 @@ public class WorldGenTallgrassMeta extends WorldGenerator {
         this.tallGrassBlock = block;
         this.tallGrassMetadata = meta;
 
-        plant = (SubBlockBush) block.getSubBlock(meta);
+        this.plant = (SubBlockBush) block.getSubBlock(meta);
 
     }
 
@@ -45,7 +45,7 @@ public class WorldGenTallgrassMeta extends WorldGenerator {
             final int curY = y + rand.nextInt(4) - rand.nextInt(4);
             final int curZ = z + rand.nextInt(8) - rand.nextInt(8);
 
-            if (world.isAirBlock(curX, curY, curZ) && plant.canPlaceOn(
+            if (world.isAirBlock(curX, curY, curZ) && this.plant.canPlaceOn(
                     world.getBlock(curX, curY - 1, curZ),
                     world.getBlockMetadata(curX, curY - 1, curZ),
                     0)) {

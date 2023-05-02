@@ -42,7 +42,7 @@ public class ContainerSchematicShuttle extends Container {
     public ContainerSchematicShuttle(final InventoryPlayer player, final int x, final int y, final int z) {
         // mostCompleteRecipe = RecipeHelper.getMostCompleteRecipeFor(craftingResult);
 
-        slotTypes = RecipeHelper.getNasaWorkbenchRecipeForContainer(craftingResult);
+        this.slotTypes = RecipeHelper.getNasaWorkbenchRecipeForContainer(this.craftingResult);
         final int change = 9; // ?
         this.worldObj = player.player.worldObj;
 
@@ -80,7 +80,7 @@ public class ContainerSchematicShuttle extends Container {
             final int x = coords[0];
             final int y = coords[1];
 
-            final HashSet<ItemDamagePair> possibleItems = slotTypes.get(slotNr + 1);
+            final HashSet<ItemDamagePair> possibleItems = this.slotTypes.get(slotNr + 1);
 
             if (possibleItems != null) {
                 final ItemDamagePair[] asArray = new ItemDamagePair[possibleItems.size()];
@@ -115,7 +115,7 @@ public class ContainerSchematicShuttle extends Container {
         // is this the only place where I need the recipe?
         // seems like that
         this.craftResult
-                .setInventorySlotContents(0, RecipeHelper.findMatchingRecipeFor(craftingResult, this.craftMatrix));
+                .setInventorySlotContents(0, RecipeHelper.findMatchingRecipeFor(this.craftingResult, this.craftMatrix));
     }
 
     @Override
@@ -189,7 +189,7 @@ public class ContainerSchematicShuttle extends Container {
                     if (curSlot instanceof SlotSpecific) {
                         if (((SlotSpecific) curSlot).isItemValid(stack)) {
                             // attempt merge
-                            if (mergeSingleSlot(stack, curSlot)) {
+                            if (this.mergeSingleSlot(stack, curSlot)) {
                                 found = true;
                                 break;
                             }

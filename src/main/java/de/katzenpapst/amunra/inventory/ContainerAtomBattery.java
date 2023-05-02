@@ -14,7 +14,7 @@ public class ContainerAtomBattery extends ContainerWithPlayerInventory {
 
         this.addSlotToContainer(new SlotSpecific(solarGen, 0, 152, 83, ItemElectricBase.class));
 
-        initPlayerInventorySlots(par1InventoryPlayer);
+        this.initPlayerInventorySlots(par1InventoryPlayer);
     }
 
     @Override

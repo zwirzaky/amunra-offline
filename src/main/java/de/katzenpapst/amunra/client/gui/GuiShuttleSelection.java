@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 
@@ -52,7 +53,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         final CelestialBody currentPlayerBody = ShuttleTeleportHelper
                 .getCelestialBodyForDimensionID(this.mc.thePlayer.dimension);
         if (currentPlayerBody != null) {
-            selectAndZoom(currentPlayerBody);
+            this.selectAndZoom(currentPlayerBody);
         }
     }
 
@@ -61,8 +62,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         this.possibleBodies = this.shuttlePossibleBodies;
         super.drawButtons(mousePosX, mousePosY);
         if (this.selectionState != EnumSelectionState.PROFILE && this.selectedBody != null
-                && canCreateMothership(this.selectedBody)) {
-            drawMothershipButton(mousePosX, mousePosY);
+                && this.canCreateMothership(this.selectedBody)) {
+            this.drawMothershipButton(mousePosX, mousePosY);
         }
 
         // exit button
@@ -70,16 +71,16 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         GL11.glColor4f(0.0F, 1.0F, 0.1F, 1);
         this.mc.renderEngine.bindTexture(GuiCelestialSelection.guiMain0);
 
-        final int exitWidth = width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 74;
-        final int exitHeight = height - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 11;
+        final int exitWidth = this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 74;
+        final int exitHeight = this.height - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 11;
 
-        exitBtnArea.setPositionSize(exitWidth, exitHeight, 74, 11);
+        this.exitBtnArea.setPositionSize(exitWidth, exitHeight, 74, 11);
 
         this.drawTexturedModalRect(
-                exitBtnArea.minX,
-                exitBtnArea.minY,
-                exitBtnArea.getWidth(),
-                exitBtnArea.getHeight(),
+                this.exitBtnArea.minX,
+                this.exitBtnArea.minY,
+                this.exitBtnArea.getWidth(),
+                this.exitBtnArea.getHeight(),
                 0,
                 392,
                 148,
@@ -89,8 +90,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         final String str = GCCoreUtil.translate("gui.message.cancel.name").toUpperCase();
         this.fontRendererObj.drawString(
                 str,
-                exitBtnArea.minX + (exitBtnArea.getWidth() - this.fontRendererObj.getStringWidth(str)) / 2,
-                exitBtnArea.minY + 2,
+                this.exitBtnArea.minX + (this.exitBtnArea.getWidth() - this.fontRendererObj.getStringWidth(str)) / 2,
+                this.exitBtnArea.minY + 2,
                 ColorUtil.to32BitColor(255, 255, 255, 255));
     }
 
@@ -108,24 +109,24 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
 
     protected boolean canCreateMothership(final CelestialBody atBody) {
         // important! check where the player started from
-        if ((numPlayersMotherships < 0) || (playerParent == null)) {
+        if ((this.numPlayersMotherships < 0) || (this.playerParent == null)) {
             return false;
         }
 
-        return (AmunRa.config.maxNumMotherships == -1 || numPlayersMotherships < AmunRa.config.maxNumMotherships)
-                && playerParent == selectedBody
+        return (AmunRa.config.maxNumMotherships == -1 || this.numPlayersMotherships < AmunRa.config.maxNumMotherships)
+                && this.playerParent == this.selectedBody
                 && Mothership.canBeOrbited(atBody);
     }
 
     protected void drawItemForRecipe(final ItemStack item, final int amount, final int requiredAmount, final int xPos, final int yPos, final int mousePosX,
             final int mousePosY) {
         RenderHelper.enableGUIStandardItemLighting();
-        GuiCelestialSelection.itemRender
+        GuiScreen.itemRender
                 .renderItemAndEffectIntoGUI(this.fontRendererObj, this.mc.renderEngine, item, xPos, yPos);
         RenderHelper.disableStandardItemLighting();
         GL11.glEnable(GL11.GL_BLEND);
 
-        if (isMouseWithin(mousePosX, mousePosY, xPos, yPos, 16, 16)) {
+        if (this.isMouseWithin(mousePosX, mousePosY, xPos, yPos, 16, 16)) {
             this.showTooltip(item.getDisplayName(), mousePosX, mousePosY);
         }
 
@@ -183,7 +184,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
          */
 
         this.drawTexturedModalRect(
-                width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95, // x
+                this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95, // x
                 offset + GuiCelestialSelection.BORDER_WIDTH + GuiCelestialSelection.BORDER_EDGE_WIDTH + 134, // y
                 93, // w
                 4, // h
@@ -195,7 +196,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                 false);
         for (int barY = 0; barY < canCreateLength; ++barY) {
             this.drawTexturedModalRect(
-                    width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95,
+                    this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95,
                     offset + GuiCelestialSelection.BORDER_WIDTH
                             + GuiCelestialSelection.BORDER_EDGE_WIDTH
                             + 138
@@ -210,7 +211,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     false);
         }
         this.drawTexturedModalRect(
-                width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95,
+                this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95,
                 offset + GuiCelestialSelection.BORDER_WIDTH
                         + GuiCelestialSelection.BORDER_EDGE_WIDTH
                         + 138
@@ -224,7 +225,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                 false,
                 false);
         this.drawTexturedModalRect(
-                width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 79,
+                this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 79,
                 offset + GuiCelestialSelection.BORDER_WIDTH + GuiCelestialSelection.BORDER_EDGE_WIDTH + 129,
                 61,
                 4,
@@ -249,7 +250,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             int i = 0;
             for (final Map.Entry<Object, Integer> e : recipe.getInput().entrySet()) {
                 final Object next = e.getKey();
-                xPos = (int) (width - GuiCelestialSelection.BORDER_WIDTH
+                xPos = (int) (this.width - GuiCelestialSelection.BORDER_WIDTH
                         - GuiCelestialSelection.BORDER_EDGE_WIDTH
                         - 95
                         + i * 93 / (double) recipe.getInput().size()
@@ -259,8 +260,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                 final int requiredAmount = e.getValue();
 
                 if (next instanceof ItemStack) {
-                    final int amount = getAmountInInventory((ItemStack) next);
-                    drawItemForRecipe(
+                    final int amount = this.getAmountInInventory((ItemStack) next);
+                    this.drawItemForRecipe(
                             ((ItemStack) next).copy(),
                             amount,
                             requiredAmount,
@@ -279,10 +280,10 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     int amount = 0;
 
                     for (final ItemStack stack : items) {
-                        amount += getAmountInInventory(stack);
+                        amount += this.getAmountInInventory(stack);
                     }
                     final ItemStack stack = items.get(this.ticksSinceMenuOpen / 20 % items.size()).copy();
-                    drawItemForRecipe(stack, amount, requiredAmount, xPos, yPos, mousePosX, mousePosY);
+                    this.drawItemForRecipe(stack, amount, requiredAmount, xPos, yPos, mousePosX, mousePosY);
                     validInputMaterials = amount >= requiredAmount && validInputMaterials;
                 }
 
@@ -290,7 +291,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             }
 
             if ((validInputMaterials || this.mc.thePlayer.capabilities.isCreativeMode)
-                    && !createMothershipButtonDisabled) {
+                    && !this.createMothershipButtonDisabled) {
                 GL11.glColor4f(0.0F, 1.0F, 0.1F, 1);
             } else {
                 GL11.glColor4f(1.0F, 0.0F, 0.0F, 1);
@@ -298,8 +299,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
 
             this.mc.renderEngine.bindTexture(GuiCelestialSelection.guiMain1);
 
-            buildMsBtnArea.setPositionSize(
-                    width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95,
+            this.buildMsBtnArea.setPositionSize(
+                    this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 95,
                     offset + GuiCelestialSelection.BORDER_WIDTH
                             + GuiCelestialSelection.BORDER_EDGE_WIDTH
                             + 182
@@ -308,12 +309,12 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     12);
 
             if (this.mapMode != MapMode.VIEW) {
-                if (buildMsBtnArea.isWithin(mousePosX, mousePosY)) {
+                if (this.buildMsBtnArea.isWithin(mousePosX, mousePosY)) {
                     this.drawTexturedModalRect(
-                            buildMsBtnArea.minX,
-                            buildMsBtnArea.minY,
-                            buildMsBtnArea.getWidth(),
-                            buildMsBtnArea.getHeight(),
+                            this.buildMsBtnArea.minX,
+                            this.buildMsBtnArea.minY,
+                            this.buildMsBtnArea.getWidth(),
+                            this.buildMsBtnArea.getHeight(),
                             0,
                             174,
                             93,
@@ -324,10 +325,10 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             }
 
             this.drawTexturedModalRect(
-                    buildMsBtnArea.minX,
-                    buildMsBtnArea.minY,
-                    buildMsBtnArea.getWidth(),
-                    buildMsBtnArea.getHeight(),
+                    this.buildMsBtnArea.minX,
+                    this.buildMsBtnArea.minY,
+                    this.buildMsBtnArea.getWidth(),
+                    this.buildMsBtnArea.getHeight(),
                     0,
                     174,
                     93,
@@ -338,7 +339,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             final int color = (int) ((Math.sin(this.ticksSinceMenuOpen / 5.0) * 0.5 + 0.5) * 255);
             this.drawSplitString(
                     GCCoreUtil.translate("gui.message.canCreateMothership.name"),
-                    width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
+                    this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
                     offset + GuiCelestialSelection.BORDER_WIDTH + GuiCelestialSelection.BORDER_EDGE_WIDTH + 137,
                     91,
                     ColorUtil.to32BitColor(255, color, 255, color),
@@ -348,7 +349,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             if (this.mapMode != MapMode.VIEW) {
                 this.drawSplitString(
                         GCCoreUtil.translate("gui.message.createSS.name").toUpperCase(),
-                        width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
+                        this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
                         offset + GuiCelestialSelection.BORDER_WIDTH
                                 + GuiCelestialSelection.BORDER_EDGE_WIDTH
                                 + 185
@@ -362,7 +363,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         else {
             this.drawSplitString(
                     GCCoreUtil.translate("gui.message.cannotCreateSpaceStation.name"),
-                    width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
+                    this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
                     offset + GuiCelestialSelection.BORDER_WIDTH + GuiCelestialSelection.BORDER_EDGE_WIDTH + 138,
                     91,
                     ColorUtil.to32BitColor(255, 255, 255, 255),
@@ -387,7 +388,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                             return false;
                         }
                         final Satellite selectedSatellite = (Satellite) this.selectedBody;
-                        final Integer mapping = this.spaceStationMap.get(getSatelliteParentID(selectedSatellite))
+                        final Integer mapping = this.spaceStationMap.get(this.getSatelliteParentID(selectedSatellite))
                                 .get(this.selectedStationOwner).getStationDimensionID();
                         // No need to check lowercase as selectedStationOwner is taken from keys.
                         if (mapping == null) {
@@ -409,7 +410,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                             new PacketSimpleAR(
                                     PacketSimpleAR.EnumSimplePacket.S_TELEPORT_SHUTTLE,
                                     new Object[] { dimensionID }));
-                    mc.displayGuiScreen(null);
+                    this.mc.displayGuiScreen(null);
                     return true;
                 } catch (final Exception e) {
                     AmunRa.LOGGER.warn("Failed to teleport to selected body", e);
@@ -427,16 +428,16 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         // CelestialBody curSelection = this.selectedBody;
 
         if (this.mapMode != MapMode.VIEW) {
-            if (exitBtnArea.isWithin(x, y)) {
-                cancelLaunch();
+            if (this.exitBtnArea.isWithin(x, y)) {
+                this.cancelLaunch();
                 clickHandled = true;
-            } else if (buildMsBtnArea.isWithin(x, y)) {
+            } else if (this.buildMsBtnArea.isWithin(x, y)) {
                 if (this.selectedBody != null) {
                     final SpaceStationRecipe recipe = RecipeHelper.mothershipRecipe;
                     if (recipe != null && this.canCreateMothership(this.selectedBody)
-                            && !createMothershipButtonDisabled) {
+                            && !this.createMothershipButtonDisabled) {
                         if (recipe.matches(this.mc.thePlayer, false) || this.mc.thePlayer.capabilities.isCreativeMode) {
-                            createMothershipButtonDisabled = true;
+                            this.createMothershipButtonDisabled = true;
                             AmunRa.packetPipeline.sendToServer(
                                     new PacketSimpleAR(
                                             PacketSimpleAR.EnumSimplePacket.S_CREATE_MOTHERSHIP,
@@ -464,7 +465,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     @Override
     public void mothershipCreationFailed() {
 
-        createMothershipButtonDisabled = false;
+        this.createMothershipButtonDisabled = false;
     }
 
     @Override
@@ -475,6 +476,6 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
             this.selectAndZoom(ship);
         }
 
-        createMothershipButtonDisabled = false;
+        this.createMothershipButtonDisabled = false;
     }
 }

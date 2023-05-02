@@ -55,7 +55,7 @@ public class RenderShuttle extends Render {
             GL11.glRotatef((float) (MathHelper.sin(var28) * var28 * i * par9), 1.0F, 0.0F, 1.0F);
         }
 
-        this.bindTexture(texture);
+        this.bindTexture(this.texture);
         // this.bindEntityTexture(entity);
         GL11.glScalef(-1.0F, -1.0F, 1.0F);
         GL11.glScalef(0.9F, 0.9F, 0.9F);

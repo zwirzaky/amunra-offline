@@ -57,17 +57,17 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BlockMetaPair getDirtBlock() {
-        return dirtBlock;
+        return this.dirtBlock;
     }
 
     @Override
     protected BlockMetaPair getGrassBlock() {
-        return grassBlock;
+        return this.grassBlock;
     }
 
     @Override
     protected BlockMetaPair getStoneBlock() {
-        return stoneBlock;
+        return this.stoneBlock;
     }
 
     @Override

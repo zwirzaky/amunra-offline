@@ -15,7 +15,7 @@ public class ContainerShuttleDock extends ContainerWithPlayerInventory {
 
         this.addSlotToContainer(new SlotSpecific(tile, 0, 137, 59, ItemShuttle.class));
 
-        initPlayerInventorySlots(player, 9);
+        this.initPlayerInventorySlots(player, 9);
     }
 
     @Override

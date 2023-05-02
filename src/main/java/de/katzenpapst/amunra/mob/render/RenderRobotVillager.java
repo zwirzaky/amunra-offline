@@ -42,7 +42,7 @@ public class RenderRobotVillager extends RenderLiving {
         super.renderEquippedItems(par1EntityVillager, par2);
 
         // try some stuff
-        renderFrontPlate(par1EntityVillager);
+        this.renderFrontPlate(par1EntityVillager);
     }
 
     private void renderFrontPlate(final EntityRobotVillager par1EntityVillager) {

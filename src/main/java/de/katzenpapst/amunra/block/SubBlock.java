@@ -30,27 +30,27 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
 
     public SubBlock(final String name, final String texture) {
         super(Material.rock);
-        init(name, texture, "pickaxe", 1, 1.5F, 10.0F);
+        this.init(name, texture, "pickaxe", 1, 1.5F, 10.0F);
     }
 
     public SubBlock(final String name, final String texture, final String tool, final int harvestLevel) {
         super(Material.rock);
-        init(name, texture, tool, harvestLevel, 1.5F, 10.0F);
+        this.init(name, texture, tool, harvestLevel, 1.5F, 10.0F);
     }
 
     public SubBlock(final String name, final String texture, final String tool, final int harvestLevel, final float hardness, final float resistance) {
         super(Material.rock);
-        init(name, texture, tool, harvestLevel, hardness, resistance);
+        this.init(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
     protected void init(final String name, final String texture, final String harvestTool, final int havestLevel, final float hardness,
             final float resistance) {
-        blockNameFU = name;
+        this.blockNameFU = name;
         this.setBlockName(name);
-        setBlockTextureName(texture);
-        setHarvestLevel(harvestTool, havestLevel);
-        setHardness(hardness);
-        setResistance(resistance);
+        this.setBlockTextureName(texture);
+        this.setHarvestLevel(harvestTool, havestLevel);
+        this.setHardness(hardness);
+        this.setResistance(resistance);
         // this.name = name;
         // this.texture = texture;
     }
@@ -60,7 +60,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      */
     @Override
     public String getLocalizedName() {
-        return blockNameFU; // multiblock does that
+        return this.blockNameFU; // multiblock does that
     }
 
     /**
@@ -68,7 +68,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      */
     @Override
     public String getUnlocalizedName() {
-        return blockNameFU;
+        return this.blockNameFU;
     }
 
     /**
@@ -147,7 +147,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      */
     @Override
     public String getHarvestTool(final int metadata) {
-        return sbHarvestTool;
+        return this.sbHarvestTool;
     }
 
     /**
@@ -159,7 +159,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      */
     @Override
     public int getHarvestLevel(final int metadata) {
-        return sbHarvestLevel;
+        return this.sbHarvestLevel;
     }
 
     /**
@@ -171,7 +171,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      */
     @Override
     public void setHarvestLevel(final String toolClass, final int level, final int metadata) {
-        setHarvestLevel(toolClass, level);
+        this.setHarvestLevel(toolClass, level);
     }
 
     /**

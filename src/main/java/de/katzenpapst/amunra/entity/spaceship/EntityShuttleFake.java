@@ -42,18 +42,18 @@ public class EntityShuttleFake extends EntityCelestialFake {
     public void onUpdate() {
         // stuff
         if (!this.worldObj.isRemote) {
-            if (ticks % 40 == 0) {
+            if (this.ticks % 40 == 0) {
                 if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayerMP player) {
-                    if (ticks % 160 == 0 || cachedDimList == null) {
+                    if (this.ticks % 160 == 0 || this.cachedDimList == null) {
                         // System.out.println("would update&send");
-                        cachedDimList = getDimList(player);
+                        this.cachedDimList = this.getDimList(player);
                     }
 
                     AmunRa.packetPipeline.sendTo(
                             new PacketSimpleAR(
                                     EnumSimplePacket.C_OPEN_SHUTTLE_GUI,
                                     player.getGameProfile().getName(),
-                                    cachedDimList),
+                                    this.cachedDimList),
                             player);
                 }
             }

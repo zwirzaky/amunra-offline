@@ -15,9 +15,9 @@ public class TouchBlock extends AbstractPopulator {
 
     @Override
     public boolean populate(final World world) {
-        final Block block = world.getBlock(x, y, z);
-        final Chunk chunk = world.getChunkFromChunkCoords(x >> 4, z >> 4);
-        world.markAndNotifyBlock(x, y, z, chunk, block, block, 3);
+        final Block block = world.getBlock(this.x, this.y, this.z);
+        final Chunk chunk = world.getChunkFromChunkCoords(this.x >> 4, this.z >> 4);
+        world.markAndNotifyBlock(this.x, this.y, this.z, chunk, block, block, 3);
         return true;
     }
 

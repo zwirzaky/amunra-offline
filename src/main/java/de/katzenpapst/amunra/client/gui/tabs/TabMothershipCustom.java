@@ -48,7 +48,7 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
             final int height, final int xSize, final int ySize) {
         super(parent, mc, width, height, xSize, ySize);
         this.ship = tile.getMothership();
-        mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
+        this.mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
 
         // changedName = ship.getLocalizedName();
         // changedIcon = ship.getBodyIcon();
@@ -56,7 +56,7 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     @Override
     public void drawScreen(final int mouseX, final int mouseY, final float ticks) {
-        for (final DynamicTexturedButton btn : textureButtons) {
+        for (final DynamicTexturedButton btn : this.textureButtons) {
             if (btn == null) continue;
             if (btn.getTexture().equals(this.ship.getBodyIcon())) {
                 btn.setSelected(true);
@@ -95,24 +95,24 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
         // numericOnly, int maxLength, boolean centered
         this.nameField = new GuiElementTextBox(2, this, guiX + 4, guiY + 4 + 20, 168, 20, "", false, 14, true);
 
-        texturesPrev = new GuiButton(3, guiX + 6, guiY + 26 + 20, 20, 20, GCCoreUtil.translate("<"));
-        texturesNext = new GuiButton(4, guiX + 150, guiY + 26 + 20, 20, 20, GCCoreUtil.translate(">"));
+        this.texturesPrev = new GuiButton(3, guiX + 6, guiY + 26 + 20, 20, 20, GCCoreUtil.translate("<"));
+        this.texturesNext = new GuiButton(4, guiX + 150, guiY + 26 + 20, 20, 20, GCCoreUtil.translate(">"));
 
         // testBtn = new DynamicTexturedButton(5, guiX + 6 + 20, guiY+26, 20, 20, mothershipTextures.get(0));
 
         // addButton(this.applyButton);
         // addButton(this.resetButton);
-        addTextBox(this.nameField);
-        addButton(this.texturesPrev);
-        addButton(this.texturesNext);
+        this.addTextBox(this.nameField);
+        this.addButton(this.texturesPrev);
+        this.addButton(this.texturesNext);
         //
-        initTextureButtons(5, guiX + 2, guiY + 20);
+        this.initTextureButtons(5, guiX + 2, guiY + 20);
 
     }
 
     protected int initTextureButtons(final int startId, final int guiX, final int guiY) {
         int curId = startId;
-        for (int i = 0; i < textureButtons.length; i++) {
+        for (int i = 0; i < this.textureButtons.length; i++) {
 
             final DynamicTexturedButton btn = new DynamicTexturedButton(
                     curId,
@@ -122,22 +122,22 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
                     20,
                     null);
             curId++;
-            if (mothershipTextures.size() > i) {
-                btn.setTexture(mothershipTextures.get(i));
+            if (this.mothershipTextures.size() > i) {
+                btn.setTexture(this.mothershipTextures.get(i));
             } else {
                 btn.enabled = false;
             }
             // btn.setd
             this.buttonList.add(btn);
-            textureButtons[i] = btn;
+            this.textureButtons[i] = btn;
         }
         return curId;
     }
 
     @Override
     public void mothershipResponsePacketRecieved() {
-        resetData();
-        setGuiEnabled(true);
+        this.resetData();
+        this.setGuiEnabled(true);
     }
 
     protected boolean isValidName(final String name) {
@@ -151,9 +151,9 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     @Override
     public void onTextChanged(final GuiElementTextBox textBox, final String newText) {
-        if (textBox.equals(nameField)) {
-            if (isValidName(newText) && !newText.equals(ship.getLocalizedName())) {
-                ship.setLocalizedName(newText);
+        if (textBox.equals(this.nameField)) {
+            if (this.isValidName(newText) && !newText.equals(this.ship.getLocalizedName())) {
+                this.ship.setLocalizedName(newText);
                 ((GuiMothershipSettings) this.parent).sendMothershipSettingsPacket();
             }
         }
@@ -162,7 +162,7 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
     @Override
     public String getInitialText(final GuiElementTextBox textBox) {
         if (textBox.equals(this.nameField)) {
-            return ship.getLocalizedName();
+            return this.ship.getLocalizedName();
         }
         return "";
     }
@@ -180,13 +180,13 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
     public void setGuiEnabled(final boolean set) {
         // applyButton.enabled = set;
         // resetButton.enabled = set;
-        texturesPrev.enabled = set;
-        texturesNext.enabled = set;
-        for (final DynamicTexturedButton btn : textureButtons) {
+        this.texturesPrev.enabled = set;
+        this.texturesNext.enabled = set;
+        for (final DynamicTexturedButton btn : this.textureButtons) {
             btn.enabled = set;
         }
 
-        nameField.enabled = set;
+        this.nameField.enabled = set;
     }
 
     public void resetData() {
@@ -205,24 +205,24 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
         /*
          * if(btn.equals(resetButton)) { resetData(); return true; }
          */
-        if (btn.equals(texturesNext)) {
-            if (texButtonOffset + textureButtons.length < mothershipTextures.size()) {
-                texButtonOffset++;
-                updateTextureButtons();
+        if (btn.equals(this.texturesNext)) {
+            if (this.texButtonOffset + this.textureButtons.length < this.mothershipTextures.size()) {
+                this.texButtonOffset++;
+                this.updateTextureButtons();
                 return true;
             }
         }
-        if (btn.equals(texturesPrev)) {
-            if (texButtonOffset > 0) {
-                texButtonOffset--;
-                updateTextureButtons();
+        if (btn.equals(this.texturesPrev)) {
+            if (this.texButtonOffset > 0) {
+                this.texButtonOffset--;
+                this.updateTextureButtons();
                 return true;
             }
         }
-        for (final DynamicTexturedButton texButton : textureButtons) {
+        for (final DynamicTexturedButton texButton : this.textureButtons) {
             if (btn.equals(texButton)) {
-                ship.setBodyIcon(texButton.getTexture());
-                ((GuiMothershipSettings) parent).sendMothershipSettingsPacket();
+                this.ship.setBodyIcon(texButton.getTexture());
+                ((GuiMothershipSettings) this.parent).sendMothershipSettingsPacket();
                 // changedIcon = texButton.getTexture();
 
                 return true;
@@ -233,19 +233,19 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     @Override
     public void onTabActivated() {
-        resetData();
+        this.resetData();
     }
 
     protected void updateTextureButtons() {
 
-        for (int i = 0; i < textureButtons.length; i++) {
+        for (int i = 0; i < this.textureButtons.length; i++) {
 
-            final int textureOffset = i + texButtonOffset;
-            if (textureOffset < 0 || textureOffset >= mothershipTextures.size()) {
-                textureButtons[i].enabled = false;
+            final int textureOffset = i + this.texButtonOffset;
+            if (textureOffset < 0 || textureOffset >= this.mothershipTextures.size()) {
+                this.textureButtons[i].enabled = false;
             } else {
-                textureButtons[i].enabled = true;
-                textureButtons[i].setTexture(mothershipTextures.get(textureOffset));
+                this.textureButtons[i].enabled = true;
+                this.textureButtons[i].setTexture(this.mothershipTextures.get(textureOffset));
             }
         }
     }
@@ -257,7 +257,7 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     @Override
     public ResourceLocation getIcon() {
-        return icontexture;
+        return this.icontexture;
     }
 
     @Override

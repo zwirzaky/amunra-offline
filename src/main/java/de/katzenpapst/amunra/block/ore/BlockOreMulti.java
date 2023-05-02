@@ -43,21 +43,21 @@ public class BlockOreMulti extends BlockBasicMeta {
     }
 
     public BlockOreMulti setMultiblockHarvestLevel(final int level) {
-        mbHarvestLevel = level;
+        this.mbHarvestLevel = level;
         return this;
     }
 
     public int getMultiblockHarvestLevel() {
-        return mbHarvestLevel;
+        return this.mbHarvestLevel;
     }
 
     public BlockOreMulti setMultiblockHarvestTool(final String tool) {
-        mbHarvestTool = tool;
+        this.mbHarvestTool = tool;
         return this;
     }
 
     public String getMultiblockHarvestTool() {
-        return mbHarvestTool;
+        return this.mbHarvestTool;
     }
 
     @Override
@@ -74,11 +74,11 @@ public class BlockOreMulti extends BlockBasicMeta {
     public void register() {
         GameRegistry.registerBlock(this, ItemBlockMulti.class, this.getUnlocalizedName());
 
-        for (int i = 0; i < subBlocksArray.length; i++) {
-            final SubBlock sb = subBlocksArray[i];
+        for (int i = 0; i < this.subBlocksArray.length; i++) {
+            final SubBlock sb = this.subBlocksArray[i];
             if (sb != null) {
                 this.setHarvestLevel(
-                        mbHarvestTool == null ? sb.getHarvestTool(0) : mbHarvestTool,
+                        this.mbHarvestTool == null ? sb.getHarvestTool(0) : this.mbHarvestTool,
                         Math.max(sb.getHarvestLevel(0), this.getMultiblockHarvestLevel()),
                         i);
                 if (sb instanceof SubBlockOre sbOre) {

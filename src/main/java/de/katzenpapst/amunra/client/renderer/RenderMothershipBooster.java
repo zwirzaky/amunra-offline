@@ -45,7 +45,7 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
          */
 
         // HACK
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
 
         //
         final TileEntityMothershipEngineAbstract masterTile = entity.getMasterTile();
@@ -159,7 +159,7 @@ public class RenderMothershipBooster extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float partialTickTime) {
-        renderMSBooster((TileEntityMothershipEngineBooster) entity, x, y, z, partialTickTime);
+        this.renderMSBooster((TileEntityMothershipEngineBooster) entity, x, y, z, partialTickTime);
     }
 
 }

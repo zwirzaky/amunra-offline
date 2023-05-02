@@ -39,7 +39,7 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
         this.containingItems = new ItemStack[1];
 
         this.fuel = GalacticraftCore.fluidFuel;
-        fuelType = new MothershipFuelDisplayFluid(this.fuel);
+        this.fuelType = new MothershipFuelDisplayFluid(this.fuel);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
         final MothershipFuelRequirements reqs = this.getFuelRequirements(duration);
 
-        final int fuelReq = reqs.get(fuelType);
+        final int fuelReq = reqs.get(this.fuelType);
 
         this.fuelTank.drain(fuelReq, true);
 
@@ -71,7 +71,7 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
             containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
         }
         if (containedFluid != null) {
-            if (containedFluid.getFluid() == fuel) {
+            if (containedFluid.getFluid() == this.fuel) {
                 return true;
             }
             return FluidUtil.testFuel(FluidRegistry.getFluidName(containedFluid));
@@ -99,8 +99,8 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     @Override
     protected void spawnParticles() {
 
-        final Vector3 particleStart = getExhaustPosition(1);
-        final Vector3 particleDirection = getExhaustDirection().scale(5);
+        final Vector3 particleStart = this.getExhaustPosition(1);
+        final Vector3 particleDirection = this.getExhaustDirection().scale(5);
 
         AmunRa.proxy
                 .spawnParticles(ParticleType.PT_MOTHERSHIP_JET_FLAME, this.worldObj, particleStart, particleDirection);
@@ -176,16 +176,16 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
         final MothershipFuelRequirements result = new MothershipFuelRequirements();
 
-        result.add(fuelType, totalFuelNeed);
+        result.add(this.fuelType, totalFuelNeed);
 
         return result;
     }
 
     @Override
     public boolean canRunForDuration(final long duration) {
-        final MothershipFuelRequirements reqs = getFuelRequirements(duration);
+        final MothershipFuelRequirements reqs = this.getFuelRequirements(duration);
 
-        return reqs.get(fuelType) <= fuelTank.getFluidAmount();
+        return reqs.get(this.fuelType) <= this.fuelTank.getFluidAmount();
     }
 
 }

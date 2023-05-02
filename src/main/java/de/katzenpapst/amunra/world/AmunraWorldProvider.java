@@ -31,22 +31,22 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
 
     @Override
     public boolean isDaytime() {
-        return worldObj.skylightSubtracted < 4;
+        return this.worldObj.skylightSubtracted < 4;
     }
 
     @Override
     public float getGravity() {
-        return 0.08F * (1 - getRelativeGravity());
+        return 0.08F * (1 - this.getRelativeGravity());
     }
 
     @Override
     public double getFuelUsageMultiplier() {
-        return getRelativeGravity();
+        return this.getRelativeGravity();
     }
 
     @Override
     public float getFallDamageModifier() {
-        return getRelativeGravity();
+        return this.getRelativeGravity();
     }
 
     /*
@@ -88,7 +88,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
             dayFactor = 1.0F;
         }
 
-        final Vector3 baseColor = getFogColor();
+        final Vector3 baseColor = this.getFogColor();
 
         float r = baseColor.floatX();
         float g = baseColor.floatY();
@@ -112,11 +112,11 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
 
     @Override
     public double getSolarEnergyMultiplier() {
-        if (solarLevel < 0) {
-            solarLevel = AstronomyHelper
-                    .getSolarEnergyMultiplier(getCelestialBody(), !getCelestialBody().atmosphere.isEmpty());
+        if (this.solarLevel < 0) {
+            this.solarLevel = AstronomyHelper
+                    .getSolarEnergyMultiplier(this.getCelestialBody(), !this.getCelestialBody().atmosphere.isEmpty());
         }
-        return solarLevel;
+        return this.solarLevel;
     }
     /*
      * @SideOnly(Side.CLIENT)
@@ -173,7 +173,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
     @Override
     public float getSunBrightness(final float partialTicks) {
 
-        float factor = worldObj.getSunBrightnessBody(partialTicks) + getAmunBrightnessFactor(partialTicks);
+        float factor = this.worldObj.getSunBrightnessBody(partialTicks) + this.getAmunBrightnessFactor(partialTicks);
         if (factor > 1.0F) {
             factor = 1.0F;
         }
@@ -190,7 +190,7 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
     @Override
     public float getSunBrightnessFactor(final float partialTicks) {
         // I *think* that I could use this to make eclipses etc work
-        float factor = worldObj.getSunBrightnessFactor(partialTicks) + getAmunBrightnessFactor(partialTicks);
+        float factor = this.worldObj.getSunBrightnessFactor(partialTicks) + this.getAmunBrightnessFactor(partialTicks);
 
         if (factor > 1.0F) {
             factor = 1.0F;

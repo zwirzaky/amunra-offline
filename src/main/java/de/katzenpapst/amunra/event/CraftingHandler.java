@@ -24,15 +24,15 @@ public class CraftingHandler {
     public void onCrafting(final ItemCraftedEvent event) {
 
         if (event.crafting.getItem() instanceof ItemRaygun) {
-            handleRaygunCrafting(event, ARItems.raygun);
+            this.handleRaygunCrafting(event, ARItems.raygun);
             return;
         }
         if (event.crafting.getItem() instanceof ItemCryogun) {
-            handleRaygunCrafting(event, ARItems.cryogun);
+            this.handleRaygunCrafting(event, ARItems.cryogun);
             return;
         }
         if (event.crafting.getItem() instanceof ItemNanotool) {
-            handleRaygunCrafting(event, ARItems.nanotool);
+            this.handleRaygunCrafting(event, ARItems.nanotool);
             return;
         }
     }

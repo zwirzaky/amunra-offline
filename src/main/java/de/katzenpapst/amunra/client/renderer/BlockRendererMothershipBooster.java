@@ -46,7 +46,7 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
             final MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) ((BlockMothershipBoosterMeta) block)
                     .getSubBlock(metadata);
             final ResourceLocation texture = sb.getBoosterTexture();
-            renderBooster(texture);
+            this.renderBooster(texture);
         }
     }
 

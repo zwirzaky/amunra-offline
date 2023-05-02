@@ -32,7 +32,7 @@ public class SubBlockLeaf extends SubBlock {
     }
 
     public SubBlockLeaf setSaplingDropped(final BlockMetaPair sapling) {
-        itemDropped = new ItemDamagePair(Item.getItemFromBlock(sapling.getBlock()), sapling.getMetadata());
+        this.itemDropped = new ItemDamagePair(Item.getItemFromBlock(sapling.getBlock()), sapling.getMetadata());
         return this;
     }
 
@@ -44,7 +44,7 @@ public class SubBlockLeaf extends SubBlock {
     }
 
     public IIcon getOpaqueIcon(final int side) {
-        return blockIconOpaque;
+        return this.blockIconOpaque;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SubBlockLeaf extends SubBlock {
 
     @Override
     public Item getItemDropped(final int meta, final Random random, final int fortune) {
-        return itemDropped.getItem();
+        return this.itemDropped.getItem();
     }
 
     /**
@@ -62,7 +62,7 @@ public class SubBlockLeaf extends SubBlock {
      */
     @Override
     public int damageDropped(final int meta) {
-        return itemDropped.getDamage();
+        return this.itemDropped.getDamage();
     }
 
 }

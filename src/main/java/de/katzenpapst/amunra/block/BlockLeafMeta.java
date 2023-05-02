@@ -35,7 +35,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
 
     public BlockLeafMeta(final Material mat, final boolean gfxMode) {
         super();
-        nameMetaMap = new HashMap<>();
+        this.nameMetaMap = new HashMap<>();
         this.setLightOpacity(1);
     }
 
@@ -70,27 +70,27 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
         if (!(sb instanceof SubBlockLeaf)) {
             throw new IllegalArgumentException("SubBlocks need to be instanceof SubBlockLeaf");
         }
-        if (meta >= subBlocksArray.length || meta < 0) {
+        if (meta >= this.subBlocksArray.length || meta < 0) {
             throw new IllegalArgumentException(
-                    "Meta " + meta + " must be <= " + (subBlocksArray.length - 1) + " && >= 0");
+                    "Meta " + meta + " must be <= " + (this.subBlocksArray.length - 1) + " && >= 0");
         }
 
-        if (subBlocksArray[meta] != null) {
+        if (this.subBlocksArray[meta] != null) {
             throw new IllegalArgumentException("Meta " + meta + " is already in use");
         }
 
-        if (nameMetaMap.get(sb.getUnlocalizedName()) != null) {
+        if (this.nameMetaMap.get(sb.getUnlocalizedName()) != null) {
             throw new IllegalArgumentException("Name " + sb.getUnlocalizedName() + " is already in use");
         }
         sb.setParent(this);
-        nameMetaMap.put(sb.getUnlocalizedName(), meta);
-        subBlocksArray[meta] = sb;
+        this.nameMetaMap.put(sb.getUnlocalizedName(), meta);
+        this.subBlocksArray[meta] = sb;
         return new BlockMetaPair(this, (byte) meta);
     }
 
     @Override
     public int getMetaByName(final String name) {
-        final Integer i = nameMetaMap.get(name);
+        final Integer i = this.nameMetaMap.get(name);
         if (i == null) {
             throw new IllegalArgumentException("Subblock " + name + " doesn't exist");
         }
@@ -100,16 +100,16 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     @Override
     public SubBlock getSubBlock(int meta) {
         // this works like wood now
-        meta = getDistinctionMeta(meta);
-        return subBlocksArray[meta];
+        meta = this.getDistinctionMeta(meta);
+        return this.subBlocksArray[meta];
     }
 
     @Override
     public IIcon getIcon(final int side, final int meta) {
-        if (isOpaqueCube()) {
-            return ((SubBlockLeaf) getSubBlock(meta)).getOpaqueIcon(side);
+        if (this.isOpaqueCube()) {
+            return ((SubBlockLeaf) this.getSubBlock(meta)).getOpaqueIcon(side);
         }
-        return getSubBlock(meta).getIcon(side, 0);
+        return this.getSubBlock(meta).getIcon(side, 0);
     }
 
     /**
@@ -118,8 +118,8 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     @Override
     public String[] func_150125_e() {
         if (unlocLeafNames == null) {
-            unlocLeafNames = new String[nameMetaMap.size()];
-            for (final Map.Entry<String, Integer> entry : nameMetaMap.entrySet()) {
+            unlocLeafNames = new String[this.nameMetaMap.size()];
+            for (final Map.Entry<String, Integer> entry : this.nameMetaMap.entrySet()) {
                 final String key = entry.getKey();
                 final int value = entry.getValue();
                 unlocLeafNames[value] = key;
@@ -132,8 +132,8 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     public void register() {
         GameRegistry.registerBlock(this, ItemBlockMulti.class, this.getUnlocalizedName());
 
-        for (int i = 0; i < subBlocksArray.length; i++) {
-            final SubBlock sb = subBlocksArray[i];
+        for (int i = 0; i < this.subBlocksArray.length; i++) {
+            final SubBlock sb = this.subBlocksArray[i];
             if (sb != null) {
 
                 this.setHarvestLevel(sb.getHarvestTool(0), sb.getHarvestLevel(0), i);
@@ -145,7 +145,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        for (final SubBlock sb : subBlocksArray) {
+        for (final SubBlock sb : this.subBlocksArray) {
             if (sb != null) {
                 sb.registerBlockIcons(par1IconRegister);
             }
@@ -160,7 +160,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
 
     @Override
     public Item getItemDropped(final int meta, final Random random, final int fortune) {
-        final SubBlock sb = getSubBlock(meta);
+        final SubBlock sb = this.getSubBlock(meta);
 
         if (sb.dropsSelf()) {
             return Item.getItemFromBlock(this);
@@ -170,7 +170,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
 
     @Override
     public int damageDropped(final int meta) {
-        final SubBlock sb = getSubBlock(meta);
+        final SubBlock sb = this.getSubBlock(meta);
         if (sb.dropsSelf()) {
             return meta;
         }
@@ -184,7 +184,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
 
     @Override
     public int quantityDropped(final int meta, final int fortune, final Random random) {
-        final SubBlock sb = getSubBlock(meta);
+        final SubBlock sb = this.getSubBlock(meta);
         if (sb.dropsSelf()) {
             return 1;
         }
@@ -196,7 +196,7 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     @Override
     public void getSubBlocks(final Item par1, final CreativeTabs par2CreativeTabs, final List par3List) {
         for (int i = 0; i < this.subBlocksArray.length; i++) {
-            if (subBlocksArray[i] != null) {
+            if (this.subBlocksArray[i] != null) {
                 par3List.add(new ItemStack(par1, 1, i));
             }
         }
@@ -210,8 +210,8 @@ public class BlockLeafMeta extends BlockLeaves implements IMetaBlock {
     @Override
     public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y, final int z, final EntityPlayer player) {
         final int meta = world.getBlockMetadata(x, y, z) & 3;
-        if (getSubBlock(meta) != null) {
-            return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
+        if (this.getSubBlock(meta) != null) {
+            return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
         }
 
         return super.getPickBlock(target, world, x, y, z, player);

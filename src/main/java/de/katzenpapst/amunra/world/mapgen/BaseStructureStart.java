@@ -55,13 +55,13 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
         // int startBlockX = chunkX*16 + this.startX;
         // int startBlockZ = chunkZ*16 + this.startZ;
 
-        populatorsByChunk = new PopulatorByChunkMap();
+        this.populatorsByChunk = new PopulatorByChunkMap();
     }
 
     protected void preparePopulatorListForChunk(final int chunkX, final int chunkZ) {
         final Long key = ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
 
-        if (populatorsByChunk.containsKey(key)) {
+        if (this.populatorsByChunk.containsKey(key)) {
             // this is bad, this shouldn't happen
             AmunRa.LOGGER.error(
                     "Tried to prepare populator list for chunk {}/{}. This could mean that the chunk is being generated twice.",
@@ -70,11 +70,11 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
             return;
         }
 
-        populatorsByChunk.put(key, new PopulatorMap());
+        this.populatorsByChunk.put(key, new PopulatorMap());
     }
 
     public World getWorld() {
-        return worldObj;
+        return this.worldObj;
     }
 
     /**
@@ -82,7 +82,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
      */
     @Override
     public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
-        preparePopulatorListForChunk(chunkX, chunkZ);
+        this.preparePopulatorListForChunk(chunkX, chunkZ);
 
         return true;
     }
@@ -90,12 +90,12 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
     public void populateChunk(final World world, final int chunkX, final int chunkZ) {
 
         final Long chunkKey = ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
-        if (!populatorsByChunk.containsKey(chunkKey)) {
+        if (!this.populatorsByChunk.containsKey(chunkKey)) {
             AmunRa.LOGGER.warn("No populator list for chunk {}/{}", chunkX, chunkZ);
             return;
         }
-        final PopulatorMap curMap = populatorsByChunk.get(chunkKey);
-        populatorsByChunk.remove(chunkKey);// remove it already, at this point, it's too late
+        final PopulatorMap curMap = this.populatorsByChunk.get(chunkKey);
+        this.populatorsByChunk.remove(chunkKey);// remove it already, at this point, it's too late
 
         for (final AbstractPopulator p : curMap.values()) {
             if (!p.populate(world)) {
@@ -117,7 +117,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
         // 16
 
         final Long chunkKey = ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
-        if (!populatorsByChunk.containsKey(chunkKey)) {
+        if (!this.populatorsByChunk.containsKey(chunkKey)) {
             AmunRa.LOGGER.error(
                     "Cannot add populator for {}/{}, offender: {}. Probably it's the wrong chunk",
                     chunkX,
@@ -125,7 +125,7 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
                     p.getClass().getCanonicalName());
             return;
         }
-        final PopulatorMap curMap = populatorsByChunk.get(chunkKey);
+        final PopulatorMap curMap = this.populatorsByChunk.get(chunkKey);
 
         final BlockVec3 key = p.getBlockVec3();
         if (curMap.containsKey(key)) {
@@ -138,13 +138,13 @@ abstract public class BaseStructureStart extends BaseStructureComponent {
 
     public void spawnLater(final Entity ent, final int x, final int y, final int z) {
         final SpawnEntity p = new SpawnEntity(x, y, z, ent);
-        addPopulator(p);
+        this.addPopulator(p);
     }
 
     public int getWorldGroundLevel() {
         // ((ChunkProviderSpace)worldObj.getChunkProvider()).g
         // NO IDEA
-        return worldObj.provider.getAverageGroundLevel();
+        return this.worldObj.provider.getAverageGroundLevel();
     }
 
 }

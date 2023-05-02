@@ -17,7 +17,7 @@ public class RenderHydroponics extends TileEntitySpecialRenderer {
     private final ModelHydroponics model;
 
     public RenderHydroponics() {
-        model = new ModelHydroponics();
+        this.model = new ModelHydroponics();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class RenderHydroponics extends TileEntitySpecialRenderer {
             final boolean hasEast = connections[ForgeDirection.EAST.ordinal()] != null;
 
             final Tessellator tess = Tessellator.instance;
-            model.render(tess, tile.getPlantGrowthStatus(), hasNorth, hasSouth, hasWest, hasEast);
+            this.model.render(tess, tile.getPlantGrowthStatus(), hasNorth, hasSouth, hasWest, hasEast);
 
             GL11.glPopMatrix();
         }

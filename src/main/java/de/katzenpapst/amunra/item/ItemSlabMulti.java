@@ -32,12 +32,12 @@ public class ItemSlabMulti extends ItemBlockMulti {
     }
 
     protected boolean placeDoubleSlab(final World world, final int x, final int y, final int z, final int meta) {
-        return world.setBlock(x, y, z, doubleSlab, meta, 3);
+        return world.setBlock(x, y, z, this.doubleSlab, meta, 3);
     }
 
     protected void combine(final World world, final ItemStack stack, final int x, final int y, final int z, final int meta) {
         if (world.checkNoEntityCollision(this.doubleSlab.getCollisionBoundingBoxFromPool(world, x, y, z))
-                && placeDoubleSlab(world, x, y, z, meta)) {
+                && this.placeDoubleSlab(world, x, y, z, meta)) {
             world.playSoundEffect(
                     (double) ((float) x + 0.5F),
                     (double) ((float) y + 0.5F),

@@ -60,7 +60,7 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
     }
 
     public boolean canPlaceOn(final BlockMetaPair blockToCheck, final int meta) {
-        return canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
+        return this.canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
     }
 
     public boolean canPlaceOn(final Block blockToCheck, final int metaToCheck, final int meta) {
@@ -75,7 +75,7 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
 
     @Override
     public Block getPlant(final IBlockAccess world, final int x, final int y, final int z) {
-        return (Block) parent;
+        return (Block) this.parent;
     }
 
     @Override

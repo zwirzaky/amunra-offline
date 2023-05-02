@@ -29,7 +29,7 @@ public class PodSapling extends AbstractSapling {
                                 && !this.isBlockReplaceable(block)) {
                             return false;
                         }
-                    } else if (!canReplaceBlock(world, curX + x, curY + y, curZ + z)) {
+                    } else if (!this.canReplaceBlock(world, curX + x, curY + y, curZ + z)) {
                         return false;
                     }
                 }
@@ -40,21 +40,21 @@ public class PodSapling extends AbstractSapling {
 
     @Override
     public boolean generate(final World world, final Random rand, final int x, final int y, final int z, final boolean notify) {
-        final double heightHalf = Math.ceil(height / 2) + rand.nextInt(3);
+        final double heightHalf = Math.ceil(this.height / 2) + rand.nextInt(3);
         final double centerOffset = 3 + rand.nextInt(2);
 
-        final double outerRadius = widthRadius + rand.nextInt(3); //
+        final double outerRadius = this.widthRadius + rand.nextInt(3); //
 
         final double innerRadius = outerRadius - 1;
         final double innerHeightRadius = heightHalf - 1;
 
         int topMostY = 0;
 
-        if (!canGenerateHere(world, rand, x, y, z, height, outerRadius)) {
+        if (!this.canGenerateHere(world, rand, x, y, z, this.height, outerRadius)) {
             return false;
         }
 
-        for (int curY = -1; curY < height + 3; curY++) {
+        for (int curY = -1; curY < this.height + 3; curY++) {
             for (int curX = (int) -outerRadius; curX <= +outerRadius; curX++) {
                 for (int curZ = (int) -outerRadius; curZ <= +outerRadius; curZ++) {
                     // some kind of a sinus function?

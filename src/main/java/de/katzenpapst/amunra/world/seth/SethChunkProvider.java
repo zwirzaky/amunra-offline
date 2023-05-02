@@ -43,38 +43,38 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     public SethChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
-        rockBlock = new BlockMetaPair(Blocks.packed_ice, (byte) 0);
-        grassBlock = new BlockMetaPair(Blocks.snow, (byte) 0);
-        dirtBlock = new BlockMetaPair(Blocks.ice, (byte) 0);
+        this.rockBlock = new BlockMetaPair(Blocks.packed_ice, (byte) 0);
+        this.grassBlock = new BlockMetaPair(Blocks.snow, (byte) 0);
+        this.dirtBlock = new BlockMetaPair(Blocks.ice, (byte) 0);
 
-        floorStoneBlock = new BlockMetaPair(Blocks.hardened_clay, (byte) 0);// ARBlocks.blockYellowRock;
-        floorDirtBlock = new BlockMetaPair(Blocks.clay, (byte) 0);
-        floorGrassBlock = ARBlocks.blockUnderwaterGrass;
-        waterBlock = new BlockMetaPair(Blocks.water, (byte) 0);
+        this.floorStoneBlock = new BlockMetaPair(Blocks.hardened_clay, (byte) 0);// ARBlocks.blockYellowRock;
+        this.floorDirtBlock = new BlockMetaPair(Blocks.clay, (byte) 0);
+        this.floorGrassBlock = ARBlocks.blockUnderwaterGrass;
+        this.waterBlock = new BlockMetaPair(Blocks.water, (byte) 0);
         // waterBlock = new BlockMetaPair(Blocks.air, (byte) 0); // DEBUG
 
-        oceanFloorGen = new TerrainGenerator(
+        this.oceanFloorGen = new TerrainGenerator(
                 this.rand,
-                floorStoneBlock,
-                waterBlock,
+                this.floorStoneBlock,
+                this.waterBlock,
                 30, // heightMod
                 35, // smallFeatureMod
                 40, // mountainHeightMod
                 10, // valleyHeightMod
                 25, // seaLevel
-                maxWaterHeight // maxHeight
+                this.maxWaterHeight // maxHeight
         );
 
-        volcanoGen = new VolcanoGenerator(waterBlock, rockBlock, dirtBlock, 60, false);
+        this.volcanoGen = new VolcanoGenerator(this.waterBlock, this.rockBlock, this.dirtBlock, 60, false);
 
-        crystalGen = new CrystalFormation(ARBlocks.blockGlowingCoral, waterBlock);
+        this.crystalGen = new CrystalFormation(ARBlocks.blockGlowingCoral, this.waterBlock);
     }
 
     @Override
     public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray) {
         super.generateTerrain(chunkX, chunkZ, idArray, metaArray);
 
-        oceanFloorGen.generateTerrain(chunkX, chunkZ, idArray, metaArray);
+        this.oceanFloorGen.generateTerrain(chunkX, chunkZ, idArray, metaArray);
     }
 
     @Override
@@ -87,20 +87,20 @@ public class SethChunkProvider extends AmunraChunkProvider {
         for (int curX = 0; curX < 16; ++curX) {
             for (int curZ = 0; curZ < 16; ++curZ) {
                 int surfaceHeight = -1;
-                for (int curY = maxWaterHeight - 1; curY > 0; curY--) {
+                for (int curY = this.maxWaterHeight - 1; curY > 0; curY--) {
                     final int index = this.getIndex(curX, curY, curZ);
                     final Block curBlockId = arrayOfIDs[index];
                     final byte curMeta = arrayOfMeta[index];
 
-                    if (curBlockId == floorStoneBlock.getBlock() && curMeta == floorStoneBlock.getMetadata()) {
+                    if (curBlockId == this.floorStoneBlock.getBlock() && curMeta == this.floorStoneBlock.getMetadata()) {
 
                         if (surfaceHeight == -1) {
                             surfaceHeight = curY;
-                            arrayOfIDs[index] = floorGrassBlock.getBlock();
-                            arrayOfMeta[index] = floorGrassBlock.getMetadata();
-                        } else if (surfaceHeight - curY < floorDirtWidth) {
-                            arrayOfIDs[index] = floorDirtBlock.getBlock();
-                            arrayOfMeta[index] = floorDirtBlock.getMetadata();
+                            arrayOfIDs[index] = this.floorGrassBlock.getBlock();
+                            arrayOfMeta[index] = this.floorGrassBlock.getMetadata();
+                        } else if (surfaceHeight - curY < this.floorDirtWidth) {
+                            arrayOfIDs[index] = this.floorDirtBlock.getBlock();
+                            arrayOfMeta[index] = this.floorDirtBlock.getMetadata();
                         }
                     }
                 }
@@ -140,17 +140,17 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BlockMetaPair getGrassBlock() {
-        return grassBlock;
+        return this.grassBlock;
     }
 
     @Override
     protected BlockMetaPair getDirtBlock() {
-        return dirtBlock;
+        return this.dirtBlock;
     }
 
     @Override
     protected BlockMetaPair getStoneBlock() {
-        return rockBlock;
+        return this.rockBlock;
     }
 
     @Override
@@ -190,7 +190,7 @@ public class SethChunkProvider extends AmunraChunkProvider {
             final int curX = curChunkMinX + this.rand.nextInt(16) + 8;
             final int curY = 35;// this.rand.nextInt(120) + 4;
             final int curZ = curChunkMinZ + this.rand.nextInt(16) + 8;
-            crystalGen.generate(this.worldObj, this.rand, curX, curY, curZ);
+            this.crystalGen.generate(this.worldObj, this.rand, curX, curY, curZ);
         }
     }
 

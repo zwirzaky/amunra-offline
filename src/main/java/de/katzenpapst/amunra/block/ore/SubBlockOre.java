@@ -21,21 +21,21 @@ public class SubBlockOre extends SubBlockDropItem {
     }
 
     public ItemStack getSmeltItem() {
-        return smeltItem;
+        return this.smeltItem;
     }
 
     public SubBlockOre setSmeltItem(final Item item, final int num, final int metadata) {
-        smeltItem = new ItemStack(item, num, metadata);
+        this.smeltItem = new ItemStack(item, num, metadata);
         return this;
     }
 
     public SubBlockOre setSmeltItem(final Item item, final int num) {
-        smeltItem = new ItemStack(item, num, 0);
+        this.smeltItem = new ItemStack(item, num, 0);
         return this;
     }
 
     public SubBlockOre setSmeltItem(final ItemStack stack) {
-        smeltItem = stack;
+        this.smeltItem = stack;
         return this;
     }
 

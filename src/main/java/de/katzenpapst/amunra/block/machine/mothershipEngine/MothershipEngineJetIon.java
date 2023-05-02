@@ -61,15 +61,15 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
 
     @Override
     protected ItemDamagePair getItem() {
-        if (item == null) {
-            item = ARItems.jetItemIon;
+        if (this.item == null) {
+            this.item = ARItems.jetItemIon;
         }
-        return item;
+        return this.item;
     }
 
     @Override
     public Item getItem(final World worldIn, final int x, final int y, final int z) {
-        return item.getItem();
+        return this.item.getItem();
     }
 
     @Override
@@ -77,12 +77,12 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
         /**
          * Returns whether or not this bed block is the head of the bed.
          */
-        return item.getItem();
+        return this.item.getItem();
     }
 
     @Override
     public int damageDropped(final int meta) {
-        return item.getDamage();
+        return this.item.getDamage();
     }
 
     @Override

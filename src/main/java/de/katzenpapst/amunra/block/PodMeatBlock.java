@@ -78,7 +78,7 @@ public class PodMeatBlock extends SubBlock {
         /**
          * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
          */
-        return quantityDroppedWithBonus(fortune, random);
+        return this.quantityDroppedWithBonus(fortune, random);
     }
 
 }

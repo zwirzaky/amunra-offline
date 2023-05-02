@@ -23,8 +23,8 @@ public class ItemRendererSpecial1 implements IItemRenderer {
     private final ModelHydroponics modelHydro;
 
     public ItemRendererSpecial1() {
-        model = new ModelShuttleDock();
-        modelHydro = new ModelHydroponics();
+        this.model = new ModelShuttleDock();
+        this.modelHydro = new ModelHydroponics();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ItemRendererSpecial1 implements IItemRenderer {
             default:
                 break;
         }
-        modelHydro.render(Tessellator.instance, 1.0F, true, true, false, false);
+        this.modelHydro.render(Tessellator.instance, 1.0F, true, true, false, false);
         GL11.glPopMatrix();
     }
 
@@ -97,7 +97,7 @@ public class ItemRendererSpecial1 implements IItemRenderer {
                 break;
         }
 
-        model.render(Tessellator.instance, false);
+        this.model.render(Tessellator.instance, false);
         GL11.glPopMatrix();
     }
 

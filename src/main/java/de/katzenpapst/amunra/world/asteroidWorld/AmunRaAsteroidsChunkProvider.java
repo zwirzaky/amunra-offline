@@ -136,8 +136,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         this.worldObj = world;
         this.rand = new Random(seed);
 
-        extraOreGen = new HashMap<>();
-        asteroidStoneBlocks = new BlockMetaPair[] { new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 0),
+        this.extraOreGen = new HashMap<>();
+        this.asteroidStoneBlocks = new BlockMetaPair[] { new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 0),
                 new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 1),
                 new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 2) };
 
@@ -164,7 +164,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         this.asteroidSkewZ.amplitude = MAX_ASTEROID_SKEW;
         this.asteroidSkewZ.frequencyZ = 0.005F;
 
-        initBlockTypes();
+        this.initBlockTypes();
 
     }
 
@@ -177,38 +177,38 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         final BlockMetaPair oreSilicon = new BlockMetaPair(GCBlocks.basicBlock, (byte) 8);
         final BlockMetaPair oreMeteorIron = new BlockMetaPair(GCBlocks.basicBlock, (byte) 12);
 
-        denseIce = new BlockMetaPair(AsteroidBlocks.blockDenseIce, (byte) 0);
+        this.denseIce = new BlockMetaPair(AsteroidBlocks.blockDenseIce, (byte) 0);
 
-        dirt = ARBlocks.blockMethaneDirt;
-        grass = ARBlocks.blockVacuumGrass;
-        light = new BlockMetaPair(Blocks.glowstone, (byte) 0);
+        this.dirt = ARBlocks.blockMethaneDirt;
+        this.grass = ARBlocks.blockVacuumGrass;
+        this.light = new BlockMetaPair(Blocks.glowstone, (byte) 0);
 
-        generatorsTrees = new WorldGenData[] {
+        this.generatorsTrees = new WorldGenData[] {
                 new WorldGenData(new WorldGenTreeBySapling(false, 5, ARBlocks.blockMethaneSapling), 2) };
-        generatorsGrass = new WorldGenData[] {
+        this.generatorsGrass = new WorldGenData[] {
                 new WorldGenData(new WorldGenTallgrassMeta(ARBlocks.blockMethaneTGrass), 2) };
-        generatorsLakes = new WorldGenData[] { new WorldGenData(new WorldGenLakes(Blocks.water), 2),
+        this.generatorsLakes = new WorldGenData[] { new WorldGenData(new WorldGenLakes(Blocks.water), 2),
                 new WorldGenData(new WorldGenLakes(Blocks.lava), 2) };
 
-        addBlockToHandler(coreHandler, asteroidStoneBlocks[2], 5, .3);
-        addBlockToHandler(coreHandler, asteroidStoneBlocks[1], 7, .3);
-        addBlockToHandler(coreHandler, asteroidStoneBlocks[0], 1, .25);
+        this.addBlockToHandler(this.coreHandler, this.asteroidStoneBlocks[2], 5, .3);
+        this.addBlockToHandler(this.coreHandler, this.asteroidStoneBlocks[1], 7, .3);
+        this.addBlockToHandler(this.coreHandler, this.asteroidStoneBlocks[0], 1, .25);
         // ores
-        addBlockToHandler(coreHandler, oreAlu, 15, .2);// 250
-        addBlockToHandler(coreHandler, oreTitanium, 10, .15); // 400
-        addBlockToHandler(coreHandler, oreIron, 23, .2); // 300
-        addBlockToHandler(coreHandler, oreSilicon, 12, .15);
-        addBlockToHandler(coreHandler, oreMeteorIron, 6, .13);
+        this.addBlockToHandler(this.coreHandler, oreAlu, 15, .2);// 250
+        this.addBlockToHandler(this.coreHandler, oreTitanium, 10, .15); // 400
+        this.addBlockToHandler(this.coreHandler, oreIron, 23, .2); // 300
+        this.addBlockToHandler(this.coreHandler, oreSilicon, 12, .15);
+        this.addBlockToHandler(this.coreHandler, oreMeteorIron, 6, .13);
         // addBlockToHandler(coreHandler, oreDiamond, 1, .1);
 
-        extraOreGen.put(oreTitanium, 400);
-        extraOreGen.put(oreAlu, 250);
-        extraOreGen.put(oreIron, 300);
+        this.extraOreGen.put(oreTitanium, 400);
+        this.extraOreGen.put(oreAlu, 250);
+        this.extraOreGen.put(oreIron, 300);
 
-        addBlockToHandler(shellHandler, asteroidStoneBlocks[0], 1, .15);
-        addBlockToHandler(shellHandler, asteroidStoneBlocks[1], 3, .15);
-        addBlockToHandler(shellHandler, asteroidStoneBlocks[2], 1, .15);
-        addBlockToHandler(shellHandler, denseIce, 1, .15);
+        this.addBlockToHandler(this.shellHandler, this.asteroidStoneBlocks[0], 1, .15);
+        this.addBlockToHandler(this.shellHandler, this.asteroidStoneBlocks[1], 3, .15);
+        this.addBlockToHandler(this.shellHandler, this.asteroidStoneBlocks[2], 1, .15);
+        this.addBlockToHandler(this.shellHandler, this.denseIce, 1, .15);
     }
 
     protected void addBlockToHandler(final SpecialAsteroidBlockHandler handler, final BlockMetaPair b, final int probability,
@@ -275,7 +275,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         final float hollowSize = rand.nextFloat() * (MAX_HOLLOW_SIZE - MIN_HOLLOW_SIZE) + MIN_HOLLOW_SIZE;
         if (rand.nextInt(HOLLOW_CHANCE) == 0 && size >= MIN_RADIUS_FOR_HOLLOW) {
             isHollow = true;
-            shell = new SpecialAsteroidBlock(denseIce.getBlock(), denseIce.getMetadata(), 1, .15);
+            shell = new SpecialAsteroidBlock(this.denseIce.getBlock(), this.denseIce.getMetadata(), 1, .15);
         }
 
         // Add to the list of asteroids for external use
@@ -387,8 +387,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                         if (distanceAbove <= 1) {
                             if (y - 1 == terrainYY) {
                                 final int index = indexBase | y + 1;
-                                blockArray[index] = light.getBlock();
-                                metaArray[index] = light.getMetadata();
+                                blockArray[index] = this.light.getBlock();
+                                metaArray[index] = this.light.getMetadata();
                             }
                         }
                     }
@@ -397,11 +397,11 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                         final int index = indexBase | y;
                         if (isHollow && distance <= hollowSize) {
                             if (y == terrainY) {
-                                blockArray[index] = grass.getBlock();
-                                metaArray[index] = grass.getMetadata();
+                                blockArray[index] = this.grass.getBlock();
+                                metaArray[index] = this.grass.getMetadata();
                             } else if (y < terrainY) {
-                                blockArray[index] = dirt.getBlock();
-                                metaArray[index] = dirt.getMetadata();
+                                blockArray[index] = this.dirt.getBlock();
+                                metaArray[index] = this.dirt.getMetadata();
                             } else {
                                 blockArray[index] = Blocks.air;
                                 metaArray[index] = 0;
@@ -411,15 +411,15 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                                 blockArray[index] = core.block;
                                 metaArray[index] = core.meta;
                             } else {
-                                blockArray[index] = asteroidStoneBlocks[0].getBlock();
-                                metaArray[index] = asteroidStoneBlocks[0].getMetadata();
+                                blockArray[index] = this.asteroidStoneBlocks[0].getBlock();
+                                metaArray[index] = this.asteroidStoneBlocks[0].getMetadata();
                             }
                         } else if (shell != null && distance >= shellThickness) {
                             blockArray[index] = shell.block;
                             metaArray[index] = shell.meta;
                         } else {
-                            blockArray[index] = asteroidStoneBlocks[1].getBlock();
-                            metaArray[index] = asteroidStoneBlocks[1].getMetadata();
+                            blockArray[index] = this.asteroidStoneBlocks[1].getBlock();
+                            metaArray[index] = this.asteroidStoneBlocks[1].getMetadata();
                         }
                     }
                 }
@@ -458,11 +458,11 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                             final int index = indexBase | y;
                             final int indexAbove = indexBase | y + 1;
                             if (Blocks.air == blockArray[indexAbove]
-                                    && (blockArray[index] == asteroidStoneBlocks[0].getBlock()
-                                            || blockArray[index] == grass.getBlock())) {
+                                    && (blockArray[index] == this.asteroidStoneBlocks[0].getBlock()
+                                            || blockArray[index] == this.grass.getBlock())) {
                                 if (this.rand.nextInt(GLOWSTONE_CHANCE) == 0) {
-                                    blockArray[index] = light.getBlock();
-                                    metaArray[index] = light.getMetadata();
+                                    blockArray[index] = this.light.getBlock();
+                                    metaArray[index] = this.light.getMetadata();
                                 }
                             }
                         }
@@ -600,7 +600,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         int count = 0;
 
         for (int i = 0; i < maxLength; i++) {
-            if (worldObj.getBlock(x - i - 1, y, z) instanceof BlockAir != isAir) {
+            if (this.worldObj.getBlock(x - i - 1, y, z) instanceof BlockAir != isAir) {
                 break;
             }
             count++;
@@ -646,30 +646,30 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                     meta = this.asteroidStoneBlocks[1].getMetadata();
 
                     // extra ore stuff
-                    for (final BlockMetaPair b : extraOreGen.keySet()) {
-                        final int chance = extraOreGen.get(b);
-                        if (rand.nextInt(chance) == 0) {
+                    for (final BlockMetaPair b : this.extraOreGen.keySet()) {
+                        final int chance = this.extraOreGen.get(b);
+                        if (this.rand.nextInt(chance) == 0) {
                             block = b.getBlock();
                             meta = b.getMetadata();
                             break;
                         }
                     }
 
-                    worldObj.setBlock(px, y, pz, block, meta, 2);
+                    this.worldObj.setBlock(px, y, pz, block, meta, 2);
                     // this does something about the light
                     // so, the more blocks towards -x are NOT air, the brighter are we?!
                     int count = 7;
-                    if (!(worldObj.getBlock(px - 1, y, pz) instanceof BlockAir)) count = 1;// 0
-                    else if (!(worldObj.getBlock(px - 2, y, pz) instanceof BlockAir)) count = 3;// 1
-                    else if (!(worldObj.getBlock(px - 3, y, pz) instanceof BlockAir)) count = 5;// 2
-                    else if (!(worldObj.getBlock(px - 4, y, pz) instanceof BlockAir)) count = 6;// 3
+                    if (!(this.worldObj.getBlock(px - 1, y, pz) instanceof BlockAir)) count = 1;// 0
+                    else if (!(this.worldObj.getBlock(px - 2, y, pz) instanceof BlockAir)) count = 3;// 1
+                    else if (!(this.worldObj.getBlock(px - 3, y, pz) instanceof BlockAir)) count = 5;// 2
+                    else if (!(this.worldObj.getBlock(px - 4, y, pz) instanceof BlockAir)) count = 6;// 3
                     /*
                      * if x-1 is not air, then count is 1 if x-1 is air, and then count is 3 if
                      */
                     // int blockCount = this.getCountInNegXDirection(par1IChunkProvider, px, y, pz, 4, true);
                     count = this.adjustBrightnessValue(count);
 
-                    worldObj.setLightValue(EnumSkyBlock.Block, px - 1, y, pz, count);// +1
+                    this.worldObj.setLightValue(EnumSkyBlock.Block, px - 1, y, pz, count);// +1
                 }
             }
         }
@@ -693,15 +693,15 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                 final int asteroidSize = asteroidIndex.asteroidSizeArray;
                 boolean treesdone = false;
 
-                for (final WorldGenData data : generatorsTrees) {
-                    if (rand.nextInt(data.chance) == 0) {
+                for (final WorldGenData data : this.generatorsTrees) {
+                    if (this.rand.nextInt(data.chance) == 0) {
 
                         for (int tries = 0; tries < 5; tries++) {
-                            final int i = rand.nextInt(16) + x + 8;
-                            final int k = rand.nextInt(16) + z + 8;
+                            final int i = this.rand.nextInt(16) + x + 8;
+                            final int k = this.rand.nextInt(16) + z + 8;
                             if (data.worldGen.generate(
-                                    worldObj,
-                                    rand,
+                                    this.worldObj,
+                                    this.rand,
                                     i,
                                     this.getTerrainHeightAt(
                                             i - x,
@@ -720,14 +720,14 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                     }
                 }
 
-                if (!treesdone || rand.nextInt(TALL_GRASS_CHANCE) == 0) {
-                    for (final WorldGenData data : generatorsGrass) {
-                        if (rand.nextInt(data.chance) == 0) {
-                            final int i = rand.nextInt(16) + x + 8;
-                            final int k = rand.nextInt(16) + z + 8;
+                if (!treesdone || this.rand.nextInt(TALL_GRASS_CHANCE) == 0) {
+                    for (final WorldGenData data : this.generatorsGrass) {
+                        if (this.rand.nextInt(data.chance) == 0) {
+                            final int i = this.rand.nextInt(16) + x + 8;
+                            final int k = this.rand.nextInt(16) + z + 8;
                             data.worldGen.generate(
-                                    worldObj,
-                                    rand,
+                                    this.worldObj,
+                                    this.rand,
                                     i,
                                     this.getTerrainHeightAt(
                                             i - x,
@@ -748,13 +748,13 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                  * z, sizeYArray, xMin, zMin, zSize, asteroidY, asteroidSize), k); }
                  */
                 // lakes
-                for (final WorldGenData data : generatorsLakes) {
-                    if (rand.nextInt(data.chance) == 0) {
-                        final int i = rand.nextInt(16) + x + 8;
-                        final int k = rand.nextInt(16) + z + 8;
+                for (final WorldGenData data : this.generatorsLakes) {
+                    if (this.rand.nextInt(data.chance) == 0) {
+                        final int i = this.rand.nextInt(16) + x + 8;
+                        final int k = this.rand.nextInt(16) + z + 8;
                         data.worldGen.generate(
-                                worldObj,
-                                rand,
+                                this.worldObj,
+                                this.rand,
                                 i,
                                 this.getTerrainHeightAt(
                                         i - x,
@@ -779,7 +779,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
 
                 // Asteroid at min height 48, size 20, can't have lit blocks below 16
                 for (int y = 16; y < 240; y++) {
-                    worldObj.updateLightByType(EnumSkyBlock.Block, xPos, y, zPos);
+                    this.worldObj.updateLightByType(EnumSkyBlock.Block, xPos, y, zPos);
                 }
             }
         }
@@ -861,7 +861,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                             }
                             // this does something about light, again?
                             // if (count > 12) count = 12;
-                            count = adjustBrightnessValue(count);
+                            count = this.adjustBrightnessValue(count);
                             // making the 15 in 15-count lower means brighter?
                             // count = 0;
                             // func_150807_a -> 15 = darkest, 0 => brightest
@@ -929,28 +929,28 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                 xToCheck = (x0 >> 4) + i0;
                 zToCheck = (z0 >> 4) + i1;
 
-                if (isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
+                if (this.isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
                     return new BlockVec3(xToCheck * 16, 0, zToCheck * 16);
                 }
 
                 xToCheck = (x0 >> 4) + i0;
                 zToCheck = (z0 >> 4) - i1;
 
-                if (isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
+                if (this.isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
                     return new BlockVec3(xToCheck * 16, 0, zToCheck * 16);
                 }
 
                 xToCheck = (x0 >> 4) - i0;
                 zToCheck = (z0 >> 4) + i1;
 
-                if (isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
+                if (this.isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
                     return new BlockVec3(xToCheck * 16, 0, zToCheck * 16);
                 }
 
                 xToCheck = (x0 >> 4) - i0;
                 zToCheck = (z0 >> 4) - i1;
 
-                if (isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
+                if (this.isLargeAsteroidAt0(xToCheck * 16, zToCheck * 16)) {
                     return new BlockVec3(xToCheck * 16, 0, zToCheck * 16);
                 }
             }

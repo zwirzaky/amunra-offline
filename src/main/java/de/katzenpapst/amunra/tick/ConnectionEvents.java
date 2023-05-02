@@ -31,15 +31,15 @@ public class ConnectionEvents {
     public void onConnectionOpened(final ClientConnectedToServerEvent event) {
         // stolen from GC...
         if (!event.isLocal) {
-            clientConnected = true;
+            this.clientConnected = true;
         }
         MapUtil.resetClient();
     }
 
     @SubscribeEvent
     public void onConnectionClosed(final ClientDisconnectionFromServerEvent event) {
-        if (clientConnected) {
-            clientConnected = false;
+        if (this.clientConnected) {
+            this.clientConnected = false;
             // unregister motherships here
             if (TickHandlerServer.mothershipData != null) {
                 TickHandlerServer.mothershipData.unregisterAllMotherships();

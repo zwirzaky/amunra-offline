@@ -114,14 +114,14 @@ public class TickHandlerServer {
                                         }
                                     } else {
                                         if (e instanceof EntityPlayerMP && e.ridingEntity instanceof EntityShuttle) {
-                                            sendPlayerInShuttleToPlanet(
+                                            this.sendPlayerInShuttleToPlanet(
                                                     (EntityPlayerMP) e,
                                                     (EntityShuttle) e.ridingEntity,
                                                     world,
                                                     parent.getDimensionID());
                                         } else if (e instanceof EntityShuttle
                                                 && e.riddenByEntity instanceof EntityPlayerMP) {
-                                                    sendPlayerInShuttleToPlanet(
+                                                    this.sendPlayerInShuttleToPlanet(
                                                             (EntityPlayerMP) e.riddenByEntity,
                                                             (EntityShuttle) e,
                                                             world,

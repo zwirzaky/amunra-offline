@@ -35,9 +35,9 @@ public class BlockScale extends SubBlockMachine {
     public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
 
-        iconTop = par1IconRegister.registerIcon(topTexture);
-        iconBottom = par1IconRegister.registerIcon(bottomTexture);
-        iconFront = par1IconRegister.registerIcon(frontTexture);
+        this.iconTop = par1IconRegister.registerIcon(this.topTexture);
+        this.iconBottom = par1IconRegister.registerIcon(this.bottomTexture);
+        this.iconFront = par1IconRegister.registerIcon(this.frontTexture);
 
     }
 

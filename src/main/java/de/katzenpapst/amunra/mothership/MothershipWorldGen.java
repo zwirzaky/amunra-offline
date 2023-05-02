@@ -23,11 +23,11 @@ public class MothershipWorldGen extends WorldGenerator {
      */
 
     public MothershipWorldGen() {
-        groundBlock = new BlockMetaPair(GCBlocks.basicBlock, (byte) 4);
-        decoBlock = new BlockMetaPair(GCBlocks.basicBlock, (byte) 3);
-        glassBlock = new BlockMetaPair(Blocks.glass, (byte) 0);
-        msController = ARBlocks.blockMothershipController;
-        msIndestructible = ARBlocks.blockMsBase;
+        this.groundBlock = new BlockMetaPair(GCBlocks.basicBlock, (byte) 4);
+        this.decoBlock = new BlockMetaPair(GCBlocks.basicBlock, (byte) 3);
+        this.glassBlock = new BlockMetaPair(Blocks.glass, (byte) 0);
+        this.msController = ARBlocks.blockMothershipController;
+        this.msIndestructible = ARBlocks.blockMsBase;
         /*
          * msJet = ARBlocks.blockMsEngineRocketJet; msEngine = ARBlocks.blockMsEngineRocketBooster;
          */
@@ -45,16 +45,16 @@ public class MothershipWorldGen extends WorldGenerator {
         for (int x = startX; x <= stopX; x++) {
             for (int z = startZ; z <= stopZ; z++) {
                 if (x == startX || x == stopX || z == startZ || z == stopZ) {
-                    world.setBlock(x, centerY, z, decoBlock.getBlock(), decoBlock.getMetadata(), 3);
+                    world.setBlock(x, centerY, z, this.decoBlock.getBlock(), this.decoBlock.getMetadata(), 3);
                 } else {
-                    world.setBlock(x, centerY, z, groundBlock.getBlock(), groundBlock.getMetadata(), 3);
+                    world.setBlock(x, centerY, z, this.groundBlock.getBlock(), this.groundBlock.getMetadata(), 3);
                 }
             }
         }
 
         // place that one failsafe block
         // msIndestructible
-        world.setBlock(centerX, centerY, centerZ, msIndestructible.getBlock(), msIndestructible.getMetadata(), 3);
+        world.setBlock(centerX, centerY, centerZ, this.msIndestructible.getBlock(), this.msIndestructible.getMetadata(), 3);
 
         startX = centerX - 3;
         stopX = centerX + 3;
@@ -64,26 +64,26 @@ public class MothershipWorldGen extends WorldGenerator {
         for (int x = startX; x <= stopX; x++) {
             for (int z = startZ; z <= stopZ; z++) {
                 // floor
-                world.setBlock(x, centerY, z, groundBlock.getBlock(), groundBlock.getMetadata(), 3);
+                world.setBlock(x, centerY, z, this.groundBlock.getBlock(), this.groundBlock.getMetadata(), 3);
 
                 // sides
                 if (x == startX || x == stopX || z == startZ || z == stopZ) {
                     // roof border
-                    world.setBlock(x, centerY + 4, z, groundBlock.getBlock(), groundBlock.getMetadata(), 3);
+                    world.setBlock(x, centerY + 4, z, this.groundBlock.getBlock(), this.groundBlock.getMetadata(), 3);
                     if (x > startX + 1 && x < stopX - 1 || z > startZ + 1 && z < stopZ - 1) {
                         continue;
                     }
                     // walls
                     for (int y = centerY + 1; y < centerY + 4; y++) {
                         if (y > centerY + 1 && y < centerY + 3) {
-                            world.setBlock(x, y, z, glassBlock.getBlock(), glassBlock.getMetadata(), 3);
+                            world.setBlock(x, y, z, this.glassBlock.getBlock(), this.glassBlock.getMetadata(), 3);
                         } else {
-                            world.setBlock(x, y, z, decoBlock.getBlock(), decoBlock.getMetadata(), 3);
+                            world.setBlock(x, y, z, this.decoBlock.getBlock(), this.decoBlock.getMetadata(), 3);
                         }
                     }
                 } else {
                     // roof center
-                    world.setBlock(x, centerY + 4, z, glassBlock.getBlock(), glassBlock.getMetadata(), 3);
+                    world.setBlock(x, centerY + 4, z, this.glassBlock.getBlock(), this.glassBlock.getMetadata(), 3);
                 }
             }
         }
@@ -96,7 +96,7 @@ public class MothershipWorldGen extends WorldGenerator {
 
         for (int x = startX; x <= stopX; x++) {
             for (int z = startZ; z <= stopZ; z++) {
-                world.setBlock(x, centerY, z, groundBlock.getBlock(), groundBlock.getMetadata(), 3);
+                world.setBlock(x, centerY, z, this.groundBlock.getBlock(), this.groundBlock.getMetadata(), 3);
             }
         }
 
@@ -107,8 +107,8 @@ public class MothershipWorldGen extends WorldGenerator {
                 centerX - 3,
                 centerY + 1,
                 centerZ - 7,
-                msController.getBlock(),
-                msController.getMetadata() | rotationMeta << 2,
+                this.msController.getBlock(),
+                this.msController.getMetadata() | rotationMeta << 2,
                 3);
         /*
          * // (-)5, -6 => booster // (-)5, -5 => engine world.setBlock(centerX+5, centerY+1, centerZ-7,

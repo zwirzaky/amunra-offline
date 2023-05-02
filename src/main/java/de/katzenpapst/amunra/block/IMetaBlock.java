@@ -93,7 +93,7 @@ public interface IMetaBlock {
      * @return
      */
     default public BlockMetaPair getBlockMetaPair(final String name) {
-        return new BlockMetaPair((Block) this, (byte) getMetaByName(name));
+        return new BlockMetaPair((Block) this, (byte) this.getMetaByName(name));
     }
 
     /**
