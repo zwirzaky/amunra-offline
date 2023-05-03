@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -19,8 +20,6 @@ import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 /**
  * I'll do a subdivision now: StructureGenerator and Structure For each StructureGenerator there is a subclass of
  * BaseStructure which it generates
- *
- *
  */
 abstract public class StructureGenerator extends MapGenBaseMeta {
 
@@ -31,8 +30,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         public int minAmount;
         public int maxAmount;
 
-        public SubComponentData(Class<? extends BaseStructureComponent> clazz, float probability, int minAmount,
-                int maxAmount) {
+        public SubComponentData(final Class<? extends BaseStructureComponent> clazz, final float probability,
+                final int minAmount, final int maxAmount) {
             this.clazz = clazz;
             this.probability = probability;
             this.minAmount = minAmount;
@@ -42,17 +41,18 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         public SubComponentData copy() {
             return new SubComponentData(this.clazz, this.probability, this.minAmount, this.maxAmount);
         }
+
+        public float getProbability() {
+            return this.probability;
+        }
     }
 
     /**
      * Clones an ArrayList of SubComponentData
      *
      * helper for generateSubComponents
-     *
-     * @param subCompData
-     * @return
      */
-    private List<SubComponentData> cloneSubComponentList(List<SubComponentData> subCompData) {
+    private List<SubComponentData> cloneSubComponentList(final List<SubComponentData> subCompData) {
         return subCompData.stream().map(SubComponentData::copy).collect(Collectors.toList());
     }
 
@@ -60,30 +60,20 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * Calculates the sum of all SubComponentData's probability values
      *
      * helper for generateSubComponents
-     *
-     * @param subCompData
-     * @return
      */
-    private float getProbabilityMaximum(List<SubComponentData> subCompData) {
-        float sum = 0.0F;
-        for (SubComponentData entry : subCompData) {
-            sum += entry.probability;
-        }
-        return sum;
+    private float getProbabilityMaximum(final List<SubComponentData> subCompData) {
+        return subCompData.parallelStream().map(SubComponentData::getProbability).reduce(0.0f, Float::sum);
     }
 
     /**
      * Just takes the "clazz" member of the entry and tries to create a new instance of it
      *
      * helper for generateSubComponents
-     *
-     * @param entry
-     * @return
      */
-    private BaseStructureComponent generateComponent(SubComponentData entry) {
+    private BaseStructureComponent generateComponent(final SubComponentData entry) {
         try {
             return entry.clazz.getConstructor().newInstance();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             AmunRa.LOGGER.error("Instantiating " + entry.clazz.getCanonicalName() + " failed", e);
         }
         return null;
@@ -93,16 +83,12 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * Tries to find a sensible limit (aka total maximum of components) for the given list of SubComponentData
      *
      * helper for generateSubComponents
-     *
-     * @param subCompData
-     * @param rand
-     * @return
      */
-    private int findComponentLimit(List<SubComponentData> subCompData, Random rand) {
+    private int findComponentLimit(final List<SubComponentData> subCompData, final Random rand) {
         int minComponents = 0;
         int maxComponents = 0;
         boolean everythingHasMax = true;
-        for (SubComponentData entry : subCompData) {
+        for (final SubComponentData entry : subCompData) {
             minComponents += entry.minAmount;
             if (entry.maxAmount > 0) {
                 maxComponents += entry.maxAmount;
@@ -126,30 +112,29 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param subCompData ArrayList of SubComponentData
      * @param rand        the Random object to use
      * @param limit       the result will not have more entries than this. if 0, a random limit will be used
-     * @return
      */
-    protected List<BaseStructureComponent> generateSubComponents(List<SubComponentData> subCompData, Random rand,
-            int limit) {
-        List<BaseStructureComponent> compList = new ArrayList<>();
-        HashMap<String, Integer> typeAmountMapping = new HashMap<String, Integer>();
+    protected List<BaseStructureComponent> generateSubComponents(final List<SubComponentData> subCompData,
+            final Random rand, int limit) {
+        final List<BaseStructureComponent> compList = new ArrayList<>();
+        final Map<String, Integer> typeAmountMapping = new HashMap<>();
 
         if (limit <= 0) {
-            limit = findComponentLimit(subCompData, rand);
+            limit = this.findComponentLimit(subCompData, rand);
         }
 
-        List<SubComponentData> curComponents = this.cloneSubComponentList(subCompData);
+        final List<SubComponentData> curComponents = this.cloneSubComponentList(subCompData);
 
         while (true) {
-            Iterator<SubComponentData> itr = curComponents.iterator();
+            final Iterator<SubComponentData> itr = curComponents.iterator();
             float curValue = 0.0F;
 
             float total = this.getProbabilityMaximum(curComponents);
-            float curRandom = rand.nextFloat() * total;
+            final float curRandom = rand.nextFloat() * total;
 
             // find an entry
             while (itr.hasNext()) {
-                SubComponentData entry = itr.next();
-                String typeName = entry.clazz.getCanonicalName();
+                final SubComponentData entry = itr.next();
+                final String typeName = entry.clazz.getCanonicalName();
 
                 if (typeAmountMapping.get(typeName) == null) {
                     typeAmountMapping.put(typeName, 0);
@@ -157,22 +142,22 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
                 int curAmount = typeAmountMapping.get(typeName);
 
-                boolean isBelowMinimum = (entry.minAmount > 0 && curAmount < entry.minAmount);
+                final boolean isBelowMinimum = entry.minAmount > 0 && curAmount < entry.minAmount;
 
                 if (
                 // automatically pick it if it's minimum isn't reached
                 isBelowMinimum ||
                 // or if it's in the current rand's range
-                        (curValue <= curRandom && curRandom <= entry.probability + curValue)) {
+                        curValue <= curRandom && curRandom <= entry.probability + curValue) {
                     // pick this
-                    BaseStructureComponent cmp = generateComponent(entry);
+                    final BaseStructureComponent cmp = this.generateComponent(entry);
                     if (cmp != null) {
                         compList.add(cmp);
                     }
                     curAmount = curAmount + 1;
                     typeAmountMapping.put(typeName, curAmount);
 
-                    boolean isMaximumReached = entry.maxAmount > 0 && curAmount >= entry.maxAmount;
+                    final boolean isMaximumReached = entry.maxAmount > 0 && curAmount >= entry.maxAmount;
 
                     if (isMaximumReached || cmp == null) {
                         // enough of this one
@@ -195,17 +180,13 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
     /**
      * Generate one single component from the list. Min and max values from SubComponentData will be ignored
-     *
-     * @param subCompData
-     * @param rand
-     * @return
      */
-    protected BaseStructureComponent generateOneComponent(List<SubComponentData> subCompData, Random rand) {
+    protected BaseStructureComponent generateOneComponent(final List<SubComponentData> subCompData, final Random rand) {
 
         BaseStructureComponent result = null;
         Class<? extends BaseStructureComponent> resultClass = null;
 
-        for (SubComponentData entry : subCompData) {
+        for (final SubComponentData entry : subCompData) {
             if (entry.probability < rand.nextFloat()) {
                 resultClass = entry.clazz;
                 break;
@@ -213,14 +194,14 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
         }
         if (resultClass == null) {
             // as fallback
-            int i = MathHelper.getRandomIntegerInRange(rand, 0, subCompData.size() - 1);
+            final int i = MathHelper.getRandomIntegerInRange(rand, 0, subCompData.size() - 1);
             resultClass = subCompData.get(i).clazz;
         }
 
         try {
 
             result = resultClass.getConstructor().newInstance();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             AmunRa.LOGGER.error("Instantiating " + resultClass.getCanonicalName() + " failed", e);
         }
 
@@ -232,7 +213,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     public class BaseStructureMap extends HashMap<Long, BaseStructureStart> {
 
         private static final long serialVersionUID = -4123587272811107730L;
-    };
+    }
 
     protected BaseStructureMap structureMap = new BaseStructureMap();
 
@@ -240,27 +221,16 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
     /**
      * Return some random long for a seed
-     * 
-     * @return
      */
     abstract protected long getSalt();
 
     /**
      * Return true if this structure (or any part of it) should be generated in this chunk
-     *
-     * @param chunkX
-     * @param chunkZ
-     * @param rand
-     * @return
      */
     abstract protected boolean canGenerateHere(int chunkX, int chunkZ, Random rand);
 
     /**
      * Create and maybe somehow init an instance of BaseStructure here
-     *
-     * @param xChunkCoord
-     * @param zChunkCoord
-     * @return
      */
     abstract protected BaseStructureStart createNewStructure(int xChunkCoord, int zChunkCoord);
 
@@ -277,8 +247,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
      * @param metas           metas array
      */
     @Override
-    public void generate(IChunkProvider chunkProvider, World world, int origXChunkCoord, int origZChunkCoord,
-            Block[] blocks, byte[] metadata) {
+    public void generate(final IChunkProvider chunkProvider, final World world, final int origXChunkCoord,
+            final int origZChunkCoord, final Block[] blocks, final byte[] metadata) {
         this.worldObj = world;
         this.chunkProvider = chunkProvider;
         // this.rand.setSeed(world.getSeed());
@@ -289,7 +259,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
                 <= origXChunkCoord + this.range; ++xChunkCoord) {
             for (int zChunkCoord = origZChunkCoord - this.range; zChunkCoord
                     <= origZChunkCoord + this.range; ++zChunkCoord) {
-                if (this.canGenerateHere(xChunkCoord, zChunkCoord, rand)) {
+                if (this.canGenerateHere(xChunkCoord, zChunkCoord, this.rand)) {
                     this.recursiveGenerate(
                             world,
                             xChunkCoord,
@@ -304,22 +274,25 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
     }
 
     @Override
-    protected void recursiveGenerate(World par1World, int xChunkCoord, int zChunkCoord, int origXChunkCoord,
-            int origZChunkCoord, Block[] arrayOfIDs, byte[] arrayOfMeta) {
-        makeStructure(par1World, xChunkCoord, zChunkCoord, origXChunkCoord, origZChunkCoord, arrayOfIDs, arrayOfMeta);
+    protected void recursiveGenerate(final World par1World, final int xChunkCoord, final int zChunkCoord,
+            final int origXChunkCoord, final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+        this.makeStructure(
+                par1World,
+                xChunkCoord,
+                zChunkCoord,
+                origXChunkCoord,
+                origZChunkCoord,
+                arrayOfIDs,
+                arrayOfMeta);
 
     }
 
     /**
      * Adds stuff like mobs or tileentities, which can't be added in the step where the block and meta arrays are being
      * filled
-     *
-     * @param chunkProvider
-     * @param world
-     * @param origXChunkCoord
-     * @param origZChunkCoord
      */
-    public void populate(IChunkProvider chunkProvider, World world, int origXChunkCoord, int origZChunkCoord) {
+    public void populate(final IChunkProvider chunkProvider, final World world, final int origXChunkCoord,
+            final int origZChunkCoord) {
         this.worldObj = world;
         this.chunkProvider = chunkProvider;
         // this.rand.setSeed(world.getSeed());
@@ -330,18 +303,18 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
                 <= origXChunkCoord + this.range; ++xChunkCoord) {
             for (int zChunkCoord = origZChunkCoord - this.range; zChunkCoord
                     <= origZChunkCoord + this.range; ++zChunkCoord) {
-                if (this.canGenerateHere(xChunkCoord, zChunkCoord, rand)) {
+                if (this.canGenerateHere(xChunkCoord, zChunkCoord, this.rand)) {
                     this.recursivePopulate(world, xChunkCoord, zChunkCoord, origXChunkCoord, origZChunkCoord);
                 }
             }
         }
     }
 
-    protected void recursivePopulate(World world, int xChunkCoord, int zChunkCoord, int origXChunkCoord,
-            int origZChunkCoord) {
-        Long key = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord));
-        if (structureMap.containsKey(key)) {
-            BaseStructureStart start = structureMap.get(key);
+    protected void recursivePopulate(final World world, final int xChunkCoord, final int zChunkCoord,
+            final int origXChunkCoord, final int origZChunkCoord) {
+        final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
+        if (this.structureMap.containsKey(key)) {
+            final BaseStructureStart start = this.structureMap.get(key);
             start.populateChunk(world, origXChunkCoord, origZChunkCoord);
         } else {
             AmunRa.LOGGER.warn(
@@ -355,25 +328,17 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
     /**
      * Creates or gets an instance of BaseStructure, then makes it generate the current chunk
-     *
-     * @param world
-     * @param xChunkCoord
-     * @param zChunkCoord
-     * @param origXChunkCoord
-     * @param origZChunkCoord
-     * @param arrayOfIDs
-     * @param arrayOfMeta
      */
-    protected void makeStructure(World world, int xChunkCoord, int zChunkCoord, int origXChunkCoord,
-            int origZChunkCoord, Block[] arrayOfIDs, byte[] arrayOfMeta) {
-        Long key = Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord));
+    protected void makeStructure(final World world, final int xChunkCoord, final int zChunkCoord,
+            final int origXChunkCoord, final int origZChunkCoord, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+        final Long key = ChunkCoordIntPair.chunkXZ2Int(xChunkCoord, zChunkCoord);
         BaseStructureStart start = null;
-        if (!structureMap.containsKey(key)) {
-            start = createNewStructure(xChunkCoord, zChunkCoord);// new GridVillageStart(xChunkCoord, zChunkCoord,
-                                                                 // this.rand);
-            structureMap.put(key, start);
+        if (!this.structureMap.containsKey(key)) {
+            start = this.createNewStructure(xChunkCoord, zChunkCoord);// new GridVillageStart(xChunkCoord, zChunkCoord,
+            // this.rand);
+            this.structureMap.put(key, start);
         } else {
-            start = structureMap.get(key);
+            start = this.structureMap.get(key);
         }
         start.generateChunk(origXChunkCoord, origZChunkCoord, arrayOfIDs, arrayOfMeta);
 

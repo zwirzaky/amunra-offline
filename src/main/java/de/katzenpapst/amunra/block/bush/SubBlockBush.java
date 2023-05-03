@@ -17,74 +17,74 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPlantable {
 
-    public SubBlockBush(String name, String texture) {
+    public SubBlockBush(final String name, final String texture) {
         super(name, texture, null, 0);
     }
 
-    public SubBlockBush(String name, String texture, String tool, int harvestLevel) {
+    public SubBlockBush(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
     }
 
-    public SubBlockBush(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
+    public SubBlockBush(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
     @Override
-    public boolean isShearable(ItemStack item, IBlockAccess world, int x, int y, int z) {
+    public boolean isShearable(final ItemStack item, final IBlockAccess world, final int x, final int y, final int z) {
         return true;
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(ItemStack item, IBlockAccess world, int x, int y, int z, int fortune) {
-        ArrayList<ItemStack> result = new ArrayList<ItemStack>();
+    public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y,
+            final int z, final int fortune) {
+        final ArrayList<ItemStack> result = new ArrayList<>();
         result.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z)));
         return result;
     }
 
     @Override
-    public boolean func_149851_a(World p_149851_1_, int p_149851_2_, int p_149851_3_, int p_149851_4_,
-            boolean isWorldRemote) {
+    public boolean func_149851_a(final World worldIn, final int x, final int y, final int z,
+            final boolean isWorldRemote) {
         return false;
     }
 
     @Override
-    public boolean func_149852_a(World p_149852_1_, Random p_149852_2_, int p_149852_3_, int p_149852_4_,
-            int p_149852_5_) {
+    public boolean func_149852_a(final World worldIn, final Random random, final int x, final int y, final int z) {
         return false;
     }
 
     @Override
-    public void func_149853_b(World p_149853_1_, Random p_149853_2_, int p_149853_3_, int p_149853_4_,
-            int p_149853_5_) {
+    public void func_149853_b(final World worldIn, final Random random, final int x, final int y, final int z) {
 
     }
 
-    public boolean canPlaceOn(BlockMetaPair blockToCheck, int meta) {
-        return canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
+    public boolean canPlaceOn(final BlockMetaPair blockToCheck, final int meta) {
+        return this.canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
     }
 
-    public boolean canPlaceOn(Block blockToCheck, int metaToCheck, int meta) {
+    public boolean canPlaceOn(final Block blockToCheck, final int metaToCheck, final int meta) {
 
         return true;
     }
 
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
+    public EnumPlantType getPlantType(final IBlockAccess world, final int x, final int y, final int z) {
         return EnumPlantType.Plains;
     }
 
     @Override
-    public Block getPlant(IBlockAccess world, int x, int y, int z) {
-        return (Block) parent;
+    public Block getPlant(final IBlockAccess world, final int x, final int y, final int z) {
+        return (Block) this.parent;
     }
 
     @Override
-    public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
+    public int getPlantMetadata(final IBlockAccess world, final int x, final int y, final int z) {
         return world.getBlockMetadata(x, y, z);
     }
 
     @Override
-    public boolean getBlocksMovement(IBlockAccess par1World, int x, int y, int z) {
+    public boolean getBlocksMovement(final IBlockAccess par1World, final int x, final int y, final int z) {
         return false;
     }
 

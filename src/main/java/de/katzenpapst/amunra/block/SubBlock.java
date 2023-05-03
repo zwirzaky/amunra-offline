@@ -28,29 +28,30 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
 
     protected IMetaBlock parent = null;
 
-    public SubBlock(String name, String texture) {
+    public SubBlock(final String name, final String texture) {
         super(Material.rock);
-        init(name, texture, "pickaxe", 1, 1.5F, 10.0F);
+        this.init(name, texture, "pickaxe", 1, 1.5F, 10.0F);
     }
 
-    public SubBlock(String name, String texture, String tool, int harvestLevel) {
+    public SubBlock(final String name, final String texture, final String tool, final int harvestLevel) {
         super(Material.rock);
-        init(name, texture, tool, harvestLevel, 1.5F, 10.0F);
+        this.init(name, texture, tool, harvestLevel, 1.5F, 10.0F);
     }
 
-    public SubBlock(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
+    public SubBlock(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(Material.rock);
-        init(name, texture, tool, harvestLevel, hardness, resistance);
+        this.init(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
-    protected void init(String name, String texture, String harvestTool, int havestLevel, float hardness,
-            float resistance) {
-        blockNameFU = name;
+    protected void init(final String name, final String texture, final String harvestTool, final int havestLevel,
+            final float hardness, final float resistance) {
+        this.blockNameFU = name;
         this.setBlockName(name);
-        setBlockTextureName(texture);
-        setHarvestLevel(harvestTool, havestLevel);
-        setHardness(hardness);
-        setResistance(resistance);
+        this.setBlockTextureName(texture);
+        this.setHarvestLevel(harvestTool, havestLevel);
+        this.setHardness(hardness);
+        this.setResistance(resistance);
         // this.name = name;
         // this.texture = texture;
     }
@@ -60,7 +61,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      */
     @Override
     public String getLocalizedName() {
-        return blockNameFU; // multiblock does that
+        return this.blockNameFU; // multiblock does that
     }
 
     /**
@@ -68,7 +69,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      */
     @Override
     public String getUnlocalizedName() {
-        return blockNameFU;
+        return this.blockNameFU;
     }
 
     /**
@@ -81,12 +82,12 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return null;
     }
 
     @Override
-    public boolean isTerraformable(World world, int x, int y, int z) {
+    public boolean isTerraformable(final World world, final int x, final int y, final int z) {
         return false;
     }
 
@@ -96,12 +97,12 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
     }
 
     @Override
-    public boolean isPlantable(int metadata) {
+    public boolean isPlantable(final int metadata) {
         return false;
     }
 
     @Override
-    public boolean isValueable(int metadata) {
+    public boolean isValueable(final int metadata) {
         return false;
     }
 
@@ -110,7 +111,7 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      * @SideOnly(Side.CLIENT) public void registerBlockIcons(IIconRegister par1IconRegister) { }
      */
 
-    public void setParent(IMetaBlock parent) {
+    public void setParent(final IMetaBlock parent) {
         if (parent instanceof Block) {
             this.parent = parent;
         }
@@ -128,12 +129,12 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      * @param level     Harvest level: Wood: 0 Stone: 1 Iron: 2 Diamond: 3 Gold: 0
      */
     @Override
-    public void setHarvestLevel(String toolClass, int level) {
+    public void setHarvestLevel(final String toolClass, final int level) {
         this.sbHarvestLevel = level;
         this.sbHarvestTool = toolClass;
     }
 
-    public SubBlock setHarvestInfo(String toolClass, int level) {
+    public SubBlock setHarvestInfo(final String toolClass, final int level) {
         this.setHarvestLevel(toolClass, level);
         return this;
     }
@@ -146,8 +147,8 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      * @return
      */
     @Override
-    public String getHarvestTool(int metadata) {
-        return sbHarvestTool;
+    public String getHarvestTool(final int metadata) {
+        return this.sbHarvestTool;
     }
 
     /**
@@ -158,8 +159,8 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      * @return Harvest level, or -1 if not the specified tool type.
      */
     @Override
-    public int getHarvestLevel(int metadata) {
-        return sbHarvestLevel;
+    public int getHarvestLevel(final int metadata) {
+        return this.sbHarvestLevel;
     }
 
     /**
@@ -170,8 +171,8 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      * @param metadata  The specific metadata to set
      */
     @Override
-    public void setHarvestLevel(String toolClass, int level, int metadata) {
-        setHarvestLevel(toolClass, level);
+    public void setHarvestLevel(final String toolClass, final int level, final int metadata) {
+        this.setHarvestLevel(toolClass, level);
     }
 
     /**
@@ -183,12 +184,13 @@ public class SubBlock extends Block implements IDetectableResource, IPlantableBl
      * @param z
      * @return
      */
-    public boolean canBeMoved(World world, int x, int y, int z) {
+    public boolean canBeMoved(final World world, final int x, final int y, final int z) {
         return true;
     }
 
     @Override
-    public void breakBlock(World world, int x0, int y0, int z0, Block var5, int var6) {
+    public void breakBlock(final World world, final int x0, final int y0, final int z0, final Block var5,
+            final int var6) {
         // NOT calling super here, the metablock is doing that part
     }
 }

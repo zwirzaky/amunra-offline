@@ -23,9 +23,9 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
 
     public interface IMothershipSettingsTab {
 
-        public void mothershipResponsePacketRecieved();
+        void mothershipResponsePacketRecieved();
 
-        public void mothershipOperationFailed(String message);
+        void mothershipOperationFailed(String message);
     }
 
     private static final ResourceLocation guiTexture = new ResourceLocation(
@@ -33,22 +33,23 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
             "textures/gui/ms_settings.png");
 
     private final TileEntityMothershipSettings tile;
-    private Mothership ship;
+    private final Mothership ship;
 
     protected List<ResourceLocation> mothershipTextures;
 
-    public GuiMothershipSettings(InventoryPlayer par1InventoryPlayer, TileEntityMothershipSettings tile) {
+    public GuiMothershipSettings(final InventoryPlayer par1InventoryPlayer, final TileEntityMothershipSettings tile) {
         super(new ContainerMothershipSettings(par1InventoryPlayer, tile));
         this.ySize = 201;
         this.xSize = 176;
         this.tile = tile;
-        mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
-        ship = tile.getMothership();
+        this.mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
+        this.ship = tile.getMothership();
 
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float ticksProbably, int somethingX, int somethingY) {
+    protected void drawGuiContainerBackgroundLayer(final float ticksProbably, final int somethingX,
+            final int somethingY) {
         GL11.glPushMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(guiTexture);
@@ -59,34 +60,35 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
         GL11.glPopMatrix();
     }
 
-    public void mothershipOperationFailed(String message) {
-        AbstractTab curTab = this.getActiveTab();
+    public void mothershipOperationFailed(final String message) {
+        final AbstractTab curTab = this.getActiveTab();
         if (curTab instanceof IMothershipSettingsTab) {
             ((IMothershipSettingsTab) curTab).mothershipOperationFailed(message);
         }
     }
 
     public void mothershipResponsePacketRecieved() {
-        AbstractTab curTab = this.getActiveTab();
+        final AbstractTab curTab = this.getActiveTab();
         if (curTab instanceof IMothershipSettingsTab) {
             ((IMothershipSettingsTab) curTab).mothershipResponsePacketRecieved();
         }
     }
 
     public void sendMothershipSettingsPacket() {
-        NBTTagCompound nbt = new NBTTagCompound();
-        ship.writeSettingsToNBT(nbt);
+        final NBTTagCompound nbt = new NBTTagCompound();
+        this.ship.writeSettingsToNBT(nbt);
         AmunRa.packetPipeline
-                .sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, ship.getID(), nbt));
+                .sendToServer(new PacketSimpleAR(EnumSimplePacket.S_SET_MOTHERSHIP_SETTINGS, this.ship.getID(), nbt));
     }
 
     @Override
     public void initGui() {
         super.initGui();
 
-        this.addTab(new TabMothershipCustom(tile, this, mc, width, height, xSize, ySize));
-        this.addTab(new TabMothershipLanding(tile, this, mc, width, height, xSize, ySize));
-        this.addTab(new TabMothershipUsage(tile, this, mc, width, height, xSize, ySize));
+        this.addTab(new TabMothershipCustom(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
+        this.addTab(
+                new TabMothershipLanding(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
+        this.addTab(new TabMothershipUsage(this.tile, this, this.mc, this.width, this.height, this.xSize, this.ySize));
 
     }
 

@@ -25,20 +25,21 @@ public class RenderARVillager extends RenderLiving {
         this.villagerModel = (ModelARVillager) this.mainModel;
     }
 
-    protected int shouldVillagerRenderPass(EntityARVillager par1EntityVillager, int par2, float par3) {
+    protected int shouldVillagerRenderPass(final EntityARVillager par1EntityVillager, final int par2,
+            final float par3) {
         return -1;
     }
 
-    public void renderVillager(EntityARVillager par1EntityVillager, double par2, double par4, double par6, float par8,
-            float par9) {
+    public void renderVillager(final EntityARVillager par1EntityVillager, final double par2, final double par4,
+            final double par6, final float par8, final float par9) {
         super.doRender(par1EntityVillager, par2, par4, par6, par8, par9);
     }
 
-    protected void renderVillagerEquipedItems(EntityARVillager par1EntityVillager, float par2) {
+    protected void renderVillagerEquipedItems(final EntityARVillager par1EntityVillager, final float par2) {
         super.renderEquippedItems(par1EntityVillager, par2);
     }
 
-    protected void preRenderVillager(EntityARVillager par1EntityVillager, float par2) {
+    protected void preRenderVillager(final EntityARVillager par1EntityVillager, final float par2) {
         float f1 = 0.9375F;
 
         if (par1EntityVillager.getGrowingAge() < 0) {
@@ -52,38 +53,40 @@ public class RenderARVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         this.renderVillager((EntityARVillager) par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
     @Override
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2) {
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2) {
         this.preRenderVillager((EntityARVillager) par1EntityLivingBase, par2);
     }
 
     @Override
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3) {
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3) {
         return this.shouldVillagerRenderPass((EntityARVillager) par1EntityLivingBase, par2, par3);
     }
 
     @Override
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2) {
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2) {
         this.renderVillagerEquipedItems((EntityARVillager) par1EntityLivingBase, par2);
     }
 
     @Override
-    public void doRender(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8,
-            float par9) {
+    public void doRender(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4,
+            final double par6, final float par8, final float par9) {
         this.renderVillager((EntityARVillager) par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity par1Entity) {
+    protected ResourceLocation getEntityTexture(final Entity par1Entity) {
         return RenderARVillager.villagerTexture;
     }
 
     @Override
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         this.renderVillager((EntityARVillager) par1Entity, par2, par4, par6, par8, par9);
     }
 }

@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 public class TileEntityARChestLarge extends TileEntityARChest {
 
     public TileEntityARChestLarge() {
-        chestContents = new ItemStack[this.getSizeInventory()];
+        this.chestContents = new ItemStack[this.getSizeInventory()];
     }
 
     /**

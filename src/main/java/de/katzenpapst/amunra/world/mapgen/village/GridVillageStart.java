@@ -34,68 +34,60 @@ public class GridVillageStart extends BaseStructureStart {
 
     /**
      * Instantiates the thing, the coords in here should be the START point
-     * 
-     * @param chunkX
-     * @param chunkZ
      */
-    public GridVillageStart(World world, int chunkX, int chunkZ, Random rand) {
+    public GridVillageStart(final World world, final int chunkX, final int chunkZ, final Random rand) {
 
         super(world, chunkX, chunkZ, rand);
-        int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
-        int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
+        final int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
+        final int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
 
         AmunRa.LOGGER.debug("Generating the Village at x={}, z={}", startBlockX, startBlockZ);
 
-        componentsByGrid = new HashMap<Integer, GridVillageComponent>();
+        this.componentsByGrid = new HashMap<>();
     }
 
     /**
      * From what I understood, this is called first, then, after this is done, populateChunk is called and after that,
      * the chunk is done and won't be touched again
-     *
-     * @param chunkX
-     * @param chunkZ
-     * @param arrayOfIDs
-     * @param arrayOfMeta
-     * @return
      */
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
-        drawGrid(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
+        this.drawGrid(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
-        drawGridComponents(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
+        this.drawGridComponents(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
         return true;
     }
 
-    public void setComponents(List<BaseStructureComponent> components) {
+    public void setComponents(final List<BaseStructureComponent> components) {
 
         // byte should be enough for gridsize
 
-        numGridElements = components.size();
+        this.numGridElements = components.size();
 
-        gridSideLength = (int) Math.ceil(Math.sqrt(numGridElements));
+        this.gridSideLength = (int) Math.ceil(Math.sqrt(this.numGridElements));
 
         // now the effective grid width is this.gridSize+3
-        int effectiveGridSize = this.gridSize + 3;
+        final int effectiveGridSize = this.gridSize + 3;
 
-        int squareWidth = effectiveGridSize * gridSideLength;
+        final int squareWidth = effectiveGridSize * this.gridSideLength;
 
-        int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
-        int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
+        final int startBlockX = CoordHelper.chunkToMinBlock(this.chunkX) + this.startX;
+        final int startBlockZ = CoordHelper.chunkToMinBlock(this.chunkZ) + this.startZ;
 
         // my own structBB
-        structBB = new StructureBoundingBox();
-        structBB.minX = startBlockX - (int) Math.floor(squareWidth / 2);
-        structBB.maxX = startBlockX + (int) Math.ceil(squareWidth / 2);
-        structBB.minZ = startBlockZ - (int) Math.floor(squareWidth / 2);
-        structBB.maxZ = startBlockZ + (int) Math.ceil(squareWidth / 2);
-        structBB.minY = 0;
-        structBB.maxY = 255;
+        this.structBB = new StructureBoundingBox();
+        this.structBB.minX = startBlockX - (int) Math.floor(squareWidth / 2);
+        this.structBB.maxX = startBlockX + (int) Math.ceil(squareWidth / 2);
+        this.structBB.minZ = startBlockZ - (int) Math.floor(squareWidth / 2);
+        this.structBB.maxZ = startBlockZ + (int) Math.ceil(squareWidth / 2);
+        this.structBB.minY = 0;
+        this.structBB.maxY = 255;
 
-        int totalGridElems = gridSideLength * gridSideLength;
+        final int totalGridElems = this.gridSideLength * this.gridSideLength;
         // pad the components
-        for (int i = numGridElements; i < totalGridElems; i++) {
+        for (int i = this.numGridElements; i < totalGridElems; i++) {
             components.add(GridVillageComponent.DUMMY);
         }
 
@@ -103,17 +95,17 @@ public class GridVillageStart extends BaseStructureStart {
 
         byte gridX = 0;
         byte gridZ = 0;
-        for (BaseStructureComponent comp : components) {
+        for (final BaseStructureComponent comp : components) {
             if (comp == GridVillageComponent.DUMMY || !(comp instanceof GridVillageComponent)) {
                 continue;
             }
-            int index = gridX + (gridZ << 8);
+            final int index = gridX + (gridZ << 8);
 
-            StructureBoundingBox componentBox = new StructureBoundingBox(
-                    structBB.minX + effectiveGridSize * gridX + 2,
-                    structBB.minZ + effectiveGridSize * gridZ + 2,
-                    structBB.minX + effectiveGridSize * gridX + 1 + this.gridSize,
-                    structBB.minZ + effectiveGridSize * gridZ + 1 + this.gridSize);
+            final StructureBoundingBox componentBox = new StructureBoundingBox(
+                    this.structBB.minX + effectiveGridSize * gridX + 2,
+                    this.structBB.minZ + effectiveGridSize * gridZ + 2,
+                    this.structBB.minX + effectiveGridSize * gridX + 1 + this.gridSize,
+                    this.structBB.minZ + effectiveGridSize * gridZ + 1 + this.gridSize);
 
             componentBox.getXSize();
             //
@@ -122,9 +114,9 @@ public class GridVillageStart extends BaseStructureStart {
             comp.setCoordMode(this.rand.nextInt(4));
             // vComp.setCoordMode(3);
             comp.setParent(this);
-            componentsByGrid.put(index, (GridVillageComponent) comp);
+            this.componentsByGrid.put(index, (GridVillageComponent) comp);
             gridX++;
-            if (gridX >= gridSideLength) {
+            if (gridX >= this.gridSideLength) {
                 gridX = 0;
                 gridZ++;
             }
@@ -133,203 +125,203 @@ public class GridVillageStart extends BaseStructureStart {
     }
 
     public BlockMetaPair getPathMaterial() {
-        return pathMaterial;
+        return this.pathMaterial;
     }
 
-    public void setPathMaterial(BlockMetaPair pathMaterial) {
+    public void setPathMaterial(final BlockMetaPair pathMaterial) {
         this.pathMaterial = pathMaterial;
     }
 
     public BlockMetaPair getWallMaterial() {
-        return wallMaterial;
+        return this.wallMaterial;
     }
 
-    public void setWallMaterial(BlockMetaPair wallMaterial) {
+    public void setWallMaterial(final BlockMetaPair wallMaterial) {
         this.wallMaterial = wallMaterial;
     }
 
     public BlockMetaPair getFloorMaterial() {
-        return floorMaterial;
+        return this.floorMaterial;
     }
 
-    public void setFloorMaterial(BlockMetaPair floorMaterial) {
+    public void setFloorMaterial(final BlockMetaPair floorMaterial) {
         this.floorMaterial = floorMaterial;
     }
 
     public BlockMetaPair getFillMaterial() {
-        return fillMaterial;
+        return this.fillMaterial;
     }
 
-    public void setFillMaterial(BlockMetaPair fillMaterial) {
+    public void setFillMaterial(final BlockMetaPair fillMaterial) {
         this.fillMaterial = fillMaterial;
     }
 
-    protected void drawStuffInGrid(int chunkX, int chunkZ, int gridX, int gridZ, Block[] arrayOfIDs,
-            byte[] arrayOfMeta) {
+    protected void drawStuffInGrid(final int chunkX, final int chunkZ, final int gridX, final int gridZ,
+            final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         // now how do I calculate the grid's position?
         // I think it's
-        int effectiveGridSize = this.gridSize + 3;
-        int testX = structBB.minX + effectiveGridSize * gridX + 2;
-        int testZ = structBB.minZ + effectiveGridSize * gridZ + 2;
+        final int effectiveGridSize = this.gridSize + 3;
+        final int testX = this.structBB.minX + effectiveGridSize * gridX + 2;
+        final int testZ = this.structBB.minZ + effectiveGridSize * gridZ + 2;
 
         // now try
         for (int x = 0; x < this.gridSize; x++) {
             for (int z = 0; z < this.gridSize; z++) {
-                int relX = CoordHelper.abs2rel(testX + x, chunkX);
-                int relZ = CoordHelper.abs2rel(testZ + z, chunkZ);
-                placeBlockOnGround(
+                final int relX = CoordHelper.abs2rel(testX + x, chunkX);
+                final int relZ = CoordHelper.abs2rel(testZ + z, chunkZ);
+                this.placeBlockOnGround(
                         arrayOfIDs,
                         arrayOfMeta,
                         relX,
                         relZ,
-                        wallMaterial.getBlock(),
-                        wallMaterial.getMetadata());
+                        this.wallMaterial.getBlock(),
+                        this.wallMaterial.getMetadata());
             }
         }
     }
 
-    protected void drawGrid(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    protected void drawGrid(final int chunkX, final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
         // hmmm how do I do this now?
         // length of the square
-        int effectiveGridSize = this.gridSize + 3;
+        final int effectiveGridSize = this.gridSize + 3;
 
         /*
          * StructureBoundingBox chunkBB = CoordHelper.getChunkBB(chunkX, chunkZ); int minGroundLevel =
          * this.getAverageGroundLevel(arrayOfIDs, arrayOfMeta, structBB, chunkBB, -1);
          */
 
-        for (int x = structBB.minX; x < structBB.maxX; x++) {
-            for (int z = structBB.minZ; z < structBB.maxZ; z++) {
-                int testX = x - structBB.minX;
-                int testZ = z - structBB.minZ;
+        for (int x = this.structBB.minX; x < this.structBB.maxX; x++) {
+            for (int z = this.structBB.minZ; z < this.structBB.maxZ; z++) {
+                final int testX = x - this.structBB.minX;
+                final int testZ = z - this.structBB.minZ;
                 boolean drawX = false;
                 boolean drawZ = false;
 
-                if (testX != 0 && (testX % effectiveGridSize) == 0) {
+                if (testX != 0 && testX % effectiveGridSize == 0) {
                     drawX = true;
                 }
-                if (testZ != 0 && (testZ % effectiveGridSize) == 0) {
+                if (testZ != 0 && testZ % effectiveGridSize == 0) {
                     drawZ = true;
                 }
 
                 if (!drawX && !drawZ) {
                     continue;
                 }
-                int relX = CoordHelper.abs2rel(x, chunkX);
-                int relZ = CoordHelper.abs2rel(z, chunkZ);
+                final int relX = CoordHelper.abs2rel(x, chunkX);
+                final int relZ = CoordHelper.abs2rel(z, chunkZ);
 
                 if (drawX && drawZ) {
                     // crossing
 
-                    placeBlockOnGround(
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX - 1,
                             relZ - 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX,
                             relZ - 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX + 1,
                             relZ - 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
 
-                    placeBlockOnGround(
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX - 1,
                             relZ,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX,
                             relZ,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX + 1,
                             relZ,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
 
-                    placeBlockOnGround(
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX - 1,
                             relZ + 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX,
                             relZ + 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX + 1,
                             relZ + 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
                 } else if (drawX) {
-                    placeBlockOnGround(
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX - 1,
                             relZ,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX,
                             relZ,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX + 1,
                             relZ,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
                 } else if (drawZ) {
-                    placeBlockOnGround(
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX,
                             relZ - 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX,
                             relZ,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
-                    placeBlockOnGround(
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
+                    this.placeBlockOnGround(
                             arrayOfIDs,
                             arrayOfMeta,
                             relX,
                             relZ + 1,
-                            pathMaterial.getBlock(),
-                            pathMaterial.getMetadata());
+                            this.pathMaterial.getBlock(),
+                            this.pathMaterial.getMetadata());
                 }
             }
         }
@@ -337,41 +329,36 @@ public class GridVillageStart extends BaseStructureStart {
 
     /**
      * Places a block into the topmost solid block
-     *
-     * @param arrayOfIDs
-     * @param arrayOfMeta
-     * @param relX
-     * @param relZ
-     * @param block
-     * @param meta
      */
-    protected void placeBlockOnGround(Block[] arrayOfIDs, byte[] arrayOfMeta, int relX, int relZ, Block block,
-            int meta) {
+    protected void placeBlockOnGround(final Block[] arrayOfIDs, final byte[] arrayOfMeta, final int relX,
+            final int relZ, final Block block, final int meta) {
         if (relX < 0 || relX >= 16 || relZ < 0 || relZ >= 16) {
             return;
         }
-        int y = GridVillageComponent.getHighestSolidBlock(arrayOfIDs, arrayOfMeta, relX, relZ);
-        GridVillageComponent.placeBlockRel(arrayOfIDs, arrayOfMeta, relX, y - 1, relZ, block, meta);
+        final int y = BaseStructureComponent.getHighestSolidBlock(arrayOfIDs, arrayOfMeta, relX, relZ);
+        BaseStructureComponent.placeBlockRel(arrayOfIDs, arrayOfMeta, relX, y - 1, relZ, block, meta);
     }
 
-    protected void drawGridComponents(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    protected void drawGridComponents(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         // int effectiveGridSize = this.gridSize+3;
 
-        StructureBoundingBox chunkBox = CoordHelper.getChunkBB(chunkX, chunkZ);// new StructureBoundingBox(chunkX*16,
-                                                                               // chunkZ*16, chunkX*16+15,
-                                                                               // chunkZ*16+15);
+        final StructureBoundingBox chunkBox = CoordHelper.getChunkBB(chunkX, chunkZ);// new
+                                                                                     // StructureBoundingBox(chunkX*16,
+        // chunkZ*16, chunkX*16+15,
+        // chunkZ*16+15);
 
-        for (int gridX = 0; gridX < gridSideLength; gridX++) {
-            for (int gridZ = 0; gridZ < gridSideLength; gridZ++) {
+        for (int gridX = 0; gridX < this.gridSideLength; gridX++) {
+            for (int gridZ = 0; gridZ < this.gridSideLength; gridZ++) {
 
-                int index = gridX + (gridZ << 8);
+                final int index = gridX + (gridZ << 8);
 
-                if (!componentsByGrid.containsKey(index)) {
+                if (!this.componentsByGrid.containsKey(index)) {
                     continue;
                 }
 
-                GridVillageComponent curComp = componentsByGrid.get(index);
+                final GridVillageComponent curComp = this.componentsByGrid.get(index);
 
                 // fail for chunk z = -28
                 // ALL components should intersect with -27

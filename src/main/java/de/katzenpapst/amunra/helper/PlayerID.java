@@ -10,61 +10,54 @@ public class PlayerID {
     protected UUID userUUID;
     protected String userName;
 
-    public PlayerID(UUID userUUID, String userName) {
+    public PlayerID(final UUID userUUID, final String userName) {
         this.userUUID = userUUID;
         this.userName = userName;
     }
 
-    public PlayerID(EntityPlayer player) {
+    public PlayerID(final EntityPlayer player) {
         this.userUUID = player.getUniqueID();
         this.userName = player.getDisplayName();
     }
 
-    public PlayerID(NBTTagCompound nbt) {
-        String uuid = nbt.getString("uuid");
+    public PlayerID(final NBTTagCompound nbt) {
+        final String uuid = nbt.getString("uuid");
         this.userUUID = UUID.fromString(uuid);
         this.userName = nbt.getString("name");
     }
 
     public UUID getUUID() {
-        return userUUID;
+        return this.userUUID;
     }
 
     public String getName() {
-        return userName;
+        return this.userName;
     }
 
     public NBTTagCompound getNbt() {
-        NBTTagCompound nbt = new NBTTagCompound();
+        final NBTTagCompound nbt = new NBTTagCompound();
 
-        nbt.setString("uuid", userUUID.toString());
-        nbt.setString("name", userName);
+        nbt.setString("uuid", this.userUUID.toString());
+        nbt.setString("name", this.userName);
 
         return nbt;
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof PlayerID)) {
             return false;
         }
-        return ((PlayerID) other).userUUID.equals(userUUID);
-    }
-
-    public boolean equals(EntityPlayer other) {
-        if (other == null) {
-            return false;
-        }
-        return new PlayerID(other).userUUID.equals(userUUID);
+        return ((PlayerID) other).userUUID.equals(this.userUUID);
     }
 
     @Override
     public int hashCode() {
-        return userUUID.hashCode();
+        return this.userUUID.hashCode();
     }
 
-    public boolean isSameUser(EntityPlayer player) {
-        return this.userUUID.equals(player.getUniqueID());
+    public boolean isSameUser(final EntityPlayer player) {
+        return player == null ? false : this.userUUID.equals(player.getUniqueID());
     }
 
 }

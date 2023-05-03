@@ -21,28 +21,27 @@ public class CraftingHandler {
     public CraftingHandler() {}
 
     @SubscribeEvent
-    public void onCrafting(ItemCraftedEvent event) {
+    public void onCrafting(final ItemCraftedEvent event) {
 
         if (event.crafting.getItem() instanceof ItemRaygun) {
-            handleRaygunCrafting(event, ARItems.raygun);
+            this.handleRaygunCrafting(event, ARItems.raygun);
             return;
         }
         if (event.crafting.getItem() instanceof ItemCryogun) {
-            handleRaygunCrafting(event, ARItems.cryogun);
+            this.handleRaygunCrafting(event, ARItems.cryogun);
             return;
         }
         if (event.crafting.getItem() instanceof ItemNanotool) {
-            handleRaygunCrafting(event, ARItems.nanotool);
-            return;
+            this.handleRaygunCrafting(event, ARItems.nanotool);
         }
     }
 
-    private void handleRaygunCrafting(ItemCraftedEvent event, ItemAbstractBatteryUser gun) {
+    private void handleRaygunCrafting(final ItemCraftedEvent event, final ItemAbstractBatteryUser gun) {
         int indexGun = -1;
         int indexBattery = -1;
 
         for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
-            ItemStack curItem = event.craftMatrix.getStackInSlot(i);
+            final ItemStack curItem = event.craftMatrix.getStackInSlot(i);
             if (curItem == null) continue;
             if (curItem.getItem() instanceof ItemAbstractBatteryUser) {
                 indexGun = i;
@@ -56,16 +55,16 @@ public class CraftingHandler {
         if (indexBattery != -1) {
             // float energyInOldBattery =
             // ((ItemBattery)GCItems.battery).getElectricityStored(event.craftMatrix.getStackInSlot(indexBattery));
-            ItemStack newBattery = event.craftMatrix.getStackInSlot(indexBattery);
+            final ItemStack newBattery = event.craftMatrix.getStackInSlot(indexBattery);
             if (indexGun != -1) {
                 // there is another gun in the ingredients, so this is recharging
-                ItemStack oldGunStack = event.craftMatrix.getStackInSlot(indexGun);
+                final ItemStack oldGunStack = event.craftMatrix.getStackInSlot(indexGun);
 
-                ItemStack oldBattery = gun.getUsedBattery(event.craftMatrix.getStackInSlot(indexGun), true);
+                final ItemStack oldBattery = gun.getUsedBattery(event.craftMatrix.getStackInSlot(indexGun), true);
                 event.player.inventory.addItemStackToInventory(oldBattery);
 
                 // replace the nbt stuff
-                NBTBase nbt = oldGunStack.stackTagCompound.copy();
+                final NBTBase nbt = oldGunStack.stackTagCompound.copy();
                 event.crafting.stackTagCompound = (NBTTagCompound) nbt;
 
             } else {

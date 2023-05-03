@@ -153,8 +153,8 @@ public class AmunRa {
 
     public static final ARConfig config = new ARConfig();
 
-    protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<ResourceLocation>();
-    protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<ResourceLocation>();
+    protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<>();
+    protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<>();
 
     @SidedProxy(
             clientSide = "de.katzenpapst.amunra.proxy.ClientProxy",
@@ -164,8 +164,8 @@ public class AmunRa {
     public static final Logger LOGGER = LogManager.getLogger(MODNAME);
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());
+    public void preInit(final FMLPreInitializationEvent event) {
+        final Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());
 
         config.processConfig(configFile);
 
@@ -177,24 +177,41 @@ public class AmunRa {
         FMLCommonHandler.instance().bus().register(new CraftingHandler());
         GameRegistry.registerFuelHandler(new FurnaceHandler());
 
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/0.png"));
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/1.png"));
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/2.png"));
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/3.png"));
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/4.png"));
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/5.png"));
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/6.png"));
-        possibleMothershipTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/7.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/0.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/1.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/2.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/3.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/4.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/5.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/6.png"));
+        this.possibleMothershipTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/7.png"));
 
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/0.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/1.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/2.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/3.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/4.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/5.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/6.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/7.png"));
-        possibleAsteroidTextures.add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/8.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/0.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/1.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/2.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/3.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/4.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/5.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/6.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/7.png"));
+        this.possibleAsteroidTextures
+                .add(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/asteroid_icons/8.png"));
 
         ConnectionPacketAR.bus = NetworkRegistry.INSTANCE.newEventDrivenChannel(ConnectionPacketAR.CHANNEL);
         ConnectionPacketAR.bus.register(new ConnectionPacketAR());
@@ -206,35 +223,35 @@ public class AmunRa {
 
     @SuppressWarnings("unchecked")
     public List<ResourceLocation> getPossibleMothershipTextures() {
-        return (List<ResourceLocation>) possibleMothershipTextures.clone();
+        return (List<ResourceLocation>) this.possibleMothershipTextures.clone();
     }
 
     @SuppressWarnings("unchecked")
     public List<ResourceLocation> getPossibleAsteroidTextures() {
-        return (List<ResourceLocation>) possibleAsteroidTextures.clone();
+        return (List<ResourceLocation>) this.possibleAsteroidTextures.clone();
     }
 
-    public void addPossibleMothershipTexture(ResourceLocation loc) {
-        possibleMothershipTextures.add(loc);
+    public void addPossibleMothershipTexture(final ResourceLocation loc) {
+        this.possibleMothershipTextures.add(loc);
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event) {
+    public void init(final FMLInitializationEvent event) {
         AmunRa.arTab = new CreativeTabGC(CreativeTabs.getNextID(), "AmunRaTab", ARItems.shuttleItem, 0);
 
         packetPipeline = ARChannelHandler.init();
 
-        initCelestialBodies();
-        initCreatures();
-        registerTileEntities();
-        initOtherEntities();
+        this.initCelestialBodies();
+        this.initCreatures();
+        this.registerTileEntities();
+        this.initOtherEntities();
         RecipeHelper.initRecipes();
 
         proxy.init(event);
     }
 
     @EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void serverStarting(final FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandShuttleTeleport());
         event.registerServerCommand(new CommandMoveMothership());
         event.registerServerCommand(new CommandMothershipInfo());
@@ -242,19 +259,19 @@ public class AmunRa {
     }
 
     @EventHandler
-    public void serverInit(FMLServerStartedEvent event) {
+    public void serverInit(final FMLServerStartedEvent event) {
         TickHandlerServer.restart();
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(final FMLPostInitializationEvent event) {
         proxy.postInit(event);
 
         NetworkRegistry.INSTANCE.registerGuiHandler(AmunRa.instance, new GuiHandler());
         FMLCommonHandler.instance().bus().register(new TickHandlerServer());
 
         // failsafes
-        doCompatibilityChecks();
+        this.doCompatibilityChecks();
 
         // mod compatibility
         InteroperabilityHelper.initCompatibility();
@@ -272,23 +289,23 @@ public class AmunRa {
 
     // stolen from GC....
     public int nextInternalID() {
-        nextID++;
-        return nextID - 1;
+        this.nextID++;
+        return this.nextID - 1;
     }
 
-    public void registerCreature(Class<? extends Entity> entityClass, String entityName, int eggBgColor,
-            int eggFgColor) {
-        int newID = EntityRegistry.findGlobalUniqueEntityId();
+    public void registerCreature(final Class<? extends Entity> entityClass, final String entityName,
+            final int eggBgColor, final int eggFgColor) {
+        final int newID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, newID, eggBgColor, eggFgColor);
-        EntityRegistry.registerModEntity(entityClass, entityName, nextInternalID(), AmunRa.instance, 80, 3, true);
+        EntityRegistry.registerModEntity(entityClass, entityName, this.nextInternalID(), AmunRa.instance, 80, 3, true);
     }
 
-    public void registerNonMobEntity(Class<? extends Entity> var0, String var1, int trackingDistance, int updateFreq,
-            boolean sendVel) {
+    public void registerNonMobEntity(final Class<? extends Entity> var0, final String var1, final int trackingDistance,
+            final int updateFreq, final boolean sendVel) {
         EntityRegistry.registerModEntity(
                 var0,
                 var1,
-                nextInternalID(),
+                this.nextInternalID(),
                 AmunRa.instance,
                 trackingDistance,
                 updateFreq,
@@ -320,28 +337,28 @@ public class AmunRa {
     }
 
     protected void initCreatures() {
-        registerCreature(EntityPorcodon.class, "porcodon", 0xff9d9d, 0x4fc451);
+        this.registerCreature(EntityPorcodon.class, "porcodon", 0xff9d9d, 0x4fc451);
 
-        registerCreature(EntityARVillager.class, "alienVillagerAR", 0x292233, 0xa38e36);
-        registerCreature(EntityRobotVillager.class, "robotVillager", 0x626260, 0x141514);
+        this.registerCreature(EntityARVillager.class, "alienVillagerAR", 0x292233, 0xa38e36);
+        this.registerCreature(EntityRobotVillager.class, "robotVillager", 0x626260, 0x141514);
 
-        registerCreature(EntitySentry.class, "sentryRobot", 0x626260, 0x141514);
+        this.registerCreature(EntitySentry.class, "sentryRobot", 0x626260, 0x141514);
 
-        registerCreature(EntityAlienBug.class, "alienBug", 0x40201e, 0x312c2b);
+        this.registerCreature(EntityAlienBug.class, "alienBug", 0x40201e, 0x312c2b);
 
-        registerCreature(EntityMummyBoss.class, "osirisBoss", 0x40201e, 0xffff0b);// ffff0b
+        this.registerCreature(EntityMummyBoss.class, "osirisBoss", 0x40201e, 0xffff0b);// ffff0b
 
         // register trading stuff
-        registerTrading();
+        this.registerTrading();
 
     }
 
     protected void initOtherEntities() {
-        registerNonMobEntity(EntityLaserArrow.class, "laserArrow", 150, 5, true);
-        registerNonMobEntity(EntityCryoArrow.class, "cryoArrow", 150, 5, true);
-        registerNonMobEntity(EntityShuttle.class, "Shuttle", 150, 1, false);
-        registerNonMobEntity(EntityShuttleFake.class, "ShuttleFake", 150, 5, false);
-        registerNonMobEntity(EntityOsirisBossFireball.class, "cryoArrow", 150, 5, true);
+        this.registerNonMobEntity(EntityLaserArrow.class, "laserArrow", 150, 5, true);
+        this.registerNonMobEntity(EntityCryoArrow.class, "cryoArrow", 150, 5, true);
+        this.registerNonMobEntity(EntityShuttle.class, "Shuttle", 150, 1, false);
+        this.registerNonMobEntity(EntityShuttleFake.class, "ShuttleFake", 150, 5, false);
+        this.registerNonMobEntity(EntityOsirisBossFireball.class, "cryoArrow", 150, 5, true);
     }
 
     protected void registerTrading() {
@@ -371,7 +388,7 @@ public class AmunRa {
                                         new ItemStack(Items.emerald, 2),
                                         new ItemStack(Items.iron_ingot, 1)));
 
-        ItemStack emptyCan = new ItemStack(GCItems.oilCanister, 1, GCItems.oilCanister.getMaxDamage());
+        final ItemStack emptyCan = new ItemStack(GCItems.oilCanister, 1, GCItems.oilCanister.getMaxDamage());
 
         // offers oxygen refill, and maybe other stuff, TBD
         RobotVillagerProfession.addProfession(
@@ -474,140 +491,140 @@ public class AmunRa {
 
     protected void initCelestialBodies() {
 
-        systemAmunRa = new SolarSystem("systemAmunRa", "milkyWay");
-        starRa = new Star("starRa");
-        systemAmunRa.setMainStar(starRa).setMapPosition(new Vector3(1.5F, -1.15F, 0.0F));
-        GalaxyRegistry.registerSolarSystem(systemAmunRa);
+        this.systemAmunRa = new SolarSystem("systemAmunRa", "milkyWay");
+        this.starRa = new Star("starRa");
+        this.systemAmunRa.setMainStar(this.starRa).setMapPosition(new Vector3(1.5F, -1.15F, 0.0F));
+        GalaxyRegistry.registerSolarSystem(this.systemAmunRa);
 
-        starRa.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
-        starRa.setParentSolarSystem(systemAmunRa);
+        this.starRa.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
+        this.starRa.setParentSolarSystem(this.systemAmunRa);
 
-        starAmun = createPlanet("starAmun", "sun-blue.png", Math.PI * 0.1, 0.7, 0.9);
-        starAmun.setRelativeSize(3.0F);
-        starAmun.setParentSolarSystem(systemAmunRa);
-        GalaxyRegistry.registerPlanet(starAmun);
+        this.starAmun = this.createPlanet("starAmun", "sun-blue.png", Math.PI * 0.1, 0.7, 0.9);
+        this.starAmun.setRelativeSize(3.0F);
+        this.starAmun.setParentSolarSystem(this.systemAmunRa);
+        GalaxyRegistry.registerPlanet(this.starAmun);
 
         // two inner planets
-        planetOsiris = createPlanet("osiris", "planet-mercury.png", Math.PI * 0.8, 0.34, 0.4);
-        planetOsiris.setParentSolarSystem(systemAmunRa);
-        planetOsiris.setRelativeSize(0.8F);
-        GalaxyRegistry.registerPlanet(planetOsiris);
+        this.planetOsiris = this.createPlanet("osiris", "planet-mercury.png", Math.PI * 0.8, 0.34, 0.4);
+        this.planetOsiris.setParentSolarSystem(this.systemAmunRa);
+        this.planetOsiris.setRelativeSize(0.8F);
+        GalaxyRegistry.registerPlanet(this.planetOsiris);
 
-        planetHorus = createPlanet("horus", "planet-horus.png", Math.PI * 1.3, 0.55, 0.458);
-        planetHorus.setRelativeSize(1.05F);
-        planetHorus.setParentSolarSystem(systemAmunRa);
-        planetHorus.setDimensionInfo(config.dimHorus, HorusWorldProvider.class);
+        this.planetHorus = this.createPlanet("horus", "planet-horus.png", Math.PI * 1.3, 0.55, 0.458);
+        this.planetHorus.setRelativeSize(1.05F);
+        this.planetHorus.setParentSolarSystem(this.systemAmunRa);
+        this.planetHorus.setDimensionInfo(config.dimHorus, HorusWorldProvider.class);
         GalacticraftRegistry.registerTeleportType(HorusWorldProvider.class, new TeleportTypeMoon());
-        planetHorus.setTierRequired(config.planetDefaultTier);
-        GalaxyRegistry.registerPlanet(planetHorus);
+        this.planetHorus.setTierRequired(config.planetDefaultTier);
+        GalaxyRegistry.registerPlanet(this.planetHorus);
 
         // gas giant
-        planetBaal = createPlanet("baal", "planet-gas03.png", Math.PI * 1.9, 1.2, 1.4);
-        planetBaal.setParentSolarSystem(systemAmunRa);
-        planetBaal.setRelativeSize(2.2F);
-        GalaxyRegistry.registerPlanet(planetBaal);
+        this.planetBaal = this.createPlanet("baal", "planet-gas03.png", Math.PI * 1.9, 1.2, 1.4);
+        this.planetBaal.setParentSolarSystem(this.systemAmunRa);
+        this.planetBaal.setRelativeSize(2.2F);
+        GalaxyRegistry.registerPlanet(this.planetBaal);
 
         // .. and its moons
         // ring, aka innermost moon
         // the regular moon has a distance of 13
-        moonBaalRings = createMoon("baalRings", "micromoon.png", 1.58, 9, 100);
-        moonBaalRings.setParentPlanet(planetBaal);
-        GalaxyRegistry.registerMoon(moonBaalRings);
+        this.moonBaalRings = this.createMoon("baalRings", "micromoon.png", 1.58, 9, 100);
+        this.moonBaalRings.setParentPlanet(this.planetBaal);
+        GalaxyRegistry.registerMoon(this.moonBaalRings);
 
         // moon god, but something to do with the creation of life? so maybe stuff here as well
-        moonKhonsu = createMoon("khonsu", "moon.png", 1.9 * Math.PI, 12.45, 110);
-        moonKhonsu.setParentPlanet(planetBaal);
-        moonKhonsu.setRelativeSize(0.45F);
-        GalaxyRegistry.registerMoon(moonKhonsu);
+        this.moonKhonsu = this.createMoon("khonsu", "moon.png", 1.9 * Math.PI, 12.45, 110);
+        this.moonKhonsu.setParentPlanet(this.planetBaal);
+        this.moonKhonsu.setRelativeSize(0.45F);
+        GalaxyRegistry.registerMoon(this.moonKhonsu);
 
         // this will have an oxygen atmosphere. neper was some kind of a grain god, so
-        moonNeper = createMoon("neper", "planet-life-o2.png", 1.58, 14.9, 140);
-        moonNeper.atmosphere.add(IAtmosphericGas.NITROGEN);
-        moonNeper.atmosphere.add(IAtmosphericGas.OXYGEN);
-        moonNeper.atmosphere.add(IAtmosphericGas.ARGON);
-        moonNeper.atmosphere.add(IAtmosphericGas.HELIUM);
-        moonNeper.setDimensionInfo(config.dimNeper, NeperWorldProvider.class);
-        moonNeper.setParentPlanet(planetBaal);
-        moonNeper.setTierRequired(config.planetDefaultTier);
-        moonNeper.setRelativeSize(0.89F);
+        this.moonNeper = this.createMoon("neper", "planet-life-o2.png", 1.58, 14.9, 140);
+        this.moonNeper.atmosphere.add(IAtmosphericGas.NITROGEN);
+        this.moonNeper.atmosphere.add(IAtmosphericGas.OXYGEN);
+        this.moonNeper.atmosphere.add(IAtmosphericGas.ARGON);
+        this.moonNeper.atmosphere.add(IAtmosphericGas.HELIUM);
+        this.moonNeper.setDimensionInfo(config.dimNeper, NeperWorldProvider.class);
+        this.moonNeper.setParentPlanet(this.planetBaal);
+        this.moonNeper.setTierRequired(config.planetDefaultTier);
+        this.moonNeper.setRelativeSize(0.89F);
         GalacticraftRegistry.registerTeleportType(NeperWorldProvider.class, new TeleportTypeOverworld());
         // GalacticraftRegistry.registerTeleportType(WorldProviderMoon.class, new TeleportTypeMoon());
         // GalacticraftRegistry.registerTeleportType(WorldProviderSurface.class, new TeleportTypeOverworld());
-        GalaxyRegistry.registerMoon(moonNeper);
+        GalaxyRegistry.registerMoon(this.moonNeper);
 
         // just some dead rock. iah was a moon god
-        moonIah = createMoon("iah", "moon.png", 3.1, 18.5, 162);
-        moonIah.setParentPlanet(planetBaal);
-        moonIah.setRelativeSize(0.21F);
-        GalaxyRegistry.registerMoon(moonIah);
+        this.moonIah = this.createMoon("iah", "moon.png", 3.1, 18.5, 162);
+        this.moonIah.setParentPlanet(this.planetBaal);
+        this.moonIah.setRelativeSize(0.21F);
+        GalaxyRegistry.registerMoon(this.moonIah);
 
         // an asteroid belt. todo figure the other stuff out later
-        asteroidBeltMehen = createPlanet("asteroidBeltMehen", "micromoon.png", Math.PI * 0.19, 1.4, 1.6);
-        asteroidBeltMehen.setParentSolarSystem(systemAmunRa);
-        asteroidBeltMehen.setDimensionInfo(config.dimMehen, MehenWorldProvider.class);
-        asteroidBeltMehen.setTierRequired(config.planetDefaultTier);
+        this.asteroidBeltMehen = this.createPlanet("asteroidBeltMehen", "micromoon.png", Math.PI * 0.19, 1.4, 1.6);
+        this.asteroidBeltMehen.setParentSolarSystem(this.systemAmunRa);
+        this.asteroidBeltMehen.setDimensionInfo(config.dimMehen, MehenWorldProvider.class);
+        this.asteroidBeltMehen.setTierRequired(config.planetDefaultTier);
         GalacticraftRegistry.registerTeleportType(MehenWorldProvider.class, new TeleportTypeAsteroids());
-        GalaxyRegistry.registerPlanet(asteroidBeltMehen);
+        GalaxyRegistry.registerPlanet(this.asteroidBeltMehen);
 
         // another gas giant?
-        planetSekhmet = createPlanet("sekhmet", "planet-gas02.png", Math.PI * 0.6, 1.6, 1.8);
-        planetSekhmet.setParentSolarSystem(systemAmunRa);
-        planetSekhmet.setRelativeSize(2.42F);
-        GalaxyRegistry.registerPlanet(planetSekhmet);
+        this.planetSekhmet = this.createPlanet("sekhmet", "planet-gas02.png", Math.PI * 0.6, 1.6, 1.8);
+        this.planetSekhmet.setParentSolarSystem(this.systemAmunRa);
+        this.planetSekhmet.setRelativeSize(2.42F);
+        GalaxyRegistry.registerPlanet(this.planetSekhmet);
 
         // ... and it's moons
         // cat goddess, of course it's a moon of sekhmet
-        moonBastet = createMoon("bast", "moon.png", 3.1, 9.8, 122);
-        moonBastet.setParentPlanet(planetSekhmet);
-        moonBastet.setRelativeSize(0.758F);
-        GalaxyRegistry.registerMoon(moonBastet);
+        this.moonBastet = this.createMoon("bast", "moon.png", 3.1, 9.8, 122);
+        this.moonBastet.setParentPlanet(this.planetSekhmet);
+        this.moonBastet.setRelativeSize(0.758F);
+        GalaxyRegistry.registerMoon(this.moonBastet);
 
         // lion goddess, dito
-        moonMaahes = createMoon("maahes", "planet-life-ch4.png", 4.514, 11.4, 136);
-        moonMaahes.setRelativeSize(0.912F);
-        moonMaahes.setParentPlanet(planetSekhmet);
-        moonMaahes.atmosphere.add(IAtmosphericGas.CO2);
-        moonMaahes.atmosphere.add(IAtmosphericGas.METHANE);
-        moonMaahes.atmosphere.add(IAtmosphericGas.HYDROGEN);
-        moonMaahes.atmosphere.add(IAtmosphericGas.ARGON);
-        moonMaahes.setDimensionInfo(config.dimMaahes, MaahesWorldProvider.class);
-        moonMaahes.setTierRequired(config.planetDefaultTier);
+        this.moonMaahes = this.createMoon("maahes", "planet-life-ch4.png", 4.514, 11.4, 136);
+        this.moonMaahes.setRelativeSize(0.912F);
+        this.moonMaahes.setParentPlanet(this.planetSekhmet);
+        this.moonMaahes.atmosphere.add(IAtmosphericGas.CO2);
+        this.moonMaahes.atmosphere.add(IAtmosphericGas.METHANE);
+        this.moonMaahes.atmosphere.add(IAtmosphericGas.HYDROGEN);
+        this.moonMaahes.atmosphere.add(IAtmosphericGas.ARGON);
+        this.moonMaahes.setDimensionInfo(config.dimMaahes, MaahesWorldProvider.class);
+        this.moonMaahes.setTierRequired(config.planetDefaultTier);
         GalacticraftRegistry.registerTeleportType(MaahesWorldProvider.class, new TeleportTypeOverworld());
 
-        GalaxyRegistry.registerMoon(moonMaahes);
+        GalaxyRegistry.registerMoon(this.moonMaahes);
 
-        moonThoth = createMoon("thoth", "moon.png", 1.9, 15.5, 145);
-        moonThoth.setRelativeSize(0.68F);
-        moonThoth.setParentPlanet(planetSekhmet);
-        GalaxyRegistry.registerMoon(moonThoth);
+        this.moonThoth = this.createMoon("thoth", "moon.png", 1.9, 15.5, 145);
+        this.moonThoth.setRelativeSize(0.68F);
+        this.moonThoth.setParentPlanet(this.planetSekhmet);
+        GalaxyRegistry.registerMoon(this.moonThoth);
 
         // this will be the ice ocean moon now
-        moonSeth = createMoon("seth", "planet-ice2.png", 6, 17.98, 198);
-        moonSeth.setRelativeSize(0.457F);
-        moonSeth.setParentPlanet(planetSekhmet);
+        this.moonSeth = this.createMoon("seth", "planet-ice2.png", 6, 17.98, 198);
+        this.moonSeth.setRelativeSize(0.457F);
+        this.moonSeth.setParentPlanet(this.planetSekhmet);
         // moonSeth.atmosphere.add(IAtmosphericGas.NITROGEN);
-        moonSeth.setDimensionInfo(config.dimSeth, SethWorldProvider.class);
-        moonSeth.setTierRequired(config.planetDefaultTier);
+        this.moonSeth.setDimensionInfo(config.dimSeth, SethWorldProvider.class);
+        this.moonSeth.setTierRequired(config.planetDefaultTier);
         GalacticraftRegistry.registerTeleportType(SethWorldProvider.class, new TeleportTypeMoon());
-        GalaxyRegistry.registerMoon(moonSeth);
+        GalaxyRegistry.registerMoon(this.moonSeth);
 
         // a small rocky planet
-        planetAnubis = createPlanet("anubis", "moon.png", Math.PI * 0.36, 1.9, 2.2);
-        planetAnubis.setParentSolarSystem(systemAmunRa);
-        planetAnubis.setDimensionInfo(config.dimAnubis, AnubisWorldProvider.class);
-        planetAnubis.setRelativeSize(0.65F);
+        this.planetAnubis = this.createPlanet("anubis", "moon.png", Math.PI * 0.36, 1.9, 2.2);
+        this.planetAnubis.setParentSolarSystem(this.systemAmunRa);
+        this.planetAnubis.setDimensionInfo(config.dimAnubis, AnubisWorldProvider.class);
+        this.planetAnubis.setRelativeSize(0.65F);
         GalacticraftRegistry.registerTeleportType(AnubisWorldProvider.class, new TeleportTypeMoon());
-        planetAnubis.setTierRequired(config.planetDefaultTier);
-        GalaxyRegistry.registerPlanet(planetAnubis);
+        this.planetAnubis.setTierRequired(config.planetDefaultTier);
+        GalaxyRegistry.registerPlanet(this.planetAnubis);
 
         // ..with a moon nonetheless
-        moonKebe = createMoon("kebe", "moon.png", 5.1, 19, 253);
-        moonKebe.setRelativeSize(0.32F);
-        moonKebe.setParentPlanet(planetAnubis);
-        GalaxyRegistry.registerMoon(moonKebe);
+        this.moonKebe = this.createMoon("kebe", "moon.png", 5.1, 19, 253);
+        this.moonKebe.setRelativeSize(0.32F);
+        this.moonKebe.setParentPlanet(this.planetAnubis);
+        GalaxyRegistry.registerMoon(this.moonKebe);
 
         // For motherships:
-        boolean flag = DimensionManager
+        final boolean flag = DimensionManager
                 .registerProviderType(config.mothershipProviderID, MothershipWorldProvider.class, false);
         if (!flag) {
             throw new RuntimeException(
@@ -619,20 +636,22 @@ public class AmunRa {
         config.setStaticConfigValues();
     }
 
-    protected Planet createPlanet(String name, String texture, double phaseShift, double distance, double orbitTime) {
-        Planet pl = new Planet(name);
-        setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
+    protected Planet createPlanet(final String name, final String texture, final double phaseShift,
+            final double distance, final double orbitTime) {
+        final Planet pl = new Planet(name);
+        this.setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
         return pl;
     }
 
-    protected Moon createMoon(String name, String texture, double phaseShift, double distance, double orbitTime) {
-        Moon pl = new Moon(name);
-        setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
+    protected Moon createMoon(final String name, final String texture, final double phaseShift, final double distance,
+            final double orbitTime) {
+        final Moon pl = new Moon(name);
+        this.setCelestialBodyStuff(pl, texture, phaseShift, distance, orbitTime);
         return pl;
     }
 
-    protected void setCelestialBodyStuff(CelestialBody body, String texture, double phaseShift, double distance,
-            double orbitTime) {
+    protected void setCelestialBodyStuff(final CelestialBody body, final String texture, final double phaseShift,
+            final double distance, final double orbitTime) {
         body.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/" + texture))
                 .setPhaseShift((float) phaseShift)
                 .setRelativeDistanceFromCenter(new ScalableDistance((float) distance, (float) distance))

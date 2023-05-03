@@ -14,13 +14,13 @@ public class ARCircuitFab extends CircuitFabricatorRecipeHandler {
 
     @Override
     public Set<Entry<ArrayList<PositionedStack>, PositionedStack>> getRecipes() {
-        HashMap<ArrayList<PositionedStack>, PositionedStack> recipes = new HashMap<ArrayList<PositionedStack>, PositionedStack>();
+        final HashMap<ArrayList<PositionedStack>, PositionedStack> recipes = new HashMap<>();
 
-        for (Entry<HashMap<Integer, PositionedStack>, PositionedStack> stack : NEIAmunRaConfig
+        for (final Entry<HashMap<Integer, PositionedStack>, PositionedStack> stack : NEIAmunRaConfig
                 .getCircuitFabricatorRecipes()) {
-            ArrayList<PositionedStack> inputStacks = new ArrayList<PositionedStack>();
+            final ArrayList<PositionedStack> inputStacks = new ArrayList<>();
 
-            for (Map.Entry<Integer, PositionedStack> input : stack.getKey().entrySet()) {
+            for (final Map.Entry<Integer, PositionedStack> input : stack.getKey().entrySet()) {
                 inputStacks.add(input.getValue());
             }
 

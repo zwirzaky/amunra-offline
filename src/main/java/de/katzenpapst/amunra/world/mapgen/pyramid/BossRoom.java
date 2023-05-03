@@ -10,12 +10,9 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BossRoom extends PyramidRoom {
 
-    public BossRoom() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
         /*
@@ -32,7 +29,7 @@ public class BossRoom extends PyramidRoom {
          * Blocks.ladder, (byte) 2); }
          */
         // for now, just this
-        placeBossSpawner(
+        this.placeBossSpawner(
                 this.roomBB.getCenterX(),
                 this.floorLevel + 2,
                 this.roomBB.getCenterZ(),
@@ -45,8 +42,8 @@ public class BossRoom extends PyramidRoom {
         return true;
     }
 
-    protected void placeBossSpawner(int x, int y, int z, int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta,
-            BlockMetaPair spawner) {
+    protected void placeBossSpawner(final int x, final int y, final int z, final int chunkX, final int chunkZ,
+            final Block[] arrayOfIDs, final byte[] arrayOfMeta, final BlockMetaPair spawner) {
         if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, spawner)) {
             /*
              * List<Entity> entitiesWithin = this.worldObj.getEntitiesWithinAABB( EntityPlayer.class,
@@ -55,13 +52,13 @@ public class BossRoom extends PyramidRoom {
              * this.roomSize.intY(), this.roomCoords.intZ() + this.roomSize.intZ() ) );
              */
 
-            AxisAlignedBB areaBB = AxisAlignedBB.getBoundingBox(
-                    roomBB.minX,
-                    roomBB.minY,
-                    roomBB.minZ,
-                    roomBB.maxX + 1,
-                    roomBB.maxY + 1,
-                    roomBB.maxZ + 1);
+            final AxisAlignedBB areaBB = AxisAlignedBB.getBoundingBox(
+                    this.roomBB.minX,
+                    this.roomBB.minY,
+                    this.roomBB.minZ,
+                    this.roomBB.maxX + 1,
+                    this.roomBB.maxY + 1,
+                    this.roomBB.maxZ + 1);
             this.parent.addPopulator(new InitBossSpawner(x, y, z, areaBB, EntityMummyBoss.class));
         }
     }

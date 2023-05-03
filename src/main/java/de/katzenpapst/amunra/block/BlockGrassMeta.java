@@ -11,13 +11,13 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
 
-    public BlockGrassMeta(String name, Material mat) {
+    public BlockGrassMeta(final String name, final Material mat) {
         super(name, mat);
         this.setTickRandomly(true);
     }
 
     @Override
-    public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
+    public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
         if (!(sb instanceof SubBlockGrass)) {
             throw new IllegalArgumentException("BlockGrassMulti can only accept SubBlockGrass");
         }
@@ -31,7 +31,8 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
      */
     @Override
-    public boolean func_149851_a(World world, int x, int y, int z, boolean isWorldRemote) {
+    public boolean func_149851_a(final World world, final int x, final int y, final int z,
+            final boolean isWorldRemote) {
         return true;
     }
 
@@ -40,7 +41,7 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * crop.
      */
     @Override
-    public boolean func_149852_a(World world, Random rand, int x, int y, int z) {
+    public boolean func_149852_a(final World world, final Random rand, final int x, final int y, final int z) {
         return true;
     }
 
@@ -48,23 +49,23 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * Ticks the block if it's been scheduled
      */
     @Override
-    public void updateTick(World world, int x, int y, int z, Random rand) {
-        int meta = world.getBlockMetadata(x, y, z);
-        SubBlockGrass sb = (SubBlockGrass) this.getSubBlock(meta);
-        BlockMetaPair dirtForm = sb.getDirtBlock();
+    public void updateTick(final World world, final int x, final int y, final int z, final Random rand) {
+        final int meta = world.getBlockMetadata(x, y, z);
+        final SubBlockGrass sb = (SubBlockGrass) this.getSubBlock(meta);
+        final BlockMetaPair dirtForm = sb.getDirtBlock();
         if (!world.isRemote) {
             if (!sb.canLiveHere(world, x, y, z)) {
                 world.setBlock(x, y, z, dirtForm.getBlock(), dirtForm.getMetadata(), 3);
             } else if (sb.canSpread(world, x, y, z)) {
                 for (int l = 0; l < 4; ++l) {
-                    int nbX = x + rand.nextInt(3) - 1;
-                    int nbY = y + rand.nextInt(5) - 3;
-                    int nbZ = z + rand.nextInt(3) - 1;
-                    Block block = world.getBlock(nbX, nbY, nbZ);
-                    int blockMeta = world.getBlockMetadata(nbX, nbY, nbZ);
+                    final int nbX = x + rand.nextInt(3) - 1;
+                    final int nbY = y + rand.nextInt(5) - 3;
+                    final int nbZ = z + rand.nextInt(3) - 1;
+                    final Block block = world.getBlock(nbX, nbY, nbZ);
+                    final int blockMeta = world.getBlockMetadata(nbX, nbY, nbZ);
 
                     if (block == dirtForm.getBlock() && blockMeta == dirtForm.getMetadata()) {
-                        boolean canLive = sb.canLiveHere(world, nbX, nbY, nbZ);
+                        final boolean canLive = sb.canLiveHere(world, nbX, nbY, nbZ);
 
                         if (canLive) {
                             world.setBlock(nbX, nbY, nbZ, this, meta, 3);
@@ -82,10 +83,10 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      *
      */
     @Override
-    public void func_149853_b(World world, Random rand, int x, int y, int z) {
+    public void func_149853_b(final World world, final Random rand, final int x, final int y, final int z) {
         int l = 0;
-        int meta = world.getBlockMetadata(x, y, z);
-        SubBlockGrass sb = (SubBlockGrass) this.getSubBlock(meta);
+        final int meta = world.getBlockMetadata(x, y, z);
+        final SubBlockGrass sb = (SubBlockGrass) this.getSubBlock(meta);
 
         while (l < 128) {
             int blockAboveX = x;

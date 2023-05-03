@@ -34,7 +34,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     private boolean isIgnited = false;
     private int timeSinceIgnited = 0;
 
-    public EntityPorcodon(World curWorld) {
+    public EntityPorcodon(final World curWorld) {
         super(curWorld);
 
         this.setSize(0.9F, 0.9F);
@@ -50,7 +50,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
 
-        dropItem = ARItems.baseItem.getItemStack("porcodonMeat", 1);
+        this.dropItem = ARItems.baseItem.getItemStack("porcodonMeat", 1);
 
     }
 
@@ -117,7 +117,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     }
 
     @Override
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_) {
+    protected void func_145780_a(final int x, final int y, final int z, final Block blockIn) {
         this.playSound("mob.pig.step", 0.15F, 1.0F);
     }
 
@@ -133,10 +133,10 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * @param par2 - Level of Looting used to kill this mob.
      */
     @Override
-    protected void dropFewItems(boolean hitByPlayer, int lootLevel) {
+    protected void dropFewItems(final boolean hitByPlayer, final int lootLevel) {
         // drop at least one meat
-        int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
-        ItemStack toDrop = this.dropItem.copy();
+        final int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
+        final ItemStack toDrop = this.dropItem.copy();
         toDrop.stackSize = j;
         this.entityDropItem(toDrop, 0.0F);
 
@@ -151,7 +151,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     }
 
     @Override
-    public EntityAgeable createChild(EntityAgeable p_90011_1_) {
+    public EntityAgeable createChild(final EntityAgeable p_90011_1_) {
         return new EntityPorcodon(this.worldObj);
     }
 
@@ -160,20 +160,20 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      * the animal type)
      */
     @Override
-    public boolean isBreedingItem(ItemStack item) {
+    public boolean isBreedingItem(final ItemStack item) {
         return false;// item != null && item.getItem() == Items.carrot;
     }
 
     @Override
-    public boolean canBreatheIn(ArrayList<IAtmosphericGas> atmosphere, boolean isInSealedArea) {
-        boolean hasOxygen = isInSealedArea || atmosphere.contains(IAtmosphericGas.OXYGEN);
+    public boolean canBreatheIn(final ArrayList<IAtmosphericGas> atmosphere, final boolean isInSealedArea) {
+        final boolean hasOxygen = isInSealedArea || atmosphere.contains(IAtmosphericGas.OXYGEN);
 
         // add stuff if oxygen exists
-        if (hasOxygen && !isIgnited) {
-            ignite();
+        if (hasOxygen && !this.isIgnited) {
+            this.ignite();
         }
-        if (!hasOxygen && isIgnited) {
-            unIgnite();
+        if (!hasOxygen && this.isIgnited) {
+            this.unIgnite();
         }
 
         return atmosphere.contains(IAtmosphericGas.METHANE);
@@ -196,7 +196,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
      */
     @Override
     public void onUpdate() {
-        if (this.isEntityAlive() && isIgnited) {
+        if (this.isEntityAlive() && this.isIgnited) {
             this.timeSinceIgnited++;
 
             if (this.timeSinceIgnited >= this.fuseTime) {
@@ -210,9 +210,9 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
 
     private void explode() {
         if (!this.worldObj.isRemote) {
-            boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
+            final boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
 
-            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) this.explosionRadius, flag);
+            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius, flag);
 
             // why is this only in the if here?
             this.setDead();

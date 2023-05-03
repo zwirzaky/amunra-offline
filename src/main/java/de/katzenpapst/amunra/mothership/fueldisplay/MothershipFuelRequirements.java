@@ -8,39 +8,39 @@ public class MothershipFuelRequirements {
     protected Map<MothershipFuelDisplay, Integer> data;
 
     public MothershipFuelRequirements() {
-        data = new HashMap<MothershipFuelDisplay, Integer>();
+        this.data = new HashMap<>();
     }
 
-    public void add(MothershipFuelDisplay fuel, int amount) {
-        if (!data.containsKey(fuel)) {
-            data.put(fuel, amount);
+    public void add(final MothershipFuelDisplay fuel, final int amount) {
+        if (!this.data.containsKey(fuel)) {
+            this.data.put(fuel, amount);
         } else {
-            data.put(fuel, data.get(fuel) + amount);
+            this.data.put(fuel, this.data.get(fuel) + amount);
         }
     }
 
-    public void merge(MothershipFuelRequirements other) {
-        for (MothershipFuelDisplay fuel : other.data.keySet()) {
-            add(fuel, other.data.get(fuel));
+    public void merge(final MothershipFuelRequirements other) {
+        for (final MothershipFuelDisplay fuel : other.data.keySet()) {
+            this.add(fuel, other.data.get(fuel));
         }
     }
 
     public boolean isEmpty() {
-        return data.isEmpty();
+        return this.data.isEmpty();
     }
 
     public void clear() {
-        data.clear();
+        this.data.clear();
     }
 
-    public int get(MothershipFuelDisplay key) {
-        if (data.containsKey(key)) {
-            return data.get(key);
+    public int get(final MothershipFuelDisplay key) {
+        if (this.data.containsKey(key)) {
+            return this.data.get(key);
         }
         return 0;
     }
 
     public Map<MothershipFuelDisplay, Integer> getData() {
-        return data;
+        return this.data;
     }
 }

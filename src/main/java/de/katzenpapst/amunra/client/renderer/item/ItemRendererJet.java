@@ -16,41 +16,36 @@ public class ItemRendererJet implements IItemRenderer {
     protected IModelCustom[] models;
     protected ResourceLocation[] textures;
 
-    public ItemRendererJet(IModelCustom[] models, ResourceLocation[] textures) {
+    public ItemRendererJet(final IModelCustom[] models, final ResourceLocation[] textures) {
         // TODO find a better idea
         this.models = models;
         this.textures = textures;
     }
 
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+    public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
 
-        if (item.getItem() == ARItems.jetItemMeta && item.getItemDamage() < models.length
-                && item.getItemDamage() < textures.length) {
-            switch (type) {
-                case ENTITY:
-                case EQUIPPED:
-                case EQUIPPED_FIRST_PERSON:
-                case INVENTORY:
-                    return true;
-                default:
-                    return false;
-            }
-        } else {
+        if (item.getItem() != ARItems.jetItemMeta || item.getItemDamage() >= this.models.length
+                || item.getItemDamage() >= this.textures.length) {
             return false;
         }
+        return switch (type) {
+            case ENTITY, EQUIPPED, EQUIPPED_FIRST_PERSON, INVENTORY -> true;
+            default -> false;
+        };
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item,
+            final ItemRendererHelper helper) {
         return true;
     }
 
-    protected void renderJet(ItemRenderType type, RenderBlocks render, ItemStack item, float translateX,
-            float translateY, float translateZ) {
+    protected void renderJet(final ItemRenderType type, final RenderBlocks render, final ItemStack item,
+            final float translateX, final float translateY, final float translateZ) {
         // TODO get a better idea how to do this
-        ResourceLocation texture = textures[item.getItemDamage()];
-        IModelCustom model = models[item.getItemDamage()];
+        final ResourceLocation texture = this.textures[item.getItemDamage()];
+        final IModelCustom model = this.models[item.getItemDamage()];
 
         switch (type) {
             case ENTITY:
@@ -84,7 +79,7 @@ public class ItemRendererJet implements IItemRenderer {
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+    public void renderItem(final ItemRenderType type, final ItemStack item, final Object... data) {
         if (this.handleRenderType(item, type)) {
             switch (type) {
                 case EQUIPPED:

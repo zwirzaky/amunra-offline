@@ -16,35 +16,36 @@ public class SubBlockLeaf extends SubBlock {
     protected IIcon blockIconOpaque = null;
     protected ItemDamagePair itemDropped = null;
 
-    public SubBlockLeaf(String name, String texture) {
+    public SubBlockLeaf(final String name, final String texture) {
         super(name, texture);
         // TODO Auto-generated constructor stub
     }
 
-    public SubBlockLeaf(String name, String texture, String tool, int harvestLevel) {
+    public SubBlockLeaf(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
         // TODO Auto-generated constructor stub
     }
 
-    public SubBlockLeaf(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
+    public SubBlockLeaf(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }
 
-    public SubBlockLeaf setSaplingDropped(BlockMetaPair sapling) {
-        itemDropped = new ItemDamagePair(Item.getItemFromBlock(sapling.getBlock()), sapling.getMetadata());
+    public SubBlockLeaf setSaplingDropped(final BlockMetaPair sapling) {
+        this.itemDropped = new ItemDamagePair(Item.getItemFromBlock(sapling.getBlock()), sapling.getMetadata());
         return this;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconReg) {
+    public void registerBlockIcons(final IIconRegister iconReg) {
         this.blockIcon = iconReg.registerIcon(this.getTextureName());
         this.blockIconOpaque = iconReg.registerIcon(this.getTextureName() + "_opaque");
     }
 
-    public IIcon getOpaqueIcon(int side) {
-        return blockIconOpaque;
+    public IIcon getOpaqueIcon(final int side) {
+        return this.blockIconOpaque;
     }
 
     @Override
@@ -53,16 +54,16 @@ public class SubBlockLeaf extends SubBlock {
     }
 
     @Override
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
-        return itemDropped.getItem();
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
+        return this.itemDropped.getItem();
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
     @Override
-    public int damageDropped(int p_149692_1_) {
-        return itemDropped.getDamage();
+    public int damageDropped(final int meta) {
+        return this.itemDropped.getDamage();
     }
 
 }

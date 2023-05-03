@@ -4,7 +4,7 @@ import micdoodle8.mods.galacticraft.api.recipe.ISchematicItem;
 
 public class ItemSchematicMulti extends ItemBasicMulti implements ISchematicItem {
 
-    public ItemSchematicMulti(String name) {
+    public ItemSchematicMulti(final String name) {
         super(name);
     }
 

@@ -19,23 +19,23 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
     private ItemDamagePair[] commonLoot = null;
     private ItemDamagePair[] rareLoot = null;
 
-    public EntitySentry(World world) {
+    public EntitySentry(final World world) {
         super(world);
 
         this.setSize(1.0F, 1.0F);
         this.isImmuneToFire = true;
         this.experienceValue = 3;
 
-        commonLoot = new ItemDamagePair[] { new ItemDamagePair(GCItems.basicItem, 8), // compressed alu
+        this.commonLoot = new ItemDamagePair[] { new ItemDamagePair(GCItems.basicItem, 8), // compressed alu
                 new ItemDamagePair(GCItems.basicItem, 13) // basic wafer
         };
 
-        rareLoot = new ItemDamagePair[] { ARItems.laserDiode, new ItemDamagePair(GCItems.basicItem, 19)// freqModule
+        this.rareLoot = new ItemDamagePair[] { ARItems.laserDiode, new ItemDamagePair(GCItems.basicItem, 19)// freqModule
         };
     }
 
     @Override
-    protected void performAttack(Entity target, double accelX, double accelY, double accelZ) {
+    protected void performAttack(final Entity target, final double accelX, final double accelY, final double accelZ) {
 
         // EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.worldObj, this, startX, startY,
         // startZ);
@@ -45,8 +45,8 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
          * this.posY + (double)(this.height / 2.0F) + 0.5D; double z = this.posZ + vec3.zCoord * size;
          */
 
-        EntityLaserArrow attack = new EntityLaserArrow(
-                worldObj,
+        final EntityLaserArrow attack = new EntityLaserArrow(
+                this.worldObj,
                 (EntityLivingBase) this,
                 new Vector3(this),
                 (EntityLivingBase) target);// new EntityLaserArrow(this.worldObj, (EntityLivingBase)this,
@@ -74,19 +74,19 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
      * @param lootLevel   - Level of Looting used to kill this mob.
      */
     @Override
-    protected void dropFewItems(boolean hitByPlayer, int lootLevel) {
+    protected void dropFewItems(final boolean hitByPlayer, final int lootLevel) {
 
-        for (int i = 0; i < commonLoot.length; i++) {
-            int numItems = this.rand.nextInt(2) + this.rand.nextInt(1 + lootLevel);
+        for (ItemDamagePair element : this.commonLoot) {
+            final int numItems = this.rand.nextInt(2) + this.rand.nextInt(1 + lootLevel);
 
-            this.entityDropItem(commonLoot[i].getItemStack(numItems), 0.0F);
+            this.entityDropItem(element.getItemStack(numItems), 0.0F);
         }
 
         if (hitByPlayer && lootLevel >= 2) {
-            double probability = ((double) lootLevel - 1.0) * 0.05;
-            for (int i = 0; i < rareLoot.length; i++) {
+            final double probability = (lootLevel - 1.0) * 0.05;
+            for (ItemDamagePair element : this.rareLoot) {
                 if (this.rand.nextDouble() < probability) {
-                    this.entityDropItem(rareLoot[i].getItemStack(1), 0.0F);
+                    this.entityDropItem(element.getItemStack(1), 0.0F);
                     return; // drop only one of these
                 }
             }

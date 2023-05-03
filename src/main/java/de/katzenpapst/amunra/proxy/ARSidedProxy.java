@@ -18,21 +18,21 @@ public class ARSidedProxy {
         PT_GRAVITY_DUST
     }
 
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(final FMLPreInitializationEvent event) {
 
     }
 
-    public void init(FMLInitializationEvent event) {}
+    public void init(final FMLInitializationEvent event) {}
 
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(final FMLPostInitializationEvent event) {
 
     }
 
-    public void spawnParticles(ParticleType type, World world, Vector3 pos, Vector3 motion) {
+    public void spawnParticles(final ParticleType type, final World world, final Vector3 pos, final Vector3 motion) {
         // noop
     }
 
-    public void playTileEntitySound(TileEntity tile, ResourceLocation resource) {
+    public void playTileEntitySound(final TileEntity tile, final ResourceLocation resource) {
         // noop
     }
 
@@ -41,11 +41,11 @@ public class ARSidedProxy {
      * 
      * @param player
      */
-    public void handlePlayerArtificalGravity(EntityPlayer player, double gravity) {
+    public void handlePlayerArtificalGravity(final EntityPlayer player, final double gravity) {
         // noop on server
     }
 
-    public boolean doCancelGravityEvent(EntityPlayer player) {
+    public boolean doCancelGravityEvent(final EntityPlayer player) {
         return false;
     }
 }

@@ -7,13 +7,13 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class NbtHelper {
 
-    public static NBTTagCompound getAsNBT(AxisAlignedBB aabb) {
-        NBTTagCompound result = new NBTTagCompound();
+    public static NBTTagCompound getAsNBT(final AxisAlignedBB aabb) {
+        final NBTTagCompound result = new NBTTagCompound();
         writeToNBT(result, aabb);
         return result;
     }
 
-    public static void writeToNBT(NBTTagCompound nbt, AxisAlignedBB aabb) {
+    public static void writeToNBT(final NBTTagCompound nbt, final AxisAlignedBB aabb) {
         nbt.setDouble("minX", aabb.minX);
         nbt.setDouble("minY", aabb.minY);
         nbt.setDouble("minZ", aabb.minZ);
@@ -23,7 +23,7 @@ public class NbtHelper {
         nbt.setDouble("maxZ", aabb.maxZ);
     }
 
-    public static AxisAlignedBB readAABB(NBTTagCompound nbt) {
+    public static AxisAlignedBB readAABB(final NBTTagCompound nbt) {
         return AxisAlignedBB.getBoundingBox(
                 nbt.getDouble("minX"),
                 nbt.getDouble("minY"),
@@ -34,9 +34,9 @@ public class NbtHelper {
 
     }
 
-    public static ItemStack[] readInventory(NBTTagCompound nbt, int inventorySize) {
+    public static ItemStack[] readInventory(final NBTTagCompound nbt, final int inventorySize) {
         final NBTTagList itemTag = nbt.getTagList("Items", 10);
-        ItemStack[] result = new ItemStack[inventorySize];
+        final ItemStack[] result = new ItemStack[inventorySize];
 
         for (int i = 0; i < itemTag.tagCount(); ++i) {
             final NBTTagCompound stackNbt = itemTag.getCompoundTagAt(i);
@@ -49,9 +49,9 @@ public class NbtHelper {
         return result;
     }
 
-    public static void writeInventory(NBTTagCompound nbt, ItemStack[] inventory) {
+    public static void writeInventory(final NBTTagCompound nbt, final ItemStack[] inventory) {
         final NBTTagList list = new NBTTagList();
-        int length = inventory.length;
+        final int length = inventory.length;
 
         for (int i = 0; i < length; ++i) {
             if (inventory[i] != null) {

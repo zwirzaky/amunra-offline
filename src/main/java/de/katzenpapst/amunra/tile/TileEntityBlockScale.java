@@ -22,8 +22,8 @@ public class TileEntityBlockScale extends TileEntity {
     }
 
     public int getRotationMeta() {
-        Block b = worldObj.getBlock(xCoord, yCoord, zCoord);
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        final Block b = this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
+        final int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
         if (b instanceof IMetaBlock) {
             return ((IMetaBlock) b).getRotationMeta(meta);
         }
@@ -32,24 +32,24 @@ public class TileEntityBlockScale extends TileEntity {
 
     @Override
     public Packet getDescriptionPacket() {
-        NBTTagCompound data = new NBTTagCompound();
+        final NBTTagCompound data = new NBTTagCompound();
         this.writeToNBT(data);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, data);
     }
 
     @Override
-    public void onDataPacket(NetworkManager netManager, S35PacketUpdateTileEntity packet) {
-        readFromNBT(packet.func_148857_g());
+    public void onDataPacket(final NetworkManager netManager, final S35PacketUpdateTileEntity packet) {
+        this.readFromNBT(packet.func_148857_g());
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setFloat("mass", this.massToDisplay);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.massToDisplay = nbt.getFloat("mass");
     }
@@ -61,30 +61,32 @@ public class TileEntityBlockScale extends TileEntity {
         }
         this.ticks++;
 
-        if (ticks % 80 == 0) {
-            doUpdate();
+        if (this.ticks % 80 == 0) {
+            this.doUpdate();
         }
     }
 
     public void doUpdate() {
-        Block b = this.worldObj.getBlock(xCoord, yCoord + 1, zCoord);
-        int meta = this.worldObj.getBlockMetadata(xCoord, yCoord + 1, zCoord);
+        final Block b = this.worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord);
+        final int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord + 1, this.zCoord);
 
-        if (lastFoundBlock != null && lastFoundBlock.getBlock() == b && lastFoundBlock.getMetadata() == meta) {
+        if (this.lastFoundBlock != null && this.lastFoundBlock.getBlock() == b
+                && this.lastFoundBlock.getMetadata() == meta) {
             // nothing changed
             return;
         }
 
-        lastFoundBlock = new BlockMetaPair(b, (byte) meta);
+        this.lastFoundBlock = new BlockMetaPair(b, (byte) meta);
 
         // mass
-        massToDisplay = BlockMassHelper.getBlockMass(worldObj, b, meta, xCoord, yCoord + 1, zCoord);
-        this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        this.massToDisplay = BlockMassHelper
+                .getBlockMass(this.worldObj, b, meta, this.xCoord, this.yCoord + 1, this.zCoord);
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         // this.markDirty();
     }
 
     public float getCurrentMass() {
-        return massToDisplay;
+        return this.massToDisplay;
     }
 
 }

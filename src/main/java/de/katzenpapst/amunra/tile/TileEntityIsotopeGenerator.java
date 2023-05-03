@@ -53,7 +53,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
         // init();
     }
 
-    public int getScaledElecticalLevel(int i) {
+    public int getScaledElecticalLevel(final int i) {
         return (int) Math.floor(this.getEnergyStoredGC() * i / this.getMaxEnergyStoredGC());
     }
 
@@ -63,22 +63,23 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
 
         this.storage.setMaxExtract(MAX_GENERATE_WATTS);
         this.storage.setMaxReceive(MAX_GENERATE_WATTS);
-        this.storage.setCapacity(energyCapacity);
+        this.storage.setCapacity(this.energyCapacity);
         this.initialised = true;
     }
 
     public SubBlockMachine getSubBlock() {
-        if (subBlock == null) {
-            subBlock = (SubBlockMachine) ((BlockMachineMeta) this.getBlockType()).getSubBlock(this.getBlockMetadata());
+        if (this.subBlock == null) {
+            this.subBlock = (SubBlockMachine) ((BlockMachineMeta) this.getBlockType())
+                    .getSubBlock(this.getBlockMetadata());
         }
-        return subBlock;
+        return this.subBlock;
     }
 
     @Override
     public void updateEntity() {
 
         if (!this.initialised) {
-            init();
+            this.init();
         }
 
         // this seems to be the important line
@@ -91,13 +92,13 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
             this.recharge(this.containingItems[0]);
             if (this.getDisabled(0)) {
                 this.generateWatts = 0;
-                generationBoost = -1;
+                this.generationBoost = -1;
             } else {
-                if (generationBoost == -1 || this.ticks % 20 == 0) {
-                    generationBoost = getEnvironmentalEnergyBoost();
+                if (this.generationBoost == -1 || this.ticks % 20 == 0) {
+                    this.generationBoost = this.getEnvironmentalEnergyBoost();
                 }
 
-                this.generateWatts = Math.min(energyGeneration * generationBoost, MAX_GENERATE_WATTS);
+                this.generateWatts = Math.min(this.energyGeneration * this.generationBoost, MAX_GENERATE_WATTS);
 
             }
 
@@ -112,18 +113,18 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     public float getEnvironmentalEnergyBoost() {
         float thermalLevel = 0.0F;
 
-        if (worldObj.provider instanceof IGalacticraftWorldProvider) {
-            thermalLevel = ((IGalacticraftWorldProvider) worldObj.provider).getThermalLevelModifier();
+        if (this.worldObj.provider instanceof IGalacticraftWorldProvider) {
+            thermalLevel = ((IGalacticraftWorldProvider) this.worldObj.provider).getThermalLevelModifier();
         }
 
         // e^(0.25*-x)
         // used a plotter to find a function which looks halfway good...
-        float result = (float) Math.exp(-0.25D * thermalLevel);
+        final float result = (float) Math.exp(-0.25D * thermalLevel);
         return Math.min(result, 10.0F);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.storage.setCapacity(nbt.getFloat("maxEnergy"));
         this.setDisabled(0, nbt.getBoolean("disabled"));
@@ -145,7 +146,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setFloat("maxEnergy", this.getMaxEnergyStoredGC());
         nbt.setInteger("disabledCooldown", this.disableCooldown);
@@ -173,7 +174,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     @Override
     public EnumSet<ForgeDirection> getElectricalOutputDirections() {
         // int metadata = this.getBlockMetadata() & 3;
-        int metadata = getRotationMeta(this.getBlockMetadata());
+        final int metadata = this.getRotationMeta(this.getBlockMetadata());
 
         return EnumSet.of(
                 CoordHelper.rotateForgeDirection(ForgeDirection.EAST, metadata),
@@ -182,24 +183,24 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
                 ForgeDirection.UNKNOWN);
     }
 
-    public int getRotationMeta(int meta) {
+    public int getRotationMeta(final int meta) {
         return (meta & 12) >> 2;
     }
 
     @Override
     public ForgeDirection getElectricalOutputDirectionMain() {
-        int metadata = getRotationMeta(this.getBlockMetadata());
+        final int metadata = this.getRotationMeta(this.getBlockMetadata());
 
         return CoordHelper.rotateForgeDirection(ForgeDirection.EAST, metadata);
     }
 
     @Override
-    public boolean canConnect(ForgeDirection direction, NetworkType type) {
-        if (direction == null || direction.equals(ForgeDirection.UNKNOWN) || type != NetworkType.POWER) {
+    public boolean canConnect(final ForgeDirection direction, final NetworkType type) {
+        if (direction == null || ForgeDirection.UNKNOWN.equals(direction) || type != NetworkType.POWER) {
             return false;
         }
 
-        return getElectricalOutputDirections().contains(direction);
+        return this.getElectricalOutputDirections().contains(direction);
         // return true;// just allow power cables to connect from anywhere //direction ==
         // this.getElectricalOutputDirectionMain();
     }
@@ -210,17 +211,17 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int side) {
+    public int[] getAccessibleSlotsFromSide(final int side) {
         return new int[] { 0 };
     }
 
     @Override
-    public boolean canInsertItem(int slotID, ItemStack itemstack, int side) {
+    public boolean canInsertItem(final int slotID, final ItemStack itemstack, final int side) {
         return this.isItemValidForSlot(slotID, itemstack);
     }
 
     @Override
-    public boolean canExtractItem(int slotID, ItemStack itemstack, int side) {
+    public boolean canExtractItem(final int slotID, final ItemStack itemstack, final int side) {
         return slotID == 0;
     }
 
@@ -230,46 +231,42 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
+    public ItemStack getStackInSlot(final int slot) {
         return this.containingItems[slot];
     }
 
     @Override
-    public ItemStack decrStackSize(int slotNr, int par2) {
-        if (this.containingItems[slotNr] != null) {
-            ItemStack var3;
-
-            if (this.containingItems[slotNr].stackSize <= par2) {
-                var3 = this.containingItems[slotNr];
-                this.containingItems[slotNr] = null;
-                return var3;
-            } else {
-                var3 = this.containingItems[slotNr].splitStack(par2);
-
-                if (this.containingItems[slotNr].stackSize == 0) {
-                    this.containingItems[slotNr] = null;
-                }
-
-                return var3;
-            }
-        } else {
+    public ItemStack decrStackSize(final int slotNr, final int par2) {
+        if (this.containingItems[slotNr] == null) {
             return null;
         }
+        ItemStack var3;
+
+        if (this.containingItems[slotNr].stackSize <= par2) {
+            var3 = this.containingItems[slotNr];
+            this.containingItems[slotNr] = null;
+        } else {
+            var3 = this.containingItems[slotNr].splitStack(par2);
+
+            if (this.containingItems[slotNr].stackSize == 0) {
+                this.containingItems[slotNr] = null;
+            }
+        }
+        return var3;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int par1) {
+    public ItemStack getStackInSlotOnClosing(final int par1) {
         if (this.containingItems[par1] != null) {
             final ItemStack var2 = this.containingItems[par1];
             this.containingItems[par1] = null;
             return var2;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack) {
         this.containingItems[par1] = par2ItemStack;
 
         if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
@@ -279,7 +276,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
 
     @Override
     public String getInventoryName() {
-        return GCCoreUtil.translate("tile." + getSubBlock().getUnlocalizedName() + ".name");
+        return GCCoreUtil.translate("tile." + this.getSubBlock().getUnlocalizedName() + ".name");
     }
 
     @Override
@@ -293,7 +290,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this
                 && par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
     }
@@ -305,12 +302,12 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int slotID, ItemStack itemstack) {
+    public boolean isItemValidForSlot(final int slotID, final ItemStack itemstack) {
         return slotID == 0 && ItemElectricBase.isElectricItem(itemstack.getItem());
     }
 
     @Override
-    public void setDisabled(int index, boolean disabled) {
+    public void setDisabled(final int index, final boolean disabled) {
         if (this.disableCooldown == 0) {
             this.disabled = disabled;
             this.disableCooldown = 20;
@@ -318,7 +315,7 @@ public class TileEntityIsotopeGenerator extends TileBaseUniversalElectricalSourc
     }
 
     @Override
-    public boolean getDisabled(int index) {
+    public boolean getDisabled(final int index) {
         return this.disabled;
     }
 

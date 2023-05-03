@@ -19,13 +19,12 @@ import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 public class MaahesChunkProvider extends AmunraChunkProvider {
 
-    public MaahesChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public MaahesChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
     }
 
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
-        // TODO Auto-generated method stub
         return new MaahesBiomeDecorator();
     }
 
@@ -40,7 +39,7 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
     protected SpawnListEntry[] getCreatures() {
 
         // entityClass, weightedProbability, minGroupCount, maxGroupCount
-        SpawnListEntry pig = new SpawnListEntry(EntityPorcodon.class, 50, 4, 10);
+        final SpawnListEntry pig = new SpawnListEntry(EntityPorcodon.class, 50, 4, 10);
         return new SpawnListEntry[] { pig };
 
         // SpawnListEntry villager = new SpawnListEntry(EntityAlienVillager.class, 1, 0, 2);
@@ -72,7 +71,7 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected SpawnListEntry[] getMonsters() {
-        SpawnListEntry bug = new SpawnListEntry(EntityAlienBug.class, 100, 4, 4);
+        final SpawnListEntry bug = new SpawnListEntry(EntityAlienBug.class, 100, 4, 4);
 
         return new SpawnListEntry[] { bug };
     }
@@ -109,17 +108,17 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
         // TODO fill in with caves and villages
-        return new ArrayList<MapGenBaseMeta>();
+        return new ArrayList<>();
     }
 
     @Override
-    public void onChunkProvide(int arg0, int arg1, Block[] arg2, byte[] arg3) {}
+    public void onChunkProvide(final int arg0, final int arg1, final Block[] arg2, final byte[] arg3) {}
 
     @Override
-    public void onPopulate(IChunkProvider arg0, int arg1, int arg2) {}
+    public void onPopulate(final IChunkProvider arg0, final int arg1, final int arg2) {}
 
     @Override
-    public boolean chunkExists(int x, int y) {
+    public boolean chunkExists(final int x, final int y) {
         return false;
     }
 

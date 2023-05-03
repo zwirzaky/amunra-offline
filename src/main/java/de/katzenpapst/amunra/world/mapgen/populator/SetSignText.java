@@ -7,19 +7,16 @@ import net.minecraft.world.World;
 
 public class SetSignText extends AbstractPopulator {
 
-    private String[] signText = new String[] { "", "", "", "" };
+    private final String[] signText = { "", "", "", "" };
 
-    public SetSignText(int x, int y, int z, String text) {
+    public SetSignText(final int x, final int y, final int z, final String text) {
         this(x, y, z, text.split("\n", 4));
     }
 
-    public SetSignText(int x, int y, int z, String[] signText) {
+    public SetSignText(final int x, final int y, final int z, final String[] signText) {
         super(x, y, z);
 
-        for (int i = 0; i < signText.length; i++) {
-            if (i >= 4) {
-                break;
-            }
+        for (int i = 0; i < signText.length && i < 4; i++) {
             if (signText[i] != null) {
                 this.signText[i] = signText[i];
             }
@@ -28,15 +25,15 @@ public class SetSignText extends AbstractPopulator {
     }
 
     @Override
-    public boolean populate(World world) {
-        Block curBlock = world.getBlock(x, y, z);
+    public boolean populate(final World world) {
+        final Block curBlock = world.getBlock(this.x, this.y, this.z);
         if (curBlock == Blocks.standing_sign || curBlock == Blocks.wall_sign) {
-            TileEntitySign sign = (TileEntitySign) world.getTileEntity(x, y, z);
+            final TileEntitySign sign = (TileEntitySign) world.getTileEntity(this.x, this.y, this.z);
 
             if (sign != null) {
                 sign.signText = this.signText;
                 sign.markDirty();
-                world.markBlockForUpdate(x, y, z);
+                world.markBlockForUpdate(this.x, this.y, this.z);
                 return true;
             }
         }

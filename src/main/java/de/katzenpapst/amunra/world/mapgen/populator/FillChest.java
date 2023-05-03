@@ -12,16 +12,16 @@ public class FillChest extends AbstractPopulator {
     protected BlockMetaPair chestBlock;
     protected String chestGenName;
 
-    public FillChest(int x, int y, int z, BlockMetaPair chestBlock, String chestGenName) {
+    public FillChest(final int x, final int y, final int z, final BlockMetaPair chestBlock, final String chestGenName) {
         super(x, y, z);
         this.chestBlock = chestBlock;
         this.chestGenName = chestGenName;
     }
 
     @Override
-    public boolean populate(World world) {
+    public boolean populate(final World world) {
         // world.setBlock(x, y, z, chestBlock.getBlock(), chestBlock.getMetadata(), 2);
-        IInventory chest = (IInventory) world.getTileEntity(x, y, z);
+        final IInventory chest = (IInventory) world.getTileEntity(this.x, this.y, this.z);
 
         if (chest != null) {
             // this clears the chest
@@ -30,7 +30,7 @@ public class FillChest extends AbstractPopulator {
             }
 
             // hmm that is an interesting concept
-            ChestGenHooks info = ChestGenHooks.getInfo(chestGenName);
+            final ChestGenHooks info = ChestGenHooks.getInfo(this.chestGenName);
 
             WeightedRandomChestContent
                     .generateChestContents(world.rand, info.getItems(world.rand), chest, info.getCount(world.rand));

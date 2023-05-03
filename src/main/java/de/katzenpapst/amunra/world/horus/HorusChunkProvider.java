@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.world.horus;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -29,19 +29,24 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     protected final BlockMetaPair stoneBlock = new BlockMetaPair(Blocks.obsidian, (byte) 0);
     protected PyramidGenerator pyramid = new PyramidGenerator();
-    private VolcanoGenerator volcanoGen;
+    private final VolcanoGenerator volcanoGen;
 
-    public HorusChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
-        pyramid.setFillMaterial(ARBlocks.blockBasaltBrick);
-        pyramid.setFloorMaterial(ARBlocks.blockSmoothBasalt);
-        pyramid.setWallMaterial(ARBlocks.blockObsidianBrick);
-        pyramid.addComponentType(ChestRoom.class, 0.25F);
-        pyramid.addComponentType(PitRoom.class, 0.25F);
-        pyramid.addComponentType(PyramidRoom.class, 0.5F);
-        pyramid.addMainRoomType(BossRoom.class, 1.0F);
+    public HorusChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
+        this.pyramid.setFillMaterial(ARBlocks.blockBasaltBrick);
+        this.pyramid.setFloorMaterial(ARBlocks.blockSmoothBasalt);
+        this.pyramid.setWallMaterial(ARBlocks.blockObsidianBrick);
+        this.pyramid.addComponentType(ChestRoom.class, 0.25F);
+        this.pyramid.addComponentType(PitRoom.class, 0.25F);
+        this.pyramid.addComponentType(PyramidRoom.class, 0.5F);
+        this.pyramid.addMainRoomType(BossRoom.class, 1.0F);
 
-        volcanoGen = new VolcanoGenerator(new BlockMetaPair(Blocks.lava, (byte) 0), stoneBlock, stoneBlock, 15, true);
+        this.volcanoGen = new VolcanoGenerator(
+                new BlockMetaPair(Blocks.lava, (byte) 0),
+                this.stoneBlock,
+                this.stoneBlock,
+                15,
+                true);
     }
 
     @Override
@@ -61,17 +66,14 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
-        ArrayList<MapGenBaseMeta> list = new ArrayList<MapGenBaseMeta>();
-        list.add(pyramid);
-        list.add(volcanoGen);
-        return list;
+        return Arrays.asList(this.volcanoGen, this.pyramid);
     }
 
     @Override
     protected SpawnListEntry[] getMonsters() {
-        SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
-        SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
-        SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
+        final SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
+        final SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
+        final SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
 
         return new SpawnListEntry[] { skele, creeper, zombie };
     }
@@ -93,7 +95,7 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BlockMetaPair getStoneBlock() {
-        return stoneBlock;
+        return this.stoneBlock;
     }
 
     @Override
@@ -113,25 +115,24 @@ public class HorusChunkProvider extends AmunraChunkProvider {
 
     @Override
     public double getValleyHeightModifier() {
-        // TODO Auto-generated method stub
         return 60;
     }
 
     @Override
-    public void onChunkProvide(int cX, int cZ, Block[] blocks, byte[] metadata) {
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {
 
     }
 
     @Override
-    public void onPopulate(IChunkProvider provider, int cX, int cZ) {
+    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {
 
     }
 
     @Override
-    public void populate(IChunkProvider par1IChunkProvider, int chunkX, int chunkZ) {
+    public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
         super.populate(par1IChunkProvider, chunkX, chunkZ);
 
-        this.pyramid.populate(this, worldObj, chunkX, chunkZ);
+        this.pyramid.populate(this, this.worldObj, chunkX, chunkZ);
         // this.pyramid.populate(this, worldObj, chunkX, chunkZ);
 
         // this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);

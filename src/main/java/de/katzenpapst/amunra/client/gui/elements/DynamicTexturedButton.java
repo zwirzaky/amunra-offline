@@ -13,45 +13,46 @@ public class DynamicTexturedButton extends GuiButton {
     protected ResourceLocation texture;
     protected boolean isSelected;
 
-    public DynamicTexturedButton(int id, int x, int y, ResourceLocation initialTexture) {
+    public DynamicTexturedButton(final int id, final int x, final int y, final ResourceLocation initialTexture) {
         super(id, x, y, "");
-        texture = initialTexture;
+        this.texture = initialTexture;
     }
 
-    public DynamicTexturedButton(int id, int x, int y, int width, int height, ResourceLocation initialTexture) {
+    public DynamicTexturedButton(final int id, final int x, final int y, final int width, final int height,
+            final ResourceLocation initialTexture) {
         super(id, x, y, width, height, "");
-        texture = initialTexture;
+        this.texture = initialTexture;
     }
 
-    public void setTexture(ResourceLocation texture) {
+    public void setTexture(final ResourceLocation texture) {
         this.texture = texture;
     }
 
     public ResourceLocation getTexture() {
-        return texture;
+        return this.texture;
     }
 
-    public void setSelected(boolean set) {
+    public void setSelected(final boolean set) {
         this.isSelected = set;
     }
 
     public boolean getSelected() {
-        return isSelected;
+        return this.isSelected;
     }
 
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(final Minecraft mc, final int mouseX, final int mouseY) {
         if (this.visible) {
             // FontRenderer fontrenderer = mc.fontRenderer;
             mc.getTextureManager().bindTexture(buttonTextures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            if (isSelected) {
+            if (this.isSelected) {
                 GL11.glColor4f(1.0F, 0.5F, 0.5F, 1.0F);
             }
             this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition
                     && mouseX < this.xPosition + this.width
                     && mouseY < this.yPosition + this.height;
-            int k = this.getHoverState(this.field_146123_n);
+            final int k = this.getHoverState(this.field_146123_n);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -65,21 +66,21 @@ public class DynamicTexturedButton extends GuiButton {
                     this.height);
             this.mouseDragged(mc, mouseX, mouseY);
 
-            if (texture != null) {
+            if (this.texture != null) {
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                mc.getTextureManager().bindTexture(texture);
+                mc.getTextureManager().bindTexture(this.texture);
                 // this.drawTexturedModalRect(xPosition, yPosition, 0, 0, width, height);
 
-                drawFullSizedTexturedRect(xPosition + 2, yPosition + 2, width - 4, height - 4);
+                this.drawFullSizedTexturedRect(this.xPosition + 2, this.yPosition + 2, this.width - 4, this.height - 4);
                 // this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2,
                 // this.yPosition + (this.height - 8) / 2, l);
             }
         }
     }
 
-    protected void drawFullSizedTexturedRect(int x, int y, int width, int height) {
+    protected void drawFullSizedTexturedRect(final int x, final int y, final int width, final int height) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(x, y + height, this.zLevel, 0, 1);
         tessellator.addVertexWithUV(x + width, y + height, this.zLevel, 1, 1);

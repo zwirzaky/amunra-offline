@@ -16,7 +16,8 @@ public class ChestRoom extends PyramidRoom {
     protected BlockMetaPair spawner = new BlockMetaPair(Blocks.mob_spawner, (byte) 0);
 
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
@@ -28,49 +29,44 @@ public class ChestRoom extends PyramidRoom {
         return true;
     }
 
-    protected void generateBoxWithChest(int centerX, int centerZ, int chunkX, int chunkZ, Block[] arrayOfIDs,
-            byte[] arrayOfMeta) {
-        int startY = this.floorLevel;
-        int stopY = this.roomBB.maxY;
-        BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
+    protected void generateBoxWithChest(final int centerX, final int centerZ, final int chunkX, final int chunkZ,
+            final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+        final int startY = this.floorLevel;
+        final int stopY = this.roomBB.maxY;
+        final BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
         for (int x = centerX - 1; x <= centerX + 1; x++) {
             for (int z = centerZ - 1; z <= centerZ + 1; z++) {
                 for (int y = startY; y <= stopY; y++) {
-                    if (y == startY || y == stopY) {
+                    if (y == startY || y == stopY || x != centerX && z != centerZ) {
                         placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, floorMat);
-                    } else {
-                        // corners
-                        if (x != centerX && z != centerZ) {
-                            placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, floorMat);
-                        } else if (x == centerX && z == centerZ) {
-                            if (y == startY + 1) {
-                                // chest
-                                placeChest(
-                                        Pyramid.LOOT_CATEGORY_BASIC,
-                                        x,
-                                        y,
-                                        z,
-                                        chunkX,
-                                        chunkZ,
-                                        arrayOfIDs,
-                                        arrayOfMeta);
-                            } else if (y == startY + 2) {
-                                placeSpawner(
-                                        getMob(this.parent.getWorld().rand),
-                                        x,
-                                        y,
-                                        z,
-                                        chunkX,
-                                        chunkZ,
-                                        arrayOfIDs,
-                                        arrayOfMeta);
-                            } else {
-                                placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, floorMat);
-                            }
+                    } else if (x == centerX && z == centerZ) {
+                        if (y == startY + 1) {
+                            // chest
+                            this.placeChest(
+                                    Pyramid.LOOT_CATEGORY_BASIC,
+                                    x,
+                                    y,
+                                    z,
+                                    chunkX,
+                                    chunkZ,
+                                    arrayOfIDs,
+                                    arrayOfMeta);
+                        } else if (y == startY + 2) {
+                            this.placeSpawner(
+                                    getMob(this.parent.getWorld().rand),
+                                    x,
+                                    y,
+                                    z,
+                                    chunkX,
+                                    chunkZ,
+                                    arrayOfIDs,
+                                    arrayOfMeta);
                         } else {
-                            // walls
-                            placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, Blocks.iron_bars, 0);
+                            placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, floorMat);
                         }
+                    } else {
+                        // walls
+                        placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, Blocks.iron_bars, 0);
                     }
                 }
             }
@@ -78,33 +74,28 @@ public class ChestRoom extends PyramidRoom {
         }
     }
 
-    protected void placeChest(String lootCat, int x, int y, int z, int chunkX, int chunkZ, Block[] arrayOfIDs,
-            byte[] arrayOfMeta) {
-        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, chest)) {
-            this.parent.addPopulator(new FillChest(x, y, z, chest, lootCat));
+    protected void placeChest(final String lootCat, final int x, final int y, final int z, final int chunkX,
+            final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, this.chest)) {
+            this.parent.addPopulator(new FillChest(x, y, z, this.chest, lootCat));
         }
     }
 
-    protected void placeSpawner(String entityName, int x, int y, int z, int chunkX, int chunkZ, Block[] arrayOfIDs,
-            byte[] arrayOfMeta) {
-        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, spawner)) {
+    protected void placeSpawner(final String entityName, final int x, final int y, final int z, final int chunkX,
+            final int chunkZ, final Block[] arrayOfIDs, final byte[] arrayOfMeta) {
+        if (placeBlockAbs(arrayOfIDs, arrayOfMeta, x, y, z, chunkX, chunkZ, this.spawner)) {
             this.parent.addPopulator(new SetSpawnerEntity(x, y, z, entityName));
         }
     }
 
-    private static String getMob(Random rand) {
-        switch (rand.nextInt(6)) {
-            case 0:
-                return "EvolvedSpider";
-            case 1:
-                return "EvolvedZombie";
-            case 2:
-                return "EvolvedCreeper";
-            case 3:
-                return "EvolvedSkeleton";
-            default:
-                return "EvolvedCreeper";
-        }
+    private static String getMob(final Random rand) {
+        return switch (rand.nextInt(6)) {
+            case 0 -> "EvolvedSpider";
+            case 1 -> "EvolvedZombie";
+            case 2 -> "EvolvedCreeper";
+            case 3 -> "EvolvedSkeleton";
+            default -> "EvolvedCreeper";
+        };
     }
 
 }

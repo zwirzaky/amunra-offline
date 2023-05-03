@@ -20,13 +20,14 @@ public class SlotSchematicShuttle extends Slot {
     // protected final ItemStack validItem;
     protected final ItemDamagePair[] validItem;
 
-    public SlotSchematicShuttle(IInventory craftMatrix, int slotIndex, int xDisplay, int yDisplay,
-            Vector3int sparkPosition, EntityPlayer player) {
+    public SlotSchematicShuttle(final IInventory craftMatrix, final int slotIndex, final int xDisplay,
+            final int yDisplay, final Vector3int sparkPosition, final EntityPlayer player) {
         this(craftMatrix, slotIndex, xDisplay, yDisplay, sparkPosition, player, new ItemDamagePair[] {});
     }
 
-    public SlotSchematicShuttle(IInventory craftMatrix, int slotIndex, int xDisplay, int yDisplay,
-            Vector3int sparkPosition, EntityPlayer player, ItemDamagePair... validItems) {
+    public SlotSchematicShuttle(final IInventory craftMatrix, final int slotIndex, final int xDisplay,
+            final int yDisplay, final Vector3int sparkPosition, final EntityPlayer player,
+            final ItemDamagePair... validItems) {
         super(craftMatrix, slotIndex, xDisplay, yDisplay);
         // this.index = slotIndex;
         // these coords are only for sparks, I think
@@ -40,8 +41,8 @@ public class SlotSchematicShuttle extends Slot {
         if (this.player instanceof EntityPlayerMP) {
             // final Object[] toSend = { this.x, this.y, this.z };
 
-            for (int playerNumber = 0; playerNumber < this.player.worldObj.playerEntities.size(); ++playerNumber) {
-                final EntityPlayerMP curPlayer = (EntityPlayerMP) this.player.worldObj.playerEntities.get(playerNumber);
+            for (EntityPlayer element : this.player.worldObj.playerEntities) {
+                final EntityPlayerMP curPlayer = (EntityPlayerMP) element;
 
                 if (curPlayer.dimension == this.player.worldObj.provider.dimensionId) {
                     final double distX = this.pos.x - curPlayer.posX;
@@ -61,12 +62,12 @@ public class SlotSchematicShuttle extends Slot {
     }
 
     @Override
-    public boolean isItemValid(ItemStack par1ItemStack) {
+    public boolean isItemValid(final ItemStack par1ItemStack) {
         if (this.validItem.length == 0) {
             return true; // all are valid
         }
 
-        for (ItemDamagePair item : validItem) {
+        for (final ItemDamagePair item : this.validItem) {
             if (item.isSameItem(par1ItemStack)) {
                 return true;
             }

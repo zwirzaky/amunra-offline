@@ -12,29 +12,32 @@ public class BlockVector extends Vector3int {
 
     public World world;
 
-    public BlockVector(World world, int x, int y, int z) {
+    public BlockVector(final World world, final int x, final int y, final int z) {
         super(x, y, z);
         this.world = world;
     }
 
     public BlockMetaPair getBlockMetaPair() {
-        return new BlockMetaPair(world.getBlock(x, y, z), (byte) world.getBlockMetadata(x, y, z));
+        return new BlockMetaPair(
+                this.world.getBlock(this.x, this.y, this.z),
+                (byte) this.world.getBlockMetadata(this.x, this.y, this.z));
     }
 
-    public boolean isBlockMetaPair(BlockMetaPair bmp) {
-        return world.getBlock(x, y, z) == bmp.getBlock() && world.getBlockMetadata(x, y, z) == bmp.getMetadata();
+    public boolean isBlockMetaPair(final BlockMetaPair bmp) {
+        return this.world.getBlock(this.x, this.y, this.z) == bmp.getBlock()
+                && this.world.getBlockMetadata(this.x, this.y, this.z) == bmp.getMetadata();
     }
 
     @Override
     public int hashCode() {
-        return world.hashCode() ^ super.hashCode();
+        return this.world.hashCode() ^ super.hashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof BlockVector)) {
             return false;
         }
-        return world.equals(((BlockVector) other).world) && super.equals(other);
+        return this.world.equals(((BlockVector) other).world) && super.equals(other);
     }
 }

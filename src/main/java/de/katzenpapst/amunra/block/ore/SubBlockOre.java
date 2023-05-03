@@ -11,7 +11,7 @@ public class SubBlockOre extends SubBlockDropItem {
 
     protected ItemStack smeltItem = null;
 
-    public SubBlockOre setOredictNames(String... newNames) {
+    public SubBlockOre setOredictNames(final String... newNames) {
         this.oredictNames = newNames;
         return this;
     }
@@ -21,35 +21,36 @@ public class SubBlockOre extends SubBlockDropItem {
     }
 
     public ItemStack getSmeltItem() {
-        return smeltItem;
+        return this.smeltItem;
     }
 
-    public SubBlockOre setSmeltItem(Item item, int num, int metadata) {
-        smeltItem = new ItemStack(item, num, metadata);
+    public SubBlockOre setSmeltItem(final Item item, final int num, final int metadata) {
+        this.smeltItem = new ItemStack(item, num, metadata);
         return this;
     }
 
-    public SubBlockOre setSmeltItem(Item item, int num) {
-        smeltItem = new ItemStack(item, num, 0);
+    public SubBlockOre setSmeltItem(final Item item, final int num) {
+        this.smeltItem = new ItemStack(item, num, 0);
         return this;
     }
 
-    public SubBlockOre setSmeltItem(ItemStack stack) {
-        smeltItem = stack;
+    public SubBlockOre setSmeltItem(final ItemStack stack) {
+        this.smeltItem = stack;
         return this;
     }
 
-    public SubBlockOre(String name, String texture) {
+    public SubBlockOre(final String name, final String texture) {
         super(name, texture);
         this.isValuable = true;
     }
 
-    public SubBlockOre(String name, String texture, String tool, int harvestLevel) {
+    public SubBlockOre(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
         this.isValuable = true;
     }
 
-    public SubBlockOre(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
+    public SubBlockOre(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         this.isValuable = true;
     }

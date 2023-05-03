@@ -26,7 +26,7 @@ public class TickHandlerClient {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent event) {
+    public void onClientTick(final ClientTickEvent event) {
         final Minecraft minecraft = FMLClientHandler.instance().getClient();
 
         final WorldClient world = minecraft.theWorld;
@@ -37,10 +37,8 @@ public class TickHandlerClient {
                     world.provider.setSkyRenderer(new SkyProviderDynamic((IGalacticraftWorldProvider) world.provider));
                 }
                 // ((AmunraWorldProvider)world.provider).hasBreathableAtmosphere()
-                if (!((AmunraWorldProvider) world.provider).hasClouds()) {
-                    if (world.provider.getCloudRenderer() == null) {
-                        world.provider.setCloudRenderer(new CloudRenderer()); // dummy cloud renderer
-                    }
+                if (!((AmunraWorldProvider) world.provider).hasClouds() && world.provider.getCloudRenderer() == null) {
+                    world.provider.setCloudRenderer(new CloudRenderer()); // dummy cloud renderer
                 }
             } else if (world.provider instanceof MothershipWorldProvider) {
                 if (world.provider.getSkyRenderer() == null
@@ -54,12 +52,11 @@ public class TickHandlerClient {
                  * if(!((AmunraWorldProvider) world.provider).hasClouds()) { if (world.provider.getCloudRenderer() ==
                  * null) { world.provider.setCloudRenderer(new CloudRenderer()); // dummy cloud renderer } }
                  */
-            } else if (world.provider instanceof AmunRaAsteroidWorldProvider) {
-                if (world.provider.getSkyRenderer() == null
-                        || world.provider.getSkyRenderer() instanceof SkyProviderAsteroids) {
-                    world.provider.setSkyRenderer(new SkyProviderDynamic((IGalacticraftWorldProvider) world.provider));
-                }
-            }
+            } else if (world.provider instanceof AmunRaAsteroidWorldProvider && (world.provider.getSkyRenderer() == null
+                    || world.provider.getSkyRenderer() instanceof SkyProviderAsteroids)) {
+                        world.provider
+                                .setSkyRenderer(new SkyProviderDynamic((IGalacticraftWorldProvider) world.provider));
+                    }
 
             if (world.isRemote && TickHandlerServer.mothershipData != null) {
                 TickHandlerServer.mothershipData.tickAllMothershipsClient();
@@ -69,7 +66,7 @@ public class TickHandlerClient {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onPlayerTick(PlayerTickEvent event) {
+    public void onPlayerTick(final PlayerTickEvent event) {
         if (playerGravityState > 0 && event.phase == Phase.END) {
             playerGravityState--;
         }

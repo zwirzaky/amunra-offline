@@ -18,34 +18,30 @@ public class ContainerCrafter extends ContainerWorkbench {
     protected int posYFU;
     protected int posZFU;
 
-    public ContainerCrafter(InventoryPlayer playerInv, World world, int x, int y, int z) {
+    public ContainerCrafter(final InventoryPlayer playerInv, final World world, final int x, final int y, final int z) {
         super(playerInv, world, x, y, z);
-        worldFU = world;
-        posXFU = x;
-        posYFU = y;
-        posZFU = z;
+        this.worldFU = world;
+        this.posXFU = x;
+        this.posYFU = y;
+        this.posZFU = z;
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(final EntityPlayer player) {
         // either using a crafting block, or a crafting tool
-        Block b = player.worldObj.getBlock(posXFU, posYFU, posZFU);
-        int meta = player.worldObj.getBlockMetadata(posXFU, posYFU, posZFU);
+        final Block b = player.worldObj.getBlock(this.posXFU, this.posYFU, this.posZFU);
+        final int meta = player.worldObj.getBlockMetadata(this.posXFU, this.posYFU, this.posZFU);
 
         if (ARBlocks.blockWorkbench.getBlock() == b && ARBlocks.blockWorkbench.getMetadata() == meta) {
-            return player.getDistanceSq(
-                    (double) this.posXFU + 0.5D,
-                    (double) this.posYFU + 0.5D,
-                    (double) this.posZFU + 0.5D) <= 64.0D;
+            return player.getDistanceSq(this.posXFU + 0.5D, this.posYFU + 0.5D, this.posZFU + 0.5D) <= 64.0D;
         }
 
         // not the block, check for item
-        ItemStack stack = player.inventory.getCurrentItem();
+        final ItemStack stack = player.inventory.getCurrentItem();
 
         if (stack != null && stack.getItem() == ARItems.nanotool) {
             return ARItems.nanotool.getMode(stack) == ItemNanotool.Mode.WORKBENCH;
-        } else {
-            return false;
         }
+        return false;
     }
 }

@@ -8,7 +8,7 @@ public class TickableLoopedSound extends MovingSound {
 
     protected TileEntity tile;
 
-    public TickableLoopedSound(TileEntity tile, ResourceLocation res) {
+    public TickableLoopedSound(final TileEntity tile, final ResourceLocation res) {
         super(res);
         this.tile = tile;
         this.volume = 10.0F; // volume
@@ -21,8 +21,8 @@ public class TickableLoopedSound extends MovingSound {
 
     @Override
     public void update() {
-        if (tile == null || tile.isInvalid()
-                || (tile instanceof ISoundableTile && ((ISoundableTile) tile).isDonePlaying())) {
+        if (this.tile == null || this.tile.isInvalid()
+                || this.tile instanceof ISoundableTile && ((ISoundableTile) this.tile).isDonePlaying()) {
             this.donePlaying = true;
         }
     }

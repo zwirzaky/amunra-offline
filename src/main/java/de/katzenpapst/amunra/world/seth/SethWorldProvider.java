@@ -13,10 +13,6 @@ import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class SethWorldProvider extends AmunraWorldProvider {
 
-    public SethWorldProvider() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
     public double getYCoordinateToTeleport() {
         return 800;
@@ -59,12 +55,9 @@ public class SethWorldProvider extends AmunraWorldProvider {
         return new Vector3(0, 0, 0);
     }
 
-    /**
-     * Returns true if the given X,Z coordinate should show environmental fog.
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean doesXZShowFog(int p_76568_1_, int p_76568_2_) {
+    public boolean doesXZShowFog(final int p_76568_1_, final int p_76568_2_) {
         return false;
     }
 

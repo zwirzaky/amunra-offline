@@ -28,7 +28,7 @@ public class GuiSchematicShuttle extends GuiContainer implements ISchematicResul
 
     private int pageIndex;
 
-    public GuiSchematicShuttle(InventoryPlayer par1InventoryPlayer, int x, int y, int z) {
+    public GuiSchematicShuttle(final InventoryPlayer par1InventoryPlayer, final int x, final int y, final int z) {
         super(new ContainerSchematicShuttle(par1InventoryPlayer, x, y, z));
         this.ySize = 220;
     }
@@ -56,7 +56,7 @@ public class GuiSchematicShuttle extends GuiContainer implements ISchematicResul
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
+    protected void actionPerformed(final GuiButton par1GuiButton) {
         if (par1GuiButton.enabled) {
             switch (par1GuiButton.id) {
                 case 0:
@@ -70,7 +70,7 @@ public class GuiSchematicShuttle extends GuiContainer implements ISchematicResul
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
 
         this.fontRendererObj.drawString(
                 ARItems.shuttleItem.getItemStackDisplayName(new ItemStack(ARItems.shuttleItem, 1, 0)),
@@ -81,7 +81,7 @@ public class GuiSchematicShuttle extends GuiContainer implements ISchematicResul
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(shuttleSchematicTexture);
         final int var5 = (this.width - this.xSize) / 2;
@@ -90,7 +90,7 @@ public class GuiSchematicShuttle extends GuiContainer implements ISchematicResul
     }
 
     @Override
-    public void setPageIndex(int index) {
+    public void setPageIndex(final int index) {
         this.pageIndex = index;
     }
 

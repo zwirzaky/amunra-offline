@@ -23,7 +23,7 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityMulti;
 
 public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassiveBlock {
 
-    public FakeBlock(String name, String texture) {
+    public FakeBlock(final String name, final String texture) {
         super(name, texture);
         this.setHardness(1.0F);
         this.setStepSound(Block.soundTypeMetal);
@@ -36,21 +36,21 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public boolean canDropFromExplosion(Explosion par1Explosion) {
+    public boolean canDropFromExplosion(final Explosion par1Explosion) {
         return false;
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 
     @Override
-    public float getBlockHardness(World par1World, int par2, int par3, int par4) {
-        TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
+    public float getBlockHardness(final World par1World, final int par2, final int par3, final int par4) {
+        final TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
 
         if (tileEntity instanceof TileEntityMulti) {
-            BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
+            final BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
 
             if (mainBlockPosition != null) {
                 return mainBlockPosition.getBlock(par1World).getBlockHardness(par1World, par2, par3, par4);
@@ -67,8 +67,8 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block par5, final int par6) {
+        final TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (tileEntity instanceof TileEntityMulti) {
             ((TileEntityMulti) tileEntity).onBlockRemoval();
@@ -78,14 +78,14 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public boolean onBlockActivated(World par1World, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6,
-            float par7, float par8, float par9) {
-        TileEntityMulti tileEntity = (TileEntityMulti) par1World.getTileEntity(x, y, z);
+    public boolean onBlockActivated(final World par1World, final int x, final int y, final int z,
+            final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9) {
+        final TileEntityMulti tileEntity = (TileEntityMulti) par1World.getTileEntity(x, y, z);
         return tileEntity.onBlockActivated(par1World, x, y, z, par5EntityPlayer);
     }
 
     @Override
-    public int quantityDropped(Random par1Random) {
+    public int quantityDropped(final Random par1Random) {
         return 0;
     }
 
@@ -100,18 +100,19 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public TileEntity createTileEntity(World var1, int meta) {
+    public TileEntity createTileEntity(final World var1, final int meta) {
         return new TileEntityShuttleDockFake();
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z, final EntityPlayer player) {
+        final TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity instanceof TileEntityMulti) {
-            BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
+            final BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
 
             if (mainBlockPosition != null) {
-                Block mainBlockID = world.getBlock(mainBlockPosition.x, mainBlockPosition.y, mainBlockPosition.z);
+                final Block mainBlockID = world.getBlock(mainBlockPosition.x, mainBlockPosition.y, mainBlockPosition.z);
 
                 if (Blocks.air != mainBlockID) {
                     return mainBlockID.getPickBlock(
@@ -129,27 +130,29 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z) {
         return this.getPickBlock(target, world, x, y, z, null);
     }
 
     @Override
-    public boolean isSealed(World world, int x, int y, int z, ForgeDirection direction) {
+    public boolean isSealed(final World world, final int x, final int y, final int z, final ForgeDirection direction) {
         return true;
     }
 
     @Override
-    public float getMass(World w, int x, int y, int z, int meta) {
+    public float getMass(final World w, final int x, final int y, final int z, final int meta) {
         return 0;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
-        TileEntity tileEntity = worldObj.getTileEntity(target.blockX, target.blockY, target.blockZ);
+    public boolean addHitEffects(final World worldObj, final MovingObjectPosition target,
+            final EffectRenderer effectRenderer) {
+        final TileEntity tileEntity = worldObj.getTileEntity(target.blockX, target.blockY, target.blockZ);
 
         if (tileEntity instanceof TileEntityMulti) {
-            BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
+            final BlockVec3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
 
             if (mainBlockPosition != null) {
                 effectRenderer

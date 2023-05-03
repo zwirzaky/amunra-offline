@@ -14,7 +14,7 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
     protected static MothershipFuelDisplayEnergy instance = null;
 
     protected MothershipFuelDisplayEnergy() {
-        stack = new ItemStack(GCItems.battery, 1, 0);
+        this.stack = new ItemStack(GCItems.battery, 1, 0);
     }
 
     public static MothershipFuelDisplayEnergy getInstance() {
@@ -27,7 +27,7 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
     @Override
     public IIcon getIcon() {
 
-        return stack.getItem().getIconFromDamage(stack.getItemDamage());
+        return this.stack.getItem().getIconFromDamage(this.stack.getItemDamage());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
 
     @Override
     public int getSpriteNumber() {
-        return stack.getItemSpriteNumber();
+        return this.stack.getItemSpriteNumber();
     }
 
     @Override
@@ -52,13 +52,13 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
     }
 
     @Override
-    public String formatValue(float value) {
+    public String formatValue(final float value) {
         // EnergyDisplayHelper
         return EnergyDisplayHelper.getEnergyDisplayS(value);
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof MothershipFuelDisplayEnergy)) {
             return false;
         }
@@ -67,7 +67,7 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
 
     @Override
     public int hashCode() {
-        return stack.hashCode() + 135842;
+        return this.stack.hashCode() + 135842;
     }
 
 }

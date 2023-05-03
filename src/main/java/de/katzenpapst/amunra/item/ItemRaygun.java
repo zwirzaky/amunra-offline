@@ -12,12 +12,13 @@ public class ItemRaygun extends ItemAbstractRaygun {
 
     protected IIcon itemEmptyIcon;
 
-    public ItemRaygun(String assetName) {
+    public ItemRaygun(final String assetName) {
         super(assetName);
     }
 
     @Override
-    protected EntityBaseLaserArrow createProjectile(ItemStack itemStack, EntityPlayer entityPlayer, World world) {
+    protected EntityBaseLaserArrow createProjectile(final ItemStack itemStack, final EntityPlayer entityPlayer,
+            final World world) {
         return new EntityLaserArrow(world, entityPlayer);
     }
 

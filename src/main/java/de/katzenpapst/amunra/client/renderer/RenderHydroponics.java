@@ -14,17 +14,16 @@ import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 
 public class RenderHydroponics extends TileEntitySpecialRenderer {
 
-    private ModelHydroponics model;
+    private final ModelHydroponics model;
 
     public RenderHydroponics() {
-        model = new ModelHydroponics();
+        this.model = new ModelHydroponics();
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks) {
-        if (te instanceof TileEntityHydroponics) {
-            TileEntityHydroponics tile = (TileEntityHydroponics) te;
-
+    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z,
+            final float partialTicks) {
+        if (te instanceof TileEntityHydroponics tile) {
             GL11.glPushMatrix();
             GL11.glTranslatef((float) x, (float) y, (float) z);
 
@@ -32,23 +31,22 @@ public class RenderHydroponics extends TileEntitySpecialRenderer {
 
             // meh
             for (int i = 0; i < connections.length; i++) {
-                TileEntity cur = connections[i];
-                ForgeDirection direction = ForgeDirection.values()[i];
+                final TileEntity cur = connections[i];
+                final ForgeDirection direction = ForgeDirection.values()[i];
 
-                if (cur instanceof IOxygenReceiver) {
-                    if (((IOxygenReceiver) cur).getOxygenRequest(direction.getOpposite()) <= 0) {
-                        connections[i] = null;
-                    }
+                if (cur instanceof IOxygenReceiver
+                        && ((IOxygenReceiver) cur).getOxygenRequest(direction.getOpposite()) <= 0) {
+                    connections[i] = null;
                 }
             }
 
-            boolean hasNorth = connections[ForgeDirection.NORTH.ordinal()] != null;
-            boolean hasSouth = connections[ForgeDirection.SOUTH.ordinal()] != null;
-            boolean hasWest = connections[ForgeDirection.WEST.ordinal()] != null;
-            boolean hasEast = connections[ForgeDirection.EAST.ordinal()] != null;
+            final boolean hasNorth = connections[ForgeDirection.NORTH.ordinal()] != null;
+            final boolean hasSouth = connections[ForgeDirection.SOUTH.ordinal()] != null;
+            final boolean hasWest = connections[ForgeDirection.WEST.ordinal()] != null;
+            final boolean hasEast = connections[ForgeDirection.EAST.ordinal()] != null;
 
             final Tessellator tess = Tessellator.instance;
-            model.render(tess, tile.getPlantGrowthStatus(), hasNorth, hasSouth, hasWest, hasEast);
+            this.model.render(tess, tile.getPlantGrowthStatus(), hasNorth, hasSouth, hasWest, hasEast);
 
             GL11.glPopMatrix();
         }

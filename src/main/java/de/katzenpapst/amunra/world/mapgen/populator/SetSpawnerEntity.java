@@ -8,17 +8,17 @@ public class SetSpawnerEntity extends AbstractPopulator {
 
     String entityName;
 
-    public SetSpawnerEntity(int x, int y, int z, String entityName) {
+    public SetSpawnerEntity(final int x, final int y, final int z, final String entityName) {
         super(x, y, z);
         this.entityName = entityName;
     }
 
     @Override
-    public boolean populate(World world) {
-        if (world.getBlock(x, y, z) == Blocks.mob_spawner) {
-            final TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(x, y, z);
+    public boolean populate(final World world) {
+        if (world.getBlock(this.x, this.y, this.z) == Blocks.mob_spawner) {
+            final TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(this.x, this.y, this.z);
             if (spawner != null) {
-                spawner.func_145881_a().setEntityName(entityName);
+                spawner.func_145881_a().setEntityName(this.entityName);
                 return true;
             }
         }

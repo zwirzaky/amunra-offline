@@ -11,7 +11,7 @@ public class InventorySchematicShuttle implements IInventory {
     protected final int inventoryWidth;
     protected final Container eventHandler;
 
-    public InventorySchematicShuttle(int numSlots, Container par1Container) {
+    public InventorySchematicShuttle(final int numSlots, final Container par1Container) {
         this.stackList = new ItemStack[numSlots];
         this.eventHandler = par1Container;
         this.inventoryWidth = 5; // what for?
@@ -23,20 +23,19 @@ public class InventorySchematicShuttle implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
+    public ItemStack getStackInSlot(final int slot) {
         return slot >= this.getSizeInventory() ? null : this.stackList[slot];
     }
 
-    public ItemStack getStackInRowAndColumn(int x, int y) {
-        if (x >= 0 && x < this.inventoryWidth) {
-            final int stackNr = x + y * this.inventoryWidth;
-            if (stackNr >= 22) {
-                return null;
-            }
-            return this.getStackInSlot(stackNr);
-        } else {
+    public ItemStack getStackInRowAndColumn(final int x, final int y) {
+        if (x < 0 || x >= this.inventoryWidth) {
             return null;
         }
+        final int stackNr = x + y * this.inventoryWidth;
+        if (stackNr >= 22) {
+            return null;
+        }
+        return this.getStackInSlot(stackNr);
     }
 
     @Override
@@ -45,43 +44,38 @@ public class InventorySchematicShuttle implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot) {
+    public ItemStack getStackInSlotOnClosing(final int slot) {
         if (this.stackList[slot] != null) {
             final ItemStack curStack = this.stackList[slot];
             this.stackList[slot] = null;
             return curStack;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
-    public ItemStack decrStackSize(int slot, int amount) {
-        if (this.stackList[slot] != null) {
-            ItemStack var3;
+    public ItemStack decrStackSize(final int slot, final int amount) {
+        if (this.stackList[slot] == null) {
+            return null;
+        }
+        ItemStack var3;
 
-            if (this.stackList[slot].stackSize <= amount) {
-                var3 = this.stackList[slot];
+        if (this.stackList[slot].stackSize <= amount) {
+            var3 = this.stackList[slot];
+            this.stackList[slot] = null;
+        } else {
+            var3 = this.stackList[slot].splitStack(amount);
+
+            if (this.stackList[slot].stackSize == 0) {
                 this.stackList[slot] = null;
-                this.eventHandler.onCraftMatrixChanged(this);
-                return var3;
-            } else {
-                var3 = this.stackList[slot].splitStack(amount);
-
-                if (this.stackList[slot].stackSize == 0) {
-                    this.stackList[slot] = null;
-                }
-
-                this.eventHandler.onCraftMatrixChanged(this);
-                return var3;
             }
-        } else {
-            return null;
         }
+        this.eventHandler.onCraftMatrixChanged(this);
+        return var3;
     }
 
     @Override
-    public void setInventorySlotContents(int slot, ItemStack par2ItemStack) {
+    public void setInventorySlotContents(final int slot, final ItemStack par2ItemStack) {
         this.stackList[slot] = par2ItemStack;
         this.eventHandler.onCraftMatrixChanged(this);
     }
@@ -95,7 +89,7 @@ public class InventorySchematicShuttle implements IInventory {
     public void markDirty() {}
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
         return true;
     }
 
@@ -111,7 +105,7 @@ public class InventorySchematicShuttle implements IInventory {
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+    public boolean isItemValidForSlot(final int i, final ItemStack itemstack) {
         return false; // but why?
     }
 }

@@ -19,29 +19,29 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 
 public class ItemTricorder extends SubItem {
 
-    public ItemTricorder(String name, String assetName) {
+    public ItemTricorder(final String name, final String assetName) {
         super(name, assetName);
         // TODO Auto-generated constructor stub
     }
 
-    public ItemTricorder(String name, String assetName, String info) {
+    public ItemTricorder(final String name, final String assetName, final String info) {
         super(name, assetName, info);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(final ItemStack stack, final World world, final EntityPlayer player) {
         if (!world.isRemote) {
             return stack;
         }
         // god, sometimes I hate java...
-        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        final DecimalFormat twoDForm = new DecimalFormat("#.##");
 
         float gravity = 1;
         float thermalLevel = 0;
         double solarLevel = 1;
         int dayLength = -1;
-        List<String> atmospheres = new ArrayList<String>();
+        final List<String> atmospheres = new ArrayList<>();
         // do stuff
         if (world.provider instanceof IGalacticraftWorldProvider) {
             gravity = ((IGalacticraftWorldProvider) world.provider).getGravity();
@@ -59,16 +59,14 @@ public class ItemTricorder extends SubItem {
 
         if (world.provider instanceof WorldProviderSpace) {
             dayLength = (int) ((WorldProviderSpace) world.provider).getDayLength();
-            CelestialBody curBody = ((WorldProviderSpace) world.provider).getCelestialBody();
-            for (IAtmosphericGas gas : curBody.atmosphere) {
+            final CelestialBody curBody = ((WorldProviderSpace) world.provider).getCelestialBody();
+            for (final IAtmosphericGas gas : curBody.atmosphere) {
                 atmospheres.add(GuiHelper.getGasName(gas));
             }
-        } else {
-            if (world.provider.dimensionId == 0) {
-                dayLength = 24000;
-                for (IAtmosphericGas gas : GalacticraftCore.planetOverworld.atmosphere) {
-                    atmospheres.add(GuiHelper.getGasName(gas));
-                }
+        } else if (world.provider.dimensionId == 0) {
+            dayLength = 24000;
+            for (final IAtmosphericGas gas : GalacticraftCore.planetOverworld.atmosphere) {
+                atmospheres.add(GuiHelper.getGasName(gas));
             }
         }
 
@@ -101,9 +99,9 @@ public class ItemTricorder extends SubItem {
                             "item.baseItem.tricorder.message.atmosphere",
                             new ChatComponentTranslation("item.baseItem.tricorder.message.none")));
         } else {
-            StringBuilder builder = new StringBuilder();
+            final StringBuilder builder = new StringBuilder();
             boolean isFirst = true;
-            for (String str : atmospheres) {
+            for (final String str : atmospheres) {
                 if (!isFirst) {
                     builder.append(", ");
                 }

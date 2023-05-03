@@ -23,7 +23,7 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     protected String iconTexture;
 
-    public MothershipEngineJetBase(String name, String texture, String iconTexture) {
+    public MothershipEngineJetBase(final String name, final String texture, final String iconTexture) {
         super(name, texture);
 
         this.iconTexture = iconTexture;
@@ -31,7 +31,7 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     @Override
     public String getItemIconName() {
-        return iconTexture;
+        return this.iconTexture;
     }
 
     /**
@@ -39,8 +39,9 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
      */
     abstract protected ItemDamagePair getItem();
 
-    protected TileEntityMothershipEngineAbstract getMyTileEntity(World world, int x, int y, int z) {
-        TileEntity t = world.getTileEntity(x, y, z);
+    protected TileEntityMothershipEngineAbstract getMyTileEntity(final World world, final int x, final int y,
+            final int z) {
+        final TileEntity t = world.getTileEntity(x, y, z);
         if (t == null || !(t instanceof TileEntityMothershipEngineAbstract)) {
             // TODO throw exception instead
             return null;
@@ -49,11 +50,12 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase user, ItemStack stack) {}
+    public void onBlockPlacedBy(final World w, final int x, final int y, final int z, final EntityLivingBase user,
+            final ItemStack stack) {}
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-        TileEntity leTile = world.getTileEntity(x, y, z);
+    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
+        final TileEntity leTile = world.getTileEntity(x, y, z);
         if (leTile instanceof TileEntityMothershipEngineAbstract) {
             ((TileEntityMothershipEngineAbstract) leTile).scheduleUpdate();
             // world.markBlockForUpdate(x, y, z);
@@ -65,13 +67,14 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
      *
      */
     @Override
-    public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
+    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX,
+            final float hitY, final float hitZ, final int meta) {
         return meta;
     }
 
     @Override
-    public boolean onUseWrench(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onUseWrench(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO rotate the tile entity
         return false;
     }
@@ -83,12 +86,12 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_) {
+    public Item getItem(final World worldIn, final int x, final int y, final int z) {
         return this.getItem().getItem();
     }
 
     @Override
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
         /**
          * Returns whether or not this bed block is the head of the bed.
          */
@@ -101,38 +104,40 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    protected void openGui(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+    protected void openGui(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_ROCKET_ENGINE, world, x, y, z);
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 
     @Override
-    public int damageDropped(int meta) {
-        return getItem().getDamage();
+    public int damageDropped(final int meta) {
+        return this.getItem().getDamage();
     }
 
     @Override
-    public String getShiftDescription(int meta) {
+    public String getShiftDescription(final int meta) {
         return GCCoreUtil.translate("tile.mothershipEngineRocket.description");
     }
 
     @Override
-    public boolean canBeMoved(World world, int x, int y, int z) {
+    public boolean canBeMoved(final World world, final int x, final int y, final int z) {
         return !this.getMyTileEntity(world, x, y, z).isInUse();
     }
 
     @Override
-    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
-        return removedByPlayer(world, player, x, y, z);
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z,
+            final boolean willHarvest) {
+        return this.removedByPlayer(world, player, x, y, z);
     }
 
     @Override
     @Deprecated
-    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
+    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y,
+            final int z) {
         if (this.canBeMoved(world, x, y, z)) {
             return super.removedByPlayer(world, player, x, y, z);
         }

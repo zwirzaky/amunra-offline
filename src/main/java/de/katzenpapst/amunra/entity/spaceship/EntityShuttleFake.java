@@ -22,54 +22,47 @@ public class EntityShuttleFake extends EntityCelestialFake {
 
     private String cachedDimList = null;
 
-    public EntityShuttleFake(World world) {
+    public EntityShuttleFake(final World world) {
         super(world);
     }
 
-    public EntityShuttleFake(World world, float yOffset) {
+    public EntityShuttleFake(final World world, final float yOffset) {
         super(world, yOffset);
     }
 
-    public EntityShuttleFake(EntityPlayerMP player, float yOffset) {
+    public EntityShuttleFake(final EntityPlayerMP player, final float yOffset) {
         super(player, yOffset);
     }
 
-    public EntityShuttleFake(World world, double x, double y, double z, float yOffset) {
+    public EntityShuttleFake(final World world, final double x, final double y, final double z, final float yOffset) {
         super(world, x, y, z, yOffset);
     }
 
     @Override
     public void onUpdate() {
         // stuff
-        if (!this.worldObj.isRemote) {
-            if (ticks % 40 == 0) {
-                if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayerMP) {
-                    // System.out.println("would send");
-                    // try packet spam
-                    EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
-
-                    if (ticks % 160 == 0 || cachedDimList == null) {
-                        // System.out.println("would update&send");
-                        cachedDimList = getDimList(player);
-                    }
-
-                    AmunRa.packetPipeline.sendTo(
-                            new PacketSimpleAR(
-                                    EnumSimplePacket.C_OPEN_SHUTTLE_GUI,
-                                    player.getGameProfile().getName(),
-                                    cachedDimList),
-                            player);
-                }
+        if ((!this.worldObj.isRemote && this.ticks % 40 == 0)
+                && (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayerMP player)) {
+            if (this.ticks % 160 == 0 || this.cachedDimList == null) {
+                // System.out.println("would update&send");
+                this.cachedDimList = this.getDimList(player);
             }
+
+            AmunRa.packetPipeline.sendTo(
+                    new PacketSimpleAR(
+                            EnumSimplePacket.C_OPEN_SHUTTLE_GUI,
+                            player.getGameProfile().getName(),
+                            this.cachedDimList),
+                    player);
         }
         super.onUpdate();
     }
 
-    private String getDimList(EntityPlayerMP player) {
-        HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
+    private String getDimList(final EntityPlayerMP player) {
+        final HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
         String dimensionList = "";
         int count = 0;
-        for (Entry<String, Integer> entry : map.entrySet()) {
+        for (final Entry<String, Integer> entry : map.entrySet()) {
             dimensionList = dimensionList.concat(entry.getKey() + (count < map.entrySet().size() - 1 ? "?" : ""));
             count++;
         }

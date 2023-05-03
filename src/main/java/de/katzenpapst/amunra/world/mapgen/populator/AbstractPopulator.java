@@ -1,7 +1,6 @@
 package de.katzenpapst.amunra.world.mapgen.populator;
 
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import de.katzenpapst.amunra.helper.CoordHelper;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
@@ -14,33 +13,29 @@ abstract public class AbstractPopulator {
 
     public abstract boolean populate(World world);
 
-    public AbstractPopulator(int x, int y, int z) {
+    public AbstractPopulator(final int x, final int y, final int z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public boolean isInChunk(int chunkX, int chunkZ) {
-
-        StructureBoundingBox box = CoordHelper.getChunkBB(chunkX, chunkZ);
-
-        return box.isVecInside(x, y, z);
-
+    public boolean isInChunk(final int chunkX, final int chunkZ) {
+        return CoordHelper.getChunkBB(chunkX, chunkZ).isVecInside(this.x, this.y, this.z);
     }
 
     public BlockVec3 getBlockVec3() {
-        return new BlockVec3(x, y, z);
+        return new BlockVec3(this.x, this.y, this.z);
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public int getZ() {
-        return z;
+        return this.z;
     }
 }

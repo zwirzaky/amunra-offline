@@ -64,7 +64,7 @@ public class EntityMummyBoss extends EntityMob
     protected static List<ItemStack> guaranteedLoot = null;
     protected static List<ItemStack> extraLoot = null;
 
-    public EntityMummyBoss(World world) {
+    public EntityMummyBoss(final World world) {
         super(world);
 
         this.setSize(2.0F, 5.0F);
@@ -100,11 +100,11 @@ public class EntityMummyBoss extends EntityMob
      * Called when the entity is attacked.
      */
     @Override
-    public boolean attackEntityFrom(DamageSource ds, float amount) {
+    public boolean attackEntityFrom(final DamageSource ds, float amount) {
         // modify the damage
         if (ds != DamageSource.outOfWorld && ds != DamageSourceAR.dsFallOffShip) {
             if (ds instanceof EntityDamageSourceIndirect
-                    && (((EntityDamageSourceIndirect) ds).getEntity() instanceof EntityCryoArrow)) {
+                    && ((EntityDamageSourceIndirect) ds).getEntity() instanceof EntityCryoArrow) {
                 amount *= 1.5F;
             } else {
                 amount /= 2.0F;
@@ -114,23 +114,23 @@ public class EntityMummyBoss extends EntityMob
     }
 
     @Override
-    public void attackEntityWithRangedAttack(EntityLivingBase targetIthink, float unknown) {
+    public void attackEntityWithRangedAttack(final EntityLivingBase targetIthink, final float unknown) {
 
         if (!this.isDead) {
-            performAttack(targetIthink);
+            this.performAttack(targetIthink);
         }
 
     }
 
-    protected void performAttack(Entity target) {
+    protected void performAttack(final Entity target) {
 
-        double startX = target.posX - this.posX;
-        double startY = target.posY - this.posY - target.height - 1.5D;// target.boundingBox.minY +
-                                                                       // (double)(target.height / 2.0F) - (this.posY +
-                                                                       // (double)(this.height / 2.0F));
-        double startZ = target.posZ - this.posZ;
+        final double startX = target.posX - this.posX;
+        final double startY = target.posY - this.posY - target.height - 1.5D;// target.boundingBox.minY +
+        // (double)(target.height / 2.0F) - (this.posY +
+        // (double)(this.height / 2.0F));
+        final double startZ = target.posZ - this.posZ;
 
-        EntityOsirisBossFireball entitylargefireball = new EntityOsirisBossFireball(
+        final EntityOsirisBossFireball entitylargefireball = new EntityOsirisBossFireball(
                 this.worldObj,
                 this,
                 startX,
@@ -139,16 +139,16 @@ public class EntityMummyBoss extends EntityMob
 
         // entitylargefireball.field_92057_e = 1;
         entitylargefireball.damage = 10.0F;
-        double d8 = 0.0D;
-        Vec3 vec3 = this.getLook(1.0F);
+        final double d8 = 0.0D;
+        final Vec3 vec3 = this.getLook(1.0F);
         entitylargefireball.posX = this.posX + vec3.xCoord * d8;
-        entitylargefireball.posY = this.posY + (double) (this.height / 2.0F) + 1.5D;
+        entitylargefireball.posY = this.posY + this.height / 2.0F + 1.5D;
         entitylargefireball.posZ = this.posZ + vec3.zCoord * d8;
         this.worldObj.spawnEntityInWorld(entitylargefireball);
     }
 
     @Override
-    public void knockBack(Entity par1Entity, float par2, double par3, double par5) {}
+    public void knockBack(final Entity par1Entity, final float par2, final double par3, final double par5) {}
 
     @Override
     protected void applyEntityAttributes() {
@@ -195,13 +195,13 @@ public class EntityMummyBoss extends EntityMob
     }
 
     @Override
-    public void onDeath(DamageSource ds) {
+    public void onDeath(final DamageSource ds) {
         super.onDeath(ds);
-        Entity entity = ds.getEntity();
+        final Entity entity = ds.getEntity();
 
         // boolean hitBy
         if (entity instanceof EntityPlayer) {
-            attackedWithLootLevel = EnchantmentHelper.getLootingModifier((EntityLivingBase) entity);
+            this.attackedWithLootLevel = EnchantmentHelper.getLootingModifier((EntityLivingBase) entity);
         }
     }
 
@@ -264,7 +264,7 @@ public class EntityMummyBoss extends EntityMob
             }
 
             // generate loot here
-            dropLoot(true, attackedWithLootLevel);
+            this.dropLoot(true, this.attackedWithLootLevel);
 
             super.setDead();
 
@@ -279,26 +279,26 @@ public class EntityMummyBoss extends EntityMob
         return null;
     }
 
-    protected void dropLoot(boolean hitByPlayer, int lootLevel) {
-        List<ItemStack> result = getDrops(guaranteedLoot, getRNG(), 0);
+    protected void dropLoot(final boolean hitByPlayer, final int lootLevel) {
+        final List<ItemStack> result = this.getDrops(guaranteedLoot, this.getRNG(), 0);
 
-        int lootModifier = (lootLevel + 1) / 2;
+        final int lootModifier = (lootLevel + 1) / 2;
 
-        result.addAll(getDrops(extraLoot, getRNG(), lootLevel, lootModifier, 5 + lootModifier));
+        result.addAll(this.getDrops(extraLoot, this.getRNG(), lootLevel, lootModifier, 5 + lootModifier));
 
-        for (ItemStack stack : result) {
+        for (final ItemStack stack : result) {
             this.entityDropItem(stack, 1);
         }
     }
 
-    protected List<ItemStack> getDrops(List<ItemStack> source, Random rand, int lootLevel) {
-        return getDrops(source, rand, lootLevel, 1, 1);
+    protected List<ItemStack> getDrops(final List<ItemStack> source, final Random rand, final int lootLevel) {
+        return this.getDrops(source, rand, lootLevel, 1, 1);
     }
 
-    protected List<ItemStack> getDrops(List<ItemStack> source, Random rand, int lootLevel, int minStacks,
-            int maxStacks) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
-        int size = source.size();
+    protected List<ItemStack> getDrops(final List<ItemStack> source, final Random rand, final int lootLevel,
+            final int minStacks, final int maxStacks) {
+        final List<ItemStack> result = new ArrayList<>();
+        final int size = source.size();
         if (size == 0) {
             return result;
         }
@@ -309,7 +309,7 @@ public class EntityMummyBoss extends EntityMob
                 randIndex = rand.nextInt(size);
             }
 
-            ItemStack stack = source.get(randIndex).copy();
+            final ItemStack stack = source.get(randIndex).copy();
 
             int stackMin = 0;
             if (minStacks > result.size()) {
@@ -317,7 +317,7 @@ public class EntityMummyBoss extends EntityMob
             }
             stackMin = Math.min(stackMin + lootLevel, stack.stackSize);
 
-            int stackSize = MathHelper.getRandomIntegerInRange(rand, stackMin, stack.stackSize);
+            final int stackSize = MathHelper.getRandomIntegerInRange(rand, stackMin, stack.stackSize);
 
             if (stackSize <= 0) {
                 continue;
@@ -330,33 +330,33 @@ public class EntityMummyBoss extends EntityMob
     }
 
     @Override
-    protected void dropRareDrop(int par1) {
+    protected void dropRareDrop(final int par1) {
 
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound nbt) {
+    public void writeEntityToNBT(final NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
 
-        if (spawnerPos != null) {
-            nbt.setTag("spawnerPosition", spawnerPos.toNBT());
+        if (this.spawnerPos != null) {
+            nbt.setTag("spawnerPosition", this.spawnerPos.toNBT());
         }
 
-        if (roomArea != null) {
-            nbt.setTag("roomArea", NbtHelper.getAsNBT(roomArea));
+        if (this.roomArea != null) {
+            nbt.setTag("roomArea", NbtHelper.getAsNBT(this.roomArea));
         }
 
-        nbt.setInteger("atkLootLevel", attackedWithLootLevel);
+        nbt.setInteger("atkLootLevel", this.attackedWithLootLevel);
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound nbt) {
+    public void readEntityFromNBT(final NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
 
-        attackedWithLootLevel = nbt.getInteger("atkLootLevel");
+        this.attackedWithLootLevel = nbt.getInteger("atkLootLevel");
 
         if (nbt.hasKey("spawnerPosition")) {
-            spawnerPos = new Vector3int(nbt.getCompoundTag("spawnerPosition"));
+            this.spawnerPos = new Vector3int(nbt.getCompoundTag("spawnerPosition"));
         }
 
         if (nbt.hasKey("roomArea")) {
@@ -365,24 +365,24 @@ public class EntityMummyBoss extends EntityMob
     }
 
     @Override
-    public void setSpawner(ITileDungeonSpawner spawner) {
+    public void setSpawner(final ITileDungeonSpawner spawner) {
         this.spawner = spawner;
-        spawnerPos = spawner.getBlockPosition();
+        this.spawnerPos = spawner.getBlockPosition();
     }
 
     @Override
     public ITileDungeonSpawner getSpawner() {
-        if (spawner == null && spawnerPos != null) {
-            TileEntity te = this.worldObj.getTileEntity(spawnerPos.x, spawnerPos.y, spawnerPos.z);
+        if (this.spawner == null && this.spawnerPos != null) {
+            final TileEntity te = this.worldObj.getTileEntity(this.spawnerPos.x, this.spawnerPos.y, this.spawnerPos.z);
             if (te instanceof ITileDungeonSpawner) {
                 this.spawner = (ITileDungeonSpawner) te;
             }
         }
-        return spawner;
+        return this.spawner;
     }
 
     @Override
-    public void setRoomArea(AxisAlignedBB aabb) {
+    public void setRoomArea(final AxisAlignedBB aabb) {
         this.roomArea = aabb.copy();
     }
 
@@ -393,11 +393,11 @@ public class EntityMummyBoss extends EntityMob
 
     @Override
     public void despawnBoss() {
-        AxisAlignedBB aabb = this.roomArea.expand(11, 11, 11);
+        final AxisAlignedBB aabb = this.roomArea.expand(11, 11, 11);
 
-        List<EntityPlayer> entitiesWithin2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);
+        final List<EntityPlayer> entitiesWithin2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);
 
-        for (EntityPlayer p : entitiesWithin2) {
+        for (final EntityPlayer p : entitiesWithin2) {
             p.addChatMessage(new ChatComponentText(GCCoreUtil.translate("gui.skeletonBoss.message")));
         }
         this.setDead();

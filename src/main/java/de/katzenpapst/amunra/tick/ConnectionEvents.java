@@ -21,25 +21,25 @@ public class ConnectionEvents {
      */
 
     @SubscribeEvent
-    public void onConnectionReceived(ServerConnectionFromClientEvent event) {
+    public void onConnectionReceived(final ServerConnectionFromClientEvent event) {
         event.manager.scheduleOutboundPacket(ConnectionPacketAR.createMothershipPacket());
         // config packet
         event.manager.scheduleOutboundPacket(ConnectionPacketAR.createConfigPacket());
     }
 
     @SubscribeEvent
-    public void onConnectionOpened(ClientConnectedToServerEvent event) {
+    public void onConnectionOpened(final ClientConnectedToServerEvent event) {
         // stolen from GC...
         if (!event.isLocal) {
-            clientConnected = true;
+            this.clientConnected = true;
         }
         MapUtil.resetClient();
     }
 
     @SubscribeEvent
-    public void onConnectionClosed(ClientDisconnectionFromServerEvent event) {
-        if (clientConnected) {
-            clientConnected = false;
+    public void onConnectionClosed(final ClientDisconnectionFromServerEvent event) {
+        if (this.clientConnected) {
+            this.clientConnected = false;
             // unregister motherships here
             if (TickHandlerServer.mothershipData != null) {
                 TickHandlerServer.mothershipData.unregisterAllMotherships();

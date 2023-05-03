@@ -18,47 +18,47 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class BlockHydroponics extends SubBlockMachine {
 
-    public BlockHydroponics(String name, String sideTexture) {
+    public BlockHydroponics(final String name, final String sideTexture) {
         super(name, sideTexture);
     }
 
     @Override
-    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_HYDROPONICS, world, x, y, z);
         return true;
         // return false;
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityHydroponics();
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 
     @Override
-    public String getShiftDescription(int meta) {
+    public String getShiftDescription(final int meta) {
         return GCCoreUtil.translate("tile.hydroponics.description");
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block var5, int var6) {
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block var5, final int var6) {
         // drop harvest items
-        TileEntity te = world.getTileEntity(x, y, z);
+        final TileEntity te = world.getTileEntity(x, y, z);
         if (te == null || !(te instanceof TileEntityHydroponics)) {
             return;
         }
-        ItemStack[] harvest = ((TileEntityHydroponics) te).getHarvest();
-        for (ItemStack stack : harvest) {
+        final ItemStack[] harvest = ((TileEntityHydroponics) te).getHarvest();
+        for (final ItemStack stack : harvest) {
             if (stack != null) {
-                Random random = new Random();
-                float randX = random.nextFloat() * 0.8F + 0.1F;
-                float randY = random.nextFloat() * 0.8F + 0.1F;
-                float randZ = random.nextFloat() * 0.8F + 0.1F;
+                final Random random = new Random();
+                final float randX = random.nextFloat() * 0.8F + 0.1F;
+                final float randY = random.nextFloat() * 0.8F + 0.1F;
+                final float randZ = random.nextFloat() * 0.8F + 0.1F;
 
                 while (stack.stackSize > 0) {
                     int randStackSize = random.nextInt(21) + 10;
@@ -68,7 +68,7 @@ public class BlockHydroponics extends SubBlockMachine {
                     }
 
                     stack.stackSize -= randStackSize;
-                    EntityItem itemEntity = new EntityItem(
+                    final EntityItem itemEntity = new EntityItem(
                             world,
                             x + randX,
                             y + randY,
@@ -79,7 +79,7 @@ public class BlockHydroponics extends SubBlockMachine {
                         itemEntity.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
                     }
 
-                    float someFactor = 0.05F;
+                    final float someFactor = 0.05F;
                     itemEntity.motionX = (float) random.nextGaussian() * someFactor;
                     itemEntity.motionY = (float) random.nextGaussian() * someFactor + 0.2F;
                     itemEntity.motionZ = (float) random.nextGaussian() * someFactor;

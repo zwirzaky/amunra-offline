@@ -13,14 +13,16 @@ import de.katzenpapst.amunra.client.BlockRenderHelper;
 
 public class ModelHydroponics {
 
-    private ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/hydroponics2.png");
+    private final ResourceLocation texture = new ResourceLocation(
+            AmunRa.ASSETPREFIX,
+            "textures/blocks/hydroponics2.png");
 
     public ModelHydroponics() {}
 
-    public void render(Tessellator tess, float growthStatus, boolean connectNorth, boolean connectSouth,
-            boolean connectWest, boolean connectEast) {
+    public void render(final Tessellator tess, final float growthStatus, final boolean connectNorth,
+            final boolean connectSouth, final boolean connectWest, final boolean connectEast) {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
 
         // block render stuff
         BlockRenderHelper.renderFaceYNeg(tess, 0, 0, 0.25, 0.5, false);
@@ -32,7 +34,7 @@ public class ModelHydroponics {
 
         if (connectWest) {
             BlockRenderHelper.renderFaceXNeg(tess, 0.75, 0, 1.0, 0.5);
-            renderConnector(tess);
+            this.renderConnector(tess);
         } else {
             BlockRenderHelper.renderFaceXNeg(tess, 0.25, 0, 0.5, 0.5);
         }
@@ -43,7 +45,7 @@ public class ModelHydroponics {
             GL11.glRotatef(180.0F, 0, 1.0F, 0);
             GL11.glTranslatef(-1.0F, 0.0F, -1.0F);
 
-            renderConnector(tess);
+            this.renderConnector(tess);
             GL11.glPopMatrix();
         } else {
             BlockRenderHelper.renderFaceXPos(tess, 0.25, 0, 0.5, 0.5);
@@ -55,7 +57,7 @@ public class ModelHydroponics {
             GL11.glRotatef(270.0F, 0, 1.0F, 0);
             GL11.glTranslatef(0.0F, 0.0F, -1.0F);
 
-            renderConnector(tess);
+            this.renderConnector(tess);
             GL11.glPopMatrix();
         } else {
             BlockRenderHelper.renderFaceZNeg(tess, 0.25, 0, 0.5, 0.5);
@@ -67,7 +69,7 @@ public class ModelHydroponics {
             GL11.glRotatef(90.0F, 0, 1.0F, 0);
             GL11.glTranslatef(-1.0F, 0.0F, 0.0F);
 
-            renderConnector(tess);
+            this.renderConnector(tess);
             GL11.glPopMatrix();
         } else {
             BlockRenderHelper.renderFaceZPos(tess, 0.25, 0, 0.5, 0.5);
@@ -92,18 +94,18 @@ public class ModelHydroponics {
 
             tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
 
-            double factor = 0.6;
+            final double factor = 0.6;
             GL11.glScaled(factor, factor, factor);
 
-            int wheatState = (int) (growthStatus * 7);
+            final int wheatState = (int) (growthStatus * 7);
 
-            renderWheat(wheatState, 0.5 / factor - 0.5, 1.0 / factor, 0.5 / factor - 0.5);
+            this.renderWheat(wheatState, 0.5 / factor - 0.5, 1.0 / factor, 0.5 / factor - 0.5);
         }
         GL11.glPopMatrix();
 
     }
 
-    protected void renderConnector(Tessellator tess) {
+    protected void renderConnector(final Tessellator tess) {
         // try doing the box
         // +Y
         tess.startDrawingQuads();
@@ -145,18 +147,18 @@ public class ModelHydroponics {
         // box END
     }
 
-    protected void renderWheat(int meta, double x, double y, double z) {
-        Tessellator tessellator = Tessellator.instance;
+    protected void renderWheat(final int meta, final double x, final double y, final double z) {
+        final Tessellator tessellator = Tessellator.instance;
         // IIcon iicon = this.getBlockIconFromSideAndMetadata(p_147795_1_, 0, p_147795_2_);
-        IIcon iicon = Blocks.wheat.getIcon(0, meta);
+        final IIcon iicon = Blocks.wheat.getIcon(0, meta);
 
-        ResourceLocation resourcelocation = Minecraft.getMinecraft().renderEngine.getResourceLocation(0);
+        final ResourceLocation resourcelocation = Minecraft.getMinecraft().renderEngine.getResourceLocation(0);
         Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 
-        double d3 = (double) iicon.getMinU();
-        double d4 = (double) iicon.getMinV();
-        double d5 = (double) iicon.getMaxU();
-        double d6 = (double) iicon.getMaxV();
+        final double d3 = iicon.getMinU();
+        final double d4 = iicon.getMinV();
+        final double d5 = iicon.getMaxU();
+        final double d6 = iicon.getMaxV();
         double d7 = x + 0.5D - 0.25D;
         double d8 = x + 0.5D + 0.25D;
         double d9 = z + 0.5D - 0.5D;

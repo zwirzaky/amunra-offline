@@ -17,13 +17,13 @@ public class CircuitFabricatorRecipe {
     public ItemStack[] redstone;
     public ItemStack[] optional;
 
-    public CircuitFabricatorRecipe(ItemStack output, ItemStack[] crystal, ItemStack[] silicon1, ItemStack[] silicon2,
-            ItemStack[] redstone) {
+    public CircuitFabricatorRecipe(final ItemStack output, final ItemStack[] crystal, final ItemStack[] silicon1,
+            final ItemStack[] silicon2, final ItemStack[] redstone) {
         this(output, crystal, silicon1, silicon2, redstone, null);
     }
 
-    public CircuitFabricatorRecipe(ItemStack output, ItemStack[] crystal, ItemStack[] silicon1, ItemStack[] silicon2,
-            ItemStack[] redstone, ItemStack[] optional) {
+    public CircuitFabricatorRecipe(final ItemStack output, final ItemStack[] crystal, final ItemStack[] silicon1,
+            final ItemStack[] silicon2, final ItemStack[] redstone, final ItemStack[] optional) {
         this.crystal = crystal;
         this.silicon1 = silicon1;
         this.silicon2 = silicon2;
@@ -33,40 +33,40 @@ public class CircuitFabricatorRecipe {
     }
 
     public Object getCrystal() {
-        if (crystal.length == 1) {
-            return crystal[0];
+        if (this.crystal.length == 1) {
+            return this.crystal[0];
         }
-        return crystal;
+        return this.crystal;
     }
 
     public Object getSilicon1() {
-        if (silicon1.length == 1) {
-            return silicon1[0];
+        if (this.silicon1.length == 1) {
+            return this.silicon1[0];
         }
-        return silicon1;
+        return this.silicon1;
     }
 
     public Object getSilicon2() {
-        if (silicon2.length == 1) {
-            return silicon2[0];
+        if (this.silicon2.length == 1) {
+            return this.silicon2[0];
         }
-        return silicon2;
+        return this.silicon2;
     }
 
     public Object getRedstone() {
-        if (redstone.length == 1) {
-            return redstone[0];
+        if (this.redstone.length == 1) {
+            return this.redstone[0];
         }
-        return redstone;
+        return this.redstone;
     }
 
     public Object getOptional() {
-        if (optional == null || optional.length == 0) {
+        if (this.optional == null || this.optional.length == 0) {
             return null;
         }
-        if (optional.length == 1) {
-            return optional[0];
+        if (this.optional.length == 1) {
+            return this.optional[0];
         }
-        return optional;
+        return this.optional;
     }
 }

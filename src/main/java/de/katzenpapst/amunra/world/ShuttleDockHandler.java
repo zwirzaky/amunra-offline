@@ -11,8 +11,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.common.util.Constants.NBT;
 
-import com.google.common.collect.Maps;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import de.katzenpapst.amunra.tick.TickHandlerServer;
 import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
@@ -23,9 +21,9 @@ public class ShuttleDockHandler extends WorldSavedData {
     public static final String saveDataID = "ShuttleDock";
 
     // map: dimensionID => (map: position => isAvailable)
-    private static Map<Integer, Map<Vector3int, Boolean>> tileMap = Maps.newHashMap();
+    private static Map<Integer, Map<Vector3int, Boolean>> tileMap = new HashMap<>();
 
-    public ShuttleDockHandler(String id) {
+    public ShuttleDockHandler(final String id) {
         super(id);
     }
 
@@ -34,26 +32,26 @@ public class ShuttleDockHandler extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(final NBTTagCompound nbt) {
         // this should be a list of lists now
-        NBTTagList tagList = nbt.getTagList("DockList", NBT.TAG_COMPOUND);
+        final NBTTagList tagList = nbt.getTagList("DockList", NBT.TAG_COMPOUND);
         tileMap.clear();
 
         for (int i = 0; i < tagList.tagCount(); i++) {
-            NBTTagCompound dimensionNbt = tagList.getCompoundTagAt(i);
+            final NBTTagCompound dimensionNbt = tagList.getCompoundTagAt(i);
 
-            int dimID = dimensionNbt.getInteger("DimID");
-            NBTTagList posList = dimensionNbt.getTagList("PosList", NBT.TAG_COMPOUND);
+            final int dimID = dimensionNbt.getInteger("DimID");
+            final NBTTagList posList = dimensionNbt.getTagList("PosList", NBT.TAG_COMPOUND);
 
-            HashMap<Vector3int, Boolean> curList = new HashMap<Vector3int, Boolean>();
+            final Map<Vector3int, Boolean> curList = new HashMap<>();
 
             for (int j = 0; j < posList.tagCount(); j++) {
-                NBTTagCompound posTag = posList.getCompoundTagAt(j);
-                int posX = posTag.getInteger("PosX");
-                int posY = posTag.getInteger("PosY");
-                int posZ = posTag.getInteger("PosZ");
-                boolean available = posTag.getBoolean("isAvailable");
-                Vector3int pos = new Vector3int(posX, posY, posZ);
+                final NBTTagCompound posTag = posList.getCompoundTagAt(j);
+                final int posX = posTag.getInteger("PosX");
+                final int posY = posTag.getInteger("PosY");
+                final int posZ = posTag.getInteger("PosZ");
+                final boolean available = posTag.getBoolean("isAvailable");
+                final Vector3int pos = new Vector3int(posX, posY, posZ);
 
                 curList.put(pos, available);
             }
@@ -62,20 +60,20 @@ public class ShuttleDockHandler extends WorldSavedData {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(final NBTTagCompound nbt) {
 
-        NBTTagList totalNbtList = new NBTTagList();
+        final NBTTagList totalNbtList = new NBTTagList();
 
-        for (int dimID : tileMap.keySet()) {
+        for (final int dimID : tileMap.keySet()) {
 
-            NBTTagCompound dimTag = new NBTTagCompound();
+            final NBTTagCompound dimTag = new NBTTagCompound();
             dimTag.setInteger("DimID", dimID);
 
-            Map<Vector3int, Boolean> curList = tileMap.get(dimID);
-            NBTTagList posNbtList = new NBTTagList();
-            for (Vector3int pos : curList.keySet()) {
-                boolean avail = curList.get(pos);
-                NBTTagCompound posTag = new NBTTagCompound();
+            final Map<Vector3int, Boolean> curList = tileMap.get(dimID);
+            final NBTTagList posNbtList = new NBTTagList();
+            for (final Vector3int pos : curList.keySet()) {
+                final boolean avail = curList.get(pos);
+                final NBTTagCompound posTag = new NBTTagCompound();
 
                 posTag.setInteger("PosX", pos.x);
                 posTag.setInteger("PosY", pos.y);
@@ -91,15 +89,15 @@ public class ShuttleDockHandler extends WorldSavedData {
         nbt.setTag("DockList", totalNbtList);
     }
 
-    public static boolean getStoredAvailability(TileEntityShuttleDock dock) {
+    public static boolean getStoredAvailability(final TileEntityShuttleDock dock) {
         if (!dock.getWorldObj().isRemote) {
-            int dimID = dock.getWorldObj().provider.dimensionId;
+            final int dimID = dock.getWorldObj().provider.dimensionId;
 
-            Vector3int pos = new Vector3int(dock.xCoord, dock.yCoord, dock.zCoord);
+            final Vector3int pos = new Vector3int(dock.xCoord, dock.yCoord, dock.zCoord);
             if (!tileMap.containsKey(dimID)) {
                 return false;
             }
-            Map<Vector3int, Boolean> set = tileMap.get(dimID);
+            final Map<Vector3int, Boolean> set = tileMap.get(dimID);
             if (!set.containsKey(pos)) {
                 return false;
             }
@@ -108,69 +106,69 @@ public class ShuttleDockHandler extends WorldSavedData {
         return false;
     }
 
-    public static void setStoredAvailability(TileEntityShuttleDock dock, boolean isAvailable) {
+    public static void setStoredAvailability(final TileEntityShuttleDock dock, final boolean isAvailable) {
         if (!dock.getWorldObj().isRemote) {
             if (dock.isInvalid()) {
                 return;
             }
-            int dimID = dock.getWorldObj().provider.dimensionId;
+            final int dimID = dock.getWorldObj().provider.dimensionId;
 
-            Vector3int pos = new Vector3int(dock.xCoord, dock.yCoord, dock.zCoord);
+            final Vector3int pos = new Vector3int(dock.xCoord, dock.yCoord, dock.zCoord);
 
             if (!tileMap.containsKey(dimID)) {
-                Map<Vector3int, Boolean> set = new HashMap<Vector3int, Boolean>();// pos
+                final Map<Vector3int, Boolean> set = new HashMap<>();// pos
                 set.put(pos, isAvailable);
                 tileMap.put(dimID, set);
             } else {
-                Map<Vector3int, Boolean> set = tileMap.get(dimID);
+                final Map<Vector3int, Boolean> set = tileMap.get(dimID);
                 set.put(pos, isAvailable);
             }
             markInstanceDirty();
         }
     }
 
-    public static void addDock(TileEntityShuttleDock dock) {
+    public static void addDock(final TileEntityShuttleDock dock) {
         setStoredAvailability(dock, dock.isAvailable());
     }
 
-    protected static void removeDock(int dimID, int x, int y, int z) {
+    protected static void removeDock(final int dimID, final int x, final int y, final int z) {
         if (tileMap.containsKey(dimID)) {
-            Vector3int pos = new Vector3int(x, y, z);
+            final Vector3int pos = new Vector3int(x, y, z);
 
             tileMap.get(dimID).remove(pos);
             markInstanceDirty();
         }
     }
 
-    public static void removeDock(TileEntityShuttleDock dock) {
+    public static void removeDock(final TileEntityShuttleDock dock) {
         if (!dock.getWorldObj().isRemote) {
-            int dimID = dock.getWorldObj().provider.dimensionId;
+            final int dimID = dock.getWorldObj().provider.dimensionId;
             removeDock(dimID, dock.xCoord, dock.yCoord, dock.zCoord);
         }
     }
 
-    public static Vector3int findAvailableDock(int dimID) {
+    public static Vector3int findAvailableDock(final int dimID) {
 
         if (tileMap.containsKey(dimID)) {
-            Map<Vector3int, Boolean> positions = tileMap.get(dimID);
+            final Map<Vector3int, Boolean> positions = tileMap.get(dimID);
             if (positions.size() > 0) {
                 // actually look up
-                MinecraftServer theServer = FMLCommonHandler.instance().getMinecraftServerInstance();
-                World ws = theServer.worldServerForDimension(dimID);
+                final MinecraftServer theServer = FMLCommonHandler.instance().getMinecraftServerInstance();
+                final World ws = theServer.worldServerForDimension(dimID);
 
-                for (Vector3int pos : positions.keySet()) {
+                for (final Vector3int pos : positions.keySet()) {
                     // int chunkx = CoordHelper.blockToChunk(pos.x);
                     // int chunkz = CoordHelper.blockToChunk(pos.z);
                     // ws.checkChunksExist(p_72904_1_, p_72904_2_, p_72904_3_, p_72904_4_, p_72904_5_, p_72904_6_)
                     // if (ws.getChunkProvider().chunkExists(chunkx, chunkz)) {
                     // seems like there is no real way to figure out if a chunk has actually been really, really, loaded
-                    TileEntity te = ws.getTileEntity(pos.x, pos.y, pos.z);
-                    if (te != null && te instanceof TileEntityShuttleDock) {
+                    final TileEntity te = ws.getTileEntity(pos.x, pos.y, pos.z);
+                    if (te instanceof TileEntityShuttleDock) {
                         if (((TileEntityShuttleDock) te).isAvailable()) {
                             return pos;
                         }
                     } else {
-                        Boolean avail = positions.get(pos);
+                        final Boolean avail = positions.get(pos);
                         if (avail) {
                             return pos;
                         }

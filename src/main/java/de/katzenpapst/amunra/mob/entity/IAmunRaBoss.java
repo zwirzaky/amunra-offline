@@ -6,13 +6,13 @@ import de.katzenpapst.amunra.tile.ITileDungeonSpawner;
 
 public interface IAmunRaBoss {
 
-    public void setSpawner(ITileDungeonSpawner spawner);
+    void setSpawner(ITileDungeonSpawner spawner);
 
-    public ITileDungeonSpawner getSpawner();
+    ITileDungeonSpawner getSpawner();
 
-    public void setRoomArea(AxisAlignedBB aabb);
+    void setRoomArea(AxisAlignedBB aabb);
 
-    public AxisAlignedBB getRoomArea();
+    AxisAlignedBB getRoomArea();
 
-    public void despawnBoss();
+    void despawnBoss();
 }

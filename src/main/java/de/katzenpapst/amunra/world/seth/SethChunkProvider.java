@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.world.seth;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -35,51 +35,51 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     protected final int maxWaterHeight = 60;
 
-    private TerrainGenerator oceanFloorGen;
+    private final TerrainGenerator oceanFloorGen;
 
     protected VolcanoGenerator volcanoGen;
 
     protected CrystalFormation crystalGen;
 
-    public SethChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
-        rockBlock = new BlockMetaPair(Blocks.packed_ice, (byte) 0);
-        grassBlock = new BlockMetaPair(Blocks.snow, (byte) 0);
-        dirtBlock = new BlockMetaPair(Blocks.ice, (byte) 0);
+    public SethChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
+        this.rockBlock = new BlockMetaPair(Blocks.packed_ice, (byte) 0);
+        this.grassBlock = new BlockMetaPair(Blocks.snow, (byte) 0);
+        this.dirtBlock = new BlockMetaPair(Blocks.ice, (byte) 0);
 
-        floorStoneBlock = new BlockMetaPair(Blocks.hardened_clay, (byte) 0);// ARBlocks.blockYellowRock;
-        floorDirtBlock = new BlockMetaPair(Blocks.clay, (byte) 0);
-        floorGrassBlock = ARBlocks.blockUnderwaterGrass;
-        waterBlock = new BlockMetaPair(Blocks.water, (byte) 0);
+        this.floorStoneBlock = new BlockMetaPair(Blocks.hardened_clay, (byte) 0);// ARBlocks.blockYellowRock;
+        this.floorDirtBlock = new BlockMetaPair(Blocks.clay, (byte) 0);
+        this.floorGrassBlock = ARBlocks.blockUnderwaterGrass;
+        this.waterBlock = new BlockMetaPair(Blocks.water, (byte) 0);
         // waterBlock = new BlockMetaPair(Blocks.air, (byte) 0); // DEBUG
 
-        oceanFloorGen = new TerrainGenerator(
+        this.oceanFloorGen = new TerrainGenerator(
                 this.rand,
-                floorStoneBlock,
-                waterBlock,
+                this.floorStoneBlock,
+                this.waterBlock,
                 30, // heightMod
                 35, // smallFeatureMod
                 40, // mountainHeightMod
                 10, // valleyHeightMod
                 25, // seaLevel
-                maxWaterHeight // maxHeight
+                this.maxWaterHeight // maxHeight
         );
 
-        volcanoGen = new VolcanoGenerator(waterBlock, rockBlock, dirtBlock, 60, false);
+        this.volcanoGen = new VolcanoGenerator(this.waterBlock, this.rockBlock, this.dirtBlock, 60, false);
 
-        crystalGen = new CrystalFormation(ARBlocks.blockGlowingCoral, waterBlock);
+        this.crystalGen = new CrystalFormation(ARBlocks.blockGlowingCoral, this.waterBlock);
     }
 
     @Override
-    public void generateTerrain(int chunkX, int chunkZ, Block[] idArray, byte[] metaArray) {
+    public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray) {
         super.generateTerrain(chunkX, chunkZ, idArray, metaArray);
 
-        oceanFloorGen.generateTerrain(chunkX, chunkZ, idArray, metaArray);
+        this.oceanFloorGen.generateTerrain(chunkX, chunkZ, idArray, metaArray);
     }
 
     @Override
-    public void replaceBlocksForBiome(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta,
-            BiomeGenBase[] par4ArrayOfBiomeGenBase) {
+    public void replaceBlocksForBiome(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta, final BiomeGenBase[] par4ArrayOfBiomeGenBase) {
         // generate the default stuff first
         super.replaceBlocksForBiome(chunkX, chunkZ, arrayOfIDs, arrayOfMeta, par4ArrayOfBiomeGenBase);
         // now do my stuff
@@ -87,22 +87,21 @@ public class SethChunkProvider extends AmunraChunkProvider {
         for (int curX = 0; curX < 16; ++curX) {
             for (int curZ = 0; curZ < 16; ++curZ) {
                 int surfaceHeight = -1;
-                for (int curY = maxWaterHeight - 1; curY > 0; curY--) {
+                for (int curY = this.maxWaterHeight - 1; curY > 0; curY--) {
                     final int index = this.getIndex(curX, curY, curZ);
-                    Block curBlockId = arrayOfIDs[index];
-                    byte curMeta = arrayOfMeta[index];
+                    final Block curBlockId = arrayOfIDs[index];
+                    final byte curMeta = arrayOfMeta[index];
 
-                    if (curBlockId == floorStoneBlock.getBlock() && curMeta == floorStoneBlock.getMetadata()) {
+                    if (curBlockId == this.floorStoneBlock.getBlock()
+                            && curMeta == this.floorStoneBlock.getMetadata()) {
 
                         if (surfaceHeight == -1) {
                             surfaceHeight = curY;
-                            arrayOfIDs[index] = floorGrassBlock.getBlock();
-                            arrayOfMeta[index] = floorGrassBlock.getMetadata();
-                        } else {
-                            if (surfaceHeight - curY < floorDirtWidth) {
-                                arrayOfIDs[index] = floorDirtBlock.getBlock();
-                                arrayOfMeta[index] = floorDirtBlock.getMetadata();
-                            }
+                            arrayOfIDs[index] = this.floorGrassBlock.getBlock();
+                            arrayOfMeta[index] = this.floorGrassBlock.getMetadata();
+                        } else if (surfaceHeight - curY < this.floorDirtWidth) {
+                            arrayOfIDs[index] = this.floorDirtBlock.getBlock();
+                            arrayOfMeta[index] = this.floorDirtBlock.getMetadata();
                         }
                     }
                 }
@@ -127,9 +126,7 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
-        ArrayList<MapGenBaseMeta> list = new ArrayList<MapGenBaseMeta>();
-        list.add(volcanoGen);
-        return list;
+        return Arrays.asList(this.volcanoGen);
     }
 
     @Override
@@ -144,17 +141,17 @@ public class SethChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BlockMetaPair getGrassBlock() {
-        return grassBlock;
+        return this.grassBlock;
     }
 
     @Override
     protected BlockMetaPair getDirtBlock() {
-        return dirtBlock;
+        return this.dirtBlock;
     }
 
     @Override
     protected BlockMetaPair getStoneBlock() {
-        return rockBlock;
+        return this.rockBlock;
     }
 
     @Override
@@ -178,23 +175,23 @@ public class SethChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void onChunkProvide(int cX, int cZ, Block[] blocks, byte[] metadata) {
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {
 
     }
 
     @Override
-    public void onPopulate(IChunkProvider provider, int cX, int cZ) {
+    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {
 
-        int numToGenerate = this.rand.nextInt(this.rand.nextInt(4) + 1);
+        final int numToGenerate = this.rand.nextInt(this.rand.nextInt(4) + 1);
 
-        int curChunkMinX = CoordHelper.chunkToMinBlock(cX);
-        int curChunkMinZ = CoordHelper.chunkToMinBlock(cZ);
+        final int curChunkMinX = CoordHelper.chunkToMinBlock(cX);
+        final int curChunkMinZ = CoordHelper.chunkToMinBlock(cZ);
 
-        for (int j1 = 0; j1 < numToGenerate; ++j1) {
-            int curX = curChunkMinX + this.rand.nextInt(16) + 8;
-            int curY = 35;// this.rand.nextInt(120) + 4;
-            int curZ = curChunkMinZ + this.rand.nextInt(16) + 8;
-            crystalGen.generate(this.worldObj, this.rand, curX, curY, curZ);
+        for (int i = 0; i < numToGenerate; ++i) {
+            final int curX = curChunkMinX + this.rand.nextInt(16) + 8;
+            final int curY = 35;// this.rand.nextInt(120) + 4;
+            final int curZ = curChunkMinZ + this.rand.nextInt(16) + 8;
+            this.crystalGen.generate(this.worldObj, this.rand, curX, curY, curZ);
         }
     }
 

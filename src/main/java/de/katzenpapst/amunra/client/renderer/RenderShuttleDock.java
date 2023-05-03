@@ -12,20 +12,19 @@ import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
 public class RenderShuttleDock extends TileEntitySpecialRenderer {
 
     // private ResourceLocation texture = new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/model/dock.png");
-    private ModelShuttleDock model;
+    private final ModelShuttleDock model;
 
     public RenderShuttleDock() {
-        model = new ModelShuttleDock();
+        this.model = new ModelShuttleDock();
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float partialTicks) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z,
+            final float partialTicks) {
 
-        if (!(entity instanceof TileEntityShuttleDock)) {
+        if (!(entity instanceof TileEntityShuttleDock dock)) {
             return;
         }
-        TileEntityShuttleDock dock = (TileEntityShuttleDock) entity;
-
         // render the stuff
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
@@ -35,7 +34,7 @@ public class RenderShuttleDock extends TileEntitySpecialRenderer {
          * GL11.glEnable(GL11.GL_TEXTURE_2D); GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
          */
 
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
 
         // Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 
@@ -69,7 +68,7 @@ public class RenderShuttleDock extends TileEntitySpecialRenderer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        model.render(tessellator, dock.hasShuttle());
+        this.model.render(tessellator, dock.hasShuttle());
 
         /*
          * Block block = dock.getWorldObj().getBlock(dock.xCoord, dock.yCoord, dock.zCoord);

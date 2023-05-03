@@ -13,29 +13,21 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class WorldHelper {
 
-    public static BlockMetaPair getBlockMetaPair(World world, int x, int y, int z) {
+    public static BlockMetaPair getBlockMetaPair(final World world, final int x, final int y, final int z) {
         return new BlockMetaPair(world.getBlock(x, y, z), (byte) world.getBlockMetadata(x, y, z));
     }
 
-    public static boolean isBlockMetaPair(World world, int x, int y, int z, BlockMetaPair bmp) {
+    public static boolean isBlockMetaPair(final World world, final int x, final int y, final int z,
+            final BlockMetaPair bmp) {
         return world.getBlock(x, y, z) == bmp.getBlock() && world.getBlockMetadata(x, y, z) == bmp.getMetadata();
     }
 
     /**
      * Drop entity in world, copy over tag compound, too
-     * 
-     * @param world
-     * @param stack
-     * @param x
-     * @param y
-     * @param z
-     * @param motionX
-     * @param motionY
-     * @param motionZ
      */
-    public static void dropItemInWorld(World world, ItemStack stack, double x, double y, double z, double motionX,
-            double motionY, double motionZ) {
-        EntityItem itemEntity = new EntityItem(
+    public static void dropItemInWorld(final World world, final ItemStack stack, final double x, final double y,
+            final double z, final double motionX, final double motionY, final double motionZ) {
+        final EntityItem itemEntity = new EntityItem(
                 world,
                 x,
                 y,
@@ -52,33 +44,27 @@ public class WorldHelper {
         world.spawnEntityInWorld(itemEntity);
     }
 
-    public static void dropItemInWorld(World world, ItemStack stack, double x, double y, double z) {
+    public static void dropItemInWorld(final World world, final ItemStack stack, final double x, final double y,
+            final double z) {
         dropItemInWorld(world, stack, x, y, z, 0, 0, 0);
     }
 
-    public static void dropItemInWorld(World world, ItemStack stack, Entity atEntity) {
+    public static void dropItemInWorld(final World world, final ItemStack stack, final Entity atEntity) {
         dropItemInWorld(world, stack, atEntity.posX, atEntity.posY, atEntity.posZ, 0, 0, 0);
     }
 
     /**
      * Attempts to ignite the block at the given position from the given direction
-     *
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @param fromX
-     * @param fromY
-     * @param fromZ
      */
-    public static void setFireToBlock(World worldObj, int x, int y, int z, double fromX, double fromY, double fromZ) {
-        double deltaX = x + 0.5 - fromX;
-        double deltaY = y + 0.5 - fromY;
-        double deltaZ = z + 0.5 - fromZ;
+    public static void setFireToBlock(final World worldObj, final int x, final int y, final int z, final double fromX,
+            final double fromY, final double fromZ) {
+        final double deltaX = x + 0.5 - fromX;
+        final double deltaY = y + 0.5 - fromY;
+        final double deltaZ = z + 0.5 - fromZ;
 
-        double deltaXabs = Math.abs(deltaX);
-        double deltaYabs = Math.abs(deltaY);
-        double deltaZabs = Math.abs(deltaZ);
+        final double deltaXabs = Math.abs(deltaX);
+        final double deltaYabs = Math.abs(deltaY);
+        final double deltaZabs = Math.abs(deltaZ);
 
         if (deltaXabs > deltaYabs) {
             if (deltaXabs > deltaZabs) {
@@ -87,32 +73,27 @@ public class WorldHelper {
                 } else {
                     setBlockIfFree(worldObj, x - 1, y, z, Blocks.fire, 0);
                 }
+            } else if (deltaZ < 0) {
+                setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
             } else {
-                if (deltaZ < 0) {
-                    setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
-                } else {
-                    setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
-                }
+                setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
             }
+        } else if (deltaYabs > deltaZabs) {
+            if (deltaY < 0) {
+                setBlockIfFree(worldObj, x, y + 1, z, Blocks.fire, 0);
+            } else {
+                setBlockIfFree(worldObj, x, y - 1, z, Blocks.fire, 0);
+            }
+        } else if (deltaZ < 0) {
+            setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
         } else {
-            if (deltaYabs > deltaZabs) {
-                if (deltaY < 0) {
-                    setBlockIfFree(worldObj, x, y + 1, z, Blocks.fire, 0);
-                } else {
-                    setBlockIfFree(worldObj, x, y - 1, z, Blocks.fire, 0);
-                }
-            } else {
-                if (deltaZ < 0) {
-                    setBlockIfFree(worldObj, x, y, z + 1, Blocks.fire, 0);
-                } else {
-                    setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
-                }
-            }
+            setBlockIfFree(worldObj, x, y, z - 1, Blocks.fire, 0);
         }
     }
 
-    public static void setBlockIfFree(World worldObj, int x, int y, int z, Block block, int meta) {
-        Block old = worldObj.getBlock(x, y, z);
+    public static void setBlockIfFree(final World worldObj, final int x, final int y, final int z, final Block block,
+            final int meta) {
+        final Block old = worldObj.getBlock(x, y, z);
         if (old == Blocks.air) {
             // System.out.println("setting "+x+"/"+y+"/"+z+" on fire");
             worldObj.setBlock(x, y, z, block, meta, 3);
@@ -121,16 +102,9 @@ public class WorldHelper {
 
     /**
      * Returns true if the given block can be walked through. Will probably return false for fluids, too
-     *
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @param checkTop
-     * @return
      */
-    public static boolean isSolid(World worldObj, int x, int y, int z, boolean checkTop) {
-        Block b = worldObj.getBlock(x, y, z);
+    public static boolean isSolid(final World worldObj, final int x, final int y, final int z, final boolean checkTop) {
+        final Block b = worldObj.getBlock(x, y, z);
         if (checkTop) {
             return World.doesBlockHaveSolidTopSurface(worldObj, x, y, z);
         }
@@ -140,37 +114,25 @@ public class WorldHelper {
 
     /**
      * Returns true if the given block can be walked through
-     * 
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @return
      */
-    public static boolean isSolid(World worldObj, int x, int y, int z) {
+    public static boolean isSolid(final World worldObj, final int x, final int y, final int z) {
         return isSolid(worldObj, x, y, z, false);
     }
 
     /**
      * Checks if given block is safe to place the player
-     * 
-     * @param worldObj
-     * @param x
-     * @param y
-     * @param z
-     * @return
      */
-    public static boolean isNonSolid(World worldObj, int x, int y, int z) {
-        Block b = worldObj.getBlock(x, y, z);
+    public static boolean isNonSolid(final World worldObj, final int x, final int y, final int z) {
+        final Block b = worldObj.getBlock(x, y, z);
 
         // so apparently block.getBlocksMovement does the opposite of what one might expect...
 
-        return b.isAir(worldObj, x, y, z) || (b.getBlocksMovement(worldObj, x, y, z) && !b.getMaterial().isLiquid()
-                && !b.getMaterial().isSolid());
+        return b.isAir(worldObj, x, y, z)
+                || b.getBlocksMovement(worldObj, x, y, z) && !b.getMaterial().isLiquid() && !b.getMaterial().isSolid();
     }
 
-    public static Vector3int getHighestNonEmptyBlock(World world, int minX, int maxX, int minY, int maxY, int minZ,
-            int maxZ) {
+    public static Vector3int getHighestNonEmptyBlock(final World world, final int minX, final int maxX, final int minY,
+            final int maxY, final int minZ, final int maxZ) {
 
         for (int y = maxY; y >= minY; y--) {
             for (int x = minX; x <= maxX; x++) {

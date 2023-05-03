@@ -23,7 +23,8 @@ public class SubBlockGrass extends SubBlock {
     protected String textureSide;
     protected String textureBottom;
 
-    public SubBlockGrass(String name, String textureTop, String textureSide, String textureBottom) {
+    public SubBlockGrass(final String name, final String textureTop, final String textureSide,
+            final String textureBottom) {
         // super(name, textureTop);
         super(name, textureTop, "shovel", 1, 0.5F, 2.5F);
         this.textureSide = textureSide;
@@ -33,38 +34,35 @@ public class SubBlockGrass extends SubBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
-        blockIcon = par1IconRegister.registerIcon(getTextureName());
-        blockIconSide = par1IconRegister.registerIcon(textureSide);
-        blockIconBottom = par1IconRegister.registerIcon(textureBottom);
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
+        this.blockIcon = par1IconRegister.registerIcon(this.getTextureName());
+        this.blockIconSide = par1IconRegister.registerIcon(this.textureSide);
+        this.blockIconBottom = par1IconRegister.registerIcon(this.textureBottom);
 
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta) {
-        switch (side) {
-            case 0:
-                return blockIconBottom;
-            case 1:
-                return blockIcon;
-            default:
-                return blockIconSide;
-        }
+    public IIcon getIcon(final int side, final int meta) {
+        return switch (side) {
+            case 0 -> this.blockIconBottom;
+            case 1 -> this.blockIcon;
+            default -> this.blockIconSide;
+        };
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune) {
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
         return this.getDirtBlock().getBlock().getItemDropped(this.getDirtBlock().getMetadata(), random, fortune);
     }
 
     @Override
-    public int damageDropped(int meta) {
+    public int damageDropped(final int meta) {
         return this.getDirtBlock().getBlock().damageDropped(this.getDirtBlock().getMetadata());
     }
 
     @Override
-    public int quantityDropped(Random rand) {
+    public int quantityDropped(final Random rand) {
         return this.getDirtBlock().getBlock().quantityDropped(rand);
     }
 
@@ -88,9 +86,9 @@ public class SubBlockGrass extends SubBlock {
      * @param z
      * @return
      */
-    public boolean canLiveHere(World world, int x, int y, int z) {
+    public boolean canLiveHere(final World world, final int x, final int y, final int z) {
         // this is the vanilla check
-        return !(world.getBlockLightValue(x, y + 1, z) < 4 && world.getBlockLightOpacity(x, y + 1, z) > 2);
+        return world.getBlockLightValue(x, y + 1, z) >= 4 || world.getBlockLightOpacity(x, y + 1, z) <= 2;
     }
 
     /**
@@ -104,7 +102,7 @@ public class SubBlockGrass extends SubBlock {
      * @param z
      * @return
      */
-    public boolean canSpread(World world, int x, int y, int z) {
+    public boolean canSpread(final World world, final int x, final int y, final int z) {
         return world.getBlockLightValue(x, y + 1, z) >= 9;
     }
 
@@ -118,7 +116,7 @@ public class SubBlockGrass extends SubBlock {
      * @param y
      * @param z
      */
-    public void growPlantsOnTop(World world, Random rand, int x, int y, int z) {
+    public void growPlantsOnTop(final World world, final Random rand, final int x, final int y, final int z) {
 
     }
 

@@ -32,12 +32,12 @@ public class ItemRendererShuttle implements IItemRenderer {
 
     protected ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/shuttle.png");
 
-    public ItemRendererShuttle(IModelCustom model) {
+    public ItemRendererShuttle(final IModelCustom model) {
         this.modelSpaceship = model;
     }
 
-    protected void renderSpaceship(ItemRenderType type, RenderBlocks render, ItemStack item, float translateX,
-            float translateY, float translateZ) {
+    protected void renderSpaceship(final ItemRenderType type, final RenderBlocks render, final ItemStack item,
+            final float translateX, final float translateY, final float translateZ) {
         GL11.glPushMatrix();
 
         this.transform(item, type);
@@ -47,8 +47,8 @@ public class ItemRendererShuttle implements IItemRenderer {
         GL11.glPopMatrix();
 
         if (type == ItemRenderType.INVENTORY) {
-            int numChests = EntityShuttle.getNumChestsFromDamage(item.getItemDamage());
-            int numTanks = EntityShuttle.getNumTanksFromDamage(item.getItemDamage());
+            final int numChests = EntityShuttle.getNumChestsFromDamage(item.getItemDamage());
+            final int numTanks = EntityShuttle.getNumTanksFromDamage(item.getItemDamage());
             // int index = Math.min(Math.max(item.getItemDamage(), 0), EnumRocketType.values().length - 1);
             if (numChests > 0) {
                 final ModelChest modelChest = this.chestModel;
@@ -107,7 +107,7 @@ public class ItemRendererShuttle implements IItemRenderer {
         }
     }
 
-    public void transform(ItemStack itemstack, ItemRenderType type) {
+    public void transform(final ItemStack itemstack, final ItemRenderType type) {
         final EntityPlayer player = FMLClientHandler.instance().getClient().thePlayer;
 
         if (type == ItemRenderType.EQUIPPED) {
@@ -118,7 +118,7 @@ public class ItemRendererShuttle implements IItemRenderer {
             GL11.glScalef(5.2F, 5.2F, 5.2F);
 
             // why?
-            if (player != null && player.ridingEntity != null && player.ridingEntity instanceof EntityTier1Rocket) {
+            if (player != null && player.ridingEntity instanceof EntityTier1Rocket) {
                 GL11.glScalef(0.0F, 0.0F, 0.0F);
             }
         }
@@ -130,7 +130,7 @@ public class ItemRendererShuttle implements IItemRenderer {
             GL11.glRotatef(73, 1.0F, 0, 0);
             GL11.glScalef(5.2F, 5.2F, 5.2F);
 
-            if (player != null && player.ridingEntity != null && player.ridingEntity instanceof EntityTier1Rocket) {
+            if (player != null && player.ridingEntity instanceof EntityTier1Rocket) {
                 GL11.glScalef(0.0F, 0.0F, 0.0F);
             }
         }
@@ -162,28 +162,24 @@ public class ItemRendererShuttle implements IItemRenderer {
      */
 
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-        switch (type) {
-            case ENTITY:
-                return true;
-            case EQUIPPED:
-                return true;
-            case EQUIPPED_FIRST_PERSON:
-                return true;
-            case INVENTORY:
-                return true;
-            default:
-                return false;
-        }
+    public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
+        return switch (type) {
+            case ENTITY -> true;
+            case EQUIPPED -> true;
+            case EQUIPPED_FIRST_PERSON -> true;
+            case INVENTORY -> true;
+            default -> false;
+        };
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item,
+            final ItemRendererHelper helper) {
         return true;
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+    public void renderItem(final ItemRenderType type, final ItemStack item, final Object... data) {
         switch (type) {
             case EQUIPPED:
                 this.renderSpaceship(type, (RenderBlocks) data[0], item, -0.5f, -0.5f, -0.5f);

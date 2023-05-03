@@ -34,13 +34,12 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
             return this.output;
         }
 
-        public CachedRocketRecipe(ArrayList<PositionedStack> pstack1, PositionedStack pstack2) {
-            super();
+        public CachedRocketRecipe(final ArrayList<PositionedStack> pstack1, final PositionedStack pstack2) {
             this.input = pstack1;
             this.output = pstack2;
         }
 
-        public CachedRocketRecipe(Map.Entry<ArrayList<PositionedStack>, PositionedStack> recipe) {
+        public CachedRocketRecipe(final Map.Entry<ArrayList<PositionedStack>, PositionedStack> recipe) {
             this(recipe.getKey(), recipe.getValue());
         }
     }
@@ -71,9 +70,9 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void drawBackground(int recipe) {
+    public void drawBackground(final int recipe) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.changeTexture(this.getGuiTexture());
 
         GuiDraw.drawTexturedModalRect(0, 4, 4, 4, 168, 130);
     }
@@ -84,7 +83,7 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void loadCraftingRecipes(String outputId, Object... results) {
+    public void loadCraftingRecipes(final String outputId, final Object... results) {
         if (outputId.equals(this.getRecipeId())) {
             for (final Map.Entry<ArrayList<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
                 this.arecipes.add(new CachedRocketRecipe(irecipe));
@@ -95,7 +94,7 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void loadCraftingRecipes(ItemStack result) {
+    public void loadCraftingRecipes(final ItemStack result) {
         for (final Map.Entry<ArrayList<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
             if (NEIServerUtils.areStacksSameTypeCrafting(irecipe.getValue().item, result)) {
                 this.arecipes.add(new CachedRocketRecipe(irecipe));
@@ -104,7 +103,7 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void loadUsageRecipes(ItemStack ingredient) {
+    public void loadUsageRecipes(final ItemStack ingredient) {
         for (final Map.Entry<ArrayList<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
             for (final PositionedStack pstack : irecipe.getKey()) {
                 if (NEIServerUtils.areStacksSameTypeCrafting(ingredient, pstack.item)) {
@@ -116,6 +115,6 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void drawForeground(int recipe) {}
+    public void drawForeground(final int recipe) {}
 
 }

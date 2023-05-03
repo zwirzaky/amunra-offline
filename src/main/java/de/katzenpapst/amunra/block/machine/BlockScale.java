@@ -24,7 +24,8 @@ public class BlockScale extends SubBlockMachine {
     protected final String bottomTexture;
     protected final String frontTexture;
 
-    public BlockScale(String name, String sideTexture, String topTexture, String frontTexture, String bottomTexture) {
+    public BlockScale(final String name, final String sideTexture, final String topTexture, final String frontTexture,
+            final String bottomTexture) {
         super(name, sideTexture);
         this.topTexture = topTexture;
         this.bottomTexture = bottomTexture;
@@ -32,21 +33,21 @@ public class BlockScale extends SubBlockMachine {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
 
-        iconTop = par1IconRegister.registerIcon(topTexture);
-        iconBottom = par1IconRegister.registerIcon(bottomTexture);
-        iconFront = par1IconRegister.registerIcon(frontTexture);
+        this.iconTop = par1IconRegister.registerIcon(this.topTexture);
+        this.iconBottom = par1IconRegister.registerIcon(this.bottomTexture);
+        this.iconFront = par1IconRegister.registerIcon(this.frontTexture);
 
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
-        int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
+    public IIcon getIcon(final int side, final int meta) {
+        final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
 
-        ForgeDirection sideFD = ForgeDirection.getOrientation(side);
+        final ForgeDirection sideFD = ForgeDirection.getOrientation(side);
 
         switch (sideFD) {
             case UP:
@@ -54,7 +55,7 @@ public class BlockScale extends SubBlockMachine {
             case DOWN:
                 return this.iconBottom;
             default:
-                ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
+                final ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
                 if (sideFD == front) {
                     return this.iconFront;
                 }
@@ -63,18 +64,18 @@ public class BlockScale extends SubBlockMachine {
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityBlockScale();
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-        TileEntity leTile = world.getTileEntity(x, y, z);
+    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
+        final TileEntity leTile = world.getTileEntity(x, y, z);
         if (leTile instanceof TileEntityBlockScale) {
             ((TileEntityBlockScale) leTile).doUpdate();
             // world.markBlockForUpdate(x, y, z);

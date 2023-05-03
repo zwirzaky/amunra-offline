@@ -9,7 +9,7 @@ public class InteroperabilityHelper {
             if (Class.forName("cofh.api.block.IDismantleable") != null) {
                 hasIDismantleable = true;
             }
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             hasIDismantleable = false;
         }
     }

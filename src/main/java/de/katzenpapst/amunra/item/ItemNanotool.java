@@ -46,8 +46,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     protected float efficiencyOnProperMaterial = 6.0F;
 
-    protected String[] textures = new String[] { "nanotool", "nanotool-axe", "nanotool-hoe", "nanotool-pickaxe",
-            "nanotool-shears", "nanotool-shovel", "nanotool-wrench" };
+    protected String[] textures = { "nanotool", "nanotool-axe", "nanotool-hoe", "nanotool-pickaxe", "nanotool-shears",
+            "nanotool-shovel", "nanotool-wrench" };
 
     public enum Mode {
         WORKBENCH,
@@ -68,52 +68,52 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     protected HashMap<Mode, Set<String>> toolClassesSet;
 
-    public ItemNanotool(String name) {
+    public ItemNanotool(final String name) {
         this.setUnlocalizedName(name);
 
-        icons = new IIcon[textures.length];
+        this.icons = new IIcon[this.textures.length];
 
         this.setTextureName(AmunRa.TEXTUREPREFIX + "nanotool-empty");
 
         // init this stuff
-        toolClassesSet = new HashMap<>();
+        this.toolClassesSet = new HashMap<>();
 
-        Set<String> axe = new HashSet<>();
+        final Set<String> axe = new HashSet<>();
         axe.add("axe");
-        toolClassesSet.put(Mode.AXE, axe);
+        this.toolClassesSet.put(Mode.AXE, axe);
 
-        Set<String> hoe = new HashSet<>();
+        final Set<String> hoe = new HashSet<>();
         hoe.add("hoe");
-        toolClassesSet.put(Mode.HOE, hoe);
+        this.toolClassesSet.put(Mode.HOE, hoe);
 
-        Set<String> pick = new HashSet<>();
+        final Set<String> pick = new HashSet<>();
         pick.add("pickaxe");
-        toolClassesSet.put(Mode.PICKAXE, pick);
+        this.toolClassesSet.put(Mode.PICKAXE, pick);
 
-        Set<String> shovel = new HashSet<>();
+        final Set<String> shovel = new HashSet<>();
         shovel.add("shovel");
-        toolClassesSet.put(Mode.SHOVEL, shovel);
+        this.toolClassesSet.put(Mode.SHOVEL, shovel);
 
-        Set<String> empty = new HashSet<>();
-        toolClassesSet.put(Mode.SHEARS, empty);
-        toolClassesSet.put(Mode.WRENCH, empty);
-        toolClassesSet.put(Mode.WORKBENCH, empty);
+        final Set<String> empty = new HashSet<>();
+        this.toolClassesSet.put(Mode.SHEARS, empty);
+        this.toolClassesSet.put(Mode.WRENCH, empty);
+        this.toolClassesSet.put(Mode.WORKBENCH, empty);
     }
 
-    protected void setMode(ItemStack stack, Mode m) {
+    protected void setMode(final ItemStack stack, final Mode m) {
         if (stack.getTagCompound() == null) {
             stack.setTagCompound(new NBTTagCompound());
         }
         stack.getTagCompound().setInteger("toolMode", m.ordinal());
     }
 
-    public Mode getMode(ItemStack stack) {
-        int ord = getModeInt(stack);
+    public Mode getMode(final ItemStack stack) {
+        final int ord = this.getModeInt(stack);
         return Mode.values()[ord];
     }
 
-    protected int getModeInt(ItemStack stack) {
-        NBTTagCompound nbt = stack.getTagCompound();
+    protected int getModeInt(final ItemStack stack) {
+        final NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null) {
             return 0;
         }
@@ -125,12 +125,12 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
         return AmunRa.arTab;
     }
 
-    public boolean hasEnoughEnergyAndMode(ItemStack stack, float energy, Mode mode) {
-        return this.getMode(stack) == mode && hasEnoughEnergy(stack, energy);
+    public boolean hasEnoughEnergyAndMode(final ItemStack stack, final float energy, final Mode mode) {
+        return this.getMode(stack) == mode && this.hasEnoughEnergy(stack, energy);
     }
 
-    public boolean hasEnoughEnergy(ItemStack stack, float energy) {
-        float storedEnergy = this.getElectricityStored(stack);
+    public boolean hasEnoughEnergy(final ItemStack stack, final float energy) {
+        final float storedEnergy = this.getElectricityStored(stack);
         return storedEnergy >= energy;
     }
 
@@ -138,25 +138,24 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+    public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
         if (entityPlayer.isSneaking()) {
             // the wrench sometimes works when sneak-rightclicking
-            if (this.hasEnoughEnergyAndMode(itemStack, energyCostUseBig, Mode.WRENCH)) {
-                if (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-                    return super.onItemRightClick(itemStack, world, entityPlayer);
-                }
+            if (this.hasEnoughEnergyAndMode(itemStack, this.energyCostUseBig, Mode.WRENCH)
+                    && Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
+                return super.onItemRightClick(itemStack, world, entityPlayer);
             }
             // try switching
-            if (hasEnoughEnergy(itemStack, energyCostSwitch)) {
-                Mode m = getMode(itemStack);
-                m = getNextMode(m);
-                this.consumePower(itemStack, entityPlayer, energyCostSwitch);
-                setMode(itemStack, m);
+            if (this.hasEnoughEnergy(itemStack, this.energyCostSwitch)) {
+                Mode m = this.getMode(itemStack);
+                m = this.getNextMode(m);
+                this.consumePower(itemStack, entityPlayer, this.energyCostSwitch);
+                this.setMode(itemStack, m);
             }
             return itemStack;
         }
-        if (this.hasEnoughEnergyAndMode(itemStack, energyCostUseBig, Mode.WORKBENCH)) {
-            this.consumePower(itemStack, entityPlayer, energyCostUseBig);
+        if (this.hasEnoughEnergyAndMode(itemStack, this.energyCostUseBig, Mode.WORKBENCH)) {
+            this.consumePower(itemStack, entityPlayer, this.energyCostUseBig);
             entityPlayer.openGui(
                     AmunRa.instance,
                     GuiIds.GUI_CRAFTING,
@@ -170,25 +169,17 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
         return super.onItemRightClick(itemStack, world, entityPlayer);
     }
 
-    public Mode getNextMode(Mode fromMode) {
-        switch (fromMode) {
-            case WORKBENCH:
-                return Mode.PICKAXE;
-            case PICKAXE:
-                return Mode.SHOVEL;
-            case SHOVEL:
-                return Mode.AXE;
-            case AXE:
-                return Mode.HOE;
-            case HOE:
-                return Mode.SHEARS;
-            case SHEARS:
-                return Mode.WRENCH;
-            case WRENCH:
-                return Mode.WORKBENCH;
-            default:
-                return Mode.PICKAXE;
-        }
+    public Mode getNextMode(final Mode fromMode) {
+        return switch (fromMode) {
+            case WORKBENCH -> Mode.PICKAXE;
+            case PICKAXE -> Mode.SHOVEL;
+            case SHOVEL -> Mode.AXE;
+            case AXE -> Mode.HOE;
+            case HOE -> Mode.SHEARS;
+            case SHEARS -> Mode.WRENCH;
+            case WRENCH -> Mode.WORKBENCH;
+            default -> Mode.PICKAXE;
+        };
 
     }
 
@@ -198,37 +189,38 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
-        return getIconIndex(stack);
+    public IIcon getIcon(final ItemStack stack, final int renderPass, final EntityPlayer player,
+            final ItemStack usingItem, final int useRemaining) {
+        return this.getIconIndex(stack);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister) {
+    public void registerIcons(final IIconRegister iconRegister) {
         super.registerIcons(iconRegister);
-        for (int i = 0; i < textures.length; i++) {
-            icons[i] = iconRegister.registerIcon(AmunRa.TEXTUREPREFIX + textures[i]);
+        for (int i = 0; i < this.textures.length; i++) {
+            this.icons[i] = iconRegister.registerIcon(AmunRa.TEXTUREPREFIX + this.textures[i]);
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconIndex(ItemStack stack) {
-        float energy = this.getElectricityStored(stack);
+    public IIcon getIconIndex(final ItemStack stack) {
+        final float energy = this.getElectricityStored(stack);
         if (energy <= 0) {
             return this.itemIcon;
         }
 
-        return icons[getModeInt(stack)];
+        return this.icons[this.getModeInt(stack)];
         // return this.getIconFromDamage(stack.getItemDamage());
     }
 
     @Override
-    public Set<String> getToolClasses(ItemStack stack) {
-        float energy = this.getElectricityStored(stack);
+    public Set<String> getToolClasses(final ItemStack stack) {
+        final float energy = this.getElectricityStored(stack);
         if (energy > 0) {
-            Mode m = this.getMode(stack);
-            return toolClassesSet.get(m);
+            final Mode m = this.getMode(stack);
+            return this.toolClassesSet.get(m);
         }
         return super.getToolClasses(stack);
     }
@@ -242,13 +234,13 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * @return Harvest level, or -1 if not the specified tool type.
      */
     @Override
-    public int getHarvestLevel(ItemStack stack, String toolClass) {
-        float energy = this.getElectricityStored(stack);
-        if (energy < energyCostUseSmall) {
+    public int getHarvestLevel(final ItemStack stack, final String toolClass) {
+        final float energy = this.getElectricityStored(stack);
+        if (energy < this.energyCostUseSmall) {
             return -1;
         }
-        Mode m = this.getMode(stack);
-        if (!toolClassesSet.get(m).contains(toolClass)) {
+        final Mode m = this.getMode(stack);
+        if (!this.toolClassesSet.get(m).contains(toolClass)) {
             return -1;
         }
         return 5;
@@ -263,77 +255,62 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * @return The damage strength
      */
     @Override
-    public float getDigSpeed(ItemStack itemstack, Block block, int metadata) {
-        if (!this.hasEnoughEnergy(itemstack, energyCostUseSmall)) {
+    public float getDigSpeed(final ItemStack itemstack, final Block block, final int metadata) {
+        if (!this.hasEnoughEnergy(itemstack, this.energyCostUseSmall)) {
             return 1.0F;
         }
         if (ForgeHooks.isToolEffective(itemstack, block, metadata)
                 || this.isEffectiveAgainst(this.getMode(itemstack), block)) {
-            return efficiencyOnProperMaterial;
+            return this.efficiencyOnProperMaterial;
         }
 
         return super.getDigSpeed(itemstack, block, metadata);
         // return func_150893_a(itemstack, block);
     }
 
-    protected boolean isEffectiveAgainst(Mode m, Block b) {
+    protected boolean isEffectiveAgainst(final Mode m, final Block b) {
 
-        switch (m) {
-            case AXE:
-                return b.getMaterial() == Material.wood || b.getMaterial() == Material.plants
-                        || b.getMaterial() == Material.vine;
-            case PICKAXE:
-                return b.getMaterial() == Material.iron || b.getMaterial() == Material.anvil
-                        || b.getMaterial() == Material.rock;
-            case SHEARS:
-                return b.getMaterial() == Material.leaves || b.getMaterial() == Material.cloth
-                        || b.getMaterial() == Material.carpet
-                        || b == Blocks.web
-                        || b == Blocks.redstone_wire
-                        || b == Blocks.tripwire;
-            case SHOVEL:
-                return b.getMaterial() == Material.clay || b.getMaterial() == Material.ground
-                        || b.getMaterial() == Material.clay;
-
-            case WRENCH:
-            case WORKBENCH:
-            case HOE:
-            default:
-                return false;
-        }
+        return switch (m) {
+            case AXE -> b.getMaterial() == Material.wood || b.getMaterial() == Material.plants
+                    || b.getMaterial() == Material.vine;
+            case PICKAXE -> b.getMaterial() == Material.iron || b.getMaterial() == Material.anvil
+                    || b.getMaterial() == Material.rock;
+            case SHEARS -> b.getMaterial() == Material.leaves || b.getMaterial() == Material.cloth
+                    || b.getMaterial() == Material.carpet
+                    || b == Blocks.web
+                    || b == Blocks.redstone_wire
+                    || b == Blocks.tripwire;
+            case SHOVEL -> b.getMaterial() == Material.clay || b.getMaterial() == Material.ground
+                    || b.getMaterial() == Material.clay;
+            case WRENCH, WORKBENCH, HOE -> false;
+            default -> false;
+        };
     }
 
-    protected String getTypeString(Mode m) {
-        switch (m) {
-            case AXE:
-                return "item.nanotool.mode.axe";
-            case HOE:
-                return "item.nanotool.mode.hoe";
-            case PICKAXE:
-                return "item.nanotool.mode.pickaxe";
-            case SHEARS:
-                return "item.nanotool.mode.shears";
-            case SHOVEL:
-                return "item.nanotool.mode.shovel";
-            case WORKBENCH:
-                return "item.nanotool.mode.workbench";
-            case WRENCH:
-                return "item.nanotool.mode.wrench";
-            default:
-                return "";
-        }
+    protected String getTypeString(final Mode m) {
+        return switch (m) {
+            case AXE -> "item.nanotool.mode.axe";
+            case HOE -> "item.nanotool.mode.hoe";
+            case PICKAXE -> "item.nanotool.mode.pickaxe";
+            case SHEARS -> "item.nanotool.mode.shears";
+            case SHOVEL -> "item.nanotool.mode.shovel";
+            case WORKBENCH -> "item.nanotool.mode.workbench";
+            case WRENCH -> "item.nanotool.mode.wrench";
+            default -> "";
+        };
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4) {
+    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list,
+            final boolean par4) {
         super.addInformation(itemStack, entityPlayer, list, par4);
 
-        Mode m = this.getMode(itemStack);
+        final Mode m = this.getMode(itemStack);
 
         list.add(
                 StatCollector.translateToLocal("item.nanotool.mode-prefix") + ": "
-                        + StatCollector.translateToLocal(getTypeString(m)));
+                        + StatCollector.translateToLocal(this.getTypeString(m)));
     }
 
     // damaging start
@@ -342,9 +319,9 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * the damage on the stack.
      */
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase entity1, EntityLivingBase user) {
-        if (this.hasEnoughEnergy(stack, energyCostUseBig)) {
-            this.consumePower(stack, user, energyCostUseBig);
+    public boolean hitEntity(final ItemStack stack, final EntityLivingBase entity1, final EntityLivingBase user) {
+        if (this.hasEnoughEnergy(stack, this.energyCostUseBig)) {
+            this.consumePower(stack, user, this.energyCostUseBig);
             return true;
         }
         return false;
@@ -354,12 +331,12 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     // shearing
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z,
-            EntityLivingBase entity) {
-        if (!this.hasEnoughEnergy(stack, energyCostUseSmall)) {
+    public boolean onBlockDestroyed(final ItemStack stack, final World world, final Block block, final int x,
+            final int y, final int z, final EntityLivingBase entity) {
+        if (!this.hasEnoughEnergy(stack, this.energyCostUseSmall)) {
             return false;
         }
-        this.consumePower(stack, entity, energyCostUseSmall);
+        this.consumePower(stack, entity, this.energyCostUseSmall);
         if (this.getMode(stack) == Mode.SHEARS) {
 
             if (block.getMaterial() != Material.leaves && block != Blocks.web
@@ -368,9 +345,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
                     && block != Blocks.tripwire
                     && !(block instanceof IShearable)) {
                 return super.onBlockDestroyed(stack, world, block, x, y, z, entity);
-            } else {
-                return true;
             }
+            return true;
         }
         return super.onBlockDestroyed(stack, world, block, x, y, z, entity);
     }
@@ -382,7 +358,7 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * @return
      */
     @Override
-    public boolean func_150897_b(Block block) {
+    public boolean func_150897_b(final Block block) {
         // I have no choice here...
         return super.func_150897_b(block);
     }
@@ -395,11 +371,11 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * @return true if can harvest the block
      */
     @Override
-    public boolean canHarvestBlock(Block par1Block, ItemStack itemStack) {
+    public boolean canHarvestBlock(final Block par1Block, final ItemStack itemStack) {
         return this.isEffectiveAgainst(this.getMode(itemStack), par1Block);
     }
 
-    protected void consumePower(ItemStack itemStack, EntityLivingBase user, float power) {
+    protected void consumePower(final ItemStack itemStack, final EntityLivingBase user, final float power) {
         EntityPlayer player = null;
         if (user instanceof EntityPlayer) {
             player = (EntityPlayer) user;
@@ -418,8 +394,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * @return
      */
     @Override
-    public float func_150893_a(ItemStack stack, Block block) {
-        if (this.hasEnoughEnergyAndMode(stack, energyCostUseSmall, Mode.SHEARS)) {
+    public float func_150893_a(final ItemStack stack, final Block block) {
+        if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.SHEARS)) {
             return Items.shears.func_150893_a(stack, block);
         }
 
@@ -430,17 +406,19 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
     @Override
-    public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity) {
-        if (this.hasEnoughEnergyAndMode(itemstack, energyCostUseBig, Mode.SHEARS)) {
-            this.consumePower(itemstack, player, energyCostUseBig);
+    public boolean itemInteractionForEntity(final ItemStack itemstack, final EntityPlayer player,
+            final EntityLivingBase entity) {
+        if (this.hasEnoughEnergyAndMode(itemstack, this.energyCostUseBig, Mode.SHEARS)) {
+            this.consumePower(itemstack, player, this.energyCostUseBig);
             return Items.shears.itemInteractionForEntity(itemstack, player, entity);
         }
         return super.itemInteractionForEntity(itemstack, player, entity);
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack itemstack, int x, int y, int z, EntityPlayer player) {
-        if (this.hasEnoughEnergyAndMode(itemstack, energyCostUseSmall, Mode.SHEARS)) {
+    public boolean onBlockStartBreak(final ItemStack itemstack, final int x, final int y, final int z,
+            final EntityPlayer player) {
+        if (this.hasEnoughEnergyAndMode(itemstack, this.energyCostUseSmall, Mode.SHEARS)) {
             return Items.shears.onBlockStartBreak(itemstack, x, y, z, player);
         }
         return super.onBlockStartBreak(itemstack, x, y, z, player);
@@ -452,79 +430,75 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
-            float hitX, float hitY, float hitZ) {
-        if (this.hasEnoughEnergyAndMode(stack, energyCostUseSmall, Mode.HOE)) {
+    public boolean onItemUse(final ItemStack stack, final EntityPlayer player, final World world, final int x,
+            final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ) {
+        if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.HOE)) {
             // if(this.getMode(stack) == Mode.HOE) {
             if (!player.canPlayerEdit(x, y, z, side, stack)) {
                 return false;
-            } else {
-                UseHoeEvent event = new UseHoeEvent(player, stack, world, x, y, z);
-                if (MinecraftForge.EVENT_BUS.post(event)) {
-                    return false;
-                }
-
-                if (event.getResult() == Result.ALLOW) {
-                    this.consumePower(stack, player, energyCostUseSmall);
-                    // stack.damageItem(1, player);
-                    return true;
-                }
-
-                Block block = world.getBlock(x, y, z);
-
-                if (side != 0 && world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z)
-                        && (block == Blocks.grass || block == Blocks.dirt)) {
-                    Block block1 = Blocks.farmland;
-                    world.playSoundEffect(
-                            (double) ((float) x + 0.5F),
-                            (double) ((float) y + 0.5F),
-                            (double) ((float) z + 0.5F),
-                            block1.stepSound.getStepResourcePath(),
-                            (block1.stepSound.getVolume() + 1.0F) / 2.0F,
-                            block1.stepSound.getPitch() * 0.8F);
-
-                    if (world.isRemote) {
-                        return true;
-                    } else {
-                        world.setBlock(x, y, z, block1);
-                        // stack.damageItem(1, player);
-                        this.consumePower(stack, player, energyCostUseSmall);
-                        return true;
-                    }
-                } else {
-                    return false;
-                }
             }
+            final UseHoeEvent event = new UseHoeEvent(player, stack, world, x, y, z);
+            if (MinecraftForge.EVENT_BUS.post(event)) {
+                return false;
+            }
+
+            if (event.getResult() == Result.ALLOW) {
+                this.consumePower(stack, player, this.energyCostUseSmall);
+                // stack.damageItem(1, player);
+                return true;
+            }
+
+            final Block block = world.getBlock(x, y, z);
+
+            if ((side == 0) || !world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z)
+                    || ((block != Blocks.grass) && (block != Blocks.dirt))) {
+                return false;
+            }
+            final Block block1 = Blocks.farmland;
+            world.playSoundEffect(
+                    x + 0.5F,
+                    y + 0.5F,
+                    z + 0.5F,
+                    block1.stepSound.getStepResourcePath(),
+                    (block1.stepSound.getVolume() + 1.0F) / 2.0F,
+                    block1.stepSound.getPitch() * 0.8F);
+
+            if (world.isRemote) {} else {
+                world.setBlock(x, y, z, block1);
+                // stack.damageItem(1, player);
+                this.consumePower(stack, player, this.energyCostUseSmall);
+            }
+            return true;
         }
         return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
     }
 
     // wrenching
     @Override
-    public boolean canWrench(EntityPlayer entityPlayer, int x, int y, int z) {
-        ItemStack stack = entityPlayer.inventory.getCurrentItem();
+    public boolean canWrench(final EntityPlayer entityPlayer, final int x, final int y, final int z) {
+        final ItemStack stack = entityPlayer.inventory.getCurrentItem();
 
-        return this.hasEnoughEnergyAndMode(stack, energyCostUseSmall, Mode.WRENCH);
+        return this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH);
     }
 
     @Override
-    public void wrenchUsed(EntityPlayer entityPlayer, int x, int y, int z) {
-        ItemStack stack = entityPlayer.inventory.getCurrentItem();
+    public void wrenchUsed(final EntityPlayer entityPlayer, final int x, final int y, final int z) {
+        final ItemStack stack = entityPlayer.inventory.getCurrentItem();
 
-        if (this.hasEnoughEnergyAndMode(stack, energyCostUseSmall, Mode.WRENCH)) {
-            this.consumePower(stack, entityPlayer, energyCostUseSmall);
+        if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH)) {
+            this.consumePower(stack, entityPlayer, this.energyCostUseSmall);
         }
     }
 
     // EnderIO
     @Override
-    public boolean canUse(ItemStack stack, EntityPlayer player, int x, int y, int z) {
-        return this.hasEnoughEnergyAndMode(stack, energyCostUseSmall, Mode.WRENCH);
+    public boolean canUse(final ItemStack stack, final EntityPlayer player, final int x, final int y, final int z) {
+        return this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH);
     }
 
     @Override
-    public void used(ItemStack stack, EntityPlayer player, int x, int y, int z) {
-        this.consumePower(stack, player, energyCostUseSmall);
+    public void used(final ItemStack stack, final EntityPlayer player, final int x, final int y, final int z) {
+        this.consumePower(stack, player, this.energyCostUseSmall);
     }
 
     @Override
@@ -533,56 +507,57 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
         return true;
     }
 
-    private boolean attemptDismantle(EntityPlayer entityPlayer, Block block, World world, int x, int y, int z) {
-        if (InteroperabilityHelper.hasIDismantleable) {
-            if (block instanceof IDismantleable
-                    && ((IDismantleable) block).canDismantle(entityPlayer, world, x, y, z)) {
+    private boolean attemptDismantle(final EntityPlayer entityPlayer, final Block block, final World world, final int x,
+            final int y, final int z) {
+        if (InteroperabilityHelper.hasIDismantleable && block instanceof IDismantleable
+                && ((IDismantleable) block).canDismantle(entityPlayer, world, x, y, z)) {
 
-                ((IDismantleable) block).dismantleBlock(entityPlayer, world, x, y, z, false);
-                return true;
-            }
+            ((IDismantleable) block).dismantleBlock(entityPlayer, world, x, y, z, false);
+            return true;
         }
         return false;
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer entityPlayer, World world, int x, int y, int z,
-            int side, float hitX, float hitY, float hitZ) {
-        if (hasEnoughEnergyAndMode(stack, energyCostUseSmall, Mode.WRENCH)) {
+    public boolean onItemUseFirst(final ItemStack stack, final EntityPlayer entityPlayer, final World world,
+            final int x, final int y, final int z, final int side, final float hitX, final float hitY,
+            final float hitZ) {
+        if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH)) {
 
             if (world.isRemote) return false;
 
-            Block blockID = world.getBlock(x, y, z);
+            final Block blockID = world.getBlock(x, y, z);
 
             // try dismantle
-            if (entityPlayer.isSneaking() && attemptDismantle(entityPlayer, blockID, world, x, y, z)) {
+            if (entityPlayer.isSneaking() && this.attemptDismantle(entityPlayer, blockID, world, x, y, z)) {
 
                 return true;
 
-            } else if (blockID == Blocks.furnace || blockID == Blocks.lit_furnace
+            }
+            if (blockID == Blocks.furnace || blockID == Blocks.lit_furnace
                     || blockID == Blocks.dropper
                     || blockID == Blocks.hopper
                     || blockID == Blocks.dispenser
                     || blockID == Blocks.piston
                     || blockID == Blocks.sticky_piston) {
-                        int metadata = world.getBlockMetadata(x, y, z);
+                final int metadata = world.getBlockMetadata(x, y, z);
 
-                        int[] rotationMatrix = { 1, 2, 3, 4, 5, 0 };
+                int[] rotationMatrix = { 1, 2, 3, 4, 5, 0 };
 
-                        if (blockID == Blocks.furnace || blockID == Blocks.lit_furnace) {
-                            rotationMatrix = ForgeDirection.ROTATION_MATRIX[0];
-                        }
+                if (blockID == Blocks.furnace || blockID == Blocks.lit_furnace) {
+                    rotationMatrix = ForgeDirection.ROTATION_MATRIX[0];
+                }
 
-                        world.setBlockMetadataWithNotify(
-                                x,
-                                y,
-                                z,
-                                ForgeDirection.getOrientation(rotationMatrix[metadata]).ordinal(),
-                                3);
-                        this.wrenchUsed(entityPlayer, x, y, z);
+                world.setBlockMetadataWithNotify(
+                        x,
+                        y,
+                        z,
+                        ForgeDirection.getOrientation(rotationMatrix[metadata]).ordinal(),
+                        3);
+                this.wrenchUsed(entityPlayer, x, y, z);
 
-                        return true;
-                    }
+                return true;
+            }
 
             return false;
         }
@@ -590,7 +565,7 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
     }
 
     @Override
-    public boolean shouldHideFacades(ItemStack stack, EntityPlayer player) {
+    public boolean shouldHideFacades(final ItemStack stack, final EntityPlayer player) {
         return this.getMode(stack) == Mode.WRENCH;
         // return true;
     }
@@ -607,13 +582,13 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
      * @return
      */
     @Override
-    public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
-        ItemStack stack = player.inventory.getCurrentItem();
+    public boolean doesSneakBypassUse(final World world, final int x, final int y, final int z,
+            final EntityPlayer player) {
+        final ItemStack stack = player.inventory.getCurrentItem();
 
-        if (this.hasEnoughEnergyAndMode(stack, energyCostUseSmall, Mode.WRENCH)) {
-            if (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-                return true;
-            }
+        if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH)
+                && Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
+            return true;
         }
 
         return false;

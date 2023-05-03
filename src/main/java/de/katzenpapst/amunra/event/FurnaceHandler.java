@@ -8,7 +8,7 @@ import de.katzenpapst.amunra.item.ItemBasicMulti;
 public class FurnaceHandler implements IFuelHandler {
 
     @Override
-    public int getBurnTime(ItemStack fuel) {
+    public int getBurnTime(final ItemStack fuel) {
 
         if (fuel.getItem() instanceof ItemBasicMulti) {
             return ((ItemBasicMulti) fuel.getItem()).getFuelDuration(fuel.getItemDamage());

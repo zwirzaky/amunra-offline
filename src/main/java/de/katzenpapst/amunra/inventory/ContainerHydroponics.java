@@ -3,7 +3,6 @@ package de.katzenpapst.amunra.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 import de.katzenpapst.amunra.tile.TileEntityHydroponics;
@@ -12,12 +11,12 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerHydroponics extends ContainerWithPlayerInventory {
 
-    public ContainerHydroponics(InventoryPlayer player, TileEntityHydroponics tile) {
-        super(((IInventory) tile));
+    public ContainerHydroponics(final InventoryPlayer player, final TileEntityHydroponics tile) {
+        super(tile);
 
         this.addSlotToContainer(new SlotSpecific(tile, 0, 32, 27, ItemElectricBase.class));
 
-        SlotSpecific secondarySlot = new SlotSpecific(
+        final SlotSpecific secondarySlot = new SlotSpecific(
                 tile,
                 1,
                 32,
@@ -27,11 +26,11 @@ public class ContainerHydroponics extends ContainerWithPlayerInventory {
         secondarySlot.setMetadataSensitive();
         this.addSlotToContainer(secondarySlot);
 
-        initPlayerInventorySlots(player, 5);
+        this.initPlayerInventorySlots(player, 5);
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(final EntityPlayer player) {
         return ((TileEntityHydroponics) this.tileEntity).isUseableByPlayer(player);
     }
 

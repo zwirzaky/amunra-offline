@@ -23,16 +23,16 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 
 public class BlockGravitation extends SubBlockMachine {
 
-    private String backTexture;
-    private String sideTexture;
-    private String activeTexture;
+    private final String backTexture;
+    private final String sideTexture;
+    private final String activeTexture;
 
     private IIcon backIcon = null;
     private IIcon sideIcon = null;
     private IIcon activeIcon = null;
 
-    public BlockGravitation(String name, String frontInactiveTexture, String activeTexture, String sideTexture,
-            String backTexture) {
+    public BlockGravitation(final String name, final String frontInactiveTexture, final String activeTexture,
+            final String sideTexture, final String backTexture) {
         super(name, frontInactiveTexture);
 
         this.backTexture = backTexture;
@@ -41,20 +41,20 @@ public class BlockGravitation extends SubBlockMachine {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
+    public void registerBlockIcons(final IIconRegister par1IconRegister) {
         super.registerBlockIcons(par1IconRegister);
-        backIcon = par1IconRegister.registerIcon(backTexture);
-        sideIcon = par1IconRegister.registerIcon(sideTexture);
-        activeIcon = par1IconRegister.registerIcon(activeTexture);
+        this.backIcon = par1IconRegister.registerIcon(this.backTexture);
+        this.sideIcon = par1IconRegister.registerIcon(this.sideTexture);
+        this.activeIcon = par1IconRegister.registerIcon(this.activeTexture);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
-        int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
+    public IIcon getIcon(final int side, final int meta) {
+        final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
 
-        ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
-        ForgeDirection back = CoordHelper.rotateForgeDirection(ForgeDirection.NORTH, realMeta);
+        final ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
+        final ForgeDirection back = CoordHelper.rotateForgeDirection(ForgeDirection.NORTH, realMeta);
 
         if (side == front.ordinal()) {
             return this.blockIcon;
@@ -66,41 +66,37 @@ public class BlockGravitation extends SubBlockMachine {
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(final World world, final int metadata) {
         return new TileEntityGravitation();
     }
 
     @Override
-    public boolean hasTileEntity(int metadata) {
+    public boolean hasTileEntity(final int metadata) {
         return true;
     }
 
     @Override
-    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_GRAVITY, world, x, y, z);
         return true;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void randomDisplayTick(World par1World, int x, int y, int z, Random rand) {
-        boolean test = true;
+    public void randomDisplayTick(final World par1World, final int x, final int y, final int z, final Random rand) {
+        final boolean test = true;
         if (par1World.getTileEntity(x, y, z) instanceof TileEntityGravitation) {
-            TileEntityGravitation tile = (TileEntityGravitation) par1World.getTileEntity(x, y, z);
+            final TileEntityGravitation tile = (TileEntityGravitation) par1World.getTileEntity(x, y, z);
             if (tile.isRunning()) {
                 for (int particleCount = 0; particleCount < 10; particleCount++) {
                     double x2 = x + rand.nextFloat();
-                    double y2 = y + rand.nextFloat();
+                    final double y2 = y + rand.nextFloat();
                     double z2 = z + rand.nextFloat();
-                    double mX = 0.0D;
-                    double mY = 0.0D;
-                    double mZ = 0.0D;
-                    int dir = rand.nextInt(2) * 2 - 1;
-                    mX = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
-                    mY = (rand.nextFloat() - 0.5D) * 0.5D;
-                    mZ = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
-
+                    double mX = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
+                    double mZ = 0;// (rand.nextFloat() - 0.5D) * 0.5D;
+                    final int dir = rand.nextInt(2) * 2 - 1;
+                    double mY = (rand.nextFloat() - 0.5D) * 0.5D;
                     final int var2 = par1World.getBlockMetadata(x, y, z);
 
                     if (var2 == 3 || var2 == 2) {

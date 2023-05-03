@@ -22,18 +22,13 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
     public RenderArtificalGravity() {}
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float ticks) {
+    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z,
+            final float ticks) {
 
-        if (!(te instanceof TileEntityGravitation)) {
+        if (!(te instanceof TileEntityGravitation entity) || !entity.isBoxShown) {
             return;
         }
-
-        TileEntityGravitation entity = (TileEntityGravitation) te;
-
-        if (!entity.isBoxShown) {
-            return;
-        }
-        int rotationMeta = entity.getRotationMeta();
+        final int rotationMeta = entity.getRotationMeta();
         GL11.glPushMatrix();
         // GL11.glTranslated(-0.5, -0.5, -0.5);
 
@@ -42,10 +37,10 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
 
         GL11.glTranslatef((float) x, (float) y, (float) z);
 
-        char c0 = 61680;
-        int j = c0 % 65536;
-        int k = c0 / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j / 1.0F, (float) k / 1.0F);
+        final char c0 = 61680;
+        final int j = c0 % 65536;
+        final int k = c0 / 65536;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j / 1.0F, k / 1.0F);
 
         GL11.glLineWidth(6.0F);
         GL11.glShadeModel(GL11.GL_FLAT);
@@ -57,7 +52,7 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
         GL11.glColor4d(1.0, 0.0, 0.0, 1.0);
         GL11.glBegin(GL11.GL_LINES);
 
-        double offset = 0.001;
+        final double offset = 0.001;
 
         // start
         // lower rectangle
@@ -117,28 +112,28 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
         GL11.glEnd();
 
         // right
-        setColorForRotation(Side.RIGHT, rotationMeta);
+        this.setColorForRotation(Side.RIGHT, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(box.maxX, 0.5, 0.5);
         GL11.glEnd();
 
         // left
-        setColorForRotation(Side.LEFT, rotationMeta);
+        this.setColorForRotation(Side.LEFT, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(box.minX, 0.5, 0.5);
         GL11.glEnd();
 
         // front
-        setColorForRotation(Side.FRONT, rotationMeta);
+        this.setColorForRotation(Side.FRONT, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(0.5, 0.5, box.minZ);
         GL11.glEnd();
 
         // back
-        setColorForRotation(Side.BACK, rotationMeta);
+        this.setColorForRotation(Side.BACK, rotationMeta);
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(0.5, 0.5, 0.5);
         GL11.glVertex3d(0.5, 0.5, box.maxZ);
@@ -149,7 +144,7 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
 
     }
 
-    private void setColorForRotation(Side side, int rotationMeta) {
+    private void setColorForRotation(final Side side, final int rotationMeta) {
         switch (side) {
             case BACK:
                 switch (rotationMeta) {

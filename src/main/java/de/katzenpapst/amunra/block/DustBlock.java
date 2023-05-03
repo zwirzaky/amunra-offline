@@ -9,15 +9,16 @@ import de.katzenpapst.amunra.item.ARItems;
 
 public class DustBlock extends SubBlock implements IMassiveBlock {
 
-    public DustBlock(String name, String texture) {
+    public DustBlock(final String name, final String texture) {
         super(name, texture);
     }
 
-    public DustBlock(String name, String texture, String tool, int harvestLevel) {
+    public DustBlock(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
     }
 
-    public DustBlock(String name, String texture, String tool, int harvestLevel, float hardness, float resistance) {
+    public DustBlock(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
     }
 
@@ -27,22 +28,22 @@ public class DustBlock extends SubBlock implements IMassiveBlock {
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune) {
+    public Item getItemDropped(final int meta, final Random random, final int fortune) {
         return ARItems.dustMote.getItem();
     }
 
     @Override
-    public int damageDropped(int meta) {
+    public int damageDropped(final int meta) {
         return ARItems.dustMote.getDamage();
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random) {
+    public int quantityDropped(final int meta, final int fortune, final Random random) {
         return Math.min(random.nextInt(3) + random.nextInt(10) * fortune, 9);
     }
 
     @Override
-    public float getMass(World w, int x, int y, int z, int meta) {
+    public float getMass(final World w, final int x, final int y, final int z, final int meta) {
         return 0.01F;
     }
 }

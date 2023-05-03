@@ -12,7 +12,7 @@ public class CoordHelper {
      * @param blockCoord
      * @return
      */
-    public static int blockToChunk(int blockCoord) {
+    public static int blockToChunk(final int blockCoord) {
         return blockCoord >> 4;
     }
 
@@ -22,7 +22,7 @@ public class CoordHelper {
      * @param chunkCoord
      * @return
      */
-    public static int chunkToMinBlock(int chunkCoord) {
+    public static int chunkToMinBlock(final int chunkCoord) {
         return chunkCoord << 4;
     }
 
@@ -32,11 +32,11 @@ public class CoordHelper {
      * @param chunkCoord
      * @return
      */
-    public static int chunkToMaxBlock(int chunkCoord) {
-        return ((chunkCoord + 1) << 4) - 1;
+    public static int chunkToMaxBlock(final int chunkCoord) {
+        return (chunkCoord + 1 << 4) - 1;
     }
 
-    public static StructureBoundingBox getChunkBB(int chunkX, int chunkZ) {
+    public static StructureBoundingBox getChunkBB(final int chunkX, final int chunkZ) {
         return new StructureBoundingBox(
                 chunkToMinBlock(chunkX),
                 chunkToMinBlock(chunkZ),
@@ -51,12 +51,12 @@ public class CoordHelper {
      * @param chunkCoord
      * @return
      */
-    public static int abs2rel(int absCoord, int chunkCoord) {
+    public static int abs2rel(final int absCoord, final int chunkCoord) {
         return absCoord - chunkToMinBlock(chunkCoord);
     }
 
-    public static int abs2rel(int absCoord) {
-        int chunkCoord = CoordHelper.blockToChunk(absCoord);
+    public static int abs2rel(final int absCoord) {
+        final int chunkCoord = CoordHelper.blockToChunk(absCoord);
         return absCoord - chunkToMinBlock(chunkCoord);
     }
 
@@ -67,7 +67,7 @@ public class CoordHelper {
      * @param chunkCoord
      * @return
      */
-    public static int rel2abs(int relCoord, int chunkCoord) {
+    public static int rel2abs(final int relCoord, final int chunkCoord) {
         return relCoord + chunkToMinBlock(chunkCoord);
     }
 
@@ -79,11 +79,11 @@ public class CoordHelper {
      * @param z
      * @return
      */
-    public static int getIndex(int x, int y, int z) {
+    public static int getIndex(final int x, final int y, final int z) {
         return (x * 16 + z) * 256 + y;
     }
 
-    public static AxisAlignedBB cloneAABB(AxisAlignedBB box) {
+    public static AxisAlignedBB cloneAABB(final AxisAlignedBB box) {
         return AxisAlignedBB.getBoundingBox(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
     }
 
@@ -94,7 +94,7 @@ public class CoordHelper {
      * @param rotationMetadata this should be ONLY the rotation metadata, ANDed and byteshifted, if necessary: 0 2-+-3 1
      * @return
      */
-    public static ForgeDirection rotateForgeDirection(ForgeDirection dir, int rotationMetadata) {
+    public static ForgeDirection rotateForgeDirection(final ForgeDirection dir, final int rotationMetadata) {
         int dirOrdinal = dir.ordinal();
         if (dirOrdinal < 2 || dirOrdinal > 5) {
             return dir;
@@ -104,7 +104,7 @@ public class CoordHelper {
         return ForgeDirection.getOrientation(dirOrdinal);
     }
 
-    private static int rotateForgeDirectionOrdinal(int dirOrdinal, int rotationMeta) {
+    private static int rotateForgeDirectionOrdinal(final int dirOrdinal, final int rotationMeta) {
         switch (rotationMeta) {
             case 0: // identity
                 return dirOrdinal;

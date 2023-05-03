@@ -44,14 +44,14 @@ public class AstronomyHelper {
      * @param world
      * @return
      */
-    public static AngleDistance projectBodyToSky(CelestialBody curBody, CelestialBody otherBody, float partialTicks,
-            long worldTime) {
+    public static AngleDistance projectBodyToSky(final CelestialBody curBody, final CelestialBody otherBody,
+            final float partialTicks, final long worldTime) {
         // long curWorldTime = world.getWorldTime();
 
-        double curBodyDist = curBody.getRelativeDistanceFromCenter().unScaledDistance;
-        double otherBodyDist = otherBody.getRelativeDistanceFromCenter().unScaledDistance;
+        final double curBodyDist = curBody.getRelativeDistanceFromCenter().unScaledDistance;
+        final double otherBodyDist = otherBody.getRelativeDistanceFromCenter().unScaledDistance;
 
-        double curBodyOrbitalAngle = getOrbitalAngle(
+        final double curBodyOrbitalAngle = getOrbitalAngle(
                 curBodyDist,
                 curBody.getPhaseShift(),
                 worldTime,
@@ -66,15 +66,15 @@ public class AstronomyHelper {
                 yearFactor);
 
         // make it relative to my own angle
-        otherBodyOrbitalAngle -= (Math.PI * 2 - curBodyOrbitalAngle);
+        otherBodyOrbitalAngle -= Math.PI * 2 - curBodyOrbitalAngle;
 
         // angle between connection line curBody<-->sun and amun<-->sun
-        double innerAngle = Math.PI - otherBodyOrbitalAngle;
+        final double innerAngle = Math.PI - otherBodyOrbitalAngle;
 
         // distance between curBody<-->planet, also needed for scaling
-        float distanceToPlanet = (float) getDistanceBetweenBodies(innerAngle, curBodyDist, otherBodyDist);
+        final float distanceToPlanet = (float) getDistanceBetweenBodies(innerAngle, curBodyDist, otherBodyDist);
 
-        float projectedAngle = (float) projectAngle(innerAngle, curBodyDist, otherBodyDist, distanceToPlanet);
+        final float projectedAngle = (float) projectAngle(innerAngle, curBodyDist, otherBodyDist, distanceToPlanet);
 
         return new AngleDistance(projectedAngle, distanceToPlanet);
     }
@@ -90,12 +90,12 @@ public class AstronomyHelper {
      * @param orbitFactor  theoretically this should be one overworld year
      * @return
      */
-    public static double getOrbitalAngle(double relOrbitTime, double phaseShift, long worldTime, double partialTicks,
-            double orbitFactor) {
+    public static double getOrbitalAngle(final double relOrbitTime, final double phaseShift, final long worldTime,
+            final double partialTicks, final double orbitFactor) {
 
-        double curYearLength = relOrbitTime * orbitFactor;
-        int j = (int) (worldTime % (long) curYearLength);
-        double orbitPos = (j + partialTicks) / curYearLength - 0.25F;
+        final double curYearLength = relOrbitTime * orbitFactor;
+        final int j = (int) (worldTime % (long) curYearLength);
+        final double orbitPos = (j + partialTicks) / curYearLength - 0.25F;
         return orbitPos * 2 * Math.PI + phaseShift;
     }
 
@@ -108,7 +108,8 @@ public class AstronomyHelper {
      * @param body2distance
      * @return
      */
-    public static double getDistanceBetweenBodies(double innerAngle, double body1distance, double body2distance) {
+    public static double getDistanceBetweenBodies(final double innerAngle, final double body1distance,
+            final double body2distance) {
         return Math.sqrt(
                 Math.pow(body2distance, 2) + Math.pow(body1distance, 2)
                         - 2 * body2distance * body1distance * Math.cos(innerAngle));
@@ -124,18 +125,18 @@ public class AstronomyHelper {
      * @param distanceBetweenBodies distance between the two, can be calculated by getDistanceBetweenBodies
      * @return
      */
-    public static double projectAngle(double innerAngle, double body1distance, double body2distance,
-            double distanceBetweenBodies) {
+    public static double projectAngle(final double innerAngle, final double body1distance, final double body2distance,
+            final double distanceBetweenBodies) {
         // omg now do dark mathemagic
 
-        double sinBeta = Math.sin(innerAngle);
+        final double sinBeta = Math.sin(innerAngle);
 
         // distFromThisToOtherBody = x
         // curBodyDistance = d
         // otherBodyDistance = r
 
         // gamma
-        double angleAroundCurBody = Math.asin(body2distance * sinBeta / distanceBetweenBodies);
+        final double angleAroundCurBody = Math.asin(body2distance * sinBeta / distanceBetweenBodies);
 
         if (body1distance > body2distance) {
             return angleAroundCurBody;
@@ -143,16 +144,15 @@ public class AstronomyHelper {
 
         // now fix this angle...
         // for this, I need the third angle, too
-        double delta = Math.asin(sinBeta / distanceBetweenBodies * body1distance);
+        final double delta = Math.asin(sinBeta / distanceBetweenBodies * body1distance);
 
-        double angleSum = innerAngle + delta + angleAroundCurBody;
+        final double angleSum = innerAngle + delta + angleAroundCurBody;
         // double otherAngleSum =innerAngle+delta+(Math.PI-angleAroundCurBody);
         if (Math.abs(Math.abs(angleSum) / Math.PI - 1) < 0.001) {
             // aka angleSUm = 180 or -180
             return angleAroundCurBody;
-        } else {
-            return Math.PI - angleAroundCurBody;
         }
+        return Math.PI - angleAroundCurBody;
     }
 
     /**
@@ -164,7 +164,7 @@ public class AstronomyHelper {
      * @param body2
      * @return
      */
-    public static CelestialBody getClosestCommonParent(CelestialBody body1, CelestialBody body2) {
+    public static CelestialBody getClosestCommonParent(final CelestialBody body1, final CelestialBody body2) {
 
         // trivial cases
         if (body1 == null || body2 == null) {
@@ -181,11 +181,13 @@ public class AstronomyHelper {
 
             return getClosestCommonParent(((Mothership) body1).getParent(), body2);
 
-        } else if (body2 instanceof Mothership && !(body1 instanceof Mothership)) {
+        }
+        if (body2 instanceof Mothership && !(body1 instanceof Mothership)) {
 
             return getClosestCommonParent(body1, ((Mothership) body2).getParent());
 
-        } else if (body1 instanceof Mothership && body2 instanceof Mothership) {
+        }
+        if (body1 instanceof Mothership && body2 instanceof Mothership) {
 
             return getClosestCommonParent(((Mothership) body1).getParent(), ((Mothership) body2).getParent());
 
@@ -196,11 +198,13 @@ public class AstronomyHelper {
 
             return getClosestCommonParent(((IChildBody) body1).getParentPlanet(), body2);
 
-        } else if (body2 instanceof IChildBody && !(body1 instanceof IChildBody)) {
+        }
+        if (body2 instanceof IChildBody && !(body1 instanceof IChildBody)) {
 
             return getClosestCommonParent(body1, ((IChildBody) body2).getParentPlanet());
 
-        } else if (body1 instanceof IChildBody && body2 instanceof IChildBody) {
+        }
+        if (body1 instanceof IChildBody && body2 instanceof IChildBody) {
 
             return getClosestCommonParent(
                     ((IChildBody) body1).getParentPlanet(),
@@ -213,11 +217,13 @@ public class AstronomyHelper {
 
             return getClosestCommonParent(((Planet) body1).getParentSolarSystem().getMainStar(), body2);
 
-        } else if (body2 instanceof Planet && !(body1 instanceof Planet)) {
+        }
+        if (body2 instanceof Planet && !(body1 instanceof Planet)) {
 
             return getClosestCommonParent(body1, ((Planet) body2).getParentSolarSystem().getMainStar());
 
-        } else if (body1 instanceof Planet && body2 instanceof Planet) {
+        }
+        if (body1 instanceof Planet && body2 instanceof Planet) {
 
             return getClosestCommonParent(
                     ((Planet) body1).getParentSolarSystem().getMainStar(),
@@ -238,12 +244,14 @@ public class AstronomyHelper {
      * @param body
      * @return
      */
-    public static CelestialBody getCelestialBodyParent(CelestialBody body) {
+    public static CelestialBody getCelestialBodyParent(final CelestialBody body) {
         if (body instanceof Planet) {
             return ((Planet) body).getParentSolarSystem().getMainStar();
-        } else if (body instanceof IChildBody) {
+        }
+        if (body instanceof IChildBody) {
             return ((IChildBody) body).getParentPlanet();
-        } else if (body instanceof Mothership) {
+        }
+        if (body instanceof Mothership) {
             return ((Mothership) body).getParent();
         } else if (body instanceof Star) {
             return body;
@@ -251,7 +259,7 @@ public class AstronomyHelper {
         return null;
     }
 
-    public static CelestialBody getParentPlanet(CelestialBody body) {
+    public static CelestialBody getParentPlanet(final CelestialBody body) {
         if (body == null) {
             return null;
         }
@@ -268,15 +276,15 @@ public class AstronomyHelper {
         return body;
     }
 
-    protected static String getSystemMainStarName(SolarSystem sys) {
+    protected static String getSystemMainStarName(final SolarSystem sys) {
         return sys.getName();
     }
 
-    protected static String getPlanetName(Planet planet) {
+    protected static String getPlanetName(final Planet planet) {
         return getSystemMainStarName(planet.getParentSolarSystem()) + nameSeparator + planet.getName();
     }
 
-    protected static String getMoonName(Moon moon) {
+    protected static String getMoonName(final Moon moon) {
         return getPlanetName(moon.getParentPlanet()) + nameSeparator + moon.getName();
     }
 
@@ -286,7 +294,7 @@ public class AstronomyHelper {
      * @param body
      * @return
      */
-    public static String getOrbitableBodyName(CelestialBody body) {
+    public static String getOrbitableBodyName(final CelestialBody body) {
 
         // now try solarSystem\planet\moon format
 
@@ -311,9 +319,8 @@ public class AstronomyHelper {
      * @param body
      * @return
      */
-    public static String getDebugBodyName(CelestialBody body) {
-        if (body instanceof Mothership) {
-            Mothership ms = ((Mothership) body);
+    public static String getDebugBodyName(final CelestialBody body) {
+        if (body instanceof Mothership ms) {
             return "Mothership #" + ms.getID() + ", \"" + ms.getLocalizedName() + "\", DIM ID " + ms.getDimensionID();
         }
         if (body instanceof Satellite) {
@@ -328,7 +335,7 @@ public class AstronomyHelper {
      * @param body
      * @return
      */
-    public static SolarSystem getSolarSystem(CelestialBody body) {
+    public static SolarSystem getSolarSystem(final CelestialBody body) {
         if (body instanceof Star) {
             return ((Star) body).getParentSolarSystem();
         }
@@ -350,7 +357,7 @@ public class AstronomyHelper {
      * @param body
      * @return
      */
-    public static boolean isStar(CelestialBody body) {
+    public static boolean isStar(final CelestialBody body) {
         if (body instanceof Star || body == AmunRa.instance.starAmun || AmunRa.config.isSun(body)) {
             return true;
         }
@@ -363,7 +370,7 @@ public class AstronomyHelper {
      * @param child
      * @return
      */
-    private static double getDistanceToParent(CelestialBody parent, CelestialBody child) {
+    private static double getDistanceToParent(final CelestialBody parent, CelestialBody child) {
         double result = 0;
         while (!parent.equals(child)) {
             if (child instanceof IChildBody) {
@@ -400,59 +407,56 @@ public class AstronomyHelper {
         // (neptune<-->sun = 2.25F -> 4504454366964901)
         // sun<-->ra = 1069,17 -> 1841206437 => 480
 
-        CelestialBody commonParent = getClosestCommonParent(body1, body2);
+        final CelestialBody commonParent = getClosestCommonParent(body1, body2);
         if (commonParent == null) {
             // different solar systems
-            SolarSystem sys1 = getSolarSystem(body1);
-            SolarSystem sys2 = getSolarSystem(body2);
-            Vector3 pos1 = sys1.getMapPosition();
-            Vector3 pos2 = sys2.getMapPosition();
-            double result = 0;
-            result = pos1.distance(pos2) * systemDistanceFactor;
+            final SolarSystem sys1 = getSolarSystem(body1);
+            final SolarSystem sys2 = getSolarSystem(body2);
+            final Vector3 pos1 = sys1.getMapPosition();
+            final Vector3 pos2 = sys2.getMapPosition();
+            double result = pos1.distance(pos2) * systemDistanceFactor;
             result += getDistanceToParent(sys1.getMainStar(), body1);
             result += getDistanceToParent(sys2.getMainStar(), body2);
             return result;
-        } else {
-            // check if one of the bodies is the parent
-            if (body1.equals(commonParent)) {
-                return getDistanceToParent(commonParent, body2);
-            } else if (body2.equals(commonParent)) {
-                return getDistanceToParent(commonParent, body1);
-            }
-
-            if (body1 instanceof IChildBody && body2 instanceof IChildBody) {
-                // are the two siblings?
-                if (commonParent instanceof Planet) {
-                    return Math.abs(
-                            body1.getRelativeDistanceFromCenter().unScaledDistance
-                                    - body2.getRelativeDistanceFromCenter().unScaledDistance)
-                            * moonDistanceFactor;
-                }
-            }
-
-            // here we either are different planets of the same system, or orbit them
-            double result = 0;
-            if (body1 instanceof IChildBody) {
-                result += body1.getRelativeDistanceFromCenter().unScaledDistance * moonDistanceFactor;
-                body1 = getCelestialBodyParent(body1);
-            }
-            if (body2 instanceof IChildBody) {
-                result += body2.getRelativeDistanceFromCenter().unScaledDistance * moonDistanceFactor;
-                body2 = getCelestialBodyParent(body2);
-            }
-
-            // at this point, we have to be planets
-
-            // are we sibling planets?
-            // if(body1 instanceof Planet && body2 instanceof Planet) {
-            float dist1 = body1.getRelativeDistanceFromCenter().unScaledDistance;
-            float dist2 = body2.getRelativeDistanceFromCenter().unScaledDistance;
-
-            result += Math.abs(dist1 - dist2) * planetDistanceFactor;
-
-            // }
-            return result;
         }
+        // check if one of the bodies is the parent
+        if (body1.equals(commonParent)) {
+            return getDistanceToParent(commonParent, body2);
+        }
+        if (body2.equals(commonParent)) {
+            return getDistanceToParent(commonParent, body1);
+        }
+
+        // are the two siblings?
+        if (body1 instanceof IChildBody && body2 instanceof IChildBody && commonParent instanceof Planet) {
+            return Math.abs(
+                    body1.getRelativeDistanceFromCenter().unScaledDistance
+                            - body2.getRelativeDistanceFromCenter().unScaledDistance)
+                    * moonDistanceFactor;
+        }
+
+        // here we either are different planets of the same system, or orbit them
+        double result = 0;
+        if (body1 instanceof IChildBody) {
+            result += body1.getRelativeDistanceFromCenter().unScaledDistance * moonDistanceFactor;
+            body1 = getCelestialBodyParent(body1);
+        }
+        if (body2 instanceof IChildBody) {
+            result += body2.getRelativeDistanceFromCenter().unScaledDistance * moonDistanceFactor;
+            body2 = getCelestialBodyParent(body2);
+        }
+
+        // at this point, we have to be planets
+
+        // are we sibling planets?
+        // if(body1 instanceof Planet && body2 instanceof Planet) {
+        final float dist1 = body1.getRelativeDistanceFromCenter().unScaledDistance;
+        final float dist2 = body2.getRelativeDistanceFromCenter().unScaledDistance;
+
+        result += Math.abs(dist1 - dist2) * planetDistanceFactor;
+
+        // }
+        return result;
     }
 
     /**
@@ -466,7 +470,7 @@ public class AstronomyHelper {
             return maxTemperature;
         }
         body = getParentPlanet(body);
-        float dist = body.getRelativeDistanceFromCenter().unScaledDistance;
+        final float dist = body.getRelativeDistanceFromCenter().unScaledDistance;
         // now IRL this is most certainly a form of 1/r²
         // let's see
         // name | thermal | distance
@@ -488,7 +492,7 @@ public class AstronomyHelper {
         return temperature;
     }
 
-    public static float getSolarEnergyMultiplier(CelestialBody body, boolean hasAtmosphere) {
+    public static float getSolarEnergyMultiplier(CelestialBody body, final boolean hasAtmosphere) {
         if (body instanceof Star) {
             return 2.0F;
         }
@@ -496,7 +500,7 @@ public class AstronomyHelper {
         // body.atmosphere
         // this is the original formula. I'm not sure if this so good,
         // since for a distance of 0.1 it would give a factor of 1000 (yes, ONE THOUSAND)
-        float solarSize = 1.0F / body.getRelativeDistanceFromCenter().unScaledDistance;
+        final float solarSize = 1.0F / body.getRelativeDistanceFromCenter().unScaledDistance;
         float level = solarSize * solarSize * solarSize;
 
         if (!hasAtmosphere) {
@@ -516,7 +520,7 @@ public class AstronomyHelper {
      * @param distance    a distance in Meters
      * @return
      */
-    public static long getTravelTime(double shipMass, double engineForce, double distance) {
+    public static long getTravelTime(final double shipMass, final double engineForce, final double distance) {
         if (shipMass <= 0 || engineForce <= 0) {
             return -1;
         }
@@ -524,13 +528,13 @@ public class AstronomyHelper {
             return 0;
         }
         // assume we accelerate to half the way, then decellerate
-        double halfDistance = distance / 2;
+        final double halfDistance = distance / 2;
         // F = m * a
         // a = F / m
-        double accel = engineForce / shipMass;
+        final double accel = engineForce / shipMass;
         // now try the speed limiting
 
-        double tEnd = maxSpeed / accel;
+        final double tEnd = maxSpeed / accel;
         // before tEnd: accelerate
         // after tEnd: go at constant speed
 
@@ -544,20 +548,19 @@ public class AstronomyHelper {
 
         if (time > tEnd) {
             // how far did we come in tEnd
-            double halfDistanceReached = 0.5D * accel * tEnd;
-            double halfDistanceRemaining = halfDistance - halfDistanceReached;
+            final double halfDistanceReached = 0.5D * accel * tEnd;
+            final double halfDistanceRemaining = halfDistance - halfDistanceReached;
             // now, how long will it take us for the rest at contant speed?
             // x = v*t => t = x/v
-            double tRemaining = halfDistanceRemaining / maxSpeed;
+            final double tRemaining = halfDistanceRemaining / maxSpeed;
             time = tEnd + tRemaining;
-            return (long) (2 * time);
         }
         // we don't reach tEnd
 
         return (long) (2 * time);
     }
 
-    public static long getTravelTimeAU(double shipMass, double engineForce, double distance) {
+    public static long getTravelTimeAU(final double shipMass, final double engineForce, final double distance) {
         return getTravelTime(shipMass, engineForce, distance * AUlength);
     }
 }

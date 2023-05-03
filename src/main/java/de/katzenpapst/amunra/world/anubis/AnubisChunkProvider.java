@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.world.anubis;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -30,18 +30,17 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
 
     // Pyramid testPyramid = new Pyramid();
 
-    public AnubisChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public AnubisChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
 
-        gVillage.addComponentType(BoxHouseComponent.class, 0.9F, 2, 4);
-        gVillage.addComponentType(SolarField.class, 0.7F, 2, 6);
-        gVillage.addComponentType(DomedHouseComponent.class, 0.7F, 2, 4);
+        this.gVillage.addComponentType(BoxHouseComponent.class, 0.9F, 2, 4);
+        this.gVillage.addComponentType(SolarField.class, 0.7F, 2, 6);
+        this.gVillage.addComponentType(DomedHouseComponent.class, 0.7F, 2, 4);
         // gVillage.addComponentType(PyramidHouseComponent.class, 0.7F, 2, 4);
     }
 
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
-        // TODO Auto-generated method stub
         return new AnubisBiomeDecorator();
     }
 
@@ -80,9 +79,9 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected SpawnListEntry[] getMonsters() {
-        SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
-        SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
-        SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
+        final SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
+        final SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
+        final SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
 
         return new SpawnListEntry[] { skele, creeper, zombie };
     }
@@ -110,35 +109,32 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
         // TODO fill in with caves and villages
-        ArrayList<MapGenBaseMeta> list = new ArrayList<MapGenBaseMeta>();
-        list.add(gVillage);
-        // list.add(pyramid);
-        return list;
+        return Arrays.asList(this.gVillage/* , this.pyramid */);
     }
 
     @Override
-    public void onChunkProvide(int arg0, int arg1, Block[] arg2, byte[] arg3) {}
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {}
 
     @Override
-    public void onPopulate(IChunkProvider arg0, int arg1, int arg2) {}
+    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {}
 
     @Override
-    public boolean chunkExists(int x, int y) {
+    public boolean chunkExists(final int x, final int y) {
         return true; // ?
     }
 
     @Override
-    public void populate(IChunkProvider par1IChunkProvider, int chunkX, int chunkZ) {
+    public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
         super.populate(par1IChunkProvider, chunkX, chunkZ);
 
-        this.gVillage.populate(this, worldObj, chunkX, chunkZ);
+        this.gVillage.populate(this, this.worldObj, chunkX, chunkZ);
         // this.pyramid.populate(this, worldObj, chunkX, chunkZ);
 
         // this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
     }
 
     @Override
-    public void recreateStructures(int par1, int par2) {
+    public void recreateStructures(final int par1, final int par2) {
         // this.villageTest.func_151539_a(this, this.worldObj, par1, par2, (Block[]) null);
     }
 

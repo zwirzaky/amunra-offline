@@ -10,13 +10,14 @@ public class PitRoom extends PyramidRoom {
     protected int pitSize = 7;
 
     @Override
-    public boolean generateChunk(int chunkX, int chunkZ, Block[] arrayOfIDs, byte[] arrayOfMeta) {
+    public boolean generateChunk(final int chunkX, final int chunkZ, final Block[] arrayOfIDs,
+            final byte[] arrayOfMeta) {
 
         super.generateChunk(chunkX, chunkZ, arrayOfIDs, arrayOfMeta);
 
-        int size = (pitSize - 1) / 2;
+        final int size = (this.pitSize - 1) / 2;
 
-        BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
+        final BlockMetaPair floorMat = ((Pyramid) this.parent).getFloorMaterial();
 
         for (int x = -size; x <= size; x++) {
             for (int z = -size; z <= size; z++) {
@@ -46,20 +47,18 @@ public class PitRoom extends PyramidRoom {
 
                 }
 
-                if (x > -size && x < size) {
-                    if (z > -size && z < size) {
-                        placeBlockAbs(
-                                arrayOfIDs,
-                                arrayOfMeta,
-                                this.roomBB.getCenterX() + x,
-                                this.floorLevel - 2,
-                                this.roomBB.getCenterZ() + z,
-                                chunkX,
-                                chunkZ,
-                                Blocks.lava,
-                                (byte) 0);
+                if (x > -size && x < size && z > -size && z < size) {
+                    placeBlockAbs(
+                            arrayOfIDs,
+                            arrayOfMeta,
+                            this.roomBB.getCenterX() + x,
+                            this.floorLevel - 2,
+                            this.roomBB.getCenterZ() + z,
+                            chunkX,
+                            chunkZ,
+                            Blocks.lava,
+                            (byte) 0);
 
-                    }
                 }
             }
         }

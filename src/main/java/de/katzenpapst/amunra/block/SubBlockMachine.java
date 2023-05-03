@@ -8,29 +8,29 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class SubBlockMachine extends SubBlock implements ItemBlockDesc.IBlockShiftDesc {
 
-    public SubBlockMachine(String name, String texture) {
+    public SubBlockMachine(final String name, final String texture) {
         super(name, texture);
         // TODO Auto-generated constructor stub
     }
 
-    public SubBlockMachine(String name, String texture, String tool, int harvestLevel) {
+    public SubBlockMachine(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
         // TODO Auto-generated constructor stub
     }
 
-    public SubBlockMachine(String name, String texture, String tool, int harvestLevel, float hardness,
-            float resistance) {
+    public SubBlockMachine(final String name, final String texture, final String tool, final int harvestLevel,
+            final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public String getShiftDescription(int meta) {
-        return GCCoreUtil.translate("tile." + blockNameFU + ".description");
+    public String getShiftDescription(final int meta) {
+        return GCCoreUtil.translate("tile." + this.blockNameFU + ".description");
     }
 
     @Override
-    public boolean showDescription(int meta) {
+    public boolean showDescription(final int meta) {
         return true;
     }
 
@@ -39,25 +39,25 @@ public class SubBlockMachine extends SubBlock implements ItemBlockDesc.IBlockShi
      *
      * @return True if something happens
      */
-    public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         return false;
     }
 
-    public boolean onSneakUseWrench(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onSneakUseWrench(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO Auto-generated method stub
         return false;
     }
 
-    public boolean onUseWrench(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
-            float hitY, float hitZ) {
+    public boolean onUseWrench(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO Auto-generated method stub
         return false;
     }
 
-    public boolean onSneakMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side,
-            float hitX, float hitY, float hitZ) {
+    public boolean onSneakMachineActivated(final World world, final int x, final int y, final int z,
+            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         // TODO Auto-generated method stub
         return false;
     }

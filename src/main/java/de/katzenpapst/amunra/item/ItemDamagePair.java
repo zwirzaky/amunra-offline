@@ -9,61 +9,59 @@ public class ItemDamagePair {
     protected Item item;
     protected int damage;
 
-    public ItemDamagePair(Item item, int damage) {
+    public ItemDamagePair(final Item item, final int damage) {
         this.item = item;
         this.damage = damage;
     }
 
-    public ItemDamagePair(ItemStack stack) {
+    public ItemDamagePair(final ItemStack stack) {
         this.item = stack.getItem();
         this.damage = stack.getItemDamage();
     }
 
     public Item getItem() {
-        return item;
+        return this.item;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public Item getSubItem() {
-        if (!(item instanceof ItemBasicMulti)) {
-            return item;
+        if (!(this.item instanceof ItemBasicMulti)) {
+            return this.item;
         }
-        return ((ItemBasicMulti) item).getSubItem(damage);
+        return ((ItemBasicMulti) this.item).getSubItem(this.damage);
     }
 
-    public ItemStack getItemStack(int numItems) {
-        return new ItemStack(item, numItems, damage);
+    public ItemStack getItemStack(final int numItems) {
+        return new ItemStack(this.item, numItems, this.damage);
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof ItemDamagePair)) {
+    public boolean equals(final Object other) {
+        if (!(other instanceof ItemDamagePair otherCast)) {
             return false;
         }
-        ItemDamagePair otherCast = (ItemDamagePair) other;
-
-        return isSameItem(otherCast.getItem(), otherCast.getDamage());
+        return this.isSameItem(otherCast.getItem(), otherCast.getDamage());
     }
 
     @Override
     public int hashCode() {
-        if (item instanceof ItemBlock) {
-            return ((ItemBlock) this.item).field_150939_a.hashCode() ^ ~damage;
+        if (this.item instanceof ItemBlock) {
+            return ((ItemBlock) this.item).field_150939_a.hashCode() ^ ~this.damage;
         }
-        return item.hashCode() ^ ~damage;
+        return this.item.hashCode() ^ ~this.damage;
     }
 
-    public boolean isSameItem(ItemStack stack) {
+    public boolean isSameItem(final ItemStack stack) {
         if (stack == null) {
             return false;
         }
-        return isSameItem(stack.getItem(), stack.getItemDamage());
+        return this.isSameItem(stack.getItem(), stack.getItemDamage());
     }
 
-    public boolean isSameItem(Item item, int damage) {
+    public boolean isSameItem(final Item item, final int damage) {
 
         // this matters anyway, do it here before the other mess
         if (this.damage != damage) {
@@ -73,16 +71,13 @@ public class ItemDamagePair {
             if (this.item instanceof ItemBlock) {
                 // compare blocks... *sigh*
                 return ((ItemBlock) this.item).field_150939_a == ((ItemBlock) item).field_150939_a;
-            } else {
-                return false;
             }
-        } else {
-            if (this.item instanceof ItemBlock) {
-                return false;
-            } else {
-                return this.item == item;
-            }
+            return false;
         }
+        if (this.item instanceof ItemBlock) {
+            return false;
+        }
+        return this.item == item;
     }
 
 }

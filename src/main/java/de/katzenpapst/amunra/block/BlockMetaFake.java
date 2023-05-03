@@ -17,13 +17,14 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityMulti;
 
 public class BlockMetaFake extends BlockBasicMeta implements ITileEntityProvider {
 
-    public BlockMetaFake(String name, Material mat) {
+    public BlockMetaFake(final String name, final Material mat) {
         super(name, mat);
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
-        int meta = world.getBlockMetadata(x, y, z);
+    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
+            final int z, final EntityPlayer player) {
+        final int meta = world.getBlockMetadata(x, y, z);
         return this.getSubBlock(meta).getPickBlock(target, world, x, y, z, player);
     }
 
@@ -38,13 +39,14 @@ public class BlockMetaFake extends BlockBasicMeta implements ITileEntityProvider
         return null;
     }
 
-    public void makeFakeBlock(World world, BlockVec3 position, BlockVec3 mainBlock, BlockMetaPair bmp) {
+    public void makeFakeBlock(final World world, final BlockVec3 position, final BlockVec3 mainBlock,
+            final BlockMetaPair bmp) {
         world.setBlock(position.x, position.y, position.z, this, bmp.getMetadata(), 3);
         ((TileEntityMulti) world.getTileEntity(position.x, position.y, position.z)).setMainBlock(mainBlock);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World var1, int meta) {
+    public TileEntity createNewTileEntity(final World var1, final int meta) {
         return this.getSubBlock(meta).createTileEntity(var1, meta);
     }
 

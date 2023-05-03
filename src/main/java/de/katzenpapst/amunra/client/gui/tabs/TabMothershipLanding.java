@@ -20,23 +20,23 @@ public class TabMothershipLanding extends AbstractPermissionTab {
             AmunRa.ASSETPREFIX,
             "textures/gui/landing-permission.png");
 
-    public TabMothershipLanding(TileEntityMothershipSettings tile, GuiMothershipSettings parent, Minecraft mc,
-            int width, int height, int xSize, int ySize) {
+    public TabMothershipLanding(final TileEntityMothershipSettings tile, final GuiMothershipSettings parent,
+            final Minecraft mc, final int width, final int height, final int xSize, final int ySize) {
         super(tile, parent, mc, width, height, xSize, ySize);
     }
 
     @Override
     public void resetData() {
-        Mothership.PermissionMode pm = this.tile.getMothership().getLandingPermissionMode();
-        modeDropdown.selectedOption = pm.ordinal();
-        playerIdList.clear();
+        final Mothership.PermissionMode pm = this.tile.getMothership().getLandingPermissionMode();
+        this.modeDropdown.selectedOption = pm.ordinal();
+        this.playerIdList.clear();
 
-        Mothership m = this.tile.getMothership();
+        final Mothership m = this.tile.getMothership();
 
-        playerIdList.addAll(m.getPlayerListLanding());
-        selectBox.clear();
-        for (PlayerID pid : playerIdList) {
-            selectBox.addString(pid.getName());
+        this.playerIdList.addAll(m.getPlayerListLanding());
+        this.selectBox.clear();
+        for (final PlayerID pid : this.playerIdList) {
+            this.selectBox.addString(pid.getName());
         }
     }
 
@@ -51,34 +51,34 @@ public class TabMothershipLanding extends AbstractPermissionTab {
     }
 
     @Override
-    public void onSelectionChanged(GuiElementDropdown dropdown, int selection) {
-        if (dropdown == modeDropdown) {
-            PermissionMode mode = PermissionMode.values()[selection];
-            tile.getMothership().setLandingPermissionMode(mode);
+    public void onSelectionChanged(final GuiElementDropdown dropdown, final int selection) {
+        if (dropdown == this.modeDropdown) {
+            final PermissionMode mode = PermissionMode.values()[selection];
+            this.tile.getMothership().setLandingPermissionMode(mode);
             this.applyData();
         }
 
     }
 
     @Override
-    public int getInitialSelection(GuiElementDropdown dropdown) {
+    public int getInitialSelection(final GuiElementDropdown dropdown) {
         return this.tile.getMothership().getLandingPermissionMode().ordinal();
     }
 
     @Override
-    protected void addUsername(Mothership mothership, String userName) {
+    protected void addUsername(final Mothership mothership, final String userName) {
         AmunRa.packetPipeline.sendToServer(
                 new PacketSimpleAR(
                         EnumSimplePacket.S_ADD_MOTHERSHIP_PLAYER,
                         this.tile.getMothership().getID(),
-                        textBoxUsername.text,
+                        this.textBoxUsername.text,
                         0));
     }
 
     @Override
-    protected void removeUsernameFromList(int position) {
-        playerIdList.remove(position);
-        tile.getMothership().setPlayerListLanding(playerIdList);
+    protected void removeUsernameFromList(final int position) {
+        this.playerIdList.remove(position);
+        this.tile.getMothership().setPlayerListLanding(this.playerIdList);
     }
 
     @Override

@@ -23,19 +23,20 @@ public class RenderFirstBoss extends RenderBiped {
     }
 
     @Override
-    protected void preRenderCallback(EntityLivingBase par1EntityLiving, float par2) {
+    protected void preRenderCallback(final EntityLivingBase par1EntityLiving, final float par2) {
         GL11.glScalef(2.5F, 2.5F, 2.5F);
     }
 
     @Override
-    public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6,
+            final float par8, final float par9) {
         BossStatus.setBossStatus((IBossDisplayData) par1EntityLiving, false);
 
         super.doRender(par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(EntityLiving e) {
+    protected ResourceLocation getEntityTexture(final EntityLiving e) {
         return zombieTextures;
     }
 }

@@ -11,7 +11,7 @@ public class HydroponicsRecipe {
 
     public ResourceLocation cropTexture;
 
-    public HydroponicsRecipe(int growDuration, ResourceLocation cropTexture, ItemStack... outputs) {
+    public HydroponicsRecipe(final int growDuration, final ResourceLocation cropTexture, final ItemStack... outputs) {
         this.growthDuration = growDuration;
         this.cropTexture = cropTexture;
         this.possibleOutputs = outputs;

@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.world.mehen;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.EnumCreatureType;
@@ -13,34 +13,30 @@ import de.katzenpapst.amunra.world.asteroidWorld.AmunRaAsteroidsChunkProvider;
 
 public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
 
-    public MehenChunkProvider(World par1World, long par2, boolean par4) {
-        super(par1World, par2, par4);
+    public MehenChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int i, int j, int k) {
-        if (par1EnumCreatureType == EnumCreatureType.monster) {
-            final List monsters = new ArrayList();
-
-            monsters.add(new SpawnListEntry(EntitySentry.class, 3000, 1, 3));
-            return monsters;
-        } else {
-            return null;
+    public List<SpawnListEntry> getPossibleCreatures(final EnumCreatureType creatureType, final int x, final int y,
+            final int z) {
+        if (creatureType == EnumCreatureType.monster) {
+            return Arrays.asList(new SpawnListEntry(EntitySentry.class, 3000, 1, 3));
         }
+        return null;
     }
 
     @Override
     protected void initBlockTypes() {
         super.initBlockTypes();
 
-        addBlockToHandler(coreHandler, ARBlocks.oreDiamondAsteroid, 1, .1);
-        addBlockToHandler(coreHandler, ARBlocks.oreRubyAsteroid, 1, .1);
-        addBlockToHandler(coreHandler, ARBlocks.oreEmeraldAsteroid, 1, .1);
-        addBlockToHandler(coreHandler, ARBlocks.oreCopperAsteroid, 15, .2);
-        addBlockToHandler(coreHandler, ARBlocks.oreLeadAsteroid, 8, .2);
-        addBlockToHandler(coreHandler, ARBlocks.oreUraniumAsteroid, 4, .05);
-        addBlockToHandler(coreHandler, ARBlocks.blockDarkmatter, 1, .05);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreDiamondAsteroid, 1, .1);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreRubyAsteroid, 1, .1);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreEmeraldAsteroid, 1, .1);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreCopperAsteroid, 15, .2);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreLeadAsteroid, 8, .2);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.oreUraniumAsteroid, 4, .05);
+        this.addBlockToHandler(this.coreHandler, ARBlocks.blockDarkmatter, 1, .05);
     }
 
     @Override

@@ -19,7 +19,7 @@ import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
 
 public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreather, IEntityBreathable {
 
-    public EntityAlienBug(World world) {
+    public EntityAlienBug(final World world) {
         super(world);
         this.setSize(1.4F, 0.9F);
     }
@@ -55,14 +55,13 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
      */
     @Override
     protected Entity findPlayerToAttack() {
-        float f = this.getBrightness(1.0F);
+        final float f = this.getBrightness(1.0F);
 
         if (f < 0.5F) {
-            double d0 = 16.0D;
+            final double d0 = 16.0D;
             return this.worldObj.getClosestVulnerablePlayerToEntity(this, d0);
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -91,7 +90,7 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
 
     // onStep?
     @Override
-    protected void func_145780_a(int x, int y, int z, Block block) {
+    protected void func_145780_a(final int x, final int y, final int z, final Block block) {
         this.playSound("mob.spider.step", 0.15F, 1.0F);
     }
 
@@ -99,27 +98,25 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
      * Basic mob attack. Default to touch of death in EntityCreature. Overridden by each mob to define their attack.
      */
     @Override
-    protected void attackEntity(Entity target, float distanceToTarget) {
-        float f1 = this.getBrightness(1.0F);
+    protected void attackEntity(final Entity target, final float distanceToTarget) {
+        final float f1 = this.getBrightness(1.0F);
 
         if (f1 > 0.5F && this.rand.nextInt(100) == 0) {
             this.entityToAttack = null;
-        } else {
-            if (distanceToTarget > 2.0F && distanceToTarget < 6.0F && this.rand.nextInt(10) == 0) {
-                if (this.onGround) {
-                    // get closer to target?
-                    double deltaX = target.posX - this.posX;
-                    double deltaZ = target.posZ - this.posZ;
-                    float planarDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
-                    this.motionX = deltaX / (double) planarDistance * 0.5D * 0.800000011920929D
-                            + this.motionX * 0.20000000298023224D;
-                    this.motionZ = deltaZ / (double) planarDistance * 0.5D * 0.800000011920929D
-                            + this.motionZ * 0.20000000298023224D;
-                    this.motionY = 0.4000000059604645D;
-                }
-            } else {
-                super.attackEntity(target, distanceToTarget);
+        } else if (distanceToTarget > 2.0F && distanceToTarget < 6.0F && this.rand.nextInt(10) == 0) {
+            if (this.onGround) {
+                // get closer to target?
+                final double deltaX = target.posX - this.posX;
+                final double deltaZ = target.posZ - this.posZ;
+                final float planarDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+                this.motionX = deltaX / planarDistance * 0.5D * 0.800000011920929D
+                        + this.motionX * 0.20000000298023224D;
+                this.motionZ = deltaZ / planarDistance * 0.5D * 0.800000011920929D
+                        + this.motionZ * 0.20000000298023224D;
+                this.motionY = 0.4000000059604645D;
             }
+        } else {
+            super.attackEntity(target, distanceToTarget);
         }
     }
 
@@ -135,7 +132,7 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
      * @param lootingLevel - Level of Looting used to kill this mob.
      */
     @Override
-    protected void dropFewItems(boolean hitByPlayer, int lootingLevel) {
+    protected void dropFewItems(final boolean hitByPlayer, final int lootingLevel) {
         // not yet
         /*
          * super.dropFewItems(hitByPlayer, lootingLevel); if (hitByPlayer && (this.rand.nextInt(3) == 0 ||
@@ -166,7 +163,7 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
     }
 
     @Override
-    public boolean isPotionApplicable(PotionEffect potionEffect) {
+    public boolean isPotionApplicable(final PotionEffect potionEffect) {
         return true;
         // return potionEffect.getPotionID() == Potion.poison.id ? false : super.isPotionApplicable(potionEffect);
     }
@@ -183,7 +180,7 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
      * Updates the WatchableObject (Byte) created in entityInit(), setting it to 0x01 if par1 is true or 0x00 if it is
      * false.
      */
-    public void setBesideClimbableBlock(boolean isBeside) {
+    public void setBesideClimbableBlock(final boolean isBeside) {
         byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
         if (isBeside) {
@@ -196,8 +193,8 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
     }
 
     @Override
-    public IEntityLivingData onSpawnWithEgg(IEntityLivingData myData) {
-        Object moreDataWhat = super.onSpawnWithEgg(myData);
+    public IEntityLivingData onSpawnWithEgg(final IEntityLivingData myData) {
+        final Object moreDataWhat = super.onSpawnWithEgg(myData);
 
         /*
          * if (this.worldObj.rand.nextInt(100) == 0) { EntitySkeleton entityskeleton = new
@@ -223,7 +220,7 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
     }
 
     @Override
-    public boolean canBreatheIn(ArrayList<IAtmosphericGas> atmosphere, boolean isInSealedArea) {
+    public boolean canBreatheIn(final ArrayList<IAtmosphericGas> atmosphere, final boolean isInSealedArea) {
         // maybe make them afraid of oxygen? maybe later
 
         return atmosphere.contains(IAtmosphericGas.METHANE);

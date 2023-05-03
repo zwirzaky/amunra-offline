@@ -8,12 +8,13 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerIonEngine extends ContainerRocketEngine {
 
-    public ContainerIonEngine(InventoryPlayer par1InventoryPlayer, TileEntityMothershipEngineAbstract solarGen) {
+    public ContainerIonEngine(final InventoryPlayer par1InventoryPlayer,
+            final TileEntityMothershipEngineAbstract solarGen) {
         super(par1InventoryPlayer, solarGen);
     }
 
     @Override
-    protected void initSlots(TileEntityMothershipEngineAbstract tile) {
+    protected void initSlots(final TileEntityMothershipEngineAbstract tile) {
         super.initSlots(tile);
         this.addSlotToContainer(new SlotSpecific(tile, 1, 152, 86, ItemElectricBase.class));
     }

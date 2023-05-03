@@ -35,7 +35,7 @@ public class GuiShuttleDock extends GuiContainerGC {
 
     private GuiElementInfoRegion shuttleInfoRegion;
 
-    public GuiShuttleDock(InventoryPlayer player, TileEntityShuttleDock tile) {
+    public GuiShuttleDock(final InventoryPlayer player, final TileEntityShuttleDock tile) {
         super(new ContainerShuttleDock(player, tile));
         this.tile = tile;
         this.ySize = 210;
@@ -43,14 +43,14 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
+    protected void actionPerformed(final GuiButton par1GuiButton) {
         switch (par1GuiButton.id) {
             case 0:
-                tile.performDockOperationClient(DockOperation.GET_SHUTTLE);
+                this.tile.performDockOperationClient(DockOperation.GET_SHUTTLE);
             case 1:
-                tile.performDockOperationClient(DockOperation.MOUNT_SHUTTLE);
+                this.tile.performDockOperationClient(DockOperation.MOUNT_SHUTTLE);
             case 2:
-                tile.performDockOperationClient(DockOperation.DEPLOY_SHUTTLE);
+                this.tile.performDockOperationClient(DockOperation.DEPLOY_SHUTTLE);
                 break;
         }
     }
@@ -59,9 +59,9 @@ public class GuiShuttleDock extends GuiContainerGC {
     public void initGui() {
         super.initGui();
 
-        isObstructed = tile.isObstructed();
+        this.isObstructed = this.tile.isObstructed();
 
-        shuttleInfoRegion = new GuiElementInfoRegion(
+        this.shuttleInfoRegion = new GuiElementInfoRegion(
                 (this.width - this.xSize) / 2 + 23,
                 (this.height - this.ySize) / 2 + 57,
                 18,
@@ -71,7 +71,7 @@ public class GuiShuttleDock extends GuiContainerGC {
                 this.height,
                 this);
 
-        List<String> descrStrings = new ArrayList<String>();
+        final List<String> descrStrings = new ArrayList<>();
         descrStrings.add("foobar");
 
         this.shuttleInfoRegion.tooltipStrings = descrStrings;
@@ -81,7 +81,7 @@ public class GuiShuttleDock extends GuiContainerGC {
         this.shuttleInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.shuttleInfoRegion);
 
-        buttonGetShuttle = new GuiButton(
+        this.buttonGetShuttle = new GuiButton(
                 0,
                 (this.width - this.xSize) / 2 + 52,
                 (this.height - this.ySize) / 2 + 20,
@@ -89,7 +89,7 @@ public class GuiShuttleDock extends GuiContainerGC {
                 20,
                 GCCoreUtil.translate("gui.message.dock.action.get"));
 
-        buttonEnterShuttle = new GuiButton(
+        this.buttonEnterShuttle = new GuiButton(
                 1,
                 (this.width - this.xSize) / 2 + 52,
                 (this.height - this.ySize) / 2 + 56,
@@ -97,7 +97,7 @@ public class GuiShuttleDock extends GuiContainerGC {
                 20,
                 GCCoreUtil.translate("gui.message.dock.action.enter"));
 
-        buttonPutShuttle = new GuiButton(
+        this.buttonPutShuttle = new GuiButton(
                 2,
                 (this.width - this.xSize) / 2 + 52,
                 (this.height - this.ySize) / 2 + 93,
@@ -105,14 +105,14 @@ public class GuiShuttleDock extends GuiContainerGC {
                 20,
                 GCCoreUtil.translate("gui.message.dock.action.deploy"));
 
-        this.buttonList.add(buttonGetShuttle);
-        this.buttonList.add(buttonEnterShuttle);
-        this.buttonList.add(buttonPutShuttle);
+        this.buttonList.add(this.buttonGetShuttle);
+        this.buttonList.add(this.buttonEnterShuttle);
+        this.buttonList.add(this.buttonPutShuttle);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        String displayString = this.tile.getInventoryName();
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
+        final String displayString = this.tile.getInventoryName();
         this.fontRendererObj.drawString(
                 displayString,
                 this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2,
@@ -121,18 +121,18 @@ public class GuiShuttleDock extends GuiContainerGC {
         this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 4210752);
 
         this.shuttleInfoRegion.tooltipStrings.clear();
-        this.shuttleInfoRegion.tooltipStrings.addAll(getStatus());
+        this.shuttleInfoRegion.tooltipStrings.addAll(this.getStatus());
 
-        ItemStack stack = tile.getStackInSlot(0);
-        boolean hasShuttle = tile.hasShuttle();
+        final ItemStack stack = this.tile.getStackInSlot(0);
+        final boolean hasShuttle = this.tile.hasShuttle();
         boolean hasItem = false;
         if (stack != null) {
-            hasItem = (stack.stackSize > 0 && stack.getItem() instanceof ItemShuttle);
+            hasItem = stack.stackSize > 0 && stack.getItem() instanceof ItemShuttle;
         }
-        buttonGetShuttle.enabled = !hasItem && hasShuttle;
-        buttonPutShuttle.enabled = hasItem && !hasShuttle && !isObstructed;
+        this.buttonGetShuttle.enabled = !hasItem && hasShuttle;
+        this.buttonPutShuttle.enabled = hasItem && !hasShuttle && !this.isObstructed;
 
-        buttonEnterShuttle.enabled = hasShuttle;
+        this.buttonEnterShuttle.enabled = hasShuttle;
 
     }
 
@@ -141,10 +141,10 @@ public class GuiShuttleDock extends GuiContainerGC {
          * gui.message.dock.status.obstructed=There are blocks in the way. Shuttles cannot dock here.
          * gui.message.dock.status.occupied=A shuttle is docked here. gui.message.dock.status.free=This dock is vacant.
          */
-        if (tile.hasShuttle()) {
+        if (this.tile.hasShuttle()) {
             return GCCoreUtil.translateWithSplit("gui.message.dock.status.occupied");
         }
-        if (isObstructed) {
+        if (this.isObstructed) {
             return GuiHelper.translateWithSplitColor("gui.message.dock.status.obstructed", EnumColor.DARK_RED);
         }
 
@@ -152,7 +152,7 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    protected void drawGuiContainerBackgroundLayer(final float partialTicks, final int mouseX, final int mouseY) {
         final int xPos = (this.width - this.xSize) / 2;
         final int yPos = (this.height - this.ySize) / 2;
         this.mc.renderEngine.bindTexture(solarGuiTexture);
@@ -160,11 +160,11 @@ public class GuiShuttleDock extends GuiContainerGC {
         final int yOffset = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(xOffset, yOffset, 0, 0, this.xSize, this.ySize);
 
-        if (isObstructed) {
+        if (this.isObstructed) {
             this.drawTexturedModalRect(xPos + 24, yPos + 59, 176, 28, 16, 16);
         }
 
-        if (tile.hasShuttle()) {
+        if (this.tile.hasShuttle()) {
             this.drawTexturedModalRect(xPos + 23, yPos + 53, 176, 1, 18, 27);
         }
     }

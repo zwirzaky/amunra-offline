@@ -8,12 +8,12 @@ public class MathHelperAR {
      * @param numbers
      * @return
      */
-    public static int min(int... numbers) {
+    public static int min(final int... numbers) {
         int smallest = Integer.MAX_VALUE;
 
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] < smallest) {
-                smallest = numbers[i];
+        for (int number : numbers) {
+            if (number < smallest) {
+                smallest = number;
             }
         }
 
@@ -26,12 +26,12 @@ public class MathHelperAR {
      * @param numbers
      * @return
      */
-    public static int max(int... numbers) {
+    public static int max(final int... numbers) {
         int largest = Integer.MIN_VALUE;
 
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] > largest) {
-                largest = numbers[i];
+        for (int number : numbers) {
+            if (number > largest) {
+                largest = number;
             }
         }
 

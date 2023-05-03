@@ -35,8 +35,8 @@ public class GuiRocketEngine extends GuiContainerGC {
 
     protected boolean isEngineObstructed;
 
-    public GuiRocketEngine(Container container, TileEntityMothershipEngineAbstract tileEngine,
-            ResourceLocation texture) {
+    public GuiRocketEngine(final Container container, final TileEntityMothershipEngineAbstract tileEngine,
+            final ResourceLocation texture) {
         super(container);
         this.tileEngine = tileEngine;
         this.ySize = 201;
@@ -46,11 +46,11 @@ public class GuiRocketEngine extends GuiContainerGC {
             throw new RuntimeException("TileEntity of engine is null");
         }
 
-        isEngineObstructed = tileEngine.isObstructed();
-        guiTexture = texture;
+        this.isEngineObstructed = tileEngine.isObstructed();
+        this.guiTexture = texture;
     }
 
-    public GuiRocketEngine(InventoryPlayer player, TileEntityMothershipEngineAbstract tileEngine) {
+    public GuiRocketEngine(final InventoryPlayer player, final TileEntityMothershipEngineAbstract tileEngine) {
 
         this(
                 new ContainerRocketEngine(player, tileEngine),
@@ -59,7 +59,7 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
+    protected void actionPerformed(final GuiButton par1GuiButton) {
         switch (par1GuiButton.id) {
             case 0:
                 GalacticraftCore.packetPipeline.sendToServer(
@@ -84,18 +84,18 @@ public class GuiRocketEngine extends GuiContainerGC {
                         20,
                         GCCoreUtil.translate("gui.button.enable.name")));
 
-        List<String> fuelTankDesc = new ArrayList<String>();
+        final List<String> fuelTankDesc = new ArrayList<>();
         fuelTankDesc.add("");
-        tankInfo = new GuiElementInfoRegion(
+        this.tankInfo = new GuiElementInfoRegion(
                 (this.width - this.xSize) / 2 + 7,
                 (this.height - this.ySize) / 2 + 27,
                 18,
                 76,
                 fuelTankDesc,
-                width,
-                height,
+                this.width,
+                this.height,
                 this);
-        this.infoRegions.add(tankInfo);
+        this.infoRegions.add(this.tankInfo);
         /*
          * List<String> fuelTankDesc = new ArrayList<String>();
          * fuelTankDesc.add(GCCoreUtil.translate("gui.fuelTank.desc.2"));
@@ -106,7 +106,7 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
         int offsetY = 35;
 
         this.buttonEnable.displayString = !this.tileEngine.getDisabled(0)
@@ -135,14 +135,14 @@ public class GuiRocketEngine extends GuiContainerGC {
                 + GuiHelper.formatMetric(this.tileEngine.getThrust(), "N");
         this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 4210752);
         offsetY += 10;
-        // this.renderToolTip(p_146285_1_, p_146285_2_, p_146285_3_);
+        // this.renderToolTip(itemIn, x, y);
 
-        tankInfo.tooltipStrings.clear();
+        this.tankInfo.tooltipStrings.clear();
         displayString = GCCoreUtil.translate("gui.message.mothership.fuel") + ": "
                 + GuiHelper.formatMetric(this.tileEngine.fuelTank.getFluidAmount() / 1000.0F, "B")
                 + "/"
-                + GuiHelper.formatMetric(tileEngine.fuelTank.getCapacity() / 1000.0F, "B");
-        tankInfo.tooltipStrings.add(displayString);
+                + GuiHelper.formatMetric(this.tileEngine.fuelTank.getCapacity() / 1000.0F, "B");
+        this.tankInfo.tooltipStrings.add(displayString);
         /*
          * this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 4210752);
          */
@@ -159,7 +159,7 @@ public class GuiRocketEngine extends GuiContainerGC {
             return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.disabled.name");
         }
 
-        if (isEngineObstructed) {
+        if (this.isEngineObstructed) {
             return EnumColor.DARK_RED + GCCoreUtil.translate("gui.message.mothership.status.obstructed");
         }
 
@@ -167,9 +167,9 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(guiTexture);
+        this.mc.getTextureManager().bindTexture(this.guiTexture);
         final int xPos = (this.width - this.xSize) / 2;
         final int yPos = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(xPos, yPos, 0, 0, this.xSize, this.ySize);
@@ -186,8 +186,8 @@ public class GuiRocketEngine extends GuiContainerGC {
 
         // other stuff
         // jet
-        int jetX = 32;
-        int jetY = 28;
+        final int jetX = 32;
+        final int jetY = 28;
         this.drawTexturedModalRect(xPos + jetX, yPos + jetY, 192, 0, 22, 11);
         if (this.tileEngine.isInUse()) {
             // fire
@@ -195,7 +195,7 @@ public class GuiRocketEngine extends GuiContainerGC {
         } else if (this.tileEngine.getDisabled(0)) {
             // red x
             this.drawTexturedModalRect(xPos + jetX + 1, yPos + jetY - 1, 192, 11, 13, 13);
-        } else if (isEngineObstructed) {
+        } else if (this.isEngineObstructed) {
             // block
             this.drawTexturedModalRect(xPos + jetX + 22, yPos + jetY - 2, 192, 24, 15, 15);
         }

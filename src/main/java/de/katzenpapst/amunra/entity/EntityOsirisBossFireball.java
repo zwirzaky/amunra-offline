@@ -14,16 +14,16 @@ public class EntityOsirisBossFireball extends EntityFireball {
 
     public float damage = 1.0F;
 
-    public EntityOsirisBossFireball(World world) {
+    public EntityOsirisBossFireball(final World world) {
         super(world);
     }
 
     @Override
-    protected void onImpact(MovingObjectPosition movingObjectPosition) {
+    protected void onImpact(final MovingObjectPosition movingObjectPosition) {
         if (!this.worldObj.isRemote) {
             if (movingObjectPosition.entityHit != null && !(movingObjectPosition.entityHit instanceof EntityCreeper)) {
                 movingObjectPosition.entityHit
-                        .attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), damage);
+                        .attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), this.damage);
                 // ConfigManagerCore.hardMode ? 12.0F : 6.0F
             }
 
@@ -39,19 +39,20 @@ public class EntityOsirisBossFireball extends EntityFireball {
         }
     }
 
-    public EntityOsirisBossFireball(World world, double x, double y, double z, double accelX, double accelY,
-            double accelZ) {
+    public EntityOsirisBossFireball(final World world, final double x, final double y, final double z,
+            final double accelX, final double accelY, final double accelZ) {
         super(world);
         this.setSize(1.0F, 1.0F);
         this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
         this.setPosition(x, y, z);
-        double d6 = (double) MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
+        final double d6 = MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
         this.accelerationX = accelX / d6 * 0.1D;
         this.accelerationY = accelY / d6 * 0.1D;
         this.accelerationZ = accelZ / d6 * 0.1D;
     }
 
-    public EntityOsirisBossFireball(World world, EntityLivingBase target, double accelX, double accelY, double accelZ) {
+    public EntityOsirisBossFireball(final World world, final EntityLivingBase target, double accelX, double accelY,
+            double accelZ) {
         super(world);
         this.shootingEntity = target;
         this.setSize(1.0F, 1.0F);
@@ -62,7 +63,7 @@ public class EntityOsirisBossFireball extends EntityFireball {
         accelX += this.rand.nextGaussian() * 0.4D;
         accelY += this.rand.nextGaussian() * 0.4D;
         accelZ += this.rand.nextGaussian() * 0.4D;
-        double d3 = (double) MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
+        final double d3 = MathHelper.sqrt_double(accelX * accelX + accelY * accelY + accelZ * accelZ);
         this.accelerationX = accelX / d3 * 0.1D;
         this.accelerationY = accelY / d3 * 0.1D;
         this.accelerationZ = accelZ / d3 * 0.1D;
@@ -72,17 +73,17 @@ public class EntityOsirisBossFireball extends EntityFireball {
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
     @Override
-    public void writeEntityToNBT(NBTTagCompound nbt) {
+    public void writeEntityToNBT(final NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
 
-        nbt.setFloat("damage", damage);
+        nbt.setFloat("damage", this.damage);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
     @Override
-    public void readEntityFromNBT(NBTTagCompound nbt) {
+    public void readEntityFromNBT(final NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
 
         this.damage = nbt.getFloat("damage");

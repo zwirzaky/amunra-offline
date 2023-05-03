@@ -5,26 +5,26 @@ import net.minecraftforge.fluids.Fluid;
 
 public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
 
-    private Fluid fluid;
+    private final Fluid fluid;
 
-    public MothershipFuelDisplayFluid(Fluid fluid) {
+    public MothershipFuelDisplayFluid(final Fluid fluid) {
         this.fluid = fluid;
     }
 
     @Override
     public IIcon getIcon() {
-        return fluid.getIcon();
+        return this.fluid.getIcon();
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public String getDisplayName() {
-        return fluid.getLocalizedName();
+        return this.fluid.getLocalizedName();
     }
 
     @Override
     public int getSpriteNumber() {
-        return fluid.getSpriteNumber();
+        return this.fluid.getSpriteNumber();
     }
 
     @Override
@@ -38,16 +38,16 @@ public class MothershipFuelDisplayFluid extends MothershipFuelDisplay {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (!(other instanceof MothershipFuelDisplayFluid)) {
             return false;
         }
-        return fluid == ((MothershipFuelDisplayFluid) other).fluid;
+        return this.fluid == ((MothershipFuelDisplayFluid) other).fluid;
     }
 
     @Override
     public int hashCode() {
-        return fluid.hashCode() + 89465;
+        return this.fluid.hashCode() + 89465;
     }
 
 }

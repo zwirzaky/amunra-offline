@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
@@ -52,14 +51,16 @@ abstract public class AbstractTab {
 
     protected GuiContainerGC parent;
 
-    public AbstractTab(GuiContainerGC parent, Minecraft mc, int width, int height, int xSize, int ySize) {
-        setWorldAndResolution(mc, width, height, xSize, ySize);
+    public AbstractTab(final GuiContainerGC parent, final Minecraft mc, final int width, final int height,
+            final int xSize, final int ySize) {
+        this.setWorldAndResolution(mc, width, height, xSize, ySize);
         this.parent = parent;
     }
 
     abstract public void initGui();
 
-    public void setWorldAndResolution(Minecraft mc, int width, int height, int xSize, int ySize) {
+    public void setWorldAndResolution(final Minecraft mc, final int width, final int height, final int xSize,
+            final int ySize) {
         this.mc = mc;
         this.fontRendererObj = mc.fontRenderer;
         this.width = width;
@@ -68,49 +69,49 @@ abstract public class AbstractTab {
         this.ySize = ySize;
     }
 
-    public void drawScreen(int mouseX, int mouseY, float ticks) {
+    public void drawScreen(final int mouseX, final int mouseY, final float ticks) {
         // GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         RenderHelper.disableStandardItemLighting();
         // GL11.glDisable(GL11.GL_LIGHTING);
         // GL11.glDisable(GL11.GL_DEPTH_TEST);
-        // super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        // super.drawScreen(mouseX, mouseY, partialTicks);
 
         // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
-        for (GuiButton box : buttonList) {
-            box.drawButton(mc, mouseX, mouseY);
+        for (final GuiButton box : this.buttonList) {
+            box.drawButton(this.mc, mouseX, mouseY);
         }
 
-        for (GuiLabel box : labelList) {
-            box.func_146159_a(mc, mouseX, mouseY);
+        for (final GuiLabel box : this.labelList) {
+            box.func_146159_a(this.mc, mouseX, mouseY);
         }
 
-        drawExtraScreenElements(mouseX, mouseY, ticks);
+        this.drawExtraScreenElements(mouseX, mouseY, ticks);
         /*
          * for(GuiElementTextBox box: textBoxList) { box.drawButton(mc, mouseX, mouseY); }
          */
         RenderHelper.enableGUIStandardItemLighting();
     }
 
-    protected void drawExtraScreenElements(int mouseX, int mouseY, float ticks) {
+    protected void drawExtraScreenElements(final int mouseX, final int mouseY, final float ticks) {
 
     }
 
-    public void addButton(GuiButton btn) {
-        buttonList.add(btn);
+    public void addButton(final GuiButton btn) {
+        this.buttonList.add(btn);
     }
 
-    public void addLabel(GuiLabel label) {
-        labelList.add(label);
+    public void addLabel(final GuiLabel label) {
+        this.labelList.add(label);
     }
 
-    public void addTextBox(GuiElementTextBox box) {
-        textBoxList.add(box);
-        buttonList.add(box);
+    public void addTextBox(final GuiElementTextBox box) {
+        this.textBoxList.add(box);
+        this.buttonList.add(box);
     }
 
-    public boolean actionPerformed(GuiButton btn) {
+    public boolean actionPerformed(final GuiButton btn) {
         return false;
     }
 
@@ -118,9 +119,9 @@ abstract public class AbstractTab {
      * Handles mouse input.
      */
     public void handleMouseInput() {
-        int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
-        int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-        int k = Mouse.getEventButton();
+        final int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
+        final int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+        final int k = Mouse.getEventButton();
 
         if (Mouse.getEventButtonState()) {
             if (this.mc.gameSettings.touchscreen && this.field_146298_h++ > 0) {
@@ -138,16 +139,17 @@ abstract public class AbstractTab {
             this.eventButton = -1;
             this.mouseMovedOrUp(i, j, k);
         } else if (this.eventButton != -1 && this.lastMouseEvent > 0L) {
-            long l = Minecraft.getSystemTime() - this.lastMouseEvent;
+            final long l = Minecraft.getSystemTime() - this.lastMouseEvent;
             this.mouseClickMove(i, j, this.eventButton, l);
         }
     }
 
-    protected void mouseClickMove(int p_146273_1_, int p_146273_2_, int p_146273_3_, long p_146273_4_) {}
+    protected void mouseClickMove(final int mouseX, final int mouseY, final int clickedMouseButton,
+            final long timeSinceLastClick) {}
 
-    protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_) {
-        if (this.selectedButton != null && p_146286_3_ == 0) {
-            this.selectedButton.mouseReleased(p_146286_1_, p_146286_2_);
+    protected void mouseMovedOrUp(final int mouseX, final int mouseY, final int state) {
+        if (this.selectedButton != null && state == 0) {
+            this.selectedButton.mouseReleased(mouseX, mouseY);
             this.selectedButton = null;
         }
     }
@@ -160,10 +162,10 @@ abstract public class AbstractTab {
     /**
      * This function is what controls the hotbar shortcut check when you press a number key when hovering a stack.
      */
-    protected boolean checkHotbarKeys(int p_146983_1_) {
+    protected boolean checkHotbarKeys(final int keyCode) {
         if (this.mc.thePlayer.inventory.getItemStack() == null && this.theSlot != null) {
             for (int j = 0; j < 9; ++j) {
-                if (p_146983_1_ == this.mc.gameSettings.keyBindsHotbar[j].getKeyCode()) {
+                if (keyCode == this.mc.gameSettings.keyBindsHotbar[j].getKeyCode()) {
                     this.handleMouseClick(this.theSlot, this.theSlot.slotNumber, j, 2);
                     return true;
                 }
@@ -173,18 +175,18 @@ abstract public class AbstractTab {
         return false;
     }
 
-    protected void handleMouseClick(Slot p_146984_1_, int p_146984_2_, int p_146984_3_, int p_146984_4_) {
+    protected void handleMouseClick(final Slot slotIn, final int slotId, final int clickedButton, final int clickType) {
         /*
-         * if (p_146984_1_ != null) { p_146984_2_ = p_146984_1_.slotNumber; }
-         * this.mc.playerController.windowClick(this.inventorySlots.windowId, p_146984_2_, p_146984_3_, p_146984_4_,
+         * if (slotIn != null) { slotId = slotIn.slotNumber; }
+         * this.mc.playerController.windowClick(this.inventorySlots.windowId, slotId, clickedButton, clickType,
          * this.mc.thePlayer);
          */
     }
 
-    public boolean keyTyped(char keyChar, int keyID) {
+    public boolean keyTyped(final char keyChar, final int keyID) {
         if (keyID != Keyboard.KEY_ESCAPE /* && keyID != this.mc.gameSettings.keyBindInventory.getKeyCode() */) {
             // do the fields
-            for (GuiElementTextBox box : textBoxList) {
+            for (final GuiElementTextBox box : this.textBoxList) {
                 if (box.keyTyped(keyChar, keyID)) {
                     return true;
                 }
@@ -196,22 +198,22 @@ abstract public class AbstractTab {
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_) {
-        if (p_73864_3_ == 0) {
-            for (int l = 0; l < this.buttonList.size(); ++l) {
-                GuiButton guibutton = (GuiButton) this.buttonList.get(l);
+    protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) {
+        if (mouseButton == 0) {
+            for (GuiButton element : this.buttonList) {
+                final GuiButton guibutton = element;
 
-                if (guibutton.mousePressed(this.mc, p_73864_1_, p_73864_2_)) {
-                    ActionPerformedEvent.Pre event = new ActionPerformedEvent.Pre(
-                            (GuiScreen) this.parent,
+                if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
+                    final ActionPerformedEvent.Pre event = new ActionPerformedEvent.Pre(
+                            this.parent,
                             guibutton,
                             this.buttonList);
                     if (MinecraftForge.EVENT_BUS.post(event)) break;
                     this.selectedButton = event.button;
                     event.button.func_146113_a(this.mc.getSoundHandler());
                     this.actionPerformed(event.button);
-                    if (this.equals(this.mc.currentScreen)) MinecraftForge.EVENT_BUS.post(
-                            new ActionPerformedEvent.Post((GuiScreen) this.parent, event.button, this.buttonList));
+                    if (this.equals(this.mc.currentScreen)) MinecraftForge.EVENT_BUS
+                            .post(new ActionPerformedEvent.Post(this.parent, event.button, this.buttonList));
                 }
             }
         }

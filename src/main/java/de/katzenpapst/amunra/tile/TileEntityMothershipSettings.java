@@ -36,25 +36,25 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public ItemStack getStackInSlot(int p_70301_1_) {
+    public ItemStack getStackInSlot(final int slotIn) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_) {
+    public ItemStack decrStackSize(final int index, final int count) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_) {
+    public ItemStack getStackInSlotOnClosing(final int index) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
+    public void setInventorySlotContents(final int index, final ItemStack stack) {
         // TODO Auto-generated method stub
 
     }
@@ -76,9 +76,9 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
         // hm, test
-        if (!isOnMothership()) {
+        if (!this.isOnMothership()) {
             return false;
         }
 
@@ -95,19 +95,19 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
+    public boolean isItemValidForSlot(final int index, final ItemStack stack) {
         return false;
     }
 
     public boolean isOnMothership() {
-        return (this.worldObj.provider instanceof MothershipWorldProvider);
+        return this.worldObj.provider instanceof MothershipWorldProvider;
     }
 
     public Mothership getMothership() {
-        if (!isOnMothership()) {
+        if (!this.isOnMothership()) {
             return null;
         }
-        return (Mothership) ((MothershipWorldProvider) worldObj.provider).getCelestialBody();
+        return (Mothership) ((MothershipWorldProvider) this.worldObj.provider).getCelestialBody();
     }
 
 }

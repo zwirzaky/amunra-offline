@@ -29,13 +29,12 @@ public class NeperChunkProvider extends AmunraChunkProvider {
     protected final BlockMetaPair grassBlock = new BlockMetaPair(Blocks.grass, (byte) 0);
     protected final BlockMetaPair stoneBlock = new BlockMetaPair(Blocks.stone, (byte) 0);
 
-    public NeperChunkProvider(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
+    public NeperChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
     }
 
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
-        // TODO Auto-generated method stub
         return new NeperBiomeDecorator();
     }
 
@@ -58,30 +57,29 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected BlockMetaPair getDirtBlock() {
-        return dirtBlock;
+        return this.dirtBlock;
     }
 
     @Override
     protected BlockMetaPair getGrassBlock() {
-        return grassBlock;
+        return this.grassBlock;
     }
 
     @Override
     protected BlockMetaPair getStoneBlock() {
-        return stoneBlock;
+        return this.stoneBlock;
     }
 
     @Override
     public double getHeightModifier() {
-        // TODO Auto-generated method stub
         return 10;
     }
 
     @Override
     protected SpawnListEntry[] getMonsters() {
-        SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
-        SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
-        SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
+        final SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
+        final SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
+        final SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
 
         return new SpawnListEntry[] { skele, creeper, zombie };
     }
@@ -108,18 +106,17 @@ public class NeperChunkProvider extends AmunraChunkProvider {
 
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
-        // TODO fill in with caves and villages
-        return new ArrayList<MapGenBaseMeta>();
+        return new ArrayList<>();
     }
 
     @Override
-    public void onChunkProvide(int arg0, int arg1, Block[] arg2, byte[] arg3) {}
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {}
 
     @Override
-    public void onPopulate(IChunkProvider arg0, int arg1, int arg2) {}
+    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {}
 
     @Override
-    public boolean chunkExists(int x, int y) {
+    public boolean chunkExists(final int x, final int y) {
         return false;
     }
 

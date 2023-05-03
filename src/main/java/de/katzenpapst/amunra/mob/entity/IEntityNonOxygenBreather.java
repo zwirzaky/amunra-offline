@@ -13,5 +13,5 @@ public interface IEntityNonOxygenBreather {
      * @param isInSealedArea if true, behave as if oxygen is present in the atmosphere
      * @return
      */
-    public boolean canBreatheIn(ArrayList<IAtmosphericGas> atmosphere, boolean isInSealedArea);
+    boolean canBreatheIn(ArrayList<IAtmosphericGas> atmosphere, boolean isInSealedArea);
 }

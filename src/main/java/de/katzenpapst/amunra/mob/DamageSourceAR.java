@@ -17,7 +17,7 @@ public class DamageSourceAR {
             .setDamageAllowedInCreativeMode();
     public static DamageSource dsEngine = new DamageSource("death.attack.killedByEngine");
 
-    public static DamageSource getDSCrashIntoPlanet(CelestialBody body) {
+    public static DamageSource getDSCrashIntoPlanet(final CelestialBody body) {
         return new DamageSourceCrash(body.getUnlocalizedName());
     }
 
@@ -25,7 +25,7 @@ public class DamageSourceAR {
 
         protected String bodyName;
 
-        public DamageSourceCrash(String bodyName) {
+        public DamageSourceCrash(final String bodyName) {
             super("fallOffMothershipIntoPlanet");
             this.setDamageBypassesArmor();
             this.setDamageAllowedInCreativeMode();
@@ -33,9 +33,9 @@ public class DamageSourceAR {
         }
 
         @Override
-        public IChatComponent func_151519_b(EntityLivingBase p_151519_1_) {
+        public IChatComponent func_151519_b(final EntityLivingBase p_151519_1_) {
             // EntityLivingBase entitylivingbase1 = p_151519_1_.func_94060_bK();
-            String s = "death.attack." + this.damageType;
+            final String s = "death.attack." + this.damageType;
             return new ChatComponentTranslation(
                     s,
                     p_151519_1_.func_145748_c_(),
@@ -47,7 +47,8 @@ public class DamageSourceAR {
     /**
      * returns EntityDamageSourceIndirect of an arrow
      */
-    public static DamageSource causeLaserDamage(String langKey, EntityBaseLaserArrow arrow, Entity shooter) {
-        return (new EntityDamageSourceIndirect(langKey, arrow, shooter)).setProjectile();
+    public static DamageSource causeLaserDamage(final String langKey, final EntityBaseLaserArrow arrow,
+            final Entity shooter) {
+        return new EntityDamageSourceIndirect(langKey, arrow, shooter).setProjectile();
     }
 }

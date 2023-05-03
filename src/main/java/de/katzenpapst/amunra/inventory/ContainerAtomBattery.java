@@ -9,16 +9,16 @@ import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerAtomBattery extends ContainerWithPlayerInventory {
 
-    public ContainerAtomBattery(InventoryPlayer par1InventoryPlayer, TileEntityIsotopeGenerator solarGen) {
+    public ContainerAtomBattery(final InventoryPlayer par1InventoryPlayer, final TileEntityIsotopeGenerator solarGen) {
         super(solarGen);
 
         this.addSlotToContainer(new SlotSpecific(solarGen, 0, 152, 83, ItemElectricBase.class));
 
-        initPlayerInventorySlots(par1InventoryPlayer);
+        this.initPlayerInventorySlots(par1InventoryPlayer);
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer var1) {
+    public boolean canInteractWith(final EntityPlayer var1) {
         return ((TileEntityIsotopeGenerator) this.tileEntity).isUseableByPlayer(var1);
     }
 

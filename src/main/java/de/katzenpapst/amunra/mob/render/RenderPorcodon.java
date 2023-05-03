@@ -25,7 +25,7 @@ public class RenderPorcodon extends RenderLiving {
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
     @Override
-    protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+    protected ResourceLocation getEntityTexture(final Entity p_110775_1_) {
         return pTextures;
     }
 

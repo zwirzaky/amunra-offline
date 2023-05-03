@@ -7,17 +7,17 @@ import de.katzenpapst.amunra.vec.Vector3int;
 
 public interface ITileDungeonSpawner {
 
-    public void setSpawnedBoss(IAmunRaBoss boss);
+    void setSpawnedBoss(IAmunRaBoss boss);
 
-    public IAmunRaBoss getSpawnedBoss();
+    IAmunRaBoss getSpawnedBoss();
 
-    public Vector3int getBlockPosition();
+    Vector3int getBlockPosition();
 
-    public AxisAlignedBB getRoomArea();
+    AxisAlignedBB getRoomArea();
 
-    public void setRoomArea(AxisAlignedBB aabb);
+    void setRoomArea(AxisAlignedBB aabb);
 
-    public void setBossClass(Class<? extends IAmunRaBoss> theClass);
+    void setBossClass(Class<? extends IAmunRaBoss> theClass);
 
-    public void onBossDefeated();
+    void onBossDefeated();
 }

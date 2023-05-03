@@ -17,7 +17,7 @@ public class MethaneGrass extends SubBlockGrass {
     @SideOnly(Side.CLIENT)
     protected IIcon blockIconBottom;
 
-    public MethaneGrass(String name) {
+    public MethaneGrass(final String name) {
         super(name, "amunra:methanegrass", "amunra:methanegrassside", "amunra:methanedirt");
     }
 
@@ -43,9 +43,9 @@ public class MethaneGrass extends SubBlockGrass {
      * @return
      */
     @Override
-    public boolean canLiveHere(World world, int x, int y, int z) {
+    public boolean canLiveHere(final World world, final int x, final int y, final int z) {
         // now this grass can only live in a methane atmosphere
-        return (world.provider instanceof WorldProviderSpace) && super.canLiveHere(world, x, y, z)
+        return world.provider instanceof WorldProviderSpace && super.canLiveHere(world, x, y, z)
                 && ((WorldProviderSpace) world.provider).isGasPresent(IAtmosphericGas.METHANE);
         // !OxygenUtil.testContactWithBreathableAir(world, world.getBlock(x, y+1, z), x, y, z, 0);
     }
@@ -61,7 +61,7 @@ public class MethaneGrass extends SubBlockGrass {
      * @return
      */
     @Override
-    public boolean canSpread(World world, int x, int y, int z) {
+    public boolean canSpread(final World world, final int x, final int y, final int z) {
         return world.getBlockLightValue(x, y + 1, z) >= 9;
     }
 

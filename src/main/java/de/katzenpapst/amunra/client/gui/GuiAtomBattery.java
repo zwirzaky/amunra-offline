@@ -30,7 +30,7 @@ public class GuiAtomBattery extends GuiContainerGC {
     private final TileEntityIsotopeGenerator generatorTile;
 
     private GuiButton buttonEnableSolar;
-    private GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(
+    private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(
             (this.width - this.xSize) / 2 + 107,
             (this.height - this.ySize) / 2 + 101,
             56,
@@ -40,7 +40,7 @@ public class GuiAtomBattery extends GuiContainerGC {
             this.height,
             this);
 
-    public GuiAtomBattery(InventoryPlayer par1InventoryPlayer, TileEntityIsotopeGenerator generator) {
+    public GuiAtomBattery(final InventoryPlayer par1InventoryPlayer, final TileEntityIsotopeGenerator generator) {
         super(new ContainerAtomBattery(par1InventoryPlayer, generator));
         this.generatorTile = generator;
         this.ySize = 201;
@@ -48,7 +48,7 @@ public class GuiAtomBattery extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
+    protected void actionPerformed(final GuiButton par1GuiButton) {
         switch (par1GuiButton.id) {
             case 0:
                 GalacticraftCore.packetPipeline.sendToServer(
@@ -63,7 +63,7 @@ public class GuiAtomBattery extends GuiContainerGC {
     @Override
     public void initGui() {
         super.initGui();
-        List<String> electricityDesc = new ArrayList<String>();
+        final List<String> electricityDesc = new ArrayList<>();
         electricityDesc.add(GCCoreUtil.translate("gui.energyStorage.desc.0"));
         electricityDesc.add(
                 EnumColor.YELLOW + GCCoreUtil.translate("gui.energyStorage.desc.1")
@@ -75,7 +75,7 @@ public class GuiAtomBattery extends GuiContainerGC {
         this.electricInfoRegion.parentWidth = this.width;
         this.electricInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.electricInfoRegion);
-        List<String> batterySlotDesc = new ArrayList<String>();
+        final List<String> batterySlotDesc = new ArrayList<>();
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.0"));
         batterySlotDesc.add(GCCoreUtil.translate("gui.batterySlot.desc.1"));
         this.infoRegions.add(
@@ -101,8 +101,8 @@ public class GuiAtomBattery extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        int offsetY = 35;
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
+        final int offsetY = 35;
         this.buttonEnableSolar.enabled = this.generatorTile.disableCooldown == 0;
         this.buttonEnableSolar.displayString = !this.generatorTile.getDisabled(0)
                 ? GCCoreUtil.translate("gui.button.disable.name")
@@ -125,7 +125,7 @@ public class GuiAtomBattery extends GuiContainerGC {
                 4210752);
 
         /* TODO maybe make the temperature a boost? the colder the better? */
-        float boost = Math.round((this.generatorTile.getEnvironmentalEnergyBoost() - 1) * 1000) / 10.0F;
+        final float boost = Math.round((this.generatorTile.getEnvironmentalEnergyBoost() - 1) * 1000) / 10.0F;
         displayString = GCCoreUtil.translate("gui.message.environment.name") + ": " + boost + "%";
         this.fontRendererObj.drawString(
                 displayString,
@@ -137,14 +137,14 @@ public class GuiAtomBattery extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(solarGuiTexture);
         final int xPos = (this.width - this.xSize) / 2;
         final int yPos = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(xPos, yPos, 0, 0, this.xSize, this.ySize);
 
-        List<String> electricityDesc = new ArrayList<String>();
+        final List<String> electricityDesc = new ArrayList<>();
         EnergyDisplayHelper.getEnergyDisplayTooltip(
                 this.generatorTile.getEnergyStoredGC(),
                 this.generatorTile.getMaxEnergyStoredGC(),
