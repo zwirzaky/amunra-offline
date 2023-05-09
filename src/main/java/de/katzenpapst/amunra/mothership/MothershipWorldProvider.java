@@ -267,7 +267,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     public String getDimensionName() {
-        return this.mothershipObj.getLocalizedName();
+        return this.mothershipObj == null ? "Mothership" : this.mothershipObj.getLocalizedName();
     }
 
     @Override

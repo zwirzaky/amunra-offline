@@ -236,8 +236,9 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      * @return
      */
     @Override
-    public String getHarvestTool(final int metadata) {
-        return this.getSubBlock(metadata).getHarvestTool(metadata);
+    public String getHarvestTool(int metadata) {
+        final SubBlock sb = this.getSubBlock(metadata);
+        return sb == null ? null : sb.getHarvestTool(metadata);
     }
 
     /**
@@ -248,8 +249,9 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      * @return Harvest level, or -1 if not the specified tool type.
      */
     @Override
-    public int getHarvestLevel(final int metadata) {
-        return this.getSubBlock(metadata).getHarvestLevel(metadata);
+    public int getHarvestLevel(int metadata) {
+        final SubBlock sb = this.getSubBlock(metadata);
+        return sb == null ? -1 : sb.getHarvestLevel(metadata);
     }
 
     /**
