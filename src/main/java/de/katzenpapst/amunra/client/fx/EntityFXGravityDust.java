@@ -2,6 +2,7 @@ package de.katzenpapst.amunra.client.fx;
 
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;

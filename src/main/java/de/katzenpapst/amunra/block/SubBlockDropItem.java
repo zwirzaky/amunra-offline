@@ -52,7 +52,8 @@ public class SubBlockDropItem extends SubBlock {
 
     @Override
     public int quantityDropped(int meta, int fortune, Random random) {
-        int result = (int) (this.quantityDropped(random) * MathHelper.getRandomIntegerInRange(random, 1, fortune + 2) * this.bonusDropMultiplier);
+        int result = (int) (this.quantityDropped(random) * MathHelper.getRandomIntegerInRange(random, 1, fortune + 2)
+                * this.bonusDropMultiplier);
         if (result < this.baseDropRateMin) {
             result = this.baseDropRateMin;
         }

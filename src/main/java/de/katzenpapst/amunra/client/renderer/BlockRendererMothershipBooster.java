@@ -41,19 +41,17 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
     }
 
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelId,
-            RenderBlocks renderer) {
+    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
         if (block instanceof BlockMothershipBoosterMeta blockBooster) {
-            final MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) blockBooster
-                    .getSubBlock(metadata);
+            final MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) blockBooster.getSubBlock(metadata);
             final ResourceLocation texture = sb.getBoosterTexture();
             this.renderBooster(texture);
         }
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block,
-            int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
+            RenderBlocks renderer) {
         // this happens in the tileentity
         return false;
     }

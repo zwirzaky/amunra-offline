@@ -844,7 +844,7 @@ public class RecipeHelper {
             ores.toArray(asArray);
             return asArray;
         }
-        if (input instanceof ItemStack[] inputAsStacks) {
+        if (input instanceof ItemStack[]inputAsStacks) {
             return inputAsStacks;
         }
         throw new RuntimeException("Bad input");
@@ -1207,7 +1207,7 @@ public class RecipeHelper {
     }
 
     public static INasaWorkbenchRecipe getMostCompleteRecipeFor(final Item expectedOutput) {
-        if(nasaWorkbenchRecipes.containsKey(expectedOutput)) {
+        if (nasaWorkbenchRecipes.containsKey(expectedOutput)) {
             return nasaWorkbenchRecipes.get(expectedOutput).lastElement();
         }
         return null;
@@ -1217,8 +1217,7 @@ public class RecipeHelper {
      * gets an arraylist of the recipe. if there are multiple possibilities for the same slot, it will contain multiple
      * itemstacks
      */
-    public static Map<Integer, Set<ItemDamagePair>> getNasaWorkbenchRecipeForContainer(
-            final Item expectedOutput) {
+    public static Map<Integer, Set<ItemDamagePair>> getNasaWorkbenchRecipeForContainer(final Item expectedOutput) {
 
         final Map<Integer, Set<ItemDamagePair>> result = new HashMap<>();
 

@@ -77,7 +77,7 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
 
     @Override
     public int getMetaByName(final String name) {
-        if(this.nameMetaMap.containsKey(name)) {
+        if (this.nameMetaMap.containsKey(name)) {
             return this.nameMetaMap.get(name);
         }
         throw new IllegalArgumentException("Subblock " + name + " doesn't exist in " + this.blockNameFU);
@@ -144,7 +144,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public float getExplosionResistance(Entity exploder, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity exploder, World world, int x, int y, int z, double explosionX,
+            double explosionY, double explosionZ) {
         final int metadata = world.getBlockMetadata(x, y, z);
         return this.getSubBlock(metadata)
                 .getExplosionResistance(exploder, world, x, y, z, explosionX, explosionY, explosionZ);
@@ -242,7 +243,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
         final int meta = worldIn.getBlockMetadata(x, y, z);
         return this.getSubBlock(meta).onBlockActivated(worldIn, x, y, z, player, side, subX, subY, subZ);
     }
@@ -279,9 +281,13 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public boolean canSustainPlant(IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable) {
+    public boolean canSustainPlant(IBlockAccess world, int x, int y, int z, ForgeDirection direction,
+            IPlantable plantable) {
         if (plantable instanceof SubBlockBush sbBush) {
-            return sbBush.canPlaceOn(plantable.getPlant(world, x, y + 1, z), plantable.getPlantMetadata(world, x, y + 1, z), 0);
+            return sbBush.canPlaceOn(
+                    plantable.getPlant(world, x, y + 1, z),
+                    plantable.getPlantMetadata(world, x, y + 1, z),
+                    0);
         }
         return super.canSustainPlant(world, x, y, z, direction, plantable);
     }
@@ -311,7 +317,8 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
     }
 
     @Override
-    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta) {
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ,
+            int meta) {
         return this.getSubBlock(meta).onBlockPlaced(worldIn, x, y, z, side, subX, subY, subZ, meta);
     }
 

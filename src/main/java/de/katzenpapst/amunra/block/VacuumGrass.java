@@ -26,8 +26,7 @@ public class VacuumGrass extends SubBlockGrass {
 
     @Override
     public boolean canLiveHere(final World world, final int x, final int y, final int z) {
-        return world.provider instanceof WorldProviderSpace spaceProvider
-                && spaceProvider.getCelestialBody() != null
+        return world.provider instanceof WorldProviderSpace spaceProvider && spaceProvider.getCelestialBody() != null
                 && spaceProvider.getCelestialBody().atmosphere.isEmpty()
                 && super.canLiveHere(world, x, y, z);
 

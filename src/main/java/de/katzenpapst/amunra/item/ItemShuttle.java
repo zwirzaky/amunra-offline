@@ -62,7 +62,8 @@ public class ItemShuttle extends Item implements IHoldableItem {
     }
 
     @Override
-    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
+    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_,
+            int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
         boolean padFound = false;
         TileEntity tile = null;
 
@@ -145,7 +146,8 @@ public class ItemShuttle extends Item implements IHoldableItem {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_,
+            boolean p_77624_4_) {
         final int dmg = p_77624_1_.getItemDamage();
         final EnumRocketType type = EntityShuttle.getRocketTypeFromDamage(dmg);
 

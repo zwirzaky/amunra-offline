@@ -73,7 +73,7 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public int getMetaByName(final String name) {
-        if(this.nameMetaMap.containsKey(name)) {
+        if (this.nameMetaMap.containsKey(name)) {
             return this.nameMetaMap.get(name);
         }
         throw new IllegalArgumentException("Subblock " + name + " doesn't exist");
@@ -177,7 +177,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     }
 
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+            double explosionY, double explosionZ) {
         final int metadata = world.getBlockMetadata(x, y, z);
         return this.getSubBlock(metadata)
                 .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);

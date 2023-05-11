@@ -37,8 +37,7 @@ public class ItemRendererSpecial1 implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-            final ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, final ItemRendererHelper helper) {
         return true;
     }
 

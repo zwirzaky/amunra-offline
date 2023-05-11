@@ -36,7 +36,7 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     protected TileEntityMothershipEngineAbstract getMyTileEntity(final World world, final int x, final int y,
             final int z) {
-        if(world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineAbstract tileEngine) {
+        if (world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineAbstract tileEngine) {
             return tileEngine;
         }
         // TODO throw exception instead

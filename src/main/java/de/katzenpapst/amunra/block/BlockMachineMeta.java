@@ -81,7 +81,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+            double explosionY, double explosionZ) {
         final int metadata = world.getBlockMetadata(x, y, z);
         return this.getSubBlock(metadata)
                 .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
@@ -116,7 +117,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
             throw new IllegalArgumentException("BlockMachineMeta can only accept SubBlockMachine");
         }
         if (meta >= this.subBlocksArray.length || meta < 0) {
-            throw new IllegalArgumentException("Meta " + meta + " must be < " + this.subBlocksArray.length + " and >= 0");
+            throw new IllegalArgumentException(
+                    "Meta " + meta + " must be < " + this.subBlocksArray.length + " and >= 0");
         }
         if (this.subBlocksArray[meta] != null) {
             throw new IllegalArgumentException("Meta " + meta + " is already in use in " + this.blockNameFU);
@@ -133,7 +135,7 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
 
     @Override
     public int getMetaByName(final String name) {
-        if(this.nameMetaMap.containsKey(name)) {
+        if (this.nameMetaMap.containsKey(name)) {
             return this.nameMetaMap.get(name);
         }
         throw new IllegalArgumentException("Subblock " + name + " doesn't exist in " + this.blockNameFU);
@@ -349,7 +351,8 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     }
 
     @Override
-    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta) {
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ,
+            int meta) {
         return this.getSubBlock(meta).onBlockPlaced(worldIn, x, y, z, side, subX, subY, subZ, meta);
     }
 

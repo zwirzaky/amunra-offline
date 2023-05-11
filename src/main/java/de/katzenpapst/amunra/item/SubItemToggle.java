@@ -101,7 +101,8 @@ public class SubItemToggle extends SubItem {
     }
 
     @Override
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_,
+            boolean p_77624_4_) {
         super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
 
         if (this.getState(p_77624_1_)) {

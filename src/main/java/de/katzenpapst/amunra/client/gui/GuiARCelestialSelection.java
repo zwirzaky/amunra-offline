@@ -204,7 +204,13 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                 tooltipY + widhtOffsetOrSo + 3,
                 colorBG,
                 colorBG);
-        this.drawGradientRect(tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + widhtOffsetOrSo + 3, colorBG, colorBG);
+        this.drawGradientRect(
+                tooltipX - 4,
+                tooltipY - 3,
+                tooltipX - 3,
+                tooltipY + widhtOffsetOrSo + 3,
+                colorBG,
+                colorBG);
         this.drawGradientRect(
                 tooltipX + stringWidth + 3,
                 tooltipY - 3,
@@ -228,7 +234,13 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
                 tooltipY + widhtOffsetOrSo + 3 - 1,
                 colorBorderStart,
                 colorBorderEnd);
-        this.drawGradientRect(tooltipX - 3, tooltipY - 3, tooltipX + stringWidth + 3, tooltipY - 3 + 1, colorBorderStart, colorBorderStart);
+        this.drawGradientRect(
+                tooltipX - 3,
+                tooltipY - 3,
+                tooltipX + stringWidth + 3,
+                tooltipY - 3 + 1,
+                colorBorderStart,
+                colorBorderStart);
         this.drawGradientRect(
                 tooltipX - 3,
                 tooltipY + widhtOffsetOrSo + 2,

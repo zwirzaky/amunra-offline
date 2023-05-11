@@ -24,7 +24,7 @@ public class MothershipEngineJetIon extends MothershipEngineJetBase {
 
     @Override
     protected TileEntityMothershipEngineIon getMyTileEntity(final World world, final int x, final int y, final int z) {
-        if(world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineIon tileEngine) {
+        if (world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineIon tileEngine) {
             return tileEngine;
         }
         // TODO throw exception instead

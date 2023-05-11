@@ -29,7 +29,8 @@ public class BlockGravitation extends SubBlockMachine {
     private IIcon backIcon = null;
     private IIcon sideIcon = null;
 
-    public BlockGravitation(final String name, final String frontInactiveTexture, final String sideTexture, final String backTexture) {
+    public BlockGravitation(final String name, final String frontInactiveTexture, final String sideTexture,
+            final String backTexture) {
         super(name, frontInactiveTexture);
 
         this.backTexture = backTexture;

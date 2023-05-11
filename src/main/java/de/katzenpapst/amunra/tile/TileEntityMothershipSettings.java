@@ -46,8 +46,7 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
-    }
+    public void setInventorySlotContents(int index, ItemStack stack) {}
 
     @Override
     public String getInventoryName() {

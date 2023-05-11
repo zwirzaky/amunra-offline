@@ -101,10 +101,12 @@ public class BlockOreMulti extends BlockBasicMeta {
     }
 
     @Override
-    public float getExplosionResistance(Entity exploder, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity exploder, World world, int x, int y, int z, double explosionX,
+            double explosionY, double explosionZ) {
         return Math.max(
                 super.getExplosionResistance(exploder, world, x, y, z, explosionX, explosionY, explosionZ),
-                this.getExplosionResistance(exploder) // default resistance, should default to this.blockResistance / 5.0F
+                this.getExplosionResistance(exploder) // default resistance, should default to this.blockResistance /
+                                                      // 5.0F
         );
     }
 

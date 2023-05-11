@@ -111,7 +111,8 @@ public class ItemThermalSuit extends Item implements IItemThermal {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_,
+            boolean p_77624_4_) {
         p_77624_3_.add(GCCoreUtil.translateWithFormat("item.thermalSuit.thermalLevel.name", this.thermalStrength));
         /*
          * String info = getSubItem(par1ItemStack.getItemDamage()).getItemInfo(); if(info != null) {

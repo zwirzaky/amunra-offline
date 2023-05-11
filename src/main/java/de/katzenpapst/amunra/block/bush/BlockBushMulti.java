@@ -74,7 +74,8 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * func_149851_a is basically a stillGrowing() method. It returns (or should return) true if the growth stage is
      * less than the max growth stage.
      *
-     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding
+     *      IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
     public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient) {
@@ -86,7 +87,8 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * func_149852_a is basically a canBoneMealSpeedUpGrowth() method. I usually just return true, but depends on your
      * crop.
      * 
-     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding
+     *      IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
     public boolean func_149852_a(World worldIn, Random random, int x, int y, int z) {
@@ -99,7 +101,8 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * metadata so then in this method you would increment it if it wasn't already at maximum and store back in
      * metadata.
      *
-     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding
+     *      IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
     public void func_149853_b(World worldIn, Random random, int x, int y, int z) {

@@ -73,7 +73,8 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
         final TileEntityMulti tileEntity = (TileEntityMulti) worldIn.getTileEntity(x, y, z);
         return tileEntity.onBlockActivated(worldIn, x, y, z, player);
     }

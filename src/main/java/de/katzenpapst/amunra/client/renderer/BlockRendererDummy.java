@@ -19,14 +19,13 @@ public class BlockRendererDummy implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelId,
-            final RenderBlocks renderer) {
+    public void renderInventoryBlock(Block block, int metadata, int modelId, final RenderBlocks renderer) {
         // don't
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block,
-            int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
+            RenderBlocks renderer) {
         // don't do anything
         return true;
     }

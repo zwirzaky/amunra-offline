@@ -34,8 +34,10 @@ public class BlockLogMeta extends BlockBasicMeta {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int side, int meta) {
-         /*Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
-         Face 5 (Eastern Face)*/
+        /*
+         * Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
+         * Face 5 (Eastern Face)
+         */
         final int rotationMeta = (meta & 12) >> 2;
 
         return this.getSubBlock(meta).getIcon(side, rotationMeta);
@@ -67,7 +69,8 @@ public class BlockLogMeta extends BlockBasicMeta {
     }
 
     @Override
-    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta) {
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ,
+            int meta) {
         final int actualMeta = meta & 3;
         final int rotationalMeta = switch (side) {
             case 2, 3 -> 8;

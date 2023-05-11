@@ -95,13 +95,14 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
     }
 
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+            double explosionY, double explosionZ) {
         return this.getSourceBlock()
                 .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     /// block-dependent functions
-    
+
     @Override
     public void onBlockClicked(World worldIn, int x, int y, int z, EntityPlayer player) {
         // I don't see any reason for this to be proxied to the source block, but meh
@@ -195,7 +196,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
         return this.getSourceBlock().onBlockActivated(worldIn, x, y, z, player, 0, 0.0F, 0.0F, 0.0F);
     }
 

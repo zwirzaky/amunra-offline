@@ -197,8 +197,10 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
     }
 
     @Override
-    public void setThrowableHeading(double p_70186_1_, double p_70186_3_, double p_70186_5_, float p_70186_7_, float p_70186_8_) {
-        final float f2 = MathHelper.sqrt_double(p_70186_1_ * p_70186_1_ + p_70186_3_ * p_70186_3_ + p_70186_5_ * p_70186_5_);
+    public void setThrowableHeading(double p_70186_1_, double p_70186_3_, double p_70186_5_, float p_70186_7_,
+            float p_70186_8_) {
+        final float f2 = MathHelper
+                .sqrt_double(p_70186_1_ * p_70186_1_ + p_70186_3_ * p_70186_3_ + p_70186_5_ * p_70186_5_);
         p_70186_1_ /= f2;
         p_70186_3_ /= f2;
         p_70186_5_ /= f2;
@@ -375,8 +377,7 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
                             if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity
                                     && movingobjectposition.entityHit instanceof EntityPlayer
                                     && this.shootingEntity instanceof EntityPlayerMP entityPlayer) {
-                                entityPlayer.playerNetServerHandler
-                                        .sendPacket(new S2BPacketChangeGameState(6, 0.0F));
+                                entityPlayer.playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
                             }
                         }
 

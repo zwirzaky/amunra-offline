@@ -177,8 +177,7 @@ public class GuiHelper {
     }
 
     /**
-     * Equivalent to {@link GCCoreUtil#translateWithSplit(String)}, but will also add a
-     * colorcode to every line
+     * Equivalent to {@link GCCoreUtil#translateWithSplit(String)}, but will also add a colorcode to every line
      */
     public static List<String> translateWithSplitColor(final String key, final EnumColor color) {
         String translated = StatCollector.translateToLocal(key);

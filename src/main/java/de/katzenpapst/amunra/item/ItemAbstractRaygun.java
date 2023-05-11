@@ -67,8 +67,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
          * ArrowNockEvent event = new ArrowNockEvent(entityPlayer, itemStack); MinecraftForge.EVENT_BUS.post(event); if
          * (event.isCanceled()) { return event.result; }
          */
-        if (player.capabilities.isCreativeMode
-                || this.getElectricityStored(itemStackIn) >= this.getEnergyPerShot()) {
+        if (player.capabilities.isCreativeMode || this.getElectricityStored(itemStackIn) >= this.getEnergyPerShot()) {
 
             player.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
             if (!this.chargeMode) {

@@ -47,10 +47,10 @@ public class BlockHydroponics extends SubBlockMachine {
     @Override
     public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta) {
         // drop harvest items
-        if(worldIn.getTileEntity(x, y, z) instanceof TileEntityHydroponics tileHydroponics) {
+        if (worldIn.getTileEntity(x, y, z) instanceof TileEntityHydroponics tileHydroponics) {
             for (final ItemStack stack : tileHydroponics.getHarvest()) {
                 if (stack == null) continue;
-                
+
                 final Random random = new Random();
                 final float randX = random.nextFloat() * 0.8F + 0.1F;
                 final float randY = random.nextFloat() * 0.8F + 0.1F;
@@ -80,7 +80,7 @@ public class BlockHydroponics extends SubBlockMachine {
                     itemEntity.motionZ = (float) random.nextGaussian() * 0.05F;
                     worldIn.spawnEntityInWorld(itemEntity);
                 }
-            
+
             }
         }
     }

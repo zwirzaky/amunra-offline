@@ -638,7 +638,8 @@ public class EntityShuttle extends EntityTieredRocket {
         if (tile instanceof IFuelDock dock && this.isDockValid(dock)) {
             if (!this.worldObj.isRemote) {
                 // Drop any existing rocket on the landing pad
-                if (dock.getDockedEntity() instanceof EntitySpaceshipBase entitySpaceship && dock.getDockedEntity() != this) {
+                if (dock.getDockedEntity() instanceof EntitySpaceshipBase entitySpaceship
+                        && dock.getDockedEntity() != this) {
                     entitySpaceship.dropShipAsItem();
                     entitySpaceship.setDead();
                 }

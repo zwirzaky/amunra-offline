@@ -136,8 +136,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         final String str = "" + amount + "/" + requiredAmount;
         final boolean valid = amount >= requiredAmount;
 
-        final int color = valid | this.mc.thePlayer.capabilities.isCreativeMode ? 0xFF00FF00
-                : 0xFFFF0000;
+        final int color = valid | this.mc.thePlayer.capabilities.isCreativeMode ? 0xFF00FF00 : 0xFFFF0000;
         this.smallFontRenderer.drawString(
                 str,
                 xPos + 8 - this.smallFontRenderer.getStringWidth(str) / 2,

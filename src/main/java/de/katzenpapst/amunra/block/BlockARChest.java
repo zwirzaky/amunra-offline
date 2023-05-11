@@ -219,7 +219,7 @@ public class BlockARChest extends BlockContainer
         if (!this.canDoublechest || world.isRemote) {
             return;
         }
-        
+
         final boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
         final boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
         final boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
@@ -409,7 +409,8 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
         Object tileEntity = worldIn.getTileEntity(x, y, z);
 
         if (tileEntity == null || worldIn.isSideSolid(x, y + 1, z, ForgeDirection.DOWN)

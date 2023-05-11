@@ -28,7 +28,8 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * func_149851_a is basically a stillGrowing() method. It returns (or should return) true if the growth stage is
      * less than the max growth stage.
      *
-     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding
+     *      IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
     public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient) {
@@ -39,7 +40,8 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * func_149852_a is basically a canBoneMealSpeedUpGrowth() method. I usually just return true, but depends on your
      * crop.
      *
-     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding
+     *      IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
     public boolean func_149852_a(World worldIn, Random random, int x, int y, int z) {
@@ -65,7 +67,8 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
                     final Block block = worldIn.getBlock(nbX, nbY, nbZ);
                     final int blockMeta = worldIn.getBlockMetadata(nbX, nbY, nbZ);
 
-                    if (block == dirtForm.getBlock() && blockMeta == dirtForm.getMetadata() && sb.canLiveHere(worldIn, nbX, nbY, nbZ)) {
+                    if (block == dirtForm.getBlock() && blockMeta == dirtForm.getMetadata()
+                            && sb.canLiveHere(worldIn, nbX, nbY, nbZ)) {
                         worldIn.setBlock(nbX, nbY, nbZ, this, meta, 3);
                     }
                 }
@@ -78,7 +81,8 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * metadata so then in this method you would increment it if it wasn't already at maximum and store back in
      * metadata.
      *
-     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding
+     *      IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
     public void func_149853_b(World worldIn, Random random, int x, int y, int z) {
@@ -98,8 +102,9 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
                     blockAboveX += random.nextInt(3) - 1;
                     blockAboveY += (random.nextInt(3) - 1) * random.nextInt(3) / 2;
                     blockAboveZ += random.nextInt(3) - 1;
-                    if (worldIn.getBlock(blockAboveX, blockAboveY - 1, blockAboveZ) == this && // I hope I can use "this"
-                                                                                             // here
+                    if (worldIn.getBlock(blockAboveX, blockAboveY - 1, blockAboveZ) == this && // I hope I can use
+                                                                                               // "this"
+                                                                                               // here
                             worldIn.getBlockMetadata(blockAboveX, blockAboveY, blockAboveZ) == meta
                             && !worldIn.getBlock(blockAboveX, blockAboveY, blockAboveZ).isNormalCube()) {
                         ++grassNearby;

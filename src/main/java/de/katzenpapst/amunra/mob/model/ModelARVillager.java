@@ -106,7 +106,8 @@ public class ModelARVillager extends ModelVillager {
     }
 
     @Override
-    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
+    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_,
+            float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
         this.villagerHead.rotateAngleY = p_78087_4_ / (180F / (float) Math.PI);
         this.villagerHead.rotateAngleX = p_78087_5_ / (180F / (float) Math.PI);
         this.villagerArms.rotationPointY = 3.0F;
@@ -135,15 +136,9 @@ public class ModelARVillager extends ModelVillager {
     }
 
     @Override
-    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
-        this.setRotationAngles(
-                p_78088_2_,
-                p_78088_3_,
-                p_78088_4_,
-                p_78088_5_,
-                p_78088_6_,
-                p_78088_7_,
-                p_78088_1_);
+    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_,
+            float p_78088_6_, float p_78088_7_) {
+        this.setRotationAngles(p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, p_78088_1_);
         this.villagerHead.render(p_78088_7_);
         this.villagerBody.render(p_78088_7_);
         // this.rightVillagerLeg.render(someConstant);

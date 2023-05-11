@@ -191,21 +191,22 @@ public class MothershipWorldData extends WorldSavedData {
      * Should only be used if only the number of ships around a body is required, otherwise just get the full list
      */
     public int getNumMothershipsForParent(final CelestialBody parent) {
-        if(parent == null) {
+        if (parent == null) {
             return 0;
         }
         return (int) this.mothershipIdList.values().stream().map(Mothership::getParent).filter(parent::equals).count();
     }
 
     public boolean hasMothershipsInOrbit(final CelestialBody parent) {
-        return parent != null && this.mothershipIdList.values().stream().map(Mothership::getParent).anyMatch(parent::equals);
+        return parent != null
+                && this.mothershipIdList.values().stream().map(Mothership::getParent).anyMatch(parent::equals);
     }
 
     /**
      * Get all motherships for a certain parent
      */
     public List<Mothership> getMothershipsForParent(final CelestialBody parent) {
-        if(parent == null) {
+        if (parent == null) {
             return new ArrayList<>(0);
         }
         return this.mothershipIdList.values().stream().filter(parent::equals).collect(Collectors.toList());

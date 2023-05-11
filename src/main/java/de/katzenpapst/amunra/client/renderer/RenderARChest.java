@@ -71,7 +71,7 @@ public class RenderARChest extends TileEntitySpecialRenderer {
             if (chestMetadata == 5 && chest.adjacentChestZPos != null) {
                 GL11.glTranslatef(0.0F, 0.0F, -1.0F);
             }
-            
+
             final float angle = switch (chestMetadata) {
                 case 2 -> 180.0f;
                 case 4 -> 90.0f;
@@ -122,7 +122,8 @@ public class RenderARChest extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_) {
+    public void renderTileEntityAt(TileEntity p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_,
+            float p_147500_8_) {
         this.renderARChestAt((TileEntityARChest) p_147500_1_, p_147500_2_, p_147500_4_, p_147500_6_, p_147500_8_);
     }
 

@@ -286,7 +286,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, @SuppressWarnings("rawtypes") List p_77624_3_, boolean p_77624_4_) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_,
+            @SuppressWarnings("rawtypes") List p_77624_3_, boolean p_77624_4_) {
         super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
 
         final Mode m = this.getMode(p_77624_1_);
@@ -310,7 +311,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     // shearing
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_) {
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, int p_150894_4_, int p_150894_5_,
+            int p_150894_6_, EntityLivingBase p_150894_7_) {
         if (!this.hasEnoughEnergy(stack, this.energyCostUseSmall)) {
             return false;
         }
@@ -322,7 +324,14 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
                     && blockIn != Blocks.vine
                     && blockIn != Blocks.tripwire
                     && !(blockIn instanceof IShearable)) {
-                return super.onBlockDestroyed(stack, worldIn, blockIn, p_150894_4_, p_150894_5_, p_150894_6_, p_150894_7_);
+                return super.onBlockDestroyed(
+                        stack,
+                        worldIn,
+                        blockIn,
+                        p_150894_4_,
+                        p_150894_5_,
+                        p_150894_6_,
+                        p_150894_7_);
             }
             return true;
         }
@@ -376,13 +385,20 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
     // hoeing
     @Override
-    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
+    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_,
+            int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
         if (this.hasEnoughEnergyAndMode(p_77648_1_, this.energyCostUseSmall, Mode.HOE)) {
             // if(this.getMode(stack) == Mode.HOE) {
             if (!p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_)) {
                 return false;
             }
-            final UseHoeEvent event = new UseHoeEvent(p_77648_2_, p_77648_1_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_);
+            final UseHoeEvent event = new UseHoeEvent(
+                    p_77648_2_,
+                    p_77648_1_,
+                    p_77648_3_,
+                    p_77648_4_,
+                    p_77648_5_,
+                    p_77648_6_);
             if (MinecraftForge.EVENT_BUS.post(event)) {
                 return false;
             }
@@ -395,7 +411,9 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
 
             final Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
 
-            if ((p_77648_7_ == 0) || !p_77648_3_.getBlock(p_77648_4_, p_77648_5_ + 1, p_77648_6_).isAir(p_77648_3_, p_77648_4_, p_77648_5_ + 1, p_77648_6_)
+            if ((p_77648_7_ == 0)
+                    || !p_77648_3_.getBlock(p_77648_4_, p_77648_5_ + 1, p_77648_6_)
+                            .isAir(p_77648_3_, p_77648_4_, p_77648_5_ + 1, p_77648_6_)
                     || ((block != Blocks.grass) && (block != Blocks.dirt))) {
                 return false;
             }
@@ -415,7 +433,17 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
             }
             return true;
         }
-        return super.onItemUse(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
+        return super.onItemUse(
+                p_77648_1_,
+                p_77648_2_,
+                p_77648_3_,
+                p_77648_4_,
+                p_77648_5_,
+                p_77648_6_,
+                p_77648_7_,
+                p_77648_8_,
+                p_77648_9_,
+                p_77648_10_);
     }
 
     // wrenching
@@ -464,7 +492,8 @@ public class ItemNanotool extends ItemAbstractBatteryUser implements ITool, IToo
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ) {
         if (this.hasEnoughEnergyAndMode(stack, this.energyCostUseSmall, Mode.WRENCH)) {
 
             if (world.isRemote) return false;

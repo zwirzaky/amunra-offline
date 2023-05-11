@@ -562,9 +562,9 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     /**
-     * @param x start x
+     * @param x         start x
      * @param maxLength how far to look max
-     * @param isAir if true, counts air blocks, if false, counts the NOT airblocks
+     * @param isAir     if true, counts air blocks, if false, counts the NOT airblocks
      */
     protected int getCountInNegXDirection(final IChunkProvider world, final int x, final int y, final int z,
             final int maxLength, final boolean isAir) {
@@ -598,7 +598,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         // 50:50 chance to include small blocks each chunk
         if (this.rand.nextBoolean()) {
             final double density = this.asteroidDensity.getNoise(p_73153_2_ * 16, p_73153_3_ * 16) * 0.54;
-            final double numOfBlocks = this.clamp(this.randFromPoint(p_73153_2_, p_73153_3_), .4, 1) * MAX_BLOCKS_PER_CHUNK
+            final double numOfBlocks = this.clamp(this.randFromPoint(p_73153_2_, p_73153_3_), .4, 1)
+                    * MAX_BLOCKS_PER_CHUNK
                     * density + MIN_BLOCKS_PER_CHUNK;
             final int y0 = this.rand.nextInt(2);
             Block block;
@@ -876,7 +877,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     @Override
-    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_, int p_73155_4_) {
+    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_,
+            int p_73155_4_) {
         return null;
     }
 

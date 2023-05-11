@@ -386,12 +386,11 @@ public class TileEntityShuttleDock extends TileEntityAdvanced
         return new RemovalResult(EnumCargoLoadingState.NOTARGET, null);
     }
 
-    protected void checkTileAt(final Set<ILandingPadAttachable> connectedTiles, final int x, final int y,
-            final int z) {
+    protected void checkTileAt(final Set<ILandingPadAttachable> connectedTiles, final int x, final int y, final int z) {
         final TileEntity tile = this.worldObj.getTileEntity(x, y, z);
 
-        if (tile instanceof ILandingPadAttachable landingPad && landingPad
-                .canAttachToLandingPad(this.worldObj, this.xCoord, this.yCoord, this.zCoord)) {
+        if (tile instanceof ILandingPadAttachable landingPad
+                && landingPad.canAttachToLandingPad(this.worldObj, this.xCoord, this.yCoord, this.zCoord)) {
             connectedTiles.add(landingPad);
         }
     }

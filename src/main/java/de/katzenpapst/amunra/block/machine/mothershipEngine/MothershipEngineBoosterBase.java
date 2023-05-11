@@ -22,7 +22,9 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
 
     protected String activeTextureName;
     protected IIcon activeBlockIcon;
-    protected ResourceLocation boosterTexture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png");
+    protected ResourceLocation boosterTexture = new ResourceLocation(
+            AmunRa.ASSETPREFIX,
+            "textures/blocks/jet-base.png");
 
     public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture) {
         super(name, texture);
@@ -110,11 +112,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
             // find next
             final Vector3int pos = tileBooster.getPossibleNextBooster();
             if (pos != null) {
-                worldIn.notifyBlockOfNeighborChange(
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        tileBooster.blockType);
+                worldIn.notifyBlockOfNeighborChange(pos.x, pos.y, pos.z, tileBooster.blockType);
             }
         }
     }
@@ -150,7 +148,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
 
     @Override
     public boolean canBeMoved(final World world, final int x, final int y, final int z) {
-        if(world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineBooster tileBooster) {
+        if (world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineBooster tileBooster) {
             final TileEntityMothershipEngineAbstract master = tileBooster.getMasterTile();
             return master == null || !master.isInUse();
         }

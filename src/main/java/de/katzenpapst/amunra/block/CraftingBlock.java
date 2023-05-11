@@ -43,7 +43,8 @@ public class CraftingBlock extends SubBlock {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
         if (!worldIn.isRemote) {
             player.openGui(AmunRa.instance, GuiIds.GUI_CRAFTING, worldIn, x, y, z);
         }

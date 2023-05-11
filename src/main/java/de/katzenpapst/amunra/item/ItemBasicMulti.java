@@ -159,7 +159,8 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_,
+            boolean p_77624_4_) {
         final SubItem item = this.getSubItem(p_77624_1_.getItemDamage());
 
         item.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
@@ -167,7 +168,8 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
         String info = item.getItemInfo();
         if (info != null) {
             info = GCCoreUtil.translate(info);
-            p_77624_3_.addAll(FMLClientHandler.instance().getClient().fontRenderer.listFormattedStringToWidth(info, 150));
+            p_77624_3_
+                    .addAll(FMLClientHandler.instance().getClient().fontRenderer.listFormattedStringToWidth(info, 150));
         }
     }
 
@@ -188,8 +190,7 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
 
     @Override
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player) {
-        return this.getSubItem(itemStackIn.getItemDamage())
-                .onItemRightClick(itemStackIn, worldIn, player);
+        return this.getSubItem(itemStackIn.getItemDamage()).onItemRightClick(itemStackIn, worldIn, player);
     }
 
     @Override

@@ -23,8 +23,8 @@ public class RenderMothershipJet extends TileEntitySpecialRenderer {
         this.texture = texture;
     }
 
-    public void renderMothershipEngine(final TileEntityMothershipEngineAbstract tile, final double x,
-            final double y, final double z, final float partialTicks) {
+    public void renderMothershipEngine(final TileEntityMothershipEngineAbstract tile, final double x, final double y,
+            final double z, final float partialTicks) {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPushMatrix();
         // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

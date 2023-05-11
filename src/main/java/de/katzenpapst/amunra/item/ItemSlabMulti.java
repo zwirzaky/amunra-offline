@@ -45,11 +45,23 @@ public class ItemSlabMulti extends ItemBlockMulti {
     }
 
     @Override
-    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
+    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_,
+            int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
         if (this.isDoubleSlab) {
-            return super.onItemUse(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
+            return super.onItemUse(
+                    p_77648_1_,
+                    p_77648_2_,
+                    p_77648_3_,
+                    p_77648_4_,
+                    p_77648_5_,
+                    p_77648_6_,
+                    p_77648_7_,
+                    p_77648_8_,
+                    p_77648_9_,
+                    p_77648_10_);
         }
-        if (p_77648_1_.stackSize == 0 || !p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_)) {
+        if (p_77648_1_.stackSize == 0
+                || !p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_)) {
             return false;
         }
         final Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
@@ -64,8 +76,26 @@ public class ItemSlabMulti extends ItemBlockMulti {
 
             return true;
         } else {
-            return this.tryCombiningWithSide(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_) ? true
-                    : super.onItemUse(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
+            return this.tryCombiningWithSide(
+                    p_77648_1_,
+                    p_77648_2_,
+                    p_77648_3_,
+                    p_77648_4_,
+                    p_77648_5_,
+                    p_77648_6_,
+                    p_77648_7_)
+                            ? true
+                            : super.onItemUse(
+                                    p_77648_1_,
+                                    p_77648_2_,
+                                    p_77648_3_,
+                                    p_77648_4_,
+                                    p_77648_5_,
+                                    p_77648_6_,
+                                    p_77648_7_,
+                                    p_77648_8_,
+                                    p_77648_9_,
+                                    p_77648_10_);
         }
     }
 
@@ -74,7 +104,8 @@ public class ItemSlabMulti extends ItemBlockMulti {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean func_150936_a(World p_150936_1_, int p_150936_2_, int p_150936_3_, int p_150936_4_, int p_150936_5_, EntityPlayer p_150936_6_, ItemStack p_150936_7_) {
+    public boolean func_150936_a(World p_150936_1_, int p_150936_2_, int p_150936_3_, int p_150936_4_, int p_150936_5_,
+            EntityPlayer p_150936_6_, ItemStack p_150936_7_) {
         final int xNew = p_150936_2_;
         final int yNew = p_150936_3_;
         final int zNew = p_150936_4_;

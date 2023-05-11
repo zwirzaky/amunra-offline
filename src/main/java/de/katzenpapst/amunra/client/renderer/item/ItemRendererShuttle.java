@@ -56,7 +56,7 @@ public class ItemRendererShuttle implements IItemRenderer {
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 GL11.glScalef(0.5F, -0.5F, -0.5F);
-                
+
                 modelChest.chestLid.rotateAngleX = 0.0F;
                 modelChest.chestBelow.render(0.0625F);
                 modelChest.chestLid.render(0.0625F);
@@ -104,8 +104,7 @@ public class ItemRendererShuttle implements IItemRenderer {
             GL11.glRotatef(50, 0.0F, 1, 1);
             GL11.glTranslatef(-0.8F, -2.2F, 0F);
             GL11.glScalef(5.2F, 5.2F, 5.2F);
-        }
-        else if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
+        } else if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
             GL11.glTranslatef(2.5F, 5.9F, 1F);
             GL11.glRotatef(28, 0.0F, 0, 1);
             GL11.glRotatef(230, 0.0F, 1, 0);
@@ -150,8 +149,7 @@ public class ItemRendererShuttle implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-            final ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, final ItemRendererHelper helper) {
         return true;
     }
 

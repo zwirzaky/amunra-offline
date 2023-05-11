@@ -47,7 +47,8 @@ public class MothershipWorldGen extends WorldGenerator {
                 if (x == startX || x == stopX || z == startZ || z == stopZ) {
                     p_76484_1_.setBlock(x, p_76484_4_, z, this.decoBlock.getBlock(), this.decoBlock.getMetadata(), 3);
                 } else {
-                    p_76484_1_.setBlock(x, p_76484_4_, z, this.groundBlock.getBlock(), this.groundBlock.getMetadata(), 3);
+                    p_76484_1_
+                            .setBlock(x, p_76484_4_, z, this.groundBlock.getBlock(), this.groundBlock.getMetadata(), 3);
                 }
             }
         }
@@ -75,7 +76,13 @@ public class MothershipWorldGen extends WorldGenerator {
                 // sides
                 if (x == startX || x == stopX || z == startZ || z == stopZ) {
                     // roof border
-                    p_76484_1_.setBlock(x, p_76484_4_ + 4, z, this.groundBlock.getBlock(), this.groundBlock.getMetadata(), 3);
+                    p_76484_1_.setBlock(
+                            x,
+                            p_76484_4_ + 4,
+                            z,
+                            this.groundBlock.getBlock(),
+                            this.groundBlock.getMetadata(),
+                            3);
                     if (x > startX + 1 && x < stopX - 1 || z > startZ + 1 && z < stopZ - 1) {
                         continue;
                     }
@@ -89,7 +96,13 @@ public class MothershipWorldGen extends WorldGenerator {
                     }
                 } else {
                     // roof center
-                    p_76484_1_.setBlock(x, p_76484_4_ + 4, z, this.glassBlock.getBlock(), this.glassBlock.getMetadata(), 3);
+                    p_76484_1_.setBlock(
+                            x,
+                            p_76484_4_ + 4,
+                            z,
+                            this.glassBlock.getBlock(),
+                            this.glassBlock.getMetadata(),
+                            3);
                 }
             }
         }

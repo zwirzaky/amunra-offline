@@ -27,7 +27,8 @@ public class MothershipEngineBoosterIon extends MothershipEngineBoosterBase {
     @Override
     public boolean onMachineActivated(final World world, final int x, final int y, final int z,
             final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
-        if(world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineBooster tileBooster && tileBooster.hasMaster()) {
+        if (world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineBooster tileBooster
+                && tileBooster.hasMaster()) {
             final Vector3int pos = tileBooster.getMasterPosition();
             entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_MS_ION_ENGINE, world, pos.x, pos.y, pos.z);
             return true;

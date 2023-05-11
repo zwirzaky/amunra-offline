@@ -88,7 +88,8 @@ public class ItemJet extends ItemBlockMulti {
     }
 
     @Override
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ, int metadata) {
 
         /**
          * 0 -> +Y 1 -> -Y 2 -> -Z 3 -> +Z 4 -> -X 5 -> +X
@@ -138,7 +139,8 @@ public class ItemJet extends ItemBlockMulti {
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, @SuppressWarnings("rawtypes") List p_77624_3_, boolean p_77624_4_) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_,
+            @SuppressWarnings("rawtypes") List p_77624_3_, boolean p_77624_4_) {
         if (this.field_150939_a instanceof IBlockShiftDesc
                 && ((IBlockShiftDesc) this.field_150939_a).showDescription(p_77624_1_.getItemDamage())) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
