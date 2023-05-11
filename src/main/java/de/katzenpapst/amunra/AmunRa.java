@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -269,6 +270,8 @@ public class AmunRa {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(AmunRa.instance, new GuiHandler());
         FMLCommonHandler.instance().bus().register(new TickHandlerServer());
+
+        TileEntityMothershipEngineJet.jetFuel = FluidRegistry.getFluid(config.validEngineFuel);
 
         // failsafes
         this.doCompatibilityChecks();

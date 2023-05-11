@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 
@@ -16,8 +15,6 @@ import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelDisplayFluid;
 import de.katzenpapst.amunra.mothership.fueldisplay.MothershipFuelRequirements;
 import de.katzenpapst.amunra.proxy.ARSidedProxy.ParticleType;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.util.FluidUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 /**
@@ -33,12 +30,13 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
     // protected final MothershipFuel fuelType;
     protected MothershipFuelDisplay fuelType = null;
+    public static Fluid jetFuel;
 
     public TileEntityMothershipEngineJet() {
         this.boosterBlock = ARBlocks.blockMsEngineRocketBooster;
         this.containingItems = new ItemStack[1];
 
-        this.fuel = GalacticraftCore.fluidFuel;
+        this.fuel = jetFuel;
         this.fuelType = new MothershipFuelDisplayFluid(this.fuel);
     }
 
@@ -49,20 +47,14 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
     @Override
     public void beginTransit(final long duration) {
-
         final MothershipFuelRequirements reqs = this.getFuelRequirements(duration);
-
         final int fuelReq = reqs.get(this.fuelType);
-
         this.fuelTank.drain(fuelReq, true);
-
         super.beginTransit(duration);
-
     }
 
     @Override
     protected boolean isItemFuel(final ItemStack itemstack) {
-
         FluidStack containedFluid = null;
         if (itemstack.getItem() instanceof IFluidContainerItem itemContainer) {
             containedFluid = itemContainer.getFluid(itemstack);
@@ -71,12 +63,8 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
             containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
         }
         if (containedFluid != null) {
-            if (containedFluid.getFluid() == this.fuel) {
-                return true;
-            }
-            return FluidUtil.testFuel(FluidRegistry.getFluidName(containedFluid));
+            return this.fuel == containedFluid.getFluid();
         }
-
         return false;
     }
 
@@ -96,7 +84,6 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
     @Override
     protected void spawnParticles() {
-
         final Vector3 particleStart = this.getExhaustPosition(1);
         final Vector3 particleDirection = this.getExhaustDirection().scale(5);
 
@@ -113,13 +100,10 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
     @Override
     public boolean canFill(final ForgeDirection from, final Fluid fluid) {
-
-        // here, fluid is fuel
-        if (!FluidUtil.testFuel(FluidRegistry.getFluidName(fluid))) {
-            return false;
+        if (this.fuel == fluid) {
+            return super.canFill(from, fluid);
         }
-
-        return super.canFill(from, fluid);
+        return false;
     }
 
     @Override
