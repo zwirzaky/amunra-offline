@@ -22,20 +22,19 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
 
     public BlockMothershipSettings(final String name, final String frontTexture, final String sideTexture) {
         super(name, sideTexture);
-
         this.frontTexture = frontTexture;
     }
 
     @Override
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        super.registerBlockIcons(par1IconRegister);
-        this.iconFront = par1IconRegister.registerIcon(this.frontTexture);
-        // this.blockIcon = iconFront;
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister reg) {
+        super.registerBlockIcons(reg);
+        this.iconFront = reg.registerIcon(this.frontTexture);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, int meta) {
         final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
         // we have the front thingy at front.. but what is front?
         // east is the output
@@ -46,9 +45,7 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
         if (side == front.ordinal()) {
             return this.iconFront;
         }
-
         return this.blockIcon;
-
     }
 
     @Override
@@ -57,7 +54,7 @@ public class BlockMothershipSettings extends AbstractBlockMothershipRestricted {
     }
 
     @Override
-    public TileEntity createTileEntity(final World world, final int metadata) {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityMothershipSettings();
     }
 

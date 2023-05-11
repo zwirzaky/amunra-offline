@@ -3,6 +3,7 @@ package de.katzenpapst.amunra.world.mapgen.village;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -30,7 +31,7 @@ public class GridVillageStart extends BaseStructureStart {
 
     protected int gridSideLength = 0;
 
-    protected HashMap<Integer, GridVillageComponent> componentsByGrid;
+    protected final Map<Integer, GridVillageComponent> componentsByGrid = new HashMap<>();
 
     /**
      * Instantiates the thing, the coords in here should be the START point
@@ -42,8 +43,6 @@ public class GridVillageStart extends BaseStructureStart {
         final int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
 
         AmunRa.LOGGER.debug("Generating the Village at x={}, z={}", startBlockX, startBlockZ);
-
-        this.componentsByGrid = new HashMap<>();
     }
 
     /**

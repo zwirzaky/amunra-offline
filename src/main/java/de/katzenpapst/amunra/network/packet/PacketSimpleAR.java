@@ -224,7 +224,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
     }
 
     @Override
-    public void encodeInto(final ChannelHandlerContext context, final ByteBuf buffer) {
+    public void encodeInto(ChannelHandlerContext context, ByteBuf buffer) {
         buffer.writeInt(this.type.ordinal());
 
         try {
@@ -235,7 +235,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
     }
 
     @Override
-    public void decodeInto(final ChannelHandlerContext context, final ByteBuf buffer) {
+    public void decodeInto(ChannelHandlerContext context, ByteBuf buffer) {
         this.type = EnumSimplePacket.values()[buffer.readInt()];
 
         try {
@@ -252,7 +252,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void handleClientSide(final EntityPlayer player) {
+    public void handleClientSide(EntityPlayer player) {
         if (!(player instanceof EntityClientPlayerMP)) {
             return;
         }
@@ -435,7 +435,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
     }
 
     @Override
-    public void handleServerSide(final EntityPlayer player) {
+    public void handleServerSide(EntityPlayer player) {
 
         final EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayer(player, false);
         MinecraftServer mcServer;
@@ -671,18 +671,18 @@ public class PacketSimpleAR extends Packet implements IPacket {
     }
 
     @Override
-    public void readPacketData(final PacketBuffer var1) {
-        this.decodeInto(null, var1);
+    public void readPacketData(PacketBuffer data) {
+        this.decodeInto(null, data);
     }
 
     @Override
-    public void writePacketData(final PacketBuffer var1) {
-        this.encodeInto(null, var1);
+    public void writePacketData(PacketBuffer data) {
+        this.encodeInto(null, data);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void processPacket(final INetHandler var1) {
+    public void processPacket(INetHandler handler) {
         /*
          * if (this.type != EnumSimplePacket.C_UPDATE_SPACESTATION_LIST && this.type !=
          * EnumSimplePacket.C_UPDATE_PLANETS_LIST && this.type != EnumSimplePacket.C_UPDATE_CONFIGS) { return; }

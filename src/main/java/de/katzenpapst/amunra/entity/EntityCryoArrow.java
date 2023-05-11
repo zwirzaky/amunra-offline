@@ -87,12 +87,12 @@ public class EntityCryoArrow extends EntityBaseLaserArrow {
 
     @Override
     protected void onImpactEntity(final MovingObjectPosition mop) {
-        if (mop.entityHit instanceof EntityLivingBase) {
+        if (mop.entityHit instanceof EntityLivingBase entityLiving) {
             // setPotionEffect(Potion.poison.id, 30, 2, 1.0F);
-            if (((EntityLivingBase) mop.entityHit).isBurning()) {
-                ((EntityLivingBase) mop.entityHit).extinguish();
+            if (entityLiving.isBurning()) {
+                entityLiving.extinguish();
             }
-            ((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 3));
+            entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 3));
 
             // how?
             // ((EntityLivingBase)mop).getEntityAttribute(p_110148_1_)

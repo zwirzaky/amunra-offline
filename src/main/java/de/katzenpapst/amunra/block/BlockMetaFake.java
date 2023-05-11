@@ -46,8 +46,8 @@ public class BlockMetaFake extends BlockBasicMeta implements ITileEntityProvider
     }
 
     @Override
-    public TileEntity createNewTileEntity(final World var1, final int meta) {
-        return this.getSubBlock(meta).createTileEntity(var1, meta);
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return this.getSubBlock(meta).createTileEntity(worldIn, meta);
     }
 
 }

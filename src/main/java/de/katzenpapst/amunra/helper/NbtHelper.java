@@ -17,7 +17,6 @@ public class NbtHelper {
         nbt.setDouble("minX", aabb.minX);
         nbt.setDouble("minY", aabb.minY);
         nbt.setDouble("minZ", aabb.minZ);
-
         nbt.setDouble("maxX", aabb.maxX);
         nbt.setDouble("maxY", aabb.maxY);
         nbt.setDouble("maxZ", aabb.maxZ);
@@ -31,7 +30,6 @@ public class NbtHelper {
                 nbt.getDouble("maxX"),
                 nbt.getDouble("maxY"),
                 nbt.getDouble("maxZ"));
-
     }
 
     public static ItemStack[] readInventory(final NBTTagCompound nbt, final int inventorySize) {

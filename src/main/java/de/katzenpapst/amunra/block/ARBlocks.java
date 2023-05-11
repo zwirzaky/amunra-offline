@@ -68,7 +68,6 @@ public class ARBlocks {
 
     public static BlockMetaPair osirisBossSpawner;
 
-    // public static BlockMetaPair blockDarkMatter;
     public static BlockMetaPair blockBasalt;
     public static BlockMetaPair blockRedRock;
     public static BlockMetaPair blockYellowCobble;
@@ -315,7 +314,6 @@ public class ARBlocks {
         oreIronBasalt = metaBlockBasaltOre.addSubBlock(6, subIron);
         oreLapisBasalt = metaBlockBasaltOre.addSubBlock(7, subLapis);
         oreSiliconBasalt = metaBlockBasaltOre.addSubBlock(8, subSilicon);
-        // oreEmeraldObsid = multiBlockBasaltOre.addSubBlock(9, subEmerald);
         oreTitaniumBasalt = metaBlockBasaltOre.addSubBlock(9, subTitanium);
         oreUraniumBasalt = metaBlockBasaltOre.addSubBlock(10, subUranium);
         metaBlockBasaltOre.register();
@@ -384,13 +382,7 @@ public class ARBlocks {
         metaBlockBossSpawner.register();
 
         // Blocks
-        // Block block = (new
-        // Block(Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundTypePiston).setBlockName("stonebrick").setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName("cobblestone");
         metaBlockRock = new BlockBasicMeta("baseBlockRock", Material.rock);
-        // blockRegistry.addObject(7, "bedrock", (new
-        // Block(Material.rock)).setBlockUnbreakable().setResistance(6000000.0F).setStepSound(soundTypePiston).setBlockName("bedrock").disableStats().setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName("bedrock"));
-        // blockDarkMatter = multiBlockRock.addSubBlock(0, new SubBlock("darkMatter", "amunra:darkmatter", "pickaxe",
-        // 9000, 9000, 9000));
         blockBasaltCobble = metaBlockRock
                 .addSubBlock(0, new SubBlock("basaltcobble", "amunra:basaltcobble", "pickaxe", 1, 2.0F, 10.0F));
         blockBasalt = metaBlockRock.addSubBlock(
@@ -443,8 +435,6 @@ public class ARBlocks {
         metaBlockRock.register();
 
         metaBlockCrystal = new BlockBasicMeta("baseBlockCrystal", Material.glass);
-        // blockRegistry.addObject(89, "glowstone", (new
-        // BlockGlowstone(Material.glass)).setHardness(0.3F).setStepSound(soundTypeGlass).setLightLevel(1.0F).setBlockName("lightgem").setBlockTextureName("glowstone"));
 
         final SubBlock coral = new SubBlock("glowCoral", "amunra:coral", "pickaxe", 2, 0.9F, 2.75F);
         coral.setStepSound(Block.soundTypeGlass);
@@ -489,8 +479,6 @@ public class ARBlocks {
                 .addSubBlock(2, new SubBlock("basaltregolith", "amunra:black_stone", "shovel", 1, 1.0F, 3.0F));
 
         metaBlockFalling.register();
-
-        // Blocks.diamond_ore
 
         metaBlockPlant = new BlockBushMulti("basePlant", Material.plants);
         metaBlockPlant.setStepSound(Block.soundTypeGrass);
@@ -616,7 +604,6 @@ public class ARBlocks {
                 new BlockGravitation(
                         "gravity",
                         AmunRa.TEXTUREPREFIX + "gravity",
-                        AsteroidsModule.TEXTURE_PREFIX + "machine_input",
                         AsteroidsModule.TEXTURE_PREFIX + "machine",
                         AsteroidsModule.TEXTURE_PREFIX + "machine_input"));
 

@@ -116,7 +116,7 @@ public class NeperChunkProvider extends AmunraChunkProvider {
     public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {}
 
     @Override
-    public boolean chunkExists(final int x, final int y) {
+    public boolean chunkExists(int p_73149_1_, int p_73149_2_) {
         return false;
     }
 

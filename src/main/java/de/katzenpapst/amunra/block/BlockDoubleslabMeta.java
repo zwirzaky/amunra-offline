@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -24,9 +22,6 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
 
     /**
      * I think this has to match the Slabs, meta-wise
-     * 
-     * @param name
-     * @param mat
      */
     public BlockDoubleslabMeta(final String name, final Material mat, final BlockSlabMeta slabMetablock) {
         super(name, mat, 8);
@@ -35,15 +30,12 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
-            final int z) {
-        // int meta = world.getBlockMetadata(x, y, z);
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         return this.slabMetablock.getPickBlock(target, world, x, y, z);
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata,
-            final int fortune) {
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
         final ArrayList<ItemStack> ret = new ArrayList<>();
 
         final int count = this.quantityDropped(metadata, fortune, world.rand);
@@ -54,7 +46,6 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
             }
         }
         return ret;
-
     }
 
     @Override
@@ -63,83 +54,42 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
     }
 
     @Override
-    public Item getItemDropped(final int meta, final Random random, final int fortune) {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return this.slabMetablock.getItemDropped(meta, random, fortune);
-        // return Item.getItemFromBlock(slabMetablock);
     }
 
     @Override
-    public int damageDropped(final int meta) {
+    public int damageDropped(int meta) {
         return this.getDistinctionMeta(meta);
     }
 
     @Override
-    public int getDamageValue(final World world, final int x, final int y, final int z) {
-        return this.getDistinctionMeta(world.getBlockMetadata(x, y, z));
-    }
-
-    @Override
-    public int quantityDropped(final int meta, final int fortune, final Random random) {
+    public int quantityDropped(int meta, int fortune, Random random) {
         return 2;
     }
 
     @Override
     public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
-
         if (meta >= this.subBlocksArray.length || meta < 0) {
             throw new IllegalArgumentException(
-                    "Meta " + meta + " must be <= " + (this.subBlocksArray.length - 1) + " && >= 0");
+                    "Meta " + meta + " must be < " + this.subBlocksArray.length + " and >= 0");
         }
-
         if (this.subBlocksArray[meta] != null) {
-            throw new IllegalArgumentException("Meta " + meta + " is already in use");
+            throw new IllegalArgumentException("Meta " + meta + " is already in use in " + this.blockNameFU);
         }
-
-        if (this.nameMetaMap.get(sb.getUnlocalizedName()) != null) {
-            throw new IllegalArgumentException("Name " + sb.getUnlocalizedName() + " is already in use");
+        if (this.nameMetaMap.containsKey(sb.getUnlocalizedName())) {
+            throw new IllegalArgumentException(
+                    "Name " + sb.getUnlocalizedName() + " is already in use in " + this.blockNameFU);
         }
-        // sb.setParent(this);
         this.nameMetaMap.put(sb.getUnlocalizedName(), meta);
         this.subBlocksArray[meta] = sb;
         return new BlockMetaPair(this, (byte) meta);
     }
 
     public BlockMetaPair addSubBlock(final int meta) {
-
         // find the basedOn block
         final SubBlock sb = this.slabMetablock.getSubBlock(meta);
-
         return this.addSubBlock(meta, sb);
-    }
-
-    @Override
-    public int getMetaByName(final String name) {
-        final Integer i = this.nameMetaMap.get(name);
-        if (i == null) {
-            throw new IllegalArgumentException("Subblock " + name + " doesn't exist");
-        }
-        return i;
-    }
-
-    @Override
-    public SubBlock getSubBlock(final int meta) {
-
-        return this.subBlocksArray[this.getDistinctionMeta(meta)];
-    }
-
-    @Override
-    public IIcon getIcon(final int side, final int meta) {
-        return this.getSubBlock(meta).getIcon(side, 0);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        for (final SubBlock sb : this.subBlocksArray) {
-            if (sb != null) {
-                sb.registerBlockIcons(par1IconRegister);
-            }
-        }
     }
 
     @SideOnly(Side.CLIENT)

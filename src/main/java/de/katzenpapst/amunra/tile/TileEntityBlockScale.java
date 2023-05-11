@@ -17,10 +17,6 @@ public class TileEntityBlockScale extends TileEntity {
     protected float massToDisplay = 0;
     protected BlockMetaPair lastFoundBlock = null;
 
-    public TileEntityBlockScale() {
-
-    }
-
     public int getRotationMeta() {
         final Block b = this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
         final int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
@@ -38,20 +34,20 @@ public class TileEntityBlockScale extends TileEntity {
     }
 
     @Override
-    public void onDataPacket(final NetworkManager netManager, final S35PacketUpdateTileEntity packet) {
-        this.readFromNBT(packet.func_148857_g());
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.func_148857_g());
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        nbt.setFloat("mass", this.massToDisplay);
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        compound.setFloat("mass", this.massToDisplay);
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-        this.massToDisplay = nbt.getFloat("mass");
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        this.massToDisplay = compound.getFloat("mass");
     }
 
     @Override

@@ -58,8 +58,6 @@ public class StringSelectBox extends GuiButton {
 
     public void addString(final String str) {
         this.strings.add(str);
-
-        //
     }
 
     public void setSelection(final int selection) {
@@ -100,7 +98,7 @@ public class StringSelectBox extends GuiButton {
      * Draws this button to the screen.
      */
     @Override
-    public void drawButton(final Minecraft mc, final int mouseX, final int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (this.visible) {
             final int color = 0xFFa6a6a6;
             // outer box
@@ -140,7 +138,6 @@ public class StringSelectBox extends GuiButton {
                             curYoffset + this.yPosition + 1 + this.textSize,
                             colorSelection,
                             colorSelection);
-                    // colorText = 0xFF555555;
                 }
 
                 this.font.drawStringWithShadow(
@@ -148,8 +145,6 @@ public class StringSelectBox extends GuiButton {
                         this.xPosition + 2,
                         curYoffset + this.yPosition,
                         colorText);
-                // FMLClientHandler.instance().getClient().fontRenderer.drawStringWithShadow("le test",
-                // this.xPosition+2, curYoffset+this.yPosition+2, colorGreen);
             }
 
             if (this.maxLines < this.strings.size()) {
@@ -189,12 +184,8 @@ public class StringSelectBox extends GuiButton {
         }
     }
 
-    /**
-     * Returns true if the mouse has been pressed on this control. Equivalent of MouseListener.mousePressed(MouseEvent
-     * e).
-     */
     @Override
-    public boolean mousePressed(final Minecraft mc, final int mouseX, final int mouseY) {
+    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
         if (!super.mousePressed(mc, mouseX, mouseY)) {
             return false;
         }
@@ -240,7 +231,6 @@ public class StringSelectBox extends GuiButton {
             final int newIndex = lineClicked + this.scrollOffset;
             this.setSelection(newIndex);
         }
-
         return true;
     }
 

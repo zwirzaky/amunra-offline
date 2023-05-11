@@ -42,13 +42,13 @@ public class SubItemFood extends SubItem {
     }
 
     @Override
-    public ItemStack onEaten(final ItemStack itemStack, final World world, final EntityPlayer player) {
-        --itemStack.stackSize;
+    public ItemStack onEaten(ItemStack p_77654_1_, World p_77654_2_, EntityPlayer p_77654_3_) {
+        --p_77654_1_.stackSize;
 
-        player.getFoodStats().addStats(this.getHealAmount(itemStack), this.getSaturationModifier(itemStack));
-        world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-        this.onFoodEaten(itemStack, world, player);
-        return itemStack;
+        p_77654_3_.getFoodStats().addStats(this.getHealAmount(p_77654_1_), this.getSaturationModifier(p_77654_1_));
+        p_77654_2_.playSoundAtEntity(p_77654_3_, "random.burp", 0.5F, p_77654_2_.rand.nextFloat() * 0.1F + 0.9F);
+        this.onFoodEaten(p_77654_1_, p_77654_2_, p_77654_3_);
+        return p_77654_1_;
     }
 
     protected void onFoodEaten(final ItemStack itemStack, final World world, final EntityPlayer player) {
@@ -57,32 +57,23 @@ public class SubItemFood extends SubItem {
         }
     }
 
-    /**
-     * How long it takes to use or consume an item
-     */
     @Override
-    public int getMaxItemUseDuration(final ItemStack itemStack) {
+    public int getMaxItemUseDuration(ItemStack p_77626_1_) {
         return 32;
     }
 
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
     @Override
-    public EnumAction getItemUseAction(final ItemStack itemStack) {
+    public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.eat;
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
     @Override
-    public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
-        if (entityPlayer.canEat(this.alwaysEdible)) {
-            entityPlayer.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player) {
+        if (player.canEat(this.alwaysEdible)) {
+            player.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
         }
 
-        return itemStack;
+        return itemStackIn;
     }
 
     public int getHealAmount(final ItemStack itemStack) {

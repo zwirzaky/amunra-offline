@@ -18,30 +18,31 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
 
     @Override
     public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
-        if (!(sb instanceof SubBlockGrass)) {
-            throw new IllegalArgumentException("BlockGrassMulti can only accept SubBlockGrass");
+        if (sb instanceof SubBlockGrass) {
+            return super.addSubBlock(meta, sb);
         }
-        return super.addSubBlock(meta, sb);
+        throw new IllegalArgumentException("BlockGrassMulti can only accept SubBlockGrass");
     }
 
     /**
      * func_149851_a is basically a stillGrowing() method. It returns (or should return) true if the growth stage is
      * less than the max growth stage.
      *
-     * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
-    public boolean func_149851_a(final World world, final int x, final int y, final int z,
-            final boolean isWorldRemote) {
+    public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient) {
         return true;
     }
 
     /**
      * func_149852_a is basically a canBoneMealSpeedUpGrowth() method. I usually just return true, but depends on your
      * crop.
+     *
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
-    public boolean func_149852_a(final World world, final Random rand, final int x, final int y, final int z) {
+    public boolean func_149852_a(World worldIn, Random random, int x, int y, int z) {
         return true;
     }
 
@@ -49,27 +50,23 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * Ticks the block if it's been scheduled
      */
     @Override
-    public void updateTick(final World world, final int x, final int y, final int z, final Random rand) {
-        final int meta = world.getBlockMetadata(x, y, z);
+    public void updateTick(World worldIn, int x, int y, int z, Random random) {
+        final int meta = worldIn.getBlockMetadata(x, y, z);
         final SubBlockGrass sb = (SubBlockGrass) this.getSubBlock(meta);
         final BlockMetaPair dirtForm = sb.getDirtBlock();
-        if (!world.isRemote) {
-            if (!sb.canLiveHere(world, x, y, z)) {
-                world.setBlock(x, y, z, dirtForm.getBlock(), dirtForm.getMetadata(), 3);
-            } else if (sb.canSpread(world, x, y, z)) {
+        if (!worldIn.isRemote) {
+            if (!sb.canLiveHere(worldIn, x, y, z)) {
+                worldIn.setBlock(x, y, z, dirtForm.getBlock(), dirtForm.getMetadata(), 3);
+            } else if (sb.canSpread(worldIn, x, y, z)) {
                 for (int l = 0; l < 4; ++l) {
-                    final int nbX = x + rand.nextInt(3) - 1;
-                    final int nbY = y + rand.nextInt(5) - 3;
-                    final int nbZ = z + rand.nextInt(3) - 1;
-                    final Block block = world.getBlock(nbX, nbY, nbZ);
-                    final int blockMeta = world.getBlockMetadata(nbX, nbY, nbZ);
+                    final int nbX = x + random.nextInt(3) - 1;
+                    final int nbY = y + random.nextInt(5) - 3;
+                    final int nbZ = z + random.nextInt(3) - 1;
+                    final Block block = worldIn.getBlock(nbX, nbY, nbZ);
+                    final int blockMeta = worldIn.getBlockMetadata(nbX, nbY, nbZ);
 
-                    if (block == dirtForm.getBlock() && blockMeta == dirtForm.getMetadata()) {
-                        final boolean canLive = sb.canLiveHere(world, nbX, nbY, nbZ);
-
-                        if (canLive) {
-                            world.setBlock(nbX, nbY, nbZ, this, meta, 3);
-                        }
+                    if (block == dirtForm.getBlock() && blockMeta == dirtForm.getMetadata() && sb.canLiveHere(worldIn, nbX, nbY, nbZ)) {
+                        worldIn.setBlock(nbX, nbY, nbZ, this, meta, 3);
                     }
                 }
             }
@@ -81,11 +78,12 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
      * metadata so then in this method you would increment it if it wasn't already at maximum and store back in
      * metadata.
      *
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
-    public void func_149853_b(final World world, final Random rand, final int x, final int y, final int z) {
+    public void func_149853_b(World worldIn, Random random, int x, int y, int z) {
         int l = 0;
-        final int meta = world.getBlockMetadata(x, y, z);
+        final int meta = worldIn.getBlockMetadata(x, y, z);
         final SubBlockGrass sb = (SubBlockGrass) this.getSubBlock(meta);
 
         while (l < 128) {
@@ -97,25 +95,23 @@ public class BlockGrassMeta extends BlockBasicMeta implements IGrowable {
             while (true) {
                 if (grassNearby < l / 16) // why 1/16??
                 {
-                    blockAboveX += rand.nextInt(3) - 1;
-                    blockAboveY += (rand.nextInt(3) - 1) * rand.nextInt(3) / 2;
-                    blockAboveZ += rand.nextInt(3) - 1;
-                    if (world.getBlock(blockAboveX, blockAboveY - 1, blockAboveZ) == this && // I hope I can use "this"
+                    blockAboveX += random.nextInt(3) - 1;
+                    blockAboveY += (random.nextInt(3) - 1) * random.nextInt(3) / 2;
+                    blockAboveZ += random.nextInt(3) - 1;
+                    if (worldIn.getBlock(blockAboveX, blockAboveY - 1, blockAboveZ) == this && // I hope I can use "this"
                                                                                              // here
-                            world.getBlockMetadata(blockAboveX, blockAboveY, blockAboveZ) == meta
-                            && !world.getBlock(blockAboveX, blockAboveY, blockAboveZ).isNormalCube()) {
+                            worldIn.getBlockMetadata(blockAboveX, blockAboveY, blockAboveZ) == meta
+                            && !worldIn.getBlock(blockAboveX, blockAboveY, blockAboveZ).isNormalCube()) {
                         ++grassNearby;
                         continue;
                     }
-                } else if (world.getBlock(blockAboveX, blockAboveY, blockAboveZ).getMaterial() == Material.air) {
-                    sb.growPlantsOnTop(world, rand, blockAboveX, blockAboveY, blockAboveZ);
+                } else if (worldIn.getBlock(blockAboveX, blockAboveY, blockAboveZ).getMaterial() == Material.air) {
+                    sb.growPlantsOnTop(worldIn, random, blockAboveX, blockAboveY, blockAboveZ);
                 }
 
                 ++l;
                 break;
             }
         }
-
     }
-
 }

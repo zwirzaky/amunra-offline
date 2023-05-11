@@ -23,7 +23,7 @@ public class BlockARChestLarge extends BlockARChest {
     }
 
     @Override
-    public TileEntity createNewTileEntity(final World world, final int meta) {
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new TileEntityARChestLarge();
     }
 

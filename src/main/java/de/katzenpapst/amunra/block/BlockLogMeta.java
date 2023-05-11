@@ -20,10 +20,10 @@ public class BlockLogMeta extends BlockBasicMeta {
 
     @Override
     public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
-        if (!(sb instanceof SubBlockWood)) {
-            throw new IllegalArgumentException("BlockWoodMulti can only accept SubBlockWood");
+        if (sb instanceof SubBlockWood) {
+            return super.addSubBlock(meta, sb);
         }
-        return super.addSubBlock(meta, sb);
+        throw new IllegalArgumentException("BlockWoodMulti can only accept SubBlockWood");
     }
 
     @Override
@@ -33,35 +33,31 @@ public class BlockLogMeta extends BlockBasicMeta {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(final int side, final int meta) {
-        // /*Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
-        // Face 5 (Eastern Face)*/
+    public IIcon getIcon(int side, int meta) {
+         /*Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
+         Face 5 (Eastern Face)*/
         final int rotationMeta = (meta & 12) >> 2;
 
         return this.getSubBlock(meta).getIcon(side, rotationMeta);
     }
 
     @Override
-    public int damageDropped(final int meta) {
+    public int damageDropped(int meta) {
         return super.damageDropped(meta & 3);
     }
 
     @Override
-    public boolean isWood(final IBlockAccess world, final int x, final int y, final int z) {
+    public boolean isWood(IBlockAccess world, int x, int y, int z) {
         return true;
     }
 
-    /**
-     * The type of render function that is called for this block
-     */
     @Override
     public int getRenderType() {
         return 31; // ..?
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
-            final int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         if (this.getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, this.getDistinctionMeta(meta));
@@ -70,34 +66,20 @@ public class BlockLogMeta extends BlockBasicMeta {
         return super.getPickBlock(target, world, x, y, z);
     }
 
-    /**
-     * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
-     */
     @Override
-    public int onBlockPlaced(final World world, final int x, final int y, final int z, final int side, final float hitX,
-            final float hitY, final float hitZ, final int metadata) {
-        final int actualMeta = metadata & 3;
-        byte rotationalMeta = 0;
-
-        switch (side) {
-            case 0:
-            case 1:
-                rotationalMeta = 0;
-                break;
-            case 2:
-            case 3:
-                rotationalMeta = 8;
-                break;
-            case 4:
-            case 5:
-                rotationalMeta = 4;
-        }
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta) {
+        final int actualMeta = meta & 3;
+        final int rotationalMeta = switch (side) {
+            case 2, 3 -> 8;
+            case 4, 5 -> 4;
+            default -> 0;
+        };
 
         return actualMeta | rotationalMeta;
     }
 
     @Override
-    public boolean canSustainLeaves(final IBlockAccess world, final int x, final int y, final int z) {
+    public boolean canSustainLeaves(IBlockAccess world, int x, int y, int z) {
         return true;
     }
 

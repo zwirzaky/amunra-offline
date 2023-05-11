@@ -30,8 +30,8 @@ public class ContainerRocketEngine extends ContainerWithPlayerInventory {
     }
 
     @Override
-    public boolean canInteractWith(final EntityPlayer var1) {
-        return ((TileEntityMothershipEngineAbstract) this.tileEntity).isUseableByPlayer(var1);
+    public boolean canInteractWith(EntityPlayer player) {
+        return ((TileEntityMothershipEngineAbstract) this.tileEntity).isUseableByPlayer(player);
     }
 
 }

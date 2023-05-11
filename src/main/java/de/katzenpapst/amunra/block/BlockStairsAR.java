@@ -26,7 +26,7 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
 
-    BlockMetaPair sourceBlock;
+    private final BlockMetaPair sourceBlock;
 
     public BlockStairsAR(final BlockMetaPair sourceBlock) {
         // protected constructor? WTF IS THIS SHIT?!!?!
@@ -67,8 +67,8 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
     }
 
     @Override
-    public float getBlockHardness(final World world, final int x, final int y, final int z) {
-        return this.getSourceBlock().getBlockHardness(world, x, y, z);
+    public float getBlockHardness(World worldIn, int x, int y, int z) {
+        return this.getSourceBlock().getBlockHardness(worldIn, x, y, z);
     }
 
     public Block getSourceBlock() {
@@ -79,233 +79,133 @@ public class BlockStairsAR extends BlockStairs implements IMassiveBlock {
         return mainBlock;
     }
 
-    /**
-     * Queries the class of tool required to harvest this block, if null is returned we assume that anything can harvest
-     * this block.
-     *
-     * @param metadata
-     * @return
-     */
     @Override
-    public String getHarvestTool(final int metadata) {
+    public String getHarvestTool(int metadata) {
         return this.sourceBlock.getBlock().getHarvestTool(metadata);
     }
 
-    /**
-     * Queries the harvest level of this item stack for the specifred tool class, Returns -1 if this tool is not of the
-     * specified type
-     *
-     * @param stack This item stack instance
-     * @return Harvest level, or -1 if not the specified tool type.
-     */
     @Override
-    public int getHarvestLevel(final int metadata) {
+    public int getHarvestLevel(int metadata) {
         return this.sourceBlock.getBlock().getHarvestLevel(metadata);
     }
 
-    /**
-     * Checks if the specified tool type is efficient on this block, meaning that it digs at full speed.
-     *
-     * @param type
-     * @param metadata
-     * @return
-     */
     @Override
-    public boolean isToolEffective(final String type, final int metadata) {
+    public boolean isToolEffective(String type, int metadata) {
         return this.getHarvestTool(metadata).equals(type);
     }
 
-    /**
-     * Location sensitive version of getExplosionRestance
-     *
-     * @param par1Entity The entity that caused the explosion
-     * @param world      The current world
-     * @param x          X Position
-     * @param y          Y Position
-     * @param z          Z Position
-     * @param explosionX Explosion source X Position
-     * @param explosionY Explosion source X Position
-     * @param explosionZ Explosion source X Position
-     * @return The amount of the explosion absorbed.
-     */
     @Override
-    public float getExplosionResistance(final Entity par1Entity, final World world, final int x, final int y,
-            final int z, final double explosionX, final double explosionY, final double explosionZ) {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
         return this.getSourceBlock()
                 .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     /// block-dependent functions
-    /**
-     * Called when a player hits the block. Args: world, x, y, z, player
-     */
+    
     @Override
-    public void onBlockClicked(final World world, final int x, final int y, final int z, final EntityPlayer player) {
+    public void onBlockClicked(World worldIn, int x, int y, int z, EntityPlayer player) {
         // I don't see any reason for this to be proxied to the source block, but meh
-        this.getSourceBlock().onBlockClicked(world, x, y, z, player);
+        this.getSourceBlock().onBlockClicked(worldIn, x, y, z, player);
     }
 
-    /**
-     * A randomly called display update to be able to add particles or other items for display
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(final World world, final int x, final int y, final int z, final Random rand) {
-
-        this.getSourceBlock().randomDisplayTick(world, x, y, z, rand);
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random) {
+        this.getSourceBlock().randomDisplayTick(worldIn, x, y, z, random);
     }
 
-    /**
-     * Called right before the block is destroyed by a player. Args: world, x, y, z, metaData
-     */
     @Override
-    public void onBlockDestroyedByPlayer(final World world, final int x, final int y, final int z, final int metadata) {
-        this.getSourceBlock().onBlockDestroyedByPlayer(world, x, y, z, metadata);
+    public void onBlockDestroyedByPlayer(World worldIn, int x, int y, int z, int meta) {
+        this.getSourceBlock().onBlockDestroyedByPlayer(worldIn, x, y, z, meta);
     }
 
-    /**
-     * Returns how much this block can resist explosions from the passed in entity.
-     */
     @Override
-    public float getExplosionResistance(final Entity ent) {
-        return this.getSourceBlock().getExplosionResistance(ent);
+    public float getExplosionResistance(Entity exploder) {
+        return this.getSourceBlock().getExplosionResistance(exploder);
     }
 
-    /**
-     * How many world ticks before ticking
-     */
     @Override
-    public int tickRate(final World world) {
-        return this.getSourceBlock().tickRate(world);
+    public int tickRate(World worldIn) {
+        return this.getSourceBlock().tickRate(worldIn);
     }
 
-    /**
-     * Can add to the passed in vector for a movement vector to be applied to the entity. Args: x, y, z, entity, vec3d
-     */
     @Override
-    public void velocityToAddToEntity(final World world, final int x, final int y, final int z, final Entity ent,
-            final Vec3 vec) {
-        this.getSourceBlock().velocityToAddToEntity(world, x, y, z, ent, vec);
+    public void velocityToAddToEntity(World worldIn, int x, int y, int z, Entity entityIn, Vec3 velocity) {
+        this.getSourceBlock().velocityToAddToEntity(worldIn, x, y, z, entityIn, velocity);
     }
 
-    /**
-     * How bright to render this block based on the light its receiving. Args: iBlockAccess, x, y, z
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public int getMixedBrightnessForBlock(final IBlockAccess world, final int x, final int y, final int z) {
-        return this.getSourceBlock().getMixedBrightnessForBlock(world, x, y, z);
+    public int getMixedBrightnessForBlock(IBlockAccess worldIn, int x, int y, int z) {
+        return this.getSourceBlock().getMixedBrightnessForBlock(worldIn, x, y, z);
     }
 
-    /**
-     * Returns which pass should this block be rendered on. 0 for solids and 1 for alpha
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public int getRenderBlockPass() {
         return this.getSourceBlock().getRenderBlockPass();
     }
 
-    /**
-     * Gets the block's texture. Args: side, meta
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, int meta) {
         return this.sourceBlock.getBlock().getIcon(side, this.sourceBlock.getMetadata());
     }
 
-    /**
-     * Returns the bounding box of the wired rectangular prism to render.
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World world, final int x, final int y, final int z) {
-        return this.getSourceBlock().getSelectedBoundingBoxFromPool(world, x, y, z);
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int x, int y, int z) {
+        return this.getSourceBlock().getSelectedBoundingBoxFromPool(worldIn, x, y, z);
     }
 
-    /**
-     * Returns if this block is collidable (only used by Fire)
-     */
     @Override
     public boolean isCollidable() {
         return this.getSourceBlock().isCollidable();
     }
 
-    /**
-     * Returns whether this block is collideable based on the arguments passed in
-     * 
-     * @param par1 block metaData
-     * @param par2 whether the player right-clicked while holding a boat
-     */
     @Override
-    public boolean canCollideCheck(final int meta, final boolean boatRightClick) {
-        return this.getSourceBlock().canCollideCheck(meta, boatRightClick);
-    }
-
-    /**
-     * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
-     */
-    @Override
-    public boolean canPlaceBlockAt(final World world, final int x, final int y, final int z) {
-        return this.getSourceBlock().canPlaceBlockAt(world, x, y, z);
-    }
-
-    /**
-     * Called whenever the block is added into the world. Args: world, x, y, z
-     */
-    @Override
-    public void onBlockAdded(final World world, final int x, final int y, final int z) {
-        this.onNeighborBlockChange(world, x, y, z, Blocks.air);
-        this.getSourceBlock().onBlockAdded(world, x, y, z);
+    public boolean canCollideCheck(int meta, boolean includeLiquid) {
+        return this.getSourceBlock().canCollideCheck(meta, includeLiquid);
     }
 
     @Override
-    public void breakBlock(final World world, final int x, final int y, final int z, final Block block,
-            final int meta) {
-        this.getSourceBlock().breakBlock(world, x, y, z, block, meta);
-    }
-
-    /**
-     * Called whenever an entity is walking on top of this block. Args: world, x, y, z, entity
-     */
-    @Override
-    public void onEntityWalking(final World world, final int x, final int y, final int z, final Entity ent) {
-        this.getSourceBlock().onEntityWalking(world, x, y, z, ent);
-    }
-
-    /**
-     * Ticks the block if it's been scheduled
-     */
-    @Override
-    public void updateTick(final World world, final int x, final int y, final int z, final Random rand) {
-        this.getSourceBlock().updateTick(world, x, y, z, rand);
-    }
-
-    /**
-     * Called upon block activation (right click on the block.)
-     *
-     * Activate the clicked on block, otherwise use the held item. Args: player, world, itemStack, x, y, z, side,
-     * xOffset, yOffset, zOffset
-     * 
-     */
-    @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player,
-            final int side, final float xOffset, final float yOffset, final float zOffset) {
-        return this.getSourceBlock().onBlockActivated(world, x, y, z, player, 0, 0.0F, 0.0F, 0.0F);
-    }
-
-    /**
-     * Called upon the block being destroyed by an explosion
-     */
-    @Override
-    public void onBlockDestroyedByExplosion(final World world, final int x, final int y, final int z,
-            final Explosion kaboom) {
-        this.getSourceBlock().onBlockDestroyedByExplosion(world, x, y, z, kaboom);
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z) {
+        return this.getSourceBlock().canPlaceBlockAt(worldIn, x, y, z);
     }
 
     @Override
-    public MapColor getMapColor(final int foo) {
+    public void onBlockAdded(World worldIn, int x, int y, int z) {
+        this.onNeighborBlockChange(worldIn, x, y, z, Blocks.air);
+        this.getSourceBlock().onBlockAdded(worldIn, x, y, z);
+    }
+
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta) {
+        this.getSourceBlock().breakBlock(worldIn, x, y, z, blockBroken, meta);
+    }
+
+    @Override
+    public void onEntityWalking(World worldIn, int x, int y, int z, Entity entityIn) {
+        this.getSourceBlock().onEntityWalking(worldIn, x, y, z, entityIn);
+    }
+
+    @Override
+    public void updateTick(World worldIn, int x, int y, int z, Random random) {
+        this.getSourceBlock().updateTick(worldIn, x, y, z, random);
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+        return this.getSourceBlock().onBlockActivated(worldIn, x, y, z, player, 0, 0.0F, 0.0F, 0.0F);
+    }
+
+    @Override
+    public void onBlockDestroyedByExplosion(World worldIn, int x, int y, int z, Explosion explosionIn) {
+        this.getSourceBlock().onBlockDestroyedByExplosion(worldIn, x, y, z, explosionIn);
+    }
+
+    @Override
+    public MapColor getMapColor(int meta) {
         return this.sourceBlock.getBlock().getMapColor(this.sourceBlock.getMetadata());
     }
 }

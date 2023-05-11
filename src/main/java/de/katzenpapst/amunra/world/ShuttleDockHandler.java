@@ -32,9 +32,9 @@ public class ShuttleDockHandler extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
+    public void readFromNBT(NBTTagCompound p_76184_1_) {
         // this should be a list of lists now
-        final NBTTagList tagList = nbt.getTagList("DockList", NBT.TAG_COMPOUND);
+        final NBTTagList tagList = p_76184_1_.getTagList("DockList", NBT.TAG_COMPOUND);
         tileMap.clear();
 
         for (int i = 0; i < tagList.tagCount(); i++) {
@@ -60,7 +60,7 @@ public class ShuttleDockHandler extends WorldSavedData {
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
+    public void writeToNBT(NBTTagCompound p_76187_1_) {
 
         final NBTTagList totalNbtList = new NBTTagList();
 
@@ -86,7 +86,7 @@ public class ShuttleDockHandler extends WorldSavedData {
             totalNbtList.appendTag(dimTag);
         }
 
-        nbt.setTag("DockList", totalNbtList);
+        p_76187_1_.setTag("DockList", totalNbtList);
     }
 
     public static boolean getStoredAvailability(final TileEntityShuttleDock dock) {

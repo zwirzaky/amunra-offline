@@ -30,7 +30,7 @@ public class ContainerHydroponics extends ContainerWithPlayerInventory {
     }
 
     @Override
-    public boolean canInteractWith(final EntityPlayer player) {
+    public boolean canInteractWith(EntityPlayer player) {
         return ((TileEntityHydroponics) this.tileEntity).isUseableByPlayer(player);
     }
 

@@ -13,9 +13,9 @@ import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
 
 abstract public class GuiContainerTabbed extends GuiContainerGC {
 
-    protected List<AbstractTab> tabList;
+    protected final List<AbstractTab> tabList = new ArrayList<>();
 
-    protected List<TabButton> tabButtons;
+    protected final List<TabButton> tabButtons = new ArrayList<>();
 
     protected int activeTab = -1;
 
@@ -23,9 +23,6 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
 
     public GuiContainerTabbed(final Container container) {
         super(container);
-
-        this.tabList = new ArrayList<>();
-        this.tabButtons = new ArrayList<>();
     }
 
     @Override
@@ -90,22 +87,20 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
     }
 
     @Override
-    public void drawScreen(final int mouseX, final int mouseY, final float ticks) {
-        super.drawScreen(mouseX, mouseY, ticks);
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
         // getActiveTab().
-        this.getActiveTab().drawScreen(mouseX, mouseY, ticks);
+        this.getActiveTab().drawScreen(mouseX, mouseY, partialTicks);
 
         for (final TabButton tb : this.tabButtons) {
             tb.drawTooltip(mouseX, mouseY);
         }
     }
 
-    protected void drawTabs() {
-
-    }
+    protected void drawTabs() {}
 
     @Override
-    protected void actionPerformed(final GuiButton btn) {
+    protected void actionPerformed(GuiButton btn) {
         if (btn.id >= TAB_BTN_OFFSET) {
             final int index = btn.id - TAB_BTN_OFFSET;
             this.setActiveTab(index);
@@ -114,13 +109,10 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
         this.getActiveTab().actionPerformed(btn);
     }
 
-    /**
-     * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
-     */
     @Override
-    protected void keyTyped(final char keyChar, final int keyId) {
-        if (!this.getActiveTab().keyTyped(keyChar, keyId)) {
-            super.keyTyped(keyChar, keyId);
+    protected void keyTyped(char typedChar, int keyCode) {
+        if (!this.getActiveTab().keyTyped(typedChar, keyCode)) {
+            super.keyTyped(typedChar, keyCode);
         }
     }
 
@@ -130,13 +122,9 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
         super.handleMouseInput();
     }
 
-    /**
-     * Causes the screen to lay out its subcomponents again. This is the equivalent of the Java call
-     * Container.validate()
-     */
     @Override
-    public void setWorldAndResolution(final Minecraft mc, final int x, final int y) {
-        super.setWorldAndResolution(mc, x, y);
-        this.getActiveTab().setWorldAndResolution(mc, x, y, this.xSize, this.ySize);
+    public void setWorldAndResolution(Minecraft mc, int width, int height) {
+        super.setWorldAndResolution(mc, width, height);
+        this.getActiveTab().setWorldAndResolution(mc, width, height, this.xSize, this.ySize);
     }
 }

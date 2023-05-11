@@ -21,11 +21,11 @@ import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
 
 abstract public class AbstractTab {
 
-    protected List<GuiButton> buttonList = new ArrayList<>();
+    protected final List<GuiButton> buttonList = new ArrayList<>();
 
-    protected List<GuiLabel> labelList = new ArrayList<>();
+    protected final List<GuiLabel> labelList = new ArrayList<>();
 
-    protected List<GuiElementTextBox> textBoxList = new ArrayList<>();
+    protected final List<GuiElementTextBox> textBoxList = new ArrayList<>();
 
     /** Reference to the Minecraft object. */
     protected Minecraft mc;
@@ -119,28 +119,28 @@ abstract public class AbstractTab {
      * Handles mouse input.
      */
     public void handleMouseInput() {
-        final int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
-        final int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-        final int k = Mouse.getEventButton();
+        final int mouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
+        final int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+        final int eventButton = Mouse.getEventButton();
 
         if (Mouse.getEventButtonState()) {
             if (this.mc.gameSettings.touchscreen && this.field_146298_h++ > 0) {
                 return;
             }
 
-            this.eventButton = k;
+            this.eventButton = eventButton;
             this.lastMouseEvent = Minecraft.getSystemTime();
-            this.mouseClicked(i, j, this.eventButton);
-        } else if (k != -1) {
+            this.mouseClicked(mouseX, mouseY, this.eventButton);
+        } else if (eventButton != -1) {
             if (this.mc.gameSettings.touchscreen && --this.field_146298_h > 0) {
                 return;
             }
 
             this.eventButton = -1;
-            this.mouseMovedOrUp(i, j, k);
+            this.mouseMovedOrUp(mouseX, mouseY, eventButton);
         } else if (this.eventButton != -1 && this.lastMouseEvent > 0L) {
             final long l = Minecraft.getSystemTime() - this.lastMouseEvent;
-            this.mouseClickMove(i, j, this.eventButton, l);
+            this.mouseClickMove(mouseX, mouseY, this.eventButton, l);
         }
     }
 
@@ -200,9 +200,7 @@ abstract public class AbstractTab {
      */
     protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) {
         if (mouseButton == 0) {
-            for (GuiButton element : this.buttonList) {
-                final GuiButton guibutton = element;
-
+            for (GuiButton guibutton : this.buttonList) {
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
                     final ActionPerformedEvent.Pre event = new ActionPerformedEvent.Pre(
                             this.parent,
@@ -212,7 +210,7 @@ abstract public class AbstractTab {
                     this.selectedButton = event.button;
                     event.button.func_146113_a(this.mc.getSoundHandler());
                     this.actionPerformed(event.button);
-                    if (this.equals(this.mc.currentScreen)) MinecraftForge.EVENT_BUS
+                    if (this.parent.equals(this.mc.currentScreen)) MinecraftForge.EVENT_BUS
                             .post(new ActionPerformedEvent.Post(this.parent, event.button, this.buttonList));
                 }
             }

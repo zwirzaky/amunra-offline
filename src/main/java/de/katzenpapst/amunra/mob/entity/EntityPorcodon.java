@@ -54,9 +54,6 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
 
     }
 
-    /**
-     * Returns true if the newer Entity AI code should be run
-     */
     @Override
     public boolean isAIEnabled() {
         return true;
@@ -74,10 +71,6 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
     }
 
-    /**
-     * returns true if all the conditions for steering the entity are met. For pigs, this is true if it is being ridden
-     * by a player and the player is holding a carrot-on-a-stick
-     */
     @Override
     public boolean canBeSteered() {
         return false;
@@ -89,35 +82,26 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(16, Byte.valueOf((byte) 0));
+        this.dataWatcher.addObject(16, 0);
     }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
     @Override
     protected String getLivingSound() {
         return "mob.pig.say";
     }
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
     @Override
     protected String getHurtSound() {
         return "mob.pig.say";
     }
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
     @Override
     protected String getDeathSound() {
         return "mob.pig.death";
     }
 
     @Override
-    protected void func_145780_a(final int x, final int y, final int z, final Block blockIn) {
+    protected void func_145780_a(int x, int y, int z, Block blockIn) {
         this.playSound("mob.pig.step", 0.15F, 1.0F);
     }
 
@@ -126,16 +110,10 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         return null;// this.isBurning() ? Items.cooked_porkchop : Items.porkchop;
     }
 
-    /**
-     * Drop 0-2 items of this living's type.
-     * 
-     * @param par1 - Whether this entity has recently been hit by a player.
-     * @param par2 - Level of Looting used to kill this mob.
-     */
     @Override
-    protected void dropFewItems(final boolean hitByPlayer, final int lootLevel) {
+    protected void dropFewItems(boolean p_70628_1_, int p_70628_2_) {
         // drop at least one meat
-        final int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
+        final int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + p_70628_2_);
         final ItemStack toDrop = this.dropItem.copy();
         toDrop.stackSize = j;
         this.entityDropItem(toDrop, 0.0F);
@@ -143,7 +121,7 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     }
 
     /**
-     * Misnomer imho, this function should be called "doesNotRequireOxygen"
+     * Misnamed imho, this function should be called "doesNotRequireOxygen"
      */
     @Override
     public boolean canBreath() {
@@ -151,16 +129,12 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
     }
 
     @Override
-    public EntityAgeable createChild(final EntityAgeable p_90011_1_) {
+    public EntityAgeable createChild(EntityAgeable p_90011_1_) {
         return new EntityPorcodon(this.worldObj);
     }
 
-    /**
-     * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
-     * the animal type)
-     */
     @Override
-    public boolean isBreedingItem(final ItemStack item) {
+    public boolean isBreedingItem(ItemStack p_70877_1_) {
         return false;// item != null && item.getItem() == Items.carrot;
     }
 
@@ -191,9 +165,6 @@ public class EntityPorcodon extends EntityAnimal implements IEntityBreathable, I
         this.playSound("random.fizz", 1.0F, 0.5F);
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
     @Override
     public void onUpdate() {
         if (this.isEntityAlive() && this.isIgnited) {

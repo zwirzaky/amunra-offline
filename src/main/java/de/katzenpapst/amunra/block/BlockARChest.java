@@ -82,8 +82,8 @@ public class BlockARChest extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        this.blockIcon = par1IconRegister.registerIcon(this.fallbackTexture);
+    public void registerBlockIcons(IIconRegister reg) {
+        this.blockIcon = reg.registerIcon(this.fallbackTexture);
     }
 
     public void setShiftDescription(final String str) {
@@ -91,7 +91,7 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public String getShiftDescription(final int meta) {
+    public String getShiftDescription(int meta) {
         if (this.shiftDescription != null) {
             return GCCoreUtil.translate(this.shiftDescription);
         }
@@ -99,12 +99,12 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public boolean showDescription(final int meta) {
+    public boolean showDescription(int meta) {
         return this.shiftDescription != null;
     }
 
     @Override
-    public TileEntity createNewTileEntity(final World world, final int meta) {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityARChest();
     }
 
@@ -129,22 +129,19 @@ public class BlockARChest extends BlockContainer
         return AmunRa.chestRenderId;
     }
 
-    /**
-     * Updates the blocks bounds based on its current state. Args: world, x, y, z
-     */
     @Override
-    public void setBlockBoundsBasedOnState(final IBlockAccess world, final int x, final int y, final int z) {
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z) {
         if (!this.canDoublechest) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
             return;
         }
-        if (this.isSameBlock(world, x, y, z - 1)) {
+        if (this.isSameBlock(worldIn, x, y, z - 1)) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0F, 0.9375F, 0.875F, 0.9375F);
-        } else if (this.isSameBlock(world, x, y, z + 1)) {
+        } else if (this.isSameBlock(worldIn, x, y, z + 1)) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 1.0F);
-        } else if (this.isSameBlock(world, x - 1, y, z)) {
+        } else if (this.isSameBlock(worldIn, x - 1, y, z)) {
             this.setBlockBounds(0.0F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-        } else if (this.isSameBlock(world, x + 1, y, z)) {
+        } else if (this.isSameBlock(worldIn, x + 1, y, z)) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F, 0.875F, 0.9375F);
         } else {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
@@ -152,198 +149,188 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public void onBlockAdded(final World world, final int x, final int y, final int z) {
-        super.onBlockAdded(world, x, y, z);
+    public void onBlockAdded(World worldIn, int x, int y, int z) {
+        super.onBlockAdded(worldIn, x, y, z);
         if (!this.canDoublechest) {
             return;
         }
 
-        this.unifyAdjacentChests(world, x, y, z);
+        this.unifyAdjacentChests(worldIn, x, y, z);
 
-        if (this.isSameBlock(world, x, y, z - 1)) {
-            this.unifyAdjacentChests(world, x, y, z - 1);
-        } else if (this.isSameBlock(world, x, y, z + 1)) {
-            this.unifyAdjacentChests(world, x, y, z + 1);
-        } else if (this.isSameBlock(world, x - 1, y, z)) {
-            this.unifyAdjacentChests(world, x - 1, y, z);
-        } else if (this.isSameBlock(world, x + 1, y, z)) {
-            this.unifyAdjacentChests(world, x + 1, y, z);
+        if (this.isSameBlock(worldIn, x, y, z - 1)) {
+            this.unifyAdjacentChests(worldIn, x, y, z - 1);
+        } else if (this.isSameBlock(worldIn, x, y, z + 1)) {
+            this.unifyAdjacentChests(worldIn, x, y, z + 1);
+        } else if (this.isSameBlock(worldIn, x - 1, y, z)) {
+            this.unifyAdjacentChests(worldIn, x - 1, y, z);
+        } else if (this.isSameBlock(worldIn, x + 1, y, z)) {
+            this.unifyAdjacentChests(worldIn, x + 1, y, z);
         }
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y, final int z, final EntityLivingBase user,
-            final ItemStack stack) {
-        byte meta = 0;
-        final int userRotation = MathHelper.floor_double(user.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn) {
+        final int userRotation = MathHelper.floor_double(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-        switch (userRotation) {
-            case 0:
-                meta = 2;
-                break;
-            case 1:
-                meta = 5;
-                break;
-            case 2:
-                meta = 3;
-                break;
-            case 3:
-                meta = 4;
-                break;
-        }
+        int meta = switch (userRotation) {
+            case 0 -> 2;
+            case 1 -> 5;
+            case 2 -> 3;
+            case 3 -> 4;
+            default -> 0;
+        };
 
         if (!this.canDoublechest) {
-            world.setBlockMetadataWithNotify(x, y, z, meta, 3);
+            worldIn.setBlockMetadataWithNotify(x, y, z, meta, 3);
             return;
         }
 
-        final boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
-        final boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
-        final boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
-        final boolean xPosSame = this.isSameBlock(world, x + 1, y, z);
+        final boolean zNegSame = this.isSameBlock(worldIn, x, y, z - 1);
+        final boolean zPosSame = this.isSameBlock(worldIn, x, y, z + 1);
+        final boolean xNegSame = this.isSameBlock(worldIn, x - 1, y, z);
+        final boolean xPosSame = this.isSameBlock(worldIn, x + 1, y, z);
 
         if (!zNegSame && !zPosSame && !xNegSame && !xPosSame) {
-            world.setBlockMetadataWithNotify(x, y, z, meta, 3);
+            worldIn.setBlockMetadataWithNotify(x, y, z, meta, 3);
         } else {
             if ((zNegSame || zPosSame) && (meta == 4 || meta == 5)) {
                 if (zNegSame) {
-                    world.setBlockMetadataWithNotify(x, y, z - 1, meta, 3);
+                    worldIn.setBlockMetadataWithNotify(x, y, z - 1, meta, 3);
                 } else {
-                    world.setBlockMetadataWithNotify(x, y, z + 1, meta, 3);
+                    worldIn.setBlockMetadataWithNotify(x, y, z + 1, meta, 3);
                 }
 
-                world.setBlockMetadataWithNotify(x, y, z, meta, 3);
+                worldIn.setBlockMetadataWithNotify(x, y, z, meta, 3);
             }
 
             if ((xNegSame || xPosSame) && (meta == 2 || meta == 3)) {
                 if (xNegSame) {
-                    world.setBlockMetadataWithNotify(x - 1, y, z, meta, 3);
+                    worldIn.setBlockMetadataWithNotify(x - 1, y, z, meta, 3);
                 } else {
-                    world.setBlockMetadataWithNotify(x + 1, y, z, meta, 3);
+                    worldIn.setBlockMetadataWithNotify(x + 1, y, z, meta, 3);
                 }
 
-                world.setBlockMetadataWithNotify(x, y, z, meta, 3);
+                worldIn.setBlockMetadataWithNotify(x, y, z, meta, 3);
             }
         }
     }
 
     public void unifyAdjacentChests(final World world, final int x, final int y, final int z) {
-        if (!this.canDoublechest) {
+        if (!this.canDoublechest || world.isRemote) {
             return;
         }
-        if (!world.isRemote) {
-            final boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
-            final boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
-            final boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
-            final boolean xPosSame = this.isSameBlock(world, x + 1, y, z);
+        
+        final boolean zNegSame = this.isSameBlock(world, x, y, z - 1);
+        final boolean zPosSame = this.isSameBlock(world, x, y, z + 1);
+        final boolean xNegSame = this.isSameBlock(world, x - 1, y, z);
+        final boolean xPosSame = this.isSameBlock(world, x + 1, y, z);
 
-            final Block nZNeg = world.getBlock(x, y, z - 1);
-            final Block nZPos = world.getBlock(x, y, z + 1);
-            final Block nXNeg = world.getBlock(x - 1, y, z);
-            final Block nXPos = world.getBlock(x + 1, y, z);
-            Block otherNeighbour1;
-            Block otherNeighbour2;
-            byte meta;
-            int otherMeta;
+        final Block nZNeg = world.getBlock(x, y, z - 1);
+        final Block nZPos = world.getBlock(x, y, z + 1);
+        final Block nXNeg = world.getBlock(x - 1, y, z);
+        final Block nXPos = world.getBlock(x + 1, y, z);
+        Block otherNeighbour1;
+        Block otherNeighbour2;
+        byte meta;
+        int otherMeta;
 
-            if (!zNegSame && !zPosSame) {
-                if (!xNegSame && !xPosSame) {
+        if (!zNegSame && !zPosSame) {
+            if (!xNegSame && !xPosSame) {
+                meta = 3;
+
+                if (nZNeg.func_149730_j() && !nZPos.func_149730_j()) {
                     meta = 3;
-
-                    if (nZNeg.func_149730_j() && !nZPos.func_149730_j()) {
-                        meta = 3;
-                    }
-
-                    if (nZPos.func_149730_j() && !nZNeg.func_149730_j()) {
-                        meta = 2;
-                    }
-
-                    if (nXNeg.func_149730_j() && !nXPos.func_149730_j()) {
-                        meta = 5;
-                    }
-
-                    if (nXPos.func_149730_j() && !nXNeg.func_149730_j()) {
-                        meta = 4;
-                    }
-                } else {
-                    otherNeighbour1 = world.getBlock(xNegSame ? x - 1 : x + 1, y, z - 1);
-                    otherNeighbour2 = world.getBlock(xNegSame ? x - 1 : x + 1, y, z + 1);
-                    meta = 3;
-                    if (xNegSame) {
-                        otherMeta = world.getBlockMetadata(x - 1, y, z);
-                    } else {
-                        otherMeta = world.getBlockMetadata(x + 1, y, z);
-                    }
-
-                    if (otherMeta == 2) {
-                        meta = 2;
-                    }
-
-                    if ((nZNeg.func_149730_j() || otherNeighbour1.func_149730_j()) && !nZPos.func_149730_j()
-                            && !otherNeighbour2.func_149730_j()) {
-                        meta = 3;
-                    }
-
-                    if ((nZPos.func_149730_j() || otherNeighbour2.func_149730_j()) && !nZNeg.func_149730_j()
-                            && !otherNeighbour1.func_149730_j()) {
-                        meta = 2;
-                    }
-                }
-            } else {
-                otherNeighbour1 = world.getBlock(x - 1, y, nZNeg == this ? z - 1 : z + 1);
-                otherNeighbour2 = world.getBlock(x + 1, y, nZNeg == this ? z - 1 : z + 1);
-                meta = 5;
-                if (nZNeg == this) {
-                    otherMeta = world.getBlockMetadata(x, y, z - 1);
-                } else {
-                    otherMeta = world.getBlockMetadata(x, y, z + 1);
                 }
 
-                if (otherMeta == 4) {
-                    meta = 4;
+                if (nZPos.func_149730_j() && !nZNeg.func_149730_j()) {
+                    meta = 2;
                 }
 
-                if ((nXNeg.func_149730_j() || otherNeighbour1.func_149730_j()) && !nXPos.func_149730_j()
-                        && !otherNeighbour2.func_149730_j()) {
+                if (nXNeg.func_149730_j() && !nXPos.func_149730_j()) {
                     meta = 5;
                 }
 
-                if ((nXPos.func_149730_j() || otherNeighbour2.func_149730_j()) && !nXNeg.func_149730_j()
-                        && !otherNeighbour1.func_149730_j()) {
+                if (nXPos.func_149730_j() && !nXNeg.func_149730_j()) {
                     meta = 4;
                 }
+            } else {
+                otherNeighbour1 = world.getBlock(xNegSame ? x - 1 : x + 1, y, z - 1);
+                otherNeighbour2 = world.getBlock(xNegSame ? x - 1 : x + 1, y, z + 1);
+                meta = 3;
+                if (xNegSame) {
+                    otherMeta = world.getBlockMetadata(x - 1, y, z);
+                } else {
+                    otherMeta = world.getBlockMetadata(x + 1, y, z);
+                }
+
+                if (otherMeta == 2) {
+                    meta = 2;
+                }
+
+                if ((nZNeg.func_149730_j() || otherNeighbour1.func_149730_j()) && !nZPos.func_149730_j()
+                        && !otherNeighbour2.func_149730_j()) {
+                    meta = 3;
+                }
+
+                if ((nZPos.func_149730_j() || otherNeighbour2.func_149730_j()) && !nZNeg.func_149730_j()
+                        && !otherNeighbour1.func_149730_j()) {
+                    meta = 2;
+                }
+            }
+        } else {
+            otherNeighbour1 = world.getBlock(x - 1, y, nZNeg == this ? z - 1 : z + 1);
+            otherNeighbour2 = world.getBlock(x + 1, y, nZNeg == this ? z - 1 : z + 1);
+            meta = 5;
+            if (nZNeg == this) {
+                otherMeta = world.getBlockMetadata(x, y, z - 1);
+            } else {
+                otherMeta = world.getBlockMetadata(x, y, z + 1);
             }
 
-            world.setBlockMetadataWithNotify(x, y, z, meta, 3);
+            if (otherMeta == 4) {
+                meta = 4;
+            }
+
+            if ((nXNeg.func_149730_j() || otherNeighbour1.func_149730_j()) && !nXPos.func_149730_j()
+                    && !otherNeighbour2.func_149730_j()) {
+                meta = 5;
+            }
+
+            if ((nXPos.func_149730_j() || otherNeighbour2.func_149730_j()) && !nXNeg.func_149730_j()
+                    && !otherNeighbour1.func_149730_j()) {
+                meta = 4;
+            }
         }
+
+        world.setBlockMetadataWithNotify(x, y, z, meta, 3);
     }
 
     @Override
-    public boolean canPlaceBlockAt(final World world, final int x, final int y, final int z) {
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z) {
         if (!this.canDoublechest) {
-            return super.canPlaceBlockAt(world, x, y, z);
+            return super.canPlaceBlockAt(worldIn, x, y, z);
         }
         int numSameNeighbours = 0;
 
-        if (this.isSameBlock(world, x - 1, y, z)) {
+        if (this.isSameBlock(worldIn, x - 1, y, z)) {
             ++numSameNeighbours;
         }
 
-        if (this.isSameBlock(world, x + 1, y, z)) {
+        if (this.isSameBlock(worldIn, x + 1, y, z)) {
             ++numSameNeighbours;
         }
 
-        if (this.isSameBlock(world, x, y, z - 1)) {
+        if (this.isSameBlock(worldIn, x, y, z - 1)) {
             ++numSameNeighbours;
         }
 
-        if (this.isSameBlock(world, x, y, z + 1)) {
+        if (this.isSameBlock(worldIn, x, y, z + 1)) {
             ++numSameNeighbours;
         }
 
-        return numSameNeighbours <= 1 && (this.isThereANeighborChest(world, x - 1, y, z) ? false
-                : !this.isThereANeighborChest(world, x + 1, y, z) && !this.isThereANeighborChest(world, x, y, z - 1)
-                        && !this.isThereANeighborChest(world, x, y, z + 1));
+        return numSameNeighbours <= 1 && (this.isThereANeighborChest(worldIn, x - 1, y, z) ? false
+                : !this.isThereANeighborChest(worldIn, x + 1, y, z) && !this.isThereANeighborChest(worldIn, x, y, z - 1)
+                        && !this.isThereANeighborChest(worldIn, x, y, z + 1));
     }
 
     /**
@@ -363,10 +350,10 @@ public class BlockARChest extends BlockContainer
     }
 
     @Override
-    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
-        super.onNeighborBlockChange(world, x, y, z, block);
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
 
-        final TileEntityARChest tileEntity = (TileEntityARChest) world.getTileEntity(x, y, z);
+        final TileEntityARChest tileEntity = (TileEntityARChest) worldIn.getTileEntity(x, y, z);
 
         if (tileEntity != null) {
             tileEntity.updateContainingBlockInfo();
@@ -374,14 +361,12 @@ public class BlockARChest extends BlockContainer
     }
 
     protected boolean isSameBlock(final IBlockAccess world, final int x, final int y, final int z) {
-        final Block b = world.getBlock(x, y, z);
-        return b == this;
+        return world.getBlock(x, y, z) == this;
     }
 
     @Override
-    public void breakBlock(final World world, final int x, final int y, final int z, final Block block,
-            final int meta) {
-        final TileEntityARChest tileEntity = (TileEntityARChest) world.getTileEntity(x, y, z);
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta) {
+        final TileEntityARChest tileEntity = (TileEntityARChest) worldIn.getTileEntity(x, y, z);
 
         if (tileEntity != null) {
             for (int i = 0; i < tileEntity.getSizeInventory(); ++i) {
@@ -392,7 +377,7 @@ public class BlockARChest extends BlockContainer
                     final float rand2 = this.random.nextFloat() * 0.8F + 0.1F;
                     EntityItem itemEntity;
 
-                    for (final float randOffset = this.random.nextFloat() * 0.8F + 0.1F; stack.stackSize > 0; world
+                    for (final float randOffset = this.random.nextFloat() * 0.8F + 0.1F; stack.stackSize > 0; worldIn
                             .spawnEntityInWorld(itemEntity)) {
                         int droppedStackSize = this.random.nextInt(21) + 10;
 
@@ -402,7 +387,7 @@ public class BlockARChest extends BlockContainer
 
                         stack.stackSize -= droppedStackSize;
                         itemEntity = new EntityItem(
-                                world,
+                                worldIn,
                                 x + rand1,
                                 y + rand2,
                                 z + randOffset,
@@ -420,75 +405,69 @@ public class BlockARChest extends BlockContainer
             }
         }
 
-        super.breakBlock(world, x, y, z, block, meta);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
-    /**
-     * Called upon block activation (right click on the block.) World world, int x, int y, int z, EntityPlayer player,
-     * int side, float xOffset, float yOffset, float zOffset
-     */
     @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player,
-            final int side, final float xOffset, final float yOffset, final float zOffset) {
-        Object tileEntity = world.getTileEntity(x, y, z);
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+        Object tileEntity = worldIn.getTileEntity(x, y, z);
 
-        if (tileEntity == null || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN)
-                || TileEntityARChest.isOcelotBlockingChest(world, x, y, z)) {
+        if (tileEntity == null || worldIn.isSideSolid(x, y + 1, z, ForgeDirection.DOWN)
+                || TileEntityARChest.isOcelotBlockingChest(worldIn, x, y, z)) {
             return true;
         }
         if (this.canDoublechest) {
-            if (world.getBlock(x - 1, y, z) == this && (world.isSideSolid(x - 1, y + 1, z, ForgeDirection.DOWN)
-                    || TileEntityARChest.isOcelotBlockingChest(world, x - 1, y, z))) {
+            if (worldIn.getBlock(x - 1, y, z) == this && (worldIn.isSideSolid(x - 1, y + 1, z, ForgeDirection.DOWN)
+                    || TileEntityARChest.isOcelotBlockingChest(worldIn, x - 1, y, z))) {
                 return true;
             }
-            if (world.getBlock(x + 1, y, z) == this && (world.isSideSolid(x + 1, y + 1, z, ForgeDirection.DOWN)
-                    || TileEntityARChest.isOcelotBlockingChest(world, x + 1, y, z))) {
+            if (worldIn.getBlock(x + 1, y, z) == this && (worldIn.isSideSolid(x + 1, y + 1, z, ForgeDirection.DOWN)
+                    || TileEntityARChest.isOcelotBlockingChest(worldIn, x + 1, y, z))) {
                 return true;
             }
-            if (world.getBlock(x, y, z - 1) == this && (world.isSideSolid(x, y + 1, z - 1, ForgeDirection.DOWN)
-                    || TileEntityARChest.isOcelotBlockingChest(world, x, y, z - 1))) {
+            if (worldIn.getBlock(x, y, z - 1) == this && (worldIn.isSideSolid(x, y + 1, z - 1, ForgeDirection.DOWN)
+                    || TileEntityARChest.isOcelotBlockingChest(worldIn, x, y, z - 1))) {
                 return true;
             }
-            if (world.getBlock(x, y, z + 1) == this && (world.isSideSolid(x, y + 1, z + 1, ForgeDirection.DOWN)
-                    || TileEntityARChest.isOcelotBlockingChest(world, x, y, z + 1))) {
+            if (worldIn.getBlock(x, y, z + 1) == this && (worldIn.isSideSolid(x, y + 1, z + 1, ForgeDirection.DOWN)
+                    || TileEntityARChest.isOcelotBlockingChest(worldIn, x, y, z + 1))) {
                 return true;
             }
 
-            if (this.isSameBlock(world, x - 1, y, z)) {
+            if (this.isSameBlock(worldIn, x - 1, y, z)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
-                        (TileEntityARChest) world.getTileEntity(x - 1, y, z),
+                        (TileEntityARChest) worldIn.getTileEntity(x - 1, y, z),
                         (IInventory) tileEntity);
             }
 
-            if (this.isSameBlock(world, x + 1, y, z)) {
+            if (this.isSameBlock(worldIn, x + 1, y, z)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
                         (IInventory) tileEntity,
-                        (TileEntityARChest) world.getTileEntity(x + 1, y, z));
+                        (TileEntityARChest) worldIn.getTileEntity(x + 1, y, z));
             }
 
-            if (this.isSameBlock(world, x, y, z - 1)) {
+            if (this.isSameBlock(worldIn, x, y, z - 1)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
-                        (TileEntityARChest) world.getTileEntity(x, y, z - 1),
+                        (TileEntityARChest) worldIn.getTileEntity(x, y, z - 1),
                         (IInventory) tileEntity);
             }
 
-            if (this.isSameBlock(world, x, y, z + 1)) {
+            if (this.isSameBlock(worldIn, x, y, z + 1)) {
                 tileEntity = new InventoryLargeChest(
                         "container.chestDouble",
                         (IInventory) tileEntity,
-                        (TileEntityARChest) world.getTileEntity(x, y, z + 1));
+                        (TileEntityARChest) worldIn.getTileEntity(x, y, z + 1));
             }
         }
 
-        if (world.isRemote) {
+        if (worldIn.isRemote) {
             return true;
         }
         player.displayGUIChest((IInventory) tileEntity);
         return true;
-
     }
 
     public void setMass(final float mass) {

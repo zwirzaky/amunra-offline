@@ -99,9 +99,9 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public boolean isItemValidForSlot(final int slotNr, final ItemStack stack) {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
 
-        return switch (slotNr) {
+        return switch (index) {
             case 0 -> ItemElectricBase.isElectricItem(stack.getItem()); // battery
             case 1 -> seeds.isSameItem(stack) || bonemeal.isSameItem(stack); // seeds or bonemeal
             default -> false;
@@ -120,18 +120,18 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(final int side) {
+    public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
         return new int[] { 0, 1 };
     }
 
     @Override
-    public boolean canInsertItem(final int slotID, final ItemStack itemstack, final int side) {
-        return this.isItemValidForSlot(slotID, itemstack);
+    public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
+        return this.isItemValidForSlot(p_102007_1_, p_102007_2_);
     }
 
     @Override
-    public boolean canExtractItem(final int slot, final ItemStack stack, final int side) {
-        return slot == 0 || slot == 1;
+    public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
+        return p_102008_1_ == 0 || p_102008_1_ == 1;
     }
 
     @Override
@@ -140,22 +140,22 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public ItemStack getStackInSlot(final int slot) {
-        return this.containingItems[slot];
+    public ItemStack getStackInSlot(int slotIn) {
+        return this.containingItems[slotIn];
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-        this.containingItems = this.readStandardItemsFromNBT(nbt);
-        this.plantGrowthStatus = nbt.getFloat("growthStatus");
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        this.containingItems = this.readStandardItemsFromNBT(compound);
+        this.plantGrowthStatus = compound.getFloat("growthStatus");
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        this.writeStandardItemsToNBT(nbt);
-        nbt.setFloat("growthStatus", this.plantGrowthStatus);
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        this.writeStandardItemsToNBT(compound);
+        compound.setFloat("growthStatus", this.plantGrowthStatus);
         // plantedSeed
     }
 
@@ -192,30 +192,30 @@ public class TileEntityHydroponics extends TileEntityOxygen
     }
 
     @Override
-    public ItemStack decrStackSize(final int slotNr, final int amount) {
-        if (this.containingItems[slotNr] == null) {
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.containingItems[index] == null) {
             return null;
         }
         ItemStack newStack;
 
-        if (this.containingItems[slotNr].stackSize <= amount) {
-            newStack = this.containingItems[slotNr];
-            this.containingItems[slotNr] = null;
+        if (this.containingItems[index].stackSize <= count) {
+            newStack = this.containingItems[index];
+            this.containingItems[index] = null;
         } else {
-            newStack = this.containingItems[slotNr].splitStack(amount);
+            newStack = this.containingItems[index].splitStack(count);
 
-            if (this.containingItems[slotNr].stackSize == 0) {
-                this.containingItems[slotNr] = null;
+            if (this.containingItems[index].stackSize == 0) {
+                this.containingItems[index] = null;
             }
         }
         return newStack;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(final int slotNr) {
-        if (this.containingItems[slotNr] != null) {
-            final ItemStack var2 = this.containingItems[slotNr];
-            this.containingItems[slotNr] = null;
+    public ItemStack getStackInSlotOnClosing(int index) {
+        if (this.containingItems[index] != null) {
+            final ItemStack var2 = this.containingItems[index];
+            this.containingItems[index] = null;
             return var2;
         }
         return null;
@@ -276,8 +276,8 @@ public class TileEntityHydroponics extends TileEntityOxygen
      */
 
     @Override
-    public void setInventorySlotContents(final int slotNr, final ItemStack stack) {
-        this.containingItems[slotNr] = stack;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        this.containingItems[index] = stack;
 
         if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
             stack.stackSize = this.getInventoryStackLimit();

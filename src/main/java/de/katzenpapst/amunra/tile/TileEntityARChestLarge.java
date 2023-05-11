@@ -8,9 +8,6 @@ public class TileEntityARChestLarge extends TileEntityARChest {
         this.chestContents = new ItemStack[this.getSizeInventory()];
     }
 
-    /**
-     * Returns the number of slots in the inventory.
-     */
     @Override
     public int getSizeInventory() {
         return 54;

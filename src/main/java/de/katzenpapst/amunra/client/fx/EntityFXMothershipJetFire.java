@@ -24,12 +24,12 @@ public class EntityFXMothershipJetFire extends EntityFX {
         final float f = (float) (Math.random() + Math.random() + 1.0D) * 0.15F;
         final float f1 = MathHelper.sqrt_double(
                 this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) / 9.0F;
-        this.motionX = this.motionX / f1 * f * 0.4000000059604645D;
-        this.motionY = this.motionY / f1 * f * 0.4000000059604645D;
-        this.motionZ = this.motionZ / f1 * f * 0.4000000059604645D;
+        this.motionX = this.motionX / f1 * f * 0.4D;
+        this.motionY = this.motionY / f1 * f * 0.4D;
+        this.motionZ = this.motionZ / f1 * f * 0.4D;
 
         // stealing stuff from GC
-        this.particleRed = 255F / 255F;
+        this.particleRed = 1.0F;
         this.particleGreen = 120F / 255F + this.rand.nextFloat() / 3;
         this.particleBlue = 55F / 255F;
 
@@ -55,37 +55,24 @@ public class EntityFXMothershipJetFire extends EntityFX {
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
         this.particleGreen += 0.01F;
-
     }
 
     @Override
-    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4,
-            final float par5, final float par6, final float par7) {
+    public void renderParticle(Tessellator p_70539_1_, float p_70539_2_, float p_70539_3_, float p_70539_4_, float p_70539_5_, float p_70539_6_, float p_70539_7_) {
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        float var8 = (this.particleAge + par2) / this.particleMaxAge * 32.0F;
-
-        if (var8 < 0.0F) {
-            var8 = 0.0F;
-        }
-
-        if (var8 > 1.0F) {
-            var8 = 1.0F;
-        }
-
-        // this.particleScale = this.smokeParticleScale * var8;
-        super.renderParticle(par1Tessellator, par2, par3, par4, par5, par6, par7);
+        super.renderParticle(p_70539_1_, p_70539_2_, p_70539_3_, p_70539_4_, p_70539_5_, p_70539_6_, p_70539_7_);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
     }
 
     @Override
-    public int getBrightnessForRender(final float par1) {
-        return 15728880;
+    public int getBrightnessForRender(float p_70070_1_) {
+        return 0xF000F0;
     }
 
     @Override
-    public float getBrightness(final float par1) {
+    public float getBrightness(float p_70013_1_) {
         return 1.0F;
     }
 }

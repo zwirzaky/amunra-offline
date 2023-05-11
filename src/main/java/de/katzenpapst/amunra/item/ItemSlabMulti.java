@@ -17,12 +17,6 @@ public class ItemSlabMulti extends ItemBlockMulti {
     protected final Block singleSlab;
     protected final Block doubleSlab;
 
-    /**
-     *
-     * @param name
-     * @param singleSlab
-     * @param doubleSlab
-     */
     public ItemSlabMulti(final Block block, final BlockSlabMeta singleSlab, final BlockDoubleslabMeta doubleSlab) {
         super(block);
 
@@ -50,33 +44,28 @@ public class ItemSlabMulti extends ItemBlockMulti {
         }
     }
 
-    /**
-     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
-     */
     @Override
-    public boolean onItemUse(final ItemStack stack, final EntityPlayer player, final World world, final int x,
-            final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ) {
+    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
         if (this.isDoubleSlab) {
-            return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+            return super.onItemUse(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
         }
-        if (stack.stackSize == 0 || !player.canPlayerEdit(x, y, z, side, stack)) {
+        if (p_77648_1_.stackSize == 0 || !p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_)) {
             return false;
         }
-        final Block block = world.getBlock(x, y, z);
-        final int worldMeta = world.getBlockMetadata(x, y, z);
+        final Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
+        final int worldMeta = p_77648_3_.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_);
         final int worldDistinctionMeta = worldMeta & 7;
         final boolean isHighestBitSet = (worldMeta & 8) != 0; // I think the meaning is: isSlabOnTop
 
-        if ((isHighestBitSet ? side == 0 : side == 1) && block == this.singleSlab
-                && worldDistinctionMeta == stack.getItemDamage()) {
+        if ((isHighestBitSet ? p_77648_7_ == 0 : p_77648_7_ == 1) && block == this.singleSlab
+                && worldDistinctionMeta == p_77648_1_.getItemDamage()) {
             // we are rightclicking on a slab with which we can merge
-            this.combine(world, stack, x, y, z, worldDistinctionMeta);
+            this.combine(p_77648_3_, p_77648_1_, p_77648_4_, p_77648_5_, p_77648_6_, worldDistinctionMeta);
 
             return true;
         } else {
-            return this.tryCombiningWithSide(stack, player, world, x, y, z, side) ? true
-                    : super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+            return this.tryCombiningWithSide(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_) ? true
+                    : super.onItemUse(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
         }
     }
 
@@ -85,46 +74,45 @@ public class ItemSlabMulti extends ItemBlockMulti {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean func_150936_a(final World world, int x, int y, int z, final int side, final EntityPlayer player,
-            final ItemStack stack) {
-        final int xNew = x;
-        final int yNew = y;
-        final int zNew = z;
-        final Block block = world.getBlock(x, y, z);
-        final int meta = world.getBlockMetadata(x, y, z);
+    public boolean func_150936_a(World p_150936_1_, int p_150936_2_, int p_150936_3_, int p_150936_4_, int p_150936_5_, EntityPlayer p_150936_6_, ItemStack p_150936_7_) {
+        final int xNew = p_150936_2_;
+        final int yNew = p_150936_3_;
+        final int zNew = p_150936_4_;
+        final Block block = p_150936_1_.getBlock(p_150936_2_, p_150936_3_, p_150936_4_);
+        final int meta = p_150936_1_.getBlockMetadata(p_150936_2_, p_150936_3_, p_150936_4_);
         int distinctionMeta = meta & 7;
         final boolean isUpperSlab = (meta & 8) != 0;
 
-        if ((isUpperSlab ? side == 0 : side == 1) && block == this.singleSlab
-                && distinctionMeta == stack.getItemDamage()) {
+        if ((isUpperSlab ? p_150936_5_ == 0 : p_150936_5_ == 1) && block == this.singleSlab
+                && distinctionMeta == p_150936_7_.getItemDamage()) {
             return true;
         }
-        switch (side) {
+        switch (p_150936_5_) {
             case 0:
-                --y;
+                --p_150936_3_;
                 break;
             case 1:
-                ++y;
+                ++p_150936_3_;
                 break;
             case 2:
-                --z;
+                --p_150936_4_;
                 break;
             case 3:
-                ++z;
+                ++p_150936_4_;
                 break;
             case 4:
-                --x;
+                --p_150936_2_;
                 break;
             case 5:
-                ++x;
+                ++p_150936_2_;
                 break;
         }
 
-        final Block newBlock = world.getBlock(x, y, z);
-        final int newMeta = world.getBlockMetadata(x, y, z);
+        final Block newBlock = p_150936_1_.getBlock(p_150936_2_, p_150936_3_, p_150936_4_);
+        final int newMeta = p_150936_1_.getBlockMetadata(p_150936_2_, p_150936_3_, p_150936_4_);
         distinctionMeta = newMeta & 7;
-        return newBlock == this.singleSlab && distinctionMeta == stack.getItemDamage() ? true
-                : super.func_150936_a(world, xNew, yNew, zNew, side, player, stack);
+        return newBlock == this.singleSlab && distinctionMeta == p_150936_7_.getItemDamage() ? true
+                : super.func_150936_a(p_150936_1_, xNew, yNew, zNew, p_150936_5_, p_150936_6_, p_150936_7_);
     }
 
     private boolean tryCombiningWithSide(final ItemStack stack, final EntityPlayer player, final World world, int x,

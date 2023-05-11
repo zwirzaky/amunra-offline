@@ -124,21 +124,21 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
 
     @SuppressWarnings("unchecked")
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
 
-        this.spawned = nbt.getBoolean("spawned");
+        this.spawned = compound.getBoolean("spawned");
         // this.playerInRange = this.lastPlayerInRange = nbt.getBoolean("playerInRange");
-        this.isBossDefeated = nbt.getBoolean("defeated");
+        this.isBossDefeated = compound.getBoolean("defeated");
 
         try {
-            this.bossClass = (Class<? extends IAmunRaBoss>) Class.forName(nbt.getString("bossClass"));
+            this.bossClass = (Class<? extends IAmunRaBoss>) Class.forName(compound.getString("bossClass"));
         } catch (final Exception e) {
             AmunRa.LOGGER.warn("Failed to parse bossClass from NBT data", e);
         }
 
-        if (nbt.hasKey("roomArea")) {
-            this.roomArea = NbtHelper.readAABB(nbt.getCompoundTag("roomArea"));
+        if (compound.hasKey("roomArea")) {
+            this.roomArea = NbtHelper.readAABB(compound.getCompoundTag("roomArea"));
         }
         /*
          * if(nbt.hasKey("spawnedBoss")) { Entity ent = this.worldObj.getEntityByID(nbt.getInteger("spawnedBoss"));
@@ -148,14 +148,14 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
 
-        nbt.setBoolean("spawned", this.spawned);
-        nbt.setBoolean("defeated", this.isBossDefeated);
+        compound.setBoolean("spawned", this.spawned);
+        compound.setBoolean("defeated", this.isBossDefeated);
 
         if (this.roomArea != null) {
-            nbt.setTag("roomArea", NbtHelper.getAsNBT(this.roomArea));
+            compound.setTag("roomArea", NbtHelper.getAsNBT(this.roomArea));
         }
 
         /*

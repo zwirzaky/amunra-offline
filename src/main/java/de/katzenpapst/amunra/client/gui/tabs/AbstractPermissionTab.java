@@ -20,7 +20,6 @@ import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementDropdown.IDropboxCallback;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.ITextBoxCallback;
-import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 abstract public class AbstractPermissionTab extends AbstractTab
@@ -36,9 +35,9 @@ abstract public class AbstractPermissionTab extends AbstractTab
     protected GuiButton rmBtn;
 
     // protected Set<PlayerID> playerIdList = new HashSet<PlayerID>();
-    protected List<PlayerID> playerIdList = new ArrayList<>();
+    protected final List<PlayerID> playerIdList = new ArrayList<>();
 
-    protected Map<Mothership.PermissionMode, String> permissionModeMap = new HashMap<>();
+    protected final Map<Mothership.PermissionMode, String> permissionModeMap = new HashMap<>();
 
     protected String error = "";
     protected float errorTime = 0;
@@ -161,22 +160,22 @@ abstract public class AbstractPermissionTab extends AbstractTab
         final int guiX = (this.width - this.xSize) / 2;
         final int guiY = (this.height - this.ySize) / 2;
 
-        this.fontRendererObj.drawString(this.getTooltip(), guiX + 5, guiY + 5, 4210752);
+        this.fontRendererObj.drawString(this.getTooltip(), guiX + 5, guiY + 5, 0x404040);
 
         this.fontRendererObj.drawString(
                 GCCoreUtil.translate("tile.mothershipSettings.permission.allowLabel") + ":",
                 guiX + 9,
                 guiY + 16,
-                4210752);
+                0x404040);
 
         if (this.errorTime > 0) {
-            this.fontRendererObj.drawSplitString(this.error, guiX + 102, guiY + 80, 70, 4210752);
+            this.fontRendererObj.drawSplitString(this.error, guiX + 102, guiY + 80, 70, 0x404040);
             this.errorTime -= ticks;
         }
-        // this.fontRendererObj.drawString("fooo", guiX+102, guiY+80, 4210752);
+        // this.fontRendererObj.drawString("fooo", guiX+102, guiY+80, 0x404040);
 
         this.fontRendererObj
-                .drawString(GCCoreUtil.translate("container.inventory"), guiX + 8, guiY + this.ySize - 94, 4210752);
+                .drawString(GCCoreUtil.translate("container.inventory"), guiX + 8, guiY + this.ySize - 94, 0x404040);
     }
 
     // DROPDOWN SHIT
@@ -189,9 +188,7 @@ abstract public class AbstractPermissionTab extends AbstractTab
     abstract public int getInitialSelection(GuiElementDropdown dropdown);
 
     @Override
-    public void onIntruderInteraction() {
-
-    }
+    public void onIntruderInteraction() {}
 
     // TEXTBOX SHIT
     @Override
@@ -212,13 +209,11 @@ abstract public class AbstractPermissionTab extends AbstractTab
 
     @Override
     public int getTextColor(final GuiElementTextBox textBox) {
-        return ColorUtil.to32BitColor(255, 20, 255, 20);
+        return 0xFF14FF14;
     }
 
     @Override
-    public void onIntruderInteraction(final GuiElementTextBox textBox) {
-
-    }
+    public void onIntruderInteraction(final GuiElementTextBox textBox) {}
 
     // STRINGSELECTBOX SHIT
     @Override

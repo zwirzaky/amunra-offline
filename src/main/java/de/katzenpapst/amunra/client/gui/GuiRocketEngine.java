@@ -106,7 +106,7 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         int offsetY = 35;
 
         this.buttonEnable.displayString = !this.tileEngine.getDisabled(0)
@@ -118,22 +118,22 @@ public class GuiRocketEngine extends GuiContainerGC {
                 displayString,
                 this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2,
                 7,
-                4210752);
+                0x404040);
 
         displayString = GCCoreUtil.translate("gui.message.mothership.status.name") + ": " + this.getStatus();
-        this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 4210752);
+        this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 0x404040);
 
         offsetY += 10;
 
         displayString = GCCoreUtil.translate("gui.message.mothership.numEngineParts") + ": "
                 + this.tileEngine.getNumBoosters();
-        this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 4210752);
+        this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 0x404040);
 
         offsetY += 10;
 
         displayString = GCCoreUtil.translate("gui.message.mothership.travelThrust") + ": "
                 + GuiHelper.formatMetric(this.tileEngine.getThrust(), "N");
-        this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 4210752);
+        this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 0x404040);
         offsetY += 10;
         // this.renderToolTip(itemIn, x, y);
 
@@ -144,10 +144,10 @@ public class GuiRocketEngine extends GuiContainerGC {
                 + GuiHelper.formatMetric(this.tileEngine.fuelTank.getCapacity() / 1000.0F, "B");
         this.tankInfo.tooltipStrings.add(displayString);
         /*
-         * this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 4210752);
+         * this.fontRendererObj.drawString(displayString, 32, 9 + offsetY, 0x404040);
          */
 
-        // this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 4210752);
+        // this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 0x404040);
     }
 
     private String getStatus() {
@@ -167,7 +167,7 @@ public class GuiRocketEngine extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(this.guiTexture);
         final int xPos = (this.width - this.xSize) / 2;

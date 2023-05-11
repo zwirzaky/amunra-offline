@@ -1,6 +1,7 @@
 package de.katzenpapst.amunra.helper;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -16,7 +17,7 @@ import de.katzenpapst.amunra.block.IMassiveBlock;
 
 public class BlockMassHelper {
 
-    private static HashMap<BlockMetaPairHashable, Float> blockMassMap = new HashMap<>();
+    private static Map<BlockMetaPairHashable, Float> blockMassMap = new HashMap<>();
 
     public static float getBlockMass(final World world, final Block block, final int meta, final int x, final int y,
             final int z) {
@@ -24,8 +25,8 @@ public class BlockMassHelper {
         if (block.isAir(world, x, y, z)) {
             return 0.0F;
         }
-        if (block instanceof IMassiveBlock) {
-            return ((IMassiveBlock) block).getMass(world, x, y, z, meta);
+        if (block instanceof IMassiveBlock massiveBlock) {
+            return massiveBlock.getMass(world, x, y, z, meta);
         }
         final BlockMetaPairHashable bmph = new BlockMetaPairHashable(block, (byte) meta);
         if (blockMassMap.containsKey(bmph)) {
@@ -41,8 +42,8 @@ public class BlockMassHelper {
     public static float guessBlockMass(final World world, final Block block, final int meta, final int x, final int y,
             final int z) {
 
-        if (block instanceof IFluidBlock) {
-            return getMassForFluid(((IFluidBlock) block).getFluid());
+        if (block instanceof IFluidBlock fluidBlock) {
+            return getMassForFluid(fluidBlock.getFluid());
         }
         if (block instanceof BlockLiquid) {
             // vanilla MC fluids

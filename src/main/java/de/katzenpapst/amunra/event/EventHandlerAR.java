@@ -23,7 +23,7 @@ public class EventHandlerAR {
     @SubscribeEvent
     public void entityLivingEvent(final LivingUpdateEvent event) {
         final EntityLivingBase entityLiving = event.entityLiving;
-        if (!(entityLiving instanceof IEntityNonOxygenBreather)) {
+        if (!(entityLiving instanceof IEntityNonOxygenBreather nonOxygenBreather)) {
             return;
         }
 
@@ -31,12 +31,12 @@ public class EventHandlerAR {
             CelestialBody body;
             final boolean isInSealedArea = OxygenUtil.isAABBInBreathableAirBlock(entityLiving);
 
-            if (entityLiving.worldObj.provider instanceof IGalacticraftWorldProvider) {
-                body = ((IGalacticraftWorldProvider) entityLiving.worldObj.provider).getCelestialBody();
+            if (entityLiving.worldObj.provider instanceof IGalacticraftWorldProvider gcProvider) {
+                body = gcProvider.getCelestialBody();
             } else {
                 body = GalacticraftCore.planetOverworld;
             }
-            if (!((IEntityNonOxygenBreather) entityLiving).canBreatheIn(body.atmosphere, isInSealedArea)) {
+            if (!nonOxygenBreather.canBreatheIn(body.atmosphere, isInSealedArea)) {
                 // should I add these events about suffocation that GC does?
                 entityLiving.attackEntityFrom(DamageSourceAR.dsSuffocate, 1);
             }
@@ -54,11 +54,11 @@ public class EventHandlerAR {
     }
 
     @SideOnly(Side.CLIENT)
-    private void provessGravityEvent(final ZeroGravityEvent event) {
-        if (!(event.entity instanceof EntityPlayer)) {
+    private void processGravityEvent(final ZeroGravityEvent event) {
+        if (!(event.entity instanceof EntityPlayer player)) {
             return;
         }
-        if (AmunRa.proxy.doCancelGravityEvent((EntityPlayer) event.entity)) {
+        if (AmunRa.proxy.doCancelGravityEvent(player)) {
             event.setCanceled(true);
         }
 
@@ -68,12 +68,12 @@ public class EventHandlerAR {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onGravityEvent(final ZeroGravityEvent.InFreefall event) {
-        this.provessGravityEvent(event);
+        this.processGravityEvent(event);
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onGravityEvent(final ZeroGravityEvent.Motion event) {
-        this.provessGravityEvent(event);
+        this.processGravityEvent(event);
     }
 }

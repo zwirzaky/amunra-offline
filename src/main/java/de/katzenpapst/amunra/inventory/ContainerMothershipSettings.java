@@ -15,7 +15,7 @@ public class ContainerMothershipSettings extends ContainerWithPlayerInventory {
     }
 
     @Override
-    public boolean canInteractWith(final EntityPlayer player) {
+    public boolean canInteractWith(EntityPlayer player) {
         return ((TileEntityMothershipSettings) this.tileEntity).isUseableByPlayer(player);
     }
 

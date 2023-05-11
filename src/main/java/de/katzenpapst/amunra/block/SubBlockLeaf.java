@@ -18,18 +18,15 @@ public class SubBlockLeaf extends SubBlock {
 
     public SubBlockLeaf(final String name, final String texture) {
         super(name, texture);
-        // TODO Auto-generated constructor stub
     }
 
     public SubBlockLeaf(final String name, final String texture, final String tool, final int harvestLevel) {
         super(name, texture, tool, harvestLevel);
-        // TODO Auto-generated constructor stub
     }
 
     public SubBlockLeaf(final String name, final String texture, final String tool, final int harvestLevel,
             final float hardness, final float resistance) {
         super(name, texture, tool, harvestLevel, hardness, resistance);
-        // TODO Auto-generated constructor stub
     }
 
     public SubBlockLeaf setSaplingDropped(final BlockMetaPair sapling) {
@@ -39,9 +36,9 @@ public class SubBlockLeaf extends SubBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(final IIconRegister iconReg) {
-        this.blockIcon = iconReg.registerIcon(this.getTextureName());
-        this.blockIconOpaque = iconReg.registerIcon(this.getTextureName() + "_opaque");
+    public void registerBlockIcons(IIconRegister reg) {
+        this.blockIcon = reg.registerIcon(this.getTextureName());
+        this.blockIconOpaque = reg.registerIcon(this.getTextureName() + "_opaque");
     }
 
     public IIcon getOpaqueIcon(final int side) {
@@ -54,15 +51,12 @@ public class SubBlockLeaf extends SubBlock {
     }
 
     @Override
-    public Item getItemDropped(final int meta, final Random random, final int fortune) {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return this.itemDropped.getItem();
     }
 
-    /**
-     * Determines the damage on the item the block drops. Used in cloth and wood.
-     */
     @Override
-    public int damageDropped(final int meta) {
+    public int damageDropped(int meta) {
         return this.itemDropped.getDamage();
     }
 

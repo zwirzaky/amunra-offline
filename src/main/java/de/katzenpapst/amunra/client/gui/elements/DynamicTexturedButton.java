@@ -41,7 +41,7 @@ public class DynamicTexturedButton extends GuiButton {
     }
 
     @Override
-    public void drawButton(final Minecraft mc, final int mouseX, final int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (this.visible) {
             // FontRenderer fontrenderer = mc.fontRenderer;
             mc.getTextureManager().bindTexture(buttonTextures);
@@ -52,16 +52,16 @@ public class DynamicTexturedButton extends GuiButton {
             this.field_146123_n = mouseX >= this.xPosition && mouseY >= this.yPosition
                     && mouseX < this.xPosition + this.width
                     && mouseY < this.yPosition + this.height;
-            final int k = this.getHoverState(this.field_146123_n);
+            final int hoverState = this.getHoverState(this.field_146123_n);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + k * 20, this.width / 2, this.height);
+            this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + hoverState * 20, this.width / 2, this.height);
             this.drawTexturedModalRect(
                     this.xPosition + this.width / 2,
                     this.yPosition,
                     200 - this.width / 2,
-                    46 + k * 20,
+                    46 + hoverState * 20,
                     this.width / 2,
                     this.height);
             this.mouseDragged(mc, mouseX, mouseY);
@@ -69,8 +69,6 @@ public class DynamicTexturedButton extends GuiButton {
             if (this.texture != null) {
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 mc.getTextureManager().bindTexture(this.texture);
-                // this.drawTexturedModalRect(xPosition, yPosition, 0, 0, width, height);
-
                 this.drawFullSizedTexturedRect(this.xPosition + 2, this.yPosition + 2, this.width - 4, this.height - 4);
                 // this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2,
                 // this.yPosition + (this.height - 8) / 2, l);

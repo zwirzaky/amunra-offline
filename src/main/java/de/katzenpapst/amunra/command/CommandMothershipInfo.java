@@ -1,6 +1,5 @@
 package de.katzenpapst.amunra.command;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.command.CommandBase;
@@ -24,18 +23,18 @@ public class CommandMothershipInfo extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(final ICommandSender sender) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.getCommandName() + " <name>";
     }
 
     @Override
-    public void processCommand(final ICommandSender sender, final String[] params) {
+    public void processCommand(ICommandSender sender, String[] params) {
         // no params
-        final HashMap<Integer, Mothership> data = TickHandlerServer.mothershipData.getMotherships();
+        final Map<Integer, Mothership> data = TickHandlerServer.mothershipData.getMotherships();
         Mothership playerMS = null;
 
-        if (sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
-            playerMS = (Mothership) ((MothershipWorldProvider) sender.getEntityWorld().provider).getCelestialBody();
+        if (sender.getEntityWorld().provider instanceof MothershipWorldProvider shipProvider) {
+            playerMS = (Mothership) shipProvider.getCelestialBody();
         }
 
         if (data.size() <= 0) {

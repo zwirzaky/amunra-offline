@@ -18,8 +18,6 @@ import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
 
 public class CommandCelestialBodyInfo extends CommandBase {
 
-    public CommandCelestialBodyInfo() {}
-
     @Override
     public int getRequiredPermissionLevel() {
         return 0;
@@ -31,12 +29,12 @@ public class CommandCelestialBodyInfo extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(final ICommandSender sender) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.getCommandName() + " <name>";
     }
 
     @Override
-    public void processCommand(final ICommandSender sender, final String[] args) {
+    public void processCommand(ICommandSender sender, String[] args) {
         if (args.length < 1) {
             throw new WrongUsageException("Not enough arguments, usage: " + this.getCommandUsage(sender));
         }
@@ -88,7 +86,7 @@ public class CommandCelestialBodyInfo extends CommandBase {
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(final ICommandSender sender) {
+    public boolean canCommandSenderUseCommand(ICommandSender sender) {
         return true;
     }
 }

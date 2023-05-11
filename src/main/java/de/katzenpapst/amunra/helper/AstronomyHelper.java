@@ -37,12 +37,6 @@ public class AstronomyHelper {
 
     /**
      * Get angle and size of otherBody in curBody's sky
-     *
-     * @param curBody
-     * @param otherBody
-     * @param partialTicks
-     * @param world
-     * @return
      */
     public static AngleDistance projectBodyToSky(final CelestialBody curBody, final CelestialBody otherBody,
             final float partialTicks, final long worldTime) {
@@ -159,10 +153,6 @@ public class AstronomyHelper {
      * Finds the closest common parent of the given bodies. For two moons, it should be their parent planet, for a
      * planet and it's moon the planet, for two planets in the same solar system or two moons of different planetes in
      * the same system the star, for objects of different systems null.
-     * 
-     * @param body1
-     * @param body2
-     * @return
      */
     public static CelestialBody getClosestCommonParent(final CelestialBody body1, final CelestialBody body2) {
 
@@ -177,57 +167,43 @@ public class AstronomyHelper {
         // death by recursion!
 
         // motherships
-        if (body1 instanceof Mothership && !(body2 instanceof Mothership)) {
-
-            return getClosestCommonParent(((Mothership) body1).getParent(), body2);
-
+        if (body1 instanceof Mothership ship1 && !(body2 instanceof Mothership)) {
+            return getClosestCommonParent(ship1.getParent(), body2);
         }
-        if (body2 instanceof Mothership && !(body1 instanceof Mothership)) {
-
-            return getClosestCommonParent(body1, ((Mothership) body2).getParent());
-
+        if (body2 instanceof Mothership ship2 && !(body1 instanceof Mothership)) {
+            return getClosestCommonParent(body1, ship2.getParent());
         }
-        if (body1 instanceof Mothership && body2 instanceof Mothership) {
-
-            return getClosestCommonParent(((Mothership) body1).getParent(), ((Mothership) body2).getParent());
-
+        if (body1 instanceof Mothership ship1 && body2 instanceof Mothership ship2) {
+            return getClosestCommonParent(ship1.getParent(), ship2.getParent());
         }
 
         // child bodies
-        if (body1 instanceof IChildBody && !(body2 instanceof IChildBody)) {
-
-            return getClosestCommonParent(((IChildBody) body1).getParentPlanet(), body2);
-
+        if (body1 instanceof IChildBody child1 && !(body2 instanceof IChildBody)) {
+            return getClosestCommonParent(child1.getParentPlanet(), body2);
         }
-        if (body2 instanceof IChildBody && !(body1 instanceof IChildBody)) {
-
-            return getClosestCommonParent(body1, ((IChildBody) body2).getParentPlanet());
-
+        if (body2 instanceof IChildBody child2 && !(body1 instanceof IChildBody)) {
+            return getClosestCommonParent(body1, child2.getParentPlanet());
         }
-        if (body1 instanceof IChildBody && body2 instanceof IChildBody) {
-
-            return getClosestCommonParent(
-                    ((IChildBody) body1).getParentPlanet(),
-                    ((IChildBody) body2).getParentPlanet());
-
+        if (body1 instanceof IChildBody child1 && body2 instanceof IChildBody child2) {
+            return getClosestCommonParent(child1.getParentPlanet(), child2.getParentPlanet());
         }
 
         // planets
-        if (body1 instanceof Planet && !(body2 instanceof Planet)) {
+        if (body1 instanceof Planet planet1 && !(body2 instanceof Planet)) {
 
-            return getClosestCommonParent(((Planet) body1).getParentSolarSystem().getMainStar(), body2);
-
-        }
-        if (body2 instanceof Planet && !(body1 instanceof Planet)) {
-
-            return getClosestCommonParent(body1, ((Planet) body2).getParentSolarSystem().getMainStar());
+            return getClosestCommonParent(planet1.getParentSolarSystem().getMainStar(), body2);
 
         }
-        if (body1 instanceof Planet && body2 instanceof Planet) {
+        if (body2 instanceof Planet planet2 && !(body1 instanceof Planet)) {
+
+            return getClosestCommonParent(body1, planet2.getParentSolarSystem().getMainStar());
+
+        }
+        if (body1 instanceof Planet planet1 && body2 instanceof Planet planet2) {
 
             return getClosestCommonParent(
-                    ((Planet) body1).getParentSolarSystem().getMainStar(),
-                    ((Planet) body2).getParentSolarSystem().getMainStar());
+                    planet1.getParentSolarSystem().getMainStar(),
+                    planet2.getParentSolarSystem().getMainStar());
 
         }
 
@@ -240,19 +216,16 @@ public class AstronomyHelper {
 
     /**
      * Gets the immediate parent of a body, except for stars, there it returns the star back
-     * 
-     * @param body
-     * @return
      */
     public static CelestialBody getCelestialBodyParent(final CelestialBody body) {
-        if (body instanceof Planet) {
-            return ((Planet) body).getParentSolarSystem().getMainStar();
+        if (body instanceof Planet planet) {
+            return planet.getParentSolarSystem().getMainStar();
         }
-        if (body instanceof IChildBody) {
-            return ((IChildBody) body).getParentPlanet();
+        if (body instanceof IChildBody child) {
+            return child.getParentPlanet();
         }
-        if (body instanceof Mothership) {
-            return ((Mothership) body).getParent();
+        if (body instanceof Mothership ship) {
+            return ship.getParent();
         } else if (body instanceof Star) {
             return body;
         }
@@ -260,19 +233,15 @@ public class AstronomyHelper {
     }
 
     public static CelestialBody getParentPlanet(final CelestialBody body) {
-        if (body == null) {
-            return null;
+        if (body instanceof Moon moon) {
+            return moon.getParentPlanet();
         }
-        if (body instanceof Moon) {
-            return ((Moon) body).getParentPlanet();
+        if (body instanceof IChildBody child) {
+            return child.getParentPlanet();
         }
-        if (body instanceof IChildBody) {
-            return ((IChildBody) body).getParentPlanet();
+        if (body instanceof Mothership ship) {
+            return getParentPlanet(ship.getParent());
         }
-        if (body instanceof Mothership) {
-            return getParentPlanet(((Mothership) body).getParent());
-        }
-
         return body;
     }
 
@@ -290,24 +259,21 @@ public class AstronomyHelper {
 
     /**
      * Returns a string in the format "solarSystem\planet\moon", for any body which is mothership-orbitable
-     * 
-     * @param body
-     * @return
      */
     public static String getOrbitableBodyName(final CelestialBody body) {
 
         // now try solarSystem\planet\moon format
 
-        if (body instanceof Star) {
-            return getSystemMainStarName(((Star) body).getParentSolarSystem());
+        if (body instanceof Star star) {
+            return getSystemMainStarName(star.getParentSolarSystem());
         }
 
-        if (body instanceof Planet) {
-            return getPlanetName((Planet) body);
+        if (body instanceof Planet planet) {
+            return getPlanetName(planet);
         }
 
-        if (body instanceof Moon) {
-            return getMoonName((Moon) body);
+        if (body instanceof Moon moon) {
+            return getMoonName(moon);
         }
 
         throw new RuntimeException("Invalid celestialbody for " + body.getName());
@@ -315,9 +281,6 @@ public class AstronomyHelper {
 
     /**
      * Like getOrbitableBodyName, but should work for most bodies, for debug purposes
-     * 
-     * @param body
-     * @return
      */
     public static String getDebugBodyName(final CelestialBody body) {
         if (body instanceof Mothership ms) {
@@ -331,45 +294,30 @@ public class AstronomyHelper {
 
     /**
      * Gets the solar system in which a body is located
-     * 
-     * @param body
-     * @return
      */
     public static SolarSystem getSolarSystem(final CelestialBody body) {
-        if (body instanceof Star) {
-            return ((Star) body).getParentSolarSystem();
+        if (body instanceof Star star) {
+            return star.getParentSolarSystem();
         }
-        if (body instanceof Planet) {
-            return ((Planet) body).getParentSolarSystem();
+        if (body instanceof Planet planet) {
+            return planet.getParentSolarSystem();
         }
-        if (body instanceof IChildBody) {
-            return ((IChildBody) body).getParentPlanet().getParentSolarSystem();
+        if (body instanceof IChildBody child) {
+            return child.getParentPlanet().getParentSolarSystem();
         }
-        if (body instanceof Mothership) {
-            return getSolarSystem(((Mothership) body).getDestination());
+        if (body instanceof Mothership ship) {
+            return getSolarSystem(ship.getDestination());
         }
         return null;
     }
 
     /**
      * Checks if the body is an actual star or a "fake star"
-     * 
-     * @param body
-     * @return
      */
     public static boolean isStar(final CelestialBody body) {
-        if (body instanceof Star || body == AmunRa.instance.starAmun || AmunRa.config.isSun(body)) {
-            return true;
-        }
-        return false;
+        return body instanceof Star || body == AmunRa.instance.starAmun || AmunRa.config.isSun(body);
     }
 
-    /**
-     *
-     * @param parent
-     * @param child
-     * @return
-     */
     private static double getDistanceToParent(final CelestialBody parent, CelestialBody child) {
         double result = 0;
         while (!parent.equals(child)) {
@@ -386,13 +334,8 @@ public class AstronomyHelper {
 
     /**
      * Calculates the distance between two bodies, for mothership travelling mostly
-     *
-     * @param body1
-     * @param body2
-     * @return
      */
     public static double getDistance(CelestialBody body1, CelestialBody body2) {
-
         if (body1.equals(body2)) {
             return 0;
         }
@@ -461,9 +404,6 @@ public class AstronomyHelper {
 
     /**
      * Should calculate a thermal level depending on that body's distance from the star in it's system
-     *
-     * @param body
-     * @return
      */
     public static float getThermalLevel(CelestialBody body) {
         if (body instanceof Star) {

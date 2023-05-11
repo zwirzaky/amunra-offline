@@ -22,12 +22,8 @@ public class RenderARChest extends TileEntitySpecialRenderer {
     private final ModelChest chestModel = new ModelChest();
     private final ModelLargeChest largeChestModel = new ModelLargeChest();
 
-    public RenderARChest() {
-        // TODO Auto-generated constructor stub
-    }
-
-    public void renderARChestAt(final TileEntityARChest chest, final double x, final double par4, final double par6,
-            final float par8) {
+    public void renderARChestAt(final TileEntityARChest chest, final double x, final double y, final double z,
+            final float partialTickTime) {
         int chestMetadata;
 
         final Block chestBlock = chest.getBlockType();
@@ -64,26 +60,9 @@ public class RenderARChest extends TileEntitySpecialRenderer {
             GL11.glPushMatrix();
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glTranslatef((float) x, (float) par4 + 1.0F, (float) par6 + 1.0F);
+            GL11.glTranslatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
             GL11.glScalef(1.0F, -1.0F, -1.0F);
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-            short var11 = 0;
-
-            if (chestMetadata == 2) {
-                var11 = 180;
-            }
-
-            if (chestMetadata == 3) {
-                var11 = 0;
-            }
-
-            if (chestMetadata == 4) {
-                var11 = 90;
-            }
-
-            if (chestMetadata == 5) {
-                var11 = -90;
-            }
 
             if (chestMetadata == 2 && chest.adjacentChestXPos != null) {
                 GL11.glTranslatef(1.0F, 0.0F, 0.0F);
@@ -92,16 +71,23 @@ public class RenderARChest extends TileEntitySpecialRenderer {
             if (chestMetadata == 5 && chest.adjacentChestZPos != null) {
                 GL11.glTranslatef(0.0F, 0.0F, -1.0F);
             }
+            
+            final float angle = switch (chestMetadata) {
+                case 2 -> 180.0f;
+                case 4 -> 90.0f;
+                case 5 -> -90.0f;
+                default -> 0.0f;
+            };
 
-            GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
+            GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            float var12 = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * par8;
+            float var12 = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * partialTickTime;
 
             float var13;
 
             if (chest.adjacentChestZNeg != null) {
                 var13 = chest.adjacentChestZNeg.prevLidAngle
-                        + (chest.adjacentChestZNeg.lidAngle - chest.adjacentChestZNeg.prevLidAngle) * par8;
+                        + (chest.adjacentChestZNeg.lidAngle - chest.adjacentChestZNeg.prevLidAngle) * partialTickTime;
 
                 if (var13 > var12) {
                     var12 = var13;
@@ -110,15 +96,14 @@ public class RenderARChest extends TileEntitySpecialRenderer {
 
             if (chest.adjacentChestXNeg != null) {
                 var13 = chest.adjacentChestXNeg.prevLidAngle
-                        + (chest.adjacentChestXNeg.lidAngle - chest.adjacentChestXNeg.prevLidAngle) * par8;
+                        + (chest.adjacentChestXNeg.lidAngle - chest.adjacentChestXNeg.prevLidAngle) * partialTickTime;
 
                 if (var13 > var12) {
                     var12 = var13;
                 }
             }
 
-            var12 = 1.0F - var12;
-            var12 = 1.0F - var12 * var12 * var12;
+            var12 = 1.0F - (float) Math.pow(1.0 - var12, 3.0);
 
             if (smallModel != null) {
                 smallModel.chestLid.rotateAngleX = -(var12 * (float) Math.PI / 4.0F);
@@ -137,11 +122,8 @@ public class RenderARChest extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(final TileEntity tileEntity, final double x, final double y, final double z,
-            final float ticks) {
-
-        this.renderARChestAt((TileEntityARChest) tileEntity, x, y, z, ticks);
-
+    public void renderTileEntityAt(TileEntity p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_) {
+        this.renderARChestAt((TileEntityARChest) p_147500_1_, p_147500_2_, p_147500_4_, p_147500_6_, p_147500_8_);
     }
 
 }

@@ -52,17 +52,10 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     protected int masterY;
     protected int masterZ;
 
-    protected Class<?> masterType;
-
-    public TileEntityMothershipEngineBooster() {
-        this.masterType = TileEntityMothershipEngineJet.class;
-    }
+    protected Class<? extends TileEntityMothershipEngineAbstract> masterType = TileEntityMothershipEngineJet.class;
 
     public boolean isValidMaster(final TileEntity tile) {
-        if (!(tile instanceof TileEntityMothershipEngineAbstract)) {
-            return false;
-        }
-        return tile.getClass() == this.masterType;
+        return this.masterType.isInstance(tile);
     }
 
     public void reset() {
@@ -104,8 +97,7 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
 
     public boolean hasMaster() {
         // meh
-        final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
-        return tile != null;
+        return this.getMasterTile() != null;
     }
 
     /**
@@ -130,8 +122,6 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
 
     /**
      * Using the master coordinates, get a position where the next booster could be
-     * 
-     * @return
      */
     public Vector3int getPossibleNextBooster() {
         if (!this.hasMaster()) {
@@ -159,21 +149,21 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-        this.masterPresent = nbt.getBoolean("hasMaster");
-        this.masterX = nbt.getInteger("masterX");
-        this.masterY = nbt.getInteger("masterY");
-        this.masterZ = nbt.getInteger("masterZ");
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        this.masterPresent = compound.getBoolean("hasMaster");
+        this.masterX = compound.getInteger("masterX");
+        this.masterY = compound.getInteger("masterY");
+        this.masterZ = compound.getInteger("masterZ");
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        nbt.setBoolean("hasMaster", this.masterPresent);
-        nbt.setInteger("masterX", this.masterX);
-        nbt.setInteger("masterY", this.masterY);
-        nbt.setInteger("masterZ", this.masterZ);
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        compound.setBoolean("hasMaster", this.masterPresent);
+        compound.setInteger("masterX", this.masterX);
+        compound.setInteger("masterY", this.masterY);
+        compound.setInteger("masterZ", this.masterZ);
     }
 
     public TileEntityMothershipEngineAbstract getMasterTile() {
@@ -181,12 +171,12 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
             return null;
         }
         final TileEntity tile = this.worldObj.getTileEntity(this.masterX, this.masterY, this.masterZ);
-        if (tile == null || !(tile instanceof TileEntityMothershipEngineAbstract)) {
+        if (!(tile instanceof TileEntityMothershipEngineAbstract tileEngine)) {
             // oops
             this.masterPresent = false;
             return null;
         }
-        return (TileEntityMothershipEngineAbstract) tile;
+        return tileEngine;
     }
 
     @Override
@@ -199,39 +189,39 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     }
 
     @Override
-    public ItemStack getStackInSlot(final int slot) {
+    public ItemStack getStackInSlot(int slotIn) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return null;
         }
-        return tile.getStackInSlot(slot);
+        return tile.getStackInSlot(slotIn);
     }
 
     @Override
-    public ItemStack decrStackSize(final int slot, final int amount) {
+    public ItemStack decrStackSize(int index, int count) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return null;
         }
-        return tile.decrStackSize(slot, amount);
+        return tile.decrStackSize(index, count);
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(final int wat) {
+    public ItemStack getStackInSlotOnClosing(int index) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return null;
         }
-        return tile.getStackInSlotOnClosing(wat);
+        return tile.getStackInSlotOnClosing(index);
     }
 
     @Override
-    public void setInventorySlotContents(final int slot, final ItemStack stack) {
+    public void setInventorySlotContents(int index, ItemStack stack) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return;
         }
-        tile.setInventorySlotContents(slot, stack);
+        tile.setInventorySlotContents(index, stack);
     }
 
     @Override
@@ -255,7 +245,7 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     }
 
     @Override
-    public boolean isUseableByPlayer(final EntityPlayer player) {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return false;
@@ -272,39 +262,39 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(final int slot, final ItemStack stack) {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return false;
         }
-        return tile.isItemValidForSlot(slot, stack);
+        return tile.isItemValidForSlot(index, stack);
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(final int side) {
+    public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return new int[] {};
         }
-        return tile.getAccessibleSlotsFromSide(side);
+        return tile.getAccessibleSlotsFromSide(p_94128_1_);
     }
 
     @Override
-    public boolean canInsertItem(final int slotID, final ItemStack itemstack, final int side) {
+    public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return false;
         }
-        return tile.canInsertItem(slotID, itemstack, side);
+        return tile.canInsertItem(p_102007_1_, p_102007_2_, p_102007_3_);
     }
 
     @Override
-    public boolean canExtractItem(final int slotID, final ItemStack itemstack, final int side) {
+    public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
         final TileEntityMothershipEngineAbstract tile = this.getMasterTile();
         if (tile == null) {
             return false;
         }
-        return tile.canExtractItem(slotID, itemstack, side);
+        return tile.canExtractItem(p_102008_1_, p_102008_2_, p_102008_3_);
     }
 
     @Override
@@ -371,8 +361,8 @@ public class TileEntityMothershipEngineBooster extends TileBaseUniversalElectric
     }
 
     @Override
-    public void onDataPacket(final NetworkManager net, final S35PacketUpdateTileEntity packet) {
-        this.readFromNBT(packet.func_148857_g());
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.func_148857_g());
     }
 
     public ResourceLocation getBlockIconFromSide(final int side) {

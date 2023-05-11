@@ -8,9 +8,6 @@ public class CoordHelper {
 
     /**
      * Convert a block coordinate to the coordinate of the chunk it is in
-     *
-     * @param blockCoord
-     * @return
      */
     public static int blockToChunk(final int blockCoord) {
         return blockCoord >> 4;
@@ -18,9 +15,6 @@ public class CoordHelper {
 
     /**
      * Get the coordinate of the minimum block of a chunk
-     * 
-     * @param chunkCoord
-     * @return
      */
     public static int chunkToMinBlock(final int chunkCoord) {
         return chunkCoord << 4;
@@ -28,9 +22,6 @@ public class CoordHelper {
 
     /**
      * Get the coordinate of the maximum block of a chunk
-     * 
-     * @param chunkCoord
-     * @return
      */
     public static int chunkToMaxBlock(final int chunkCoord) {
         return (chunkCoord + 1 << 4) - 1;
@@ -46,10 +37,6 @@ public class CoordHelper {
 
     /**
      * Converts an absolute coordinate to relative. Does not validate the result
-     *
-     * @param absCoord
-     * @param chunkCoord
-     * @return
      */
     public static int abs2rel(final int absCoord, final int chunkCoord) {
         return absCoord - chunkToMinBlock(chunkCoord);
@@ -62,10 +49,6 @@ public class CoordHelper {
 
     /**
      * Converts a relative chunk coordinate to an absolute one Does not validate the input
-     *
-     * @param relCoord
-     * @param chunkCoord
-     * @return
      */
     public static int rel2abs(final int relCoord, final int chunkCoord) {
         return relCoord + chunkToMinBlock(chunkCoord);
@@ -73,11 +56,6 @@ public class CoordHelper {
 
     /**
      * Converts the coordinates to the index for a blocks/metas array
-     *
-     * @param x
-     * @param y
-     * @param z
-     * @return
      */
     public static int getIndex(final int x, final int y, final int z) {
         return (x * 16 + z) * 256 + y;
@@ -90,9 +68,7 @@ public class CoordHelper {
     /**
      * This should transform a ForgeDirection according to rotation metadata
      * 
-     * @param dir
      * @param rotationMetadata this should be ONLY the rotation metadata, ANDed and byteshifted, if necessary: 0 2-+-3 1
-     * @return
      */
     public static ForgeDirection rotateForgeDirection(final ForgeDirection dir, final int rotationMetadata) {
         int dirOrdinal = dir.ordinal();

@@ -3,6 +3,7 @@ package de.katzenpapst.amunra.mob.entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -59,7 +60,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * For now I'll just keep the professions in here
      */
 
-    protected static ArrayList<ResourceLocation> professionIcons = new ArrayList<>();
+    protected static List<ResourceLocation> professionIcons = new ArrayList<>();
 
     public EntityRobotVillager(final World par1World) {
         this(par1World, -1);
@@ -99,9 +100,6 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
     }
 
-    /**
-     * Returns true if the newer Entity AI code should be run
-     */
     @Override
     public boolean isAIEnabled() {
         return true;
@@ -112,9 +110,6 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         return true;
     }
 
-    /**
-     * main AI tick function, replaces updateEntityActionState
-     */
     @Override
     protected void updateAITick() {
         if (--this.randomTickDivider <= 0) {
@@ -234,7 +229,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
     @Override
-    public boolean interact(final EntityPlayer p_70085_1_) {
+    public boolean interact(EntityPlayer p_70085_1_) {
         final ItemStack itemstack = p_70085_1_.inventory.getCurrentItem();
         final boolean flag = itemstack != null && itemstack.getItem() == Items.spawn_egg;
 
@@ -262,35 +257,32 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(16, Integer.valueOf(0));
+        this.dataWatcher.addObject(16, 0);
     }
 
     @Override
-    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("Profession", this.getProfession());
-        par1NBTTagCompound.setInteger("Riches", this.wealth);
+    public void writeEntityToNBT(NBTTagCompound tagCompound) {
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("Profession", this.getProfession());
+        tagCompound.setInteger("Riches", this.wealth);
 
         if (this.buyingList != null) {
-            par1NBTTagCompound.setTag("Offers", this.buyingList.getRecipiesAsTags());
+            tagCompound.setTag("Offers", this.buyingList.getRecipiesAsTags());
         }
     }
 
     @Override
-    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-        this.setProfession(par1NBTTagCompound.getInteger("Profession"));
-        this.wealth = par1NBTTagCompound.getInteger("Riches");
+    public void readEntityFromNBT(NBTTagCompound tagCompund) {
+        super.readEntityFromNBT(tagCompund);
+        this.setProfession(tagCompund.getInteger("Profession"));
+        this.wealth = tagCompund.getInteger("Riches");
 
-        if (par1NBTTagCompound.hasKey("Offers")) {
-            final NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("Offers");
+        if (tagCompund.hasKey("Offers")) {
+            final NBTTagCompound nbttagcompound1 = tagCompund.getCompoundTag("Offers");
             this.buyingList = new MerchantRecipeList(nbttagcompound1);
         }
     }
 
-    /**
-     * Determines if an entity can be despawned, used on idle far away entities
-     */
     @Override
     protected boolean canDespawn() {
         return false;
@@ -304,26 +296,17 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         return p_110161_1_;
     }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
     @Override
     protected String getLivingSound() {
         // return "mob.villager.idle";
         return AmunRa.TEXTUREPREFIX + "mob.robotvillager.idle";
     }
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
     @Override
     protected String getHurtSound() {
         return AmunRa.TEXTUREPREFIX + "mob.robotvillager.hit";
     }
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
     @Override
     protected String getDeathSound() {
         return AmunRa.TEXTUREPREFIX + "mob.robotvillager.death";
@@ -355,20 +338,20 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void setRevengeTarget(final EntityLivingBase par1EntityLiving) {
-        super.setRevengeTarget(par1EntityLiving);
+    public void setRevengeTarget(EntityLivingBase p_70604_1_) {
+        super.setRevengeTarget(p_70604_1_);
 
-        if (this.villageObj != null && par1EntityLiving != null) {
-            this.villageObj.addOrRenewAgressor(par1EntityLiving);
+        if (this.villageObj != null && p_70604_1_ != null) {
+            this.villageObj.addOrRenewAgressor(p_70604_1_);
 
-            if (par1EntityLiving instanceof EntityPlayer) {
+            if (p_70604_1_ instanceof EntityPlayer) {
                 byte b0 = -1;
 
                 if (this.isChild()) {
                     b0 = -3;
                 }
 
-                this.villageObj.setReputationForPlayer(((EntityPlayer) par1EntityLiving).getCommandSenderName(), b0);
+                this.villageObj.setReputationForPlayer(((EntityPlayer) p_70604_1_).getCommandSenderName(), b0);
 
                 if (this.isEntityAlive()) {
                     this.worldObj.setEntityState(this, (byte) 13);
@@ -377,13 +360,10 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
         }
     }
 
-    /**
-     * Called when the mob's health reaches 0.
-     */
     @Override
-    public void onDeath(final DamageSource par1DamageSource) {
+    public void onDeath(DamageSource p_70645_1_) {
         if (this.villageObj != null) {
-            final Entity entity = par1DamageSource.getEntity();
+            final Entity entity = p_70645_1_.getEntity();
 
             if (entity != null) {
                 if (entity instanceof EntityPlayer) {
@@ -400,12 +380,12 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
             }
         }
 
-        super.onDeath(par1DamageSource);
+        super.onDeath(p_70645_1_);
     }
 
     @Override
-    public void setCustomer(final EntityPlayer par1EntityPlayer) {
-        this.buyingPlayer = par1EntityPlayer;
+    public void setCustomer(EntityPlayer p_70932_1_) {
+        this.buyingPlayer = p_70932_1_;
     }
 
     @Override
@@ -418,18 +398,18 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void useRecipe(final MerchantRecipe par1MerchantRecipe) {
-        par1MerchantRecipe.incrementToolUses();
+    public void useRecipe(MerchantRecipe p_70933_1_) {
+        p_70933_1_.incrementToolUses();
 
-        if (par1MerchantRecipe.getItemToBuy().getItem() == Items.emerald) {
-            this.wealth += par1MerchantRecipe.getItemToBuy().stackSize;
+        if (p_70933_1_.getItemToBuy().getItem() == Items.emerald) {
+            this.wealth += p_70933_1_.getItemToBuy().stackSize;
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(final byte par1) {
-        switch (par1) {
+    public void handleHealthUpdate(byte p_70103_1_) {
+        switch (p_70103_1_) {
             case 12:
                 this.generateRandomParticles("heart");
                 break;
@@ -440,7 +420,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
                 this.generateRandomParticles("happyVillager");
                 break;
             default:
-                super.handleHealthUpdate(par1);
+                super.handleHealthUpdate(p_70103_1_);
                 break;
         }
     }
@@ -471,8 +451,8 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public EntityAgeable createChild(final EntityAgeable par1EntityAgeable) {
-        return this.func_90012_b(par1EntityAgeable);
+    public EntityAgeable createChild(EntityAgeable p_90011_1_) {
+        return this.func_90012_b(p_90011_1_);
     }
 
     @Override
@@ -481,7 +461,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public MerchantRecipeList getRecipes(final EntityPlayer p_70934_1_) {
+    public MerchantRecipeList getRecipes(EntityPlayer p_70934_1_) {
         if (this.buyingList == null) {
             this.addDefaultEquipmentAndRecipies(1);
         }
@@ -490,10 +470,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
     }
 
     @Override
-    public void setRecipes(final MerchantRecipeList p_70930_1_) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setRecipes(MerchantRecipeList p_70930_1_) {}
 
     public void sayYes() {
         this.playSound(AmunRa.TEXTUREPREFIX + "mob.robotvillager.yay", this.getSoundVolume(), this.getSoundPitch());
@@ -507,7 +484,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * Seems to be for playing the yes and no sounds
      */
     @Override
-    public void func_110297_a_(final ItemStack p_110297_1_) {
+    public void func_110297_a_(ItemStack p_110297_1_) {
         if (!this.worldObj.isRemote && this.livingSoundTime > -this.getTalkInterval() + 20) {
             this.livingSoundTime = -this.getTalkInterval();
 

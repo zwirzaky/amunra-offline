@@ -33,34 +33,30 @@ public class BlockScale extends SubBlockMachine {
     }
 
     @Override
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        super.registerBlockIcons(par1IconRegister);
-
-        this.iconTop = par1IconRegister.registerIcon(this.topTexture);
-        this.iconBottom = par1IconRegister.registerIcon(this.bottomTexture);
-        this.iconFront = par1IconRegister.registerIcon(this.frontTexture);
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister reg) {
+        super.registerBlockIcons(reg);
+        this.iconTop = reg.registerIcon(this.topTexture);
+        this.iconBottom = reg.registerIcon(this.bottomTexture);
+        this.iconFront = reg.registerIcon(this.frontTexture);
 
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, int meta) {
         final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
 
         final ForgeDirection sideFD = ForgeDirection.getOrientation(side);
 
-        switch (sideFD) {
-            case UP:
-                return this.iconTop;
-            case DOWN:
-                return this.iconBottom;
-            default:
+        return switch (sideFD) {
+            case UP -> this.iconTop;
+            case DOWN -> this.iconBottom;
+            default -> {
                 final ForgeDirection front = CoordHelper.rotateForgeDirection(ForgeDirection.SOUTH, realMeta);
-                if (sideFD == front) {
-                    return this.iconFront;
-                }
-                return this.blockIcon;
-        }
+                yield sideFD == front ? this.iconFront : this.blockIcon;
+            }
+        };
     }
 
     @Override
@@ -74,10 +70,9 @@ public class BlockScale extends SubBlockMachine {
     }
 
     @Override
-    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
-        final TileEntity leTile = world.getTileEntity(x, y, z);
-        if (leTile instanceof TileEntityBlockScale) {
-            ((TileEntityBlockScale) leTile).doUpdate();
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
+        if (worldIn.getTileEntity(x, y, z) instanceof TileEntityBlockScale tileScale) {
+            tileScale.doUpdate();
             // world.markBlockForUpdate(x, y, z);
         }
     }

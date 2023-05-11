@@ -24,8 +24,6 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
     /**
      * Gravity relative to OW. 1.35 seems to be the last value where you can jump up blocks. walking up stairs seems to
      * work on any gravity
-     * 
-     * @return
      */
     protected abstract float getRelativeGravity();
 
@@ -78,8 +76,8 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public Vec3 getFogColor(final float celestialAngle, final float partialTicksIThink) {
-        float dayFactor = MathHelper.cos(celestialAngle * (float) Math.PI * 2.0F) * 2.0F + 0.5F;
+    public Vec3 getFogColor(float p_76562_1_, float p_76562_2_) {
+        float dayFactor = MathHelper.cos(p_76562_1_ * (float) Math.PI * 2.0F) * 2.0F + 0.5F;
 
         if (dayFactor < 0.0F) {
             dayFactor = 0.0F;
@@ -172,9 +170,9 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public float getSunBrightness(final float partialTicks) {
+    public float getSunBrightness(float par1) {
 
-        float factor = this.worldObj.getSunBrightnessBody(partialTicks) + this.getAmunBrightnessFactor(partialTicks);
+        float factor = this.worldObj.getSunBrightnessBody(par1) + this.getAmunBrightnessFactor(par1);
         if (factor > 1.0F) {
             factor = 1.0F;
         }
@@ -189,9 +187,9 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
      * @return The current brightness factor
      */
     @Override
-    public float getSunBrightnessFactor(final float partialTicks) {
+    public float getSunBrightnessFactor(float par1) {
         // I *think* that I could use this to make eclipses etc work
-        float factor = this.worldObj.getSunBrightnessFactor(partialTicks) + this.getAmunBrightnessFactor(partialTicks);
+        float factor = this.worldObj.getSunBrightnessFactor(par1) + this.getAmunBrightnessFactor(par1);
 
         if (factor > 1.0F) {
             factor = 1.0F;
@@ -202,8 +200,8 @@ public abstract class AmunraWorldProvider extends WorldProviderSpace implements 
 
     protected float getAmunBrightnessFactor(final float partialTicks) {
         CelestialBody curBody = this.getCelestialBody();
-        if (curBody instanceof Moon) {
-            curBody = ((Moon) curBody).getParentPlanet();
+        if (curBody instanceof Moon moon) {
+            curBody = moon.getParentPlanet();
         }
         final AngleDistance ad = AstronomyHelper
                 .projectBodyToSky(curBody, AmunRa.instance.starAmun, partialTicks, this.worldObj.getWorldTime());

@@ -21,11 +21,11 @@ public class BlockMetaPairHashable extends BlockMetaPair {
     }
 
     @Override
-    public boolean equals(final Object other) {
-        if (!(other instanceof BlockMetaPair otherReal)) {
-            return false;
+    public boolean equals(Object obj) {
+        if (obj instanceof BlockMetaPair bmp) {
+            return bmp.getBlock() == this.getBlock() && bmp.getMetadata() == this.getMetadata();
         }
-        return otherReal.getBlock() == this.getBlock() && otherReal.getMetadata() == this.getMetadata();
+        return false;
     }
 
     @Override

@@ -48,8 +48,8 @@ public class ItemDamagePair {
 
     @Override
     public int hashCode() {
-        if (this.item instanceof ItemBlock) {
-            return ((ItemBlock) this.item).field_150939_a.hashCode() ^ ~this.damage;
+        if (this.item instanceof ItemBlock itemBlock) {
+            return itemBlock.field_150939_a.hashCode() ^ ~this.damage;
         }
         return this.item.hashCode() ^ ~this.damage;
     }

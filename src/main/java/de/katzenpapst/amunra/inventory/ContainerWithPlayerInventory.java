@@ -40,8 +40,8 @@ abstract public class ContainerWithPlayerInventory extends Container {
 
     // let's try to fix shiftclicking
     @Override
-    protected Slot addSlotToContainer(final Slot slot) {
-        return super.addSlotToContainer(slot);
+    protected Slot addSlotToContainer(Slot p_75146_1_) {
+        return super.addSlotToContainer(p_75146_1_);
     }
 
     protected boolean mergeSingleSlot(final ItemStack mergeFrom, final Slot slotToMergeTo) {
@@ -82,10 +82,10 @@ abstract public class ContainerWithPlayerInventory extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(final EntityPlayer player, final int slotNr) {
+    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         ItemStack resultStack = null;
 
-        final Slot slot = this.inventorySlots.get(slotNr);
+        final Slot slot = this.inventorySlots.get(index);
         final int containerInvSize = this.inventorySlots.size();
         final int numSlotsAdded = containerInvSize - 36;
 
@@ -96,7 +96,7 @@ abstract public class ContainerWithPlayerInventory extends Container {
             final ItemStack stack = slot.getStack();
             resultStack = stack.copy();
 
-            if (slotNr < numSlotsAdded) {
+            if (index < numSlotsAdded) {
                 // clicked one of the container's slots
                 if (!this.mergeItemStack(stack, containerInvSize - 36, containerInvSize, true)) {
                     return null;
@@ -122,7 +122,7 @@ abstract public class ContainerWithPlayerInventory extends Container {
                 if (!found) {
 
                     // fallback, moves between main inventory and hotbar
-                    if (slotNr < containerInvSize - 9) {
+                    if (index < containerInvSize - 9) {
                         if (!this.mergeItemStack(stack, containerInvSize - 9, containerInvSize, false)) {
                             return null;
                         }

@@ -37,7 +37,7 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     }
 
     @Override
-    public boolean saveChunks(final boolean var1, final IProgressUpdate var2) {
+    public boolean saveChunks(boolean p_73151_1_, IProgressUpdate p_73151_2_) {
         return true;
     }
 
@@ -47,13 +47,13 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     }
 
     @Override
-    public Chunk provideChunk(final int chunkX, final int chunkZ) {
-        this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
+    public Chunk provideChunk(int p_73154_1_, int p_73154_2_) {
+        this.rand.setSeed(p_73154_1_ * 341873128712L + p_73154_2_ * 132897987541L);
         final Block[] ids = new Block[32768];
         Arrays.fill(ids, Blocks.air);
         final byte[] meta = new byte[32768];
 
-        final Chunk chunk = new Chunk(this.worldObjNonPrivate, ids, meta, chunkX, chunkZ);
+        final Chunk chunk = new Chunk(this.worldObjNonPrivate, ids, meta, p_73154_1_, p_73154_2_);
 
         final byte[] biomesArray = chunk.getBiomeArray();
         for (int i = 0; i < biomesArray.length; ++i) {
@@ -65,23 +65,21 @@ public class MothershipChunkProvider extends ChunkProviderGenerate { // for now,
     }
 
     @Override
-    public boolean chunkExists(final int par1, final int par2) {
+    public boolean chunkExists(int p_73149_1_, int p_73149_2_) {
         return true;
     }
 
     @Override
-    public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
-
+    public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_) {
         BlockFalling.fallInstantly = true;
-        final int blockX = chunkX * 16;
-        final int blockZ = chunkZ * 16;
+        final int blockX = p_73153_2_ * 16;
+        final int blockZ = p_73153_3_ * 16;
         this.rand.setSeed(this.worldObjNonPrivate.getSeed());
         final long seed1 = this.rand.nextLong() / 2L * 2L + 1L;
         final long seed2 = this.rand.nextLong() / 2L * 2L + 1L;
-        this.rand.setSeed(chunkX * seed1 + chunkZ * seed2 ^ this.worldObjNonPrivate.getSeed());
+        this.rand.setSeed(p_73153_2_ * seed1 + p_73153_3_ * seed2 ^ this.worldObjNonPrivate.getSeed());
         if (blockX == 0 && blockZ == 0) {
             // this generates the basis structure
-
             new MothershipWorldGen().generate(this.worldObjNonPrivate, this.rand, 0, 64, 0);
         }
         BlockFalling.fallInstantly = false;

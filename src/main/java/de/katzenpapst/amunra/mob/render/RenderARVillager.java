@@ -14,7 +14,7 @@ import de.katzenpapst.amunra.mob.model.ModelARVillager;
 
 public class RenderARVillager extends RenderLiving {
 
-    private static final ResourceLocation villagerTexture = new ResourceLocation(
+    private static final ResourceLocation VILLAGER_TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/entity/villager-2.png");
 
@@ -53,40 +53,37 @@ public class RenderARVillager extends RenderLiving {
     }
 
     @Override
-    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6,
-            final float par8, final float par9) {
-        this.renderVillager((EntityARVillager) par1EntityLiving, par2, par4, par6, par8, par9);
+    public void doRender(EntityLiving p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {
+        this.renderVillager((EntityARVillager) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
     }
 
     @Override
-    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2) {
-        this.preRenderVillager((EntityARVillager) par1EntityLivingBase, par2);
+    protected void preRenderCallback(EntityLivingBase p_77041_1_, float p_77041_2_) {
+        this.preRenderVillager((EntityARVillager) p_77041_1_, p_77041_2_);
     }
 
     @Override
-    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3) {
-        return this.shouldVillagerRenderPass((EntityARVillager) par1EntityLivingBase, par2, par3);
+    protected int shouldRenderPass(EntityLivingBase p_77032_1_, int p_77032_2_, float p_77032_3_) {
+        return this.shouldVillagerRenderPass((EntityARVillager) p_77032_1_, p_77032_2_, p_77032_3_);
     }
 
     @Override
-    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2) {
-        this.renderVillagerEquipedItems((EntityARVillager) par1EntityLivingBase, par2);
+    protected void renderEquippedItems(EntityLivingBase p_77029_1_, float p_77029_2_) {
+        this.renderVillagerEquipedItems((EntityARVillager) p_77029_1_, p_77029_2_);
     }
 
     @Override
-    public void doRender(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4,
-            final double par6, final float par8, final float par9) {
-        this.renderVillager((EntityARVillager) par1EntityLivingBase, par2, par4, par6, par8, par9);
+    public void doRender(EntityLivingBase p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {
+        this.renderVillager((EntityARVillager) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(final Entity par1Entity) {
-        return RenderARVillager.villagerTexture;
+    protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+        return RenderARVillager.VILLAGER_TEXTURE;
     }
 
     @Override
-    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6,
-            final float par8, final float par9) {
-        this.renderVillager((EntityARVillager) par1Entity, par2, par4, par6, par8, par9);
+    public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {
+        this.renderVillager((EntityARVillager) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
     }
 }

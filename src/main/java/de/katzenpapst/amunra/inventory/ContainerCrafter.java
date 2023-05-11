@@ -27,7 +27,7 @@ public class ContainerCrafter extends ContainerWorkbench {
     }
 
     @Override
-    public boolean canInteractWith(final EntityPlayer player) {
+    public boolean canInteractWith(EntityPlayer player) {
         // either using a crafting block, or a crafting tool
         final Block b = player.worldObj.getBlock(this.posXFU, this.posYFU, this.posZFU);
         final int meta = player.worldObj.getBlockMetadata(this.posXFU, this.posYFU, this.posZFU);

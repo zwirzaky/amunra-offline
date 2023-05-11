@@ -1,11 +1,7 @@
 package de.katzenpapst.amunra.client.fx;
 
-import java.util.List;
-
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -31,14 +27,14 @@ public class EntityFXMothershipIonFlame extends EntityFX {
         final float f = (float) (Math.random() + Math.random() + 1.0D) * 0.15F;
         final float f1 = MathHelper.sqrt_double(
                 this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) / 9.0F;
-        this.motionX = this.motionX / f1 * f * 0.4000000059604645D;
-        this.motionY = this.motionY / f1 * f * 0.4000000059604645D;
-        this.motionZ = this.motionZ / f1 * f * 0.4000000059604645D;
+        this.motionX = this.motionX / f1 * f * 0.4D;
+        this.motionY = this.motionY / f1 * f * 0.4D;
+        this.motionZ = this.motionZ / f1 * f * 0.4D;
 
         // stealing stuff from GC
         this.particleRed = 50F / 255F + this.rand.nextFloat() / 3;
-        this.particleGreen = 255F / 255F;// + ;
-        this.particleBlue = 255F / 255F;
+        this.particleGreen = 1.0F;
+        this.particleBlue = 1.0F;
 
         this.particleMaxAge = (int) (Math.ceil(this.particleMaxAge) * 2.0F);
 
@@ -46,22 +42,10 @@ public class EntityFXMothershipIonFlame extends EntityFX {
     }
 
     @Override
-    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4,
-            final float par5, final float par6, final float par7) {
+    public void renderParticle(Tessellator p_70539_1_, float p_70539_2_, float p_70539_3_, float p_70539_4_, float p_70539_5_, float p_70539_6_, float p_70539_7_) {
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        float var8 = (this.particleAge + par2) / this.particleMaxAge * 32.0F;
-
-        if (var8 < 0.0F) {
-            var8 = 0.0F;
-        }
-
-        if (var8 > 1.0F) {
-            var8 = 1.0F;
-        }
-
-        // this.particleScale = this.smokeParticleScale * var8;
-        super.renderParticle(par1Tessellator, par2, par3, par4, par5, par6, par7);
+        super.renderParticle(p_70539_1_, p_70539_2_, p_70539_3_, p_70539_4_, p_70539_5_, p_70539_6_, p_70539_7_);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
     }
@@ -73,21 +57,6 @@ public class EntityFXMothershipIonFlame extends EntityFX {
         this.prevPosZ = this.posZ;
 
         if (this.particleAge++ >= this.particleMaxAge) {
-            // AmunRa.proxy.spawnParticles(ParticleType.PT_MOTHERSHIP_JET_SMOKE, this.worldObj, new Vector3(posX, posY,
-            // posZ), new Vector3(this.motionX, this.motionY, this.motionZ).scale(5.0D));
-            /*
-             * GalacticraftCore.proxy.spawnParticle(this.spawnSmokeShort ? "whiteSmokeLaunched" : "whiteSmokeIdle", new
-             * Vector3(this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ), new Vector3(this.motionX,
-             * this.motionY, this.motionZ), new Object[] {}); GalacticraftCore.proxy.spawnParticle(this.spawnSmokeShort
-             * ? "whiteSmokeLargeLaunched" : "whiteSmokeLargeIdle", new Vector3(this.posX, this.posY +
-             * this.rand.nextDouble() * 2, this.posZ), new Vector3(this.motionX, this.motionY, this.motionZ), new
-             * Object[] {}); if (!this.spawnSmokeShort) { GalacticraftCore.proxy.spawnParticle("whiteSmokeIdle", new
-             * Vector3(this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ), new Vector3(this.motionX,
-             * this.motionY, this.motionZ), new Object[] {});
-             * GalacticraftCore.proxy.spawnParticle("whiteSmokeLargeIdle", new Vector3(this.posX, this.posY +
-             * this.rand.nextDouble() * 2, this.posZ), new Vector3(this.motionX, this.motionY, this.motionZ), new
-             * Object[] {}); }
-             */
             this.setDead();
             return;
         }
@@ -107,35 +76,15 @@ public class EntityFXMothershipIonFlame extends EntityFX {
          * this.motionX *= 0.9599999785423279D; this.motionY *= 0.9599999785423279D; this.motionZ *=
          * 0.9599999785423279D;
          */
-
-        final List<?> var3 = this.worldObj
-                .getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(1.0D, 0.5D, 1.0D));
-
-        if (var3 != null) {
-            for (Object element : var3) {
-                final Entity var5 = (Entity) element;
-
-                if (var5 instanceof EntityLivingBase && !var5.isDead
-                        && !var5.isBurning()
-                        && !var5.equals(this.ridingEntity)) {
-                    // not just fire, do some more
-                    // or maybe do this in the tile entity instead
-                    /*
-                     * var5.setFire(3); GalacticraftCore.packetPipeline.sendToServer(new
-                     * PacketSimple(EnumSimplePacket.S_SET_ENTITY_FIRE, new Object[] { var5.getEntityId() }));
-                     */
-                }
-            }
-        }
     }
 
     @Override
-    public int getBrightnessForRender(final float par1) {
-        return 15728880;
+    public int getBrightnessForRender(float p_70070_1_) {
+        return 0xF000F0;
     }
 
     @Override
-    public float getBrightness(final float par1) {
+    public float getBrightness(float p_70013_1_) {
         return 1.0F;
     }
 }

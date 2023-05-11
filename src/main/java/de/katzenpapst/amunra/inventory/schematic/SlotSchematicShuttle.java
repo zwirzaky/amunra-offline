@@ -62,23 +62,19 @@ public class SlotSchematicShuttle extends Slot {
     }
 
     @Override
-    public boolean isItemValid(final ItemStack par1ItemStack) {
+    public boolean isItemValid(ItemStack stack) {
         if (this.validItem.length == 0) {
             return true; // all are valid
         }
 
         for (final ItemDamagePair item : this.validItem) {
-            if (item.isSameItem(par1ItemStack)) {
+            if (item.isSameItem(stack)) {
                 return true;
             }
         }
         return false;
     }
 
-    /**
-     * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the case
-     * of armor slots)
-     */
     @Override
     public int getSlotStackLimit() {
         return 1;

@@ -1,6 +1,7 @@
 package de.katzenpapst.amunra.mob;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.init.Items;
@@ -16,7 +17,7 @@ public class RobotVillagerProfession {
     protected String name;
     protected MerchantRecipeList merchantList;
 
-    protected static ArrayList<RobotVillagerProfession> professionRegistry = new ArrayList<>();
+    protected final static List<RobotVillagerProfession> professionRegistry = new ArrayList<>();
 
     public static int addProfession(final RobotVillagerProfession prof) {
         professionRegistry.add(prof);

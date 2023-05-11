@@ -11,15 +11,13 @@ public class ContainerAtomBattery extends ContainerWithPlayerInventory {
 
     public ContainerAtomBattery(final InventoryPlayer par1InventoryPlayer, final TileEntityIsotopeGenerator solarGen) {
         super(solarGen);
-
         this.addSlotToContainer(new SlotSpecific(solarGen, 0, 152, 83, ItemElectricBase.class));
-
         this.initPlayerInventorySlots(par1InventoryPlayer);
     }
 
     @Override
-    public boolean canInteractWith(final EntityPlayer var1) {
-        return ((TileEntityIsotopeGenerator) this.tileEntity).isUseableByPlayer(var1);
+    public boolean canInteractWith(EntityPlayer player) {
+        return ((TileEntityIsotopeGenerator) this.tileEntity).isUseableByPlayer(player);
     }
 
 }

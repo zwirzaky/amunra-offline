@@ -21,7 +21,7 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiShuttleDock extends GuiContainerGC {
 
-    private static final ResourceLocation solarGuiTexture = new ResourceLocation(
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/gui/dock-gui.png");
 
@@ -43,8 +43,8 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(final GuiButton par1GuiButton) {
-        switch (par1GuiButton.id) {
+    protected void actionPerformed(GuiButton button) {
+        switch (button.id) {
             case 0:
                 this.tile.performDockOperationClient(DockOperation.GET_SHUTTLE);
             case 1:
@@ -117,8 +117,8 @@ public class GuiShuttleDock extends GuiContainerGC {
                 displayString,
                 this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2,
                 7,
-                4210752);
-        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 4210752);
+                0x404040);
+        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 0x404040);
 
         this.shuttleInfoRegion.tooltipStrings.clear();
         this.shuttleInfoRegion.tooltipStrings.addAll(this.getStatus());
@@ -152,10 +152,10 @@ public class GuiShuttleDock extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float partialTicks, final int mouseX, final int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         final int xPos = (this.width - this.xSize) / 2;
         final int yPos = (this.height - this.ySize) / 2;
-        this.mc.renderEngine.bindTexture(solarGuiTexture);
+        this.mc.renderEngine.bindTexture(GUI_TEXTURE);
         final int xOffset = (this.width - this.xSize) / 2;
         final int yOffset = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(xOffset, yOffset, 0, 0, this.xSize, this.ySize);

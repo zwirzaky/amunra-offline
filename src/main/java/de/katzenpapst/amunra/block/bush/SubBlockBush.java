@@ -31,60 +31,72 @@ public class SubBlockBush extends SubBlock implements IGrowable, IShearable, IPl
     }
 
     @Override
-    public boolean isShearable(final ItemStack item, final IBlockAccess world, final int x, final int y, final int z) {
+    public boolean isShearable(ItemStack item, IBlockAccess world, int x, int y, int z) {
         return true;
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y,
-            final int z, final int fortune) {
+    public ArrayList<ItemStack> onSheared(ItemStack item, IBlockAccess world, int x, int y, int z, int fortune) {
         final ArrayList<ItemStack> result = new ArrayList<>();
         result.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z)));
         return result;
     }
 
+    /**
+     * func_149851_a is basically a stillGrowing() method. It returns (or should return) true if the growth stage is
+     * less than the max growth stage.
+     *
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     */
     @Override
-    public boolean func_149851_a(final World worldIn, final int x, final int y, final int z,
-            final boolean isWorldRemote) {
+    public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient) {
         return false;
     }
 
+    /**
+     * func_149852_a is basically a canBoneMealSpeedUpGrowth() method. I usually just return true, but depends on your
+     * crop.
+     *
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     */
     @Override
-    public boolean func_149852_a(final World worldIn, final Random random, final int x, final int y, final int z) {
+    public boolean func_149852_a(World worldIn, Random random, int x, int y, int z) {
         return false;
     }
 
+    /**
+     * func_149853_b is basically an incrementGrowthStage() method.  In vanilla crops the growth stage is stored in metadata so then in this method you would increment it if it wasn't already at maximum and store back in metadata.
+     *
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
+     */
     @Override
-    public void func_149853_b(final World worldIn, final Random random, final int x, final int y, final int z) {
-
-    }
+    public void func_149853_b(World worldIn, Random random, int x, int y, int z) {}
 
     public boolean canPlaceOn(final BlockMetaPair blockToCheck, final int meta) {
         return this.canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
     }
 
     public boolean canPlaceOn(final Block blockToCheck, final int metaToCheck, final int meta) {
-
         return true;
     }
 
     @Override
-    public EnumPlantType getPlantType(final IBlockAccess world, final int x, final int y, final int z) {
+    public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
         return EnumPlantType.Plains;
     }
 
     @Override
-    public Block getPlant(final IBlockAccess world, final int x, final int y, final int z) {
+    public Block getPlant(IBlockAccess world, int x, int y, int z) {
         return (Block) this.parent;
     }
 
     @Override
-    public int getPlantMetadata(final IBlockAccess world, final int x, final int y, final int z) {
+    public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
         return world.getBlockMetadata(x, y, z);
     }
 
     @Override
-    public boolean getBlocksMovement(final IBlockAccess par1World, final int x, final int y, final int z) {
+    public boolean getBlocksMovement(IBlockAccess worldIn, int x, int y, int z) {
         return false;
     }
 

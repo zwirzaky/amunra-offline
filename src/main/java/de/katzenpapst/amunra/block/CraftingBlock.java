@@ -15,12 +15,9 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 public class CraftingBlock extends SubBlock {
 
     @SideOnly(Side.CLIENT)
-    protected IIcon blockIconBottom;
-    @SideOnly(Side.CLIENT)
-    protected IIcon blockIconSide;
+    protected IIcon blockIconBottom, blockIconSide;
 
     public CraftingBlock(final String name) {
-        // super
         super(name, "amunra:crafter", "pickaxe", 1, 5.0F, 5.0F);
         this.setStepSound(Block.soundTypeMetal);
 
@@ -28,16 +25,16 @@ public class CraftingBlock extends SubBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        this.blockIcon = par1IconRegister.registerIcon(this.getTextureName());
-        this.blockIconSide = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine_side");
-        this.blockIconBottom = par1IconRegister.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine");
+    public void registerBlockIcons(IIconRegister reg) {
+        this.blockIcon = reg.registerIcon(this.getTextureName());
+        this.blockIconSide = reg.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine_side");
+        this.blockIconBottom = reg.registerIcon(GalacticraftCore.TEXTURE_PREFIX + "machine");
 
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, int meta) {
         return switch (side) {
             case 0 -> this.blockIconBottom;
             case 1 -> this.blockIcon;
@@ -45,27 +42,12 @@ public class CraftingBlock extends SubBlock {
         };
     }
 
-    /**
-     *
-     *
-     * @param world The World Object.
-     * @param x     , y, z The coordinate of the block.
-     * @param side  The side the player clicked on.
-     * @param hitX  , hitY, hitZ The position the player clicked on relative to the block.
-     */
     @Override
-    public boolean onBlockActivated(final World world, final int x, final int y, final int z,
-            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
-
-        // onBlockActivated
-
-        if (world.isRemote) {
-            return true;
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+        if (!worldIn.isRemote) {
+            player.openGui(AmunRa.instance, GuiIds.GUI_CRAFTING, worldIn, x, y, z);
         }
-        entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_CRAFTING, world, x, y, z);
         return true;
     }
 
 }
-// blockRegistry.addObject(58, "crafting_table", (new
-// BlockWorkbench()).setHardness(2.5F).setStepSound(soundTypeWood).setBlockName("workbench").setBlockTextureName("crafting_table"));

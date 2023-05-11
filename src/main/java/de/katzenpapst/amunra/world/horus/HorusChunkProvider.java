@@ -119,20 +119,16 @@ public class HorusChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {
-
-    }
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {}
 
     @Override
-    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {
-
-    }
+    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {}
 
     @Override
-    public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
-        super.populate(par1IChunkProvider, chunkX, chunkZ);
+    public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_) {
+        super.populate(p_73153_1_, p_73153_2_, p_73153_3_);
 
-        this.pyramid.populate(this, this.worldObj, chunkX, chunkZ);
+        this.pyramid.populate(this, this.worldObj, p_73153_2_, p_73153_3_);
         // this.pyramid.populate(this, worldObj, chunkX, chunkZ);
 
         // this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);

@@ -38,7 +38,7 @@ public class BlockOreMulti extends BlockBasicMeta {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, int meta) {
         return this.blockIcon;
     }
 
@@ -62,9 +62,9 @@ public class BlockOreMulti extends BlockBasicMeta {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        super.registerBlockIcons(par1IconRegister);
-        this.blockIcon = par1IconRegister.registerIcon(this.textureName);
+    public void registerBlockIcons(IIconRegister reg) {
+        super.registerBlockIcons(reg);
+        this.blockIcon = reg.registerIcon(this.textureName);
     }
 
     /**
@@ -90,11 +90,7 @@ public class BlockOreMulti extends BlockBasicMeta {
         }
     }
 
-    /**
-     * The type of render function that is called for this block
-     */
     @Override
-    @SideOnly(Side.CLIENT)
     public int getRenderType() {
         return AmunRa.multiOreRendererId;
     }
@@ -105,17 +101,16 @@ public class BlockOreMulti extends BlockBasicMeta {
     }
 
     @Override
-    public float getExplosionResistance(final Entity entity, final World world, final int x, final int y, final int z,
-            final double explosionX, final double explosionY, final double explosionZ) {
+    public float getExplosionResistance(Entity exploder, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
         return Math.max(
-                super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ),
-                this.getExplosionResistance(entity) // default resistance, should default to this.blockResistance / 5.0F
+                super.getExplosionResistance(exploder, world, x, y, z, explosionX, explosionY, explosionZ),
+                this.getExplosionResistance(exploder) // default resistance, should default to this.blockResistance / 5.0F
         );
     }
 
     @Override
-    public float getBlockHardness(final World par1World, final int x, final int y, final int z) {
-        return Math.max(super.getBlockHardness(par1World, x, y, z), this.blockHardness);
+    public float getBlockHardness(World worldIn, int x, int y, int z) {
+        return Math.max(super.getBlockHardness(worldIn, x, y, z), this.blockHardness);
     }
 
 }

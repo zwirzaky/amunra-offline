@@ -57,8 +57,8 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     @Override
-    public void onDataPacket(final NetworkManager netManager, final S35PacketUpdateTileEntity packet) {
-        this.readFromNBT(packet.func_148857_g());
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.func_148857_g());
     }
 
     @Override
@@ -196,42 +196,42 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     @Override
-    public ItemStack getStackInSlot(final int slot) {
-        return this.containingItems[slot];
+    public ItemStack getStackInSlot(int slotIn) {
+        return this.containingItems[slotIn];
     }
 
     @Override
-    public ItemStack decrStackSize(final int slotNr, final int amount) {
-        if (this.containingItems[slotNr] == null) {
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.containingItems[index] == null) {
             return null;
         }
         ItemStack newStack;
 
-        if (this.containingItems[slotNr].stackSize <= amount) {
-            newStack = this.containingItems[slotNr];
-            this.containingItems[slotNr] = null;
+        if (this.containingItems[index].stackSize <= count) {
+            newStack = this.containingItems[index];
+            this.containingItems[index] = null;
         } else {
-            newStack = this.containingItems[slotNr].splitStack(amount);
+            newStack = this.containingItems[index].splitStack(count);
 
-            if (this.containingItems[slotNr].stackSize == 0) {
-                this.containingItems[slotNr] = null;
+            if (this.containingItems[index].stackSize == 0) {
+                this.containingItems[index] = null;
             }
         }
         return newStack;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(final int slotNr) {
-        if (this.containingItems[slotNr] != null) {
-            final ItemStack var2 = this.containingItems[slotNr];
-            this.containingItems[slotNr] = null;
+    public ItemStack getStackInSlotOnClosing(int index) {
+        if (this.containingItems[index] != null) {
+            final ItemStack var2 = this.containingItems[index];
+            this.containingItems[index] = null;
             return var2;
         }
         return null;
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
+    public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         this.containingItems = NbtHelper.readInventory(nbt, this.containingItems.length);
 
@@ -254,7 +254,7 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
+    public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         NbtHelper.writeInventory(nbt, this.containingItems);
 
@@ -270,8 +270,8 @@ public class TileEntityGravitation extends TileBaseElectricBlock implements IInv
     }
 
     @Override
-    public void setInventorySlotContents(final int slotNr, final ItemStack stack) {
-        this.containingItems[slotNr] = stack;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        this.containingItems[index] = stack;
 
         if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
             stack.stackSize = this.getInventoryStackLimit();

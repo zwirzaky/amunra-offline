@@ -10,17 +10,12 @@ import de.katzenpapst.amunra.AmunRa;
 
 public class ModelShuttleDock {
 
-    private final ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/dock.png");
-
-    // not really a model, but meh
-    public ModelShuttleDock() {
-        // this.texture = texture;
-    }
+    private static final ResourceLocation TEXTURE = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/dock.png");
 
     public void render(final Tessellator tessellator, final boolean renderConnector) {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE);
         // front
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, -0.8F);

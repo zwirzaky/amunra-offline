@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-
+import net.minecraftforge.event.terraingen.TerrainGen;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 abstract public class AbstractSapling extends SubBlockBush {
@@ -28,77 +28,52 @@ abstract public class AbstractSapling extends SubBlockBush {
         return this;
     }
 
-    /**
-     * Ticks the block if it's been scheduled
-     */
     @Override
-    public void updateTick(final World world, final int x, final int y, final int z, final Random rand) {
-
-        if (world.getBlockLightValue(x, y + 1, z) >= 9 && rand.nextInt(7) == 0) {
-            this.prepareGrowTree(world, x, y, z, rand);
+    public void updateTick(World worldIn, int x, int y, int z, Random random) {
+        if (worldIn.getBlockLightValue(x, y + 1, z) >= 9 && random.nextInt(7) == 0) {
+            this.prepareGrowTree(worldIn, x, y, z, random);
         }
-
     }
 
-    public void prepareGrowTree(final World world, final int x, final int y, final int z, final Random rand) {
-        final int l = world.getBlockMetadata(x, y, z);
+    public void prepareGrowTree(final World worldIn, final int x, final int y, final int z, final Random random) {
+        final int meta = worldIn.getBlockMetadata(x, y, z);
 
-        if ((l & 8) == 0) {
-            world.setBlockMetadataWithNotify(x, y, z, l | 8, 4);
+        if ((meta & 8) == 0) {
+            worldIn.setBlockMetadataWithNotify(x, y, z, meta | 8, 4);
         } else {
-            this.growTree(world, x, y, z, rand);
+            this.growTree(worldIn, x, y, z, random);
         }
     }
 
-    public void growTree(final World world, final int x, final int y, final int z, final Random rand) {
+    public void growTree(final World worldIn, final int x, final int y, final int z, final Random random) {
+        if (!TerrainGen.saplingGrowTree(worldIn, random, x, y, z)) return;
 
-        if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z)) return;
-
-        final int meta = world.getBlockMetadata(x, y, z) & 7;
-        final Block block = Blocks.air;
+        final int meta = worldIn.getBlockMetadata(x, y, z) & 7;
 
         // self-removal before tree generation
-        world.setBlock(x, y, z, block, 0, 4);
-        if (!this.generate(world, rand, x, y, z, true)) {
+        worldIn.setBlock(x, y, z, Blocks.air, 0, 4);
+        if (!this.generate(worldIn, random, x, y, z, true)) {
             // return self on failure
-            world.setBlock(x, y, z, (Block) this.parent, meta, 4);
+            worldIn.setBlock(x, y, z, (Block) this.parent, meta, 4);
         }
-
     }
 
     public boolean checkBlockAt(final World world, final int x, final int y, final int z, final int metadata) {
         return world.getBlock(x, y, z) == this && (world.getBlockMetadata(x, y, z) & 7) == metadata;
     }
 
-    /**
-     * func_149851_a is basically a stillGrowing() method. It returns (or should return) true if the growth stage is
-     * less than the max growth stage.
-     *
-     * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
-     */
     @Override
-    public boolean func_149851_a(final World world, final int x, final int y, final int z,
-            final boolean isWorldRemote) {
+    public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient) {
         return true;
     }
 
-    /**
-     * func_149852_a is basically a canBoneMealSpeedUpGrowth() method. I usually just return true, but depends on your
-     * crop.
-     */
     @Override
-    public boolean func_149852_a(final World world, final Random rand, final int x, final int y, final int z) {
-        return world.rand.nextFloat() < 0.45D;
+    public boolean func_149852_a(World worldIn, Random random, int x, int y, int z) {
+        return worldIn.rand.nextFloat() < 0.45D;
     }
 
-    /**
-     * func_149853_b is basically an incrementGrowthStage() method. In vanilla crops the growth stage is stored in
-     * metadata so then in this method you would increment it if it wasn't already at maximum and store back in
-     * metadata.
-     *
-     */
     @Override
-    public void func_149853_b(final World worldIn, final Random random, final int x, final int y, final int z) {
+    public void func_149853_b(World worldIn, Random random, int x, int y, int z) {
         this.prepareGrowTree(worldIn, x, y, z, random);
     }
 

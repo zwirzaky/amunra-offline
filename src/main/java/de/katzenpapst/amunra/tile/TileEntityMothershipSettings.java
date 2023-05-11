@@ -10,10 +10,6 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityAdvanced;
 
 public class TileEntityMothershipSettings extends TileEntityAdvanced implements IInventory {
 
-    public TileEntityMothershipSettings() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
     public double getPacketRange() {
         return 12.0D;
@@ -31,32 +27,26 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
 
     @Override
     public int getSizeInventory() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public ItemStack getStackInSlot(final int slotIn) {
-        // TODO Auto-generated method stub
+    public ItemStack getStackInSlot(int slotIn) {
         return null;
     }
 
     @Override
-    public ItemStack decrStackSize(final int index, final int count) {
-        // TODO Auto-generated method stub
+    public ItemStack decrStackSize(int index, int count) {
         return null;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(final int index) {
-        // TODO Auto-generated method stub
+    public ItemStack getStackInSlotOnClosing(int index) {
         return null;
     }
 
     @Override
-    public void setInventorySlotContents(final int index, final ItemStack stack) {
-        // TODO Auto-generated method stub
-
+    public void setInventorySlotContents(int index, ItemStack stack) {
     }
 
     @Override
@@ -76,14 +66,14 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     }
 
     @Override
-    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         // hm, test
         if (!this.isOnMothership()) {
             return false;
         }
 
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this
-                && par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
+                && player.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
     }
 
     @Override
@@ -95,7 +85,7 @@ public class TileEntityMothershipSettings extends TileEntityAdvanced implements 
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(final int index, final ItemStack stack) {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
         return false;
     }
 

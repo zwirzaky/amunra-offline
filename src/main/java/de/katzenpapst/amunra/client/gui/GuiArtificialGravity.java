@@ -28,16 +28,15 @@ import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementTextBox.IT
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCallback, ICheckBoxCallback {
 
-    private static final ResourceLocation guiTexture = new ResourceLocation(
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/gui/gravity.png");
 
-    protected List<GuiElementTextBox> inputFieldList = new ArrayList<>();
+    protected final List<GuiElementTextBox> inputFieldList = new ArrayList<>();
 
     private GuiElementTextBox leftValueField;
     private GuiElementTextBox rightValueField;
@@ -57,19 +56,19 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     private double tempGravityStrength;
     private boolean tempIsInverted;
 
-    public final int FIELD_TOP = 0;
-    public final int FIELD_LEFT = 1;
-    public final int FIELD_FRONT = 2;
+    public static final int FIELD_TOP = 0;
+    public static final int FIELD_LEFT = 1;
+    public static final int FIELD_FRONT = 2;
 
-    public final int FIELD_BACK = 3;
-    public final int FIELD_RIGHT = 4;
-    public final int FIELD_BOTTOM = 5;
+    public static final int FIELD_BACK = 3;
+    public static final int FIELD_RIGHT = 4;
+    public static final int FIELD_BOTTOM = 5;
 
-    public final int FIELD_STRENGTH = 10;
+    public static final int FIELD_STRENGTH = 10;
 
-    public final int BTN_ENABLE = 6;
-    public final int CHECKBOX_VISUAL = 8;
-    public final int CHECKBOX_INVERT = 11;
+    public static final int BTN_ENABLE = 6;
+    public static final int CHECKBOX_VISUAL = 8;
+    public static final int CHECKBOX_INVERT = 11;
 
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(
             (this.width - this.xSize) / 2 + 112,
@@ -135,7 +134,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     }
 
     @Override
-    protected void actionPerformed(final GuiButton btn) {
+    protected void actionPerformed(GuiButton btn) {
         switch (btn.id) {
             case BTN_ENABLE:
                 GalacticraftCore.packetPipeline.sendToServer(
@@ -176,7 +175,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         final int offsetX1 = 10;
         final int offsetX2 = 50;
         this.topValueField = new GuiElementTextBox(
-                this.FIELD_TOP,
+                FIELD_TOP,
                 this,
                 offsetX1 + guiX + 32,
                 guiY + 28 - 4,
@@ -187,7 +186,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 2,
                 true);
         this.leftValueField = new GuiElementTextBox(
-                this.FIELD_LEFT,
+                FIELD_LEFT,
                 this,
                 offsetX1 + guiX + 2,
                 guiY + 44,
@@ -198,7 +197,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 2,
                 true);
         this.frontValueField = new GuiElementTextBox(
-                this.FIELD_FRONT,
+                FIELD_FRONT,
                 this,
                 offsetX2 + guiX + 62 - 40,
                 guiY + 28 + 16,
@@ -210,7 +209,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 true);
 
         this.backValueField = new GuiElementTextBox(
-                this.FIELD_BACK,
+                FIELD_BACK,
                 this,
                 offsetX1 + guiX + 2,
                 guiY + 64,
@@ -221,7 +220,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 2,
                 true);
         this.rightValueField = new GuiElementTextBox(
-                this.FIELD_RIGHT,
+                FIELD_RIGHT,
                 this,
                 offsetX2 + guiX + 22,
                 guiY + 48 + 16,
@@ -232,7 +231,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 2,
                 true);
         this.bottomValueField = new GuiElementTextBox(
-                this.FIELD_BOTTOM,
+                FIELD_BOTTOM,
                 this,
                 offsetX1 + guiX + 32,
                 guiY + 68 + 16,
@@ -258,7 +257,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         // resetButton = new GuiButton(BTN_RESET, guiX + 110, guiY + 70+yOffsetBtns, 50, 20,
         // GCCoreUtil.translate("gui.message.mothership.reset"));
         this.disableButton = new GuiButton(
-                this.BTN_ENABLE,
+                BTN_ENABLE,
                 guiX + 110,
                 guiY + 90 + yOffsetBtns,
                 50,
@@ -266,7 +265,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                 GCCoreUtil.translate("gui.button.disable.name"));
 
         this.checkboxVisualGuide = new GuiElementCheckbox(
-                this.CHECKBOX_VISUAL,
+                CHECKBOX_VISUAL,
                 this,
                 guiX + 80,
                 guiY + 24,
@@ -278,7 +277,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         this.buttonList.add(this.checkboxVisualGuide);
 
         this.strengthField = new GuiElementTextBox(
-                this.FIELD_STRENGTH,
+                FIELD_STRENGTH,
                 this,
                 guiX + 60,
                 guiY + 110,
@@ -291,7 +290,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
         this.addInputField(this.strengthField);
 
         this.checkboxInvert = new GuiElementCheckbox(
-                this.CHECKBOX_INVERT,
+                CHECKBOX_INVERT,
                 this,
                 guiX + 100,
                 guiY + 112,
@@ -305,32 +304,29 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
-        this.fontRendererObj.drawString(this.tile.getInventoryName(), 8, 10, 4210752);
-
-        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 90 + 2, 4210752);
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        this.fontRendererObj.drawString(this.tile.getInventoryName(), 8, 10, 0x404040);
+        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 90 + 2, 0x404040);
     }
 
     @Override
-    public void drawScreen(final int par1, final int par2, final float par3) {
-        super.drawScreen(par1, par2, par3);
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float partialTicks, final int mouseX, final int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(guiTexture);
+        this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
         final int xOffset = (this.width - this.xSize) / 2;
         final int yOffset = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(xOffset, yOffset + 5, 0, 0, this.xSize, this.ySize);
 
         if (this.tile != null) {
             if (this.tile.getDisabled(0)) {
-
                 this.disableButton.displayString = GCCoreUtil.translate("gui.button.enable.name");
             } else {
                 this.disableButton.displayString = GCCoreUtil.translate("gui.button.disable.name");
-
             }
 
             final int scale = this.tile.getScaledElecticalLevel(54);
@@ -356,13 +352,13 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
                     GCCoreUtil.translate("gui.message.status.name") + ": " + this.getStatus(),
                     xOffset + 8,
                     yOffset + 130,
-                    4210752);
+                    0x404040);
 
             this.fontRendererObj.drawString(
                     GCCoreUtil.translate("gui.message.force.strength") + ": ",
                     xOffset + 8,
                     yOffset + 116,
-                    4210752);
+                    0x404040);
 
         }
     }
@@ -401,7 +397,6 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
             case FIELD_RIGHT:
                 this.tempBox.maxX = (int) newValue;
                 break;
-
             case FIELD_BOTTOM:
                 this.tempBox.minY = (int) newValue * -1;
                 break;
@@ -446,22 +441,22 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
     }
 
     @Override
-    protected void keyTyped(final char keyChar, final int keyID) {
-        if (keyID != Keyboard.KEY_ESCAPE /* && keyID != this.mc.gameSettings.keyBindInventory.getKeyCode() */) {
+    protected void keyTyped(char typedChar, int keyCode) {
+        if (keyCode != Keyboard.KEY_ESCAPE /* && keyID != this.mc.gameSettings.keyBindInventory.getKeyCode() */) {
             // do the fields
             for (final GuiElementTextBox box : this.inputFieldList) {
-                if (box.keyTyped(keyChar, keyID)) {
+                if (box.keyTyped(typedChar, keyCode)) {
                     return;
                 }
             }
         }
 
-        super.keyTyped(keyChar, keyID);
+        super.keyTyped(typedChar, keyCode);
     }
 
     @Override
     public int getTextColor(final GuiElementTextBox textBox) {
-        return ColorUtil.to32BitColor(255, 20, 255, 20);
+        return 0xFF14FF14;
     }
 
     @Override
@@ -471,7 +466,6 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
 
     @Override
     public void onSelectionChanged(final GuiElementCheckbox checkbox, final boolean newSelected) {
-
         switch (checkbox.id) {
             case CHECKBOX_VISUAL:
                 this.tile.isBoxShown = newSelected;

@@ -5,11 +5,7 @@ import java.util.Map;
 
 public class MothershipFuelRequirements {
 
-    protected Map<MothershipFuelDisplay, Integer> data;
-
-    public MothershipFuelRequirements() {
-        this.data = new HashMap<>();
-    }
+    protected final Map<MothershipFuelDisplay, Integer> data = new HashMap<>();
 
     public void add(final MothershipFuelDisplay fuel, final int amount) {
         if (!this.data.containsKey(fuel)) {

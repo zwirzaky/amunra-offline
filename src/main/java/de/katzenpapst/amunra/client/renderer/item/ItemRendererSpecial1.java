@@ -19,16 +19,11 @@ import de.katzenpapst.amunra.client.renderer.model.ModelShuttleDock;
  */
 public class ItemRendererSpecial1 implements IItemRenderer {
 
-    private final ModelShuttleDock model;
-    private final ModelHydroponics modelHydro;
-
-    public ItemRendererSpecial1() {
-        this.model = new ModelShuttleDock();
-        this.modelHydro = new ModelHydroponics();
-    }
+    private final ModelShuttleDock modelDock = new ModelShuttleDock();
+    private final ModelHydroponics modelHydro = new ModelHydroponics();
 
     @Override
-    public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 
         // I think this prevents this thing from doing other items
         if (item.getItemDamage() != ARBlocks.blockShuttleDock.getMetadata()
@@ -42,7 +37,7 @@ public class ItemRendererSpecial1 implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item,
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
             final ItemRendererHelper helper) {
         return true;
     }
@@ -99,12 +94,12 @@ public class ItemRendererSpecial1 implements IItemRenderer {
                 break;
         }
 
-        this.model.render(Tessellator.instance, false);
+        this.modelDock.render(Tessellator.instance, false);
         GL11.glPopMatrix();
     }
 
     @Override
-    public void renderItem(final ItemRenderType type, final ItemStack item, final Object... data) {
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         if (this.handleRenderType(item, type)) {
             switch (type) {
                 case EQUIPPED:

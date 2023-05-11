@@ -27,34 +27,30 @@ public class BlockHydroponics extends SubBlockMachine {
             final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_HYDROPONICS, world, x, y, z);
         return true;
-        // return false;
     }
 
     @Override
-    public TileEntity createTileEntity(final World world, final int metadata) {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityHydroponics();
     }
 
     @Override
-    public boolean hasTileEntity(final int metadata) {
+    public boolean hasTileEntity(int metadata) {
         return true;
     }
 
     @Override
-    public String getShiftDescription(final int meta) {
+    public String getShiftDescription(int meta) {
         return GCCoreUtil.translate("tile.hydroponics.description");
     }
 
     @Override
-    public void breakBlock(final World world, final int x, final int y, final int z, final Block var5, final int var6) {
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta) {
         // drop harvest items
-        final TileEntity te = world.getTileEntity(x, y, z);
-        if (te == null || !(te instanceof TileEntityHydroponics)) {
-            return;
-        }
-        final ItemStack[] harvest = ((TileEntityHydroponics) te).getHarvest();
-        for (final ItemStack stack : harvest) {
-            if (stack != null) {
+        if(worldIn.getTileEntity(x, y, z) instanceof TileEntityHydroponics tileHydroponics) {
+            for (final ItemStack stack : tileHydroponics.getHarvest()) {
+                if (stack == null) continue;
+                
                 final Random random = new Random();
                 final float randX = random.nextFloat() * 0.8F + 0.1F;
                 final float randY = random.nextFloat() * 0.8F + 0.1F;
@@ -69,7 +65,7 @@ public class BlockHydroponics extends SubBlockMachine {
 
                     stack.stackSize -= randStackSize;
                     final EntityItem itemEntity = new EntityItem(
-                            world,
+                            worldIn,
                             x + randX,
                             y + randY,
                             z + randZ,
@@ -79,14 +75,13 @@ public class BlockHydroponics extends SubBlockMachine {
                         itemEntity.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
                     }
 
-                    final float someFactor = 0.05F;
-                    itemEntity.motionX = (float) random.nextGaussian() * someFactor;
-                    itemEntity.motionY = (float) random.nextGaussian() * someFactor + 0.2F;
-                    itemEntity.motionZ = (float) random.nextGaussian() * someFactor;
-                    world.spawnEntityInWorld(itemEntity);
+                    itemEntity.motionX = (float) random.nextGaussian() * 0.05F;
+                    itemEntity.motionY = (float) random.nextGaussian() * 0.05F + 0.2F;
+                    itemEntity.motionZ = (float) random.nextGaussian() * 0.05F;
+                    worldIn.spawnEntityInWorld(itemEntity);
                 }
+            
             }
         }
     }
-
 }

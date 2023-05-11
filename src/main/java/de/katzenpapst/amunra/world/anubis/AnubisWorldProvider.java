@@ -11,35 +11,16 @@ import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class AnubisWorldProvider extends AmunraWorldProvider {
 
-    /**
-     * Determines the rate to spawn meteors in this planet. Lower means MORE meteors.
-     * <p/>
-     * Typical value would be about 7. Return 0 for no meteors.
-     *
-     * @return
-     */
     @Override
     public double getMeteorFrequency() {
         return 2;
     }
 
-    /**
-     * Changes volume of sounds on this planet. You should be using higher values for thin atmospheres and high values
-     * for dense atmospheres
-     *
-     * @return Sound reduction divisor. Value of 10 will make sounds ten times more quiet. Value of 0.1 will make sounds
-     *         10 times louder. Be careful with the values you choose!
-     */
     @Override
     public float getSoundVolReductionAmount() {
         return 20;
     }
 
-    /**
-     * This value will affect player's thermal level, damaging them if it reaches too high or too low.
-     *
-     * @return Positive integer for hot celestial bodies, negative for cold. Zero for neutral
-     */
     @Override
     public float getThermalLevelModifier() {
         return -10;

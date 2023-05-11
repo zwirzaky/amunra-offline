@@ -166,34 +166,32 @@ public class ModelBug extends ModelBase {
     }
 
     @Override
-    public void render(final Entity entity, final float f, final float f1, final float f2, final float f3,
-            final float f4, final float f5) {
-        super.render(entity, f, f1, f2, f3, f4, f5);
-        this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        this.body.render(f5);
-        this.head.render(f5);
-        this.tail1.render(f5);
+    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
+        super.render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        this.setRotationAngles(p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, p_78088_1_);
+        this.body.render(p_78088_7_);
+        this.head.render(p_78088_7_);
+        this.tail1.render(p_78088_7_);
         // lefthand2.render(f5);
         // lefthand1.render(f5);
-        this.leftarm.render(f5);
+        this.leftarm.render(p_78088_7_);
         // righthand2.render(f5);
         // righthand1.render(f5);
-        this.rightarm.render(f5);
-        this.legLeft3.render(f5);
-        this.legLeft2.render(f5);
-        this.legLeft1.render(f5);
-        this.legRight3.render(f5);
-        this.legRight2.render(f5);
-        this.legRight1.render(f5);
+        this.rightarm.render(p_78088_7_);
+        this.legLeft3.render(p_78088_7_);
+        this.legLeft2.render(p_78088_7_);
+        this.legLeft1.render(p_78088_7_);
+        this.legRight3.render(p_78088_7_);
+        this.legRight2.render(p_78088_7_);
+        this.legRight1.render(p_78088_7_);
     }
 
     @Override
     // public void setRotationAngles(float time, float walkSpeed, float appendageRotation, float rotationYaw, float
     // rotationPitch, float scale, Entity entity)
-    public void setRotationAngles(final float time, final float walkSpeed, final float appendageRotation,
-            final float rotationYaw, final float rotationPitch, final float cale, final Entity entity) {
-        this.head.rotateAngleY = rotationYaw / (180F / (float) Math.PI);
-        this.head.rotateAngleX = rotationPitch / (180F / (float) Math.PI);
+    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
+        this.head.rotateAngleY = p_78087_4_ / (180F / (float) Math.PI);
+        this.head.rotateAngleX = p_78087_5_ / (180F / (float) Math.PI);
 
         // reset to default
         this.setRotation(this.legLeft1, -0.3F, 0F, 1.134464F);
@@ -218,15 +216,15 @@ public class ModelBug extends ModelBase {
 
         // now rotate
 
-        final float leg1Y = -(MathHelper.cos(time * 0.6662F * 2.0F + 0.0F) * 0.4F) * walkSpeed;
-        final float leg3Y = -(MathHelper.cos(time * 0.6662F * 2.0F + (float) Math.PI) * 0.4F) * walkSpeed;
+        final float leg1Y = -(MathHelper.cos(p_78087_1_ * 0.6662F * 2.0F + 0.0F) * 0.4F) * p_78087_2_;
+        final float leg3Y = -(MathHelper.cos(p_78087_1_ * 0.6662F * 2.0F + (float) Math.PI) * 0.4F) * p_78087_2_;
         // float leg6Y = -(MathHelper.cos(time * 0.6662F * 2.0F + ((float)Math.PI / 2F)) * 0.4F) * walkSpeed;
-        final float leg7Y = -(MathHelper.cos(time * 0.6662F * 2.0F + (float) Math.PI * 3F / 2F) * 0.4F) * walkSpeed;
+        final float leg7Y = -(MathHelper.cos(p_78087_1_ * 0.6662F * 2.0F + (float) Math.PI * 3F / 2F) * 0.4F) * p_78087_2_;
 
-        final float leg1Z = Math.abs(MathHelper.sin(time * 0.6662F + 0.0F) * 0.4F) * walkSpeed;
-        final float leg3Z = Math.abs(MathHelper.sin(time * 0.6662F + (float) Math.PI) * 0.4F) * walkSpeed;
+        final float leg1Z = Math.abs(MathHelper.sin(p_78087_1_ * 0.6662F + 0.0F) * 0.4F) * p_78087_2_;
+        final float leg3Z = Math.abs(MathHelper.sin(p_78087_1_ * 0.6662F + (float) Math.PI) * 0.4F) * p_78087_2_;
         // float leg5Z = Math.abs(MathHelper.sin(time * 0.6662F + ((float)Math.PI / 2F)) * 0.4F) * walkSpeed;
-        final float leg7Z = Math.abs(MathHelper.sin(time * 0.6662F + (float) Math.PI * 3F / 2F) * 0.4F) * walkSpeed;
+        final float leg7Z = Math.abs(MathHelper.sin(p_78087_1_ * 0.6662F + (float) Math.PI * 3F / 2F) * 0.4F) * p_78087_2_;
 
         this.legLeft1.rotateAngleY += leg1Y;
         this.legRight1.rotateAngleY -= leg1Y;
@@ -243,15 +241,15 @@ public class ModelBug extends ModelBase {
         this.legLeft3.rotateAngleX += leg7Z;
         this.legRight3.rotateAngleX -= leg7Z;
 
-        this.rightarm.rotateAngleZ += MathHelper.cos(appendageRotation * 0.09F) * 0.05F + 0.05F;
-        this.rightarm.rotateAngleX += MathHelper.sin(appendageRotation * 0.067F) * 0.05F;
-        this.righthand1.rotateAngleZ += MathHelper.cos(appendageRotation * 0.5F) * 0.5F - 0.5F;
-        this.righthand2.rotateAngleZ -= MathHelper.cos(appendageRotation * 0.5F) * 0.5F - 0.5F;
+        this.rightarm.rotateAngleZ += MathHelper.cos(p_78087_3_ * 0.09F) * 0.05F + 0.05F;
+        this.rightarm.rotateAngleX += MathHelper.sin(p_78087_3_ * 0.067F) * 0.05F;
+        this.righthand1.rotateAngleZ += MathHelper.cos(p_78087_3_ * 0.5F) * 0.5F - 0.5F;
+        this.righthand2.rotateAngleZ -= MathHelper.cos(p_78087_3_ * 0.5F) * 0.5F - 0.5F;
 
-        this.leftarm.rotateAngleZ -= MathHelper.cos(appendageRotation * 0.09F) * 0.05F + 0.05F;
-        this.leftarm.rotateAngleX -= MathHelper.sin(appendageRotation * 0.067F) * 0.05F;
-        this.lefthand1.rotateAngleZ -= MathHelper.cos(appendageRotation * 0.5F) * 0.5F - 0.5F;
-        this.lefthand2.rotateAngleZ += MathHelper.cos(appendageRotation * 0.5F) * 0.5F - 0.5F;
+        this.leftarm.rotateAngleZ -= MathHelper.cos(p_78087_3_ * 0.09F) * 0.05F + 0.05F;
+        this.leftarm.rotateAngleX -= MathHelper.sin(p_78087_3_ * 0.067F) * 0.05F;
+        this.lefthand1.rotateAngleZ -= MathHelper.cos(p_78087_3_ * 0.5F) * 0.5F - 0.5F;
+        this.lefthand2.rotateAngleZ += MathHelper.cos(p_78087_3_ * 0.5F) * 0.5F - 0.5F;
         /*
          * this.spiderLeg1.rotateAngleY += leg1Y; this.spiderLeg2.rotateAngleY += -leg1Y; this.spiderLeg3.rotateAngleY
          * += leg3Y; this.spiderLeg4.rotateAngleY += -leg3Y; this.spiderLeg5.rotateAngleY += leg6Y;
@@ -264,6 +262,6 @@ public class ModelBug extends ModelBase {
 
         // this.legLeft1.rotateAngleZ = f / (180F / (float)Math.PI);
 
-        super.setRotationAngles(time, walkSpeed, appendageRotation, rotationYaw, rotationPitch, cale, entity);
+        super.setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
     }
 }

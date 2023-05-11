@@ -26,7 +26,7 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
 
     protected boolean doesFireDamage = true;
 
-    private static final ResourceLocation arrowTextures = new ResourceLocation(
+    private static final ResourceLocation ARROW_TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/entity/laserarrow.png");
 
@@ -37,7 +37,6 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
 
     public EntityLaserArrow(final World world) {
         super(world);
-        // TODO Auto-generated constructor stub
     }
 
     public EntityLaserArrow(final World world, final EntityLivingBase shooter, final double startX, final double startY,
@@ -83,7 +82,7 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
 
     @Override
     public ResourceLocation getTexture() {
-        return arrowTextures;
+        return ARROW_TEXTURE;
     }
 
     @Override
@@ -208,17 +207,17 @@ public class EntityLaserArrow extends EntityBaseLaserArrow {
     }
 
     @Override
-    protected void readEntityFromNBT(final NBTTagCompound nbttagcompound) {
-        super.readEntityFromNBT(nbttagcompound);
-        this.damage = nbttagcompound.getFloat("damage");
-        this.doesFireDamage = nbttagcompound.getBoolean("fireDmg");
+    protected void readEntityFromNBT(NBTTagCompound tagCompund) {
+        super.readEntityFromNBT(tagCompund);
+        this.damage = tagCompund.getFloat("damage");
+        this.doesFireDamage = tagCompund.getBoolean("fireDmg");
     }
 
     @Override
-    protected void writeEntityToNBT(final NBTTagCompound nbttagcompound) {
-        super.writeEntityToNBT(nbttagcompound);
-        nbttagcompound.setFloat("damage", this.damage);
-        nbttagcompound.setBoolean("fireDmg", this.doesFireDamage);
+    protected void writeEntityToNBT(NBTTagCompound tagCompound) {
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setFloat("damage", this.damage);
+        tagCompound.setBoolean("fireDmg", this.doesFireDamage);
     }
 
 }

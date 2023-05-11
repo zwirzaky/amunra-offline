@@ -12,22 +12,17 @@ import de.katzenpapst.amunra.tile.TileEntityShuttleDock;
 public class RenderShuttleDock extends TileEntitySpecialRenderer {
 
     // private ResourceLocation texture = new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/model/dock.png");
-    private final ModelShuttleDock model;
-
-    public RenderShuttleDock() {
-        this.model = new ModelShuttleDock();
-    }
+    private final ModelShuttleDock model = new ModelShuttleDock();
 
     @Override
-    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z,
-            final float partialTicks) {
+    public void renderTileEntityAt(TileEntity p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_) {
 
-        if (!(entity instanceof TileEntityShuttleDock dock)) {
+        if (!(p_147500_1_ instanceof TileEntityShuttleDock dock)) {
             return;
         }
         // render the stuff
         GL11.glPushMatrix();
-        GL11.glTranslatef((float) x, (float) y, (float) z);
+        GL11.glTranslated(p_147500_2_, p_147500_4_, p_147500_6_);
 
         // TextureManager renderEngine = Minecraft.getMinecraft().renderEngine;
         /*

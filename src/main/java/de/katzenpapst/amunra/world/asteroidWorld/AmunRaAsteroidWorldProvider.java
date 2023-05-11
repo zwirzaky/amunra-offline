@@ -2,6 +2,7 @@ package de.katzenpapst.amunra.world.asteroidWorld;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeMap;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,7 +26,7 @@ import micdoodle8.mods.galacticraft.planets.asteroids.entities.EntityAstroMiner;
 abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids {
 
     // Used to list asteroid centres to external code that needs to know them
-    protected HashSet<AsteroidData> asteroids = new HashSet<>();
+    protected final Set<AsteroidData> asteroids = new HashSet<>();
     protected boolean dataNotLoaded = true;
     protected AsteroidSaveData datafile;
     protected double solarMultiplier = -1D;
@@ -70,7 +71,7 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
     }
 
     @Override
-    public float calculateCelestialAngle(final long par1, final float par3) {
+    public float calculateCelestialAngle(long p_76563_1_, float p_76563_3_) {
         return 0.0F;
     }
 
@@ -92,9 +93,6 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
 
     /**
      * TODO do something
-     * 
-     * @param partialTicks
-     * @return
      */
     protected float getAmunBrightnessFactor(final float partialTicks) {
         CelestialBody curBody = this.getCelestialBody();
@@ -257,13 +255,6 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
 
     /**
      * This seems to be for AstroMiner
-     * 
-     * @param x
-     * @param y
-     * @param z
-     * @param facing
-     * @param count
-     * @return
      */
     @Override
     public ArrayList<BlockVec3> getClosestAsteroidsXZ(final int x, final int y, final int z, final int facing,
@@ -374,8 +365,8 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
 
         @Override
         public boolean equals(final Object o) {
-            if (o instanceof AsteroidData) {
-                final BlockVec3 vector = ((AsteroidData) o).centre;
+            if (o instanceof AsteroidData data) {
+                final BlockVec3 vector = data.centre;
                 return this.centre.x == vector.x && this.centre.y == vector.y && this.centre.z == vector.z;
             }
 

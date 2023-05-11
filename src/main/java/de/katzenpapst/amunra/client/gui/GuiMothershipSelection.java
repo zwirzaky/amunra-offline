@@ -27,7 +27,6 @@ import de.katzenpapst.amunra.tile.TileEntityMothershipController;
 import de.katzenpapst.amunra.vec.BlockVector;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
-import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiMothershipSelection extends GuiARCelestialSelection {
@@ -44,22 +43,22 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
     protected int offsetY;
 
     // launch button
-    protected final int LAUNCHBUTTON_X = -95;
-    protected final int LAUNCHBUTTON_Y = 133;
-    protected final int LAUNCHBUTTON_W = 93;
-    protected final int LAUNCHBUTTON_H = 12;
+    protected static final int LAUNCHBUTTON_X = -95;
+    protected static final int LAUNCHBUTTON_Y = 133;
+    protected static final int LAUNCHBUTTON_W = 93;
+    protected static final int LAUNCHBUTTON_H = 12;
 
     // rename button
-    protected final int RENAMEBUTTON_X = -95;
-    protected final int RENAMEBUTTON_Y = 53;
-    protected final int RENAMEBUTTON_W = 93;
-    protected final int RENAMEBUTTON_H = 12;
+    protected static final int RENAMEBUTTON_X = -95;
+    protected static final int RENAMEBUTTON_Y = 53;
+    protected static final int RENAMEBUTTON_W = 93;
+    protected static final int RENAMEBUTTON_H = 12;
 
     // transit info box
-    protected final int TRANSIT_INFO_U = 0;
-    protected final int TRANSIT_INFO_V = 16;
-    protected final int TRANSIT_INFO_W = 179;
-    protected final int TRANSIT_INFO_H = 20;
+    protected static final int TRANSIT_INFO_U = 0;
+    protected static final int TRANSIT_INFO_V = 16;
+    protected static final int TRANSIT_INFO_W = 179;
+    protected static final int TRANSIT_INFO_H = 20;
     /*
      * /*int TRANSIT_INFO_U = 0; int TRANSIT_INFO_V = 16; int TRANSIT_INFO_W = 179; int TRANSIT_INFO_H = 20;
      */
@@ -106,7 +105,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
      */
 
     @Override
-    public void drawButtons(final int mousePosX, final int mousePosY) {
+    public void drawButtons(int mousePosX, int mousePosY) {
         this.possibleBodies = this.shuttlePossibleBodies;
         super.drawButtons(mousePosX, mousePosY);
 
@@ -133,8 +132,8 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
     }
 
     @Override
-    public void drawScreen(final int mousePosX, final int mousePosY, final float partialTicks) {
-        super.drawScreen(mousePosX, mousePosY, partialTicks);
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
         if (this.ticksSinceLaunch >= 0) {
             this.ticksSinceLaunch += partialTicks;
             if (this.ticksSinceLaunch > 1.0F) {
@@ -209,12 +208,12 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         this.drawTexturedModalRect(
                 this.width / 2 - 90,
                 this.height - 11 - GuiCelestialSelection.BORDER_WIDTH - 4,
-                this.TRANSIT_INFO_W, // w
-                this.TRANSIT_INFO_H, // h
-                this.TRANSIT_INFO_U, // u
-                this.TRANSIT_INFO_V, // v
-                this.TRANSIT_INFO_W,
-                this.TRANSIT_INFO_H,
+                TRANSIT_INFO_W, // w
+                TRANSIT_INFO_H, // h
+                TRANSIT_INFO_U, // u
+                TRANSIT_INFO_V, // v
+                TRANSIT_INFO_W,
+                TRANSIT_INFO_H,
                 false,
                 false);
 
@@ -339,7 +338,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                 this.offsetX - boxWidth / 2 - 2, // x?
                 bottomOffset - totalOffset, // y
                 91, // width?
-                ColorUtil.to32BitColor(255, 255, 255, 255),
+                0xFFFFFFFF,
                 false,
                 false);
 
@@ -354,7 +353,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                 GCCoreUtil.translate("gui.message.mothership.totalMass") + ": " + GuiHelper.formatKilogram(totalMass),
                 this.offsetX - 90,
                 bottomOffset - totalOffset,
-                ColorUtil.to32BitColor(255, 255, 255, 255),
+                0xFFFFFFFF,
                 false);
 
         totalOffset -= 10;
@@ -364,14 +363,11 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         + GuiHelper.formatMetric(this.provider.getNumBlocks()),
                 this.offsetX - 90,
                 bottomOffset - totalOffset,
-                ColorUtil.to32BitColor(255, 255, 255, 255),
+                0xFFFFFFFF,
                 false);
 
         totalOffset -= 10;
-        int thrustColor = ColorUtil.to32BitColor(255, 255, 255, 255);
-        if (tData.thrust <= 0) {
-            thrustColor = ColorUtil.to32BitColor(255, 255, 126, 126);
-        }
+        final int thrustColor = tData.thrust <= 0 ? 0xFFFFFFFF : 0xFFFF7E7E;
 
         this.smallFontRenderer.drawString(
                 GCCoreUtil.translate("gui.message.mothership.travelThrust") + ": "
@@ -415,14 +411,14 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         }
 
         this.drawTexturedModalRect(
-                this.offsetX + this.LAUNCHBUTTON_X,
-                this.offsetY + this.LAUNCHBUTTON_Y,
-                this.LAUNCHBUTTON_W,
-                this.LAUNCHBUTTON_H,
+                this.offsetX + LAUNCHBUTTON_X,
+                this.offsetY + LAUNCHBUTTON_Y,
+                LAUNCHBUTTON_W,
+                LAUNCHBUTTON_H,
                 0, // u
                 4, // v
-                this.LAUNCHBUTTON_W,
-                this.LAUNCHBUTTON_H,
+                LAUNCHBUTTON_W,
+                LAUNCHBUTTON_H,
                 false,
                 false);
 
@@ -431,7 +427,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                 this.offsetX - 48,
                 this.offsetY + 135,
                 91,
-                ColorUtil.to32BitColor(255, 255, 255, 255),
+                0xFFFFFFFF,
                 false,
                 false);
 
@@ -440,7 +436,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                 this.offsetX - 48,
                 offset + this.offsetY,
                 91,
-                ColorUtil.to32BitColor(255, 255, 255, 255),
+                0xFFFFFFFF,
                 false,
                 false);
 
@@ -459,7 +455,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         this.offsetX - 90,
                         this.offsetY + offset,
                         90,
-                        ColorUtil.to32BitColor(255, 255, 255, 255));
+                        0xFFFFFFFF);
                 offset += 10;
                 break;
             case NONE:
@@ -476,7 +472,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         this.offsetX - 90,
                         this.offsetY + offset,
                         90,
-                        ColorUtil.to32BitColor(255, 255, 128, 128));
+                        0xFFFF8080);
                 offset += 10;
                 break;
             case NOT_ENOUGH_THRUST:
@@ -488,7 +484,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         this.offsetX - 90,
                         this.offsetY + offset,
                         90,
-                        ColorUtil.to32BitColor(255, 255, 128, 128));
+                        0xFFFF8080);
                 offset += 10;
                 break;
             case NOT_ORBITABLE:
@@ -497,7 +493,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         this.offsetX - 90,
                         this.offsetY + offset,
                         90,
-                        ColorUtil.to32BitColor(255, 255, 128, 128));
+                        0xFFFF8080);
                 offset += 10;
                 break;
             case TRAVEL_TOO_LONG:
@@ -509,7 +505,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         this.offsetX - 90,
                         this.offsetY + offset,
                         90,
-                        ColorUtil.to32BitColor(255, 255, 128, 128));
+                        0xFFFF8080);
                 offset += 10;
 
                 break;
@@ -528,7 +524,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                     this.offsetX - 90,
                     this.offsetY + offset,
                     90,
-                    ColorUtil.to32BitColor(255, 255, 255, 255));
+                    0xFFFFFFFF);
             for (final MothershipFuelDisplay f : fuelReqs.getData().keySet()) {
                 offset += 10;
 
@@ -549,7 +545,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         this.offsetX - 80,
                         this.offsetY + offset,
                         90,
-                        ColorUtil.to32BitColor(255, 255, 255, 255));
+                        0xFFFFFFFF);
             }
             offset += 10;
         }
@@ -563,7 +559,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                         + GuiHelper.formatMetric(travelDistance, "AU"),
                 this.offsetX - 90,
                 this.offsetY + offset,
-                ColorUtil.to32BitColor(255, 255, 255, 255),
+                0xFFFFFFFF,
                 false);
         offset += 10;
         return offset;
@@ -584,7 +580,7 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
                 GCCoreUtil.translate("gui.message.mothership.travelTime") + ": " + travelTimeStr,
                 this.offsetX - 90,
                 this.offsetY + offset,
-                ColorUtil.to32BitColor(255, 255, 255, 255),
+                0xFFFFFFFF,
                 false);
         return offset + 10;
     }
@@ -681,14 +677,14 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
      */
 
     @Override
-    protected void mouseClicked(final int x, final int y, final int button) {
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 
         // simple checks first
-        int actualBtnX = this.offsetX + this.LAUNCHBUTTON_X;
-        int actualBtnY = this.offsetY + this.LAUNCHBUTTON_Y;
-        if (actualBtnX <= x && x <= actualBtnX + this.LAUNCHBUTTON_W
-                && actualBtnY <= y
-                && y <= actualBtnY + this.LAUNCHBUTTON_H) {
+        int actualBtnX = this.offsetX + LAUNCHBUTTON_X;
+        int actualBtnY = this.offsetY + LAUNCHBUTTON_Y;
+        if (actualBtnX <= mouseX && mouseX <= actualBtnX + LAUNCHBUTTON_W
+                && actualBtnY <= mouseY
+                && mouseY <= actualBtnY + LAUNCHBUTTON_H) {
             if (this.getTravelFailReason(this.selectedBody, null) == TravelFailReason.NONE) {
 
                 // spam protection?
@@ -708,16 +704,16 @@ public class GuiMothershipSelection extends GuiARCelestialSelection {
         }
 
         if (this.hasMothershipStats) {
-            actualBtnX = this.offsetX + this.RENAMEBUTTON_X;
-            actualBtnY = this.height - this.offsetY - this.RENAMEBUTTON_Y;
-            if (actualBtnX <= x && x <= actualBtnX + this.RENAMEBUTTON_W
-                    && actualBtnY <= y
-                    && y <= actualBtnY + this.RENAMEBUTTON_H) {
+            actualBtnX = this.offsetX + RENAMEBUTTON_X;
+            actualBtnY = this.height - this.offsetY - RENAMEBUTTON_Y;
+            if (actualBtnX <= mouseX && mouseX <= actualBtnX + RENAMEBUTTON_W
+                    && actualBtnY <= mouseY
+                    && mouseY <= actualBtnY + RENAMEBUTTON_H) {
                 return;
             }
         }
 
-        super.mouseClicked(x, y, button);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
 }

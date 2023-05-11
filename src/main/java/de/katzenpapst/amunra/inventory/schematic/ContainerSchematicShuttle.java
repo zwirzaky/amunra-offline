@@ -1,7 +1,7 @@
 package de.katzenpapst.amunra.inventory.schematic;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -27,7 +27,7 @@ public class ContainerSchematicShuttle extends Container {
     public IInventory craftResult = new InventoryCraftResult();
     protected final World worldObj;
     // protected INasaWorkbenchRecipe mostCompleteRecipe;
-    protected HashMap<Integer, HashSet<ItemDamagePair>> slotTypes;
+    protected Map<Integer, Set<ItemDamagePair>> slotTypes;
 
     protected final Item craftingResult = ARItems.shuttleItem;
 
@@ -80,7 +80,7 @@ public class ContainerSchematicShuttle extends Container {
             final int x = coords[0];
             final int y = coords[1];
 
-            final HashSet<ItemDamagePair> possibleItems = this.slotTypes.get(slotNr + 1);
+            final Set<ItemDamagePair> possibleItems = this.slotTypes.get(slotNr + 1);
 
             if (possibleItems != null) {
                 final ItemDamagePair[] asArray = new ItemDamagePair[possibleItems.size()];
@@ -95,22 +95,22 @@ public class ContainerSchematicShuttle extends Container {
     }
 
     @Override
-    public void onContainerClosed(final EntityPlayer par1EntityPlayer) {
-        super.onContainerClosed(par1EntityPlayer);
+    public void onContainerClosed(EntityPlayer p_75134_1_) {
+        super.onContainerClosed(p_75134_1_);
 
         if (!this.worldObj.isRemote) {
             for (int i = 1; i < this.craftMatrix.getSizeInventory(); ++i) {
                 final ItemStack curStack = this.craftMatrix.getStackInSlotOnClosing(i);
 
                 if (curStack != null) {
-                    par1EntityPlayer.entityDropItem(curStack, 0.0F);
+                    p_75134_1_.entityDropItem(curStack, 0.0F);
                 }
             }
         }
     }
 
     @Override
-    public void onCraftMatrixChanged(final IInventory par1IInventory) {
+    public void onCraftMatrixChanged(IInventory p_75130_1_) {
         // now this will require my custom recipe
         // is this the only place where I need the recipe?
         // seems like that
@@ -119,7 +119,7 @@ public class ContainerSchematicShuttle extends Container {
     }
 
     @Override
-    public boolean canInteractWith(final EntityPlayer par1EntityPlayer) {
+    public boolean canInteractWith(EntityPlayer player) {
         return true;
     }
 
@@ -161,10 +161,10 @@ public class ContainerSchematicShuttle extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(final EntityPlayer player, final int slotNr) {
+    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         ItemStack resultStack = null;
 
-        final Slot slot = this.inventorySlots.get(slotNr);
+        final Slot slot = this.inventorySlots.get(index);
         final int containerInvSize = this.inventorySlots.size();
         final int numSlotsAdded = containerInvSize - 36;
 
@@ -175,7 +175,7 @@ public class ContainerSchematicShuttle extends Container {
             final ItemStack stack = slot.getStack();
             resultStack = stack.copy();
 
-            if (slotNr < numSlotsAdded) {
+            if (index < numSlotsAdded) {
                 // clicked one of the container's slots
                 if (!this.mergeItemStack(stack, containerInvSize - 36, containerInvSize, true)) {
                     return null;
@@ -196,7 +196,7 @@ public class ContainerSchematicShuttle extends Container {
                 if (!found) {
 
                     // fallback, moves between main inventory and hotbar
-                    if (slotNr < containerInvSize - 9) {
+                    if (index < containerInvSize - 9) {
                         if (!this.mergeItemStack(stack, containerInvSize - 9, containerInvSize, false)) {
                             return null;
                         }

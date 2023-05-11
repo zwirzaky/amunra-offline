@@ -19,7 +19,6 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class BlockIsotopeGenerator extends SubBlockMachine {
 
-    // private IIcon iconFront = null;
     private IIcon iconOutput = null;
     private IIcon iconBlank = null;
 
@@ -36,29 +35,22 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
         this.energyGeneration = energyGeneration;
     }
 
-    /**
-     *
-     * @param side
-     * @return
-     */
     public static boolean isSideEnergyOutput(final int side) {
         // wait, wat?
         return false;
     }
 
     @Override
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        super.registerBlockIcons(par1IconRegister);
-        // this.blockIcon = reg.registerIcon(this.getTextureName());
-        // this.iconFront = par1IconRegister.registerIcon(AmunRa.TEXTUREPREFIX + "machine_nuclear");
-        this.iconBlank = par1IconRegister.registerIcon(this.sideTexture);
-        this.iconOutput = par1IconRegister.registerIcon(this.outputTexture);
-        // this.blockIcon = iconFront;
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister reg) {
+        super.registerBlockIcons(reg);
+        this.iconBlank = reg.registerIcon(this.sideTexture);
+        this.iconOutput = reg.registerIcon(this.outputTexture);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, int meta) {
         final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
         // we have the front thingy at front.. but what is front?
         // east is the output
@@ -74,10 +66,7 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
         if (side == front.ordinal()) {
             return this.blockIcon;
         }
-        // if(side == output.ordinal()) {
         return this.iconOutput;
-        // }
-        // return this.iconBlank;
     }
 
     @Override
@@ -85,29 +74,20 @@ public class BlockIsotopeGenerator extends SubBlockMachine {
             final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
         entityPlayer.openGui(AmunRa.instance, GuiIds.GUI_ATOMBATTERY, world, x, y, z);
         return true;
-        // return false;
     }
 
-    /**
-     * Called throughout the code as a replacement for ITileEntityProvider.createNewTileEntity Return the same thing you
-     * would from that function. This will fall back to ITileEntityProvider.createNewTileEntity(World) if this block is
-     * a ITileEntityProvider
-     *
-     * @param metadata The Metadata of the current block
-     * @return A instance of a class extending TileEntity
-     */
     @Override
-    public TileEntity createTileEntity(final World world, final int metadata) {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityIsotopeGenerator();
     }
 
     @Override
-    public boolean hasTileEntity(final int metadata) {
+    public boolean hasTileEntity(int metadata) {
         return true;
     }
 
     @Override
-    public String getShiftDescription(final int meta) {
+    public String getShiftDescription(int meta) {
         return GCCoreUtil.translate("tile.isotopeGenerator.description");
     }
 

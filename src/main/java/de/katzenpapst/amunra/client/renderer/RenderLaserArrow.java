@@ -5,19 +5,13 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import de.katzenpapst.amunra.entity.EntityBaseLaserArrow;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 
 public class RenderLaserArrow extends Render {
-
-    private final IModelCustom meteorChunkModel = AdvancedModelLoader
-            .loadModel(new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "models/meteorChunk.obj"));
 
     public RenderLaserArrow() {
         this.shadowSize = 0.1F;
@@ -28,8 +22,8 @@ public class RenderLaserArrow extends Render {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(final Entity par1Entity) {
-        return this.func_110779_a((EntityBaseLaserArrow) par1Entity);
+    protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+        return this.func_110779_a((EntityBaseLaserArrow) p_110775_1_);
     }
 
     /**
@@ -39,9 +33,8 @@ public class RenderLaserArrow extends Render {
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
     @Override
-    public void doRender(final Entity entity, final double x, final double y, final double z, final float p_76986_8_,
-            final float p_76986_9_) {
-        this.bindEntityTexture(entity);
+    public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {
+        this.bindEntityTexture(p_76986_1_);
 
         /*
          * final float var24 = entity.rotationPitch; final float var24b = entity.rotationYaw; GL11.glTranslatef((float)
@@ -50,14 +43,14 @@ public class RenderLaserArrow extends Render {
          */
 
         GL11.glPushMatrix();
-        GL11.glTranslatef((float) x, (float) y, (float) z);
+        GL11.glTranslated(p_76986_2_, p_76986_4_, p_76986_6_);
         GL11.glRotatef(
-                entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * p_76986_9_ - 90.0F,
+                p_76986_1_.prevRotationYaw + (p_76986_1_.rotationYaw - p_76986_1_.prevRotationYaw) * p_76986_9_ - 90.0F,
                 0.0F,
                 1.0F,
                 0.0F);
         GL11.glRotatef(
-                entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * p_76986_9_,
+                p_76986_1_.prevRotationPitch + (p_76986_1_.rotationPitch - p_76986_1_.prevRotationPitch) * p_76986_9_,
                 0.0F,
                 0.0F,
                 1.0F);
@@ -80,10 +73,7 @@ public class RenderLaserArrow extends Render {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
         GL11.glDepthMask(false);
-        final char c0 = 61680;
-        final int j = c0 % 65536;
-        final int k = c0 / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j / 1.0F, k / 1.0F);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680.0F, 0.0F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         /*
          * GL11.glEnable(GL12.GL_RESCALE_NORMAL); GL11.glEnable(GL11.GL_BLEND); GL11.glBlendFunc(GL11.GL_SRC_ALPHA,

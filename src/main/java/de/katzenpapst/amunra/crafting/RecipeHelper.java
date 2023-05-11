@@ -3,6 +3,9 @@ package de.katzenpapst.amunra.crafting;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import net.minecraft.init.Blocks;
@@ -42,9 +45,9 @@ public class RecipeHelper {
 
     public static SpaceStationRecipe mothershipRecipe;
 
-    protected static HashMap<Item, Vector<INasaWorkbenchRecipe>> nasaWorkbenchRecipes = new HashMap<>();
+    protected static Map<Item, Vector<INasaWorkbenchRecipe>> nasaWorkbenchRecipes = new HashMap<>();
 
-    protected static ArrayList<CircuitFabricatorRecipe> circuitFabricatorRecipes = new ArrayList<>();
+    protected static List<CircuitFabricatorRecipe> circuitFabricatorRecipes = new ArrayList<>();
 
     public RecipeHelper() {}
 
@@ -93,7 +96,7 @@ public class RecipeHelper {
         mothershipRecipe = new SpaceStationRecipe(inputMap);
 
         // *** circuit fabricator recipes ***
-        final ArrayList<ItemStack> silicons = new ArrayList<>();
+        final List<ItemStack> silicons = new ArrayList<>();
         silicons.add(new ItemStack(GCItems.basicItem, 1, 2));
         silicons.addAll(OreDictionary.getOres(ConfigManagerCore.otherModsSilicon));
         // add the silicon of GC, apparently it's not in the same oredict
@@ -767,8 +770,8 @@ public class RecipeHelper {
     }
 
     public static void verifyNasaWorkbenchCrafting() {
-        final HashMap<Integer, ISchematicPage> pagesByPageID = new HashMap<>();
-        final HashMap<Integer, ISchematicPage> pagesByGuiID = new HashMap<>();
+        final Map<Integer, ISchematicPage> pagesByPageID = new HashMap<>();
+        final Map<Integer, ISchematicPage> pagesByGuiID = new HashMap<>();
 
         // boolean fail = false;
 
@@ -832,18 +835,17 @@ public class RecipeHelper {
     }
 
     private static ItemStack[] getStacksForInput(final Object input) {
-        if (input instanceof ItemStack) {
-            return new ItemStack[] { (ItemStack) input };
+        if (input instanceof ItemStack inputAsStack) {
+            return new ItemStack[] { inputAsStack };
         }
-        if (input instanceof String) {
-            final ArrayList<ItemStack> ores = OreDictionary.getOres((String) input);
+        if (input instanceof String inputAsString) {
+            final List<ItemStack> ores = OreDictionary.getOres(inputAsString);
             final ItemStack[] asArray = new ItemStack[ores.size()];
             ores.toArray(asArray);
-
             return asArray;
         }
-        if (input instanceof ItemStack[]) {
-            return (ItemStack[]) input;
+        if (input instanceof ItemStack[] inputAsStacks) {
+            return inputAsStacks;
         }
         throw new RuntimeException("Bad input");
     }
@@ -895,7 +897,6 @@ public class RecipeHelper {
     protected static void addCircuitFabricatorRecipeInternal(final ItemStack output, final ItemStack crystal,
             final ItemStack silicon1, final ItemStack silicon2, final ItemStack redstone, final ItemStack optional) {
         if (optional != null) {
-
             CircuitFabricatorRecipes
                     .addRecipe(output, new ItemStack[] { crystal, silicon1, silicon2, redstone, optional });
         } else {
@@ -963,9 +964,7 @@ public class RecipeHelper {
         for (int i = 0; i < block.getNumPossibleSubBlocks(); i++) {
             final SubBlockOre sb = (SubBlockOre) block.getSubBlock(i);
             if (sb != null && sb.getSmeltItem() != null) {
-
                 final ItemStack input = new ItemStack(block, 1, i);
-
                 GameRegistry.addSmelting(input, sb.getSmeltItem(), 1.0F);
             }
         }
@@ -1011,8 +1010,8 @@ public class RecipeHelper {
         for (final ItemStack battery : batteries) {
 
             final Object[] modifiedRecipe = recipe.clone();
-            final Object lastItem = modifiedRecipe[modifiedRecipe.length - 1];
-            if (!(lastItem instanceof ItemStack) && !(((ItemStack) lastItem).getItem() instanceof ItemElectricBase)) {
+            final Object lastObject = modifiedRecipe[modifiedRecipe.length - 1];
+            if (!(lastObject instanceof ItemStack lastStack) || !(lastStack.getItem() instanceof ItemElectricBase)) {
                 throw new RuntimeException("Bad Raygun Recipe!");
             }
             modifiedRecipe[modifiedRecipe.length - 1] = battery;
@@ -1163,9 +1162,9 @@ public class RecipeHelper {
             final HashMap<Integer, ItemStack> incompleteInput, final int chestSlot1, final int chestSlot2,
             final int chestSlot3, final RocketRecipeHelper rrh) {
 
-        final ArrayList<ItemStack> chest1 = rrh.getStacks(0);
-        final ArrayList<ItemStack> chest2 = rrh.getStacks(1);
-        final ArrayList<ItemStack> chest3 = rrh.getStacks(2);
+        final List<ItemStack> chest1 = rrh.getStacks(0);
+        final List<ItemStack> chest2 = rrh.getStacks(1);
+        final List<ItemStack> chest3 = rrh.getStacks(2);
         HashMap<Integer, ItemStack> input;
         for (int i = 0; i < chest1.size(); i++) {
             input = new HashMap<>(incompleteInput);
@@ -1208,31 +1207,27 @@ public class RecipeHelper {
     }
 
     public static INasaWorkbenchRecipe getMostCompleteRecipeFor(final Item expectedOutput) {
-        final Vector<INasaWorkbenchRecipe> recipeArray = nasaWorkbenchRecipes.get(expectedOutput);
-        if (recipeArray == null) {
-            return null;
+        if(nasaWorkbenchRecipes.containsKey(expectedOutput)) {
+            return nasaWorkbenchRecipes.get(expectedOutput).lastElement();
         }
-        return recipeArray.lastElement();
+        return null;
     }
 
     /**
      * gets an arraylist of the recipe. if there are multiple possibilities for the same slot, it will contain multiple
      * itemstacks
      */
-    public static HashMap<Integer, HashSet<ItemDamagePair>> getNasaWorkbenchRecipeForContainer(
+    public static Map<Integer, Set<ItemDamagePair>> getNasaWorkbenchRecipeForContainer(
             final Item expectedOutput) {
 
-        final HashMap<Integer, HashSet<ItemDamagePair>> result = new HashMap<>();
+        final Map<Integer, Set<ItemDamagePair>> result = new HashMap<>();
 
         // ArrayList<HashSet<ItemDamagePair>> result = new ArrayList<HashSet<ItemDamagePair>>();
         final Vector<INasaWorkbenchRecipe> recipeArray = nasaWorkbenchRecipes.get(expectedOutput);
         for (final INasaWorkbenchRecipe curRecipe : recipeArray) {
 
             for (final int slotNr : curRecipe.getRecipeInput().keySet()) {
-
-                if (result.get(slotNr) == null) {
-                    result.put(slotNr, new HashSet<ItemDamagePair>());
-                }
+                result.computeIfAbsent(slotNr, t -> new HashSet<>());
                 final ItemStack stack = curRecipe.getRecipeInput().get(slotNr);
                 if (stack == null) {
                     continue;
@@ -1246,7 +1241,7 @@ public class RecipeHelper {
         return result;
     }
 
-    public static ArrayList<CircuitFabricatorRecipe> getCircuitFabricatorRecipes() {
+    public static List<CircuitFabricatorRecipe> getCircuitFabricatorRecipes() {
         return circuitFabricatorRecipes;
     }
     /*

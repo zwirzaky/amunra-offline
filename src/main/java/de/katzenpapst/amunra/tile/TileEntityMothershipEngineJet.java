@@ -64,8 +64,8 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     protected boolean isItemFuel(final ItemStack itemstack) {
 
         FluidStack containedFluid = null;
-        if (itemstack.getItem() instanceof IFluidContainerItem) {
-            containedFluid = ((IFluidContainerItem) itemstack.getItem()).getFluid(itemstack);
+        if (itemstack.getItem() instanceof IFluidContainerItem itemContainer) {
+            containedFluid = itemContainer.getFluid(itemstack);
         }
         if (containedFluid == null) {
             containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
@@ -82,8 +82,6 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
     /**
      * Calculates tank capacity based on the boosters
-     * 
-     * @return
      */
     @Override
     protected int getTankCapacity() {
@@ -130,9 +128,9 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public boolean isItemValidForSlot(final int slotID, final ItemStack itemstack) {
-        if (slotID == 0 && itemstack != null) {
-            return this.isItemFuel(itemstack);
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        if (index == 0 && stack != null) {
+            return this.isItemFuel(stack);
         }
         /*
          * FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
@@ -142,18 +140,8 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(final int side) {
+    public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
         return new int[] { 0 };
-    }
-
-    @Override
-    public boolean canInsertItem(final int slotID, final ItemStack itemstack, final int side) {
-        return this.isItemValidForSlot(slotID, itemstack);
-    }
-
-    @Override
-    public boolean canExtractItem(final int slotID, final ItemStack itemstack, final int side) {
-        return slotID == 0;
     }
 
     @Override
@@ -163,8 +151,6 @@ public class TileEntityMothershipEngineJet extends TileEntityMothershipEngineAbs
 
     /**
      * This should return how much fuel units are consumed per AU travelled, in millibuckets
-     * 
-     * @return
      */
     public float getFuelUsagePerTick() {
         return 2.0F;

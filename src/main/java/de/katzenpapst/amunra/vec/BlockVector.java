@@ -35,9 +35,9 @@ public class BlockVector extends Vector3int {
 
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof BlockVector)) {
+        if (!(other instanceof BlockVector blockVector)) {
             return false;
         }
-        return this.world.equals(((BlockVector) other).world) && super.equals(other);
+        return this.world.equals(blockVector.world) && super.equals(other);
     }
 }

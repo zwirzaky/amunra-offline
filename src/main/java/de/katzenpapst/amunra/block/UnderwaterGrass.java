@@ -20,31 +20,15 @@ public class UnderwaterGrass extends SubBlockGrass {
     }
 
     @Override
-    public int quantityDropped(final int meta, final int fortune, final Random random) {
+    public int quantityDropped(int meta, int fortune, Random random) {
         return this.getDirtBlock().getBlock().quantityDropped(this.getDirtBlock().getMetadata(), fortune, random);
     }
 
-    /**
-     * Return the block what this should revert to if the conditions are bad
-     * 
-     * @return
-     */
     @Override
     public BlockMetaPair getDirtBlock() {
         return this.dirtVersion;
     }
 
-    /**
-     * Return true if the current conditions are good for this grasses survival, usually light stuff The Multiblock will
-     * replace it with this.getDirtBlock() Will also be called for dirt neighbors of this in order to check if this
-     * *could* live there
-     *
-     * @param world
-     * @param x
-     * @param y
-     * @param z
-     * @return
-     */
     @Override
     public boolean canLiveHere(final World world, final int x, final int y, final int z) {
         // this can only live underwater
@@ -54,9 +38,6 @@ public class UnderwaterGrass extends SubBlockGrass {
         return blockAbove == Blocks.water || blockAbove == Blocks.flowing_water;
     }
 
-    /**
-     *
-     */
     @Override
     public boolean canSpread(final World world, final int x, final int y, final int z) {
         // if it can live, then it can spread, no extra checks

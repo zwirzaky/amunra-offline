@@ -160,7 +160,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     }
 
     @Override
-    public void setDimension(final int id) {
+    public void setDimension(int dim) {
         // this really shouldn't happen...
         if (TickHandlerServer.mothershipData == null) {
             throw new RuntimeException(
@@ -168,17 +168,17 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
                             + "Please try changing I:mothershipProviderID in GalacticraftAmunRa.cfg and try again. "
                             + "If error persists, please report a bug including a complete list of your mods");
         }
-        this.mothershipObj = TickHandlerServer.mothershipData.getByDimensionId(id);
+        this.mothershipObj = TickHandlerServer.mothershipData.getByDimensionId(dim);
         if (this.mothershipObj == null) {
-            throw new RuntimeException("Mothership with dim ID " + id + " has no celestial body. This is bad!");
+            throw new RuntimeException("Mothership with dim ID " + dim + " has no celestial body. This is bad!");
         }
         // this.spaceStationDimensionID = id;
-        super.setDimension(id);
+        super.setDimension(dim);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public float getSunBrightness(final float par1) {
+    public float getSunBrightness(float par1) {
         if (this.mothershipObj.isInTransit()) {
             return 0.0F; // dunno
         }
@@ -241,11 +241,11 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     }
 
     @Override
-    public float calculateCelestialAngle(final long worldTime, final float partialTicks) {
+    public float calculateCelestialAngle(long par1, float par3) {
         if (this.getDayLength() == 0) {
             return 0.0F;
         }
-        return super.calculateCelestialAngle(worldTime, partialTicks);
+        return super.calculateCelestialAngle(par1, par3);
     }
 
     @Override
@@ -313,8 +313,6 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      * should only ever happen on server
      * 
      * @param cheat if true, no checks are performed, no engines are actually started, the ship is moved anyway
-     *
-     * @return
      */
     public boolean startTransit(final CelestialBody target, final boolean cheat) {
         if (this.worldObj.isRemote) {
@@ -427,8 +425,6 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     /**
      * The currently orbited celestial body or null if in transit
-     * 
-     * @return
      */
     public CelestialBody getParent() {
         return ((Mothership) this.getCelestialBody()).getParent();
@@ -456,8 +452,6 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     /**
      * Figures out the direction of this ship, and the displayed amount of thrust, to check against the actual.
-     * 
-     * @return
      */
     protected TransitData calcTheoreticalTransitData() {
 
@@ -517,10 +511,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     }
 
     /**
-     *
-     * @param target
      * @param potentialData if true, potential data will be returned
-     * @return
      */
     public TransitDataWithDuration getTransitDataTo(final CelestialBody target, final boolean potentialData) {
         TransitData generalData = this.calcTheoreticalTransitData();
@@ -735,12 +726,6 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
     /**
      * This should process one block for the mothership update, figuring out it's mass and stuff The coordinates must be
      * world-global, not chunk-local
-     *
-     * @param block
-     * @param meta
-     * @param x
-     * @param y
-     * @param z
      */
     protected void processBlock(final Block block, final int meta, final int x, final int y, final int z) {
         // first, the mass
@@ -765,8 +750,6 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      * <p/>
      * TODO how can this code be called by other mods / plugins with teleports (e.g. Bukkit)? See
      * WorldUtil.teleportEntity()
-     *
-     * @param player
      */
     public void sendPacketsToClient(final EntityPlayerMP player) {
         // so apparently, this can happen even before the worldprovider itself has readFromNbt...
@@ -871,15 +854,12 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void setCloudRenderer(final IRenderHandler renderer) {
+    public void setCloudRenderer(IRenderHandler renderer) {
         super.setCloudRenderer(renderer);
     }
 
     /**
      * Returns if given player is the owner of this mothership
-     * 
-     * @param player
-     * @return
      */
     public boolean isPlayerOwner(final EntityPlayer player) {
         return this.mothershipObj.isPlayerOwner(player);

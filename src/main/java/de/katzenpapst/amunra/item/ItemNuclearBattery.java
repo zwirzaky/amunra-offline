@@ -20,8 +20,7 @@ public class ItemNuclearBattery extends ItemBaseBattery {
     }
 
     @Override
-    public void onUpdate(final ItemStack stack, final World world, final Entity entity, final int stackNumber,
-            final boolean isBeingHeld) {
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int p_77663_4_, boolean p_77663_5_) {
         if (this.getElectricityStored(stack) < this.getMaxElectricityStored(stack)) {
             // recharge
             this.setElectricity(stack, this.getElectricityStored(stack) + this.rechargeRate);

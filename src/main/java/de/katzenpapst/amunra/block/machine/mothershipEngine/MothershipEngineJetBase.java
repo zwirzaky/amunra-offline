@@ -3,15 +3,10 @@ package de.katzenpapst.amunra.block.machine.mothershipEngine;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.GuiIds;
 import de.katzenpapst.amunra.block.machine.AbstractBlockMothershipRestricted;
@@ -41,60 +36,33 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
 
     protected TileEntityMothershipEngineAbstract getMyTileEntity(final World world, final int x, final int y,
             final int z) {
-        final TileEntity t = world.getTileEntity(x, y, z);
-        if (t == null || !(t instanceof TileEntityMothershipEngineAbstract)) {
-            // TODO throw exception instead
-            return null;
+        if(world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineAbstract tileEngine) {
+            return tileEngine;
         }
-        return (TileEntityMothershipEngineAbstract) t;
+        // TODO throw exception instead
+        return null;
     }
 
     @Override
-    public void onBlockPlacedBy(final World w, final int x, final int y, final int z, final EntityLivingBase user,
-            final ItemStack stack) {}
-
-    @Override
-    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block block) {
-        final TileEntity leTile = world.getTileEntity(x, y, z);
-        if (leTile instanceof TileEntityMothershipEngineAbstract) {
-            ((TileEntityMothershipEngineAbstract) leTile).scheduleUpdate();
-            // world.markBlockForUpdate(x, y, z);
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
+        if (worldIn.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineAbstract tileEngine) {
+            tileEngine.scheduleUpdate();
+            // worldIn.markBlockForUpdate(x, y, z);
         }
     }
 
-    /**
-     * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
-     *
-     */
     @Override
-    public int onBlockPlaced(final World w, final int x, final int y, final int z, final int side, final float hitX,
-            final float hitY, final float hitZ, final int meta) {
-        return meta;
-    }
-
-    @Override
-    public boolean onUseWrench(final World world, final int x, final int y, final int z,
-            final EntityPlayer entityPlayer, final int side, final float hitX, final float hitY, final float hitZ) {
-        // TODO rotate the tile entity
-        return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
     public int getRenderType() {
         return AmunRa.dummyRendererId;
     }
 
     @Override
-    public Item getItem(final World worldIn, final int x, final int y, final int z) {
+    public Item getItem(World worldIn, int x, int y, int z) {
         return this.getItem().getItem();
     }
 
     @Override
-    public Item getItemDropped(final int meta, final Random random, final int fortune) {
-        /**
-         * Returns whether or not this bed block is the head of the bed.
-         */
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return this.getItem().getItem();
     }
 
@@ -109,17 +77,17 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
     }
 
     @Override
-    public boolean hasTileEntity(final int metadata) {
+    public boolean hasTileEntity(int metadata) {
         return true;
     }
 
     @Override
-    public int damageDropped(final int meta) {
+    public int damageDropped(int meta) {
         return this.getItem().getDamage();
     }
 
     @Override
-    public String getShiftDescription(final int meta) {
+    public String getShiftDescription(int meta) {
         return GCCoreUtil.translate("tile.mothershipEngineRocket.description");
     }
 
@@ -128,16 +96,9 @@ public abstract class MothershipEngineJetBase extends AbstractBlockMothershipRes
         return !this.getMyTileEntity(world, x, y, z).isInUse();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z,
-            final boolean willHarvest) {
-        return this.removedByPlayer(world, player, x, y, z);
-    }
-
-    @Override
-    @Deprecated
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y,
-            final int z) {
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
         if (this.canBeMoved(world, x, y, z)) {
             return super.removedByPlayer(world, player, x, y, z);
         }

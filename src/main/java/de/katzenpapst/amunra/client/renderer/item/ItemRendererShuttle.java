@@ -4,7 +4,6 @@ import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -16,7 +15,6 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
-import micdoodle8.mods.galacticraft.core.entities.EntityTier1Rocket;
 
 public class ItemRendererShuttle implements IItemRenderer {
 
@@ -58,16 +56,8 @@ public class ItemRendererShuttle implements IItemRenderer {
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 GL11.glScalef(0.5F, -0.5F, -0.5F);
-                GL11.glTranslatef(1.5F, 1.95F, 1.7F);
-                final short short1 = 0;
-
-                GL11.glRotatef(short1, 0.0F, 1.0F, 0.0F);
-                GL11.glTranslatef(-1.5F, -1.5F, -1.5F);
-                float f1 = 0;
-                f1 = 1.0F - f1;
-                f1 = 1.0F - f1 * f1 * f1;
-                modelChest.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);
-
+                
+                modelChest.chestLid.rotateAngleX = 0.0F;
                 modelChest.chestBelow.render(0.0625F);
                 modelChest.chestLid.render(0.0625F);
                 modelChest.chestKnob.render(0.0625F);
@@ -108,33 +98,20 @@ public class ItemRendererShuttle implements IItemRenderer {
     }
 
     public void transform(final ItemStack itemstack, final ItemRenderType type) {
-        final EntityPlayer player = FMLClientHandler.instance().getClient().thePlayer;
-
         if (type == ItemRenderType.EQUIPPED) {
             GL11.glRotatef(70, 1.0F, 0, 0);
             GL11.glRotatef(-10, 0.0F, 1, 0);
             GL11.glRotatef(50, 0.0F, 1, 1);
             GL11.glTranslatef(-0.8F, -2.2F, 0F);
             GL11.glScalef(5.2F, 5.2F, 5.2F);
-
-            // why?
-            if (player != null && player.ridingEntity instanceof EntityTier1Rocket) {
-                GL11.glScalef(0.0F, 0.0F, 0.0F);
-            }
         }
-
-        if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
+        else if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
             GL11.glTranslatef(2.5F, 5.9F, 1F);
             GL11.glRotatef(28, 0.0F, 0, 1);
-            GL11.glRotatef(50 + 180, 0.0F, 1, 0);
+            GL11.glRotatef(230, 0.0F, 1, 0);
             GL11.glRotatef(73, 1.0F, 0, 0);
             GL11.glScalef(5.2F, 5.2F, 5.2F);
-
-            if (player != null && player.ridingEntity instanceof EntityTier1Rocket) {
-                GL11.glScalef(0.0F, 0.0F, 0.0F);
-            }
         }
-
         GL11.glTranslatef(0, 0.1F, 0);
         GL11.glScalef(-0.4F, -0.4F, 0.4F);
 
@@ -162,7 +139,7 @@ public class ItemRendererShuttle implements IItemRenderer {
      */
 
     @Override
-    public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         return switch (type) {
             case ENTITY -> true;
             case EQUIPPED -> true;
@@ -173,13 +150,13 @@ public class ItemRendererShuttle implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item,
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
             final ItemRendererHelper helper) {
         return true;
     }
 
     @Override
-    public void renderItem(final ItemRenderType type, final ItemStack item, final Object... data) {
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         switch (type) {
             case EQUIPPED:
                 this.renderSpaceship(type, (RenderBlocks) data[0], item, -0.5f, -0.5f, -0.5f);

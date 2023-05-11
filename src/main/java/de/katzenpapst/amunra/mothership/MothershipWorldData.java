@@ -1,10 +1,11 @@
 package de.katzenpapst.amunra.mothership;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,21 +31,18 @@ public class MothershipWorldData extends WorldSavedData {
     public static final String saveDataID = "ARMothershipData";
 
     // orbit distances should stay the same
-    private final HashMap<CelestialBody, Float> orbitDistances;
+    private final Map<CelestialBody, Float> orbitDistances = new HashMap<>();
 
     private int highestId = 0;
     private int numTicksWithoutSave = 0;
 
     // https://github.com/Questology/Questology/blob/d125a9359e50a84ccee0c5100f04464a0d13e072/src/main/java/demonmodders/questology/handlers/event/GenericEventHandler.java
-    protected HashMap<Integer, Mothership> mothershipIdList;
+    protected final HashMap<Integer, Mothership> mothershipIdList = new HashMap<>();
 
-    protected HashMap<Integer, Mothership> mothershipsByDimension;
+    protected final Map<Integer, Mothership> mothershipsByDimension = new HashMap<>();
 
     public MothershipWorldData(final String id) {
         super(id);
-        this.mothershipIdList = new HashMap<>();
-        this.mothershipsByDimension = new HashMap<>();
-        this.orbitDistances = new HashMap<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -53,7 +51,7 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     protected void updateAllOrbits() {
-        final HashMap<CelestialBody, Integer> bodies = this.getBodiesWithShips();
+        final Map<CelestialBody, Integer> bodies = this.getBodiesWithShips();
         for (final CelestialBody b : bodies.keySet()) {
             this.updateOrbitsFor(b);
         }
@@ -123,12 +121,7 @@ public class MothershipWorldData extends WorldSavedData {
 
     /**
      * Creates new mothership for given player and given parentBody, sends it to all clients and returns it.
-     *
-     * @param player
-     * @param currentParent
-     * @return
      */
-    // @SideOnly(Side.SERVER)
     public Mothership registerNewMothership(final EntityPlayer player, final CelestialBody currentParent) {
         final int newId = ++this.highestId;
 
@@ -163,7 +156,6 @@ public class MothershipWorldData extends WorldSavedData {
     /**
      * Add an existing mothership object, usually one which the server sent here
      *
-     * @param ship
      * @return the definite mothership object as it should be used and stuff
      */
     @SideOnly(Side.CLIENT)
@@ -197,73 +189,33 @@ public class MothershipWorldData extends WorldSavedData {
 
     /**
      * Should only be used if only the number of ships around a body is required, otherwise just get the full list
-     *
-     * @param parent
-     * @return
      */
     public int getNumMothershipsForParent(final CelestialBody parent) {
-        int result = 0;
-
-        for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = pair.getValue();
-
-            final CelestialBody curParent = curM.getParent();
-            if (curParent != null && curParent.equals(parent)) {
-                result++;
-            }
+        if(parent == null) {
+            return 0;
         }
-
-        return result;
+        return (int) this.mothershipIdList.values().stream().map(Mothership::getParent).filter(parent::equals).count();
     }
 
     public boolean hasMothershipsInOrbit(final CelestialBody parent) {
-        for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = pair.getValue();
-
-            if (curM.getParent() == parent) return true;
-        }
-        return false;
+        return parent != null && this.mothershipIdList.values().stream().map(Mothership::getParent).anyMatch(parent::equals);
     }
 
     /**
      * Get all motherships for a certain parent
-     * 
-     * @param parent
-     * @return
      */
     public List<Mothership> getMothershipsForParent(final CelestialBody parent) {
-        final LinkedList<Mothership> result = new LinkedList<>();
-
-        for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = pair.getValue();
-
-            final CelestialBody curParent = curM.getParent();
-            if (curParent != null && curParent.equals(parent)) {
-                result.add(curM);
-            }
+        if(parent == null) {
+            return new ArrayList<>(0);
         }
-
-        return result;
+        return this.mothershipIdList.values().stream().filter(parent::equals).collect(Collectors.toList());
     }
 
     /**
      * Get all motherships owned by a certain player
-     * 
-     * @param player
-     * @return
      */
     public int getNumMothershipsForPlayer(final PlayerID player) {
-        int num = 0;
-
-        for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = pair.getValue();
-
-            if (curM.isPlayerOwner(player)) {
-                num++;
-            }
-        }
-
-        return num;
+        return (int) this.mothershipIdList.values().stream().filter(ship -> ship.isPlayerOwner(player)).count();
     }
 
     public int getNumMothershipsForPlayer(final EntityPlayer player) {
@@ -275,18 +227,17 @@ public class MothershipWorldData extends WorldSavedData {
      * 
      * @return a map where the key is the celestial body and the value is the number of motherships around it
      */
-    public HashMap<CelestialBody, Integer> getBodiesWithShips() {
-        final HashMap<CelestialBody, Integer> result = new HashMap<>();
+    public Map<CelestialBody, Integer> getBodiesWithShips() {
+        final Map<CelestialBody, Integer> result = new HashMap<>();
 
-        for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = pair.getValue();
+        for (final Mothership curM : this.mothershipIdList.values()) {
             final CelestialBody parent = curM.getParent();
             if (parent == null) continue;
 
-            if (result.get(parent) == null) {
-                result.put(parent, 1);
-            } else {
+            if (result.containsKey(parent)) {
                 result.put(parent, result.get(parent) + 1);
+            } else {
+                result.put(parent, 1);
             }
 
         }
@@ -303,21 +254,12 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public Mothership getByName(final String name) {
-        for (Entry<Integer, Mothership> pair : this.mothershipIdList.entrySet()) {
-            final Mothership curM = pair.getValue();
-            if (curM.getName().equals(name)) {
-                return curM;
-            }
-        }
-        return null;
+        return this.mothershipIdList.values().stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
     }
 
-    /**
-     * This should only ever be called when the save is loaded initially
-     */
     @Override
-    public void readFromNBT(final NBTTagCompound data) {
-        final NBTTagList tagList = data.getTagList("MothershipList", 10);
+    public void readFromNBT(NBTTagCompound p_76184_1_) {
+        final NBTTagList tagList = p_76184_1_.getTagList("MothershipList", 10);
         this.mothershipIdList.clear();
         this.mothershipsByDimension.clear();
 
@@ -372,8 +314,6 @@ public class MothershipWorldData extends WorldSavedData {
 
     /**
      * Hack for client-side dimension registration
-     *
-     * @param dimId
      */
     protected void maybeRegisterDimension(final int dimId) {
         if (!DimensionManager.isDimensionRegistered(dimId)) {
@@ -389,7 +329,7 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound data) {
+    public void writeToNBT(NBTTagCompound p_76187_1_) {
         final NBTTagList tagList = new NBTTagList();
 
         // HashMap<Integer, Mothership> mothershipIdList
@@ -399,7 +339,7 @@ public class MothershipWorldData extends WorldSavedData {
             tagList.appendTag(nbt2);
         }
 
-        data.setTag("MothershipList", tagList);
+        p_76187_1_.setTag("MothershipList", tagList);
     }
 
     public void tickAllMotherships() {

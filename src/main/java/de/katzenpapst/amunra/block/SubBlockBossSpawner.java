@@ -21,50 +21,48 @@ public class SubBlockBossSpawner extends SubBlock {
     }
 
     @Override
-    public boolean hasTileEntity(final int metadata) {
+    public boolean hasTileEntity(int metadata) {
         return true;
     }
 
     @Override
-    public TileEntity createTileEntity(final World world, final int metadata) {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityBossDungeonSpawner();
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int wx, final int wy, final int wz) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z) {
         return null;
     }
 
     @Override
-    public boolean canHarvestBlock(final EntityPlayer player, final int meta) {
+    public boolean canHarvestBlock(EntityPlayer player, int meta) {
         return false;
     }
 
     @Override
-    public Item getItemDropped(final int meta, final Random random, final int par3) {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return null;
     }
 
     @Override
-    public int quantityDropped(final int meta, final int fortune, final Random random) {
+    public int quantityDropped(int meta, int fortune, Random random) {
         return 0;
     }
 
     @Override
-    public boolean canSilkHarvest(final World world, final EntityPlayer player, final int x, final int y, final int z,
-            final int metadata) {
+    public boolean canSilkHarvest(World world, EntityPlayer player, int x, int y, int z, int metadata) {
         return false;
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
-            final int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         return null;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World world, final int x, final int y, final int z) {
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int x, int y, int z) {
         return AxisAlignedBB.getBoundingBox(x + 0.0D, y + 0.0D, z + 0.0D, x + 0.0D, y + 0.0D, z + 0.0D);
     }
 

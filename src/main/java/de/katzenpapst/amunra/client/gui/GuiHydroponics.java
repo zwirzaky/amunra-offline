@@ -22,7 +22,7 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiHydroponics extends GuiContainerGC {
 
-    private static final ResourceLocation guiTexture = new ResourceLocation(
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/gui/hydroponics.png");
 
@@ -31,7 +31,7 @@ public class GuiHydroponics extends GuiContainerGC {
             (this.height - this.ySize) / 2 + 24,
             56,
             9,
-            new ArrayList<String>(),
+            new ArrayList<>(),
             this.width,
             this.height,
             this);
@@ -40,7 +40,7 @@ public class GuiHydroponics extends GuiContainerGC {
             (this.height - this.ySize) / 2 + 37,
             56,
             9,
-            new ArrayList<String>(),
+            new ArrayList<>(),
             this.width,
             this.height,
             this);
@@ -57,8 +57,8 @@ public class GuiHydroponics extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(final GuiButton par1GuiButton) {
-        if (par1GuiButton.id == 0) {
+    protected void actionPerformed(GuiButton button) {
+        if (button.id == 0) {
             // do the stuff
             final float growthStatus = this.tile.getPlantGrowthStatus();
             if (growthStatus < 0) {
@@ -87,7 +87,6 @@ public class GuiHydroponics extends GuiContainerGC {
                                 TileEntityHydroponics.OperationType.HARVEST.ordinal()));
             }
         }
-
     }
 
     @Override
@@ -150,20 +149,20 @@ public class GuiHydroponics extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         final float growStatus = this.tile.getPlantGrowthStatus();
-        this.fontRendererObj.drawString(this.tile.getInventoryName(), 8, 10, 4210752);
+        this.fontRendererObj.drawString(this.tile.getInventoryName(), 8, 10, 0x404040);
         GCCoreUtil.drawStringRightAligned(
                 GCCoreUtil.translate("gui.message.out.name") + ":",
                 99,
                 25,
-                4210752,
+                0x404040,
                 this.fontRendererObj);
         GCCoreUtil.drawStringRightAligned(
                 GCCoreUtil.translate("gui.message.in.name") + ":",
                 99,
                 37,
-                4210752,
+                0x404040,
                 this.fontRendererObj);
 
         final String plantStatus = this.getPlantStatus(growStatus);
@@ -172,7 +171,7 @@ public class GuiHydroponics extends GuiContainerGC {
                     GCCoreUtil.translate("gui.message.status.name") + ": " + plantStatus,
                     this.xSize / 2,
                     50,
-                    4210752,
+                    0x404040,
                     this.fontRendererObj);
 
         } else {
@@ -180,24 +179,24 @@ public class GuiHydroponics extends GuiContainerGC {
                     GCCoreUtil.translate("gui.message.status.name") + ": " + this.getStatus(),
                     this.xSize / 2,
                     50,
-                    4210752,
+                    0x404040,
                     this.fontRendererObj);
             GCCoreUtil.drawStringCentered(
                     GCCoreUtil.translate("tile.hydroponics.plantstatus") + ": " + plantStatus,
                     this.xSize / 2,
                     60,
-                    4210752,
+                    0x404040,
                     this.fontRendererObj);
             final String status = GCCoreUtil.translate("gui.status.collecting.name") + ": "
                     + (int) (0.5F + Math
                             .min(this.tile.lastOxygenCollected * 20F, TileEntityHydroponics.OUTPUT_PER_TICK * 20F))
                     + GCCoreUtil.translate("gui.perSecond");
-            GCCoreUtil.drawStringCentered(status, this.xSize / 2, 70, 4210752, this.fontRendererObj);
+            GCCoreUtil.drawStringCentered(status, this.xSize / 2, 70, 0x404040, this.fontRendererObj);
         }
 
         this.updateTheButton(growStatus);
 
-        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 90 + 2, 4210752);
+        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 90 + 2, 0x404040);
     }
 
     private String getPlantStatus(final float growStatus) {
@@ -215,25 +214,25 @@ public class GuiHydroponics extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(guiTexture);
-        final int var5 = (this.width - this.xSize) / 2;
-        final int var6 = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(var5, var6 + 5, 0, 0, this.xSize, this.ySize);
+        this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
+        final int x = (this.width - this.xSize) / 2;
+        final int y = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(x, y + 5, 0, 0, this.xSize, this.ySize);
 
         if (this.tile != null) {
             int scale = this.tile.getCappedScaledOxygenLevel(54);
-            this.drawTexturedModalRect(var5 + 113, var6 + 25, 197, 7, Math.min(scale, 54), 7);
+            this.drawTexturedModalRect(x + 113, y + 25, 197, 7, Math.min(scale, 54), 7);
             scale = this.tile.getScaledElecticalLevel(54);
-            this.drawTexturedModalRect(var5 + 113, var6 + 38, 197, 0, Math.min(scale, 54), 7);
+            this.drawTexturedModalRect(x + 113, y + 38, 197, 0, Math.min(scale, 54), 7);
 
             if (this.tile.getEnergyStoredGC() > 0) {
-                this.drawTexturedModalRect(var5 + 99, var6 + 37, 176, 0, 11, 10);
+                this.drawTexturedModalRect(x + 99, y + 37, 176, 0, 11, 10);
             }
 
             if (this.tile.storedOxygen > 0) {
-                this.drawTexturedModalRect(var5 + 100, var6 + 24, 187, 0, 10, 10);
+                this.drawTexturedModalRect(x + 100, y + 24, 187, 0, 10, 10);
             }
 
             final List<String> oxygenDesc = new ArrayList<>();

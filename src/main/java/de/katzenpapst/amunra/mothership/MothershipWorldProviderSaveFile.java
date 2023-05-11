@@ -7,7 +7,7 @@ import net.minecraft.world.storage.MapStorage;
 
 public class MothershipWorldProviderSaveFile extends WorldSavedData {
 
-    final static String saveFileId = "mothershipData";
+    final static String SAVE_FILE_ID = "mothershipData";
 
     public NBTTagCompound data = null;
 
@@ -18,22 +18,22 @@ public class MothershipWorldProviderSaveFile extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        this.data = nbt.getCompoundTag("data");
+    public void readFromNBT(NBTTagCompound p_76184_1_) {
+        this.data = p_76184_1_.getCompoundTag("data");
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        nbt.setTag("data", this.data);
+    public void writeToNBT(NBTTagCompound p_76187_1_) {
+        p_76187_1_.setTag("data", this.data);
     }
 
     public static MothershipWorldProviderSaveFile getSaveFile(final World world) {
         final MapStorage storage = world.perWorldStorage;
         MothershipWorldProviderSaveFile result = (MothershipWorldProviderSaveFile) storage
-                .loadData(MothershipWorldProviderSaveFile.class, saveFileId);
+                .loadData(MothershipWorldProviderSaveFile.class, SAVE_FILE_ID);
         if (result == null) {
-            result = new MothershipWorldProviderSaveFile(saveFileId);
-            storage.setData(saveFileId, result);
+            result = new MothershipWorldProviderSaveFile(SAVE_FILE_ID);
+            storage.setData(SAVE_FILE_ID, result);
         }
         return result;
     }

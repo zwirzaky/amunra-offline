@@ -119,22 +119,22 @@ public class AnubisChunkProvider extends AmunraChunkProvider {
     public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {}
 
     @Override
-    public boolean chunkExists(final int x, final int y) {
+    public boolean chunkExists(int p_73149_1_, int p_73149_2_) {
         return true; // ?
     }
 
     @Override
-    public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
-        super.populate(par1IChunkProvider, chunkX, chunkZ);
+    public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_) {
+        super.populate(p_73153_1_, p_73153_2_, p_73153_3_);
 
-        this.gVillage.populate(this, this.worldObj, chunkX, chunkZ);
+        this.gVillage.populate(this, this.worldObj, p_73153_2_, p_73153_3_);
         // this.pyramid.populate(this, worldObj, chunkX, chunkZ);
 
         // this.villageTest.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
     }
 
     @Override
-    public void recreateStructures(final int par1, final int par2) {
+    public void recreateStructures(int p_82695_1_, int p_82695_2_) {
         // this.villageTest.func_151539_a(this, this.worldObj, par1, par2, (Block[]) null);
     }
 

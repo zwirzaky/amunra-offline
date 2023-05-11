@@ -102,8 +102,8 @@ public class SkyProviderDynamic extends IRenderHandler {
     public static final float MOON_AXIS_ANGLE_ASTEROID = 10.0F;
     public static final float MOON_AXIS_ANGLE_DEFAULT = 10.0F;
 
-    protected ArrayList<BodyRenderTask> farBodiesToRender = new ArrayList<>();
-    protected ArrayList<BodyRenderTask> nearBodiesToRender = new ArrayList<>();
+    protected final List<BodyRenderTask> farBodiesToRender = new ArrayList<>();
+    protected final List<BodyRenderTask> nearBodiesToRender = new ArrayList<>();
 
     // angle of the system in the sky
     private static float planetAxisAngle = -19.0F;
@@ -363,7 +363,7 @@ public class SkyProviderDynamic extends IRenderHandler {
     }
 
     @Override
-    public void render(final float partialTicks, final WorldClient world, final Minecraft mc) {
+    public void render(float partialTicks, WorldClient world, Minecraft mc) {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         // RenderHelper.enableStandardItemLighting();

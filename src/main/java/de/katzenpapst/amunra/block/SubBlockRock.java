@@ -8,7 +8,6 @@ import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 /**
  * Subblock which drops some kind of cobble when harvested
- *
  */
 public class SubBlockRock extends SubBlock {
 
@@ -38,12 +37,12 @@ public class SubBlockRock extends SubBlock {
     }
 
     @Override
-    public Item getItemDropped(final int meta, final Random random, final int fortune) {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return Item.getItemFromBlock(this.blockToDrop.getBlock());
     }
 
     @Override
-    public int damageDropped(final int meta) {
+    public int damageDropped(int meta) {
         return this.blockToDrop.getMetadata();
     }
 

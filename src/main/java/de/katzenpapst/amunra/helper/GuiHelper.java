@@ -72,14 +72,9 @@ public class GuiHelper {
 
     /**
      * Specialized version to format kilograms, because it's weird
-     * 
-     * @param number
-     * @return
      */
     public static String formatKilogram(final double number) {
-
         return formatKilogram(number, false);
-
     }
 
     public static String formatKilogram(final double number, final boolean addSpace) {
@@ -97,9 +92,6 @@ public class GuiHelper {
 
     /**
      * Formats a time (in ticks) to a hh:mm:ss format, with minecraft hours, minutes and seconds
-     * 
-     * @param number
-     * @return
      */
     public static String formatTime(final long number) {
         return formatTime(number, false);
@@ -107,10 +99,6 @@ public class GuiHelper {
 
     /**
      * Formats a time, and optionally a date, too, if the time is too high
-     * 
-     * @param number
-     * @param formatDate
-     * @return
      */
     public static String formatTime(final long number, final boolean formatDate) {
 
@@ -159,9 +147,6 @@ public class GuiHelper {
 
     /**
      * Converts a speed from AU/t into AU/h and formats the number
-     *
-     * @param number
-     * @return
      */
     public static String formatSpeed(final double number) {
         // which is rather simple, since one MC hour is 1000 ticks
@@ -192,11 +177,8 @@ public class GuiHelper {
     }
 
     /**
-     * Equivalent to micdoodle8.mods.galacticraft.core.util.GCCoreUtil.translateWithSplit(String), but will also add a
+     * Equivalent to {@link GCCoreUtil#translateWithSplit(String)}, but will also add a
      * colorcode to every line
-     * 
-     * @param key
-     * @return
      */
     public static List<String> translateWithSplitColor(final String key, final EnumColor color) {
         String translated = StatCollector.translateToLocal(key);

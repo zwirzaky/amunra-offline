@@ -6,7 +6,6 @@ import net.minecraft.world.World;
  * Interface for blocks to return a mass
  * 
  * @author katzenpapst
- *
  */
 public interface IMassiveBlock {
 

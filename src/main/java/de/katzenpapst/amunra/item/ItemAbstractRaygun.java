@@ -41,64 +41,49 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
         return true;
     }
 
-    /**
-     * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
-     */
-
     @Override
-    public void onPlayerStoppedUsing(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer,
-            final int itemInUseCount) {
+    public void onPlayerStoppedUsing(ItemStack p_77615_1_, World p_77615_2_, EntityPlayer p_77615_3_, int p_77615_4_) {
         if (!this.chargeMode) {
             return;
         }
         // int j = this.getMaxItemUseDuration(itemStack) - itemInUseCount;
 
-        this.fire(itemStack, entityPlayer, world);
+        this.fire(p_77615_1_, p_77615_3_, p_77615_2_);
     }
 
-    /**
-     * How long it takes to use or consume an item
-     */
-
     @Override
-    public int getMaxItemUseDuration(final ItemStack itemStack) {
+    public int getMaxItemUseDuration(ItemStack p_77626_1_) {
         return 72000;
     }
 
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
     @Override
-    public EnumAction getItemUseAction(final ItemStack stack) {
+    public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.bow;
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
     @Override
-    public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player) {
         /*
          * ArrowNockEvent event = new ArrowNockEvent(entityPlayer, itemStack); MinecraftForge.EVENT_BUS.post(event); if
          * (event.isCanceled()) { return event.result; }
          */
-        if (entityPlayer.capabilities.isCreativeMode
-                || this.getElectricityStored(itemStack) >= this.getEnergyPerShot()) {
+        if (player.capabilities.isCreativeMode
+                || this.getElectricityStored(itemStackIn) >= this.getEnergyPerShot()) {
 
-            entityPlayer.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+            player.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
             if (!this.chargeMode) {
-                this.fire(itemStack, entityPlayer, world);
+                this.fire(itemStackIn, player, worldIn);
             }
-        } else if (!world.isRemote) {
-            world.playSoundAtEntity(
-                    entityPlayer,
+        } else if (!worldIn.isRemote) {
+            worldIn.playSoundAtEntity(
+                    player,
                     this.getEmptySound(),
                     1.0F,
                     1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + 0.5F);
 
         }
 
-        return itemStack;
+        return itemStackIn;
     }
 
     public float getEnergyPerShot() {
@@ -152,9 +137,6 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
     abstract protected EntityBaseLaserArrow createProjectile(ItemStack itemStack, EntityPlayer entityPlayer,
             World world);
 
-    /**
-     * Return the enchantability factor of the item, most of the time is based on material.
-     */
     @Override
     public int getItemEnchantability() {
         return 0;
@@ -162,14 +144,13 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(final IIconRegister iconRegister) {
-        this.itemIcon = iconRegister.registerIcon(this.getIconString());
+    public void registerIcons(IIconRegister register) {
+        this.itemIcon = register.registerIcon(this.getIconString());
         // this.itemEmptyIcon = iconRegister.registerIcon(this.getIconString() + "_empty");
     }
 
     @Override
-    public IIcon getIcon(final ItemStack stack, final int renderPass, final EntityPlayer player,
-            final ItemStack usingItem, final int useRemaining) {
+    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
         return super.getIcon(stack, renderPass, player, usingItem, useRemaining);
 
         /*

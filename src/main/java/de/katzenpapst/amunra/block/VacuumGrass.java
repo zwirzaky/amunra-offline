@@ -12,42 +12,23 @@ public class VacuumGrass extends SubBlockGrass {
 
     // blockIcon = 0 = top
     @SideOnly(Side.CLIENT)
-    protected IIcon blockIconSide;
-    @SideOnly(Side.CLIENT)
-    protected IIcon blockIconBottom;
+    protected IIcon blockIconSide, blockIconBottom;
 
     public VacuumGrass(final String name, final String textureTop, final String textureSide,
             final String textureBottom) {
         super(name, textureTop, textureSide, textureBottom);
     }
 
-    /**
-     * Return the block what this should revert to if the conditions are bad
-     * 
-     * @return
-     */
     @Override
     public BlockMetaPair getDirtBlock() {
         return ARBlocks.blockMethaneDirt;
     }
 
-    /**
-     * Return true if the current conditions are good for this grasses survival, usually light stuff The Multiblock will
-     * replace it with this.getDirtBlock() Will also be called for dirt neighbors of this in order to check if this
-     * *could* live there
-     *
-     * @param world
-     * @param x
-     * @param y
-     * @param z
-     * @return
-     */
     @Override
     public boolean canLiveHere(final World world, final int x, final int y, final int z) {
-
-        return world.provider instanceof WorldProviderSpace
-                && ((WorldProviderSpace) world.provider).getCelestialBody() != null
-                && ((WorldProviderSpace) world.provider).getCelestialBody().atmosphere.isEmpty()
+        return world.provider instanceof WorldProviderSpace spaceProvider
+                && spaceProvider.getCelestialBody() != null
+                && spaceProvider.getCelestialBody().atmosphere.isEmpty()
                 && super.canLiveHere(world, x, y, z);
 
     }

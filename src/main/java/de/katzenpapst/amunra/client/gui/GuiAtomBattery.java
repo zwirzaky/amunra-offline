@@ -23,7 +23,7 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiAtomBattery extends GuiContainerGC {
 
-    private static final ResourceLocation solarGuiTexture = new ResourceLocation(
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/gui/atomgenerator.png");
 
@@ -35,7 +35,7 @@ public class GuiAtomBattery extends GuiContainerGC {
             (this.height - this.ySize) / 2 + 101,
             56,
             9,
-            new ArrayList<String>(),
+            new ArrayList<>(),
             this.width,
             this.height,
             this);
@@ -48,8 +48,8 @@ public class GuiAtomBattery extends GuiContainerGC {
     }
 
     @Override
-    protected void actionPerformed(final GuiButton par1GuiButton) {
-        switch (par1GuiButton.id) {
+    protected void actionPerformed(GuiButton button) {
+        switch (button.id) {
             case 0:
                 GalacticraftCore.packetPipeline.sendToServer(
                         new PacketSimple(
@@ -101,7 +101,7 @@ public class GuiAtomBattery extends GuiContainerGC {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         final int offsetY = 35;
         this.buttonEnableSolar.enabled = this.generatorTile.disableCooldown == 0;
         this.buttonEnableSolar.displayString = !this.generatorTile.getDisabled(0)
@@ -112,7 +112,7 @@ public class GuiAtomBattery extends GuiContainerGC {
                 displayString,
                 this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2,
                 7,
-                4210752);
+                0x404040);
 
         displayString = GCCoreUtil.translate("gui.message.generating.name") + ": "
                 + (this.generatorTile.generateWatts > 0
@@ -122,7 +122,7 @@ public class GuiAtomBattery extends GuiContainerGC {
                 displayString,
                 this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2,
                 45 + 23 - 46 + offsetY,
-                4210752);
+                0x404040);
 
         /* TODO maybe make the temperature a boost? the colder the better? */
         final float boost = Math.round((this.generatorTile.getEnvironmentalEnergyBoost() - 1) * 1000) / 10.0F;
@@ -131,15 +131,15 @@ public class GuiAtomBattery extends GuiContainerGC {
                 displayString,
                 this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2,
                 56 + 23 - 46 + offsetY,
-                4210752);
+                0x404040);
 
-        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 4210752);
+        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 94, 0x404040);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(solarGuiTexture);
+        this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
         final int xPos = (this.width - this.xSize) / 2;
         final int yPos = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(xPos, yPos, 0, 0, this.xSize, this.ySize);

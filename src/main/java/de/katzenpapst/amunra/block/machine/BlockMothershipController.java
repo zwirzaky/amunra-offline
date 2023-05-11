@@ -25,26 +25,21 @@ public class BlockMothershipController extends AbstractBlockMothershipRestricted
         this.frontTexture = frontTexture;
     }
 
-    /**
-     *
-     * @param side
-     * @return
-     */
     public static boolean isSideEnergyOutput(final int side) {
         // wait, wat?
         return false;
     }
 
     @Override
-    public void registerBlockIcons(final IIconRegister par1IconRegister) {
-        super.registerBlockIcons(par1IconRegister);
-        this.iconFront = par1IconRegister.registerIcon(this.frontTexture);
-        // this.blockIcon = iconFront;
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister reg) {
+        super.registerBlockIcons(reg);
+        this.iconFront = reg.registerIcon(this.frontTexture);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, int meta) {
         final int realMeta = ((BlockMachineMeta) this.parent).getRotationMeta(meta);
         // we have the front thingy at front.. but what is front?
         // east is the output
@@ -55,21 +50,11 @@ public class BlockMothershipController extends AbstractBlockMothershipRestricted
         if (side == front.ordinal()) {
             return this.iconFront;
         }
-
         return this.blockIcon;
-
     }
 
-    /**
-     * Called throughout the code as a replacement for ITileEntityProvider.createNewTileEntity Return the same thing you
-     * would from that function. This will fall back to ITileEntityProvider.createNewTileEntity(World) if this block is
-     * a ITileEntityProvider
-     *
-     * @param metadata The Metadata of the current block
-     * @return A instance of a class extending TileEntity
-     */
     @Override
-    public TileEntity createTileEntity(final World world, final int metadata) {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityMothershipController();
     }
 

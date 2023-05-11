@@ -13,7 +13,7 @@ import de.katzenpapst.amunra.client.BlockRenderHelper;
 
 public class ModelHydroponics {
 
-    private final ResourceLocation texture = new ResourceLocation(
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/blocks/hydroponics2.png");
 
@@ -22,7 +22,7 @@ public class ModelHydroponics {
     public void render(final Tessellator tess, final float growthStatus, final boolean connectNorth,
             final boolean connectSouth, final boolean connectWest, final boolean connectEast) {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE);
 
         // block render stuff
         BlockRenderHelper.renderFaceYNeg(tess, 0, 0, 0.25, 0.5, false);

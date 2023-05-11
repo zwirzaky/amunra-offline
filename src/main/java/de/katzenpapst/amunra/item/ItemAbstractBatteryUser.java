@@ -32,7 +32,7 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
     }
 
     @Override
-    public void onCreated(final ItemStack itemStack, final World par2World, final EntityPlayer par3EntityPlayer) {
+    public void onCreated(ItemStack p_77622_1_, World p_77622_2_, EntityPlayer p_77622_3_) {
         // important NOT to call the parent for this, because there are crafting recipes
         // which create non-empty rayguns
         // this.setElectricity(itemStack, 0);
@@ -43,7 +43,6 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
      *
      * @param theItem   The ItemAbstractBatteryUser ItemStack
      * @param setEnergy if true, the result itemstack will also have the energy of the current battery user
-     * @return
      */
     public ItemStack getUsedBattery(final ItemStack theItem, final boolean setEnergy) {
         if (theItem.getTagCompound() == null) {
@@ -72,9 +71,6 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
 
     /**
      * Set the battery to use for this BU. also sets the BU's energy level to that of the battery
-     *
-     * @param theItem
-     * @param battery
      */
     public void setUsedBattery(final ItemStack theItem, final ItemStack battery) {
         if (theItem.getTagCompound() == null) {
@@ -102,10 +98,9 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
     }
 
     @Override
-    public void onUpdate(final ItemStack stack, final World world, final Entity entity, final int stackNumber,
-            final boolean isBeingHeld) {
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int p_77663_4_, boolean p_77663_5_) {
         final ItemStack battery = this.getUsedBattery(stack, true);
-        battery.getItem().onUpdate(battery, world, entity, stackNumber, isBeingHeld);
+        battery.getItem().onUpdate(battery, worldIn, entityIn, p_77663_4_, p_77663_5_);
         // do I write the battery back in?
         // I'm somewhat afraid regarding the efficiency of this
         // this.setUsedBattery(stack, battery);
@@ -113,18 +108,17 @@ public class ItemAbstractBatteryUser extends ItemElectricBase {
         this.setElectricity(stack, ((ItemElectricBase) battery.getItem()).getElectricityStored(battery));
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list,
-            final boolean par4) {
-        super.addInformation(itemStack, entityPlayer, list, par4);
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, @SuppressWarnings("rawtypes") List p_77624_3_, boolean p_77624_4_) {
+        super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
 
-        final Item batItem = this.getUsedBatteryID(itemStack);
+        final Item batItem = this.getUsedBatteryID(p_77624_1_);
         //
         final String s = StatCollector.translateToLocal("item.battery-using-item.powerlevel") + ": "
                 + StatCollector.translateToLocal(batItem.getUnlocalizedName() + ".name");
 
-        list.add(s);
+        p_77624_3_.add(s);
     }
 
 }

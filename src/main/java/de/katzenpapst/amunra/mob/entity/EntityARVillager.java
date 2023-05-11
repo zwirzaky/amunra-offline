@@ -42,7 +42,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     private EntityPlayer buyingPlayer;
     private MerchantRecipeList buyingList;
     private int wealth;
-    private boolean field_82190_bM;
+    private boolean isLookingForHome;
 
     public EntityARVillager(final World par1World) {
         super(par1World);
@@ -70,17 +70,11 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
     }
 
-    /**
-     * Returns true if the newer Entity AI code should be run
-     */
     @Override
     public boolean isAIEnabled() {
         return true;
     }
 
-    /**
-     * main AI tick function, replaces updateEntityActionState
-     */
     @Override
     protected void updateAITick() {
         if (--this.randomTickDivider <= 0) {
@@ -105,8 +99,8 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
                         chunkcoordinates.posZ,
                         (int) (this.villageObj.getVillageRadius() * 0.6F));
 
-                if (this.field_82190_bM) {
-                    this.field_82190_bM = false;
+                if (this.isLookingForHome) {
+                    this.isLookingForHome = false;
                     this.villageObj.setDefaultPlayerReputation(5);
                 }
             }
@@ -122,62 +116,50 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     }
 
     @Override
-    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("Profession", this.getProfession());
-        par1NBTTagCompound.setInteger("Riches", this.wealth);
+    public void writeEntityToNBT(NBTTagCompound tagCompound) {
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("Profession", this.getProfession());
+        tagCompound.setInteger("Riches", this.wealth);
 
         if (this.buyingList != null) {
-            par1NBTTagCompound.setTag("Offers", this.buyingList.getRecipiesAsTags());
+            tagCompound.setTag("Offers", this.buyingList.getRecipiesAsTags());
         }
     }
 
     @Override
-    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-        this.setProfession(par1NBTTagCompound.getInteger("Profession"));
-        this.wealth = par1NBTTagCompound.getInteger("Riches");
+    public void readEntityFromNBT(NBTTagCompound tagCompund) {
+        super.readEntityFromNBT(tagCompund);
+        this.setProfession(tagCompund.getInteger("Profession"));
+        this.wealth = tagCompund.getInteger("Riches");
 
-        if (par1NBTTagCompound.hasKey("Offers")) {
-            final NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("Offers");
+        if (tagCompund.hasKey("Offers")) {
+            final NBTTagCompound nbttagcompound1 = tagCompund.getCompoundTag("Offers");
             this.buyingList = new MerchantRecipeList(nbttagcompound1);
         }
     }
 
-    /**
-     * Determines if an entity can be despawned, used on idle far away entities
-     */
     @Override
     protected boolean canDespawn() {
         return false;
     }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
     @Override
     protected String getLivingSound() {
         return "mob.villager.idle";
     }
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
     @Override
     protected String getHurtSound() {
         return "mob.villager.hit";
     }
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
     @Override
     protected String getDeathSound() {
         return "mob.villager.death";
     }
 
     public void setProfession(final int par1) {
-        this.dataWatcher.updateObject(16, Integer.valueOf(par1));
+        this.dataWatcher.updateObject(16, par1);
     }
 
     public int getProfession() {
@@ -201,20 +183,20 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
     }
 
     @Override
-    public void setRevengeTarget(final EntityLivingBase par1EntityLiving) {
-        super.setRevengeTarget(par1EntityLiving);
+    public void setRevengeTarget(EntityLivingBase p_70604_1_) {
+        super.setRevengeTarget(p_70604_1_);
 
-        if (this.villageObj != null && par1EntityLiving != null) {
-            this.villageObj.addOrRenewAgressor(par1EntityLiving);
+        if (this.villageObj != null && p_70604_1_ != null) {
+            this.villageObj.addOrRenewAgressor(p_70604_1_);
 
-            if (par1EntityLiving instanceof EntityPlayer) {
+            if (p_70604_1_ instanceof EntityPlayer player) {
                 byte b0 = -1;
 
                 if (this.isChild()) {
                     b0 = -3;
                 }
 
-                this.villageObj.setReputationForPlayer(((EntityPlayer) par1EntityLiving).getCommandSenderName(), b0);
+                this.villageObj.setReputationForPlayer(player.getCommandSenderName(), b0);
 
                 if (this.isEntityAlive()) {
                     this.worldObj.setEntityState(this, (byte) 13);
@@ -223,17 +205,14 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         }
     }
 
-    /**
-     * Called when the mob's health reaches 0.
-     */
     @Override
-    public void onDeath(final DamageSource par1DamageSource) {
+    public void onDeath(DamageSource p_70645_1_) {
         if (this.villageObj != null) {
-            final Entity entity = par1DamageSource.getEntity();
+            final Entity entity = p_70645_1_.getEntity();
 
             if (entity != null) {
-                if (entity instanceof EntityPlayer) {
-                    this.villageObj.setReputationForPlayer(((EntityPlayer) entity).getCommandSenderName(), -2);
+                if (entity instanceof EntityPlayer player) {
+                    this.villageObj.setReputationForPlayer(player.getCommandSenderName(), -2);
                 } else if (entity instanceof IMob) {
                     this.villageObj.endMatingSeason();
                 }
@@ -246,7 +225,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
             }
         }
 
-        super.onDeath(par1DamageSource);
+        super.onDeath(p_70645_1_);
     }
 
     public void setCustomer(final EntityPlayer par1EntityPlayer) {
@@ -271,8 +250,8 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(final byte par1) {
-        switch (par1) {
+    public void handleHealthUpdate(byte p_70103_1_) {
+        switch (p_70103_1_) {
             case 12:
                 this.generateRandomParticles("heart");
                 break;
@@ -283,7 +262,7 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
                 this.generateRandomParticles("happyVillager");
                 break;
             default:
-                super.handleHealthUpdate(par1);
+                super.handleHealthUpdate(p_70103_1_);
                 break;
         }
     }
@@ -305,8 +284,8 @@ public class EntityARVillager extends EntityAgeable implements IEntityBreathable
         }
     }
 
-    public void func_82187_q() {
-        this.field_82190_bM = true;
+    public void setLookingForHome() {
+        this.isLookingForHome = true;
     }
 
     public EntityARVillager func_90012_b(final EntityAgeable par1EntityAgeable) {

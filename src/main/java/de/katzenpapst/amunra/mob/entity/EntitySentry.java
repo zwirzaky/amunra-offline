@@ -35,7 +35,7 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
     }
 
     @Override
-    protected void performAttack(final Entity target, final double accelX, final double accelY, final double accelZ) {
+    protected void performAttack(Entity target, double accelX, double accelY, double accelZ) {
 
         // EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.worldObj, this, startX, startY,
         // startZ);
@@ -67,23 +67,17 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
         return null;
     }
 
-    /**
-     * Drop 0-2 items of this living's type.
-     * 
-     * @param hitByPlayer - Whether this entity has recently been hit by a player.
-     * @param lootLevel   - Level of Looting used to kill this mob.
-     */
     @Override
-    protected void dropFewItems(final boolean hitByPlayer, final int lootLevel) {
+    protected void dropFewItems(boolean p_70628_1_, int p_70628_2_) {
 
         for (ItemDamagePair element : this.commonLoot) {
-            final int numItems = this.rand.nextInt(2) + this.rand.nextInt(1 + lootLevel);
+            final int numItems = this.rand.nextInt(2) + this.rand.nextInt(1 + p_70628_2_);
 
             this.entityDropItem(element.getItemStack(numItems), 0.0F);
         }
 
-        if (hitByPlayer && lootLevel >= 2) {
-            final double probability = (lootLevel - 1.0) * 0.05;
+        if (p_70628_1_ && p_70628_2_ >= 2) {
+            final double probability = (p_70628_2_ - 1.0) * 0.05;
             for (ItemDamagePair element : this.rareLoot) {
                 if (this.rand.nextDouble() < probability) {
                     this.entityDropItem(element.getItemStack(1), 0.0F);
@@ -106,25 +100,16 @@ public class EntitySentry extends EntityFlyingMob implements IEntityBreathable {
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(5.0D);
     }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
     @Override
     protected String getLivingSound() {
         return AmunRa.TEXTUREPREFIX + "mob.sentryblock.idle";
     }
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
     @Override
     protected String getHurtSound() {
         return AmunRa.TEXTUREPREFIX + "mob.sentryblock.hit";
     }
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
     @Override
     protected String getDeathSound() {
         return AmunRa.TEXTUREPREFIX + "mob.sentryblock.death";

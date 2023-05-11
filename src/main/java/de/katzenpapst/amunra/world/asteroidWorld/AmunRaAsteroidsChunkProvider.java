@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -56,7 +58,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         }
     }
 
-    protected HashMap<BlockMetaPair, Integer> extraOreGen;
+    protected Map<BlockMetaPair, Integer> extraOreGen = new HashMap<>();
 
     protected BlockMetaPair[] asteroidStoneBlocks;
 
@@ -114,8 +116,8 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     private static final int TALL_GRASS_CHANCE = 2;
     private static final int GLOWSTONE_CHANCE = 20;
 
-    private final ArrayList<AsteroidData> largeAsteroids = new ArrayList<>();
-    private static HashSet<BlockVec3> chunksDone = new HashSet<>();
+    private final List<AsteroidData> largeAsteroids = new ArrayList<>();
+    private static final Set<BlockVec3> CHUNKS_DONE = new HashSet<>();
     private int largeAsteroidsLastChunkX;
     private int largeAsteroidsLastChunkZ;
 
@@ -124,7 +126,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         this.worldObj = world;
         this.rand = new Random(seed);
 
-        this.extraOreGen = new HashMap<>();
         this.asteroidStoneBlocks = new BlockMetaPair[] { new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 0),
                 new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 1),
                 new BlockMetaPair(AsteroidBlocks.blockBasic, (byte) 2) };
@@ -207,7 +208,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     public void generateTerrain(final int chunkX, final int chunkZ, final Block[] idArray, final byte[] metaArray,
             final boolean flagDataOnly) {
         this.largeAsteroids.clear();
-        int largeCount = 0;
         final Random random = new Random();
         final int asteroidChance = ASTEROID_CHANCE;
         final int rangeY = MAX_ASTEROID_Y - MIN_ASTEROID_Y;
@@ -243,7 +243,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                                     idArray,
                                     metaArray,
                                     flagDataOnly);
-                            largeCount++;
                         }
                     }
                 }
@@ -503,18 +502,18 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     @Override
-    public Chunk provideChunk(final int chunkX, final int chunkZ) {
+    public Chunk provideChunk(int p_73154_1_, int p_73154_2_) {
         // long time1 = System.nanoTime();
-        this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
+        this.rand.setSeed(p_73154_1_ * 341873128712L + p_73154_2_ * 132897987541L);
         final Block[] ids = new Block[65536];
         final byte[] meta = new byte[65536];
-        this.generateTerrain(chunkX, chunkZ, ids, meta, false);
+        this.generateTerrain(p_73154_1_, p_73154_2_, ids, meta, false);
         // this.biomesForGeneration =
         // this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, par1 * 16, par2 * 16,
         // 16, 16);
 
         // long time2 = System.nanoTime();
-        final Chunk curChunk = new Chunk(this.worldObj, ids, meta, chunkX, chunkZ);
+        final Chunk curChunk = new Chunk(this.worldObj, ids, meta, p_73154_1_, p_73154_2_);
         final byte[] chunkBiomeArray = curChunk.getBiomeArray();
 
         for (int i = 0; i < chunkBiomeArray.length; ++i) {
@@ -522,7 +521,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         }
 
         // long time3 = System.nanoTime();
-        this.generateSkylightMap(curChunk, chunkX, chunkZ);
+        this.generateSkylightMap(curChunk, p_73154_1_, p_73154_2_);
         // long time4 = System.nanoTime();
         // if (ConfigManagerCore.enableDebug)
         // {
@@ -558,19 +557,14 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     @Override
-    public boolean chunkExists(final int par1, final int par2) {
+    public boolean chunkExists(int p_73149_1_, int p_73149_2_) {
         return true;
     }
 
     /**
-     *
-     * @param world
-     * @param x         start x
-     * @param y
-     * @param z
+     * @param x start x
      * @param maxLength how far to look max
-     * @param isAir     if true, counts air blocks, if false, counts the NOT airblocks
-     * @return
+     * @param isAir if true, counts air blocks, if false, counts the NOT airblocks
      */
     protected int getCountInNegXDirection(final IChunkProvider world, final int x, final int y, final int z,
             final int maxLength, final boolean isAir) {
@@ -587,10 +581,10 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     @Override
-    public void populate(final IChunkProvider par1IChunkProvider, final int chunkX, final int chunkZ) {
-        final int x = chunkX << 4;
-        final int z = chunkZ << 4;
-        if (!chunksDone.add(new BlockVec3(x, 0, z))) return;
+    public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_) {
+        final int x = p_73153_2_ << 4;
+        final int z = p_73153_3_ << 4;
+        if (!CHUNKS_DONE.add(new BlockVec3(x, 0, z))) return;
 
         BlockFalling.fallInstantly = true;
         this.worldObj.getBiomeGenForCoords(x + 16, z + 16);
@@ -599,12 +593,12 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         this.rand.setSeed(this.worldObj.getSeed());
         final long var7 = this.rand.nextLong() / 2L * 2L + 1L;
         final long var9 = this.rand.nextLong() / 2L * 2L + 1L;
-        this.rand.setSeed(chunkX * var7 + chunkZ * var9 ^ this.worldObj.getSeed());
+        this.rand.setSeed(p_73153_2_ * var7 + p_73153_3_ * var9 ^ this.worldObj.getSeed());
 
         // 50:50 chance to include small blocks each chunk
         if (this.rand.nextBoolean()) {
-            final double density = this.asteroidDensity.getNoise(chunkX * 16, chunkZ * 16) * 0.54;
-            final double numOfBlocks = this.clamp(this.randFromPoint(chunkX, chunkZ), .4, 1) * MAX_BLOCKS_PER_CHUNK
+            final double density = this.asteroidDensity.getNoise(p_73153_2_ * 16, p_73153_3_ * 16) * 0.54;
+            final double numOfBlocks = this.clamp(this.randFromPoint(p_73153_2_, p_73153_3_), .4, 1) * MAX_BLOCKS_PER_CHUNK
                     * density + MIN_BLOCKS_PER_CHUNK;
             final int y0 = this.rand.nextInt(2);
             Block block;
@@ -651,11 +645,11 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
             }
         }
 
-        if (this.largeAsteroidsLastChunkX != chunkX || this.largeAsteroidsLastChunkZ != chunkZ) {
-            this.generateTerrain(chunkX, chunkZ, null, null, true);
+        if (this.largeAsteroidsLastChunkX != p_73153_2_ || this.largeAsteroidsLastChunkZ != p_73153_3_) {
+            this.generateTerrain(p_73153_2_, p_73153_3_, null, null, true);
         }
 
-        this.rand.setSeed(chunkX * var7 + chunkZ * var9 ^ this.worldObj.getSeed());
+        this.rand.setSeed(p_73153_2_ * var7 + p_73153_3_ * var9 ^ this.worldObj.getSeed());
 
         // Look for hollow asteroids to populate
         if (!this.largeAsteroids.isEmpty()) {
@@ -857,9 +851,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
 
     /**
      * higher values = lighter dimension. Probably should not exceed 12
-     * 
-     * @param count
-     * @return
      */
     protected int adjustBrightnessValue(int count) {
         count += 2;
@@ -870,7 +861,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     @Override
-    public boolean saveChunks(final boolean par1, final IProgressUpdate par2IProgressUpdate) {
+    public boolean saveChunks(boolean p_73151_1_, IProgressUpdate p_73151_2_) {
         return true;
     }
 
@@ -885,8 +876,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     }
 
     @Override
-    public List<SpawnListEntry> getPossibleCreatures(final EnumCreatureType creatureType, final int x, final int y,
-            final int z) {
+    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_, int p_73155_4_) {
         return null;
     }
 

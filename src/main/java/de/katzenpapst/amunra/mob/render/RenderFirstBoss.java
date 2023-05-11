@@ -14,7 +14,7 @@ import de.katzenpapst.amunra.mob.model.ModelFirstBoss;
 
 public class RenderFirstBoss extends RenderBiped {
 
-    private static final ResourceLocation zombieTextures = new ResourceLocation(
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/entity/mummy.png");
 
@@ -23,20 +23,19 @@ public class RenderFirstBoss extends RenderBiped {
     }
 
     @Override
-    protected void preRenderCallback(final EntityLivingBase par1EntityLiving, final float par2) {
+    protected void preRenderCallback(EntityLivingBase p_77041_1_, float p_77041_2_) {
         GL11.glScalef(2.5F, 2.5F, 2.5F);
     }
 
     @Override
-    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6,
-            final float par8, final float par9) {
-        BossStatus.setBossStatus((IBossDisplayData) par1EntityLiving, false);
+    public void doRender(EntityLiving p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {
+        BossStatus.setBossStatus((IBossDisplayData) p_76986_1_, false);
 
-        super.doRender(par1EntityLiving, par2, par4, par6, par8, par9);
+        super.doRender(p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(final EntityLiving e) {
-        return zombieTextures;
+    protected ResourceLocation getEntityTexture(EntityLiving p_110775_1_) {
+        return TEXTURE;
     }
 }

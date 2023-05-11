@@ -21,18 +21,16 @@ public class ItemTricorder extends SubItem {
 
     public ItemTricorder(final String name, final String assetName) {
         super(name, assetName);
-        // TODO Auto-generated constructor stub
     }
 
     public ItemTricorder(final String name, final String assetName, final String info) {
         super(name, assetName, info);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
-    public ItemStack onItemRightClick(final ItemStack stack, final World world, final EntityPlayer player) {
-        if (!world.isRemote) {
-            return stack;
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player) {
+        if (!worldIn.isRemote) {
+            return itemStackIn;
         }
         // god, sometimes I hate java...
         final DecimalFormat twoDForm = new DecimalFormat("#.##");
@@ -43,27 +41,27 @@ public class ItemTricorder extends SubItem {
         int dayLength = -1;
         final List<String> atmospheres = new ArrayList<>();
         // do stuff
-        if (world.provider instanceof IGalacticraftWorldProvider) {
-            gravity = ((IGalacticraftWorldProvider) world.provider).getGravity();
+        if (worldIn.provider instanceof IGalacticraftWorldProvider) {
+            gravity = ((IGalacticraftWorldProvider) worldIn.provider).getGravity();
             // convert
             gravity = 1.0F - gravity / 0.08F;
-            thermalLevel = ((IGalacticraftWorldProvider) world.provider).getThermalLevelModifier();
+            thermalLevel = ((IGalacticraftWorldProvider) worldIn.provider).getThermalLevelModifier();
             // solarLevel = ((IGalacticraftWorldProvider)world.provider).getSolarSize()
             // dayLength = ((IGalacticraftWorldProvider)world.provider).get
             // ((IGalacticraftWorldProvider)world.provider).isGasPresent(gas)
         }
 
-        if (world.provider instanceof ISolarLevel) {
-            solarLevel = ((ISolarLevel) world.provider).getSolarEnergyMultiplier();
+        if (worldIn.provider instanceof ISolarLevel) {
+            solarLevel = ((ISolarLevel) worldIn.provider).getSolarEnergyMultiplier();
         }
 
-        if (world.provider instanceof WorldProviderSpace) {
-            dayLength = (int) ((WorldProviderSpace) world.provider).getDayLength();
-            final CelestialBody curBody = ((WorldProviderSpace) world.provider).getCelestialBody();
+        if (worldIn.provider instanceof WorldProviderSpace) {
+            dayLength = (int) ((WorldProviderSpace) worldIn.provider).getDayLength();
+            final CelestialBody curBody = ((WorldProviderSpace) worldIn.provider).getCelestialBody();
             for (final IAtmosphericGas gas : curBody.atmosphere) {
                 atmospheres.add(GuiHelper.getGasName(gas));
             }
-        } else if (world.provider.dimensionId == 0) {
+        } else if (worldIn.provider.dimensionId == 0) {
             dayLength = 24000;
             for (final IAtmosphericGas gas : GalacticraftCore.planetOverworld.atmosphere) {
                 atmospheres.add(GuiHelper.getGasName(gas));
@@ -120,7 +118,7 @@ public class ItemTricorder extends SubItem {
          */
 
         // player.addChatComponentMessage(p_146105_1_);
-        return stack;
+        return itemStackIn;
     }
 
 }

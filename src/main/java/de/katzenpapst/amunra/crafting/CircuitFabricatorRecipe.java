@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
  * Helper for NEI and stuff
  * 
  * @author katzenpapst
- *
  */
 public class CircuitFabricatorRecipe {
 

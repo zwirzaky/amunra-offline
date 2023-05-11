@@ -14,18 +14,13 @@ import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 
 public class RenderHydroponics extends TileEntitySpecialRenderer {
 
-    private final ModelHydroponics model;
-
-    public RenderHydroponics() {
-        this.model = new ModelHydroponics();
-    }
+    private final ModelHydroponics model = new ModelHydroponics();
 
     @Override
-    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z,
-            final float partialTicks) {
-        if (te instanceof TileEntityHydroponics tile) {
+    public void renderTileEntityAt(TileEntity p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_) {
+        if (p_147500_1_ instanceof TileEntityHydroponics tile) {
             GL11.glPushMatrix();
-            GL11.glTranslatef((float) x, (float) y, (float) z);
+            GL11.glTranslated(p_147500_2_, p_147500_4_, p_147500_6_);
 
             final TileEntity[] connections = OxygenUtil.getAdjacentOxygenConnections(tile);
 

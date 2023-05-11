@@ -379,9 +379,6 @@ public class Mothership extends CelestialBody {
 
     /**
      * Finds mothership-able bodies by galacticraft body name, aka the english name...
-     *
-     * @param bodyName
-     * @return
      */
     public static CelestialBody findBodyByGCBodyName(final String bodyName) {
         final Collection<SolarSystem> sysList = GalaxyRegistry.getRegisteredSolarSystems().values();
@@ -400,12 +397,6 @@ public class Mothership extends CelestialBody {
         return GalaxyRegistry.getRegisteredMoons().get(bodyName);
     }
 
-    /**
-     * Automatically
-     * 
-     * @param str
-     * @return
-     */
     public static CelestialBody findBodyByString(final String str) {
         if (str.contains(nameSeparator)) {
             return findBodyByNamePath(str);
@@ -480,8 +471,6 @@ public class Mothership extends CelestialBody {
 
     /**
      * "Settings" are things which a player can change
-     * 
-     * @param data
      */
     public void readSettingsFromNBT(final NBTTagCompound data) {
         if (data.hasKey("bodyIcon")) {
@@ -560,9 +549,6 @@ public class Mothership extends CelestialBody {
 
     /**
      * Returns whenever the given player is the owner of this mothership
-     *
-     * @param player
-     * @return
      */
     public boolean isPlayerOwner(final EntityPlayer player) {
         return this.owner.isSameUser(player);
@@ -570,9 +556,6 @@ public class Mothership extends CelestialBody {
 
     /**
      * Returns whenever the given player is the owner of this mothership
-     *
-     * @param player
-     * @return
      */
     public boolean isPlayerOwner(final PlayerID player) {
         return this.owner.equals(player);
@@ -589,9 +572,6 @@ public class Mothership extends CelestialBody {
 
     /**
      * Returns whenever the given player is permitted to land on this mothership
-     *
-     * @param player
-     * @return
      */
     public boolean isPlayerLandingPermitted(final EntityPlayer player) {
 

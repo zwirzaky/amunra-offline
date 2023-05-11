@@ -45,10 +45,10 @@ public class PlayerID {
 
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof PlayerID)) {
+        if (!(other instanceof PlayerID playerID)) {
             return false;
         }
-        return ((PlayerID) other).userUUID.equals(this.userUUID);
+        return playerID.userUUID.equals(this.userUUID);
     }
 
     @Override

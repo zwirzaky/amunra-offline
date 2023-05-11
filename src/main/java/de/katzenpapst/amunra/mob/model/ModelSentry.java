@@ -67,41 +67,31 @@ public class ModelSentry extends ModelBase {
         model.rotateAngleZ = z;
     }
 
-    /**
-     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
-     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
-     * "far" arms and legs can swing at most.
-     */
     @Override
-    public void setRotationAngles(final float limbSwingTime, final float linbSwingAmount, final float somethingWhatever,
-            final float rotationY, final float rotationX, final float p_78087_6_, final Entity p_78087_7_) {
-        this.body.rotateAngleY = rotationY / (180F / (float) Math.PI);
-        this.body.rotateAngleX = rotationX / (180F / (float) Math.PI);
+    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
+        this.body.rotateAngleY = p_78087_4_ / (180F / (float) Math.PI);
+        this.body.rotateAngleX = p_78087_5_ / (180F / (float) Math.PI);
 
-        this.rightarm.rotateAngleY = 0.2F * MathHelper.sin(somethingWhatever * 0.3F) + 0.4F;
-        this.leftarm.rotateAngleY = -(0.2F * MathHelper.sin(somethingWhatever * 0.3F) + 0.4F);
-        this.toparm.rotateAngleX = (float) (0.2 * MathHelper.sin(somethingWhatever * 0.3F) + 0.4 + Math.PI / 2.0);
-        this.bottomarm.rotateAngleX = -(float) (0.2 * MathHelper.sin(somethingWhatever * 0.3F) + 0.4 - Math.PI / 2.0);
+        this.rightarm.rotateAngleY = 0.2F * MathHelper.sin(p_78087_3_ * 0.3F) + 0.4F;
+        this.leftarm.rotateAngleY = -(0.2F * MathHelper.sin(p_78087_3_ * 0.3F) + 0.4F);
+        this.toparm.rotateAngleX = (float) (0.2 * MathHelper.sin(p_78087_3_ * 0.3F) + 0.4 + Math.PI / 2.0);
+        this.bottomarm.rotateAngleX = -(float) (0.2 * MathHelper.sin(p_78087_3_ * 0.3F) + 0.4 - Math.PI / 2.0);
 
     }
 
-    /**
-     * Sets the models various rotation angles then renders the model.
-     */
     @Override
-    public void render(final Entity entity, final float limbSwingTime, final float limbSwingAmplitude,
-            final float totalTimeMaybe, final float rotationY, final float rotationX, final float someConstant) {
+    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
         this.setRotationAngles(
-                limbSwingTime,
-                limbSwingAmplitude,
-                totalTimeMaybe,
-                rotationY,
-                rotationX,
-                someConstant,
-                entity);
+                p_78088_2_,
+                p_78088_3_,
+                p_78088_4_,
+                p_78088_5_,
+                p_78088_6_,
+                p_78088_7_,
+                p_78088_1_);
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, 0.6F, 0.0F);
-        this.body.render(someConstant);
+        this.body.render(p_78088_7_);
         /*
          * leftarm.render(someConstant); rightarm.render(someConstant); toparm.render(someConstant);
          * bottomarm.render(someConstant);

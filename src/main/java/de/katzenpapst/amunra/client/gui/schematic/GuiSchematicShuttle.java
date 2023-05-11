@@ -56,37 +56,32 @@ public class GuiSchematicShuttle extends GuiContainer implements ISchematicResul
     }
 
     @Override
-    protected void actionPerformed(final GuiButton par1GuiButton) {
-        if (par1GuiButton.enabled) {
-            switch (par1GuiButton.id) {
-                case 0:
-                    SchematicRegistry.flipToLastPage(this.pageIndex);
-                    break;
-                case 1:
-                    SchematicRegistry.flipToNextPage(this.pageIndex);
-                    break;
+    protected void actionPerformed(GuiButton button) {
+        if (button.enabled) {
+            switch (button.id) {
+                case 0 -> SchematicRegistry.flipToLastPage(this.pageIndex);
+                case 1 -> SchematicRegistry.flipToNextPage(this.pageIndex);
             }
         }
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
-
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.fontRendererObj.drawString(
                 ARItems.shuttleItem.getItemStackDisplayName(new ItemStack(ARItems.shuttleItem, 1, 0)),
                 7,
-                -20 + 27,
-                4210752);
-        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 220 - 122 + 2 + 27, 4210752);
+                7,
+                0x404040);
+        this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 127, 0x404040);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(shuttleSchematicTexture);
-        final int var5 = (this.width - this.xSize) / 2;
-        final int var6 = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
+        final int x = (this.width - this.xSize) / 2;
+        final int y = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
     }
 
     @Override

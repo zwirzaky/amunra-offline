@@ -110,33 +110,23 @@ public class ModelRobotVillager extends ModelVillager {
         return arm;
     }
 
-    /**
-     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
-     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
-     * "far" arms and legs can swing at most.
-     */
     @Override
-    public void setRotationAngles(final float time, final float walkSpeed, final float appendageRotation,
-            final float rotationYaw, final float rotationPitch, final float scale, final Entity p_78087_7_) {
-        this.villagerHead.rotateAngleY = rotationYaw / (180F / (float) Math.PI);
-        this.villagerHead.rotateAngleX = rotationPitch / (180F / (float) Math.PI);
+    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
+        this.villagerHead.rotateAngleY = p_78087_4_ / (180F / (float) Math.PI);
+        this.villagerHead.rotateAngleX = p_78087_5_ / (180F / (float) Math.PI);
         /*
          * this.villagerArms.rotationPointY = 3.0F; this.villagerArms.rotationPointZ = -1.0F;
          * this.villagerArms.rotateAngleX = -0.75F;
          */
-        this.rightVillagerLeg.rotateAngleX = MathHelper.cos(time * 0.6662F) * 1.4F * walkSpeed * 0.5F;
-        this.leftVillagerLeg.rotateAngleX = MathHelper.cos(time * 0.6662F + (float) Math.PI) * 1.4F * walkSpeed * 0.5F;
+        this.rightVillagerLeg.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F) * 1.4F * p_78087_2_ * 0.5F;
+        this.leftVillagerLeg.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F + (float) Math.PI) * 1.4F * p_78087_2_ * 0.5F;
         this.rightVillagerLeg.rotateAngleY = 0.0F;
         this.leftVillagerLeg.rotateAngleY = 0.0F;
     }
 
-    /**
-     * Sets the models various rotation angles then renders the model.
-     */
     @Override
-    public void render(final Entity curEntity, final float timeOrSo, final float p_78088_3_, final float p_78088_4_,
-            final float p_78088_5_, final float p_78088_6_, final float p_78088_7_) {
-        this.setRotationAngles(timeOrSo, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, curEntity);
+    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
+        this.setRotationAngles(p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, p_78088_1_);
 
         // animateVisor(timeOrSo);
         this.villagerHead.render(p_78088_7_);

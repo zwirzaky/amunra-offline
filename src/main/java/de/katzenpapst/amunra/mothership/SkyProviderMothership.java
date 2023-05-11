@@ -185,7 +185,7 @@ public class SkyProviderMothership extends SkyProviderDynamic {
     }
 
     @Override
-    public void render(final float partialTicks, final WorldClient world, final Minecraft mc) {
+    public void render(float partialTicks, WorldClient world, Minecraft mc) {
         if (this.isInTransit != ((Mothership) this.curBody).isInTransit()) {
             this.initVars();
         }

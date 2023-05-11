@@ -72,83 +72,63 @@ public class TileEntityARChest extends TileEntity implements IInventory {
      */
     private int ticksSinceSync;
 
-    /**
-     * Returns the number of slots in the inventory.
-     */
     @Override
     public int getSizeInventory() {
         return 27;
     }
 
-    /**
-     * Returns the stack in slot i
-     */
     @Override
-    public ItemStack getStackInSlot(final int par1) {
-        return this.chestContents[par1];
+    public ItemStack getStackInSlot(int slotIn) {
+        return this.chestContents[slotIn];
     }
 
-    /**
-     * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
-     * new stack.
-     */
     @Override
-    public ItemStack decrStackSize(final int slotNr, final int nrOfItems) {
-        if (this.chestContents[slotNr] == null) {
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.chestContents[index] == null) {
             return null;
         }
         ItemStack itemstack;
 
-        if (this.chestContents[slotNr].stackSize <= nrOfItems) {
-            itemstack = this.chestContents[slotNr];
-            this.chestContents[slotNr] = null;
+        if (this.chestContents[index].stackSize <= count) {
+            itemstack = this.chestContents[index];
+            this.chestContents[index] = null;
         } else {
-            itemstack = this.chestContents[slotNr].splitStack(nrOfItems);
+            itemstack = this.chestContents[index].splitStack(count);
 
-            if (this.chestContents[slotNr].stackSize == 0) {
-                this.chestContents[slotNr] = null;
+            if (this.chestContents[index].stackSize == 0) {
+                this.chestContents[index] = null;
             }
         }
         this.markDirty();
         return itemstack;
     }
 
-    /**
-     * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
-     * like when you close a workbench GUI.
-     */
     @Override
-    public ItemStack getStackInSlotOnClosing(final int par1) {
-        if (this.chestContents[par1] != null) {
-            final ItemStack itemstack = this.chestContents[par1];
-            this.chestContents[par1] = null;
+    public ItemStack getStackInSlotOnClosing(int index) {
+        if (this.chestContents[index] != null) {
+            final ItemStack itemstack = this.chestContents[index];
+            this.chestContents[index] = null;
             return itemstack;
         }
         return null;
     }
 
-    /**
-     * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-     */
     @Override
-    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack) {
-        this.chestContents[par1] = par2ItemStack;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        this.chestContents[index] = stack;
 
-        if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-            par2ItemStack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
+            stack.stackSize = this.getInventoryStackLimit();
         }
 
         this.markDirty();
     }
 
-    /**
-     * Reads a tile entity from NBT.
-     */
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
 
-        final NBTTagList nbttaglist = nbt.getTagList("Items", 10);
+        final NBTTagList nbttaglist = compound.getTagList("Items", 10);
         this.chestContents = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -161,12 +141,9 @@ public class TileEntityARChest extends TileEntity implements IInventory {
         }
     }
 
-    /**
-     * Writes a tile entity to NBT.
-     */
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
 
         final NBTTagList nbttaglist = new NBTTagList();
 
@@ -179,31 +156,20 @@ public class TileEntityARChest extends TileEntity implements IInventory {
             }
         }
 
-        nbt.setTag("Items", nbttaglist);
+        compound.setTag("Items", nbttaglist);
     }
 
-    /**
-     * Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. *Isn't
-     * this more of a set than a get?*
-     */
     @Override
     public int getInventoryStackLimit() {
         return 64;
     }
 
-    /**
-     * Do not make give this method the name canInteractWith because it clashes with Container
-     */
     @Override
-    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this
-                && par1EntityPlayer.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
+                && player.getDistanceSq(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D;
     }
 
-    /**
-     * Causes the TileEntity to reset all it's cached values for it's container block, blockID, metaData and in the case
-     * of chests, the adjcacent chest check
-     */
     @Override
     public void updateContainingBlockInfo() {
         super.updateContainingBlockInfo();
@@ -417,16 +383,13 @@ public class TileEntityARChest extends TileEntity implements IInventory {
         }
     }
 
-    /**
-     * Called when a client event is received with the event number and argument, see World.sendClientEvent
-     */
     @Override
-    public boolean receiveClientEvent(final int par1, final int par2) {
-        if (par1 == 1) {
-            this.numUsingPlayers = par2;
+    public boolean receiveClientEvent(int id, int type) {
+        if (id == 1) {
+            this.numUsingPlayers = type;
             return true;
         }
-        return super.receiveClientEvent(par1, par2);
+        return super.receiveClientEvent(id, type);
     }
 
     @Override
@@ -458,9 +421,6 @@ public class TileEntityARChest extends TileEntity implements IInventory {
         return true;
     }
 
-    /**
-     * invalidates a tile entity
-     */
     @Override
     public void invalidate() {
         super.invalidate();
@@ -471,17 +431,15 @@ public class TileEntityARChest extends TileEntity implements IInventory {
     @Override
     public String getInventoryName() {
         return this.getBlockType().getLocalizedName();
-        // return GCCoreUtil.translate("container.treasurechest.name");
     }
 
     @Override
-    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack) {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
         return true;
     }
 
-    @SuppressWarnings("rawtypes")
     public static boolean isOcelotBlockingChest(final World par0World, final int par1, final int par2, final int par3) {
-        final Iterator var4 = par0World.getEntitiesWithinAABB(
+        final Iterator<EntityOcelot> var4 = par0World.getEntitiesWithinAABB(
                 EntityOcelot.class,
                 AxisAlignedBB.getBoundingBox(par1, par2 + 1, par3, par1 + 1, par2 + 2, par3 + 1)).iterator();
         EntityOcelot var6;

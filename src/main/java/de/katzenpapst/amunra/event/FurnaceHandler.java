@@ -9,9 +9,8 @@ public class FurnaceHandler implements IFuelHandler {
 
     @Override
     public int getBurnTime(final ItemStack fuel) {
-
-        if (fuel.getItem() instanceof ItemBasicMulti) {
-            return ((ItemBasicMulti) fuel.getItem()).getFuelDuration(fuel.getItemDamage());
+        if (fuel.getItem() instanceof ItemBasicMulti itemMulti) {
+            return itemMulti.getFuelDuration(fuel.getItemDamage());
         }
         return 0;
     }

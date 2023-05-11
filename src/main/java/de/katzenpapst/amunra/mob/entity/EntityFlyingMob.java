@@ -45,21 +45,18 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
     abstract protected float getVisionDistance();
 
-    /**
-     * Called when the entity is attacked.
-     */
     @Override
-    public boolean attackEntityFrom(final DamageSource dmgSrc, final float amount) {
+    public boolean attackEntityFrom(DamageSource source, float amount) {
         if (this.isEntityInvulnerable()) {
             return false;
         }
-        return super.attackEntityFrom(dmgSrc, amount);
+        return super.attackEntityFrom(source, amount);
     }
 
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(16, Byte.valueOf((byte) 0));
+        this.dataWatcher.addObject(16, 0);
     }
 
     abstract protected void performAttack(Entity target, double accelX, double accelY, double accelZ);
@@ -215,26 +212,17 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
         return true;
     }
 
-    /**
-     * Returns the volume for the sounds this mob makes.
-     */
     @Override
     protected float getSoundVolume() {
         return 1.0F;
     }
 
-    /**
-     * Checks if the entity's current position is a valid location to spawn this entity.
-     */
     @Override
     public boolean getCanSpawnHere() {
         return this.rand.nextInt(20) == 0 && super.getCanSpawnHere()
                 && this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
     }
 
-    /**
-     * Will return how many at most can spawn in a chunk at once.
-     */
     @Override
     public int getMaxSpawnedInChunk() {
         return 1;
@@ -242,24 +230,18 @@ public abstract class EntityFlyingMob extends EntityFlying implements IMob, IAnt
 
     abstract public String getFiringSound();
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
     @Override
-    public void writeEntityToNBT(final NBTTagCompound nbt) {
-        super.writeEntityToNBT(nbt);
-        nbt.setInteger("ExplosionPower", this.explosionStrength);
+    public void writeEntityToNBT(NBTTagCompound tagCompound) {
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("ExplosionPower", this.explosionStrength);
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
     @Override
-    public void readEntityFromNBT(final NBTTagCompound nbt) {
-        super.readEntityFromNBT(nbt);
+    public void readEntityFromNBT(NBTTagCompound tagCompund) {
+        super.readEntityFromNBT(tagCompund);
 
-        if (nbt.hasKey("ExplosionPower", 99)) {
-            this.explosionStrength = nbt.getInteger("ExplosionPower");
+        if (tagCompund.hasKey("ExplosionPower", 99)) {
+            this.explosionStrength = tagCompund.getInteger("ExplosionPower");
         }
     }
 

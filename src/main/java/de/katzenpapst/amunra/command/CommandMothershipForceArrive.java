@@ -9,10 +9,6 @@ import de.katzenpapst.amunra.mothership.MothershipWorldProvider;
 
 public class CommandMothershipForceArrive extends CommandBase {
 
-    public CommandMothershipForceArrive() {
-
-    }
-
     @Override
     public int getRequiredPermissionLevel() {
         return 2;
@@ -24,19 +20,17 @@ public class CommandMothershipForceArrive extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(final ICommandSender sender) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.getCommandName();
     }
 
     @Override
-    public void processCommand(final ICommandSender sender, final String[] args) {
-        if (sender.getEntityWorld().provider instanceof MothershipWorldProvider) {
-            final MothershipWorldProvider msProvider = (MothershipWorldProvider) sender.getEntityWorld().provider;
-
-            if (!((Mothership) msProvider.getCelestialBody()).isInTransit()) {
+    public void processCommand(ICommandSender sender, String[] args) {
+        if (sender.getEntityWorld().provider instanceof MothershipWorldProvider shipProvider) {
+            if (!((Mothership) shipProvider.getCelestialBody()).isInTransit()) {
                 sender.addChatMessage(new ChatComponentText("Mothership not in transit"));
             } else {
-                ((Mothership) msProvider.getCelestialBody()).forceArrival();
+                ((Mothership) shipProvider.getCelestialBody()).forceArrival();
             }
         } else {
             sender.addChatMessage(new ChatComponentText("Not on a mothership"));

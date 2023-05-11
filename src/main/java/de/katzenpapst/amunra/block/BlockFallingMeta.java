@@ -15,37 +15,26 @@ public class BlockFallingMeta extends BlockBasicMeta {
         super(name, mat);
     }
 
-    /**
-     * Called whenever the block is added into the world. Args: world, x, y, z
-     */
     @Override
-    public void onBlockAdded(final World world, final int x, final int y, final int z) {
-        world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+    public void onBlockAdded(World worldIn, int x, int y, int z) {
+        worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
     }
 
-    /**
-     * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
-     * their own) Args: x, y, z, neighbor Block
-     */
     @Override
-    public void onNeighborBlockChange(final World world, final int x, final int y, final int z,
-            final Block otherBlock) {
-        world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
+        worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
     }
 
-    /**
-     * Ticks the block if it's been scheduled
-     */
     @Override
-    public void updateTick(final World world, final int x, final int y, final int z, final Random rand) {
-        if (!world.isRemote) {
-            this.doTheFalling(world, x, y, z);
+    public void updateTick(World worldIn, int x, int y, int z, Random random) {
+        if (!worldIn.isRemote) {
+            this.doTheFalling(worldIn, x, y, z);
         }
     }
 
     private void doTheFalling(final World world, final int x, int y, final int z) {
         if (canContinueFalling(world, x, y - 1, z) && y >= 0) {
-            final byte b0 = 32;
+            final int b0 = 32;
             // It might be a good idea to check for the value of the official falling block...
             if (!BlockFalling.fallInstantly && world.checkChunksExist(x - b0, y - b0, z - b0, x + b0, y + b0, z + b0)) {
                 if (!world.isRemote) {
@@ -75,11 +64,8 @@ public class BlockFallingMeta extends BlockBasicMeta {
 
     protected void onEntityCreated(final EntityFallingBlock entity) {}
 
-    /**
-     * How many world ticks before ticking
-     */
     @Override
-    public int tickRate(final World world) {
+    public int tickRate(World worldIn) {
         return 2;
     }
 

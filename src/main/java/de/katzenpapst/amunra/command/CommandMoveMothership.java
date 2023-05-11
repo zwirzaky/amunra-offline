@@ -24,12 +24,12 @@ public class CommandMoveMothership extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(final ICommandSender sender) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.getCommandName() + " <name> [<travel time>]";
     }
 
     @Override
-    public void processCommand(final ICommandSender sender, final String[] args) {
+    public void processCommand(ICommandSender sender, String[] args) {
 
         long travelTime = 100;
 

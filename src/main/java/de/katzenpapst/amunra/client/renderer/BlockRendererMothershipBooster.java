@@ -41,10 +41,10 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
     }
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata, final int modelId,
-            final RenderBlocks renderer) {
-        if (block instanceof BlockMothershipBoosterMeta) {
-            final MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) ((BlockMothershipBoosterMeta) block)
+    public void renderInventoryBlock(Block block, int metadata, int modelId,
+            RenderBlocks renderer) {
+        if (block instanceof BlockMothershipBoosterMeta blockBooster) {
+            final MothershipEngineBoosterBase sb = (MothershipEngineBoosterBase) blockBooster
                     .getSubBlock(metadata);
             final ResourceLocation texture = sb.getBoosterTexture();
             this.renderBooster(texture);
@@ -52,15 +52,14 @@ public class BlockRendererMothershipBooster implements ISimpleBlockRenderingHand
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block,
-            final int modelId, final RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block,
+            int modelId, RenderBlocks renderer) {
         // this happens in the tileentity
-
         return false;
     }
 
     @Override
-    public boolean shouldRender3DInInventory(final int modelId) {
+    public boolean shouldRender3DInInventory(int modelId) {
         return true;
     }
 

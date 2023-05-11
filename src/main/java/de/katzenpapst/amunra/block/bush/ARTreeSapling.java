@@ -59,13 +59,7 @@ public class ARTreeSapling extends AbstractSapling {
     /**
      * Actual generation function. Can be called from worldgen
      *
-     * @param world
-     * @param rand
-     * @param x
-     * @param y
-     * @param z
      * @param notify apparently I have to pass false here on worldgen and true on sapling-growth
-     * @return
      */
     @Override
     public boolean generate(final World world, final Random rand, final int x, final int y, final int z,
@@ -135,7 +129,6 @@ public class ARTreeSapling extends AbstractSapling {
                                     highestYLeaf = curY;
                                 }
                             }
-
                         }
                     }
                 }
@@ -158,7 +151,6 @@ public class ARTreeSapling extends AbstractSapling {
 
                     }
                 }
-
                 return true;
             }
 

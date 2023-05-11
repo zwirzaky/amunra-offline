@@ -3,6 +3,7 @@ package de.katzenpapst.amunra.item;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,7 +34,7 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     // protected IIcon[] icons = new IIcon[ItemBasic.names.length];
     protected ArrayList<SubItem> subItems = null;
 
-    protected HashMap<String, Integer> nameDamageMapping = null;
+    protected Map<String, Integer> nameDamageMapping = null;
 
     public ItemBasicMulti(final String name) {
         this.setMaxDamage(0);
@@ -44,7 +45,6 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     }
 
     public ItemStack getItemStack(final String name, final int count) {
-
         return this.getItemStack(this.getDamageByName(name), count);
     }
 
@@ -96,35 +96,34 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(final ItemStack par1ItemStack) {
+    public EnumRarity getRarity(ItemStack p_77613_1_) {
         return ClientProxyCore.galacticraftItem;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(final IIconRegister iconRegister) {
+    public void registerIcons(IIconRegister register) {
         for (final SubItem item : this.subItems) {
             if (item == null) continue;
 
-            item.registerIcons(iconRegister);
+            item.registerIcons(register);
             // item.icon = iconRegister.registerIcon(item.getIconString());
         }
     }
 
     @Override
-    public String getUnlocalizedName(final ItemStack itemStack) {
-        return this.getUnlocalizedName() + "." + this.getSubItem(itemStack.getItemDamage()).getUnlocalizedName();
+    public String getUnlocalizedName(ItemStack stack) {
+        return this.getUnlocalizedName() + "." + this.getSubItem(stack.getItemDamage()).getUnlocalizedName();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(final int damage) {
-        return this.subItems.get(damage).getIconFromDamage(0);
+    public IIcon getIconFromDamage(int p_77617_1_) {
+        return this.subItems.get(p_77617_1_).getIconFromDamage(0);
     }
 
     @Override
-    public IIcon getIcon(final ItemStack stack, final int pass) {
+    public IIcon getIcon(ItemStack stack, int pass) {
         return this.subItems.get(stack.getItemDamage()).getIcon(stack, pass);
     }
 
@@ -133,22 +132,21 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconIndex(final ItemStack stack) {
-        return this.subItems.get(stack.getItemDamage()).getIconIndex(stack);
+    public IIcon getIconIndex(ItemStack p_77650_1_) {
+        return this.subItems.get(p_77650_1_.getItemDamage()).getIconIndex(p_77650_1_);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void getSubItems(final Item par1, final CreativeTabs par2CreativeTabs, final List par3List) {
+    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List<ItemStack> p_150895_3_) {
         for (int i = 0; i < this.subItems.size(); i++) {
             if (this.subItems.get(i) == null) continue;
-            par3List.add(new ItemStack(par1, 1, i));
+            p_150895_3_.add(new ItemStack(p_150895_1_, 1, i));
         }
     }
 
     @Override
-    public int getMetadata(final int par1) {
-        return par1;
+    public int getMetadata(int p_77647_1_) {
+        return p_77647_1_;
     }
 
     public SubItem getSubItem(final int damage) {
@@ -160,47 +158,43 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List,
-            final boolean par4) {
-        final SubItem item = this.getSubItem(par1ItemStack.getItemDamage());
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+        final SubItem item = this.getSubItem(p_77624_1_.getItemDamage());
 
-        item.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+        item.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
 
         String info = item.getItemInfo();
         if (info != null) {
             info = GCCoreUtil.translate(info);
-            par3List.addAll(FMLClientHandler.instance().getClient().fontRenderer.listFormattedStringToWidth(info, 150));
+            p_77624_3_.addAll(FMLClientHandler.instance().getClient().fontRenderer.listFormattedStringToWidth(info, 150));
         }
     }
 
     @Override
-    public ItemStack onEaten(final ItemStack par1ItemStack, final World par2World,
-            final EntityPlayer par3EntityPlayer) {
-        return this.getSubItem(par1ItemStack.getItemDamage()).onEaten(par1ItemStack, par2World, par3EntityPlayer);
+    public ItemStack onEaten(ItemStack p_77654_1_, World p_77654_2_, EntityPlayer p_77654_3_) {
+        return this.getSubItem(p_77654_1_.getItemDamage()).onEaten(p_77654_1_, p_77654_2_, p_77654_3_);
     }
 
     @Override
-    public int getMaxItemUseDuration(final ItemStack par1ItemStack) {
-        return this.getSubItem(par1ItemStack.getItemDamage()).getMaxItemUseDuration(par1ItemStack);
+    public int getMaxItemUseDuration(ItemStack p_77626_1_) {
+        return this.getSubItem(p_77626_1_.getItemDamage()).getMaxItemUseDuration(p_77626_1_);
     }
 
     @Override
-    public EnumAction getItemUseAction(final ItemStack par1ItemStack) {
-        return this.getSubItem(par1ItemStack.getItemDamage()).getItemUseAction(par1ItemStack);
+    public EnumAction getItemUseAction(ItemStack stack) {
+        return this.getSubItem(stack.getItemDamage()).getItemUseAction(stack);
     }
 
     @Override
-    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World,
-            final EntityPlayer par3EntityPlayer) {
-        return this.getSubItem(par1ItemStack.getItemDamage())
-                .onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player) {
+        return this.getSubItem(itemStackIn.getItemDamage())
+                .onItemRightClick(itemStackIn, worldIn, player);
     }
 
     @Override
-    public boolean onLeftClickEntity(final ItemStack itemStack, final EntityPlayer player, final Entity entity) {
-        return this.getSubItem(itemStack.getItemDamage()).onLeftClickEntity(itemStack, player, entity);
+    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+        return this.getSubItem(stack.getItemDamage()).onLeftClickEntity(stack, player, entity);
     }
 
     public int getFuelDuration(final int meta) {
@@ -209,13 +203,11 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
 
     @Override
     public String getShiftDescription(final int meta) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public boolean showDescription(final int meta) {
-        // TODO Auto-generated method stub
         return false;
     }
 }

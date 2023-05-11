@@ -18,10 +18,10 @@ public class Vector2int {
 
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof Vector2int)) {
+        if (!(other instanceof Vector2int vector)) {
             return false;
         }
-        return this.x == ((Vector2int) other).x && this.y == ((Vector2int) other).y;
+        return this.x == vector.x && this.y == vector.y;
     }
 
 }

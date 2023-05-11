@@ -18,8 +18,8 @@ public class PyramidGenerator extends StructureGenerator {
     protected BlockMetaPair floorMaterial = ARBlocks.blockSmoothBasalt;
     protected BlockMetaPair fillMaterial = ARBlocks.blockBasaltBrick;
 
-    protected List<SubComponentData> components = new ArrayList<>();
-    protected List<SubComponentData> potentialMainRooms = new ArrayList<>();
+    protected final List<SubComponentData> components = new ArrayList<>();
+    protected final List<SubComponentData> potentialMainRooms = new ArrayList<>();
 
     @Override
     protected boolean canGenerateHere(final int chunkX, final int chunkZ, final Random rand) {

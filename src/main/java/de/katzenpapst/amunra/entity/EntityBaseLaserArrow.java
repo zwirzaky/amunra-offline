@@ -197,38 +197,37 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
     }
 
     @Override
-    public void setThrowableHeading(double headingX, double headingY, double headingZ, final float speed,
-            final float randMod) {
-        final float f2 = MathHelper.sqrt_double(headingX * headingX + headingY * headingY + headingZ * headingZ);
-        headingX /= f2;
-        headingY /= f2;
-        headingZ /= f2;
-        headingX += this.rand.nextGaussian() * (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * randMod;
-        headingY += this.rand.nextGaussian() * (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * randMod;
-        headingZ += this.rand.nextGaussian() * (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * randMod;
-        headingX *= speed;
-        headingY *= speed;
-        headingZ *= speed;
-        this.motionX = headingX;
-        this.motionY = headingY;
-        this.motionZ = headingZ;
-        final float f3 = MathHelper.sqrt_double(headingX * headingX + headingZ * headingZ);
-        this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(headingX, headingZ) * 180.0D / Math.PI);
-        this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(headingY, f3) * 180.0D / Math.PI);
+    public void setThrowableHeading(double p_70186_1_, double p_70186_3_, double p_70186_5_, float p_70186_7_, float p_70186_8_) {
+        final float f2 = MathHelper.sqrt_double(p_70186_1_ * p_70186_1_ + p_70186_3_ * p_70186_3_ + p_70186_5_ * p_70186_5_);
+        p_70186_1_ /= f2;
+        p_70186_3_ /= f2;
+        p_70186_5_ /= f2;
+        p_70186_1_ += this.rand.nextGaussian() * (this.rand.nextBoolean() ? -1 : 1) * 0.0075D * p_70186_8_;
+        p_70186_3_ += this.rand.nextGaussian() * (this.rand.nextBoolean() ? -1 : 1) * 0.0075D * p_70186_8_;
+        p_70186_5_ += this.rand.nextGaussian() * (this.rand.nextBoolean() ? -1 : 1) * 0.0075D * p_70186_8_;
+        p_70186_1_ *= p_70186_7_;
+        p_70186_3_ *= p_70186_7_;
+        p_70186_5_ *= p_70186_7_;
+        this.motionX = p_70186_1_;
+        this.motionY = p_70186_3_;
+        this.motionZ = p_70186_5_;
+        final float f3 = MathHelper.sqrt_double(p_70186_1_ * p_70186_1_ + p_70186_5_ * p_70186_5_);
+        this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(p_70186_1_, p_70186_5_) * 180.0D / Math.PI);
+        this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(p_70186_3_, f3) * 180.0D / Math.PI);
         this.ticksInGround = 0;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void setVelocity(final double par1, final double par3, final double par5) {
-        this.motionX = par1;
-        this.motionY = par3;
-        this.motionZ = par5;
+    public void setVelocity(double x, double y, double z) {
+        this.motionX = x;
+        this.motionY = y;
+        this.motionZ = z;
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-            final float f = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
-            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
-            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(par3, f) * 180.0D / Math.PI);
+            final float distXZ = MathHelper.sqrt_double(x * x + z * z);
+            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
+            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(y, distXZ) * 180.0D / Math.PI);
             this.prevRotationPitch = this.rotationPitch;
             this.prevRotationYaw = this.rotationYaw;
             this.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
@@ -244,9 +243,7 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         return DamageSourceAR.causeLaserDamage("ar_laser", this, this.shootingEntity);
     }
 
-    protected void onPassThrough(final int x, final int y, final int z) {
-
-    }
+    protected void onPassThrough(final int x, final int y, final int z) {}
 
     protected int getEntityDependentDamage(final Entity ent, final int regularDamage) {
         return regularDamage;
@@ -304,10 +301,9 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
                     this,
                     this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
-            int l;
             float f1;
 
-            for (l = 0; l < list.size(); ++l) {
+            for (int l = 0; l < list.size(); ++l) {
                 final Entity entity1 = list.get(l);
 
                 if (entity1.canBeCollidedWith() && (entity1 != this.shootingEntity || this.ticksInAir >= 5)) {
@@ -378,8 +374,8 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
 
                             if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity
                                     && movingobjectposition.entityHit instanceof EntityPlayer
-                                    && this.shootingEntity instanceof EntityPlayerMP) {
-                                ((EntityPlayerMP) this.shootingEntity).playerNetServerHandler
+                                    && this.shootingEntity instanceof EntityPlayerMP entityPlayer) {
+                                entityPlayer.playerNetServerHandler
                                         .sendPacket(new S2BPacketChangeGameState(6, 0.0F));
                             }
                         }
@@ -440,13 +436,11 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
 
     protected void onPassWater() {}
 
-    protected void onImpactBlock(final World worldObj, final int xTile2, final int yTile2, final int zTile2) {
-
-    }
+    protected void onImpactBlock(final World worldObj, final int xTile2, final int yTile2, final int zTile2) {}
 
     @Override
     protected void entityInit() {
-        this.dataWatcher.addObject(16, Integer.valueOf(0));
+        this.dataWatcher.addObject(16, 0);
     }
 
     /*
@@ -455,30 +449,30 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
      */
 
     @Override
-    protected void readEntityFromNBT(final NBTTagCompound nbttagcompound) {
-        this.xTile = nbttagcompound.getShort("xTile");
-        this.yTile = nbttagcompound.getShort("yTile");
-        this.zTile = nbttagcompound.getShort("zTile");
-        this.ticksInAir = nbttagcompound.getShort("life");
-        this.inTile = Block.getBlockById(nbttagcompound.getByte("inTile") & 255);
-        this.inData = nbttagcompound.getByte("inData") & 255;
+    protected void readEntityFromNBT(NBTTagCompound tagCompund) {
+        this.xTile = tagCompund.getShort("xTile");
+        this.yTile = tagCompund.getShort("yTile");
+        this.zTile = tagCompund.getShort("zTile");
+        this.ticksInAir = tagCompund.getShort("life");
+        this.inTile = Block.getBlockById(tagCompund.getByte("inTile") & 255);
+        this.inData = tagCompund.getByte("inData") & 255;
 
-        this.inGround = nbttagcompound.getByte("inGround") == 1;
+        this.inGround = tagCompund.getByte("inGround") == 1;
 
     }
 
     @Override
-    protected void writeEntityToNBT(final NBTTagCompound nbttagcompound) {
-        nbttagcompound.setShort("xTile", (short) this.xTile);
-        nbttagcompound.setShort("yTile", (short) this.yTile);
-        nbttagcompound.setShort("zTile", (short) this.zTile);
-        nbttagcompound.setShort("life", (short) this.ticksInAir);
-        nbttagcompound.setByte("inTile", (byte) Block.getIdFromBlock(this.inTile));
-        nbttagcompound.setByte("inData", (byte) this.inData);
+    protected void writeEntityToNBT(NBTTagCompound tagCompound) {
+        tagCompound.setShort("xTile", (short) this.xTile);
+        tagCompound.setShort("yTile", (short) this.yTile);
+        tagCompound.setShort("zTile", (short) this.zTile);
+        tagCompound.setShort("life", (short) this.ticksInAir);
+        tagCompound.setByte("inTile", (byte) Block.getIdFromBlock(this.inTile));
+        tagCompound.setByte("inData", (byte) this.inData);
     }
 
     @Override
-    public void onCollideWithPlayer(final EntityPlayer par1EntityPlayer) {
+    public void onCollideWithPlayer(EntityPlayer entityIn) {
         if (!this.worldObj.isRemote && this.inGround) {
             this.setDead();
         }
@@ -489,23 +483,13 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
         return false;
     }
 
-    /**
-     * Gets the entity that threw/created this entity.
-     * 
-     * @return The owner instance, Null if none.
-     */
     @Override
     public Entity getThrower() {
         return this.shootingEntity;
     }
 
-    /**
-     * Sets the entity that threw/created this entity.
-     * 
-     * @param entity The new thrower/creator.
-     */
     @Override
-    public void setThrower(final Entity entity) {
+    public void setThrower(Entity entity) {
         this.shootingEntity = entity;
     }
 

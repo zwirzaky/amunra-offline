@@ -38,8 +38,6 @@ public class ARSidedProxy {
 
     /**
      * Doing this because EntityPlayerSP doesn't exist serverside
-     * 
-     * @param player
      */
     public void handlePlayerArtificalGravity(final EntityPlayer player, final double gravity) {
         // noop on server

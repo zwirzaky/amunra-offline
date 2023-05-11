@@ -1,6 +1,6 @@
 package de.katzenpapst.amunra.entity.spaceship;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -59,7 +59,7 @@ public class EntityShuttleFake extends EntityCelestialFake {
     }
 
     private String getDimList(final EntityPlayerMP player) {
-        final HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
+        final Map<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
         String dimensionList = "";
         int count = 0;
         for (final Entry<String, Integer> entry : map.entrySet()) {

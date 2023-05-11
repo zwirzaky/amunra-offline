@@ -13,8 +13,6 @@ public class ModelARChest {
     private final ModelChest chestModel = new ModelChest();
     private final ModelLargeChest largeChestModel = new ModelLargeChest();
 
-    public ModelARChest() {}
-
     public void render(final BlockARChest chestBlock, final boolean isDouble, final double x, final double y,
             final double z) {
         ModelChest chestModel = null;

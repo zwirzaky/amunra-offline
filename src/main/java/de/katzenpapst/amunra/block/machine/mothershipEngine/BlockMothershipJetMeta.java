@@ -7,9 +7,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.BlockMachineMetaDummyRender;
 import de.katzenpapst.amunra.block.SubBlock;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
@@ -21,33 +18,7 @@ public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
-    public boolean isBlockNormalCube() {
-        return false;
-    }
-
-    @Override
-    public boolean isNormalCube() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderType() {
-        return AmunRa.dummyRendererId;
-    }
-
-    @Override
-    public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
+    public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
         if (!(sb instanceof MothershipEngineJetBase)) {
             throw new IllegalArgumentException("BlockMothershipJetMeta can only accept MothershipEngineJetBase");
         }
@@ -67,25 +38,21 @@ public class BlockMothershipJetMeta extends BlockMachineMetaDummyRender {
     }
 
     @Override
-    public ItemStack getPickBlock(final MovingObjectPosition target, final World world, final int x, final int y,
-            final int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         final SubBlock sb = this.getSubBlock(meta);
-        if (sb instanceof MothershipEngineJetBase) {
-            return ((MothershipEngineJetBase) sb).getItem().getItemStack(1);
+        if (sb instanceof MothershipEngineJetBase engineJetBase) {
+            return engineJetBase.getItem().getItemStack(1);
         }
-
         return super.getPickBlock(target, world, x, y, z);
     }
 
     @Override
-    public void onBlockPlacedBy(final World world, final int x, final int y, final int z,
-            final EntityLivingBase entityLiving, final ItemStack itemStack) {
-        final int metadata = world.getBlockMetadata(x, y, z);
-
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn) {
+        final int metadata = worldIn.getBlockMetadata(x, y, z);
         final SubBlock sb = this.getSubBlock(metadata);
         if (sb != null) {
-            sb.onBlockPlacedBy(world, x, y, z, entityLiving, itemStack);
+            sb.onBlockPlacedBy(worldIn, x, y, z, placer, itemIn);
         }
     }
 }

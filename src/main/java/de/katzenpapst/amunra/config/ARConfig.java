@@ -3,6 +3,7 @@ package de.katzenpapst.amunra.config;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -62,9 +63,9 @@ public class ARConfig {
     public int numAsteroids = 600;
 
     // bodies to render as suns
-    public HashMap<String, Vector3> sunColorMap = new HashMap<>();
+    public Map<String, Vector3> sunColorMap = new HashMap<>();
 
-    public HashMap<String, RingsRenderInfo> ringMap = new HashMap<>();
+    public Map<String, RingsRenderInfo> ringMap = new HashMap<>();
 
     // ** IDs **
     public int schematicIdShuttle = 11;

@@ -21,7 +21,6 @@ public class SubItemToggle extends SubItem {
 
     protected boolean defaultState = false;
 
-    @SideOnly(Side.CLIENT)
     protected IIcon inactItemIcon;
 
     public SubItemToggle(final String name, final String assetName, final String inactiveAssetName) {
@@ -73,60 +72,43 @@ public class SubItemToggle extends SubItem {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(final IIconRegister registerer) {
-        super.registerIcons(registerer);
-        this.inactItemIcon = registerer.registerIcon(AmunRa.TEXTUREPREFIX + this.inactiveAssetName);
+    public void registerIcons(IIconRegister register) {
+        super.registerIcons(register);
+        this.inactItemIcon = register.registerIcon(AmunRa.TEXTUREPREFIX + this.inactiveAssetName);
     }
 
-    /**
-     * Returns the icon index of the stack given as argument.
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconIndex(final ItemStack stack) {
+    public IIcon getIconIndex(ItemStack p_77650_1_) {
+        if (this.getState(p_77650_1_)) {
+            return this.itemIcon;
+        }
+        return this.inactItemIcon;
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass) {
         if (this.getState(stack)) {
             return this.itemIcon;
         }
         return this.inactItemIcon;
     }
 
-    /**
-     * Return the correct icon for rendering based on the supplied ItemStack and render pass.
-     *
-     * Defers to {@link #getIconFromDamageForRenderPass(int, int)}
-     * 
-     * @param stack to render for
-     * @param pass  the multi-render pass
-     * @return the icon
-     */
     @Override
-    public IIcon getIcon(final ItemStack stack, final int pass) {
-        if (this.getState(stack)) {
-            return this.itemIcon;
-        }
-        return this.inactItemIcon;
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player) {
+        this.toggleState(itemStackIn);
+        return itemStackIn;
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
     @Override
-    public ItemStack onItemRightClick(final ItemStack itemStack, final World world, final EntityPlayer entityPlayer) {
-        this.toggleState(itemStack);
-        return itemStack;
-    }
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+        super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List list,
-            final boolean par4) {
-        super.addInformation(itemStack, entityPlayer, list, par4);
-
-        if (this.getState(itemStack)) {
+        if (this.getState(p_77624_1_)) {
             // EnumChatFormatting.GREEN
-            list.add(EnumChatFormatting.GREEN + StatCollector.translateToLocal("gui.status.active.name"));
+            p_77624_3_.add(EnumChatFormatting.GREEN + StatCollector.translateToLocal("gui.status.active.name"));
         } else {
-            list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("gui.status.disabled.name"));
+            p_77624_3_.add(EnumChatFormatting.RED + StatCollector.translateToLocal("gui.status.disabled.name"));
         }
     }
 }

@@ -26,7 +26,6 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
 
     @Override
     public IIcon getIcon() {
-
         return this.stack.getItem().getIconFromDamage(this.stack.getItemDamage());
     }
 

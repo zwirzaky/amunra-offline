@@ -23,8 +23,7 @@ public class ItemRendererJet implements IItemRenderer {
     }
 
     @Override
-    public boolean handleRenderType(final ItemStack item, final ItemRenderType type) {
-
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         if (item.getItem() != ARItems.jetItemMeta || item.getItemDamage() >= this.models.length
                 || item.getItemDamage() >= this.textures.length) {
             return false;
@@ -36,8 +35,7 @@ public class ItemRendererJet implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(final ItemRenderType type, final ItemStack item,
-            final ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
         return true;
     }
 
@@ -79,7 +77,7 @@ public class ItemRendererJet implements IItemRenderer {
     }
 
     @Override
-    public void renderItem(final ItemRenderType type, final ItemStack item, final Object... data) {
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         if (this.handleRenderType(item, type)) {
             switch (type) {
                 case EQUIPPED:

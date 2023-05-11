@@ -51,20 +51,12 @@ public class SubBlockDropItem extends SubBlock {
     }
 
     @Override
-    public int quantityDropped(final int meta, final int fortune, final Random random) {
-        int j = random.nextInt(fortune + 2) - 1;
-
-        if (j < 0) {
-            j = 0;
-        }
-
-        int result = (int) (this.quantityDropped(random) * (j + 1) * this.bonusDropMultiplier);
+    public int quantityDropped(int meta, int fortune, Random random) {
+        int result = (int) (this.quantityDropped(random) * MathHelper.getRandomIntegerInRange(random, 1, fortune + 2) * this.bonusDropMultiplier);
         if (result < this.baseDropRateMin) {
             result = this.baseDropRateMin;
         }
         return result;
-
-        // return Math.min(random.nextInt(3)+random.nextInt(10)*fortune, 9);
     }
 
     /**
@@ -72,17 +64,17 @@ public class SubBlockDropItem extends SubBlock {
      * from the outside, I can't do shit
      */
     @Override
-    public int quantityDropped(final Random rand) {
+    public int quantityDropped(Random random) {
         return this.baseDropRateMin;
     }
 
     @Override
-    public int damageDropped(final int meta) {
+    public int damageDropped(int meta) {
         return this.droppedItems != null ? this.droppedItems.getDamage() : super.damageDropped(meta);
     }
 
     @Override
-    public Item getItemDropped(final int meta, final Random random, final int fortune) {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return this.droppedItems != null ? this.droppedItems.getItem() : super.getItemDropped(meta, random, fortune);
     }
 
@@ -108,7 +100,7 @@ public class SubBlockDropItem extends SubBlock {
     }
 
     @Override
-    public int getExpDrop(final IBlockAccess world, final int metadata, final int fortune) {
+    public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
         if (!this.dropsSelf()) {
             if (this.xpDropMin <= this.xpDropMax) {
                 return this.xpDropMin;
@@ -119,7 +111,7 @@ public class SubBlockDropItem extends SubBlock {
     }
 
     @Override
-    public boolean isValueable(final int metadata) {
+    public boolean isValueable(int metadata) {
         return this.isValuable;
     }
 

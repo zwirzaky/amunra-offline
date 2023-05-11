@@ -27,12 +27,9 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(16, (byte) 0);
+        this.dataWatcher.addObject(16, 0);
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
     @Override
     public void onUpdate() {
         super.onUpdate();
@@ -49,10 +46,6 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.800000011920929D);
     }
 
-    /**
-     * Finds the closest player within 16 blocks to attack, or null if this Entity isn't interested in attacking
-     * (Animals, Spiders at day, peaceful PigZombies).
-     */
     @Override
     protected Entity findPlayerToAttack() {
         final float f = this.getBrightness(1.0F);
@@ -64,25 +57,16 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
         return null;
     }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
     @Override
     protected String getLivingSound() {
         return "mob.spider.say";
     }
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
     @Override
     protected String getHurtSound() {
         return "mob.spider.say";
     }
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
     @Override
     protected String getDeathSound() {
         return "mob.spider.death";
@@ -94,20 +78,17 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
         this.playSound("mob.spider.step", 0.15F, 1.0F);
     }
 
-    /**
-     * Basic mob attack. Default to touch of death in EntityCreature. Overridden by each mob to define their attack.
-     */
     @Override
-    protected void attackEntity(final Entity target, final float distanceToTarget) {
+    protected void attackEntity(Entity p_70785_1_, float p_70785_2_) {
         final float f1 = this.getBrightness(1.0F);
 
         if (f1 > 0.5F && this.rand.nextInt(100) == 0) {
             this.entityToAttack = null;
-        } else if (distanceToTarget > 2.0F && distanceToTarget < 6.0F && this.rand.nextInt(10) == 0) {
+        } else if (p_70785_2_ > 2.0F && p_70785_2_ < 6.0F && this.rand.nextInt(10) == 0) {
             if (this.onGround) {
                 // get closer to target?
-                final double deltaX = target.posX - this.posX;
-                final double deltaZ = target.posZ - this.posZ;
+                final double deltaX = p_70785_1_.posX - this.posX;
+                final double deltaZ = p_70785_1_.posZ - this.posZ;
                 final float planarDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
                 this.motionX = deltaX / planarDistance * 0.5D * 0.800000011920929D
                         + this.motionX * 0.20000000298023224D;
@@ -116,7 +97,7 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
                 this.motionY = 0.4000000059604645D;
             }
         } else {
-            super.attackEntity(target, distanceToTarget);
+            super.attackEntity(p_70785_1_, p_70785_2_);
         }
     }
 
@@ -125,14 +106,8 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
         return Items.string;
     }
 
-    /**
-     * Drop 0-2 items of this living's type.
-     * 
-     * @param hitByPlayer  - Whether this entity has recently been hit by a player.
-     * @param lootingLevel - Level of Looting used to kill this mob.
-     */
     @Override
-    protected void dropFewItems(final boolean hitByPlayer, final int lootingLevel) {
+    protected void dropFewItems(boolean p_70628_1_, int p_70628_2_) {
         // not yet
         /*
          * super.dropFewItems(hitByPlayer, lootingLevel); if (hitByPlayer && (this.rand.nextInt(3) == 0 ||
@@ -140,30 +115,21 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
          */
     }
 
-    /**
-     * returns true if this entity is by a ladder, false otherwise
-     */
     @Override
     public boolean isOnLadder() {
         return this.isBesideClimbableBlock();
     }
 
-    /**
-     * Sets the Entity inside a web block.
-     */
     // @Override
     // public void setInWeb() {}
 
-    /**
-     * Get this Entity's EnumCreatureAttribute
-     */
     @Override
     public EnumCreatureAttribute getCreatureAttribute() {
         return EnumCreatureAttribute.ARTHROPOD;
     }
 
     @Override
-    public boolean isPotionApplicable(final PotionEffect potionEffect) {
+    public boolean isPotionApplicable(PotionEffect p_70687_1_) {
         return true;
         // return potionEffect.getPotionID() == Potion.poison.id ? false : super.isPotionApplicable(potionEffect);
     }
@@ -193,8 +159,8 @@ public class EntityAlienBug extends EntityMob implements IEntityNonOxygenBreathe
     }
 
     @Override
-    public IEntityLivingData onSpawnWithEgg(final IEntityLivingData myData) {
-        final Object moreDataWhat = super.onSpawnWithEgg(myData);
+    public IEntityLivingData onSpawnWithEgg(IEntityLivingData p_110161_1_) {
+        final Object moreDataWhat = super.onSpawnWithEgg(p_110161_1_);
 
         /*
          * if (this.worldObj.rand.nextInt(100) == 0) { EntitySkeleton entityskeleton = new

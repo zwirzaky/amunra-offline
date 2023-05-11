@@ -62,10 +62,10 @@ public class Vector3int {
 
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof Vector3int)) {
+        if (!(other instanceof Vector3int vector)) {
             return false;
         }
-        return this.x == ((Vector3int) other).x && this.y == ((Vector3int) other).y && this.z == ((Vector3int) other).z;
+        return this.x == vector.x && this.y == vector.y && this.z == vector.z;
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -67,10 +66,6 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
     protected BlockMetaPair boosterBlock;
     protected PositionedSoundRecord leSound;
 
-    public TileEntityMothershipEngineAbstract() {
-        // TODO Auto-generated constructor stub
-    }
-
     public int getScaledFuelLevel(final int i) {
         final double fuelLevel = this.fuelTank.getFluid() == null ? 0 : this.fuelTank.getFluid().amount;
 
@@ -78,38 +73,38 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-        this.containingItems = this.readStandardItemsFromNBT(nbt);
-        if (nbt.hasKey("numBoosters")) {
-            this.numBoosters = nbt.getInteger("numBoosters");
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        this.containingItems = this.readStandardItemsFromNBT(compound);
+        if (compound.hasKey("numBoosters")) {
+            this.numBoosters = compound.getInteger("numBoosters");
             // System.out.println("Got data, numBoosters = "+numBoosters);
         }
 
         this.fuelTank.setCapacity(this.getTankCapacity());
 
-        if (nbt.hasKey("fuelTank")) {
-            this.fuelTank.readFromNBT(nbt.getCompoundTag("fuelTank"));
+        if (compound.hasKey("fuelTank")) {
+            this.fuelTank.readFromNBT(compound.getCompoundTag("fuelTank"));
         }
 
-        if (nbt.hasKey("needsUpdate")) {
-            this.needsUpdate = nbt.getBoolean("needsUpdate");
+        if (compound.hasKey("needsUpdate")) {
+            this.needsUpdate = compound.getBoolean("needsUpdate");
         }
-        if (nbt.hasKey("usedForTransit")) {
-            this.isInUseForTransit = nbt.getBoolean("usedForTransit");
+        if (compound.hasKey("usedForTransit")) {
+            this.isInUseForTransit = compound.getBoolean("usedForTransit");
         }
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        this.writeStandardItemsToNBT(nbt);
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        this.writeStandardItemsToNBT(compound);
         if (this.fuelTank.getFluid() != null) {
-            nbt.setTag("fuelTank", this.fuelTank.writeToNBT(new NBTTagCompound()));
+            compound.setTag("fuelTank", this.fuelTank.writeToNBT(new NBTTagCompound()));
         }
-        nbt.setInteger("numBoosters", this.numBoosters);
-        nbt.setBoolean("needsUpdate", this.needsUpdate);
-        nbt.setBoolean("usedForTransit", this.isInUseForTransit);
+        compound.setInteger("numBoosters", this.numBoosters);
+        compound.setBoolean("needsUpdate", this.needsUpdate);
+        compound.setBoolean("usedForTransit", this.isInUseForTransit);
     }
 
     @Override
@@ -122,8 +117,8 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
     }
 
     @Override
-    public void onDataPacket(final NetworkManager net, final S35PacketUpdateTileEntity packet) {
-        this.readFromNBT(packet.func_148857_g());
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.func_148857_g());
     }
 
     /**
@@ -284,26 +279,22 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
         final Vector3 myPos = this.getCenterPosition();
         final Vector3 exhaustDir = this.getExhaustDirection();
 
-        final List<?> list = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.exhaustBB);
+        final List<EntityLivingBase> list = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.exhaustBB);
 
         if (list != null) {
-            for (Object element : list) {
-                final Entity entity = (Entity) element;
+            for (EntityLivingBase entity : list) {
+                entity.setFire(5);
 
-                if (entity instanceof EntityLivingBase) {
-                    entity.setFire(5);
+                Vector3 entityPos = new Vector3(entity);
 
-                    Vector3 entityPos = new Vector3(entity);
+                final double factor = entityPos.distance(myPos);
 
-                    final double factor = entityPos.distance(myPos);
+                entityPos = exhaustDir.clone().scale(0.2 / factor);
 
-                    entityPos = exhaustDir.clone().scale(1 / factor * 0.2);
+                final float damage = (float) (10.0F / factor);
 
-                    final float damage = (float) (1.0F / factor * 10.0F);
-
-                    entity.attackEntityFrom(DamageSourceAR.dsEngine, damage);
-                    entity.addVelocity(entityPos.x, entityPos.y, entityPos.z);
-                }
+                entity.attackEntityFrom(DamageSourceAR.dsEngine, damage);
+                entity.addVelocity(entityPos.x, entityPos.y, entityPos.z);
             }
         }
     }
@@ -506,13 +497,13 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
     }
 
     @Override
-    public boolean canInsertItem(final int slotID, final ItemStack itemstack, final int side) {
-        return this.isItemValidForSlot(slotID, itemstack);
+    public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
+        return this.isItemValidForSlot(p_102007_1_, p_102007_2_);
     }
 
     @Override
-    public boolean canExtractItem(final int slotID, final ItemStack itemstack, final int side) {
-        return slotID == 0;
+    public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
+        return p_102008_1_ == 0;
     }
 
     public Vector3int getLastBoosterPosition() {
@@ -540,46 +531,46 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
     }
 
     @Override
-    public ItemStack getStackInSlot(final int slot) {
-        return this.containingItems[slot];
+    public ItemStack getStackInSlot(int slotIn) {
+        return this.containingItems[slotIn];
     }
 
     @Override
-    public ItemStack decrStackSize(final int slotNr, final int par2) {
-        if (this.containingItems[slotNr] == null) {
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.containingItems[index] == null) {
             return null;
         }
         ItemStack var3;
 
-        if (this.containingItems[slotNr].stackSize <= par2) {
-            var3 = this.containingItems[slotNr];
-            this.containingItems[slotNr] = null;
+        if (this.containingItems[index].stackSize <= count) {
+            var3 = this.containingItems[index];
+            this.containingItems[index] = null;
         } else {
-            var3 = this.containingItems[slotNr].splitStack(par2);
+            var3 = this.containingItems[index].splitStack(count);
 
-            if (this.containingItems[slotNr].stackSize == 0) {
-                this.containingItems[slotNr] = null;
+            if (this.containingItems[index].stackSize == 0) {
+                this.containingItems[index] = null;
             }
         }
         return var3;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(final int par1) {
-        if (this.containingItems[par1] != null) {
-            final ItemStack var2 = this.containingItems[par1];
-            this.containingItems[par1] = null;
+    public ItemStack getStackInSlotOnClosing(int index) {
+        if (this.containingItems[index] != null) {
+            final ItemStack var2 = this.containingItems[index];
+            this.containingItems[index] = null;
             return var2;
         }
         return null;
     }
 
     @Override
-    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack) {
-        this.containingItems[par1] = par2ItemStack;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        this.containingItems[index] = stack;
 
-        if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-            par2ItemStack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
+            stack.stackSize = this.getInventoryStackLimit();
         }
     }
 
@@ -691,11 +682,6 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
 
     /**
      * Check if the block at the given position is (or should be) within the current multiblock
-     * 
-     * @param x
-     * @param y
-     * @param z
-     * @return
      */
     public boolean isPartOfMultiBlock(final int x, final int y, final int z) {
         // for each axis, the other two coordinates should be the same
@@ -886,9 +872,6 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
 
     /**
      * This should be the master source on how much fuel we will need
-     * 
-     * @param distance
-     * @return
      */
     @Override
     abstract public MothershipFuelRequirements getFuelRequirements(long duration);

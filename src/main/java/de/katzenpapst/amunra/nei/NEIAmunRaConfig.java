@@ -2,6 +2,7 @@ package de.katzenpapst.amunra.nei;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -23,8 +24,8 @@ import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
 
 public class NEIAmunRaConfig implements IConfigureNEI {
 
-    private static HashMap<HashMap<Integer, PositionedStack>, PositionedStack> circuitFabricatorRecipes = new HashMap<>();
-    private static HashMap<ArrayList<PositionedStack>, PositionedStack> shuttleRecipes = new HashMap<>();
+    private static Map<Map<Integer, PositionedStack>, PositionedStack> circuitFabricatorRecipes = new HashMap<>();
+    private static Map<List<PositionedStack>, PositionedStack> shuttleRecipes = new HashMap<>();
 
     public NEIAmunRaConfig() {
 
@@ -85,15 +86,15 @@ public class NEIAmunRaConfig implements IConfigureNEI {
         }
     }
 
-    public static Set<Map.Entry<ArrayList<PositionedStack>, PositionedStack>> getShuttleRecipes() {
+    public static Set<Map.Entry<List<PositionedStack>, PositionedStack>> getShuttleRecipes() {
         return shuttleRecipes.entrySet();
     }
 
     private void initCircuitFabricatorRecipes() {
-        final ArrayList<CircuitFabricatorRecipe> recipes = RecipeHelper.getCircuitFabricatorRecipes();
+        final List<CircuitFabricatorRecipe> recipes = RecipeHelper.getCircuitFabricatorRecipes();
         for (final CircuitFabricatorRecipe recipe : recipes) {
             // add it
-            final HashMap<Integer, PositionedStack> input1 = new HashMap<>();
+            final Map<Integer, PositionedStack> input1 = new HashMap<>();
             // slot 0 = gem
             input1.put(0, new PositionedStack(recipe.getCrystal(), 10, 22));
 
@@ -130,12 +131,12 @@ public class NEIAmunRaConfig implements IConfigureNEI {
      *                 PositionedStack(output, 147, 91)); }
      */
 
-    public void registerCircuitFabricatorRecipe(final HashMap<Integer, PositionedStack> input,
+    public void registerCircuitFabricatorRecipe(final Map<Integer, PositionedStack> input,
             final PositionedStack output) {
         circuitFabricatorRecipes.put(input, output);
     }
 
-    public static Set<Entry<HashMap<Integer, PositionedStack>, PositionedStack>> getCircuitFabricatorRecipes() {
+    public static Set<Entry<Map<Integer, PositionedStack>, PositionedStack>> getCircuitFabricatorRecipes() {
         return circuitFabricatorRecipes.entrySet();
     }
 

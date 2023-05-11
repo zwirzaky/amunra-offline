@@ -15,10 +15,6 @@ import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
 
 public class SchematicPageShuttle implements ISchematicPage {
 
-    public SchematicPageShuttle() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
     public int getPageID() {
         return AmunRa.config.schematicIdShuttle;

@@ -58,7 +58,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     }
 
     @Override
-    public void drawButtons(final int mousePosX, final int mousePosY) {
+    public void drawButtons(int mousePosX, int mousePosY) {
         this.possibleBodies = this.shuttlePossibleBodies;
         super.drawButtons(mousePosX, mousePosY);
         if (this.selectionState != EnumSelectionState.PROFILE && this.selectedBody != null
@@ -96,12 +96,12 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                 str,
                 this.exitBtnArea.minX + (this.exitBtnArea.getWidth() - this.fontRendererObj.getStringWidth(str)) / 2,
                 this.exitBtnArea.minY + 2,
-                ColorUtil.to32BitColor(255, 255, 255, 255));
+                0xFFFFFFFF);
     }
 
     @Override
-    protected void keyTyped(final char keyChar, final int keyID) {
-        super.keyTyped(keyChar, keyID);
+    protected void keyTyped(char typedChar, int keyCode) {
+        super.keyTyped(typedChar, keyCode);
 
     }
 
@@ -136,8 +136,8 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         final String str = "" + amount + "/" + requiredAmount;
         final boolean valid = amount >= requiredAmount;
 
-        final int color = valid | this.mc.thePlayer.capabilities.isCreativeMode ? ColorUtil.to32BitColor(255, 0, 255, 0)
-                : ColorUtil.to32BitColor(255, 255, 0, 0);
+        final int color = valid | this.mc.thePlayer.capabilities.isCreativeMode ? 0xFF00FF00
+                : 0xFFFF0000;
         this.smallFontRenderer.drawString(
                 str,
                 xPos + 8 - this.smallFontRenderer.getStringWidth(str) / 2,
@@ -355,7 +355,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                                 + 185
                                 + canCreateOffset,
                         91,
-                        ColorUtil.to32BitColor(255, 255, 255, 255),
+                        0xFFFFFFFF,
                         false,
                         false);
             }
@@ -366,7 +366,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                     this.width - GuiCelestialSelection.BORDER_WIDTH - GuiCelestialSelection.BORDER_EDGE_WIDTH - 48,
                     offset + GuiCelestialSelection.BORDER_WIDTH + GuiCelestialSelection.BORDER_EDGE_WIDTH + 138,
                     91,
-                    ColorUtil.to32BitColor(255, 255, 255, 255),
+                    0xFFFFFFFF,
                     true,
                     false);
         }
@@ -418,17 +418,17 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     }
 
     @Override
-    protected void mouseClicked(final int x, final int y, final int button) {
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         // exitBtnArea
 
         boolean clickHandled = false;
         // CelestialBody curSelection = this.selectedBody;
 
         if (this.mapMode != MapMode.VIEW) {
-            if (this.exitBtnArea.isWithin(x, y)) {
+            if (this.exitBtnArea.isWithin(mouseX, mouseY)) {
                 this.cancelLaunch();
                 clickHandled = true;
-            } else if (this.buildMsBtnArea.isWithin(x, y) && this.selectedBody != null) {
+            } else if (this.buildMsBtnArea.isWithin(mouseX, mouseY) && this.selectedBody != null) {
                 final SpaceStationRecipe recipe = RecipeHelper.mothershipRecipe;
                 if (recipe != null && this.canCreateMothership(this.selectedBody)
                         && !this.createMothershipButtonDisabled) {
@@ -445,7 +445,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
         }
 
         if (!clickHandled) {
-            super.mouseClicked(x, y, button);
+            super.mouseClicked(mouseX, mouseY, mouseButton);
 
         }
     }

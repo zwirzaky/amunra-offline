@@ -14,9 +14,9 @@ public class ARCircuitFab extends CircuitFabricatorRecipeHandler {
 
     @Override
     public Set<Entry<ArrayList<PositionedStack>, PositionedStack>> getRecipes() {
-        final HashMap<ArrayList<PositionedStack>, PositionedStack> recipes = new HashMap<>();
+        final Map<ArrayList<PositionedStack>, PositionedStack> recipes = new HashMap<>();
 
-        for (final Entry<HashMap<Integer, PositionedStack>, PositionedStack> stack : NEIAmunRaConfig
+        for (final Entry<Map<Integer, PositionedStack>, PositionedStack> stack : NEIAmunRaConfig
                 .getCircuitFabricatorRecipes()) {
             final ArrayList<PositionedStack> inputStacks = new ArrayList<>();
 

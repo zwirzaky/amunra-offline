@@ -22,6 +22,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
 
     protected String activeTextureName;
     protected IIcon activeBlockIcon;
+    protected ResourceLocation boosterTexture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png");
 
     public MothershipEngineBoosterBase(final String name, final String texture, final String activeTexture) {
         super(name, texture);
@@ -48,7 +49,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
     }
 
     @Override
-    protected void openGui(final World world, final int x, final int y, final int z, final EntityPlayer entityPlayer) {
+    protected void openGui(World world, int x, int y, int z, EntityPlayer entityPlayer) {
         // try this
         if (world.isRemote) {
             return;
@@ -63,7 +64,7 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
     }
 
     @Override
-    public boolean hasTileEntity(final int metadata) {
+    public boolean hasTileEntity(int metadata) {
         return true;
     }
 
@@ -75,23 +76,20 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
 
     // TileEntityMothershipEngineBooster.java
     @Override
-    public TileEntity createTileEntity(final World world, final int metadata) {
+    public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityMothershipEngineBooster();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(final IIconRegister reg) {
+    public void registerBlockIcons(IIconRegister reg) {
         super.registerBlockIcons(reg);
         this.activeBlockIcon = reg.registerIcon(this.activeTextureName);
     }
 
-    /**
-     * Gets the block's texture. Args: side, meta
-     */
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(final int side, final int meta) {
+    public IIcon getIcon(int side, final int meta) {
         if (side <= 1) {
             return this.blockIcon;
         }
@@ -99,30 +97,30 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
     }
 
     @Override
-    public void onNeighborBlockChange(final World w, final int x, final int y, final int z, final Block block) {
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
         // these are MY coords
-        final TileEntity leTile = w.getTileEntity(x, y, z);
+        final TileEntity leTile = worldIn.getTileEntity(x, y, z);
         if (leTile == null) return;
 
-        if (leTile instanceof TileEntityMothershipEngineAbstract) {
-            ((TileEntityMothershipEngineAbstract) leTile).scheduleUpdate();
-        } else if (leTile instanceof TileEntityMothershipEngineBooster) {
-            ((TileEntityMothershipEngineBooster) leTile).updateMaster(false);
+        if (leTile instanceof TileEntityMothershipEngineAbstract tileEngine) {
+            tileEngine.scheduleUpdate();
+        } else if (leTile instanceof TileEntityMothershipEngineBooster tileBooster) {
+            tileBooster.updateMaster(false);
             // attept to continue the process
             // find next
-            final Vector3int pos = ((TileEntityMothershipEngineBooster) leTile).getPossibleNextBooster();
+            final Vector3int pos = tileBooster.getPossibleNextBooster();
             if (pos != null) {
-                w.notifyBlockOfNeighborChange(
+                worldIn.notifyBlockOfNeighborChange(
                         pos.x,
                         pos.y,
                         pos.z,
-                        ((TileEntityMothershipEngineBooster) leTile).blockType);
+                        tileBooster.blockType);
             }
         }
     }
 
     @Override
-    public String getShiftDescription(final int meta) {
+    public String getShiftDescription(int meta) {
         return GCCoreUtil.translate("tile.mothershipEngineRocket.description");
     }
 
@@ -142,40 +140,26 @@ public class MothershipEngineBoosterBase extends AbstractBlockMothershipRestrict
     }
 
     @Override
-    public boolean isOpaqueCube() {
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
     public int getRenderType() {
         return AmunRa.msBoosterRendererId;
     }
 
     public ResourceLocation getBoosterTexture() {
-        return new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png");
+        return this.boosterTexture;
     }
 
     @Override
     public boolean canBeMoved(final World world, final int x, final int y, final int z) {
-        final TileEntity te = world.getTileEntity(x, y, z);
-        if (te == null || !(te instanceof TileEntityMothershipEngineBooster)) {
-            return true;
+        if(world.getTileEntity(x, y, z) instanceof TileEntityMothershipEngineBooster tileBooster) {
+            final TileEntityMothershipEngineAbstract master = tileBooster.getMasterTile();
+            return master == null || !master.isInUse();
         }
-        final TileEntityMothershipEngineAbstract master = ((TileEntityMothershipEngineBooster) te).getMasterTile();
-        return master == null || !master.isInUse();
+        return true;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y, final int z,
-            final boolean willHarvest) {
-        return this.removedByPlayer(world, player, x, y, z);
-    }
-
-    @Override
-    @Deprecated
-    public boolean removedByPlayer(final World world, final EntityPlayer player, final int x, final int y,
-            final int z) {
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
         if (this.canBeMoved(world, x, y, z)) {
             return super.removedByPlayer(world, player, x, y, z);
         }

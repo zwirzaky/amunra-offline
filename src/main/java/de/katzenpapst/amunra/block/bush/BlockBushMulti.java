@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
@@ -18,7 +20,9 @@ import de.katzenpapst.amunra.block.BlockBasicMeta;
 import de.katzenpapst.amunra.block.SubBlock;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
-// SEE net.minecraft.block.BlockBush
+/**
+ * @see BlockBush
+ */
 public class BlockBushMulti extends BlockBasicMeta implements IGrowable, IShearable, IPlantable {
 
     public BlockBushMulti(final String name, final Material mat) {
@@ -31,12 +35,9 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
         this.setTickRandomly(true);
     }
 
-    /**
-     * Ticks the block if it's been scheduled
-     */
     @Override
-    public void updateTick(final World world, final int x, final int y, final int z, final Random rand) {
-        this.checkAndDropBlock(world, x, y, z);
+    public void updateTick(World worldIn, int x, int y, int z, Random random) {
+        this.checkAndDropBlock(worldIn, x, y, z);
     }
 
     /**
@@ -45,12 +46,12 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
     protected void checkAndDropBlock(final World world, final int x, final int y, final int z) {
         if (!this.canBlockStay(world, x, y, z)) {
             this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-            world.setBlock(x, y, z, getBlockById(0), 0, 2);
+            world.setBlock(x, y, z, Blocks.air, 0, 2);
         }
     }
 
     @Override
-    public BlockMetaPair addSubBlock(final int meta, final SubBlock sb) {
+    public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
         if (!(sb instanceof SubBlockBush)) {
             throw new IllegalArgumentException("BlockBushMulti can only accept SubBlockBush");
         }
@@ -58,15 +59,13 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
     }
 
     @Override
-    public boolean isShearable(final ItemStack item, final IBlockAccess world, final int x, final int y, final int z) {
+    public boolean isShearable(ItemStack item, IBlockAccess world, int x, int y, int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         return ((SubBlockBush) this.getSubBlock(meta)).isShearable(item, world, x, y, z);
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(final ItemStack item, final IBlockAccess world, final int x, final int y,
-            final int z, final int fortune) {
-
+    public ArrayList<ItemStack> onSheared(ItemStack item, IBlockAccess world, int x, int y, int z, int fortune) {
         final int meta = world.getBlockMetadata(x, y, z);
         return ((SubBlockBush) this.getSubBlock(meta)).onSheared(item, world, x, y, z, fortune);
     }
@@ -75,23 +74,24 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * func_149851_a is basically a stillGrowing() method. It returns (or should return) true if the growth stage is
      * less than the max growth stage.
      *
-     * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
-    public boolean func_149851_a(final World world, final int x, final int y, final int z,
-            final boolean isWorldRemote) {
-        final int meta = world.getBlockMetadata(x, y, z);
-        return ((SubBlockBush) this.getSubBlock(meta)).func_149851_a(world, x, y, z, isWorldRemote);
+    public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient) {
+        final int meta = worldIn.getBlockMetadata(x, y, z);
+        return ((SubBlockBush) this.getSubBlock(meta)).func_149851_a(worldIn, x, y, z, isClient);
     }
 
     /**
      * func_149852_a is basically a canBoneMealSpeedUpGrowth() method. I usually just return true, but depends on your
      * crop.
+     * 
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
-    public boolean func_149852_a(final World world, final Random rand, final int x, final int y, final int z) {
-        final int meta = world.getBlockMetadata(x, y, z);
-        return ((SubBlockBush) this.getSubBlock(meta)).func_149852_a(world, rand, x, y, z);
+    public boolean func_149852_a(World worldIn, Random random, int x, int y, int z) {
+        final int meta = worldIn.getBlockMetadata(x, y, z);
+        return ((SubBlockBush) this.getSubBlock(meta)).func_149852_a(worldIn, random, x, y, z);
     }
 
     /**
@@ -99,61 +99,48 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * metadata so then in this method you would increment it if it wasn't already at maximum and store back in
      * metadata.
      *
+     * @see <a href=https://forums.minecraftforge.net/topic/22365-understanding-igrowable/#comment-115221>Understanding IGrowable - Modder Support - Forge Forums</a>
      */
     @Override
-    public void func_149853_b(final World world, final Random rand, final int x, final int y, final int z) {
-        final int meta = world.getBlockMetadata(x, y, z);
-        ((SubBlockBush) this.getSubBlock(meta)).func_149853_b(world, rand, x, y, z);
+    public void func_149853_b(World worldIn, Random random, int x, int y, int z) {
+        final int meta = worldIn.getBlockMetadata(x, y, z);
+        ((SubBlockBush) this.getSubBlock(meta)).func_149853_b(worldIn, random, x, y, z);
 
     }
 
-    /**
-     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-     * cleared to be reused)
-     */
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World worldIn, final int x, final int y, final int z) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z) {
         return null;
     }
 
-    /**
-     * Is this block (a) opaque and (b) a full 1m cube? This determines whether or not to render the shared face of two
-     * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
-     */
     @Override
     public boolean isOpaqueCube() {
         return false;
     }
 
-    /**
-     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
-     */
     @Override
     public boolean renderAsNormalBlock() {
         return false;
     }
 
-    /**
-     * The type of render function that is called for this block
-     */
     @Override
     public int getRenderType() {
         return 1;
     }
 
     @Override
-    public EnumPlantType getPlantType(final IBlockAccess world, final int x, final int y, final int z) {
+    public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
         final int meta = world.getBlockMetadata(x, y, z);
         return ((SubBlockBush) this.getSubBlock(meta)).getPlantType(world, x, y, z);
     }
 
     @Override
-    public Block getPlant(final IBlockAccess world, final int x, final int y, final int z) {
+    public Block getPlant(IBlockAccess world, int x, int y, int z) {
         return this;
     }
 
     @Override
-    public int getPlantMetadata(final IBlockAccess world, final int x, final int y, final int z) {
+    public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
         return world.getBlockMetadata(x, y, z);
     }
 
@@ -165,14 +152,10 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
         return ((SubBlockBush) this.getSubBlock(meta)).canPlaceOn(blockToCheck, metaToCheck, 0);
     }
 
-    /**
-     * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
-     * their own) Args: x, y, z, neighbor Block
-     */
     @Override
-    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final Block b) {
-        super.onNeighborBlockChange(world, x, y, z, b);
-        this.checkAndDropBlock(world, x, y, z);
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
+        this.checkAndDropBlock(worldIn, x, y, z);
     }
     /*
      * @Override public boolean isCollidable() { return false; }

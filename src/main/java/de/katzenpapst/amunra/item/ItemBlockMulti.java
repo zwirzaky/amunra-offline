@@ -15,7 +15,6 @@ import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
  * Item for multiblocks
  * 
  * @author katzenpapst
- *
  */
 public class ItemBlockMulti extends ItemBlockDesc {
 
@@ -27,15 +26,15 @@ public class ItemBlockMulti extends ItemBlockDesc {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(final ItemStack par1ItemStack) {
+    public EnumRarity getRarity(ItemStack p_77613_1_) {
         // colors the name
         return ClientProxyCore.galacticraftItem;
     }
 
     @Override
-    public String getUnlocalizedName(final ItemStack itemstack) {
+    public String getUnlocalizedName(ItemStack stack) {
         final String subBlockName = ((IMetaBlock) this.field_150939_a)
-                .getUnlocalizedSubBlockName(itemstack.getItemDamage());
+                .getUnlocalizedSubBlockName(stack.getItemDamage());
         return "tile." + subBlockName;
     }
 
@@ -45,13 +44,13 @@ public class ItemBlockMulti extends ItemBlockDesc {
     }
 
     @Override
-    public int getMetadata(final int meta) {
-        return meta;
+    public int getMetadata(int p_77647_1_) {
+        return p_77647_1_;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(final int damage) {
-        return ((IMetaBlock) this.field_150939_a).getSubBlock(damage).getIcon(1, 0);
+    public IIcon getIconFromDamage(int p_77617_1_) {
+        return ((IMetaBlock) this.field_150939_a).getSubBlock(p_77617_1_).getIcon(1, 0);
     }
 }

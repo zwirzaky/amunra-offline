@@ -105,25 +105,19 @@ public class ModelARVillager extends ModelVillager {
 
     }
 
-    /**
-     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
-     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
-     * "far" arms and legs can swing at most.
-     */
     @Override
-    public void setRotationAngles(final float limbSwingTime, final float limbSwingAmount, final float totalTimeMaybe,
-            final float rotationY, final float rotationX, final float someConstant, final Entity theEntity) {
-        this.villagerHead.rotateAngleY = rotationY / (180F / (float) Math.PI);
-        this.villagerHead.rotateAngleX = rotationX / (180F / (float) Math.PI);
+    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
+        this.villagerHead.rotateAngleY = p_78087_4_ / (180F / (float) Math.PI);
+        this.villagerHead.rotateAngleX = p_78087_5_ / (180F / (float) Math.PI);
         this.villagerArms.rotationPointY = 3.0F;
         this.villagerArms.rotationPointZ = -1.0F;
         this.villagerArms.rotateAngleX = -0.75F;
 
-        final float test = MathHelper.cos(limbSwingTime * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
+        final float test = MathHelper.cos(p_78087_1_ * 0.6662F) * 1.4F * p_78087_2_ * 0.5F;
 
         this.rightVillagerLeg.rotateAngleX = test;
-        this.leftVillagerLeg.rotateAngleX = MathHelper.cos(limbSwingTime * 0.6662F + (float) Math.PI) * 1.4F
-                * limbSwingAmount
+        this.leftVillagerLeg.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F + (float) Math.PI) * 1.4F
+                * p_78087_2_
                 * 0.5F;
         this.rightVillagerLeg.rotateAngleY = 0.0F;
         this.leftVillagerLeg.rotateAngleY = 0.0F;
@@ -141,24 +135,23 @@ public class ModelARVillager extends ModelVillager {
     }
 
     @Override
-    public void render(final Entity curEntity, final float limbSwingTime, final float limbSwingAmplitude,
-            final float totalTimeMaybe, final float rotationY, final float rotationX, final float someConstant) {
+    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_) {
         this.setRotationAngles(
-                limbSwingTime,
-                limbSwingAmplitude,
-                totalTimeMaybe,
-                rotationY,
-                rotationX,
-                someConstant,
-                curEntity);
-        this.villagerHead.render(someConstant);
-        this.villagerBody.render(someConstant);
+                p_78088_2_,
+                p_78088_3_,
+                p_78088_4_,
+                p_78088_5_,
+                p_78088_6_,
+                p_78088_7_,
+                p_78088_1_);
+        this.villagerHead.render(p_78088_7_);
+        this.villagerBody.render(p_78088_7_);
         // this.rightVillagerLeg.render(someConstant);
         // this.leftVillagerLeg.render(someConstant);
-        this.villagerArms.render(someConstant);
+        this.villagerArms.render(p_78088_7_);
 
         for (ModelRenderer element : this.tailBoxes) {
-            element.render(someConstant);
+            element.render(p_78088_7_);
         }
 
     }

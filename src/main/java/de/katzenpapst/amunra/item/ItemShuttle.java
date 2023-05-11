@@ -2,6 +2,7 @@ package de.katzenpapst.amunra.item;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -60,18 +61,14 @@ public class ItemShuttle extends Item implements IHoldableItem {
         return spaceship;
     }
 
-    /**
-     * itemstack, player, world, x, y, z, side, hitX, hitY, hitZ
-     */
     @Override
-    public boolean onItemUse(ItemStack itemStack, final EntityPlayer player, final World world, final int x,
-            final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ) {
+    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
         boolean padFound = false;
         TileEntity tile = null;
 
-        if (world.isRemote && player instanceof EntityPlayerSP) {
+        if (p_77648_3_.isRemote && p_77648_2_ instanceof EntityPlayerSP playerSP) {
             // TODO FIX THIS, or figure out what it does
-            ClientProxyCore.playerClientHandler.onBuild(8, (EntityPlayerSP) player);
+            ClientProxyCore.playerClientHandler.onBuild(8, playerSP);
             return false;
         }
         float centerX = -1;
@@ -80,16 +77,16 @@ public class ItemShuttle extends Item implements IHoldableItem {
 
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                final net.minecraft.block.Block id = world.getBlock(x + i, y, z + j);
-                final int meta = world.getBlockMetadata(x + i, y, z + j);
+                final Block id = p_77648_3_.getBlock(p_77648_4_ + i, p_77648_5_, p_77648_6_ + j);
+                final int meta = p_77648_3_.getBlockMetadata(p_77648_4_ + i, p_77648_5_, p_77648_6_ + j);
 
                 if (id == GCBlocks.landingPadFull && meta == 0) {
                     padFound = true;
-                    tile = world.getTileEntity(x + i, y, z + j);
+                    tile = p_77648_3_.getTileEntity(p_77648_4_ + i, p_77648_5_, p_77648_6_ + j);
 
-                    centerX = x + i + 0.5F;
-                    centerY = y + 0.4F;
-                    centerZ = z + j + 0.5F;
+                    centerX = p_77648_4_ + i + 0.5F;
+                    centerY = p_77648_5_ + 0.4F;
+                    centerZ = p_77648_6_ + j + 0.5F;
 
                     break;
                 }
@@ -100,31 +97,30 @@ public class ItemShuttle extends Item implements IHoldableItem {
 
         if (padFound) {
             // Check whether there is already a rocket on the pad
-            if (!(tile instanceof TileEntityLandingPad)) {
+            if (!(tile instanceof TileEntityLandingPad tilePad)) {
                 return false;
             }
-            if (((TileEntityLandingPad) tile).getDockedEntity() != null) return false;
+            if (tilePad.getDockedEntity() != null) return false;
 
         } else {
-            centerX = x + 0.5F;
-            centerY = y + 0.4F;
-            centerZ = z + 0.5F;
+            centerX = p_77648_4_ + 0.5F;
+            centerY = p_77648_5_ + 0.4F;
+            centerZ = p_77648_6_ + 0.5F;
 
         }
-        this.spawnRocketEntity(itemStack, world, centerX, centerY, centerZ);
-        if (!player.capabilities.isCreativeMode) {
-            itemStack.stackSize--;
+        this.spawnRocketEntity(p_77648_1_, p_77648_3_, centerX, centerY, centerZ);
+        if (!p_77648_2_.capabilities.isCreativeMode) {
+            p_77648_1_.stackSize--;
 
-            if (itemStack.stackSize <= 0) {
-                itemStack = null;
+            if (p_77648_1_.stackSize <= 0) {
+                p_77648_1_ = null;
             }
         }
         return true;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void getSubItems(final Item par1, final CreativeTabs par2CreativeTabs, final List par3List) {
+    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List<ItemStack> p_150895_3_) {
         // par3List.add(new ItemStack(par1, 1, 0));
 
         for (int numTanks = 0; numTanks <= 3; numTanks++) {
@@ -133,41 +129,40 @@ public class ItemShuttle extends Item implements IHoldableItem {
                     continue; // do it later
                 }
                 final int dmg = numChests | numTanks << 2;
-                par3List.add(new ItemStack(par1, 1, dmg));
+                p_150895_3_.add(new ItemStack(p_150895_1_, 1, dmg));
             }
         }
 
         // lastly
-        par3List.add(new ItemStack(par1, 1, 3 | 3 << 2));
+        p_150895_3_.add(new ItemStack(p_150895_1_, 1, 3 | 3 << 2));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(final ItemStack par1ItemStack) {
+    public EnumRarity getRarity(ItemStack p_77613_1_) {
         return ClientProxyCore.galacticraftItem;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(final ItemStack stack, final EntityPlayer player, final List list, final boolean b) {
-        final int dmg = stack.getItemDamage();
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+        final int dmg = p_77624_1_.getItemDamage();
         final EnumRocketType type = EntityShuttle.getRocketTypeFromDamage(dmg);
 
         if (!type.getTooltip().isEmpty()) {
-            list.add(type.getTooltip());
+            p_77624_3_.add(type.getTooltip());
         }
 
         final int fuelTotal = EntityShuttle.getFuelCapacityFromDamage(dmg);
         if (EntityShuttle.isPreFueled(dmg)) {
-            list.add(GCCoreUtil.translate("gui.message.fuel.name") + ": " + fuelTotal + " / " + fuelTotal);
-            list.add(EnumColor.RED + "\u00a7o" + GCCoreUtil.translate("gui.creativeOnly.desc"));
+            p_77624_3_.add(GCCoreUtil.translate("gui.message.fuel.name") + ": " + fuelTotal + " / " + fuelTotal);
+            p_77624_3_.add(EnumColor.RED + "\u00a7o" + GCCoreUtil.translate("gui.creativeOnly.desc"));
         } else {
             int fuelContained = 0;
-            if (stack.hasTagCompound() && stack.getTagCompound().hasKey("RocketFuel")) {
-                fuelContained = stack.getTagCompound().getInteger("RocketFuel");
+            if (p_77624_1_.hasTagCompound() && p_77624_1_.getTagCompound().hasKey("RocketFuel")) {
+                fuelContained = p_77624_1_.getTagCompound().getInteger("RocketFuel");
             }
-            list.add(GCCoreUtil.translate("gui.message.fuel.name") + ": " + fuelContained + " / " + fuelTotal);
+            p_77624_3_.add(GCCoreUtil.translate("gui.message.fuel.name") + ": " + fuelContained + " / " + fuelTotal);
         }
     }
 

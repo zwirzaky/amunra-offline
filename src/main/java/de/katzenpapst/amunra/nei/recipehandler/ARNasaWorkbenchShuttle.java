@@ -1,7 +1,7 @@
 package de.katzenpapst.amunra.nei.recipehandler;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -21,12 +21,12 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
 
     public class CachedRocketRecipe extends TemplateRecipeHandler.CachedRecipe {
 
-        public ArrayList<PositionedStack> input;
+        public List<PositionedStack> input;
         public PositionedStack output;
 
         @Override
         public ArrayList<PositionedStack> getIngredients() {
-            return this.input;
+            return new ArrayList<>(this.input);
         }
 
         @Override
@@ -34,12 +34,12 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
             return this.output;
         }
 
-        public CachedRocketRecipe(final ArrayList<PositionedStack> pstack1, final PositionedStack pstack2) {
+        public CachedRocketRecipe(final List<PositionedStack> pstack1, final PositionedStack pstack2) {
             this.input = pstack1;
             this.output = pstack2;
         }
 
-        public CachedRocketRecipe(final Map.Entry<ArrayList<PositionedStack>, PositionedStack> recipe) {
+        public CachedRocketRecipe(final Entry<List<PositionedStack>, PositionedStack> recipe) {
             this(recipe.getKey(), recipe.getValue());
         }
     }
@@ -65,12 +65,12 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
         return GuiSchematicShuttle.shuttleSchematicTexture.toString();
     }
 
-    public Set<Entry<ArrayList<PositionedStack>, PositionedStack>> getRecipes() {
+    public Set<Entry<List<PositionedStack>, PositionedStack>> getRecipes() {
         return NEIAmunRaConfig.getShuttleRecipes();
     }
 
     @Override
-    public void drawBackground(final int recipe) {
+    public void drawBackground(int recipe) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(this.getGuiTexture());
 
@@ -83,9 +83,9 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void loadCraftingRecipes(final String outputId, final Object... results) {
+    public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(this.getRecipeId())) {
-            for (final Map.Entry<ArrayList<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
+            for (final Entry<List<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
                 this.arecipes.add(new CachedRocketRecipe(irecipe));
             }
         } else {
@@ -94,8 +94,8 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void loadCraftingRecipes(final ItemStack result) {
-        for (final Map.Entry<ArrayList<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
+    public void loadCraftingRecipes(ItemStack result) {
+        for (final Entry<List<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
             if (NEIServerUtils.areStacksSameTypeCrafting(irecipe.getValue().item, result)) {
                 this.arecipes.add(new CachedRocketRecipe(irecipe));
             }
@@ -103,8 +103,8 @@ public class ARNasaWorkbenchShuttle extends TemplateRecipeHandler {
     }
 
     @Override
-    public void loadUsageRecipes(final ItemStack ingredient) {
-        for (final Map.Entry<ArrayList<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
+    public void loadUsageRecipes(ItemStack ingredient) {
+        for (final Entry<List<PositionedStack>, PositionedStack> irecipe : this.getRecipes()) {
             for (final PositionedStack pstack : irecipe.getKey()) {
                 if (NEIServerUtils.areStacksSameTypeCrafting(ingredient, pstack.item)) {
                     this.arecipes.add(new CachedRocketRecipe(irecipe));

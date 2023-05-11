@@ -28,7 +28,7 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
         void mothershipOperationFailed(String message);
     }
 
-    private static final ResourceLocation guiTexture = new ResourceLocation(
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/gui/ms_settings.png");
 
@@ -48,11 +48,10 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float ticksProbably, final int somethingX,
-            final int somethingY) {
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glPushMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture(guiTexture);
+        this.mc.renderEngine.bindTexture(GUI_TEXTURE);
         final int xOffset = (this.width - this.xSize) / 2;
         final int yOffset = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(xOffset, yOffset, 0, 0, this.xSize, this.ySize);

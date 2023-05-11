@@ -20,11 +20,11 @@ public class GridVillageGenerator extends StructureGenerator {
      * float probability, int minAmount, int maxAmount) { this.clazz = clazz; this.probability = probability;
      * this.minAmount = minAmount; this.maxAmount = maxAmount; } }
      */
-    protected List<SubComponentData> components = new ArrayList<>();
+    protected final List<SubComponentData> components = new ArrayList<>();
 
     protected int gridSize = 32;
 
-    protected Map<Long, GridVillageStart> structureMap = new HashMap<>(); // Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(p_151538_2_,
+    protected final Map<Long, GridVillageStart> structureMap = new HashMap<>(); // Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(p_151538_2_,
                                                                           // p_151538_3_)
 
     public void addComponentType(final Class<? extends GridVillageComponent> clazz, final float probability) {

@@ -61,9 +61,6 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
         return ARBlocks.blockBasalt;
     }
 
-    /**
-     * Seems to affect the baseheight doesn't affect the bedrock holes
-     */
     @Override
     public double getHeightModifier() {
         return 10;
@@ -81,25 +78,16 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
         return 0;
     }
 
-    /**
-     * medium terrain height, doesn't affect the bedrock holes
-     */
     @Override
     protected int getSeaLevel() {
         return 56;
     }
 
-    /**
-     * doesn't affect the bedrock holes
-     */
     @Override
     public double getSmallFeatureHeightModifier() {
         return 0;
     }
 
-    /**
-     * doesn't affect the bedrock holes
-     */
     @Override
     public double getValleyHeightModifier() {
         return 0;
@@ -118,7 +106,7 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
     public void onPopulate(final IChunkProvider arg0, final int arg1, final int arg2) {}
 
     @Override
-    public boolean chunkExists(final int x, final int y) {
+    public boolean chunkExists(int p_73149_1_, int p_73149_2_) {
         return false;
     }
 

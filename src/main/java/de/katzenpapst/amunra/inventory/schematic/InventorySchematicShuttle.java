@@ -23,8 +23,8 @@ public class InventorySchematicShuttle implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlot(final int slot) {
-        return slot >= this.getSizeInventory() ? null : this.stackList[slot];
+    public ItemStack getStackInSlot(int slotIn) {
+        return slotIn >= this.getSizeInventory() ? null : this.stackList[slotIn];
     }
 
     public ItemStack getStackInRowAndColumn(final int x, final int y) {
@@ -44,30 +44,30 @@ public class InventorySchematicShuttle implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(final int slot) {
-        if (this.stackList[slot] != null) {
-            final ItemStack curStack = this.stackList[slot];
-            this.stackList[slot] = null;
+    public ItemStack getStackInSlotOnClosing(int index) {
+        if (this.stackList[index] != null) {
+            final ItemStack curStack = this.stackList[index];
+            this.stackList[index] = null;
             return curStack;
         }
         return null;
     }
 
     @Override
-    public ItemStack decrStackSize(final int slot, final int amount) {
-        if (this.stackList[slot] == null) {
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.stackList[index] == null) {
             return null;
         }
         ItemStack var3;
 
-        if (this.stackList[slot].stackSize <= amount) {
-            var3 = this.stackList[slot];
-            this.stackList[slot] = null;
+        if (this.stackList[index].stackSize <= count) {
+            var3 = this.stackList[index];
+            this.stackList[index] = null;
         } else {
-            var3 = this.stackList[slot].splitStack(amount);
+            var3 = this.stackList[index].splitStack(count);
 
-            if (this.stackList[slot].stackSize == 0) {
-                this.stackList[slot] = null;
+            if (this.stackList[index].stackSize == 0) {
+                this.stackList[index] = null;
             }
         }
         this.eventHandler.onCraftMatrixChanged(this);
@@ -89,7 +89,7 @@ public class InventorySchematicShuttle implements IInventory {
     public void markDirty() {}
 
     @Override
-    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer) {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return true;
     }
 
@@ -105,7 +105,7 @@ public class InventorySchematicShuttle implements IInventory {
     }
 
     @Override
-    public boolean isItemValidForSlot(final int i, final ItemStack itemstack) {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
         return false; // but why?
     }
 }

@@ -20,23 +20,18 @@ public class BlockRendererARChest implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public void renderInventoryBlock(final Block block, final int metadata, final int modelId,
-            final RenderBlocks renderer) {
-        // TODO Auto-generated method stub
+    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
         this.renderChest(block, metadata, modelId);
-
     }
 
     @Override
-    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block,
-            final int modelId, final RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         // this happens in the tileentity
-
         return false;
     }
 
     @Override
-    public boolean shouldRender3DInInventory(final int modelId) {
+    public boolean shouldRender3DInInventory(int modelId) {
         return true;
     }
 
@@ -46,8 +41,8 @@ public class BlockRendererARChest implements ISimpleBlockRenderingHandler {
     }
 
     public void renderChest(final Block par1Block, final int par2, final float par3) {
-        if (par1Block instanceof BlockARChest) {
-            this.chestModel.render((BlockARChest) par1Block, false, 0, -0.1F, 0);
+        if (par1Block instanceof BlockARChest blockChest) {
+            this.chestModel.render(blockChest, false, 0, -0.1F, 0);
         }
     }
 }

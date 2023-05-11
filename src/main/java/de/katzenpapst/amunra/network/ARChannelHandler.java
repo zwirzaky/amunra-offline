@@ -33,12 +33,12 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
     }
 
     @Override
-    public void encodeInto(final ChannelHandlerContext ctx, final IPacket msg, final ByteBuf target) throws Exception {
+    public void encodeInto(ChannelHandlerContext ctx, IPacket msg, ByteBuf target) throws Exception {
         msg.encodeInto(ctx, target);
     }
 
     @Override
-    public void decodeInto(final ChannelHandlerContext ctx, final ByteBuf source, final IPacket msg) {
+    public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, IPacket msg) {
         msg.decodeInto(ctx, source);
     }
 
@@ -56,7 +56,7 @@ public class ARChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
      * @param message The message to send
      * @param player  The player to send it to
      */
-    public void sendTo(final IPacket message, final EntityPlayerMP player) {
+    public void sendTo(IPacket message, final EntityPlayerMP player) {
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);

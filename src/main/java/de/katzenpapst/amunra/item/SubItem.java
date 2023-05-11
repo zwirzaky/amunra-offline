@@ -5,18 +5,16 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 
 public class SubItem extends Item {
 
     protected String itemInfo = null;
-    protected String fuckYouName = null;// fuck you, private
+    protected String name = null;
 
     public SubItem(final String name, final String assetName) {
-        this.fuckYouName = name;
+        this.name = name;
         this.setUnlocalizedName(name);
         this.setTextureName(AmunRa.TEXTUREPREFIX + assetName);
     }
@@ -28,7 +26,7 @@ public class SubItem extends Item {
 
     @Override
     public String getUnlocalizedName() {
-        return this.fuckYouName;
+        return this.name;
     }
 
     public String getItemInfo() {
@@ -41,8 +39,7 @@ public class SubItem extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(final ItemStack par1ItemStack) {
+    public EnumRarity getRarity(ItemStack p_77613_1_) {
         return ClientProxyCore.galacticraftItem;
     }
 

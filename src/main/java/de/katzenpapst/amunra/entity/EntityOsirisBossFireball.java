@@ -19,10 +19,10 @@ public class EntityOsirisBossFireball extends EntityFireball {
     }
 
     @Override
-    protected void onImpact(final MovingObjectPosition movingObjectPosition) {
+    protected void onImpact(MovingObjectPosition p_70227_1_) {
         if (!this.worldObj.isRemote) {
-            if (movingObjectPosition.entityHit != null && !(movingObjectPosition.entityHit instanceof EntityCreeper)) {
-                movingObjectPosition.entityHit
+            if (p_70227_1_.entityHit != null && !(p_70227_1_.entityHit instanceof EntityCreeper)) {
+                p_70227_1_.entityHit
                         .attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), this.damage);
                 // ConfigManagerCore.hardMode ? 12.0F : 6.0F
             }
@@ -69,24 +69,16 @@ public class EntityOsirisBossFireball extends EntityFireball {
         this.accelerationZ = accelZ / d3 * 0.1D;
     }
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
     @Override
-    public void writeEntityToNBT(final NBTTagCompound nbt) {
-        super.writeEntityToNBT(nbt);
-
-        nbt.setFloat("damage", this.damage);
+    public void writeEntityToNBT(NBTTagCompound tagCompound) {
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setFloat("damage", this.damage);
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
     @Override
-    public void readEntityFromNBT(final NBTTagCompound nbt) {
-        super.readEntityFromNBT(nbt);
-
-        this.damage = nbt.getFloat("damage");
+    public void readEntityFromNBT(NBTTagCompound tagCompound) {
+        super.readEntityFromNBT(tagCompound);
+        this.damage = tagCompound.getFloat("damage");
     }
 
 }

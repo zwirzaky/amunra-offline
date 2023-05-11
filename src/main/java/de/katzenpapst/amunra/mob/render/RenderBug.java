@@ -19,12 +19,12 @@ public class RenderBug extends RenderLiving {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(final Entity ent) {
+    protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
         return tex;
     }
 
     @Override
-    protected void preRenderCallback(final EntityLivingBase entity, final float partialTickTime) {
+    protected void preRenderCallback(EntityLivingBase p_77041_1_, float p_77041_2_) {
         GL11.glTranslated(0.0, 1.1, 0.0);
     }
 

@@ -20,7 +20,7 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback, IMothershipSettingsTab {
 
-    private final ResourceLocation icontexture = new ResourceLocation(
+    private static final ResourceLocation ICONTEXTURES = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/gui/mothership_icons/0.png");
 
@@ -73,10 +73,10 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
         final int guiX = (this.width - this.xSize) / 2;
         final int guiY = (this.height - this.ySize) / 2;
 
-        this.fontRendererObj.drawString(this.getTooltip(), guiX + 5, guiY + 5, 4210752);
+        this.fontRendererObj.drawString(this.getTooltip(), guiX + 5, guiY + 5, 0x404040);
 
         this.fontRendererObj
-                .drawString(GCCoreUtil.translate("container.inventory"), guiX + 8, guiY + this.ySize - 94, 4210752);
+                .drawString(GCCoreUtil.translate("container.inventory"), guiX + 8, guiY + this.ySize - 94, 0x404040);
     }
 
     @Override
@@ -172,9 +172,7 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
     }
 
     @Override
-    public void onIntruderInteraction(final GuiElementTextBox textBox) {
-        // TODO Auto-generated method stub
-    }
+    public void onIntruderInteraction(final GuiElementTextBox textBox) {}
 
     public void setGuiEnabled(final boolean set) {
         // applyButton.enabled = set;
@@ -253,12 +251,9 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     @Override
     public ResourceLocation getIcon() {
-        return this.icontexture;
+        return ICONTEXTURES;
     }
 
     @Override
-    public void mothershipOperationFailed(final String message) {
-        // TODO Auto-generated method stub
-
-    }
+    public void mothershipOperationFailed(final String message) {}
 }

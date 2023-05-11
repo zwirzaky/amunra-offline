@@ -26,7 +26,7 @@ public class CommandShuttleTeleport extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(final ICommandSender sender) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.getCommandName() + " [<player>]";
     }
 
@@ -36,7 +36,7 @@ public class CommandShuttleTeleport extends CommandBase {
     }
 
     @Override
-    public void processCommand(final ICommandSender sender, final String[] args) {
+    public void processCommand(ICommandSender sender, String[] args) {
         EntityPlayerMP playerBase = null;
 
         if (args.length >= 2) {

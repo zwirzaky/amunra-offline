@@ -13,10 +13,10 @@ import de.katzenpapst.amunra.mob.model.ModelSentry;
 
 public class RenderSentry extends RenderLiving {
 
-    private static final ResourceLocation textures = new ResourceLocation(
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/entity/sentry.png");
-    private static final ResourceLocation textures_highlight = new ResourceLocation(
+    private static final ResourceLocation TEXTURE_HIGHLIGHT = new ResourceLocation(
             AmunRa.ASSETPREFIX,
             "textures/entity/sentry_highlight.png");
     // private static final ResourceLocation ghastShootingTextures = new
@@ -28,11 +28,11 @@ public class RenderSentry extends RenderLiving {
     }
 
     @Override
-    protected int shouldRenderPass(final EntityLivingBase p_77032_1_, final int p_77032_2_, final float p_77032_3_) {
+    protected int shouldRenderPass(EntityLivingBase p_77032_1_, int p_77032_2_, float p_77032_3_) {
         if (p_77032_2_ != 0) {
             return -1;
         }
-        this.bindTexture(textures_highlight);
+        this.bindTexture(TEXTURE_HIGHLIGHT);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
@@ -51,22 +51,15 @@ public class RenderSentry extends RenderLiving {
         return 1;
     }
 
-    /**
-     * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
-     * entityLiving, partialTickTime
-     */
     @Override
-    protected void preRenderCallback(final EntityLivingBase entity, final float partialTickTime) {
+    protected void preRenderCallback(EntityLivingBase p_77041_1_, float p_77041_2_) {
         // this.preRenderCallback((EntitySentry)entity, partialTickTime);
         GL11.glScalef(1.0F, 1.0F, 1.0F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    /**
-     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
-     */
     @Override
-    protected ResourceLocation getEntityTexture(final Entity entity) {
-        return textures;
+    protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+        return TEXTURE;
     }
 }

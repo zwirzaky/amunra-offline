@@ -18,7 +18,7 @@ public class ContainerShuttleDock extends ContainerWithPlayerInventory {
     }
 
     @Override
-    public boolean canInteractWith(final EntityPlayer player) {
+    public boolean canInteractWith(EntityPlayer player) {
         return ((TileEntityShuttleDock) this.tileEntity).isUseableByPlayer(player);
     }
 

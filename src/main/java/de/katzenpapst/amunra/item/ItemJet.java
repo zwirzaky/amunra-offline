@@ -38,31 +38,27 @@ public class ItemJet extends ItemBlockMulti {
         this.setUnlocalizedName(assetName);
     }
 
-    /**
-     * Returns the unlocalized name of this item.
-     */
     @Override
     public String getUnlocalizedName() {
         return this.field_150939_a.getUnlocalizedName();
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(final ItemStack par1ItemStack) {
+    public EnumRarity getRarity(ItemStack p_77613_1_) {
         // colors the name
         return ClientProxyCore.galacticraftItem;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(final IIconRegister reg) {
+    public void registerIcons(IIconRegister register) {
         final int length = ((BlockMachineMeta) this.field_150939_a).getNumPossibleSubBlocks();
         this.icons = new IIcon[length];
         for (int i = 0; i < length; i++) {
             final MothershipEngineJetBase sb = (MothershipEngineJetBase) ((BlockMachineMeta) this.field_150939_a)
                     .getSubBlock(i);
             if (sb != null) {
-                this.icons[i] = reg.registerIcon(sb.getItemIconName());
+                this.icons[i] = register.registerIcon(sb.getItemIconName());
             }
         }
         // this.itemIcon = reg.registerIcon(this.getIconString());
@@ -73,9 +69,6 @@ public class ItemJet extends ItemBlockMulti {
         return AmunRa.arTab;
     }
 
-    /**
-     * Returns 0 for /terrain.png, 1 for /gui/items.png
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public int getSpriteNumber() {
@@ -84,27 +77,18 @@ public class ItemJet extends ItemBlockMulti {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(final int dmg) {
-        return this.icons[dmg];
+    public IIcon getIconFromDamage(int p_77617_1_) {
+        return this.icons[p_77617_1_];
         // return ((BlockMachineMeta)field_150939_a).getSubBlock(dmg).getIcon(1, 0);
     }
 
     @Override
-    public int getMetadata(final int damage) {
-        return damage;
+    public int getMetadata(int p_77647_1_) {
+        return p_77647_1_;
     }
 
-    /**
-     * Called to actually place the block, after the location is determined and all permission checks have been made.
-     *
-     * @param stack  The item stack that was used to place the block. This can be changed inside the method.
-     * @param player The player who is placing the block. Can be null if the block is not being placed by a player.
-     * @param side   The side the player (or machine) right-clicked on.
-     */
     @Override
-    public boolean placeBlockAt(final ItemStack stack, final EntityPlayer player, final World world, final int x,
-            final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ,
-            int metadata) {
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
 
         /**
          * 0 -> +Y 1 -> -Y 2 -> -Z 3 -> +Z 4 -> -X 5 -> +X
@@ -154,17 +138,16 @@ public class ItemJet extends ItemBlockMulti {
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(final ItemStack stack, final EntityPlayer player,
-            @SuppressWarnings("rawtypes") final List info, final boolean advanced) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, @SuppressWarnings("rawtypes") List p_77624_3_, boolean p_77624_4_) {
         if (this.field_150939_a instanceof IBlockShiftDesc
-                && ((IBlockShiftDesc) this.field_150939_a).showDescription(stack.getItemDamage())) {
+                && ((IBlockShiftDesc) this.field_150939_a).showDescription(p_77624_1_.getItemDamage())) {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-                info.addAll(
+                p_77624_3_.addAll(
                         FMLClientHandler.instance().getClient().fontRenderer.listFormattedStringToWidth(
-                                ((IBlockShiftDesc) this.field_150939_a).getShiftDescription(stack.getItemDamage()),
+                                ((IBlockShiftDesc) this.field_150939_a).getShiftDescription(p_77624_1_.getItemDamage()),
                                 150));
             } else {
-                info.add(
+                p_77624_3_.add(
                         GCCoreUtil.translateWithFormat(
                                 "itemDesc.shift.name",
                                 GameSettings.getKeyDisplayString(

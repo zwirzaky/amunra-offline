@@ -44,11 +44,8 @@ public class TabButton extends GuiButton {
         this.extraInfo = infoString;
     }
 
-    /**
-     * Draws this button to the screen.
-     */
     @Override
-    public void drawButton(final Minecraft mc, final int mouseX, final int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (this.visible) {
             RenderHelper.disableStandardItemLighting();
 
@@ -56,7 +53,7 @@ public class TabButton extends GuiButton {
                     && mouseX < this.xPosition + this.width
                     && mouseY < this.yPosition + this.height;
 
-            final int k = this.getHoverState(this.field_146123_n);
+            final int hoverState = this.getHoverState(this.field_146123_n);
 
             mc.getTextureManager().bindTexture(textures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -65,11 +62,10 @@ public class TabButton extends GuiButton {
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0 + k * 28, 30, 28);
+            this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0 + hoverState * 28, 30, 28);
 
             this.mouseDragged(mc, mouseX, mouseY);
 
-            //
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             mc.getTextureManager().bindTexture(this.texture);
             this.drawFullSizedTexturedRect(this.xPosition + 7, this.yPosition + 5, 18, 18);
@@ -91,12 +87,8 @@ public class TabButton extends GuiButton {
         tessellator.draw();
     }
 
-    /**
-     * Returns 0 if the button is disabled, 1 if the mouse is NOT hovering over this button and 2 if it IS hovering over
-     * this button.
-     */
     @Override
-    public int getHoverState(final boolean isMouseOver) {
+    public int getHoverState(boolean mouseOver) {
         if (this.isActive) {
             return 0;
         }

@@ -175,9 +175,7 @@ public class SethChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {
-
-    }
+    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {}
 
     @Override
     public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {

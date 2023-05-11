@@ -68,8 +68,8 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(final int slotnr) {
-        // T ODO fix
+    public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
+        // TODO fix
         return new int[] { 0, 1 };
 
     }
@@ -94,18 +94,18 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public boolean isItemValidForSlot(final int slotID, final ItemStack itemstack) {
-        if (itemstack == null) return false;
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        if (stack == null) return false;
 
-        switch (slotID) {
+        switch (index) {
             case 0:
-                final FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(itemstack);
+                final FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(stack);
                 if (containedFluid != null && containedFluid.getFluid() == this.fuel) {
                     return true;
                 }
                 break;
             case 1:
-                return ItemElectricBase.isElectricItem(itemstack.getItem());
+                return ItemElectricBase.isElectricItem(stack.getItem());
         }
         return false;
 
@@ -198,8 +198,8 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public boolean canExtractItem(final int slotID, final ItemStack itemstack, final int side) {
-        return slotID == 0 || slotID == 1;
+    public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
+        return p_102008_1_ == 0 || p_102008_1_ == 1;
     }
 
     @Override
@@ -208,24 +208,22 @@ public class TileEntityMothershipEngineIon extends TileEntityMothershipEngineAbs
     }
 
     @Override
-    public void readFromNBT(final NBTTagCompound nbt) {
-        final float capacity = nbt.getFloat("energyCapacity");
+    public void readFromNBT(NBTTagCompound compound) {
+        final float capacity = compound.getFloat("energyCapacity");
         this.storage.setCapacity(capacity);
-        super.readFromNBT(nbt);
+        super.readFromNBT(compound);
     }
 
     @Override
-    public void writeToNBT(final NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        nbt.setFloat("energyCapacity", this.storage.getCapacityGC());
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        compound.setFloat("energyCapacity", this.storage.getCapacityGC());
     }
 
     @Override
     protected void createMultiblockInternal(final boolean notifyClient) {
         super.createMultiblockInternal(notifyClient);
-
         this.storage.setCapacity(this.getEnergyCapacity());
-
     }
 
     @Override

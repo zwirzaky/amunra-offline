@@ -1,8 +1,8 @@
 package de.katzenpapst.amunra.entity.spaceship;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.Entity;
@@ -174,7 +174,7 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     @Override
-    public ItemStack getPickedResult(final MovingObjectPosition target) {
+    public ItemStack getPickedResult(MovingObjectPosition target) {
         return new ItemStack(ARItems.shuttleItem, 1, this.encodeItemDamage());
     }
 
@@ -212,8 +212,6 @@ public class EntityShuttle extends EntityTieredRocket {
 
     /**
      * This gets added onto getOnPadYOffset
-     * 
-     * @return
      */
     public double getOnGroundYOffset() {
         return 1.0D;
@@ -371,27 +369,25 @@ public class EntityShuttle extends EntityTieredRocket {
         super.failRocket();
     }
 
-    protected void repositionMountedPlayer(final Entity player) {
-        if (!(player instanceof EntityPlayer)) {
+    protected void repositionMountedPlayer(final Entity entity) {
+        if (!(entity instanceof EntityPlayer player)) {
             return;
         }
-        if (this.getLandingPad() != null && this.getLandingPad() instanceof TileEntityShuttleDock) {
+        if (this.getLandingPad() != null && this.getLandingPad() instanceof TileEntityShuttleDock tileDock) {
             // just rotate the player away from the dock
-            final TileEntityShuttleDock dock = (TileEntityShuttleDock) this.getLandingPad();
-            ((EntityPlayer) player).rotationYaw = dock.getExitRotation();
-            ((EntityPlayer) player).setPositionAndUpdate(player.posX, player.posY, player.posZ);
+            player.rotationYaw = tileDock.getExitRotation();
+            player.setPositionAndUpdate(entity.posX, entity.posY, entity.posZ);
         }
     }
 
-    protected void repositionDismountedPlayer(final Entity player) {
-        if (!(player instanceof EntityPlayer)) {
+    protected void repositionDismountedPlayer(final Entity entity) {
+        if (!(entity instanceof EntityPlayer player)) {
             return;
         }
-        if (this.getLandingPad() != null && this.getLandingPad() instanceof TileEntityShuttleDock) {
-            final TileEntityShuttleDock dock = (TileEntityShuttleDock) this.getLandingPad();
-            final Vector3 pos = dock.getExitPosition();
-            ((EntityPlayer) player).rotationYaw = dock.getExitRotation();
-            ((EntityPlayer) player).setPositionAndUpdate(pos.x, pos.y, pos.z);
+        if (this.getLandingPad() != null && this.getLandingPad() instanceof TileEntityShuttleDock tileDock) {
+            final Vector3 pos = tileDock.getExitPosition();
+            player.rotationYaw = tileDock.getExitRotation();
+            player.setPositionAndUpdate(pos.x, pos.y, pos.z);
             // player.setPositionAndRotation(pos.x, pos.y, pos.z, 0, 0);
             // player.setPosition(pos.x, pos.y, pos.z);
         } else {
@@ -402,13 +398,13 @@ public class EntityShuttle extends EntityTieredRocket {
             final int zPos = (int) (this.posZ - 0.5D);
 
             if (this.isSafeForPlayer(xPos, yPos, zPos - 2)) {
-                ((EntityPlayer) player).setPositionAndUpdate(this.posX, yPos, this.posZ - 2);
+                player.setPositionAndUpdate(this.posX, yPos, this.posZ - 2);
             } else if (this.isSafeForPlayer(xPos, yPos, zPos + 2)) {
-                ((EntityPlayer) player).setPositionAndUpdate(this.posX, yPos, this.posZ + 2);
+                player.setPositionAndUpdate(this.posX, yPos, this.posZ + 2);
             } else if (this.isSafeForPlayer(xPos - 2, yPos, zPos)) {
-                ((EntityPlayer) player).setPositionAndUpdate(this.posX - 2, yPos, this.posZ);
+                player.setPositionAndUpdate(this.posX - 2, yPos, this.posZ);
             } else if (this.isSafeForPlayer(xPos + 2, yPos, zPos)) {
-                ((EntityPlayer) player).setPositionAndUpdate(this.posX + 2, yPos, this.posZ);
+                player.setPositionAndUpdate(this.posX + 2, yPos, this.posZ);
             }
         }
         // return new Vector3(this.posX, this.posY, this.posZ);
@@ -443,14 +439,13 @@ public class EntityShuttle extends EntityTieredRocket {
             final TileEntity te = this.targetVec.getTileEntity(this.worldObj);
             if (te instanceof IFuelDock) {
 
-                if (!(te instanceof TileEntityShuttleDock)) {
+                if (!(te instanceof TileEntityShuttleDock tileDock)) {
                     // just a regular dock. oh well
                     return;
                 }
-                if (((TileEntityShuttleDock) te).isAvailable()) {
-
+                if (tileDock.isAvailable()) {
                     // finally
-                    ((TileEntityShuttleDock) te).dockEntity(this);
+                    tileDock.dockEntity(this);
                 } else {
                     this.tryFindAnotherDock();
                 }
@@ -524,8 +519,8 @@ public class EntityShuttle extends EntityTieredRocket {
 
                 double multiplier = 1.0D;
 
-                if (this.worldObj.provider instanceof IGalacticraftWorldProvider) {
-                    multiplier = ((IGalacticraftWorldProvider) this.worldObj.provider).getFuelUsageMultiplier();
+                if (this.worldObj.provider instanceof IGalacticraftWorldProvider gcProvider) {
+                    multiplier = gcProvider.getFuelUsageMultiplier();
 
                     if (multiplier <= 0) {
                         multiplier = 1;
@@ -640,18 +635,15 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     public void landEntity(final TileEntity tile) {
-
         if (tile instanceof IFuelDock dock && this.isDockValid(dock)) {
             if (!this.worldObj.isRemote) {
                 // Drop any existing rocket on the landing pad
-                if (dock.getDockedEntity() instanceof EntitySpaceshipBase && dock.getDockedEntity() != this) {
-                    ((EntitySpaceshipBase) dock.getDockedEntity()).dropShipAsItem();
-                    ((EntitySpaceshipBase) dock.getDockedEntity()).setDead();
+                if (dock.getDockedEntity() instanceof EntitySpaceshipBase entitySpaceship && dock.getDockedEntity() != this) {
+                    entitySpaceship.dropShipAsItem();
+                    entitySpaceship.setDead();
                 }
-
                 this.setPad(dock);
             }
-
             this.onRocketLand(tile.xCoord, tile.yCoord, tile.zCoord);
         }
     }
@@ -710,7 +702,7 @@ public class EntityShuttle extends EntityTieredRocket {
         player.mountEntity(null);
         stats.spaceshipTier = tier;
         // replace this with my own stuff. this must only contain the nearby stuff
-        final HashMap<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
+        final Map<String, Integer> map = ShuttleTeleportHelper.getArrayOfPossibleDimensions(player);
         String dimensionList = "";
         int count = 0;
         for (final Entry<String, Integer> entry : map.entrySet()) {
@@ -749,7 +741,7 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     public List<ItemStack> getCargoContents() {
-        final ArrayList<ItemStack> droppedItemList = new ArrayList<>();
+        final List<ItemStack> droppedItemList = new ArrayList<>();
         if (this.cargoItems != null) {
             for (final ItemStack item : this.cargoItems) {
                 if (item != null) {

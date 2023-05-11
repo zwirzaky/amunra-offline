@@ -1,6 +1,7 @@
 package de.katzenpapst.amunra.block.ore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,7 +34,7 @@ public class SubBlockOreMultidrop extends SubBlockOre {
         }
     }
 
-    protected ArrayList<DroppedItem> dropList = new ArrayList<>();
+    protected List<DroppedItem> dropList = new ArrayList<>();
 
     public SubBlockOreMultidrop(final String name, final String texture) {
         super(name, texture);
@@ -63,8 +64,7 @@ public class SubBlockOreMultidrop extends SubBlockOre {
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(final World world, final int x, final int y, final int z, final int metadata,
-            final int fortune) {
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
         final ArrayList<ItemStack> ret = new ArrayList<>();
         for (final DroppedItem di : this.dropList) {
             if (di.probability < 1) {

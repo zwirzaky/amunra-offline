@@ -2,7 +2,8 @@ package de.katzenpapst.amunra.client.fx;
 
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.World;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
 public class EntityFXGravityDust extends EntityFX {
@@ -42,14 +43,13 @@ public class EntityFXGravityDust extends EntityFX {
     }
 
     @Override
-    public int getBrightnessForRender(final float par1) {
-        final int var2 = super.getBrightnessForRender(par1);
-        float var3 = (float) this.particleAge / (float) this.particleMaxAge;
-        var3 *= var3;
-        var3 *= var3;
-        final int var4 = var2 & 255;
-        int var5 = var2 >> 16 & 255;
-        var5 += (int) (var3 * 15.0F * 16.0F);
+    @SideOnly(Side.CLIENT)
+    public int getBrightnessForRender(float p_70070_1_) {
+        final int brightness = super.getBrightnessForRender(p_70070_1_);
+        final double var3 = Math.pow((double) this.particleAge / (double) this.particleMaxAge, 3.0);
+        final int var4 = brightness & 255;
+        int var5 = brightness >> 16 & 255;
+        var5 += (int) (var3 * 240.0);
 
         if (var5 > 240) {
             var5 = 240;
@@ -58,20 +58,13 @@ public class EntityFXGravityDust extends EntityFX {
         return var4 | var5 << 16;
     }
 
-    /**
-     * Gets how bright this entity is.
-     */
     @Override
-    public float getBrightness(final float par1) {
-        final float var2 = super.getBrightness(par1);
-        float var3 = (float) this.particleAge / (float) this.particleMaxAge;
-        var3 = var3 * var3 * var3 * var3;
-        return var2 * (1.0F - var3) + var3;
+    public float getBrightness(float p_70013_1_) {
+        final float brightness = super.getBrightness(p_70013_1_);
+        final float var3 = (float) Math.pow((double) this.particleAge / (double) this.particleMaxAge, 4.0);
+        return brightness * (1.0F - var3) + var3;
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
     @Override
     public void onUpdate() {
         this.prevPosX = this.posX;

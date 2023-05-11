@@ -19,13 +19,10 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
         BACK
     }
 
-    public RenderArtificalGravity() {}
-
     @Override
-    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z,
-            final float ticks) {
+    public void renderTileEntityAt(TileEntity p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_) {
 
-        if (!(te instanceof TileEntityGravitation entity) || !entity.isBoxShown) {
+        if (!(p_147500_1_ instanceof TileEntityGravitation entity) || !entity.isBoxShown) {
             return;
         }
         final int rotationMeta = entity.getRotationMeta();
@@ -35,12 +32,9 @@ public class RenderArtificalGravity extends TileEntitySpecialRenderer {
         AxisAlignedBB box = entity.getRotatedAABB();
         box = AxisAlignedBB.getBoundingBox(box.minX, box.minY, box.minZ, box.maxX + 1, box.maxY + 1, box.maxZ + 1);
 
-        GL11.glTranslatef((float) x, (float) y, (float) z);
+        GL11.glTranslated(p_147500_2_, p_147500_4_, p_147500_6_);
 
-        final char c0 = 61680;
-        final int j = c0 % 65536;
-        final int k = c0 / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j / 1.0F, k / 1.0F);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680.0F, 0.0F);
 
         GL11.glLineWidth(6.0F);
         GL11.glShadeModel(GL11.GL_FLAT);

@@ -96,30 +96,25 @@ public class EntityMummyBoss extends EntityMob
         // this.getNavigator().getPathSearchRange()
     }
 
-    /**
-     * Called when the entity is attacked.
-     */
     @Override
-    public boolean attackEntityFrom(final DamageSource ds, float amount) {
+    public boolean attackEntityFrom(DamageSource source, float amount) {
         // modify the damage
-        if (ds != DamageSource.outOfWorld && ds != DamageSourceAR.dsFallOffShip) {
-            if (ds instanceof EntityDamageSourceIndirect
-                    && ((EntityDamageSourceIndirect) ds).getEntity() instanceof EntityCryoArrow) {
+        if (source != DamageSource.outOfWorld && source != DamageSourceAR.dsFallOffShip) {
+            if (source instanceof EntityDamageSourceIndirect
+                    && ((EntityDamageSourceIndirect) source).getEntity() instanceof EntityCryoArrow) {
                 amount *= 1.5F;
             } else {
                 amount /= 2.0F;
             }
         }
-        return super.attackEntityFrom(ds, amount);
+        return super.attackEntityFrom(source, amount);
     }
 
     @Override
-    public void attackEntityWithRangedAttack(final EntityLivingBase targetIthink, final float unknown) {
-
+    public void attackEntityWithRangedAttack(EntityLivingBase p_82196_1_, float p_82196_2_) {
         if (!this.isDead) {
-            this.performAttack(targetIthink);
+            this.performAttack(p_82196_1_);
         }
-
     }
 
     protected void performAttack(final Entity target) {
@@ -148,7 +143,7 @@ public class EntityMummyBoss extends EntityMob
     }
 
     @Override
-    public void knockBack(final Entity par1Entity, final float par2, final double par3, final double par5) {}
+    public void knockBack(Entity p_70653_1_, float p_70653_2_, double p_70653_3_, double p_70653_5_) {}
 
     @Override
     protected void applyEntityAttributes() {
@@ -195,13 +190,13 @@ public class EntityMummyBoss extends EntityMob
     }
 
     @Override
-    public void onDeath(final DamageSource ds) {
-        super.onDeath(ds);
-        final Entity entity = ds.getEntity();
+    public void onDeath(DamageSource p_70645_1_) {
+        super.onDeath(p_70645_1_);
+        final Entity entity = p_70645_1_.getEntity();
 
         // boolean hitBy
-        if (entity instanceof EntityPlayer) {
-            this.attackedWithLootLevel = EnchantmentHelper.getLootingModifier((EntityLivingBase) entity);
+        if (entity instanceof EntityPlayer player) {
+            this.attackedWithLootLevel = EnchantmentHelper.getLootingModifier(player);
         }
     }
 
@@ -330,37 +325,35 @@ public class EntityMummyBoss extends EntityMob
     }
 
     @Override
-    protected void dropRareDrop(final int par1) {
-
-    }
+    protected void dropRareDrop(int p_70600_1_) {}
 
     @Override
-    public void writeEntityToNBT(final NBTTagCompound nbt) {
-        super.writeEntityToNBT(nbt);
+    public void writeEntityToNBT(NBTTagCompound tagCompound) {
+        super.writeEntityToNBT(tagCompound);
 
         if (this.spawnerPos != null) {
-            nbt.setTag("spawnerPosition", this.spawnerPos.toNBT());
+            tagCompound.setTag("spawnerPosition", this.spawnerPos.toNBT());
         }
 
         if (this.roomArea != null) {
-            nbt.setTag("roomArea", NbtHelper.getAsNBT(this.roomArea));
+            tagCompound.setTag("roomArea", NbtHelper.getAsNBT(this.roomArea));
         }
 
-        nbt.setInteger("atkLootLevel", this.attackedWithLootLevel);
+        tagCompound.setInteger("atkLootLevel", this.attackedWithLootLevel);
     }
 
     @Override
-    public void readEntityFromNBT(final NBTTagCompound nbt) {
-        super.readEntityFromNBT(nbt);
+    public void readEntityFromNBT(NBTTagCompound tagCompund) {
+        super.readEntityFromNBT(tagCompund);
 
-        this.attackedWithLootLevel = nbt.getInteger("atkLootLevel");
+        this.attackedWithLootLevel = tagCompund.getInteger("atkLootLevel");
 
-        if (nbt.hasKey("spawnerPosition")) {
-            this.spawnerPos = new Vector3int(nbt.getCompoundTag("spawnerPosition"));
+        if (tagCompund.hasKey("spawnerPosition")) {
+            this.spawnerPos = new Vector3int(tagCompund.getCompoundTag("spawnerPosition"));
         }
 
-        if (nbt.hasKey("roomArea")) {
-            this.roomArea = NbtHelper.readAABB(nbt.getCompoundTag("roomArea"));
+        if (tagCompund.hasKey("roomArea")) {
+            this.roomArea = NbtHelper.readAABB(tagCompund.getCompoundTag("roomArea"));
         }
     }
 

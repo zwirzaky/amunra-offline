@@ -61,7 +61,7 @@ public class ItemThermalSuit extends Item implements IItemThermal {
     }
 
     @Override
-    public boolean isValidForSlot(final ItemStack stack, final int armorSlot) {
+    public boolean isValidForSlot(ItemStack stack, int armorSlot) {
         return armorSlot == stack.getItemDamage();
     }
 
@@ -75,48 +75,44 @@ public class ItemThermalSuit extends Item implements IItemThermal {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(final ItemStack par1ItemStack) {
+    public EnumRarity getRarity(ItemStack p_77613_1_) {
         return ClientProxyCore.galacticraftItem;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(final IIconRegister iconRegister) {
+    public void registerIcons(IIconRegister register) {
         for (int i = 0; i < 4; i++) {
-            this.icons[i] = iconRegister.registerIcon(this.iconStrings[i]);
+            this.icons[i] = register.registerIcon(this.iconStrings[i]);
         }
     }
 
     @Override
-    public String getUnlocalizedName(final ItemStack itemStack) {
-        return this.getUnlocalizedName() + "." + this.names[itemStack.getItemDamage()];
+    public String getUnlocalizedName(ItemStack stack) {
+        return this.getUnlocalizedName() + "." + this.names[stack.getItemDamage()];
     }
 
     @Override
-    public IIcon getIconFromDamage(final int damage) {
-        return this.icons[damage];
+    public IIcon getIconFromDamage(int p_77617_1_) {
+        return this.icons[p_77617_1_];
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void getSubItems(final Item par1, final CreativeTabs par2CreativeTabs, final List par3List) {
+    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List<ItemStack> p_150895_3_) {
         for (int i = 0; i < 4; i++) {
-            par3List.add(new ItemStack(par1, 1, i));
+            p_150895_3_.add(new ItemStack(p_150895_1_, 1, i));
         }
     }
 
     @Override
-    public int getMetadata(final int par1) {
-        return par1;
+    public int getMetadata(int p_77647_1_) {
+        return p_77647_1_;
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List,
-            final boolean par4) {
-        par3List.add(GCCoreUtil.translateWithFormat("item.thermalSuit.thermalLevel.name", this.thermalStrength));
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {
+        p_77624_3_.add(GCCoreUtil.translateWithFormat("item.thermalSuit.thermalLevel.name", this.thermalStrength));
         /*
          * String info = getSubItem(par1ItemStack.getItemDamage()).getItemInfo(); if(info != null) {
          * par3List.add(GCCoreUtil.translate(info)); }

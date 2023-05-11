@@ -23,19 +23,19 @@ public class RenderMothershipJet extends TileEntitySpecialRenderer {
         this.texture = texture;
     }
 
-    public void renderMothershipEngine(final TileEntityMothershipEngineAbstract chamber, final double par2,
-            final double par4, final double par6, final float par8) {
+    public void renderMothershipEngine(final TileEntityMothershipEngineAbstract tile, final double x,
+            final double y, final double z, final float partialTicks) {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPushMatrix();
         // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glTranslatef((float) par2 + 0.5F, (float) par4, (float) par6 + 0.5F);
+        GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
 
         float rotation = 0.0F;
 
         /*
          * 2 -> -Z 1 -> -X 3 -> +X 0 -> +Z
          */
-        switch (chamber.getRotationMeta()) {
+        switch (tile.getRotationMeta()) {
             case 0:
                 rotation = 0;// 180.0F;// -> Z
                 break;

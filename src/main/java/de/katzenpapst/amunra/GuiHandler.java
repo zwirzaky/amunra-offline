@@ -39,13 +39,8 @@ import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 public class GuiHandler implements IGuiHandler {
 
-    public GuiHandler() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
-    public Object getServerGuiElement(final int ID, final EntityPlayer player, final World world, final int x,
-            final int y, final int z) {
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
         if (FMLCommonHandler.instance().getEffectiveSide() != Side.SERVER) {
             return null;
@@ -76,9 +71,7 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    // @SideOnly(Side.CLIENT)
-    public Object getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x,
-            final int y, final int z) {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (FMLCommonHandler.instance().getEffectiveSide() != Side.CLIENT) {
             return null;
         }

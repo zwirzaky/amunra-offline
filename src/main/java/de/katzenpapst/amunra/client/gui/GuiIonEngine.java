@@ -32,7 +32,7 @@ public class GuiIonEngine extends GuiRocketEngine {
                 (this.height - this.ySize) / 2 + 29,
                 56,
                 9,
-                new ArrayList<String>(),
+                new ArrayList<>(),
                 this.width,
                 this.height,
                 this);
@@ -41,13 +41,8 @@ public class GuiIonEngine extends GuiRocketEngine {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(final float var1, final int var2, final int var3) {
-        super.drawGuiContainerBackgroundLayer(var1, var2, var3);
-
-        final int containerWidth = (this.width - this.xSize) / 2;
-        final int containerHeight = (this.height - this.ySize) / 2;
-        // this.drawTexturedModalRect(containerWidth, containerHeight, 0, 0, this.xSize, this.ySize);
-        int scale;
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
         final List<String> electricityDesc = new ArrayList<>();
         electricityDesc.add(GCCoreUtil.translate("gui.energyStorage.desc.0"));
@@ -58,16 +53,12 @@ public class GuiIonEngine extends GuiRocketEngine {
         this.electricInfoRegion.tooltipStrings = electricityDesc;
 
         if (this.tileEngine.getEnergyStoredGC() > 0) {
-            scale = this.tileEngine.getScaledElecticalLevel(54);
-            this.drawTexturedModalRect(containerWidth + 114, containerHeight + 30, 176, 74, scale, 7);
-            this.drawTexturedModalRect(containerWidth + 101, containerHeight + 29, 192, 64, 11, 10);
+            final int x = (this.width - this.xSize) / 2;
+            final int y = (this.height - this.ySize) / 2;
+            final int scale = this.tileEngine.getScaledElecticalLevel(54);
+            this.drawTexturedModalRect(x + 114, y + 30, 176, 74, scale, 7);
+            this.drawTexturedModalRect(x + 101, y + 29, 192, 64, 11, 10);
         }
-    }
-
-    @Override
-    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
-        super.drawGuiContainerForegroundLayer(par1, par2);
-
     }
 
 }
