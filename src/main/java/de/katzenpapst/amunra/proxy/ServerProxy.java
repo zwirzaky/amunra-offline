@@ -3,13 +3,13 @@ package de.katzenpapst.amunra.proxy;
 import net.minecraft.server.MinecraftServer;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import de.katzenpapst.amunra.AmunRa;
 
 public class ServerProxy extends ARSidedProxy {
 
     @Override
-    public void preInit(final FMLPreInitializationEvent event) {
+    public void init(final FMLInitializationEvent event) {
         try {
             final MinecraftServer s = MinecraftServer.getServer();
             if (s.isDedicatedServer() && !s.isServerInOnlineMode() && !AmunRa.isDevEnvironment()) {
