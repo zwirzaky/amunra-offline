@@ -52,10 +52,10 @@ public class RecipeHelper {
     public RecipeHelper() {}
 
     public static void initRecipes() {
-        
+
         initNasaWorkbenchCrafting();
-        
-        if(!AmunRa.isNHCoreLoaded) {
+
+        if (!AmunRa.isNHCoreLoaded) {
             return;
         }
 
@@ -917,9 +917,9 @@ public class RecipeHelper {
         // Schematic
         final HashMap<Integer, ItemStack> input = new HashMap<>();
 
-        if(AmunRa.isNHCoreLoaded && AmunRa.isASPLoaded) {
+        if (AmunRa.isNHCoreLoaded && AmunRa.isASPLoaded) {
             final ItemStack fins = GameRegistry.findItemStack("dreamcraft", "item.HeavyDutyRocketFinsTier4", 1);
-            
+
             // top row, single slot
             input.put(1, ARItems.noseCone.getItemStack(1));
             // body
@@ -1038,7 +1038,7 @@ public class RecipeHelper {
     /**
      * adds a crafting recipe for a gun and reloading recipes
      *
-     * @param recipe    the very last argument must be the battery
+     * @param recipe the very last argument must be the battery
      */
     private static void addRaygunRecipe(final ItemStack gun, final ItemStack[] batteries, final Object... recipe) {
         // TODO find a way to display what is actually being crafted
@@ -1082,8 +1082,8 @@ public class RecipeHelper {
 
         ItemStack chest;
         final ItemStack tank = ARItems.shuttleTank.getItemStack(1);
-        
-        if(AmunRa.isIronChestsLoaded) {
+
+        if (AmunRa.isIronChestsLoaded) {
             // Copper Chest
             chest = GameRegistry.findItemStack("IronChest", "BlockIronChest", 1);
             Items.apple.setDamage(chest, 3);

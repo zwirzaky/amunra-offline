@@ -105,8 +105,7 @@ import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
 @Mod(
         modid = AmunRa.MODID,
         version = AmunRa.VERSION,
-        dependencies = "required-after:GalacticraftCore@[3.0.61-GTNH,);"
-                + "required-after:GalacticraftMars;"
+        dependencies = "required-after:GalacticraftCore@[3.0.61-GTNH,);" + "required-after:GalacticraftMars;"
                 + "after:dreamcraft;"
                 + "after:IronChest;"
                 + "after:AdvancedSolarPanel",
@@ -161,7 +160,7 @@ public class AmunRa {
 
     protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<>();
     protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<>();
-    
+
     public static boolean isNHCoreLoaded;
     public static boolean isIronChestsLoaded;
     public static boolean isASPLoaded;
@@ -178,7 +177,7 @@ public class AmunRa {
         isNHCoreLoaded = Loader.isModLoaded("dreamcraft");
         isIronChestsLoaded = Loader.isModLoaded("IronChest");
         isASPLoaded = Loader.isModLoaded("AdvancedSolarPanel");
-        
+
         final Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());
 
         config.processConfig(configFile);
