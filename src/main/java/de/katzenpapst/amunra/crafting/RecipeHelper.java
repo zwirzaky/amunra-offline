@@ -52,6 +52,12 @@ public class RecipeHelper {
     public RecipeHelper() {}
 
     public static void initRecipes() {
+        
+        initNasaWorkbenchCrafting();
+        
+        if(!AmunRa.isNHCoreLoaded) {
+            return;
+        }
 
         // ItemStack enderWaferStack = ARItems.baseItem.getItemStack("waferEnder", 1);
         final ItemStack freqModuleStack = new ItemStack(GCItems.basicItem, 1, 19);
@@ -765,8 +771,6 @@ public class RecipeHelper {
         addSlabAndStairsCrafting(ARBlocks.blockMethanePlanks, ARBlocks.slabMethanePlanks, ARBlocks.stairsMethanePlanks);
         addSlabAndStairsCrafting(ARBlocks.blockObsidianBrick, ARBlocks.slabObsidianBrick, ARBlocks.stairsObsidianBrick);
         addSlabAndStairsCrafting(ARBlocks.blockPodPlanks, ARBlocks.slabPodPlanks, ARBlocks.stairsPodPlanks);
-
-        initNasaWorkbenchCrafting();
     }
 
     public static void verifyNasaWorkbenchCrafting() {
@@ -912,36 +916,72 @@ public class RecipeHelper {
         final ItemStack shuttleLeg = ARItems.shuttleLegs.getItemStack(1);
         // Schematic
         final HashMap<Integer, ItemStack> input = new HashMap<>();
-        // top row, single slot
-        input.put(1, ARItems.noseCone.getItemStack(1));
-        // body
-        input.put(2, lightPlate);
-        input.put(3, lightPlate);
-        input.put(4, lightPlate);
-        // next 3
-        input.put(5, lightPlate);
-        input.put(6, new ItemStack(Blocks.glass_pane, 1, 0));
-        input.put(7, lightPlate);
 
-        input.put(8, lightPlate);
-        input.put(9, lightPlate);
-        input.put(10, lightPlate);
+        if(AmunRa.isNHCoreLoaded && AmunRa.isASPLoaded) {
+            final ItemStack fins = GameRegistry.findItemStack("dreamcraft", "item.HeavyDutyRocketFinsTier4", 1);
+            
+            // top row, single slot
+            input.put(1, ARItems.noseCone.getItemStack(1));
+            // body
+            input.put(2, lightPlate);
+            input.put(3, lightPlate);
+            input.put(4, lightPlate);
+            // next 3
+            input.put(5, lightPlate);
+            input.put(6, new ItemStack(GameRegistry.findItem("AdvancedSolarPanel", "asp_crafting_items"), 1, 5));
+            input.put(7, lightPlate);
 
-        // second to last row, the fins start here
-        input.put(11, new ItemStack(GCItems.partFins));
+            input.put(8, lightPlate);
+            input.put(9, lightPlate);
+            input.put(10, lightPlate);
 
-        // for now, potentially change this
-        input.put(12, lightPlate);
-        input.put(13, lightPlate);
-        input.put(14, lightPlate);
+            // second to last row, the fins start here
+            input.put(11, fins);
 
-        input.put(15, new ItemStack(GCItems.partFins));
+            // for now, potentially change this
+            input.put(12, lightPlate);
+            input.put(13, lightPlate);
+            input.put(14, lightPlate);
 
-        // last row
-        input.put(16, shuttleLeg);
-        // engine?
-        input.put(17, new ItemStack(GCItems.rocketEngine));
-        input.put(18, shuttleLeg);
+            input.put(15, fins);
+
+            // last row
+            input.put(16, shuttleLeg);
+            // engine?
+            input.put(17, GameRegistry.findItemStack("dreamcraft", "item.HeavyDutyRocketEngineTier4", 1));
+            input.put(18, shuttleLeg);
+        } else {
+            // top row, single slot
+            input.put(1, ARItems.noseCone.getItemStack(1));
+            // body
+            input.put(2, lightPlate);
+            input.put(3, lightPlate);
+            input.put(4, lightPlate);
+            // next 3
+            input.put(5, lightPlate);
+            input.put(6, new ItemStack(Blocks.glass_pane, 1, 0));
+            input.put(7, lightPlate);
+
+            input.put(8, lightPlate);
+            input.put(9, lightPlate);
+            input.put(10, lightPlate);
+
+            // second to last row, the fins start here
+            input.put(11, new ItemStack(GCItems.partFins));
+
+            // for now, potentially change this
+            input.put(12, lightPlate);
+            input.put(13, lightPlate);
+            input.put(14, lightPlate);
+
+            input.put(15, new ItemStack(GCItems.partFins));
+
+            // last row
+            input.put(16, shuttleLeg);
+            // engine?
+            input.put(17, new ItemStack(GCItems.rocketEngine));
+            input.put(18, shuttleLeg);
+        }
 
         // chests
         input.put(19, null);
@@ -988,9 +1028,6 @@ public class RecipeHelper {
 
     /**
      * Helper function to add all reloading recipes for all rayguns and batteries...
-     *
-     * @param guns
-     * @param batteries
      */
     /*
      * private static void initRaygunReloadingRecipes(ItemStack[] guns, ItemStack[] batteries) { for(ItemStack gun:
@@ -1001,8 +1038,6 @@ public class RecipeHelper {
     /**
      * adds a crafting recipe for a gun and reloading recipes
      *
-     * @param gun
-     * @param batteries
      * @param recipe    the very last argument must be the battery
      */
     private static void addRaygunRecipe(final ItemStack gun, final ItemStack[] batteries, final Object... recipe) {
@@ -1038,8 +1073,6 @@ public class RecipeHelper {
      * @param input      the input hashmap
      * @param chestAlu   itemstack of the "chest"
      * @param chestSlot1 the 3 slot positions for the 3 "chests"
-     * @param chestSlot2
-     * @param chestSlot3
      */
     public static void addRocketRecipeWithChestPermutations(final Item rocket,
             final HashMap<Integer, ItemStack> input) {
@@ -1047,8 +1080,16 @@ public class RecipeHelper {
         final int chestSlot2 = 20;
         final int chestSlot3 = 21;
 
-        final ItemStack chest = new ItemStack(Blocks.chest);
+        ItemStack chest;
         final ItemStack tank = ARItems.shuttleTank.getItemStack(1);
+        
+        if(AmunRa.isIronChestsLoaded) {
+            // Copper Chest
+            chest = GameRegistry.findItemStack("IronChest", "BlockIronChest", 1);
+            Items.apple.setDamage(chest, 3);
+        } else {
+            chest = new ItemStack(Blocks.chest);
+        }
 
         /*
          * ItemStack numChests0 = new ItemStack(rocket, 1, 0); ItemStack numChests1 = new ItemStack(rocket, 1, 1);

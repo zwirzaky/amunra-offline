@@ -19,6 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -104,7 +105,11 @@ import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
 @Mod(
         modid = AmunRa.MODID,
         version = AmunRa.VERSION,
-        dependencies = "required-after:GalacticraftCore@[3.0.61-GTNH,);required-after:GalacticraftMars",
+        dependencies = "required-after:GalacticraftCore@[3.0.61-GTNH,);"
+                + "required-after:GalacticraftMars;"
+                + "after:dreamcraft;"
+                + "after:IronChest;"
+                + "after:AdvancedSolarPanel",
         name = AmunRa.MODNAME)
 public class AmunRa {
 
@@ -156,6 +161,10 @@ public class AmunRa {
 
     protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<>();
     protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<>();
+    
+    public static boolean isNHCoreLoaded;
+    public static boolean isIronChestsLoaded;
+    public static boolean isASPLoaded;
 
     @SidedProxy(
             clientSide = "de.katzenpapst.amunra.proxy.ClientProxy",
@@ -166,6 +175,10 @@ public class AmunRa {
 
     @EventHandler
     public void preInit(final FMLPreInitializationEvent event) {
+        isNHCoreLoaded = Loader.isModLoaded("dreamcraft");
+        isIronChestsLoaded = Loader.isModLoaded("IronChest");
+        isASPLoaded = Loader.isModLoaded("AdvancedSolarPanel");
+        
         final Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());
 
         config.processConfig(configFile);
