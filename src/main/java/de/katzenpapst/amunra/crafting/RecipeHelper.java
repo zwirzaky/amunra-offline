@@ -55,7 +55,7 @@ public class RecipeHelper {
 
         initNasaWorkbenchCrafting();
 
-        if (!AmunRa.isNHCoreLoaded) {
+        if (AmunRa.isNHCoreLoaded) {
             return;
         }
 
