@@ -209,7 +209,7 @@ public class MothershipWorldData extends WorldSavedData {
         if (parent == null) {
             return new ArrayList<>(0);
         }
-        return this.mothershipIdList.values().stream().filter(parent::equals).collect(Collectors.toList());
+        return this.mothershipIdList.values().stream().filter(ship -> parent.equals(ship.getParent())).collect(Collectors.toList());
     }
 
     /**
