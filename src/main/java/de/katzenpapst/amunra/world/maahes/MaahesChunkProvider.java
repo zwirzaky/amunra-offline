@@ -1,13 +1,7 @@
 package de.katzenpapst.amunra.world.maahes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
-import net.minecraft.world.chunk.IChunkProvider;
 
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.mob.entity.EntityAlienBug;
@@ -15,29 +9,18 @@ import de.katzenpapst.amunra.mob.entity.EntityPorcodon;
 import de.katzenpapst.amunra.world.AmunraChunkProvider;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 public class MaahesChunkProvider extends AmunraChunkProvider {
 
     public MaahesChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
+        this.creatures = new SpawnListEntry[] {new SpawnListEntry(EntityPorcodon.class, 50, 4, 10)};
+        this.monsters = new SpawnListEntry[] {new SpawnListEntry(EntityAlienBug.class, 100, 4, 4)};
     }
 
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
         return new MaahesBiomeDecorator();
-    }
-
-
-    @Override
-    protected SpawnListEntry[] getCreatures() {
-
-        // entityClass, weightedProbability, minGroupCount, maxGroupCount
-        final SpawnListEntry pig = new SpawnListEntry(EntityPorcodon.class, 50, 4, 10);
-        return new SpawnListEntry[] { pig };
-
-        // SpawnListEntry villager = new SpawnListEntry(EntityAlienVillager.class, 1, 0, 2);
-        // return new SpawnListEntry[]{villager};
     }
 
     @Override
@@ -61,13 +44,6 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    protected SpawnListEntry[] getMonsters() {
-        final SpawnListEntry bug = new SpawnListEntry(EntityAlienBug.class, 100, 4, 4);
-
-        return new SpawnListEntry[] { bug };
-    }
-
-    @Override
     public double getMountainHeightModifier() {
         return 0;
     }
@@ -85,23 +61,6 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
     @Override
     public double getValleyHeightModifier() {
         return 0;
-    }
-
-    @Override
-    protected List<MapGenBaseMeta> getWorldGenerators() {
-        // TODO fill in with caves and villages
-        return new ArrayList<>();
-    }
-
-    @Override
-    public void onChunkProvide(final int arg0, final int arg1, final Block[] arg2, final byte[] arg3) {}
-
-    @Override
-    public void onPopulate(final IChunkProvider arg0, final int arg1, final int arg2) {}
-
-    @Override
-    public boolean chunkExists(int p_73149_1_, int p_73149_2_) {
-        return false;
     }
 
 }

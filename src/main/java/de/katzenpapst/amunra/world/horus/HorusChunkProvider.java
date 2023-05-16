@@ -1,13 +1,7 @@
 package de.katzenpapst.amunra.world.horus;
 
-import java.util.Arrays;
-import java.util.List;
-
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.IChunkProvider;
 
 import de.katzenpapst.amunra.block.ARBlocks;
@@ -20,10 +14,6 @@ import de.katzenpapst.amunra.world.mapgen.pyramid.PyramidRoom;
 import de.katzenpapst.amunra.world.mapgen.volcano.VolcanoGenerator;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
-import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedCreeper;
-import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedSkeleton;
-import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedZombie;
 
 public class HorusChunkProvider extends AmunraChunkProvider {
 
@@ -47,6 +37,9 @@ public class HorusChunkProvider extends AmunraChunkProvider {
                 this.stoneBlock,
                 15,
                 true);
+        
+        this.worldGenerators.add(this.volcanoGen);
+        this.worldGenerators.add(this.pyramid);
     }
 
     @Override
@@ -57,25 +50,6 @@ public class HorusChunkProvider extends AmunraChunkProvider {
     @Override
     protected int getSeaLevel() {
         return 64;
-    }
-
-    @Override
-    protected List<MapGenBaseMeta> getWorldGenerators() {
-        return Arrays.asList(this.volcanoGen, this.pyramid);
-    }
-
-    @Override
-    protected SpawnListEntry[] getMonsters() {
-        final SpawnListEntry skele = new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
-        final SpawnListEntry creeper = new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
-        final SpawnListEntry zombie = new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4);
-
-        return new SpawnListEntry[] { skele, creeper, zombie };
-    }
-
-    @Override
-    protected SpawnListEntry[] getCreatures() {
-        return new SpawnListEntry[] {};
     }
 
     @Override
@@ -112,12 +86,6 @@ public class HorusChunkProvider extends AmunraChunkProvider {
     public double getValleyHeightModifier() {
         return 60;
     }
-
-    @Override
-    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {}
-
-    @Override
-    public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {}
 
     @Override
     public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_) {

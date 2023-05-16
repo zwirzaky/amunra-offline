@@ -1,8 +1,5 @@
 package de.katzenpapst.amunra.world.seth;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -18,7 +15,6 @@ import de.katzenpapst.amunra.world.mapgen.CrystalFormation;
 import de.katzenpapst.amunra.world.mapgen.volcano.VolcanoGenerator;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 public class SethChunkProvider extends AmunraChunkProvider {
 
@@ -68,7 +64,10 @@ public class SethChunkProvider extends AmunraChunkProvider {
         this.volcanoGen = new VolcanoGenerator(this.waterBlock, this.rockBlock, this.dirtBlock, 60, false);
 
         this.crystalGen = new CrystalFormation(ARBlocks.blockGlowingCoral, this.waterBlock);
+        
+        this.monsters = new SpawnListEntry[] {};
         this.biomes = new BiomeGenBase[] { BiomeGenBase.iceMountains };
+        this.worldGenerators.add(this.volcanoGen);
     }
 
     @Override
@@ -121,21 +120,6 @@ public class SethChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    protected List<MapGenBaseMeta> getWorldGenerators() {
-        return Arrays.asList(this.volcanoGen);
-    }
-
-    @Override
-    protected SpawnListEntry[] getMonsters() {
-        return new SpawnListEntry[] {};
-    }
-
-    @Override
-    protected SpawnListEntry[] getCreatures() {
-        return new SpawnListEntry[] {};
-    }
-
-    @Override
     protected BlockMetaPair getGrassBlock() {
         return this.grassBlock;
     }
@@ -169,9 +153,6 @@ public class SethChunkProvider extends AmunraChunkProvider {
     public double getValleyHeightModifier() {
         return 50;
     }
-
-    @Override
-    public void onChunkProvide(final int cX, final int cZ, final Block[] blocks, final byte[] metadata) {}
 
     @Override
     public void onPopulate(final IChunkProvider provider, final int cX, final int cZ) {
