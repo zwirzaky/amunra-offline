@@ -55,11 +55,6 @@ public class HorusChunkProvider extends AmunraChunkProvider {
     }
 
     @Override
-    protected BiomeGenBase[] getBiomesForGeneration() {
-        return new BiomeGenBase[] { BiomeGenBase.desert };
-    }
-
-    @Override
     protected int getSeaLevel() {
         return 64;
     }

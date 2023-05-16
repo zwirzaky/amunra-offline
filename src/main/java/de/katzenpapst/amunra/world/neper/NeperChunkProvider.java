@@ -38,12 +38,6 @@ public class NeperChunkProvider extends AmunraChunkProvider {
         return new NeperBiomeDecorator();
     }
 
-    // This should be a custom biome for your mod, but I'm opting to go desert instead out of quickness
-    // and the fact that biomes are outside the scope of this tutorial
-    @Override
-    protected BiomeGenBase[] getBiomesForGeneration() {
-        return new BiomeGenBase[] { BiomeGenBase.desert };
-    }
 
     @Override
     protected SpawnListEntry[] getCreatures() {

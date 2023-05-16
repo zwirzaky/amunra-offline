@@ -68,6 +68,7 @@ public class SethChunkProvider extends AmunraChunkProvider {
         this.volcanoGen = new VolcanoGenerator(this.waterBlock, this.rockBlock, this.dirtBlock, 60, false);
 
         this.crystalGen = new CrystalFormation(ARBlocks.blockGlowingCoral, this.waterBlock);
+        this.biomes = new BiomeGenBase[] { BiomeGenBase.iceMountains };
     }
 
     @Override
@@ -112,11 +113,6 @@ public class SethChunkProvider extends AmunraChunkProvider {
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
         return new SethBiomeDecorator();
-    }
-
-    @Override
-    protected BiomeGenBase[] getBiomesForGeneration() {
-        return new BiomeGenBase[] { BiomeGenBase.iceMountains };
     }
 
     @Override

@@ -3,13 +3,18 @@ package de.katzenpapst.amunra.world;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.ChunkProviderSpace;
+import micdoodle8.mods.galacticraft.core.world.gen.BiomeGenBaseOrbit;
 
 abstract public class AmunraChunkProvider extends ChunkProviderSpace {
 
     public static final int CHUNK_SIZE_X = 16;
     public static final int CHUNK_SIZE_Y = 256;
     public static final int CHUNK_SIZE_Z = 16;
+    
+    protected BiomeGenBase[] biomes = {BiomeGenBaseOrbit.space};
 
     public AmunraChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
@@ -19,6 +24,11 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
     public int getCraterProbability() {
         // vestigial
         return 2000;
+    }
+    
+    @Override
+    protected BiomeGenBase[] getBiomesForGeneration() {
+        return this.biomes;
     }
 
     /**
