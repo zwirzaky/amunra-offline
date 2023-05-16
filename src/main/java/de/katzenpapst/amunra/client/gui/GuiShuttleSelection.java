@@ -37,11 +37,11 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
     }
 
     protected CelestialBody getParent(final CelestialBody body) {
-        if (body instanceof IChildBody) {// satellite apparently implements this already?
-            return ((IChildBody) body).getParentPlanet();
+        if (body instanceof IChildBody child) {// satellite apparently implements this already?
+            return child.getParentPlanet();
         }
-        if (body instanceof Mothership) {
-            return ((Mothership) body).getParent();
+        if (body instanceof Mothership ship) {
+            return ship.getParent();
         }
         return body;
     }

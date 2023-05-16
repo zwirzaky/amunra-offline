@@ -255,7 +255,7 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public Mothership getByName(final String name) {
-        return this.mothershipIdList.values().stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
+        return this.mothershipIdList.values().stream().filter(ship -> ship.getName().equals(name)).findFirst().orElse(null);
     }
 
     @Override
