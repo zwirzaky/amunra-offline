@@ -278,8 +278,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
             for (final Mothership ms : msData.getMotherships().values()) {
                 if ((ms == this.selectedBody || ms.getParent() == this.selectedBody && this.selectionCount != 1)
                         && (this.ticksSinceSelection > 35 || this.selectedBody == ms
-                                || this.lastSelectedBody instanceof Mothership ship
-                                        && ship.getParent().equals(ms))
+                                || this.lastSelectedBody instanceof Mothership ship && ship.getParent().equals(ms))
                         || this.isSiblingOf(this.selectedBody, ms)) {
                     result.add(ms);
                 }

@@ -37,7 +37,7 @@ public class HorusChunkProvider extends AmunraChunkProvider {
                 this.stoneBlock,
                 15,
                 true);
-        
+
         this.worldGenerators.add(this.volcanoGen);
         this.worldGenerators.add(this.pyramid);
     }

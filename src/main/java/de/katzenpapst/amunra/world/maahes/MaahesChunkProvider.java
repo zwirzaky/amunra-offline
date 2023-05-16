@@ -14,8 +14,8 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
 
     public MaahesChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
-        this.creatures = new SpawnListEntry[] {new SpawnListEntry(EntityPorcodon.class, 50, 4, 10)};
-        this.monsters = new SpawnListEntry[] {new SpawnListEntry(EntityAlienBug.class, 100, 4, 4)};
+        this.creatures = new SpawnListEntry[] { new SpawnListEntry(EntityPorcodon.class, 50, 4, 10) };
+        this.monsters = new SpawnListEntry[] { new SpawnListEntry(EntityAlienBug.class, 100, 4, 4) };
     }
 
     @Override

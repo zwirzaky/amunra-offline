@@ -209,7 +209,8 @@ public class MothershipWorldData extends WorldSavedData {
         if (parent == null) {
             return new ArrayList<>(0);
         }
-        return this.mothershipIdList.values().stream().filter(ship -> parent.equals(ship.getParent())).collect(Collectors.toList());
+        return this.mothershipIdList.values().stream().filter(ship -> parent.equals(ship.getParent()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -255,7 +256,8 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public Mothership getByName(final String name) {
-        return this.mothershipIdList.values().stream().filter(ship -> ship.getName().equals(name)).findFirst().orElse(null);
+        return this.mothershipIdList.values().stream().filter(ship -> ship.getName().equals(name)).findFirst()
+                .orElse(null);
     }
 
     @Override

@@ -1,13 +1,13 @@
 package de.katzenpapst.amunra.world;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.IChunkProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.ChunkProviderSpace;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
@@ -21,10 +21,12 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
     public static final int CHUNK_SIZE_X = 16;
     public static final int CHUNK_SIZE_Y = 256;
     public static final int CHUNK_SIZE_Z = 16;
-    
-    protected BiomeGenBase[] biomes = {BiomeGenBaseOrbit.space};
+
+    protected BiomeGenBase[] biomes = { BiomeGenBaseOrbit.space };
     protected SpawnListEntry[] creatures = {};
-    protected SpawnListEntry[] monsters = {new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4), new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4), new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4)};
+    protected SpawnListEntry[] monsters = { new SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4),
+            new SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4),
+            new SpawnListEntry(EntityEvolvedZombie.class, 100, 4, 4) };
     protected final List<MapGenBaseMeta> worldGenerators = new ArrayList<>();
 
     public AmunraChunkProvider(final World world, final long seed, final boolean mapFeaturesEnabled) {
@@ -36,7 +38,7 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
         // vestigial
         return 2000;
     }
-    
+
     @Override
     protected BiomeGenBase[] getBiomesForGeneration() {
         return this.biomes;
@@ -46,12 +48,12 @@ abstract public class AmunraChunkProvider extends ChunkProviderSpace {
     protected SpawnListEntry[] getCreatures() {
         return this.creatures;
     }
-    
+
     @Override
     protected SpawnListEntry[] getMonsters() {
         return this.monsters;
     }
-    
+
     @Override
     protected List<MapGenBaseMeta> getWorldGenerators() {
         return this.worldGenerators;

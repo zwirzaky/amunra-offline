@@ -64,7 +64,7 @@ public class SethChunkProvider extends AmunraChunkProvider {
         this.volcanoGen = new VolcanoGenerator(this.waterBlock, this.rockBlock, this.dirtBlock, 60, false);
 
         this.crystalGen = new CrystalFormation(ARBlocks.blockGlowingCoral, this.waterBlock);
-        
+
         this.monsters = new SpawnListEntry[] {};
         this.biomes = new BiomeGenBase[] { BiomeGenBase.iceMountains };
         this.worldGenerators.add(this.volcanoGen);
