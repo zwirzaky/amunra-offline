@@ -329,9 +329,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 }
                 // mData.updateFromNBT(nbt);
 
-                if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection) {
-                    ((GuiShuttleSelection) FMLClientHandler.instance().getClient().currentScreen)
-                            .mothershipListUpdated();
+                if (FMLClientHandler.instance()
+                        .getClient().currentScreen instanceof GuiShuttleSelection guiShuttleSelection) {
+                    guiShuttleSelection.mothershipListUpdated();
                 }
 
                 break;
@@ -341,16 +341,16 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 motherShip = Mothership.createFromNBT(nbt);
 
                 motherShip = TickHandlerServer.mothershipData.addMothership(motherShip);
-                if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiARCelestialSelection) {
-                    ((GuiARCelestialSelection) FMLClientHandler.instance().getClient().currentScreen)
-                            .newMothershipCreated(motherShip);
+                if (FMLClientHandler.instance()
+                        .getClient().currentScreen instanceof GuiARCelestialSelection guiARCelestialSelection) {
+                    guiARCelestialSelection.newMothershipCreated(motherShip);
                 }
 
                 break;
             case C_MOTHERSHIP_CREATION_FAILED:
-                if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiARCelestialSelection) {
-                    ((GuiARCelestialSelection) FMLClientHandler.instance().getClient().currentScreen)
-                            .mothershipCreationFailed();
+                if (FMLClientHandler.instance()
+                        .getClient().currentScreen instanceof GuiARCelestialSelection guiARCelestialSelection) {
+                    guiARCelestialSelection.mothershipCreationFailed();
                 }
                 break;
             case C_MOTHERSHIP_TRANSIT_STARTED:// (Side.CLIENT, Integer.class, String.class, Long.class),
@@ -360,9 +360,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                 motherShip.startTransit(targetBody, travelTime);
 
-                if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection) {
-                    ((GuiShuttleSelection) FMLClientHandler.instance().getClient().currentScreen)
-                            .mothershipPositionChanged(motherShip);
+                if (FMLClientHandler.instance()
+                        .getClient().currentScreen instanceof GuiShuttleSelection guiShuttleSelection) {
+                    guiShuttleSelection.mothershipPositionChanged(motherShip);
                 }
                 break;
             case C_MOTHERSHIP_TRANSIT_FAILED:
@@ -373,9 +373,9 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                 motherShip.getWorldProviderClient().endTransit();
 
-                if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection) {
-                    ((GuiShuttleSelection) FMLClientHandler.instance().getClient().currentScreen)
-                            .mothershipPositionChanged(motherShip);
+                if (FMLClientHandler.instance()
+                        .getClient().currentScreen instanceof GuiShuttleSelection guiShuttleSelection) {
+                    guiShuttleSelection.mothershipPositionChanged(motherShip);
                 }
                 break;
             case C_MOTHERSHIP_DATA:
@@ -383,13 +383,12 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 nbt = (NBTTagCompound) this.data.get(1);
                 final WorldProvider playerWorldProvider = player.getEntityWorld().provider;
                 if (playerWorldProvider.dimensionId == dimId
-                        && playerWorldProvider instanceof MothershipWorldProvider) {
+                        && playerWorldProvider instanceof MothershipWorldProvider mothershipProvider) {
                     // don't do this otherwise
-                    ((MothershipWorldProvider) playerWorldProvider).readFromNBT(nbt);
-                    if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiMothershipSelection) {
-
-                        ((GuiMothershipSelection) FMLClientHandler.instance().getClient().currentScreen)
-                                .mothershipUpdateRecieved();
+                    mothershipProvider.readFromNBT(nbt);
+                    if (FMLClientHandler.instance()
+                            .getClient().currentScreen instanceof GuiMothershipSelection guiMothershipSelection) {
+                        guiMothershipSelection.mothershipUpdateRecieved();
                     }
                 }
                 break;
@@ -407,16 +406,16 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 final Mothership mShip = TickHandlerServer.mothershipData.getByMothershipId(mothershipId);
                 mShip.readSettingsFromNBT(nbt);
 
-                if (player.worldObj.provider.dimensionId == mShip.getDimensionID()
-                        && FMLClientHandler.instance().getClient().currentScreen instanceof GuiMothershipSettings) {
-                    ((GuiMothershipSettings) FMLClientHandler.instance().getClient().currentScreen)
-                            .mothershipResponsePacketRecieved();
+                if (player.worldObj.provider.dimensionId == mShip.getDimensionID() && FMLClientHandler.instance()
+                        .getClient().currentScreen instanceof GuiMothershipSettings guiMothershipSettings) {
+                    guiMothershipSettings.mothershipResponsePacketRecieved();
                 }
                 break;
             case C_TELEPORT_SHUTTLE_PERMISSION_ERROR:
-                if (FMLClientHandler.instance().getClient().currentScreen instanceof GuiShuttleSelection) {
+                if (FMLClientHandler.instance()
+                        .getClient().currentScreen instanceof GuiShuttleSelection guiShuttleSelection) {
                     final String owner = (String) this.data.get(0);
-                    ((GuiShuttleSelection) FMLClientHandler.instance().getClient().currentScreen).showMessageBox(
+                    guiShuttleSelection.showMessageBox(
                             GCCoreUtil.translate("gui.message.mothership.permissionError"),
                             GCCoreUtil.translateWithFormat("gui.message.mothership.notAllowed", owner));
                 }
@@ -463,7 +462,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
             case S_TELEPORT_SHUTTLE: // S_TELEPORT_ENTITY
                 try {
                     // final WorldProvider provider = WorldUtil.getProviderForNameServer((String) this.data.get(0));
-                    final Integer dim = (int) this.data.get(0);
+                    final int dim = (int) this.data.get(0);
                     AmunRa.LOGGER.info("Will teleport to ({})", dim);
 
                     if (playerBase.worldObj instanceof WorldServer) {
@@ -563,8 +562,8 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
                 world = mcServer.worldServerForDimension(dimId);
 
-                if (world.provider instanceof MothershipWorldProvider) {
-                    ((MothershipWorldProvider) world.provider).asyncSendMothershipDataToClient();
+                if (world.provider instanceof MothershipWorldProvider mothershipProvider) {
+                    mothershipProvider.asyncSendMothershipDataToClient();
                 }
                 break;
             case S_SET_MOTHERSHIP_SETTINGS:
@@ -634,8 +633,8 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 z = (int) this.data.get(2);
                 op = (int) this.data.get(3);
                 tileEntity = playerBase.worldObj.getTileEntity(x, y, z);
-                if (tileEntity instanceof TileEntityShuttleDock) {
-                    ((TileEntityShuttleDock) tileEntity).performDockOperation(op, playerBase);
+                if (tileEntity instanceof TileEntityShuttleDock tileShuttleDock) {
+                    tileShuttleDock.performDockOperation(op, playerBase);
                 }
                 break;
             case S_HYDROPONICS_OPERATION:
@@ -645,8 +644,8 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 op = (int) this.data.get(3);
 
                 tileEntity = playerBase.worldObj.getTileEntity(x, y, z);
-                if (tileEntity instanceof TileEntityHydroponics) {
-                    ((TileEntityHydroponics) tileEntity).performOperation(op, playerBase);
+                if (tileEntity instanceof TileEntityHydroponics tileHydroponics) {
+                    tileHydroponics.performOperation(op, playerBase);
                 }
                 break;
             case S_ARTIFICIAL_GRAVITY_SETTINGS:
@@ -657,10 +656,10 @@ public class PacketSimpleAR extends Packet implements IPacket {
                 final AxisAlignedBB box = AxisAlignedBB.getBoundingBox(min.x, min.y, min.z, max.x, max.y, max.z);
 
                 tileEntity = pos.getTileEntity(playerBase.worldObj);
-                if (tileEntity instanceof TileEntityGravitation) {
-                    ((TileEntityGravitation) tileEntity).setGravityBox(box);
-                    ((TileEntityGravitation) tileEntity).setGravityForce(strength);
-                    ((TileEntityGravitation) tileEntity).updateEnergyConsumption();
+                if (tileEntity instanceof TileEntityGravitation tileGravitation) {
+                    tileGravitation.setGravityBox(box);
+                    tileGravitation.setGravityForce(strength);
+                    tileGravitation.updateEnergyConsumption();
                     tileEntity.markDirty();
                     playerBase.worldObj.markBlockForUpdate(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
                 }
