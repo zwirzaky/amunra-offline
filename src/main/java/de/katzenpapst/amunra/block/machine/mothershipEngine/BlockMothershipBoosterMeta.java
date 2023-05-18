@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.BlockMachineMetaDummyRender;
 import de.katzenpapst.amunra.block.SubBlock;
 
@@ -49,6 +50,11 @@ public class BlockMothershipBoosterMeta extends BlockMachineMetaDummyRender {
     @Override
     public boolean isOpaqueCube() {
         return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return AmunRa.msBoosterRendererId;
     }
 
     @Override
