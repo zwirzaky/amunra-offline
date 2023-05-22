@@ -13,8 +13,8 @@
 		"logoFile": "",
 		"screenshots": [],
 		"parent": "",
-		"requiredMods": [],
-		"dependencies": [],
+		"requiredMods": ["GalacticraftCore@[3.0.61-GTNH,)", "GalacticraftMars"],
+		"dependencies": ["GalacticraftCore@[3.0.61-GTNH,)", "GalacticraftMars", "dreamcraft", "IronChest", "AdvancedSolarPanel"],
 		"dependants": [],
 		"useDependencyInformation": true
 	}]
