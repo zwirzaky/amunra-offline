@@ -33,6 +33,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.entity.EntityCryoArrow;
 import de.katzenpapst.amunra.entity.EntityOsirisBossFireball;
 import de.katzenpapst.amunra.helper.NbtHelper;
@@ -80,7 +81,9 @@ public class EntityMummyBoss extends EntityMob
 
         if (guaranteedLoot == null) {
             guaranteedLoot = new ArrayList<>();
-            guaranteedLoot.add(ARItems.shuttleSchematic.getItemStack(1));
+            if (!AmunRa.isNHCoreLoaded) {
+                guaranteedLoot.add(ARItems.shuttleSchematic.getItemStack(1));
+            }
             // guaranteedLoot.add(new ItemStack(ARItems.batteryQuantum, 0, 0));
         }
 
@@ -100,8 +103,8 @@ public class EntityMummyBoss extends EntityMob
     public boolean attackEntityFrom(DamageSource source, float amount) {
         // modify the damage
         if (source != DamageSource.outOfWorld && source != DamageSourceAR.dsFallOffShip) {
-            if (source instanceof EntityDamageSourceIndirect
-                    && ((EntityDamageSourceIndirect) source).getEntity() instanceof EntityCryoArrow) {
+            if (source instanceof EntityDamageSourceIndirect indirectSource
+                    && indirectSource.getEntity() instanceof EntityCryoArrow) {
                 amount *= 1.5F;
             } else {
                 amount /= 2.0F;
