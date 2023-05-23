@@ -163,6 +163,7 @@ public class AmunRa {
 
     public static boolean isNHCoreLoaded;
     public static boolean isIronChestsLoaded;
+    public static boolean isIronTanksLoaded;
     public static boolean isASPLoaded;
 
     @SidedProxy(
@@ -176,6 +177,7 @@ public class AmunRa {
     public void preInit(final FMLPreInitializationEvent event) {
         isNHCoreLoaded = Loader.isModLoaded("dreamcraft");
         isIronChestsLoaded = Loader.isModLoaded("IronChest");
+        isIronTanksLoaded = Loader.isModLoaded("irontank");
         isASPLoaded = Loader.isModLoaded("AdvancedSolarPanel");
 
         final Configuration configFile = new Configuration(event.getSuggestedConfigurationFile());

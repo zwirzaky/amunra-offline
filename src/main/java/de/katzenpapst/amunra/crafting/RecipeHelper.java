@@ -1081,7 +1081,7 @@ public class RecipeHelper {
         final int chestSlot3 = 21;
 
         ItemStack chest;
-        final ItemStack tank = ARItems.shuttleTank.getItemStack(1);
+        ItemStack tank;
 
         if (AmunRa.isIronChestsLoaded) {
             // Copper Chest
@@ -1089,6 +1089,12 @@ public class RecipeHelper {
             Items.apple.setDamage(chest, 3);
         } else {
             chest = new ItemStack(Blocks.chest);
+        }
+
+        if (AmunRa.isIronTanksLoaded) {
+            tank = GameRegistry.findItemStack("irontank", "copperTank", 1);
+        } else {
+            tank = ARItems.shuttleTank.getItemStack(1);
         }
 
         /*
