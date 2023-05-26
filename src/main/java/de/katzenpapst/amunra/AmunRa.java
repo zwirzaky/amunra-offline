@@ -510,7 +510,7 @@ public class AmunRa {
 
         this.systemAmunRa = new SolarSystem("systemAmunRa", "milkyWay");
         this.starRa = new Star("starRa");
-        this.systemAmunRa.setMainStar(this.starRa).setMapPosition(new Vector3(1.5F, -1.15F, 0.0F));
+        this.systemAmunRa.setMainStar(this.starRa).setMapPosition(new Vector3(3.0F, -1.5F, 0.0F));
         GalaxyRegistry.registerSolarSystem(this.systemAmunRa);
 
         this.starRa.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
