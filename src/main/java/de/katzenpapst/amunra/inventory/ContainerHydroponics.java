@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import de.katzenpapst.amunra.tile.TileEntityHydroponics;
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+import micdoodle8.mods.galacticraft.api.item.IItemElectric;
 import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerHydroponics extends ContainerWithPlayerInventory {
@@ -14,7 +14,7 @@ public class ContainerHydroponics extends ContainerWithPlayerInventory {
     public ContainerHydroponics(final InventoryPlayer player, final TileEntityHydroponics tile) {
         super(tile);
 
-        this.addSlotToContainer(new SlotSpecific(tile, 0, 32, 27, ItemElectricBase.class));
+        this.addSlotToContainer(new SlotSpecific(tile, 0, 32, 27, IItemElectric.class));
 
         final SlotSpecific secondarySlot = new SlotSpecific(
                 tile,

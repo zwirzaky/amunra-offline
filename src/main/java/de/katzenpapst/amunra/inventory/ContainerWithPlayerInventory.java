@@ -38,12 +38,6 @@ abstract public class ContainerWithPlayerInventory extends Container {
         }
     }
 
-    // let's try to fix shiftclicking
-    @Override
-    protected Slot addSlotToContainer(Slot p_75146_1_) {
-        return super.addSlotToContainer(p_75146_1_);
-    }
-
     protected boolean mergeSingleSlot(final ItemStack mergeFrom, final Slot slotToMergeTo) {
 
         final ItemStack targetStack = slotToMergeTo.getStack();
