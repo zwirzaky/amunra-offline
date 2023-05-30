@@ -2,11 +2,14 @@ package de.katzenpapst.amunra.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
-import net.minecraftforge.fluids.ItemFluidContainer;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.IFluidContainerItem;
 
 import de.katzenpapst.amunra.tile.TileEntityMothershipEngineAbstract;
-import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerRocketEngine extends ContainerWithPlayerInventory {
 
@@ -26,7 +29,15 @@ public class ContainerRocketEngine extends ContainerWithPlayerInventory {
     }
 
     protected void initSlots(final TileEntityMothershipEngineAbstract tile) {
-        this.addSlotToContainer(new SlotSpecific(tile, 0, 8, 7, ItemFluidContainer.class, ItemBucket.class));
+        this.addSlotToContainer(new Slot(tile, 0, 8, 7) {
+
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                final Item item = stack.getItem();
+                return item instanceof IFluidContainerItem || item instanceof ItemBucket
+                        || FluidContainerRegistry.isContainer(stack);
+            }
+        });
     }
 
     @Override
