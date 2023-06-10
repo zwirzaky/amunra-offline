@@ -268,7 +268,7 @@ public class ARBlocks {
         subLapis = (SubBlockOre) new SubBlockOre("oreLapis", "amunra:ore-lapis").setOredictNames("oreLapis")
                 .setHarvestInfo("pickaxe", 1).setHardness(3).setResistance(5);
 
-        subLithium = (SubBlockOre) new SubBlockOre("oreLithium", "amunra:ore-lithium").setOredictNames("oreLithium")
+        subLithium = (SubBlockOre) new SubBlockOre("oreLithium", "amunra:ore-lithium").setOredictNames("oreSpodumene")
                 .setHarvestInfo("pickaxe", 3).setHardness(3).setResistance(5);
 
         subRuby = (SubBlockOre) new SubBlockOre("oreRuby", "amunra:ore-ruby").setOredictNames("oreRuby")
