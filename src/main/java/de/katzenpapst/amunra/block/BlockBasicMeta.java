@@ -173,7 +173,7 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
          */
         final SubBlock sb = this.getSubBlock(meta);
         if (sb != null) {
-            sb.getIcon(side, meta);
+            return sb.getIcon(side, meta);
         }
         return super.getIcon(side, meta);
     }
