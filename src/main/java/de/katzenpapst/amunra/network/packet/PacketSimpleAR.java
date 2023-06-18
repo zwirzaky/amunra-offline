@@ -371,7 +371,12 @@ public class PacketSimpleAR extends Packet implements IPacket {
             case C_MOTHERSHIP_TRANSIT_ENDED: // (Side.CLIENT, Integer.class);
                 motherShip = mData.getByMothershipId((int) this.data.get(0));
 
-                motherShip.getWorldProviderClient().endTransit();
+                MothershipWorldProvider mswp = motherShip.getWorldProviderClient();
+                if (mswp == null) {
+                    // this player is not on the mothership
+                    break;
+                }
+                mswp.endTransit();
 
                 if (FMLClientHandler.instance()
                         .getClient().currentScreen instanceof GuiShuttleSelection guiShuttleSelection) {
