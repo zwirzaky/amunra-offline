@@ -108,7 +108,8 @@ import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
         dependencies = "required-after:GalacticraftCore@[3.0.61-GTNH,);" + "required-after:GalacticraftMars;"
                 + "after:dreamcraft;"
                 + "after:IronChest;"
-                + "after:AdvancedSolarPanel",
+                + "after:AdvancedSolarPanel;"
+                + "after:Hodgepodge@[2.2.19,);",
         name = AmunRa.MODNAME)
 public class AmunRa {
 
