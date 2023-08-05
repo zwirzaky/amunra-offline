@@ -33,7 +33,6 @@ public class ARConfig {
 
     // default tier for my planets and moons
     public int planetDefaultTier = 3;
-
     public boolean villageAdvancedMachines = false;
 
     // ** motherships **
@@ -43,38 +42,31 @@ public class ARConfig {
 
     // motherships will refuse to start transit, if the time is > than this
     public int mothershipMaxTravelTime = 24000;
-
     public float mothershipSpeedFactor = 1.0F;
-
     public float mothershipFuelFactor = 1.0F;
+    public int mothershipMass = 0;
 
     // bodies which motherships cannot orbit
     public Set<String> mothershipBodiesNoOrbit;
-
     public String validJetEngineFuel;
     public String validIonThrusterCoolant;
 
     // *** sky rendering and related ***
     // bodies not to render
     public Set<String> bodiesNoRender;
-
     public Set<String> asteroidBeltBodies;
 
     // star lines for transit sky
     public int mothershipNumStarLines = 400;
-
     public int numAsteroids = 600;
 
     // bodies to render as suns
     public Map<String, Vector3> sunColorMap = new HashMap<>();
-
     public Map<String, RingsRenderInfo> ringMap = new HashMap<>();
 
     // ** IDs **
     public int schematicIdShuttle = 11;
-
     public int guiIdShuttle = 8;
-
     public float hydroponicsFactor = 1.0F;
 
     // ** extra default stuff **
@@ -88,7 +80,6 @@ public class ARConfig {
             "appleapachia:8:20:extendedplanets:textures/gui/celestialbodies/appleapachiaRings.png" };
 
     private final String[] defaultAsteroidBelts = { "okblekbelt", "saturnrings" };
-
     public boolean generateOres = false;
 
     // public boolean mothershipUserRestriction = true;
@@ -189,6 +180,14 @@ public class ARConfig {
                 Float.MIN_VALUE,
                 Float.MAX_VALUE,
                 "A factor to be multiplied onto the fuel usages of mothership engines. Higher values = higher fuel usage");
+
+        this.mothershipMass = config.getInt(
+                "mothershipMass",
+                "motherships",
+                this.mothershipMass,
+                0,
+                Integer.MAX_VALUE,
+                "If greater than zero, overrides the mothership's mass. If zero, the mass will be calculated based on the blocks used to build the mothership.");
 
         this.mothershipBodiesNoOrbit = this.configGetStringHashSet(
                 config,
