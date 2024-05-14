@@ -84,6 +84,8 @@ public class ARConfig {
 
     // public boolean mothershipUserRestriction = true;
 
+    public boolean mothershipUserMatchUUID = true;
+
     public ARConfig() {}
 
     public void processConfig(final Configuration config) {
@@ -207,7 +209,11 @@ public class ARConfig {
 
         // mothershipUserRestriction = config.getBoolean("restrictMothershipToOwner", "mothership", true, "If true, only
         // the one who built the mothership will be able to use it. If false, anyone can");
-
+        this.mothershipUserMatchUUID = config.getBoolean(
+                "matchUsersByUUID",
+                "mothership",
+                this.mothershipUserMatchUUID,
+                "If true, users will be identified by UUID, if false by username. You will probably only want the latter if you run an 'offline' server...");
         // rendering
         this.mothershipNumStarLines = config.getInt(
                 "mothershipStarLines",
@@ -346,6 +352,7 @@ public class ARConfig {
         data.setInteger("msMaxTravelTime", this.mothershipMaxTravelTime);
         data.setFloat("msFuelFactor", this.mothershipFuelFactor);
         data.setFloat("msSpeedFactor", this.mothershipSpeedFactor);
+        data.setBoolean("msMatchUUID", this.mothershipUserMatchUUID);
         data.setInteger("planetDefaultTier", this.planetDefaultTier);
 
         return data;
@@ -366,6 +373,7 @@ public class ARConfig {
         this.mothershipMaxTravelTime = data.getInteger("msMaxTravelTime");
         this.mothershipFuelFactor = data.getFloat("msFuelFactor");
         this.mothershipSpeedFactor = data.getFloat("msSpeedFactor");
+        this.mothershipUserMatchUUID = data.getBoolean("msMatchUUID");
         this.planetDefaultTier = data.getInteger("planetDefaultTier");
     }
 

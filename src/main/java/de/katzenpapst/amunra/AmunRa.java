@@ -8,7 +8,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -678,7 +677,8 @@ public class AmunRa {
     }
 
     public static boolean isDevEnvironment() {
-        return (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+        boolean b = true;
+        return b;
     }
 
     /*

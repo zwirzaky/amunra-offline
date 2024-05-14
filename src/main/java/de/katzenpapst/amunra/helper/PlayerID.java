@@ -5,6 +5,8 @@ import java.util.UUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
+import de.katzenpapst.amunra.AmunRa;
+
 public class PlayerID {
 
     protected UUID userUUID;
@@ -48,16 +50,28 @@ public class PlayerID {
         if (!(other instanceof PlayerID playerID)) {
             return false;
         }
-        return playerID.userUUID.equals(this.userUUID);
+        if (AmunRa.config.mothershipUserMatchUUID) {
+            return ((PlayerID) other).userUUID.equals(userUUID);
+        } else {
+            return ((PlayerID) other).userName.equals(userName);
+        }
     }
 
     @Override
     public int hashCode() {
-        return this.userUUID.hashCode();
+        if (AmunRa.config.mothershipUserMatchUUID) {
+            return userUUID.hashCode();
+        } else {
+            return userName.hashCode();
+        }
     }
 
     public boolean isSameUser(final EntityPlayer player) {
-        return player == null ? false : this.userUUID.equals(player.getUniqueID());
+        if (AmunRa.config.mothershipUserMatchUUID) {
+            return this.userUUID.equals(player.getUniqueID());
+        } else {
+            return this.userName.equals(player.getDisplayName());
+        }
     }
 
 }
