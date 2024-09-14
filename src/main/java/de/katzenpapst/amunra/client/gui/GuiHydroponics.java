@@ -204,7 +204,7 @@ public class GuiHydroponics extends GuiContainerGC {
             return EnumColor.DARK_RED + GCCoreUtil.translate("tile.hydroponics.noplant");
         }
         if (growStatus < 1.0F) {
-            return EnumColor.YELLOW.getCode() + Math.floor(this.tile.getPlantGrowthStatus() * 100) + "%";
+            return EnumColor.YELLOW.getCode() + String.format("%.1f", this.tile.getPlantGrowthStatus() * 100) + "%";
         }
         return EnumColor.DARK_GREEN + "100%";
     }
