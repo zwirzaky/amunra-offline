@@ -462,7 +462,7 @@ public class ARBlocks {
         blockVacuumGrass = metaBlockGrass.addSubBlock(
                 2,
                 new VacuumGrass(
-                        "vaccumRedGrass",
+                        "vacuumRedGrass",
                         "amunra:methanegrass-2",
                         "amunra:methanegrassside-2",
                         "amunra:methanedirt"));
