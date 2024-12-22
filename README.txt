@@ -1,4 +1,7 @@
-Mod tp resolve: "Login while the server is in online mode to be able to login while it is in offline mode."
+!!!!
+AS OF VERSION 2.7.1 - NO NEED TO REPLACE HODGEPODGE ANY FURTHER
+
+Mod to resolve: "Login while the server is in online mode to be able to login while it is in offline mode."
 This modifiaction is meant to provide offline support to Greg Tech New Horizons Modpack
 Last tested on version 2.6.0 java 17-21
 
